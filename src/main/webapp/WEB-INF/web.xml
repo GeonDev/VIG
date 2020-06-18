@@ -8,12 +8,7 @@
 	 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>
-			classpath:config/context-aspect.xml,
-			classpath:config/context-common.xml,
-			classpath:config/context-mybatis.xml,
-			classpath:config/context-transaction.xml
-		</param-value>
+		<param-value> classpath:config/context-*.xml</param-value>
 	</context-param>
   
   
