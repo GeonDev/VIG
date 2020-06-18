@@ -3,7 +3,8 @@ package com.VIG.mvc.web.Vision;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.VIG.mvc.web.Translate.TranslateKeyword;
+import com.VIG.mvc.service.domain.ImageKeyword;
+import com.VIG.mvc.web.Translate.Translater;
 import com.google.api.services.translate.Translate;
 
 public class VisionTest {
@@ -14,10 +15,10 @@ public class VisionTest {
 			String imageFilePath = "C:\\workspace\\VIG\\src\\main\\java\\com\\VIG\\mvc\\web\\Vision\\face.jpg"; 			
 			
 			System.out.println("VISION START...");
-			List<ImageKeyword> keys = VisionKeyword.getKeywordForVision(imageFilePath);			
+			List<ImageKeyword> keys = VisionInfo.getKeywordForVision(imageFilePath);			
 			
 			for(ImageKeyword key : keys) {
-				System.out.println(key.getKeyword() +" score : " +key.getScore());
+				System.out.println(key.getKeywordEn() +" , "+key.getKeywordKr() + " score : " +key.getScore());
 			}		
 			System.out.println("VISION END...");
 			
@@ -29,7 +30,7 @@ public class VisionTest {
 			
 			System.out.println("Tanslate START...");
 			
-			System.out.println(TranslateKeyword.autoDetectTranslate("스마트폰", "en"));
+			System.out.println(Translater.autoDetectTranslate("스마트폰", "en"));
 			
 			
 			System.out.println("Tanslate END...");
