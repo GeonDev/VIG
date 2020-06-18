@@ -4,18 +4,16 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Vector;
 
 import com.google.cloud.vision.v1.AnnotateImageRequest;
 import com.google.cloud.vision.v1.AnnotateImageResponse;
 import com.google.cloud.vision.v1.BatchAnnotateImagesResponse;
 import com.google.cloud.vision.v1.EntityAnnotation;
 import com.google.cloud.vision.v1.Feature;
+import com.google.cloud.vision.v1.Feature.Type;
 import com.google.cloud.vision.v1.Image;
 import com.google.cloud.vision.v1.ImageAnnotatorClient;
-import com.google.cloud.vision.v1.Feature.Type;
 import com.google.protobuf.ByteString;
-
 
 
 // 작동을 위해서는 API 키를 적용하야 합니다.
@@ -26,8 +24,7 @@ public class VisionKeyword {
 	
 	//private static final Type typeColor = Type.IMAGE_PROPERTIES;		
 	
-	
-	public  List<ImageKeyword> getKeywordForVision(String imageFilePath) {
+	public static List<ImageKeyword> getKeywordForVision(String imageFilePath) {
 		
 		//중복값이 저장되는 것을 막기위하여 set 사용
 		HashSet<ImageKeyword> result = new HashSet<ImageKeyword>();	
@@ -42,7 +39,7 @@ public class VisionKeyword {
 		return new ArrayList<ImageKeyword>(result);
 	}
 	
-	private  void requestVision(String imageFilePath, Type type, HashSet<ImageKeyword> list) {		
+	private static void requestVision(String imageFilePath, Type type, HashSet<ImageKeyword> list) {		
 		try {		
 			
 			List<AnnotateImageRequest> requests = new ArrayList<>();
@@ -77,45 +74,34 @@ public class VisionKeyword {
 	}	
 	
 	
-	private void addKeywordList(Type type, AnnotateImageResponse res, HashSet<ImageKeyword> result) {		
+	private static void addkeywoadhash(EntityAnnotation annotation, HashSet<ImageKeyword> result) {
+		ImageKeyword imageKeyword = new ImageKeyword();
 		
-		if(type ==  Type.TEXT_DETECTION) {
-		      for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
-		    	  ImageKeyword imageKeyword = new ImageKeyword();
-		    	  
-		    	  imageKeyword.setKeyword(annotation.getDescription());
-		    	  imageKeyword.setScore(annotation.getScore());		    	  
-		    	  
-		           result.add(imageKeyword);
-		        }			
-		}else if(type ==  Type.LABEL_DETECTION) {
-		      for (EntityAnnotation annotation : res.getLabelAnnotationsList()) {
-		    	  ImageKeyword imageKeyword = new ImageKeyword();
-		    	  
-		    	  imageKeyword.setKeyword(annotation.getDescription());
-		    	  imageKeyword.setScore(annotation.getScore());
-		    	 
-		           result.add(imageKeyword);
-		        }
-		}else if(type ==  Type.LANDMARK_DETECTION) {			
+		if (annotation.getScore() > 0.0f) {
+			imageKeyword.setKeyword(annotation.getDescription());
+			imageKeyword.setScore(annotation.getScore());
+			result.add(imageKeyword);
+		}		
+	}	
+	
+	private static void addKeywordList(Type type, AnnotateImageResponse res, HashSet<ImageKeyword> result) {
+
+		if (type == Type.TEXT_DETECTION) {
+			for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
+				addkeywoadhash(annotation, result);
+			}
+		} else if (type == Type.LABEL_DETECTION) {
+			for (EntityAnnotation annotation : res.getLabelAnnotationsList()) {
+				addkeywoadhash(annotation, result);
+			}
+		} else if (type == Type.LANDMARK_DETECTION) {
 			for (EntityAnnotation annotation : res.getLandmarkAnnotationsList()) {
-				  ImageKeyword imageKeyword = new ImageKeyword();
-				  
-		    	  imageKeyword.setKeyword(annotation.getDescription());
-		    	  imageKeyword.setScore(annotation.getScore());
-		    	  
-		           result.add(imageKeyword);
-		      }
-		}else if(type ==  Type.LOGO_DETECTION) {
-	          for (EntityAnnotation annotation : res.getLogoAnnotationsList()) {
-	        	  ImageKeyword imageKeyword = new ImageKeyword();
-	        	  
-		    	  imageKeyword.setKeyword(annotation.getDescription());
-		    	  imageKeyword.setScore(annotation.getScore());
-		    	  
-		           result.add(imageKeyword);
-	            }
+				addkeywoadhash(annotation, result);
+			}
+		} else if (type == Type.LOGO_DETECTION) {
+			for (EntityAnnotation annotation : res.getLogoAnnotationsList()) {
+				addkeywoadhash(annotation, result);
+			}
 		}
-		
 	}
 }
