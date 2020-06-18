@@ -7,9 +7,9 @@ import com.google.cloud.translate.Translation;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
 
-public class TranslateKeyword {
+public class Translater {
 
-	public TranslateKeyword() {
+	public Translater() {
 		// TODO Auto-generated constructor stub
 	}
 	

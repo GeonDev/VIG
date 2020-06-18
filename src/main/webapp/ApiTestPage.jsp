@@ -62,7 +62,7 @@
 	<br/>		
 		
 		
-	<form name="TransCode" action="/VIG/testController/trans" method="POST">
+	<form name="TransCode" action="VIG/testController/trans" method="POST">
 		<div class="row">
 			<div class="col-sm-6">
 		 	<input type="text" class="form-control" name="Trans" id="Transword"  placeholder="번역할 단어" >
@@ -80,7 +80,7 @@
 	<br/>
 	
 	
-	<form name="fileCode" action="/VIG/testController/upload">
+	<form name="fileCode" action="VIG/testController/upload" enctype="multipart/form-data">
 		<div class="row">
 		<div class="col-xs-4 col-md-2"><strong>상품이미지</strong></div>
 		<div class="col-xs-8 col-md-4">

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import com.VIG.mvc.service.domain.ImageKeyword;
+import com.VIG.mvc.web.Translate.Translater;
 import com.google.cloud.vision.v1.AnnotateImageRequest;
 import com.google.cloud.vision.v1.AnnotateImageResponse;
 import com.google.cloud.vision.v1.BatchAnnotateImagesResponse;
@@ -18,9 +20,9 @@ import com.google.protobuf.ByteString;
 
 // 작동을 위해서는 API 키를 적용하야 합니다.
 // Run As - Run Configurations - Environment - New 
-public class VisionKeyword { 			
+public class VisionInfo { 			
 		
-	public VisionKeyword() {}	
+	public VisionInfo() {}	
 	
 	//private static final Type typeColor = Type.IMAGE_PROPERTIES;		
 	
@@ -38,6 +40,8 @@ public class VisionKeyword {
 		//최종 결과값 전달 - 간단하게 형태인 LIST로 변환
 		return new ArrayList<ImageKeyword>(result);
 	}
+	
+	
 	
 	private static void requestVision(String imageFilePath, Type type, HashSet<ImageKeyword> list) {		
 		try {		
@@ -78,7 +82,9 @@ public class VisionKeyword {
 		ImageKeyword imageKeyword = new ImageKeyword();
 		
 		if (annotation.getScore() > 0.0f) {
-			imageKeyword.setKeyword(annotation.getDescription());
+			imageKeyword.setKeywordEn(annotation.getDescription());
+			//한국어 ko, 일본어 ja, 영어 en
+			imageKeyword.setKeywordKr(Translater.autoDetectTranslate(annotation.getDescription(), "ko"));
 			imageKeyword.setScore(annotation.getScore());
 			result.add(imageKeyword);
 		}		
