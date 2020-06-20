@@ -42,7 +42,17 @@ public class Translater {
     }
 
     public static String autoDetectTranslate(String text, String target) {
-        return translate(text, detectLanguage(text), target);
+    	String originlang = detectLanguage(text);
+    	
+    	if(target.equals("auto")) {
+	    	if(originlang.equals("en")) {
+	    		return translate(text, originlang, "ko");	
+	    	}else if(originlang.equals("ko")) {
+	    		return translate(text, originlang, "en");
+	    	}
+    	}
+    	
+    	return translate(text, originlang, target);    	
     }
 	
 

@@ -1,6 +1,7 @@
 package com.VIG.mvc.web.test;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -8,11 +9,16 @@ import javax.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.VIG.mvc.service.domain.ImageKeyword;
+import com.VIG.mvc.web.Translate.Translater;
+import com.VIG.mvc.web.Vision.VisionInfo;
 
 
 
@@ -34,9 +40,12 @@ public class TestController {
 	
 	
 	@RequestMapping(value = "trans", method = RequestMethod.POST)
-	public void trans() throws Exception {
+	public ModelAndView trans(@ModelAttribute("Trans") String target ) throws Exception {
+		String result = new String("Translate : ");
 		
-		System.out.println("일단 트랜스에 정상 도착");
+		result = result + Translater.autoDetectTranslate(target, "auto");
+		
+		return new ModelAndView("forward:/common/alertView.jsp", "message", result);
 	}
 	
 	
@@ -48,21 +57,31 @@ public class TestController {
         path = path.substring(0,path.indexOf("\\.metadata"));         
         path = path +  uploadPath;  
 		
+        String result = new String("VISION KEY : ");
+        List<ImageKeyword> keys = new ArrayList<ImageKeyword>();
+        
 		if(files !=null) {
 	        for (MultipartFile multipartFile : files) {
 	        	//파일 업로드시 시간을 이용하여 이름이 중복되지 않게 한다.
 	        	String inDate   = new java.text.SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date());
 	    
 	    		File f =new File(path+inDate+multipartFile.getOriginalFilename());
+	    		keys = VisionInfo.getKeywordForVision(path+inDate+multipartFile.getOriginalFilename());
+	    		
 	    		
 	    		//원하는 위치에 파일 저장
-	    		multipartFile.transferTo(f);	    		
-	    	
+	    		multipartFile.transferTo(f);	    	
 	    			    	
 			} 			
+		}		
+		
+		if(keys.size() > 1) {
+			for(ImageKeyword word : keys) {				
+				result = result +" "+word.getKeywordEn();
+			}
 		}
 		
-		return new ModelAndView("forward:/common/alertView.jsp", "message", "임시기능.");
+		return new ModelAndView("forward:/common/alertView.jsp", "message", result);
 	}
 	
 		
