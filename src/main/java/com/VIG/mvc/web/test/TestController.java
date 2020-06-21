@@ -66,12 +66,10 @@ public class TestController {
 	        	String inDate   = new java.text.SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date());
 	    
 	    		File f =new File(path+inDate+multipartFile.getOriginalFilename());
-	    		keys = VisionInfo.getKeywordForVision(path+inDate+multipartFile.getOriginalFilename());
-	    		
-	    		
 	    		//원하는 위치에 파일 저장
-	    		multipartFile.transferTo(f);	    	
-	    			    	
+	    		multipartFile.transferTo(f);	
+	    		
+	    		keys = VisionInfo.getKeywordForVision(path+inDate+multipartFile.getOriginalFilename());	    			    	
 			} 			
 		}		
 		
