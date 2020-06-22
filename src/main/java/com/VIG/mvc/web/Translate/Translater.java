@@ -42,18 +42,20 @@ public class Translater {
     }
 
     public static String autoDetectTranslate(String text, String target) {
-    	String originlang = detectLanguage(text);
-    	
-    	if(target.equals("auto")) {
-	    	if(originlang.equals("en")) {
-	    		return translate(text, originlang, "ko");	
-	    	}else if(originlang.equals("ko")) {
-	    		return translate(text, originlang, "en");
-	    	}
-    	}
-    	
+    	String originlang = detectLanguage(text);    	
     	return translate(text, originlang, target);    	
     }
 	
+        
+    public static String autoDetectTranslate(String text) {
+    	String originlang = detectLanguage(text);    	
+    
+    	if(originlang.equals("en")) {
+    		return translate(text, originlang, "ko");	
+    	}else {
+    		return translate(text, originlang, "en");
+    	}
+    		
+    }
 
 }
