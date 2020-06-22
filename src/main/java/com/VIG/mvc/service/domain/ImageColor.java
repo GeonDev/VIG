@@ -6,6 +6,9 @@ public class ImageColor {
 	private float green;
 	private float blue;
 	
+	//이미지에서 해당 색이 차지하는 비율
+	private float ratio;
+	
 	public ImageColor() {}
 
 	public float getRed() {
@@ -32,9 +35,19 @@ public class ImageColor {
 		this.blue = blue;
 	}
 
+	public float getRatio() {
+		return ratio;
+	}
+
+	public void setRatio(float ratio) {
+		this.ratio = ratio;
+	}
+
 	@Override
 	public String toString() {
-		return "ImageColor [red=" + red + ", green=" + green + ", blue=" + blue + "]";
+		return "ImageColor [red=" + red + ", green=" + green + ", blue=" + blue + ", ratio=" + ratio + "]";
 	}
+	
+	
 
 }

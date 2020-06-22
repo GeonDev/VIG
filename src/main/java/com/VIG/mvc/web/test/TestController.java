@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.VIG.mvc.service.domain.ImageColor;
 import com.VIG.mvc.service.domain.ImageKeyword;
 import com.VIG.mvc.web.Translate.Translater;
 import com.VIG.mvc.web.Vision.VisionInfo;
@@ -41,9 +42,9 @@ public class TestController {
 	
 	@RequestMapping(value = "trans", method = RequestMethod.POST)
 	public ModelAndView trans(@ModelAttribute("Trans") String target ) throws Exception {
-		String result = new String("Translate : ");
+		String result = new String("Translate : ");	
 		
-		result = result + Translater.autoDetectTranslate(target, "auto");
+		result = result + Translater.autoDetectTranslate(target);
 		
 		return new ModelAndView("forward:/common/alertView.jsp", "message", result);
 	}
@@ -59,6 +60,7 @@ public class TestController {
 		
         String result = new String("VISION KEY : ");
         List<ImageKeyword> keys = new ArrayList<ImageKeyword>();
+        List<ImageColor> colors = new ArrayList<ImageColor>();
         
 		if(files !=null) {
 	        for (MultipartFile multipartFile : files) {
@@ -69,7 +71,8 @@ public class TestController {
 	    		//원하는 위치에 파일 저장
 	    		multipartFile.transferTo(f);	
 	    		
-	    		keys = VisionInfo.getKeywordForVision(path+inDate+multipartFile.getOriginalFilename());	    			    	
+	    		keys = VisionInfo.getKeywordForVision(path+inDate+multipartFile.getOriginalFilename());	    			
+	    		//colors = VisionInfo.getColorForVision(path+inDate+multipartFile.getOriginalFilename());
 			} 			
 		}		
 		
@@ -78,6 +81,21 @@ public class TestController {
 				result = result +" "+word.getKeywordEn();
 			}
 		}
+		
+		result = result + "--------------------------\n";
+		
+		if(colors.size() > 1) {
+			for(ImageColor color : colors) {
+				result = result +" R: "+color.getRed();
+				result = result +" G: "+color.getGreen();
+				result = result +" B: "+color.getBlue();
+				result = result +" Ratio: "+color.getRatio();
+				
+			}
+			
+		}
+		
+		
 		
 		return new ModelAndView("forward:/common/alertView.jsp", "message", result);
 	}

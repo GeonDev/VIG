@@ -5,11 +5,14 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import com.VIG.mvc.service.domain.ImageColor;
 import com.VIG.mvc.service.domain.ImageKeyword;
 import com.VIG.mvc.web.Translate.Translater;
 import com.google.cloud.vision.v1.AnnotateImageRequest;
 import com.google.cloud.vision.v1.AnnotateImageResponse;
 import com.google.cloud.vision.v1.BatchAnnotateImagesResponse;
+import com.google.cloud.vision.v1.ColorInfo;
+import com.google.cloud.vision.v1.DominantColorsAnnotation;
 import com.google.cloud.vision.v1.EntityAnnotation;
 import com.google.cloud.vision.v1.Feature;
 import com.google.cloud.vision.v1.Feature.Type;
@@ -22,28 +25,43 @@ import com.google.protobuf.ByteString;
 // Run As - Run Configurations - Environment - New 
 public class VisionInfo { 			
 		
+	
+	//중복값이 저장되는 것을 막기위하여 set 사용
+	private static HashSet<ImageKeyword> kewordResult = new HashSet<ImageKeyword>();			
+	
+	private static List<ImageColor> colorResult = new ArrayList<ImageColor>();
+	
+	
 	public VisionInfo() {}	
 	
-	//private static final Type typeColor = Type.IMAGE_PROPERTIES;		
-	
-	public static List<ImageKeyword> getKeywordForVision(String imageFilePath) {
+	//이미지의 키워드를 추출하는 함수
+	public static List<ImageKeyword> getKeywordForVision(String imageFilePath) {	
 		
-		//중복값이 저장되는 것을 막기위하여 set 사용
-		HashSet<ImageKeyword> result = new HashSet<ImageKeyword>();	
+		kewordResult.clear();
 		
-		
-		requestVision(imageFilePath, Type.TEXT_DETECTION, result);
-		requestVision(imageFilePath, Type.LABEL_DETECTION, result);
-		requestVision(imageFilePath, Type.LANDMARK_DETECTION, result );
-		requestVision(imageFilePath, Type.LOGO_DETECTION, result);
+		requestVision(imageFilePath, Type.TEXT_DETECTION);
+		//requestVision(imageFilePath, Type.LABEL_DETECTION);
+		//requestVision(imageFilePath, Type.LANDMARK_DETECTION);
+		//requestVision(imageFilePath, Type.LOGO_DETECTION);
 		
 		//최종 결과값 전달 - 간단하게 형태인 LIST로 변환
-		return new ArrayList<ImageKeyword>(result);
+		return new ArrayList<ImageKeyword>(kewordResult);
 	}
 	
 	
 	
-	private static void requestVision(String imageFilePath, Type type, HashSet<ImageKeyword> list) {		
+	//이미지의 색상정보를 추출하는 함수
+	public static List<ImageColor> getColorForVision(String imageFilePath) {		
+		
+		colorResult.clear();
+		
+		requestVision(imageFilePath, Type.IMAGE_PROPERTIES);		
+		
+		return colorResult;
+	}
+	
+	
+	private static void requestVision(String imageFilePath, Type type) {		
 		try {		
 			
 			List<AnnotateImageRequest> requests = new ArrayList<>();
@@ -66,8 +84,11 @@ public class VisionInfo {
 			    	if (res.hasError()) {
 			    		System.out.printf("Error: %s\n", res.getError().getMessage());			    		
 			    		return;
-			    	}			    	
-			    	addKeywordList(type, res, list);		    	
+			    	}
+			    	
+			    	// 공용으로 분류를 사용하기 위하여 키워드, 컬러 인자값 2개를 전달
+			    	// 실제 사용은 둘중 1개만 한다.
+			    	addKeywordList(type, res, kewordResult, colorResult);		    	
 			    }		    
 		
 			}
@@ -90,24 +111,42 @@ public class VisionInfo {
 		}		
 	}	
 	
-	private static void addKeywordList(Type type, AnnotateImageResponse res, HashSet<ImageKeyword> result) {
+	
+	
+	private static void addColorList(ColorInfo color, List<ImageColor> result) {
+		ImageColor imageColor = new ImageColor();		
+		imageColor.setRed(color.getColor().getRed());
+		imageColor.setBlue(color.getColor().getBlue());
+		imageColor.setGreen(color.getColor().getGreen());
+		imageColor.setRatio(color.getPixelFraction());
+		result.add(imageColor);
+	}
+	
+	
+	
+	private static void addKeywordList(Type type, AnnotateImageResponse res, HashSet<ImageKeyword> keyResult, List<ImageColor> colorResult) {
 
 		if (type == Type.TEXT_DETECTION) {
 			for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
-				addkeywoadhash(annotation, result);
+				addkeywoadhash(annotation, keyResult);
 			}
 		} else if (type == Type.LABEL_DETECTION) {
 			for (EntityAnnotation annotation : res.getLabelAnnotationsList()) {
-				addkeywoadhash(annotation, result);
+				addkeywoadhash(annotation, keyResult);
 			}
 		} else if (type == Type.LANDMARK_DETECTION) {
 			for (EntityAnnotation annotation : res.getLandmarkAnnotationsList()) {
-				addkeywoadhash(annotation, result);
+				addkeywoadhash(annotation, keyResult);
 			}
 		} else if (type == Type.LOGO_DETECTION) {
 			for (EntityAnnotation annotation : res.getLogoAnnotationsList()) {
-				addkeywoadhash(annotation, result);
+				addkeywoadhash(annotation, keyResult);
 			}
+		}else if(type == Type.IMAGE_PROPERTIES) {
+			DominantColorsAnnotation colors = res.getImagePropertiesAnnotation().getDominantColors();
+			for(ColorInfo color : colors.getColorsList()) {
+				addColorList(color, colorResult);
+			}			
 		}
 	}
 }

@@ -28,21 +28,19 @@
    	$(function() {
 		
    		$("button:contains('번역')").on("click", function() {
-   			alert("번역버튼 눌림")
+   			
    			$("form[name='TransCode']").attr("method", "POST");		
    			$("form[name='TransCode']").submit();	
    		});
 
    		$("button:contains('등록')").on("click", function() {
-   			alert("등록버튼 눌림")
+   			
    			$("form[name='fileCode']").attr("method", "POST");		
    			$("form[name='fileCode']").submit();	
    		});
    		
    		
-	});
-   	
-   	
+	});   	
    	
 
 
