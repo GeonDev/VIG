@@ -72,24 +72,25 @@ public class TestController {
 	    		multipartFile.transferTo(f);	
 	    		
 	    		keys = VisionInfo.getKeywordForVision(path+inDate+multipartFile.getOriginalFilename());	    			
-	    		//colors = VisionInfo.getColorForVision(path+inDate+multipartFile.getOriginalFilename());
+	    		colors = VisionInfo.getColorForVision(path+inDate+multipartFile.getOriginalFilename());
 			} 			
 		}		
 		
 		if(keys.size() > 1) {
 			for(ImageKeyword word : keys) {				
-				result = result +" "+word.getKeywordEn();
+				result +=" "+word.getKeywordEn();
+				
 			}
-		}
+		}		
 		
-		result = result + "--------------------------\n";
+	
 		
 		if(colors.size() > 1) {
 			for(ImageColor color : colors) {
-				result = result +" R: "+color.getRed();
-				result = result +" G: "+color.getGreen();
-				result = result +" B: "+color.getBlue();
-				result = result +" Ratio: "+color.getRatio();
+				result +=" R: "+color.getRed();
+				result +=" G: "+color.getGreen();
+				result +=" B: "+color.getBlue();
+				result +=" Ratio: "+color.getRatio();
 				
 			}
 			

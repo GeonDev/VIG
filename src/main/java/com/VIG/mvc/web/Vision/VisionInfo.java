@@ -23,29 +23,21 @@ import com.google.protobuf.ByteString;
 
 // 작동을 위해서는 API 키를 적용하야 합니다.
 // Run As - Run Configurations - Environment - New 
-public class VisionInfo { 			
-		
-	
-	//중복값이 저장되는 것을 막기위하여 set 사용
-	private static HashSet<ImageKeyword> kewordResult = new HashSet<ImageKeyword>();			
-	
-	private static List<ImageColor> colorResult = new ArrayList<ImageColor>();
-	
+public class VisionInfo {		
 	
 	public VisionInfo() {}	
 	
 	//이미지의 키워드를 추출하는 함수
 	public static List<ImageKeyword> getKeywordForVision(String imageFilePath) {	
 		
-		kewordResult.clear();
+		List<ImageKeyword> keywords = new ArrayList<ImageKeyword>();
 		
-		requestVision(imageFilePath, Type.TEXT_DETECTION);
-		//requestVision(imageFilePath, Type.LABEL_DETECTION);
-		//requestVision(imageFilePath, Type.LANDMARK_DETECTION);
-		//requestVision(imageFilePath, Type.LOGO_DETECTION);
+		requestVision(imageFilePath, Type.TEXT_DETECTION, keywords);
+		requestVision(imageFilePath, Type.LABEL_DETECTION, keywords);
+		requestVision(imageFilePath, Type.LANDMARK_DETECTION, keywords);
+		requestVision(imageFilePath, Type.LOGO_DETECTION, keywords);
 		
-		//최종 결과값 전달 - 간단하게 형태인 LIST로 변환
-		return new ArrayList<ImageKeyword>(kewordResult);
+		return keywords;
 	}
 	
 	
@@ -53,15 +45,15 @@ public class VisionInfo {
 	//이미지의 색상정보를 추출하는 함수
 	public static List<ImageColor> getColorForVision(String imageFilePath) {		
 		
-		colorResult.clear();
+		List<ImageColor> colors = new ArrayList<ImageColor>();
 		
-		requestVision(imageFilePath, Type.IMAGE_PROPERTIES);		
+		requestVision(imageFilePath, Type.IMAGE_PROPERTIES, colors);		
 		
-		return colorResult;
+		return colors;
 	}
 	
 	
-	private static void requestVision(String imageFilePath, Type type) {		
+	private static void requestVision(String imageFilePath, Type type, List list) {		
 		try {		
 			
 			List<AnnotateImageRequest> requests = new ArrayList<>();
@@ -84,11 +76,13 @@ public class VisionInfo {
 			    	if (res.hasError()) {
 			    		System.out.printf("Error: %s\n", res.getError().getMessage());			    		
 			    		return;
+			    	}		    	
+			    	if(type == Type.IMAGE_PROPERTIES) {				    		
+			    		addColorList(type, res, list);
+			    	}else {
+			    		addKeywordList(type, res, list);	
 			    	}
-			    	
-			    	// 공용으로 분류를 사용하기 위하여 키워드, 컬러 인자값 2개를 전달
-			    	// 실제 사용은 둘중 1개만 한다.
-			    	addKeywordList(type, res, kewordResult, colorResult);		    	
+			    			    	
 			    }		    
 		
 			}
@@ -98,18 +92,6 @@ public class VisionInfo {
 				
 	}	
 	
-	
-	private static void addkeywoadhash(EntityAnnotation annotation, HashSet<ImageKeyword> result) {
-		ImageKeyword imageKeyword = new ImageKeyword();
-		
-		if (annotation.getScore() > 0.0f) {
-			imageKeyword.setKeywordEn(annotation.getDescription());
-			//한국어 ko, 일본어 ja, 영어 en
-			imageKeyword.setKeywordKr(Translater.autoDetectTranslate(annotation.getDescription(), "ko"));
-			imageKeyword.setScore(annotation.getScore());
-			result.add(imageKeyword);
-		}		
-	}	
 	
 	
 	
@@ -124,29 +106,45 @@ public class VisionInfo {
 	
 	
 	
-	private static void addKeywordList(Type type, AnnotateImageResponse res, HashSet<ImageKeyword> keyResult, List<ImageColor> colorResult) {
+	private static void addKeywordList(Type type, AnnotateImageResponse res, List<ImageKeyword> keys) {
 
 		if (type == Type.TEXT_DETECTION) {
 			for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
-				addkeywoadhash(annotation, keyResult);
+				addkeywoad(annotation, keys);
 			}
 		} else if (type == Type.LABEL_DETECTION) {
 			for (EntityAnnotation annotation : res.getLabelAnnotationsList()) {
-				addkeywoadhash(annotation, keyResult);
+				addkeywoad(annotation, keys);
 			}
 		} else if (type == Type.LANDMARK_DETECTION) {
 			for (EntityAnnotation annotation : res.getLandmarkAnnotationsList()) {
-				addkeywoadhash(annotation, keyResult);
+				addkeywoad(annotation, keys);
 			}
 		} else if (type == Type.LOGO_DETECTION) {
 			for (EntityAnnotation annotation : res.getLogoAnnotationsList()) {
-				addkeywoadhash(annotation, keyResult);
+				addkeywoad(annotation, keys);
 			}
-		}else if(type == Type.IMAGE_PROPERTIES) {
-			DominantColorsAnnotation colors = res.getImagePropertiesAnnotation().getDominantColors();
-			for(ColorInfo color : colors.getColorsList()) {
-				addColorList(color, colorResult);
-			}			
 		}
 	}
+	
+	private static void addkeywoad(EntityAnnotation annotation, List<ImageKeyword> result) {
+		ImageKeyword imageKeyword = new ImageKeyword();
+		
+		if (annotation.getScore() > 0.0f) {
+			imageKeyword.setKeywordEn(annotation.getDescription());
+			//한국어 ko, 일본어 ja, 영어 en
+			imageKeyword.setKeywordKr(Translater.autoDetectTranslate(annotation.getDescription(), "ko"));
+			imageKeyword.setScore(annotation.getScore());
+			result.add(imageKeyword);
+		}		
+	}
+	
+	
+	private static void addColorList(Type type, AnnotateImageResponse res, List<ImageColor> colorResult) {	
+		DominantColorsAnnotation colors = res.getImagePropertiesAnnotation().getDominantColors();
+		for(ColorInfo color : colors.getColorsList()) {
+			addColorList(color, colorResult);
+		}
+	}
+	
 }
