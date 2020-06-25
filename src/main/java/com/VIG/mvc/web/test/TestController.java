@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,8 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.VIG.mvc.service.domain.ImageColor;
 import com.VIG.mvc.service.domain.ImageKeyword;
-import com.VIG.mvc.web.Translate.Translater;
-import com.VIG.mvc.web.Vision.VisionInfo;
+import com.VIG.mvc.service.domain.User;
+import com.VIG.mvc.util.Translater;
+import com.VIG.mvc.util.VisionInfo;
 
 
 
@@ -81,9 +83,7 @@ public class TestController {
 				result +=" "+word.getKeywordEn();
 				
 			}
-		}		
-		
-	
+		}	
 		
 		if(colors.size() > 1) {
 			for(ImageColor color : colors) {
@@ -94,13 +94,20 @@ public class TestController {
 				
 			}
 			
-		}
-		
-		
+		}	
 		
 		return new ModelAndView("forward:/common/alertView.jsp", "message", result);
 	}
 	
+	@RequestMapping(value = "chatting")
+	public ModelAndView chat(@ModelAttribute("user") User user, HttpSession session) {
+				
+		//사용자 정보 세션 삽입		
+		session.setAttribute("user", user);
 		
+		System.out.println("user name :" + user.getName());	
+				
+		return new ModelAndView("forward:/ChattingView.jsp", "userid", user.getName());
+	}	
 
 }

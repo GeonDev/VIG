@@ -1,4 +1,4 @@
-package com.VIG.mvc.web.Translate;
+package com.VIG.mvc.util;
 
 import com.google.cloud.translate.Detection;
 import com.google.cloud.translate.Translate;
