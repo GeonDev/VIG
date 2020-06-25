@@ -19,10 +19,10 @@
     </context:component-scan>
         
     
-	<mvc:resources mapping="/css/**" location="/css/" />
-   	<mvc:resources mapping="/images/**" location="/images/" />
-   	<mvc:resources mapping="/javascript/**" location="/javascript/" />
-   	<mvc:resources mapping="/upload/**" location="/images/uploadFiles/" />
+	<mvc:resources mapping="/css/**" location="./WEB_INF/css/" />
+   	<mvc:resources mapping="/images/**" location="./WEB_INF/images/" />
+   	<mvc:resources mapping="/javascript/**" location="./WEB-INF/javascript/" />
+   	<mvc:resources mapping="/upload/**" location="./WEB_INF/images/uploadFiles/" />
     
     
 
