@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page pageEncoding="UTF-8"%>
-<<<<<<< Updated upstream
-=======
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
@@ -29,22 +28,10 @@
 			$("form[name='login']").submit();	
 		
 	});
-	
-
 
 </script>
 
 </head>
->>>>>>> Stashed changes
-
-
-<html>
-<body>
-<<<<<<< Updated upstream
-<h2>Hello World!</h2>
-
-<a href="ApiTestPage.jsp">테스트 코드로</a>
-=======
 
 <h1>Hello World!</h1>
 
@@ -63,13 +50,7 @@
 		
 		<button type="button" >로그인</button>
 	</div>
-
-	
-
-
 </form>
-
-
 
 <br/>
 
@@ -78,11 +59,5 @@
 
 <a href="ChattingView.jsp">채팅 코드로</a>
 
-<br/>
-<br/>
-<div id="disqus_thread"></div>
-
-                         
->>>>>>> Stashed changes
 </body>
 </html>
