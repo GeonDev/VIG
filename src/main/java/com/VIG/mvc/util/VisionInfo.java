@@ -1,4 +1,4 @@
-package com.VIG.mvc.web.Vision;
+package com.VIG.mvc.util;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
@@ -7,7 +7,6 @@ import java.util.List;
 
 import com.VIG.mvc.service.domain.ImageColor;
 import com.VIG.mvc.service.domain.ImageKeyword;
-import com.VIG.mvc.web.Translate.Translater;
 import com.google.cloud.vision.v1.AnnotateImageRequest;
 import com.google.cloud.vision.v1.AnnotateImageResponse;
 import com.google.cloud.vision.v1.BatchAnnotateImagesResponse;
