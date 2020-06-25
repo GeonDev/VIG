@@ -1,12 +1,12 @@
-<%@ page contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <html>
 	<body>
 	
 		<h3> NullPointerException page</h3>
 		<%	Exception exception = (Exception)request.getAttribute("exception");	%>
-		<%="Java CodeÀ» ÀÌ¿ëÇÑ ¿¹¿Ü Message º¸±â ::" +  exception.getMessage() %><br/>
-		ELÀ» ÀÌ¿ëÇÑ ¿¹¿Ü Message º¸±â :: ${ exception.message }<br/> 
+		<%="Java Codeì„ ì´ìš©í•œ ì˜ˆì™¸ Message ë³´ê¸° ::" +  exception.getMessage() %><br/>
+		ELì„ ì´ìš©í•œ ì˜ˆì™¸ Message ë³´ê¸° :: ${ exception.message }<br/> 
 		
 		<hr/>
 		<br/>
