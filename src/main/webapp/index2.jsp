@@ -33,7 +33,7 @@
 </head>
 <body>
 
-<h2>Hello World!</h2>
+<h2>Hello World! 디스쿠스 적용 버전</h2>
 
 <a href="ApiTestPage.jsp">테스트 코드로</a>
 
