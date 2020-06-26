@@ -29,6 +29,12 @@
     <!-- Websocket -->
     <websocket:handlers>
     	<websocket:mapping handler="echoHandler" path="/echo"/>
+    	
+    	<!-- Httpsession 의 값을 websession에 넣어준다.  -->
+    	<websocket:handshake-interceptors>
+ 	         <bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+ 	    </websocket:handshake-interceptors>     	
+    	
     	<websocket:sockjs/>
 	</websocket:handlers>
 	

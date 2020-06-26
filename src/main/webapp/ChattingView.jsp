@@ -5,7 +5,7 @@
 <html>
 <head>
 
-		<!--   jQuery , Bootstrap CDN  -->
+	<!--   jQuery , Bootstrap CDN  -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	
@@ -24,25 +24,23 @@
         });
     });
     
+    //웹 소켓을 생성한다.
     var sock;
-    //웸소켓을 지정한 url로 연결한다.
     sock = new SockJS("<c:url value="/echo"/>");
     
     //자바스크립트 안에 function을 집어넣을 수 있음.
-    //데이터가 나한테 전달되읐을 때 자동으로 실행되는 function
+    //데이터가 나한테 전달되었을때 자동으로 실행되는 function
     sock.onmessage=onMessage;
     
     //데이터를 끊고싶을때 실행하는 메소드
     sock.onclose = onClose;
     
-    /* sock.onopen = function(){
-        sock.send($("#message").val());
-    }; */
-    function sendMessage(){
-            /*소켓으로 보내겠다.  */
+
+    function sendMessage(){     
             sock.send($("#message").val());
     }
-    //evt 파라미터는 웹소켓을 보내준 데이터다.(자동으로 들어옴)
+    
+    //evt 파라미터는 웹 소켓을 보내준 데이터다.(자동으로 들어옴)
     function onMessage(evt){
         var data = evt.data;
         $("#data").append(data+"<br/>");
