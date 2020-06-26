@@ -10,6 +10,8 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.VIG.mvc.service.domain.User;
+
 public class EchoHandler extends TextWebSocketHandler{
     
     //세션을 모두 저장한다.
@@ -34,7 +36,8 @@ public class EchoHandler extends TextWebSocketHandler{
        
         
         //Session값을 가지고 데이터베이스등의 작업을 하면 채팅 참여 사용자 정보 리스트를 구현할 수 있다.//
-        System.out.println("채팅방 입장자: " + session.getPrincipal().getName());
+        User user = (User)session.getAttributes().get("user");
+        System.out.println("채팅방 입장자: " + user.getName());
     }
     
     /**
@@ -48,8 +51,11 @@ public class EchoHandler extends TextWebSocketHandler{
         
         //연결된 모든 클라이언트에게 메시지 전송 : 리스트 방법
         //getPrincipal()를 이용해서 세션에 물려있는 유저의 정보를 불러온다.세션의 정보는 User를 이용한것과 동일하다.//
-        for(WebSocketSession sess : sessionList){
-        	sess.sendMessage(new TextMessage(session.getPrincipal().getName()+ "|" + message.getPayload()));
+        for(WebSocketSession sess : sessionList){        	
+        	
+        	String name =  ((User)sess.getAttributes().get("user")).getName();
+        	
+        	sess.sendMessage(new TextMessage(name + "|" + message.getPayload()));
         }
         
         // 맵 방법.
