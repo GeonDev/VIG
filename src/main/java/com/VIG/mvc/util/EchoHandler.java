@@ -1,7 +1,9 @@
 package com.VIG.mvc.util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -14,7 +16,7 @@ public class EchoHandler extends TextWebSocketHandler{
     
     //세션을 모두 저장한다.
     //방법 1 :  1:1 채팅
-	//private Map<String, WebSocketSession> sessions = new HashMap<String, WebSocketSession>();
+	private Map<String, WebSocketSession> sessions = new HashMap<String, WebSocketSession>();
     
     //방법 2 : 전체 채팅
     private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
@@ -23,12 +25,16 @@ public class EchoHandler extends TextWebSocketHandler{
     //클라이언트 연결후 진행
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+    	
+    	User user = (User)session.getAttributes().get("user");
+    	
         //맵을 쓸때 방법
-    	//sessions.put(session.getId(), session);
- 
+    	sessions.put(user.getName(), session);
+    	
+    	//전체 세션 저장
         sessionList.add(session);       
         
-        User user = (User)session.getAttributes().get("user");
+        
         System.out.println("채팅방 입장자: " + user.getName());
     }
     
@@ -36,14 +42,22 @@ public class EchoHandler extends TextWebSocketHandler{
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
        
-        //연결된 모든 클라이언트에게 메시지 전송   
-        for(WebSocketSession sess : sessionList){        	
-        	
-        	String name =  ((User)sess.getAttributes().get("user")).getName();        	    
-        	
-        	//메세지를 전송한다. message.getPayload() => 저장되어 있는 텍스트를 불러옴
-        	sess.sendMessage(new TextMessage(name + " | " + message.getPayload()));
-        }        
+    	String split[] = (message.getPayload()).split(",");
+    	String name =  ((User)session.getAttributes().get("user")).getName(); 
+    	
+    	if(split[0].equals("")) {    	
+	        //연결된 모든 클라이언트에게 메시지 전송   
+	        for(WebSocketSession sess : sessionList){          	
+	        	       	    
+	        	
+	        	//메세지를 전송한다. message.getPayload() => 저장되어 있는 텍스트를 불러옴
+	        	sess.sendMessage(new TextMessage(name + " : " +split[1]));
+	        }        
+    	}else {    		
+    		WebSocketSession reqSession = sessions.get(split[0]);
+    		
+    		reqSession.sendMessage(new TextMessage(name + " : " +split[1]));
+    	}
    
     }
     
