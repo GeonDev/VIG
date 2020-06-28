@@ -36,8 +36,8 @@
     sock.onclose = onClose;
     
 
-    function sendMessage(){     
-            sock.send($("#message").val());
+    function sendMessage(){         	
+    	sock.send($("#userId").val() +"," +$("#message").val()  );
     }
     
     //evt 파라미터는 웹 소켓을 보내준 데이터다.(자동으로 들어옴)
@@ -55,7 +55,8 @@
 </head>
 
 <body>
-	<input type="text" id="message"/>
+	<input type="text" id="userId" placeholder="보낼 유저명"/>
+	<input type="text" id="message" placeholder="내용"/>
 	<input type="button" id="sendBtn" value="전송"/>
 	<div id="data"></div>
 </body>

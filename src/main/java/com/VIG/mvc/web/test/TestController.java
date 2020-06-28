@@ -8,7 +8,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.VIG.mvc.service.domain.ImageColor;
 import com.VIG.mvc.service.domain.ImageKeyword;
 import com.VIG.mvc.service.domain.User;
+import com.VIG.mvc.service.scheduler.Scheduler;
 import com.VIG.mvc.util.Translater;
 import com.VIG.mvc.util.VisionInfo;
 
@@ -37,8 +40,15 @@ public class TestController {
 	@Autowired
 	private ServletContext context;
 
+	
+	
+	@Autowired
+	@Qualifier("scheduler")
+	private Scheduler scheduler;
+	
 	public TestController() {
 		// TODO Auto-generated constructor stub
+		
 	}	
 	
 	
@@ -101,7 +111,8 @@ public class TestController {
 	
 	@RequestMapping(value = "chatting")
 	public ModelAndView chat(@ModelAttribute("user") User user, HttpSession session) {
-				
+			
+		scheduler.TestScheduler();
 		//사용자 정보 세션 삽입		
 		session.setAttribute("user", user);
 		
