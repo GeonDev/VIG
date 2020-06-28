@@ -30,7 +30,7 @@ import com.VIG.mvc.util.VisionInfo;
 
 
 @Controller
-@RequestMapping("/VIG/testController/*")
+@RequestMapping("/testController/*")
 public class TestController {
 	
 	
