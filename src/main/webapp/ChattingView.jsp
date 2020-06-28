@@ -55,6 +55,8 @@
 </head>
 
 <body>
+	<h1>Chatting Tester</h1>
+	<hr/>
 	<input type="text" id="userId" placeholder="보낼 유저명"/>
 	<input type="text" id="message" placeholder="내용"/>
 	<input type="button" id="sendBtn" value="전송"/>
