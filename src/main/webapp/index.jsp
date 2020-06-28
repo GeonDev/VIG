@@ -47,7 +47,7 @@
 
 
 	<div class="container">
-		<form action="VIG/testController/chatting" name="Login">
+		<form action="./testController/chatting" name="Login">
 			<div class="row">		
 				<label for="userId" class="col-md-4 control-label">아 이 디 :</label>	
 					
