@@ -22,11 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.VIG.mvc.service.domain.ImageColor;
 import com.VIG.mvc.service.domain.ImageKeyword;
 import com.VIG.mvc.service.domain.User;
-import com.VIG.mvc.service.scheduler.Scheduler;
 import com.VIG.mvc.util.Translater;
 import com.VIG.mvc.util.VisionInfo;
-
-
 
 
 @Controller
@@ -38,18 +35,19 @@ public class TestController {
 	String uploadPath;
 	
 	@Autowired
-	private ServletContext context;
+	private ServletContext context;	
 
-	
-	
-	@Autowired
-	@Qualifier("scheduler")
-	private Scheduler scheduler;
 	
 	public TestController() {
 		// TODO Auto-generated constructor stub
 		
 	}	
+	
+	@Scheduled(cron="0/50 * * * * *")
+	public void TestScheduler() {
+		System.out.println("[SERVER] : Scheduler START......");		
+	}
+
 	
 	
 	@RequestMapping(value = "trans", method = RequestMethod.POST)
@@ -111,8 +109,8 @@ public class TestController {
 	
 	@RequestMapping(value = "chatting")
 	public ModelAndView chat(@ModelAttribute("user") User user, HttpSession session) {
-			
-		scheduler.TestScheduler();
+		
+	
 		//사용자 정보 세션 삽입		
 		session.setAttribute("user", user);
 		
