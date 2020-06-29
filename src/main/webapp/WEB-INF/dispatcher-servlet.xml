@@ -14,15 +14,16 @@
                            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
                            http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
      
-    <mvc:annotation-driven/>
- 	<task:annotation-driven/>
+     <!-- Activates @Scheduled and @Async annotations for scheduling -->
+     <task:annotation-driven />    
+     
+    <mvc:annotation-driven/> 	
  
     <context:component-scan base-package="com.VIG.mvc.web">      
       	<context:include-filter 	type="annotation"	expression="org.springframework.stereotype.Controller" />
 		<context:exclude-filter 	type="annotation" 	expression="org.springframework.stereotype.Service"/>
 		<context:exclude-filter 	type="annotation" 	expression="org.springframework.stereotype.Repository"/>
-    </context:component-scan>
-        
+    </context:component-scan>        
    
 	<mvc:resources mapping="/css/**" location="./WEB-INF/css/" />
    	<mvc:resources mapping="/images/**" location="./WEB-INF/images/" />
