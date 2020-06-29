@@ -32,6 +32,9 @@
 <script type="text/javascript">	
 	
 	$(function(){
+		
+		checkBrower();		
+		
 		$("button:contains('로그인')").on("click", function() {			
 			$("form[name='Login']").attr("method", "POST");		
 			$("form[name='Login']").submit();	
@@ -39,10 +42,9 @@
 	});
 
 </script>
-
-
 </head>
 
+<body>
 <h1>Hello World!</h1>
 
 
