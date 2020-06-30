@@ -2,6 +2,7 @@ package com.VIG.mvc.web.test;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -24,6 +25,7 @@ import com.VIG.mvc.service.domain.ImageKeyword;
 import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.util.Translater;
 import com.VIG.mvc.util.VisionInfo;
+import com.google.api.client.util.Data;
 
 
 @Controller
@@ -43,9 +45,11 @@ public class TestController {
 		
 	}	
 	
-	@Scheduled(cron="0/50 * * * * *")
-	public void TestScheduler() {
-		System.out.println("[SERVER] : Scheduler START......");		
+	@Scheduled(cron="10 * * * *")
+	public void TestScheduler() {	
+		
+		Date now = new Date();
+		System.out.println("[SERVER] : Scheduler " + now);		
 	}
 
 	
