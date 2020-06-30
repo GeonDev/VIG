@@ -33,12 +33,31 @@
 	
 	$(function(){
 		
-		checkBrower();		
+		checkBrower();	
+		
+		
+		
+		$("button:contains('구글')").on("click", function() {			
+			location.href="https://accounts.google.com/o/oauth2/auth?client_id="+
+			"82747934090-ljsrvma8goa9dskv7hchor1mt2atl1ao.apps.googleusercontent.com"+
+			"&redirect_uri="+
+			"http://localhost:8080/VIG/redirect.jsp" +
+			"&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email&approval_prompt=force&access_type=offline";
+			
+		});
+		
 		
 		$("button:contains('로그인')").on("click", function() {			
 			$("form[name='Login']").attr("method", "POST");		
 			$("form[name='Login']").submit();	
 		});	
+		
+
+		
+		
+		
+		
+		
 	});
 
 </script>
@@ -71,7 +90,8 @@
 		
 		<br/>
 		<div class="row">
-			<button type="button">로그인</button>			
+			<button type="button">로그인</button>	
+			<button type="button">구글</button>			
 		</div>
 		
 		<br/>
