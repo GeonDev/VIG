@@ -45,12 +45,12 @@ public class TestController {
 		
 	}	
 	
-	@Scheduled(cron="10 * * * *")
-	public void TestScheduler() {	
-		
-		Date now = new Date();
-		System.out.println("[SERVER] : Scheduler " + now);		
-	}
+	
+	  @Scheduled(cron="*/10 * * * * *")
+	  public void TestScheduler() {	  
+		  Date now = new Date(); System.out.println("[SERVER] : Scheduler " + now);
+	  }
+	 
 
 	
 	
