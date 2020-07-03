@@ -1,36 +1,27 @@
 package com.VIG.mvc.service.domain;
 
+import java.sql.Date;
+
+import lombok.Data;
+
+@Data
 public class User {
-
-	private String name;
+	
+	
+	private int userId;
+	private String userName;
 	private String password;
-	
-	public User() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	@Override
-	public String toString() {
-		return "User [name=" + name + ", password=" + password + "]";
-	}
-	
-	
+	private String role;
+	private String profileImg;
+	private String selfIntroduce;
+	private String sex;
+	private int birthYear;
+	private String state;
+	private String googleId;
+	private String account;
+	private int prime_count;
+	private String email;
+	private String variedCode;
+	private Date regDate;
 
 }
