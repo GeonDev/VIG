@@ -29,13 +29,13 @@ public class EchoHandler extends TextWebSocketHandler{
     	User user = (User)session.getAttributes().get("user");
     	
         //맵을 쓸때 방법
-    	sessions.put(user.getName(), session);
+    	sessions.put(user.getUserName(), session);
     	
     	//전체 세션 저장
         sessionList.add(session);       
         
         
-        System.out.println("채팅방 입장자: " + user.getName());
+        System.out.println("채팅방 입장자: " + user.getUserName());
     }
     
     //클라이언트 메세지를 받고 보내기
@@ -43,7 +43,7 @@ public class EchoHandler extends TextWebSocketHandler{
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
        
     	String split[] = (message.getPayload()).split(",");
-    	String name =  ((User)session.getAttributes().get("user")).getName(); 
+    	String name =  ((User)session.getAttributes().get("user")).getUserName(); 
     	
     	if(split[0].equals("")) {    	
 	        //연결된 모든 클라이언트에게 메시지 전송   
@@ -65,7 +65,7 @@ public class EchoHandler extends TextWebSocketHandler{
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
        
-    	String name =  ((User)session.getAttributes().get("user")).getName();
+    	String name =  ((User)session.getAttributes().get("user")).getUserName();
     	
     	//List 삭제
         sessionList.remove(session);

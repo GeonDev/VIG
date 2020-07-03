@@ -118,9 +118,9 @@ public class TestController {
 		//사용자 정보 세션 삽입		
 		session.setAttribute("user", user);
 		
-		System.out.println("user name :" + user.getName());	
+		System.out.println("user name :" + user.getUserName());	
 				
-		return new ModelAndView("forward:/ChattingView.jsp", "userid", user.getName());
+		return new ModelAndView("forward:/ChattingView.jsp", "userid", user.getUserName());
 	}	
 
 }

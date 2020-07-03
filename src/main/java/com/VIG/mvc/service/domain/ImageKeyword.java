@@ -1,10 +1,13 @@
 package com.VIG.mvc.service.domain;
 
 public class ImageKeyword {
-
-	private String keywordEn;
-	private String keywordKr;
 	
+	private int keywordId;
+	private int imageId;
+	private int isTag;
+	private int userId;
+	private String keywordEn;
+	private String keywordKr;	
 	private float score;
 	
 	
@@ -43,11 +46,50 @@ public class ImageKeyword {
 	}
 
 
-	@Override
-	public String toString() {
-		return "ImageKeyword [keywordEn=" + keywordEn + ", keywordKr=" + keywordKr + ", score=" + score + "]";
+	public int getKeywordId() {
+		return keywordId;
 	}
 
-	
+
+	public void setKeywordId(int keywordId) {
+		this.keywordId = keywordId;
+	}
+
+
+	public int getImageId() {
+		return imageId;
+	}
+
+
+	public void setImageId(int imageId) {
+		this.imageId = imageId;
+	}
+
+
+	public int getIsTag() {
+		return isTag;
+	}
+
+
+	public void setIsTag(int isTag) {
+		this.isTag = isTag;
+	}
+
+
+	public int getUserId() {
+		return userId;
+	}
+
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+
+	@Override
+	public String toString() {
+		return "ImageKeyword [keywordId=" + keywordId + ", imageId=" + imageId + ", isTag=" + isTag + ", userId="
+				+ userId + ", keywordEn=" + keywordEn + ", keywordKr=" + keywordKr + ", score=" + score + "]";
+	}
 
 }
