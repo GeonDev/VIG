@@ -56,7 +56,7 @@ CREATE TABLE feeds (
 	feed_use_gears		 	 VARCHAR(1024),
 	feed_is_temp			 TINYINT(1),
 	prime_feed_view_count	 INT(11),
-	comment_range			 TINYINT(4),
+	comment_range			 TINYINT(1),
 	PRIMARY KEY(feed_id)
 );
 
@@ -97,7 +97,7 @@ CREATE TABLE keywords (
 	is_tag					 TINYINT(1),
 	user_id					 INT(11)		REFERENCES users(user_id),			 
 	keyword_en				 VARCHAR(100)   NOT NULL,
-	keyword_kr				 VARCHAR(100),
+	keyword_origin			 VARCHAR(100),
 	keyword_score			 FLOAT(5,5),	
 	PRIMARY KEY(keyword_id)
 );

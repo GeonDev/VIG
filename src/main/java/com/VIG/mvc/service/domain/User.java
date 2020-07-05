@@ -1,12 +1,12 @@
 package com.VIG.mvc.service.domain;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.Data;
 
 @Data
 public class User {
-	
 	
 	private int userId;
 	private String userName;
@@ -23,5 +23,8 @@ public class User {
 	private String email;
 	private String variedCode;
 	private Date regDate;
+	
+	//검색을 편하게 하기 위하여 최근 열람 정보를 별도 저장
+	private List<String> currintKeyword;
 
 }
