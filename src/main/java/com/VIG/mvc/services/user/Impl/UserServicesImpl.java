@@ -1,23 +1,20 @@
-package com.VIG.mvc.user.Impl;
+package com.VIG.mvc.services.user.Impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.VIG.mvc.service.domain.User;
-import com.VIG.mvc.user.UserDao;
-import com.VIG.mvc.user.UserServices;
+import com.VIG.mvc.services.user.UserDao;
+import com.VIG.mvc.services.user.UserServices;
 
 
-
-@Service("userServiceImpl")
+@Service("userServicesImpl")
 public class UserServicesImpl implements UserServices {	
 	
-	///Field
-	@Autowired
+	@Autowired	  
 	@Qualifier("userDaoImpl")
-	private UserDao userDao;
-	
+	private UserDao userDao;	
 
 	public UserServicesImpl() {
 		// TODO Auto-generated constructor stub
@@ -25,8 +22,7 @@ public class UserServicesImpl implements UserServices {
 
 	@Override
 	public void addUser(User user) throws Exception {
-		// TODO Auto-generated method stub
-
+		userDao.addUser(user);
 	}
 
 	@Override
