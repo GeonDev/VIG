@@ -23,9 +23,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.VIG.mvc.service.domain.ImageColor;
 import com.VIG.mvc.service.domain.ImageKeyword;
 import com.VIG.mvc.service.domain.User;
+import com.VIG.mvc.services.user.UserServices;
 import com.VIG.mvc.util.Translater;
 import com.VIG.mvc.util.VisionInfo;
-import com.google.api.client.util.Data;
 
 
 @Controller
@@ -35,23 +35,23 @@ public class TestController {
 	
 	@Value("#{commonProperties['uploadPath']}")
 	String uploadPath;
-	
+
+	@Autowired 
+	@Qualifier("userServicesImpl")
+	private UserServices userServices;
+
 	@Autowired
 	private ServletContext context;	
 
 	
 	public TestController() {
-		// TODO Auto-generated constructor stub
-		
+		// TODO Auto-generated constructor stub		
 	}	
 	
-	
-	  @Scheduled(cron="*/10 * * * * *")
-	  public void TestScheduler() {	  
-		  Date now = new Date(); System.out.println("[SERVER] : Scheduler " + now);
-	  }
-	 
-
+	@Scheduled(cron="*/10 * * * * *")
+	public void TestScheduler() {	  
+		 Date now = new Date(); System.out.println("[SERVER] : Scheduler " + now);
+	}
 	
 	
 	@RequestMapping(value = "trans", method = RequestMethod.POST)
@@ -112,10 +112,12 @@ public class TestController {
 	}
 	
 	@RequestMapping(value = "chatting")
-	public ModelAndView chat(@ModelAttribute("user") User user, HttpSession session) {
-		
+	public ModelAndView chat(@ModelAttribute("user") User user, HttpSession session) throws Exception {		
 	
-		//사용자 정보 세션 삽입		
+		user.setUserName("temp");
+		userServices.addUser(user);
+		
+		//사용자 정보 세션 삽입				
 		session.setAttribute("user", user);
 		
 		System.out.println("user name :" + user.getUserName());	

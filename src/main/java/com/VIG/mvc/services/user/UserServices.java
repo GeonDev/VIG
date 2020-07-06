@@ -1,8 +1,8 @@
-package com.VIG.mvc.user;
+package com.VIG.mvc.services.user;
 
 import com.VIG.mvc.service.domain.User;
 
-public interface UserDao {
+public interface UserServices {
 	
 	// INSERT
 	public void addUser(User user) throws Exception;
@@ -11,6 +11,6 @@ public interface UserDao {
 	public User getUser(int userId) throws Exception;	
 
 	// UPDATE 
-	public void updateUser(User user) throws Exception;	
+	public void updateUser(User user) throws Exception;
 
 }

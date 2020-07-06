@@ -4,8 +4,7 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="UserMapper">
- 	
+<mapper namespace="UserMapper"> 	
  	
 	<resultMap id="userSelectMap" type="user">
 		<result property="userId" 			column="user_id" 			jdbcType="NUMERIC"/>
@@ -27,17 +26,16 @@
 	
 	
 		<!-- SQL : INSERT -->
-	<insert 	id="addUser"	parameterType="user" >
+	<insert	id="addUser" parameterType="user" >
 	 	INSERT
 		INTO users( user_id , user_name , password , role , profile_img, self_introduce, sex, birth, state, google_id, account, prime_count, email, varied_code, reg_date) 
-		VALUES	 (	#{userId}, #{userName}, #{password:VARCHAR}, 'user', #{profileImg:VARCHAR}, #{selfIntroduce:VARCHAR}, #{sex:VARCHAR}, #{birth:NUMERIC}, #{googleId:VARCHAR}, #{account:VARCHAR}, #{primeCount:NUMERIC}, #{email:VARCHAR}, #{variedCode:VARCHAR}, SYSDATE )
+		VALUES (#{userId}, #{userName}, #{password:VARCHAR}, #{role:VARCHAR}, #{profileImg:VARCHAR}, #{selfIntroduce:VARCHAR}, #{sex:VARCHAR}, #{birth:NUMERIC}, #{state:VARCHAR}, #{googleId:VARCHAR}, #{account:VARCHAR}, #{primeCount:NUMERIC}, #{email:VARCHAR}, #{variedCode:VARCHAR}, NOW())
 	 </insert>
 	 
-	 
-	 <select id="getUser" parameterType = "int">
+	 <select id="getUser" parameterType = "int" resultMap="userSelectMap">
 	 	SELET *
-	 	FROM user
-	 	WHERE user_id #{value}	
+	 	FROM users
+	 	WHERE user_id = #{value}	
 	 </select>
 	
 	 

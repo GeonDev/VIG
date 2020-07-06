@@ -18,7 +18,7 @@
 	<util:properties id="commonProperties" location="classpath:config/common.properties"/>
 		
 	<!-- 	ㅇ 어노테이션 기반 :: Spring Framework 사용. :: sub element 이해 할것 -->				
-	<context:component-scan base-package="com.VIG.mvc.service">
+	<context:component-scan base-package="com.VIG.mvc.services">
 		<context:include-filter type="annotation"	expression="org.springframework.stereotype.Service" />
 		<context:include-filter type="annotation"	expression="org.springframework.stereotype.Repository" />
 		<context:exclude-filter type="annotation" 	expression="org.springframework.stereotype.Controller" />
