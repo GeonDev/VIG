@@ -4,14 +4,7 @@
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://xmlns.jcp.org/xml/ns/javaee"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
-         http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-
- 	 
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value> classpath:config/context-common.xml</param-value>
-	</context-param>
-  
+         http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">  
   
   
   	<!-- :: Spring API 에 제공하는 CharacterEncodingFilter로 인코딩처리(UTF-8) -->	
@@ -28,6 +21,20 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+	<context-param>
+	<param-name>contextConfigLocation</param-name>
+		<param-value> 
+			classpath:config/context-common.xml,
+			classpath:config/context-transaction.xml,
+			classpath:config/context-mybatis.xml			
+		</param-value>
+	</context-param>
+	
+	
+	<listener>
+       <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
   
   
   <servlet>
@@ -50,11 +57,7 @@
        <url-pattern>/</url-pattern>
    </servlet-mapping>
   
-   <listener>
-       <listener-class>
-           org.springframework.web.context.ContextLoaderListener
-       </listener-class>
-   </listener> 
+ 
   
   
   <welcome-file-list>

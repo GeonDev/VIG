@@ -15,11 +15,11 @@ public class User {
 	private String profileImg;
 	private String selfIntroduce;
 	private String sex;
-	private int birthYear;
+	private int birth;
 	private String state;
 	private String googleId;
 	private String account;
-	private int prime_count;
+	private int primeCount;
 	private String email;
 	private String variedCode;
 	private Date regDate;

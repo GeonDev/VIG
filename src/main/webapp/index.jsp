@@ -33,8 +33,7 @@
 	
 	$(function(){
 		
-		checkBrower();	
-		
+		checkBrower();			
 		
 		
 		$("button:contains('구글')").on("click", function() {			
@@ -50,13 +49,7 @@
 		$("button:contains('로그인')").on("click", function() {			
 			$("form[name='Login']").attr("method", "POST");		
 			$("form[name='Login']").submit();	
-		});	
-		
-
-		
-		
-		
-		
+		});			
 		
 	});
 

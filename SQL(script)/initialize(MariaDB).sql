@@ -23,7 +23,7 @@ CREATE TABLE users (
 	profile_img			 VARCHAR(50),
 	self_introduce 		 VARCHAR(1024),	
 	sex 				 VARCHAR(10),
-	birth_year 			 INT(4),
+	birth 				 INT(4),
 	state 				 VARCHAR(50),
 	google_id 			 VARCHAR(50),
 	account 			 VARCHAR(50),
@@ -83,9 +83,9 @@ CREATE TABLE images (
 CREATE TABLE colors ( 
 	color_id				 INT(11)  NOT NULL AUTO_INCREMENT,
 	image_id				 INT(11)  NOT NULL REFERENCES images(image_id),
-	color_r					 TINYINT(4) UNSIGNED NOT NULL,
-	color_g					 TINYINT(4) UNSIGNED NOT NULL ,
-	color_b					 TINYINT(4) UNSIGNED NOT NULL ,
+	color_r					 TINYINT(4) UNSIGNED,
+	color_g					 TINYINT(4) UNSIGNED,
+	color_b					 TINYINT(4) UNSIGNED,
 	color_ratio				 FLOAT(5,5),
 	PRIMARY KEY(color_id)
 );
@@ -96,7 +96,7 @@ CREATE TABLE keywords (
 	image_id 				 INT(11)		NOT NULL REFERENCES images(image_no),
 	is_tag					 TINYINT(1),
 	user_id					 INT(11)		REFERENCES users(user_id),			 
-	keyword_en				 VARCHAR(100)   NOT NULL,
+	keyword_en				 VARCHAR(100),
 	keyword_origin			 VARCHAR(100),
 	keyword_score			 FLOAT(5,5),	
 	PRIMARY KEY(keyword_id)
@@ -114,10 +114,7 @@ CREATE TABLE comments (
 );
 
 
-
-
 ALTER TABLE users AUTO_INCREMENT = 1000;
-
 
 
 INSERT 

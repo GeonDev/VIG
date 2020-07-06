@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="UserMapper">
+ 	
+ 	
+	<resultMap id="userSelectMap" type="user">
+		<result property="userId" 			column="user_id" 			jdbcType="NUMERIC"/>
+		<result property="userName"			column="user_name" 			jdbcType="VARCHAR" />
+		<result property="password" 		column="password" 			jdbcType="VARCHAR" />
+		<result property="role" 			column="role" 				jdbcType="VARCHAR" />
+		<result property="profileImg" 		column="profile_img" 		jdbcType="VARCHAR" />
+		<result property="selfIntroduce" 	column="self_introduce" 	jdbcType="VARCHAR" />
+		<result property="sex" 				column="sex" 				jdbcType="VARCHAR" />
+		<result property="birth" 			column="birth" 				jdbcType="NUMERIC"  />
+		<result property="state" 			column="state" 				jdbcType="VARCHAR" />
+		<result property="googleId" 		column="google_id" 			jdbcType="VARCHAR" />
+		<result property="account" 			column="account" 			jdbcType="VARCHAR" />
+		<result property="primeCount" 		column="prime_count" 		jdbcType="NUMERIC" />
+		<result property="email" 			column="email" 				jdbcType="VARCHAR" />
+		<result property="variedCode" 		column="varied_code" 		jdbcType="VARCHAR" />
+		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />		
+	</resultMap>	 
+	
+	
+		<!-- SQL : INSERT -->
+	<insert 	id="addUser"	parameterType="user" >
+	 	INSERT
+		INTO users( user_id , user_name , password , role , profile_img, self_introduce, sex, birth, state, google_id, account, prime_count, email, varied_code, reg_date) 
+		VALUES	 (	#{userId}, #{userName}, #{password:VARCHAR}, 'user', #{profileImg:VARCHAR}, #{selfIntroduce:VARCHAR}, #{sex:VARCHAR}, #{birth:NUMERIC}, #{googleId:VARCHAR}, #{account:VARCHAR}, #{primeCount:NUMERIC}, #{email:VARCHAR}, #{variedCode:VARCHAR}, SYSDATE )
+	 </insert>
+	 
+	 
+	 <select id="getUser" parameterType = "int">
+	 	SELET *
+	 	FROM user
+	 	WHERE user_id #{value}	
+	 </select>
+	
+	 
+</mapper>
+
+
