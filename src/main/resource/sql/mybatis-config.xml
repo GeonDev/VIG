@@ -16,6 +16,7 @@
 		<typeAlias alias="image" 	 	type="com.VIG.mvc.service.domain.Image" />
 		<typeAlias alias="color" 		type="com.VIG.mvc.service.domain.ImageColor" />
 		<typeAlias alias="keyword" 		type="com.VIG.mvc.service.domain.ImageKeyword" />
+		<typeAlias alias="like" 		type="com.VIG.mvc.service.domain.Likes" />
 	</typeAliases>
 	
 	 <!-- SQL Definition :: file include -->

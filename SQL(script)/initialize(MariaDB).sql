@@ -50,7 +50,7 @@ CREATE TABLE feeds (
 	feed_edit_date			 VARCHAR(20),
 	feed_view_count			 INT(11),
 	feed_is_prime			 TINYINT(1),
-	category_id			     INT(11) 	 	NOT NULL REFERENCES categories(category_id),
+	category			     VARCHAR(20), 	 	
 	feed_use_gears		 	 VARCHAR(1024),
 	feed_is_temp			 TINYINT(1),
 	prime_feed_view_count	 INT(11),

@@ -13,17 +13,17 @@
 		<result property="isThumbnail" 		column="is_thumbnail" 		jdbcType="NUMERIC" />
 		<result property="imageFile" 		column="image_file" 		jdbcType="VARCHAR" />	
 		
-		<collection property="color" column="image_id" javaType="list" ofType="color" select="getColors"/>
-		<collection property="keyword" column="image_id" javaType="list" ofType="keyword" select="getKeywords"/>		
+		<collection property="color" column="image_id" javaType="list" ofType="color" select="setColors"/>
+		<collection property="keyword" column="image_id" javaType="list" ofType="keyword" select="setKeywords"/>		
 					
 	</resultMap>		
 	
-	 <select id ="getKeywords" parameterType="int" resultMap="KeywordMapper.keywordSelectMap">
+	 <select id ="setKeywords" parameterType="int" resultMap="KeywordMapper.keywordSelectMap">
 		SELECT * FROM keywords
 		WHERE keywords.image_id = #{value}		
 	 </select>
 	 	
-	 <select id ="getColors" parameterType="int" resultMap="ColorMapper.ColorSelectMap">
+	 <select id ="setColors" parameterType="int" resultMap="ColorMapper.ColorSelectMap">
 		SELECT * FROM colors 
 		WHERE colors.image_id = #{value}		
 	 </select>
