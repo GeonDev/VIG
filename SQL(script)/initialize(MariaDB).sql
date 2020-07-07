@@ -83,6 +83,7 @@ CREATE TABLE likes (
 	like_id					 INT(11)  	  NOT NULL AUTO_INCREMENT,
 	user_id					 VARCHAR(20)  NOT NULL REFERENCES users(user_id),
 	feed_id					 INT(11)  	  NOT NULL REFERENCES feeds(feed_id),
+	like_date 			 DATE,
 	PRIMARY KEY(like_id)
 );
 

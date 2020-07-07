@@ -20,9 +20,10 @@
 		<result property="primeFeedViewCount" 	column="prime_feed_view_count" 	jdbcType="NUMERIC" />
 		<result property="commentRange" 		column="comment_range" 			jdbcType="NUMERIC" />					
 		
-		<association property="writer"  	column="user_id"		javaType="user"  		select="setWriter"/>		
-		<collection property="images" column="feed_id" javaType="list" ofType="image" select="setFeedImages"/>
-		<collection property="likes" column="feed_id" javaType="list" ofType="like" select="setLikeUserlist"/>	
+		<association property="writer"  column="user_id" javaType="user" select="setWriter"/>	
+			
+		<collection property="images" 	column="feed_id" javaType="list" ofType="image" select="setFeedImages"/>
+		<collection property="likes" 	column="feed_id" javaType="list" ofType="like" select="setLikeUserlist"/>	
 			
 	</resultMap>		
 	
@@ -33,6 +34,11 @@
 		
 		<select id="setFeedImages" parameterType="int" resultMap="ImageMapper.ImageSelectMap" >
 			SELECT * FROM images
+			WHERE feed_id = #{value}		
+		</select>
+		
+		<select id="setLikeUserlist" parameterType="int" resultMap="LikesMapper.ImageSelectMap" >
+			SELECT * FROM likes
 			WHERE feed_id = #{value}		
 		</select>
 	
