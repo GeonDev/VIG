@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="FeedMapper"> 	
+ 	
+	<resultMap id="FeedSelectMap" type="feed">
+		<result property="feedId" 				column="feed_id" 				jdbcType="NUMERIC"/>
+		<result property="feedTitle"			column="feed_title" 			jdbcType="VARCHAR" />
+		<result property="feedExplanation" 		column="feed_explanation" 		jdbcType="VARCHAR" />
+		<result property="feedRegDate" 			column="feed_reg_date" 			jdbcType="VARCHAR" />
+		<result property="feedEditDate" 		column="feed_edit_date" 		jdbcType="VARCHAR" />
+		<result property="feedViewCount" 		column="feed_view_count" 		jdbcType="NUMERIC" />
+		<result property="feedIsPrime" 			column="feed_is_prime" 			jdbcType="NUMERIC" />	
+		<result property="feedUseGears" 		column="feed_use_gears" 		jdbcType="VARCHAR" />
+		<result property="feedIsTemp" 			column="feed_is_temp" 			jdbcType="NUMERIC" />
+		<result property="primeFeedViewCount" 	column="prime_feed_view_count" 	jdbcType="NUMERIC" />
+		<result property="commentRange" 		column="comment_range" 			jdbcType="NUMERIC" />					
+		
+		<association property="writer"  	column="user_id"		javaType="user"  		select="setWriter"/>
+		<association property="category"  	column="category_id"	javaType="category"  	select="setCategory"/>		
+			
+	</resultMap>	
+	
+	
+	
+	 
+</mapper>
+
+

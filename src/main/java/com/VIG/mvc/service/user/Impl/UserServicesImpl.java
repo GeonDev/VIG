@@ -1,12 +1,12 @@
-package com.VIG.mvc.services.user.Impl;
+package com.VIG.mvc.service.user.Impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.VIG.mvc.service.domain.User;
-import com.VIG.mvc.services.user.UserDao;
-import com.VIG.mvc.services.user.UserServices;
+import com.VIG.mvc.service.user.UserDao;
+import com.VIG.mvc.service.user.UserServices;
 
 
 @Service("userServicesImpl")

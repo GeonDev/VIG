@@ -1,5 +1,7 @@
 package com.VIG.mvc.service.domain;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -10,8 +12,8 @@ public class Image {
 	private int feedOrder;
 	private int isThumbnail;
 	private String imageFile;
-	private ImageColor color;
-	private ImageKeyword keyword;
+	private List<ImageColor> color;
+	private List<ImageKeyword> keyword;
 	
 	public Image() {
 		// TODO Auto-generated constructor stub

@@ -1,4 +1,4 @@
-package com.VIG.mvc.services.user;
+package com.VIG.mvc.service.user;
 
 import com.VIG.mvc.service.domain.User;
 
