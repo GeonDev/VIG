@@ -1,16 +1,17 @@
 package com.VIG.mvc.service.domain;
 
+
 import lombok.Data;
 
 @Data
-public class Coworker {
-
-	private int coworkerId;
-	private int feedId;	
-	private User user; 	
+public class Likes {
+	
+	private int likeId;
+	private User likeedUser;	
+	private int feedId;
 	
 	
-	public Coworker() {
+	public Likes() {
 		// TODO Auto-generated constructor stub
 	}
 

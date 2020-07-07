@@ -130,9 +130,7 @@ public class VisionInfo {
 		ImageKeyword imageKeyword = new ImageKeyword();
 		
 		if (annotation.getScore() > 0.0f) {
-			imageKeyword.setKeywordEn(annotation.getDescription());
-			//한국어 ko, 일본어 ja, 영어 en
-			imageKeyword.setKeywordKr(Translater.autoDetectTranslate(annotation.getDescription(), "ko"));
+			imageKeyword.setKeywordEn(annotation.getDescription());	
 			imageKeyword.setScore(annotation.getScore());
 			result.add(imageKeyword);
 		}		

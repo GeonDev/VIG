@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="KeywordMapper"> 	
+ 	
+	<resultMap id="keywordSelectMap" type="keyword">
+		<result property="keywordId" 		column="keyword_id" 		jdbcType="NUMERIC"/>
+		<result property="imageId"			column="image_id" 			jdbcType="NUMERIC" />
+		<result property="isTag" 			column="is_tag" 			jdbcType="NUMERIC" />
+		<result property="userId" 			column="user_id" 			jdbcType="VARCHAR" />
+		<result property="keywordEn" 		column="keyword_en" 		jdbcType="VARCHAR" />
+		<result property="keywordOrigin" 	column="keyword_origin" 	jdbcType="VARCHAR" />
+		<result property="score" 			column="keyword_score" 		jdbcType="FLOAT" />					
+	</resultMap>	
+	
+	<insert id ="addkeyword" parameterType="keyword">
+		INSERT INTO keywords (keyword_id, image_id, is_tag, user_id, keyword_en, keyword_origin, keyword_score)
+		VALUES(keyword_id, #{imageId}, #{isTag:NUMERIC}, #{userId:NUMERIC}, #{keywordEn:VARCHAR}, #{keywordOrigin:VARCHAR}, #{score:FLOAT})		
+	</insert>
+
+	
+	 
+</mapper>
+
+

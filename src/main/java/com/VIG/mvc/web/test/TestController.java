@@ -23,7 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.VIG.mvc.service.domain.ImageColor;
 import com.VIG.mvc.service.domain.ImageKeyword;
 import com.VIG.mvc.service.domain.User;
-import com.VIG.mvc.services.user.UserServices;
+import com.VIG.mvc.service.user.UserServices;
 import com.VIG.mvc.util.Translater;
 import com.VIG.mvc.util.VisionInfo;
 
@@ -48,9 +48,10 @@ public class TestController {
 		// TODO Auto-generated constructor stub		
 	}	
 	
-	@Scheduled(cron="*/10 * * * * *")
+	@Scheduled(cron="0 */10 * * * *")
 	public void TestScheduler() {	  
-		 Date now = new Date(); System.out.println("[SERVER] : Scheduler " + now);
+		 Date now = new Date();
+		 System.out.println("[SERVER] : Scheduler " + now);
 	}
 	
 	

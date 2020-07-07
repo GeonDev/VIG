@@ -13,7 +13,6 @@ public class Feed {
 	private User writer;
 	private String feedRegDate;
 	private String feedEditDate;
-	private int feedIikes;
 	private int feedViewCount;
 	private int feedIsPrime;
 	private Category category;
@@ -21,8 +20,9 @@ public class Feed {
 	private int feedIsTemp;
 	private int primeFeedViewCount;
 	private int commentRange;
-	private List<Coworker> cowakers;
+	private List<User> cowakers;
 	private List<Image> images;
+	private List<Likes> likes;
 	
 
 	public Feed() {
