@@ -14,7 +14,7 @@
 		<result property="profileImg" 		column="profile_img" 		jdbcType="VARCHAR" />
 		<result property="selfIntroduce" 	column="self_introduce" 	jdbcType="VARCHAR" />
 		<result property="sex" 				column="sex" 				jdbcType="VARCHAR" />
-		<result property="birth" 			column="birth" 				jdbcType="NUMERIC"  />
+		<result property="birth" 			column="birth" 				jdbcType="NUMERIC" />
 		<result property="state" 			column="state" 				jdbcType="VARCHAR" />
 		<result property="googleId" 		column="google_id" 			jdbcType="VARCHAR" />
 		<result property="account" 			column="account" 			jdbcType="VARCHAR" />

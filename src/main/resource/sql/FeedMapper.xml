@@ -13,17 +13,28 @@
 		<result property="feedRegDate" 			column="feed_reg_date" 			jdbcType="VARCHAR" />
 		<result property="feedEditDate" 		column="feed_edit_date" 		jdbcType="VARCHAR" />
 		<result property="feedViewCount" 		column="feed_view_count" 		jdbcType="NUMERIC" />
-		<result property="feedIsPrime" 			column="feed_is_prime" 			jdbcType="NUMERIC" />	
+		<result property="feedIsPrime" 			column="feed_is_prime" 			jdbcType="NUMERIC" />
+		<result property="category" 			column="category" 				jdbcType="VARCHAR" />		
 		<result property="feedUseGears" 		column="feed_use_gears" 		jdbcType="VARCHAR" />
 		<result property="feedIsTemp" 			column="feed_is_temp" 			jdbcType="NUMERIC" />
 		<result property="primeFeedViewCount" 	column="prime_feed_view_count" 	jdbcType="NUMERIC" />
 		<result property="commentRange" 		column="comment_range" 			jdbcType="NUMERIC" />					
 		
-		<association property="writer"  	column="user_id"		javaType="user"  		select="setWriter"/>
-		<association property="category"  	column="category_id"	javaType="category"  	select="setCategory"/>		
+		<association property="writer"  	column="user_id"		javaType="user"  		select="setWriter"/>		
+		<collection property="images" column="feed_id" javaType="list" ofType="image" select="setFeedImages"/>
+		<collection property="likes" column="feed_id" javaType="list" ofType="like" select="setLikeUserlist"/>	
 			
-	</resultMap>	
+	</resultMap>		
 	
+		<select id="setWriter" parameterType="string" resultMap="UserMapper.userSelectMap" >
+			SELECT * FROM user
+			WHERE user_id = #{value}		
+		</select>	
+		
+		<select id="setFeedImages" parameterType="int" resultMap="ImageMapper.ImageSelectMap" >
+			SELECT * FROM images
+			WHERE feed_id = #{value}		
+		</select>
 	
 	
 	 

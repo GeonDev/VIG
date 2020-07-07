@@ -15,12 +15,12 @@ public class Feed {
 	private String feedEditDate;
 	private int feedViewCount;
 	private int feedIsPrime;
-	private Category category;
+	private String category;
 	private String feedUseGears;
 	private int feedIsTemp;
 	private int primeFeedViewCount;
 	private int commentRange;
-	private List<User> cowakers;
+	private List<User> coworkers;
 	private List<Image> images;
 	private List<Likes> likes;
 	
