@@ -22,8 +22,9 @@
 		
 		<association property="writer"  column="user_id" javaType="user" select="setWriter"/>	
 			
-		<collection property="images" 	column="feed_id" javaType="list" ofType="image" select="setFeedImages"/>
-		<collection property="likes" 	column="feed_id" javaType="list" ofType="like" select="setLikeUserlist"/>	
+		<collection property="images" 		column="feed_id" 	javaType="list" 	ofType="image" 	select="setFeedImages"/>
+		<collection property="likes" 		column="feed_id" 	javaType="list" 	ofType="user" 	select="setLikeUserlist"/>
+		<collection property="coworkers" 	column="feed_id" 	javaType="list" 	ofType="user" 	select="setCoworkUserlist"/>	
 			
 	</resultMap>		
 	
@@ -37,9 +38,14 @@
 			WHERE feed_id = #{value}		
 		</select>
 		
-		<select id="setLikeUserlist" parameterType="int" resultMap="LikesMapper.ImageSelectMap" >
-			SELECT * FROM likes
-			WHERE feed_id = #{value}		
+		<select id="setLikeUserlist" parameterType="int" resultMap="JoinerMapper.joinerSelectMap" >
+			SELECT * FROM joiner
+			WHERE feed_id = #{value} AND is_like = 1					
+		</select>
+		
+		<select id="setCoworkUserlist" parameterType="int" resultMap="JoinerMapper.joinerSelectMap" >
+			SELECT * FROM joiner
+			WHERE feed_id = #{value} AND is_like = 0					
 		</select>
 	
 	

@@ -12,11 +12,10 @@
 		<typeAlias alias="user" 	 	type="com.VIG.mvc.service.domain.User" />		
 		<typeAlias alias="category"  	type="com.VIG.mvc.service.domain.Category" />
 		<typeAlias alias="feed" 	 	type="com.VIG.mvc.service.domain.Feed" />
-		<typeAlias alias="coworker" 	type="com.VIG.mvc.service.domain.Coworker" />
 		<typeAlias alias="image" 	 	type="com.VIG.mvc.service.domain.Image" />
 		<typeAlias alias="color" 		type="com.VIG.mvc.service.domain.ImageColor" />
 		<typeAlias alias="keyword" 		type="com.VIG.mvc.service.domain.ImageKeyword" />
-		<typeAlias alias="like" 		type="com.VIG.mvc.service.domain.Likes" />
+		<typeAlias alias="joiner" 		type="com.VIG.mvc.service.domain.JoinUser" />
 	</typeAliases>
 	
 	 <!-- SQL Definition :: file include -->
@@ -25,6 +24,8 @@
 		<mapper resource="sql/ImageMapper.xml"/>
 		<mapper resource="sql/KeywordMapper.xml"/>
 		<mapper resource="sql/ColorMapper.xml"/>
+		<mapper resource="sql/JoinerMapper.xml"/>
+		<mapper resource="sql/FeedMapper.xml"/>
 	</mappers>
 
 </configuration>
