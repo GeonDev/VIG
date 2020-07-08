@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CommentMapper"> 	
+ 	
+	<resultMap id="commentSelectMap" type="joiner">
+		<result property="commentId" 	column="comment_id" 		jdbcType="NUMERIC"/>
+		<result property="feedId"		column="feed_id" 		jdbcType="NUMERIC" />
+		<result property="commentText"	column="comment_text" 		jdbcType="VARCHAR" />
+		<result property="regDate" 		column="reg_date" 		jdbcType="DATE" />
+		<result property="editDate" 	column="edit_date" 		jdbcType="DATE" />
+				
+		<association property="user" column="user_id" javaType="user" select="setCommenter" />					
+	</resultMap>
+	
+		<select id="setCommenter" parameterType="string" resultMap="UserMapper.userSelectMap" >
+			SELECT * FROM user
+			WHERE user_id = #{value}		
+		</select>	
+		
+				 
+</mapper>
+
+

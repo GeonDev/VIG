@@ -15,7 +15,8 @@
 		<typeAlias alias="image" 	 	type="com.VIG.mvc.service.domain.Image" />
 		<typeAlias alias="color" 		type="com.VIG.mvc.service.domain.ImageColor" />
 		<typeAlias alias="keyword" 		type="com.VIG.mvc.service.domain.ImageKeyword" />
-		<typeAlias alias="joiner" 		type="com.VIG.mvc.service.domain.JoinUser" />
+		<typeAlias alias="joiner" 		type="com.VIG.mvc.service.domain.JoinUser"/>
+		<typeAlias alias="comment" 		type="com.VIG.mvc.service.domain.Comment"/>
 	</typeAliases>
 	
 	 <!-- SQL Definition :: file include -->
@@ -26,6 +27,7 @@
 		<mapper resource="sql/ColorMapper.xml"/>
 		<mapper resource="sql/JoinerMapper.xml"/>
 		<mapper resource="sql/FeedMapper.xml"/>
+		<mapper resource="sql/CommentMapper.xml"/>
 	</mappers>
 
 </configuration>
