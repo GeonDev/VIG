@@ -23,6 +23,7 @@ public class Feed {
 	private List<JoinUser> coworkers;
 	private List<Image> images;
 	private List<JoinUser> likes;
+	private List<Comment> comments;
 	
 
 	public Feed() {
