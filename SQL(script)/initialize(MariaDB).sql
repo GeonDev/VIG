@@ -79,12 +79,13 @@ CREATE TABLE colors (
 	PRIMARY KEY(color_id)
 );
 
-CREATE TABLE likes ( 
-	like_id					 INT(11)  	  NOT NULL AUTO_INCREMENT,
-	user_id					 VARCHAR(20)  NOT NULL REFERENCES users(user_id),
-	feed_id					 INT(11)  	  NOT NULL REFERENCES feeds(feed_id),
-	like_date 			 DATE,
-	PRIMARY KEY(like_id)
+CREATE TABLE joiner ( 
+	joiner_id				INT(11)  	  NOT NULL AUTO_INCREMENT,
+	user_id					VARCHAR(20)  NOT NULL REFERENCES users(user_id),
+	feed_id					INT(11)  	  NOT NULL REFERENCES feeds(feed_id),
+	is_like					TINYINT(1),
+	add_date 				DATE,
+	PRIMARY KEY(joiner_id)
 );
 
 
@@ -110,11 +111,11 @@ CREATE TABLE comments (
 	PRIMARY KEY(comment_id)
 );
 
-ALTER TABLE categories AUTO_INCREMENT   = 10000000;
+ALTER TABLE categories AUTO_INCREMENT  	= 10000000;
 ALTER TABLE feeds AUTO_INCREMENT 		= 20000000;
 ALTER TABLE images AUTO_INCREMENT 		= 30000000;
 ALTER TABLE colors AUTO_INCREMENT		= 40000000;
-ALTER TABLE likes AUTO_INCREMENT 		= 50000000;
+ALTER TABLE joiner AUTO_INCREMENT 		= 50000000;
 ALTER TABLE keywords AUTO_INCREMENT 	= 60000000;
 ALTER TABLE comments AUTO_INCREMENT 	= 70000000;
 

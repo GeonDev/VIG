@@ -6,15 +6,16 @@ import java.sql.Date;
 import lombok.Data;
 
 @Data
-public class Likes {
+public class JoinUser {
 	
-	private int likeId;
-	private User likeedUser;	
+	private int joinerId;
+	private User user;	
 	private int feedId;
-	private Date likeDate;
+	private int isLike;
+	private Date addDate;
 	
 	
-	public Likes() {
+	public JoinUser() {
 		// TODO Auto-generated constructor stub
 	}
 

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="JoinerMapper"> 	
+ 	
+	<resultMap id="joinerSelectMap" type="joiner">
+		<result property="joinerId" 	column="joiner_id" 		jdbcType="NUMERIC"/>
+		<result property="feedId"		column="feed_id" 		jdbcType="NUMERIC" />
+		<result property="isLike"		column="is_like" 		jdbcType="NUMERIC" />
+		<result property="addDate" 		column="like_date" 		jdbcType="DATE" />
+				
+		<association property="user" column="user_id" javaType="user" select="setJoiner" />					
+	</resultMap>
+	
+		<select id="setJoiner" parameterType="string" resultMap="UserMapper.userSelectMap" >
+			SELECT * FROM user
+			WHERE user_id = #{value}		
+		</select>
+		
+		
+		<select id="getLikeUser" parameterType="int" resultMap="joiner" >
+			SELECT * FROM joiner
+			WHERE feed_id = #{value} AND is_like = 1	
+		</select>
+		
+		<select id="getCoworkUser" parameterType="int" resultMap="joiner" >
+			SELECT * FROM joiner
+			WHERE feed_id = #{value} AND is_like = 0	
+		</select>
+		
+		
+				 
+</mapper>
+
+

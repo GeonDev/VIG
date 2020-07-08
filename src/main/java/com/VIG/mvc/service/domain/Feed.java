@@ -20,9 +20,9 @@ public class Feed {
 	private int feedIsTemp;
 	private int primeFeedViewCount;
 	private int commentRange;
-	private List<User> coworkers;
+	private List<JoinUser> coworkers;
 	private List<Image> images;
-	private List<Likes> likes;
+	private List<JoinUser> likes;
 	
 
 	public Feed() {
