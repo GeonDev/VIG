@@ -20,7 +20,7 @@
 		<result property="primeFeedViewCount" 	column="prime_feed_view_count" 	jdbcType="NUMERIC" />
 		<result property="commentRange" 		column="comment_range" 			jdbcType="NUMERIC" />					
 		
-		<association property="writer"  column="user_id" javaType="user" select="setWriter"/>	
+		<association property="writer"  column="user_code" javaType="user" select="setWriter"/>	
 			
 		<collection property="images" 		column="feed_id" 	javaType="list" 	ofType="image" 		select="setFeedImages"/>
 		<collection property="likes" 		column="feed_id" 	javaType="list" 	ofType="joiner" 	select="setLikeUserlist"/>
@@ -31,7 +31,7 @@
 	
 		<select id="setWriter" parameterType="string" resultMap="UserMapper.userSelectMap" >
 			SELECT * FROM user
-			WHERE user_id = #{value}		
+			WHERE user_code = #{value}		
 		</select>	
 		
 		<select id="setFeedImages" parameterType="int" resultMap="ImageMapper.ImageSelectMap" >

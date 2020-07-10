@@ -9,10 +9,14 @@ public class Search {
 	
 	//이미지 검색시 입력된 검색어 + 최근 열람 이미지 키워드도 보냄)
 	private List<String> keywords;
+	private int r;
+	private int g;
+	private int b;
 	private int searchType;
 	private int currentPage;
 	private int pageSize;
 	private ImageColor color;
+
 
 	
 	public Search() {

@@ -12,12 +12,12 @@
 		<result property="isLike"		column="is_like" 		jdbcType="NUMERIC" />
 		<result property="addDate" 		column="like_date" 		jdbcType="DATE" />
 				
-		<association property="user" column="user_id" javaType="user" select="setJoiner" />					
+		<association property="user" column="user_code" javaType="user" select="setJoiner" />					
 	</resultMap>
 	
 		<select id="setJoiner" parameterType="string" resultMap="UserMapper.userSelectMap" >
 			SELECT * FROM user
-			WHERE user_id = #{value}		
+			WHERE user_code = #{value}		
 		</select>
 		
 		

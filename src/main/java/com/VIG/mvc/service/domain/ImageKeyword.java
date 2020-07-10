@@ -8,7 +8,7 @@ public class ImageKeyword {
 	private int keywordId;
 	private int imageId;
 	private int isTag;
-	private int userId;
+	private int userCode;
 	private String keywordEn;
 	private String keywordOrigin;	
 	private float score;
