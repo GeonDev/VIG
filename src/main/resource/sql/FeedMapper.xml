@@ -53,6 +53,17 @@
 			SELECT * FROM comments
 			WHERE feed_id = #{value}					
 		</select>
+		
+		
+		<select id = "getlastFeedId" resultType="int">
+			SELECT MAX(feed_id) FROM feeds
+		</select>
+		
+		
+		<insert id ="insertFeed" parameterType="feed">
+			Insert INTO feeds(feed_id, feed_title, feed_explanation, feed_reg_date, feed_is_prime, category, feed_use_gears, feed_is_temp, comment_range  )
+			VALUES(feed_id, #{feedTitle:NUMERIC})		
+		</insert>
 	
 	
 	 
