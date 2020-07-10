@@ -10,20 +10,20 @@
 		<result property="keywordId" 		column="keyword_id" 		jdbcType="NUMERIC"/>
 		<result property="imageId"			column="image_id" 			jdbcType="NUMERIC" />
 		<result property="isTag" 			column="is_tag" 			jdbcType="NUMERIC" />
-		<result property="userId" 			column="user_id" 			jdbcType="VARCHAR" />
+		<result property="userCode" 		column="user_code" 			jdbcType="VARCHAR" />
 		<result property="keywordEn" 		column="keyword_en" 		jdbcType="VARCHAR" />
 		<result property="keywordOrigin" 	column="keyword_origin" 	jdbcType="VARCHAR" />
 		<result property="score" 			column="keyword_score" 		jdbcType="FLOAT" />					
 	</resultMap>	
 	
 	<insert id ="addkeyword" parameterType="keyword">
-		INSERT INTO keywords (keyword_id, image_id, is_tag, user_id, keyword_en, keyword_origin, keyword_score)
+		INSERT INTO keywords (keyword_id, image_id, is_tag, user_code, keyword_en, keyword_origin, keyword_score)
 		VALUES(keyword_id, #{imageId}, #{isTag:NUMERIC}, #{userId:NUMERIC}, #{keywordEn:VARCHAR}, #{keywordOrigin:VARCHAR}, #{score:FLOAT})		
 	</insert>
 
 	<select id="getTagList" parameterType="string" resultMap="keyword">
 		SELECT * FROM keywords
-		WHERE is_tag = 1 AND user_id = #{value}
+		WHERE is_tag = 1 AND user_code = #{value}
 		
 	</select>
 	 

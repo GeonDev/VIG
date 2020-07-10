@@ -7,7 +7,7 @@
 <mapper namespace="UserMapper"> 	
  	
 	<resultMap id="userSelectMap" type="user">
-		<result property="userId" 			column="user_id" 			jdbcType="VARCHAR"/>
+		<result property="userCode" 		column="user_code" 			jdbcType="VARCHAR"/>
 		<result property="userName"			column="user_name" 			jdbcType="VARCHAR" />
 		<result property="password" 		column="password" 			jdbcType="VARCHAR" />
 		<result property="role" 			column="role" 				jdbcType="VARCHAR" />
@@ -27,14 +27,19 @@
 		<!-- SQL : INSERT -->
 	<insert	id="addUser" parameterType="user" >
 	 	INSERT
-		INTO users('user_id' , user_name , password , role , profile_img, self_introduce, sex, birth, state, google_id, account, prime_count, email, varied_code, reg_date) 
-		VALUES (user_id, #{userName}, #{password:VARCHAR}, #{role:VARCHAR}, #{profileImg:VARCHAR}, #{selfIntroduce:VARCHAR}, #{sex:VARCHAR}, #{birth:NUMERIC}, #{state:VARCHAR}, #{googleId:VARCHAR}, #{account:VARCHAR}, #{primeCount:NUMERIC}, #{email:VARCHAR}, NOW())
+		INTO users('user_code' , user_name , password , role , profile_img, self_introduce, sex, birth, state, google_id, account, prime_count, email, varied_code, reg_date) 
+		VALUES (user_code, #{userName}, #{password:VARCHAR}, #{role:VARCHAR}, #{profileImg:VARCHAR}, #{selfIntroduce:VARCHAR}, #{sex:VARCHAR}, #{birth:NUMERIC}, #{state:VARCHAR}, #{googleId:VARCHAR}, #{account:VARCHAR}, #{primeCount:NUMERIC}, #{email:VARCHAR}, NOW())
 	 </insert>
 	 
 	 <select id="getUser" parameterType = "int" resultMap="userSelectMap">
 	 	SELET *
 	 	FROM users
-	 	WHERE user_id = #{value}	
+	 	WHERE user_code = #{value}	
+	 </select>
+	 
+	 
+	  <select id="getLastUserNum" parameterType = "int" resultType="int">
+	 	SELET COUNT(user_code) FROM users	 	
 	 </select>
 	
 	 

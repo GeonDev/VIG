@@ -13,12 +13,12 @@
 		<result property="regDate" 		column="reg_date" 		jdbcType="DATE" />
 		<result property="editDate" 	column="edit_date" 		jdbcType="DATE" />
 				
-		<association property="user" column="user_id" javaType="user" select="setCommenter" />					
+		<association property="user" column="user_code" javaType="user" select="setCommenter" />					
 	</resultMap>
 	
 		<select id="setCommenter" parameterType="string" resultMap="UserMapper.userSelectMap" >
 			SELECT * FROM user
-			WHERE user_id = #{value}		
+			WHERE user_code = #{value}		
 		</select>	
 		
 				 
