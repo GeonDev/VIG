@@ -2,14 +2,21 @@ package com.VIG.mvc.service.feed.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.VIG.mvc.service.domain.Feed;
 import com.VIG.mvc.service.domain.Search;
+import com.VIG.mvc.service.feed.FeedDao;
 import com.VIG.mvc.service.feed.FeedServices;
 
 @Service("feedServicesImpl")
 public class FeedServicesImpl implements FeedServices {
+	
+	@Autowired	  
+	@Qualifier("feedDaoImpl")
+	private FeedDao feedDao;
 
 	public FeedServicesImpl() {
 		// TODO Auto-generated constructor stub
@@ -17,50 +24,44 @@ public class FeedServicesImpl implements FeedServices {
 
 	@Override
 	public void addFeed(Feed feed) throws Exception {
-		// TODO Auto-generated method stub
+		feedDao.addFeed(feed);
 
 	}
 
 	@Override
 	public Feed getFeed(int feedId) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return feedDao.getFeed(feedId);
 	}
 
 	@Override
 	public void deleteFeed(int feedId) throws Exception {
-		// TODO Auto-generated method stub
-
+		feedDao.deleteFeed(feedId);
 	}
 
 	@Override
 	public List<Feed> getFeedList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return feedDao.getFeedList(search);
 	}
 
 	@Override
-	public List<Feed> getmyFeedList(String userCode) throws Exception {
+	public List<Feed> getMyFeedList(String userCode) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return feedDao.getMyFeedList(userCode);
 	}
 
 	@Override
 	public Feed getTempFeed(String userCode) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return feedDao.getTempFeed(userCode);
 	}
 
-	@Override
-	public void insertFeed(Feed feed) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public int getLastFeedId() throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		return feedDao.getLastFeedId();
 	}
 
 }

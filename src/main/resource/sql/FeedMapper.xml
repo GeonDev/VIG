@@ -10,8 +10,8 @@
 		<result property="feedId" 				column="feed_id" 				jdbcType="NUMERIC"/>
 		<result property="feedTitle"			column="feed_title" 			jdbcType="VARCHAR" />
 		<result property="feedExplanation" 		column="feed_explanation" 		jdbcType="VARCHAR" />
-		<result property="feedRegDate" 			column="feed_reg_date" 			jdbcType="VARCHAR" />
-		<result property="feedEditDate" 		column="feed_edit_date" 		jdbcType="VARCHAR" />
+		<result property="feedRegDate" 			column="feed_reg_date" 			jdbcType="DATE" />
+		<result property="feedEditDate" 		column="feed_edit_date" 		jdbcType="DATE" />
 		<result property="feedViewCount" 		column="feed_view_count" 		jdbcType="NUMERIC" />
 		<result property="feedIsPrime" 			column="feed_is_prime" 			jdbcType="NUMERIC" />
 		<result property="category" 			column="category" 				jdbcType="VARCHAR" />		
@@ -57,13 +57,33 @@
 		
 		<select id = "getlastFeedId" resultType="int">
 			SELECT MAX(feed_id) FROM feeds
+		</select>		
+		
+		<insert id ="insertFeed" parameterType="feed">
+			Insert INTO feeds(feed_id, user_code feed_title, feed_explanation, feed_reg_date, feed_is_prime, category, feed_use_gears, feed_is_temp, comment_range  )
+			VALUES(feed_id, #{writer.userCode}, #{feedTitle}, #{feedExplanation:VARCHAR}, NOW(), #{feedIsPrime:NUMERIC}, #{category:VARCHAR}, #{feedUseGears:VARCHAR}, #{feedIsTemp:NUMERIC}, #{commentRange:NUMERIC})		
+		</insert>
+		
+		<select id="getFeed" parameterType="int" resultMap="feed">
+			SELECT * FROM feed
+			WHERE feed_id = #{value}
 		</select>
 		
 		
-		<insert id ="insertFeed" parameterType="feed">
-			Insert INTO feeds(feed_id, feed_title, feed_explanation, feed_reg_date, feed_is_prime, category, feed_use_gears, feed_is_temp, comment_range  )
-			VALUES(feed_id, #{feedTitle:NUMERIC})		
-		</insert>
+		<select id="getMyFeedList" parameterType="string" resultMap="feed">
+			SELECT * FROM feed
+			WHERE user_code = #{value} AND feed_is_temp = 0
+		</select>
+		
+		<select id="getTempFeed" parameterType="string" resultMap="feed">
+			SELECT * FROM feed
+			WHERE user_code = #{value} AND feed_is_temp = 1
+		</select>
+		
+		<delete id="deleteFeed" parameterType="int">
+		 	DELETE FROM feed
+		 	WHERE feed_id = #{value}
+		</delete>
 	
 	
 	 

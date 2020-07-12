@@ -1,5 +1,6 @@
 package com.VIG.mvc.service.domain;
 
+import java.sql.Date;
 import java.util.List;
 
 import lombok.Data;
@@ -11,8 +12,8 @@ public class Feed {
 	private String feedTitle;
 	private String feedExplanation;
 	private User writer;
-	private String feedRegDate;
-	private String feedEditDate;
+	private Date feedRegDate;
+	private Date feedEditDate;
 	private int feedViewCount;
 	private int feedIsPrime;
 	private String category;

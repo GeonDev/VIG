@@ -19,8 +19,7 @@
 			SELECT * FROM user
 			WHERE user_code = #{value}		
 		</select>
-		
-		
+				
 		<select id="getLikeUser" parameterType="int" resultMap="joiner" >
 			SELECT * FROM joiner
 			WHERE feed_id = #{value} AND is_like = 1	
@@ -31,6 +30,10 @@
 			WHERE feed_id = #{value} AND is_like = 0	
 		</select>
 		
+		<insert id="addJoinUser" parameterType="joiner">
+		 INSERT INTO joiner (joiner_id, feed_id ,is_like, like_date, user_code)
+		 VALUES (joiner_id, #{feedId}, #{isLike}, NOW(), #{user.userCode})
+		</insert>	
 		
 				 
 </mapper>
