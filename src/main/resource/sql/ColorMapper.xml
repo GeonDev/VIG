@@ -17,8 +17,7 @@
 	
 	<insert id="addColor" parameterType="color">
 		INSERT INTO colors(color_id, image_id, color_r, color_g, color_b, color_ratio)
-		VALUES(color_id, #{ImageId}, #{red:NUMERIC} ,#{green:NUMERIC}, #{blue:NUMERIC}, #{ratio:FLOAT})
-	
+		VALUES(color_id, #{ImageId}, #{red:NUMERIC} ,#{green:NUMERIC}, #{blue:NUMERIC}, #{ratio:FLOAT})	
 	</insert>
 
 	

@@ -36,8 +36,7 @@
 	 	FROM users
 	 	WHERE user_code = #{value}	
 	 </select>
-	 
-	 
+	 	 
 	  <select id="getLastUserNum" parameterType = "int" resultType="int">
 	 	SELET COUNT(user_code) FROM users	 	
 	 </select>

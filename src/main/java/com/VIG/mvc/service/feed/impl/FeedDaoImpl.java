@@ -21,6 +21,10 @@ public class FeedDaoImpl implements FeedDao {
 	@Autowired
 	@Qualifier("sqlSessionTemplate")
 	private SqlSession sqlSession;
+	
+	public void setSqlSession(SqlSession sqlSession) {
+		this.sqlSession = sqlSession;
+	}
 
 	public FeedDaoImpl() {
 		// TODO Auto-generated constructor stub
@@ -28,20 +32,19 @@ public class FeedDaoImpl implements FeedDao {
 
 	@Override
 	public void addFeed(Feed feed) throws Exception {
-		// TODO Auto-generated method stub
-
+		sqlSession.insert("FeedMapper.insertFeed",feed);
 	}
 
 	@Override
 	public Feed getFeed(int feedId) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectOne("FeedMapper.getFeed",feedId);
 	}
 
 	@Override
 	public void deleteFeed(int feedId) throws Exception {
 		// TODO Auto-generated method stub
-
+		sqlSession.delete("FeedMapper.deleteFeed", feedId);
 	}
 
 	@Override
@@ -51,27 +54,22 @@ public class FeedDaoImpl implements FeedDao {
 	}
 
 	@Override
-	public List<Feed> getmyFeedList(String userCode) throws Exception {
+	public List<Feed> getMyFeedList(String userCode) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectList("FeedMapper.getMyFeedList",userCode);
 	}
 
 	@Override
 	public Feed getTempFeed(String userCode) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectOne("FeedMapper.getTempFeed",userCode);
 	}
 
-	@Override
-	public void insertFeed(Feed feed) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public int getLastFeedId() throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.selectOne("FeedMapper.getlastFeedId");
 	}
 
 }
