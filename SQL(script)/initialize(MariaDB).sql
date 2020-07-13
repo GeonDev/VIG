@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS colors;
 DROP TABLE IF EXISTS joiner;
 DROP TABLE IF EXISTS report;
 DROP TABLE IF EXISTS follow;
+DROP TABLE IF EXISTS alarm;
 
 DROP TABLE IF EXISTS categories CASCADE;
 DROP TABLE IF EXISTS feeds CASCADE;
@@ -146,10 +147,51 @@ CREATE TABLE follow (
 CREATE TABLE alarm ( 
 	alarm_id		INT(11) 		NOT NULL AUTO_INCREMENT,	
 	user_code  		VARCHAR(20)		NOT NULL REFERENCES users(user_code),
-	follower_code  	VARCHAR(1024)	NOT NULL,
+	message		  	VARCHAR(1024)	NOT NULL,
 	is_watch		TINYINT(1),	
-	PRIMARY KEY(follower_id)
+	show_date		DATE,
+	PRIMARY KEY(alarm_id)
 );
+
+
+CREATE TABLE payment ( 
+	payment_id		INT(11) 		NOT NULL AUTO_INCREMENT,
+	sponser			VARCHAR(20)		NOT NULL REFERENCES users(user_code),
+	beneficlal		VARCHAR(20)		NOT NULL REFERENCES users(user_code),
+	payment_option	TINYINT(1),
+	product_type	TINYINT(1),
+	product_name	VARCHAR(100),
+	price			INT(11),
+	payment_date	DATE,
+	is_cancel		TINYINT(1),
+	is_withdraw		TINYINT(1),
+	PRIMARY KEY(payment_id)
+);
+
+CREATE TABLE withdraw ( 
+	withdraw_id		INT(11) 		NOT NULL AUTO_INCREMENT,
+	user_code		VARCHAR(20)		NOT NULL REFERENCES users(user_code),
+	acc_no			VARCHAR(20),
+	acc_holder		VARCHAR(20),
+	bank_name		VARCHAR(20),
+	whthdrow_date	DATE,
+	PRIMARY KEY(withdraw_id)
+);
+
+CREATE TABLE event ( 
+	event_id			INT(11) 		NOT NULL AUTO_INCREMENT,	
+	event_title			VARCHAR(100),
+	event_sub			VARCHAR(1024),
+	event_start			DATE,
+	event_end			DATE,
+	event_thumbnail		VARCHAR(100),
+	event_tag			VARCHAR(100),
+	event_image			VARCHAR(100),
+	event_type			TINYINT(1),
+	banner				VARCHAR(100),
+	PRIMARY KEY(event_id)
+);
+
 
 
 ALTER TABLE categories AUTO_INCREMENT  	 = 10000000;
@@ -162,6 +204,9 @@ ALTER TABLE comments AUTO_INCREMENT 	 = 70000000;
 ALTER TABLE report AUTO_INCREMENT 		 = 80000000;
 ALTER TABLE follow AUTO_INCREMENT 		 = 90000000;
 ALTER TABLE alarm AUTO_INCREMENT 		 = 100000000;
+ALTER TABLE payment AUTO_INCREMENT 		 = 110000000;
+ALTER TABLE withdraw AUTO_INCREMENT 	 = 120000000;
+ALTER TABLE event AUTO_INCREMENT 	 	 = 130000000;
 
 INSERT 
 INTO users (user_code, user_name, password, role, cell_phone, addr, email, reg_date) 
