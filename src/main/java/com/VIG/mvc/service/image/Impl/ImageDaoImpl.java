@@ -37,9 +37,9 @@ public class ImageDaoImpl implements ImageDao {
 	}
 
 	@Override
-	public Image getImage(int imageId) throws Exception {
+	public Image getImageOne(int imageId) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("ImageMapper.getimage", imageId);
+		return sqlSession.selectOne("ImageMapper.getimageOne", imageId);
 	}
 
 	@Override
@@ -60,6 +60,13 @@ public class ImageDaoImpl implements ImageDao {
 	public List<Image> getImageListfromColor(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public List<Image> getALLImageList() throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("ImageMapper.getimageAll");
 	}
 
 }
