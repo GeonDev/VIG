@@ -17,6 +17,8 @@ public interface FeedServices {
 	
 	public List<Feed> getMyFeedList(String userCode) throws Exception;	
 	
+	public List<Feed> getFeedListOnlyTag(String tag) throws Exception;
+	
 	public Feed getTempFeed(String userCode) throws Exception;	
 	
 	public int getLastFeedId() throws Exception;

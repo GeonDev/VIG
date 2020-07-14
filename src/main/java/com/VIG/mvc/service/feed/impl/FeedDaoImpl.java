@@ -72,4 +72,10 @@ public class FeedDaoImpl implements FeedDao {
 		return sqlSession.selectOne("FeedMapper.getlastFeedId");
 	}
 
+	@Override
+	public List<Feed> getFeedListOnlyTag(String tag) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("FeedMapper.getFeedListOnlyTag",tag);
+	}
+
 }

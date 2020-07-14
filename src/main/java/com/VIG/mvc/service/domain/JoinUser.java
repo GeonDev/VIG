@@ -11,6 +11,7 @@ public class JoinUser {
 	private int joinerId;
 	private User user;	
 	private int feedId;
+	// 0= 협업자 1= 좋아요한 유저
 	private int isLike;
 	private Date addDate;
 	

@@ -64,4 +64,10 @@ public class FeedServicesImpl implements FeedServices {
 		return feedDao.getLastFeedId();
 	}
 
+	@Override
+	public List<Feed> getFeedListOnlyTag(String tag) throws Exception {
+		// TODO Auto-generated method stub
+		return feedDao.getFeedListOnlyTag(tag);
+	}
+
 }

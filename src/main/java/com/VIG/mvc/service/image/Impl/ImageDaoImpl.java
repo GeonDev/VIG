@@ -32,14 +32,14 @@ public class ImageDaoImpl implements ImageDao {
 
 	@Override
 	public void addImage(Image image) throws Exception {
-		// TODO Auto-generated method stub
+		sqlSession.insert("ImageMapper.addImage", image);
 
 	}
 
 	@Override
 	public Image getImage(int imageId) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectOne("ImageMapper.getimage", imageId);
 	}
 
 	@Override
@@ -49,9 +49,17 @@ public class ImageDaoImpl implements ImageDao {
 	}
 
 	@Override
-	public void deleteImage(Image image) throws Exception {
+	public void deleteImage(String image) throws Exception {
 		// TODO Auto-generated method stub
+		sqlSession.delete("ImageMapper.deleteImage", image);
 
+	}
+
+
+	@Override
+	public List<Image> getImageListfromColor(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

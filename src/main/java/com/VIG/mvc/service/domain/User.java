@@ -11,6 +11,7 @@ public class User {
 	private int userCode;
 	private String userName;
 	private String password;
+	//user, business, curator, admin 
 	private String role;
 	private String profileImg;
 	private String selfIntroduce;

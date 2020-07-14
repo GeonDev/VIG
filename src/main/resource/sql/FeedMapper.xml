@@ -65,23 +65,30 @@
 		</insert>
 		
 		<select id="getFeed" parameterType="int" resultMap="feed">
-			SELECT * FROM feed
+			SELECT * FROM feeds
 			WHERE feed_id = #{value}
-		</select>
-		
+		</select>		
 		
 		<select id="getMyFeedList" parameterType="string" resultMap="feed">
-			SELECT * FROM feed
+			SELECT * FROM feeds
 			WHERE user_code = #{value} AND feed_is_temp = 0
 		</select>
 		
+		
+		<select id ="getFeedListOnlyTag" parameterType="string" resultMap="feed">
+			SELECT * FROM feeds, images, keywords
+			WHERE feeds.feed_id = images.feed_id AND images.image_id = keywords.image_id
+			AND keywords.keyword_origin = #{value}			
+		</select>
+		
+		
 		<select id="getTempFeed" parameterType="string" resultMap="feed">
-			SELECT * FROM feed
+			SELECT * FROM feeds
 			WHERE user_code = #{value} AND feed_is_temp = 1
 		</select>
 		
 		<delete id="deleteFeed" parameterType="int">
-		 	DELETE FROM feed
+		 	DELETE FROM feeds
 		 	WHERE feed_id = #{value}
 		</delete>
 	
