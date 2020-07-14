@@ -37,7 +37,19 @@
 	 	INSERT INTO images (imageId, feedId, feedOrder ,isThumbnail, imageFile)
 	 	VALUES(image_id, #{feedId}, #{feedOrder:NUMERIC}, #{isThumbnail:NUMERIC}, #{imageFile})	 
 	 </insert>
+	 
+	 	 
+	 <delete id="deleteImage" parameterType="int">
+	 	DELETE FROM images
+	 	WHERE image_id = #{value}	 
+	 </delete>
 	
+	
+	<select id="getimage" parameterType="int" resultMap="image">
+		SELECT * FROM images
+		WHERE image_id = #{value}
+	
+	</select>
 	
 	
 	

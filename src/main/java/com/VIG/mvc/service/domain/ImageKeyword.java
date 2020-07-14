@@ -7,7 +7,8 @@ public class ImageKeyword {
 	
 	private int keywordId;
 	private int imageId;
-	private int isTag;
+	// 0= 테그아님 1= 테그
+ 	private int isTag;
 	private int userCode;
 	private String keywordEn;
 	private String keywordOrigin;	

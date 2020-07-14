@@ -16,8 +16,7 @@ public class ImageServicesImpl implements ImageServices {
 
 	@Autowired
 	@Qualifier("imageDaoImpl")
-	private ImageDao ImageDao;
-	
+	private ImageDao imageDao;	
 	
 	
 	public ImageServicesImpl() {
@@ -27,13 +26,14 @@ public class ImageServicesImpl implements ImageServices {
 	@Override
 	public void addImage(Image image) throws Exception {
 		// TODO Auto-generated method stub
+		imageDao.addImage(image);
 
 	}
 
 	@Override
 	public Image getImage(int imageId) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return imageDao.getImage(imageId);
 	}
 
 	@Override
@@ -43,9 +43,15 @@ public class ImageServicesImpl implements ImageServices {
 	}
 
 	@Override
-	public void deleteImage(Image image) throws Exception {
+	public void deleteImage(String image) throws Exception {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public List<Image> getImageListfromColor(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

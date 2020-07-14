@@ -15,7 +15,11 @@ public interface ImageDao {
 	//검색조건을 넣어 이미지 리스트를 출력
 	public List<Image> getImageList(Search search) throws Exception;	
 	
-	public void deleteImage(Image image) throws Exception;
+	//색상을 기준으로 조회
+	public List<Image> getImageListfromColor(Search search) throws Exception;
+	
+	
+	public void deleteImage(String image) throws Exception;
 
 }
 
