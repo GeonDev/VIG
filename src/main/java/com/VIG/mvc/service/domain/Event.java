@@ -9,6 +9,7 @@ public class Event {
 	//field
 	public int eventId;
 	public String eventTitle;
+	public String eventSub;
 	public Date eventStart;
 	public Date eventEnd;
 	public String eventThumb;
@@ -23,6 +24,6 @@ public class Event {
 		
 	}
 	
-	
+
 
 }
