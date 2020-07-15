@@ -16,7 +16,8 @@ public class Feed {
 	private Date feedEditDate;
 	private int feedViewCount;
 	private int feedIsPrime;
-	private String category;
+	//카테고리 저장
+	private Category feedCategory;
 	private String feedUseGears;
 	// 0 = 정상등록, 1 = 임시 피드
 	private int feedIsTemp;
