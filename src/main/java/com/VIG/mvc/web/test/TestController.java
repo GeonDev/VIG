@@ -20,9 +20,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.VIG.mvc.service.color.ColorServices;
+import com.VIG.mvc.service.domain.Image;
 import com.VIG.mvc.service.domain.ImageColor;
 import com.VIG.mvc.service.domain.ImageKeyword;
 import com.VIG.mvc.service.domain.User;
+import com.VIG.mvc.service.image.ImageServices;
+import com.VIG.mvc.service.keyword.KeywordServices;
 import com.VIG.mvc.service.user.UserServices;
 import com.VIG.mvc.util.Translater;
 import com.VIG.mvc.util.VisionInfo;
@@ -39,6 +43,20 @@ public class TestController {
 	@Autowired 
 	@Qualifier("userServicesImpl")
 	private UserServices userServices;
+	
+
+	@Autowired 
+	@Qualifier("imageServicesImpl")
+	private ImageServices imageServices;
+	
+	@Autowired 
+	@Qualifier("keywordServicesImpl")
+	private KeywordServices keywordServices;
+	
+	@Autowired 
+	@Qualifier("colorServicesImpl")
+	private ColorServices colorServices;
+	
 
 	@Autowired
 	private ServletContext context;	
@@ -129,7 +147,21 @@ public class TestController {
 	
 	@RequestMapping(value = "setImage")
 	public ModelAndView setImageKeyword() throws Exception {		
-	
+		
+		String path = context.getRealPath("/");        
+	    path = path.substring(0,path.indexOf("\\.metadata"));
+	    path = path +  uploadPath; 
+		
+		List<Image> imagelist = new ArrayList<Image>();
+		
+		//저장되어 있는 모든 이미지를 불러옴		
+		imagelist = imageServices.getALLImageList();
+		
+		for(Image image :imagelist) {
+			List<ImageKeyword> keywords = VisionInfo.getKeywordForVision(path+image.getImageFile());
+			List<ImageColor> colors = VisionInfo.getColorForVision(path+image.getImageFile());
+			
+		}	
 
 					
 		return new ModelAndView("forward:/common/alertView.jsp", "message", "세팅 완료");
