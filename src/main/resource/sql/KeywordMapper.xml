@@ -18,7 +18,7 @@
 	
 	<insert id ="addkeyword" parameterType="keyword">
 		INSERT INTO keywords (keyword_id, image_id, is_tag, user_code, keyword_en, keyword_origin, keyword_score)
-		VALUES(keyword_id, #{imageId}, #{isTag:NUMERIC}, #{userId:NUMERIC}, #{keywordEn:VARCHAR}, #{keywordOrigin:VARCHAR}, #{score:FLOAT})		
+		VALUES(keyword_id, #{imageId}, #{isTag:NUMERIC}, #{userCode:VARCHAR}, #{keywordEn:VARCHAR}, #{keywordOrigin:VARCHAR}, #{score:FLOAT})		
 	</insert>
 
 	<select id = "getTagList" parameterType="string" resultMap="keywordSelectMap">
