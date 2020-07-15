@@ -44,12 +44,12 @@
 	 	WHERE image_id = #{value}	 
 	 </delete>	
 	
-	<select id="getimageOne" parameterType="int" resultMap="image">
+	<select id="getimageOne" parameterType="int" resultMap="ImageSelectMap">
 		SELECT * FROM images
 		WHERE image_id = #{value}	
 	</select>	
 	
-	<select id="getimageAll"  resultMap="image">
+	<select id="getimageAll"  resultMap="ImageSelectMap">
 		SELECT * FROM images		
 	</select>
 	 

@@ -10,14 +10,14 @@ import com.VIG.mvc.service.domain.ImageKeyword;
 import com.VIG.mvc.service.keyword.KeywordDao;
 import com.VIG.mvc.service.keyword.KeywordServices;
 
-@Service("keywordServiceImpl")
-public class KeywordServiceImpl implements KeywordServices {
+@Service("keywordServicesImpl")
+public class KeywordServicesImpl implements KeywordServices {
 	
 	@Autowired	  
 	@Qualifier("keywordDaoImpl")
 	private KeywordDao keywordDao;
 
-	public KeywordServiceImpl() {
+	public KeywordServicesImpl() {
 		// TODO Auto-generated constructor stub
 	}
 
