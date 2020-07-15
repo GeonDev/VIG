@@ -157,10 +157,21 @@ public class TestController {
 		//저장되어 있는 모든 이미지를 불러옴		
 		imagelist = imageServices.getALLImageList();
 		
+		System.out.println("[SERVER] : 이미지 정보 추출 시작.....");
+		
 		for(Image image :imagelist) {
 			List<ImageKeyword> keywords = VisionInfo.getKeywordForVision(path+image.getImageFile());
 			List<ImageColor> colors = VisionInfo.getColorForVision(path+image.getImageFile());
 			
+			for(ImageKeyword keyword : keywords) {
+				keyword.setImageId(image.getImageId());
+				keywordServices.addKeyword(keyword);
+			}
+			
+			for(ImageColor color : colors) {
+				color.setImageId(image.getImageId());
+				colorServices.addColor(color);
+			}			
 		}	
 
 					
