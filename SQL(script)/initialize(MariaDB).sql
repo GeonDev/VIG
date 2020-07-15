@@ -13,6 +13,7 @@ DROP TABLE IF EXISTS report;
 DROP TABLE IF EXISTS follow;
 DROP TABLE IF EXISTS alarm;
 
+
 DROP TABLE IF EXISTS categories CASCADE;
 DROP TABLE IF EXISTS feeds CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
@@ -193,7 +194,6 @@ CREATE TABLE event (
 );
 
 
-
 ALTER TABLE categories AUTO_INCREMENT  	 = 10000000;
 ALTER TABLE feeds AUTO_INCREMENT 		 = 20000000;
 ALTER TABLE images AUTO_INCREMENT 		 = 30000000;
@@ -209,13 +209,67 @@ ALTER TABLE payment AUTO_INCREMENT 		 = 120000000;
 ALTER TABLE withdraw AUTO_INCREMENT 	 = 130000000;
 ALTER TABLE event AUTO_INCREMENT 	 	 = 140000000;
 
-INSERT 
-INTO users (user_code, user_name, password, role, cell_phone, addr, email, reg_date) 
-VALUES ( 'admin', 'admin', '1234', 'admin',  '010-1111-2222', '����� ���ʱ�', 'admin@mvc.com',DATE_FORMAT('2012/01/14', '%Y/%M/%D')); 
 
-INSERT INTO users (user_code, user_name, password, role, cell_phone, addr, email, reg_date)
-VALUES ( 'user01', '�հ�', '1111', 'user', '010-1111-2222', '����� ���ʱ�', 'USER@mvc.com', NOW()); 
+INSERT
+INTO categories (category_id, category_name, category_img)
+VALUES (category_id, '일러스트레이션', 'category01.jpg');
 
+INSERT
+INTO categories (category_id, category_name, category_img)
+VALUES (category_id, '그래픽디자인', 'category02.jpg');
+
+INSERT
+INTO categories (category_id, category_name, category_img)
+VALUES (category_id, '건축', 'category03.jpg');
+
+INSERT
+INTO categories (category_id, category_name, category_img)
+VALUES (category_id, '제품디자인', 'category04.jpg');
+
+INSERT
+INTO categories (category_id, category_name, category_img)
+VALUES (category_id, '패션', 'category05.jpg');
+
+INSERT
+INTO categories (category_id, category_name, category_img)
+VALUES (category_id, '광고', 'category06.jpg');
+
+INSERT
+INTO categories (category_id, category_name, category_img)
+VALUES (category_id, '포토그래피', 'category07.jpg');
+
+INSERT
+INTO categories (category_id, category_name, category_img)
+VALUES (category_id, '미술', 'category08.jpg');
+
+INSERT
+INTO categories (category_id, category_name, category_img)
+VALUES (category_id, '게임디자인', 'category09.jpg');
+
+INSERT
+INTO categories (category_id, category_name, category_img)
+VALUES (category_id, '공예', 'category10.jpg');
+
+INSERT
+INTO categories (category_id, category_name, category_img)
+VALUES (category_id, '타이포그래피', 'category11.jpg');
+
+INSERT
+INTO categories (category_id, category_name, category_img)
+VALUES (category_id, '인터랙션', 'category12.jpg');
+
+
+INSERT
+INTO users (user_code, user_name, password, role, profile_img, state, reg_date)
+VALUES ('admin', '관리자', '1234', 'admin', 'profile_img.jpg', 0, NOW());
+
+INSERT
+INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
+VALUES ('user01', 'atom11', '1111', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
+
+INSERT
+INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
+VALUES ('user02', 'atom22', '2222', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
 
 
 commit;
