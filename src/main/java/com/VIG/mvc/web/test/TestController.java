@@ -125,5 +125,15 @@ public class TestController {
 				
 		return new ModelAndView("forward:/ChattingView.jsp", "userid", user.getUserName());
 	}	
+	
+	
+	@RequestMapping(value = "setImage")
+	public ModelAndView setImageKeyword() throws Exception {		
+	
+
+					
+		return new ModelAndView("forward:/common/alertView.jsp", "message", "세팅 완료");
+	}	
+	
 
 }
