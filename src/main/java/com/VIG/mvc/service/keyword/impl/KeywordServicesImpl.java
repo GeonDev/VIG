@@ -51,4 +51,10 @@ public class KeywordServicesImpl implements KeywordServices {
 		
 	}
 
+	@Override
+	public List<ImageKeyword> getFeedKeywordList(int feedId) throws Exception {
+		// TODO Auto-generated method stub
+		return keywordDao.getFeedKeywordList(feedId);
+	}
+
 }
