@@ -27,13 +27,12 @@ public class ImageServicesImpl implements ImageServices {
 	public void addImage(Image image) throws Exception {
 		// TODO Auto-generated method stub
 		imageDao.addImage(image);
-
 	}
 
 	@Override
-	public Image getImage(int imageId) throws Exception {
+	public Image getImageOne(int imageId) throws Exception {
 		// TODO Auto-generated method stub
-		return imageDao.getImage(imageId);
+		return imageDao.getImageOne(imageId);
 	}
 
 	@Override
@@ -52,6 +51,12 @@ public class ImageServicesImpl implements ImageServices {
 	public List<Image> getImageListfromColor(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Image> getALLImageList() throws Exception {
+		// TODO Auto-generated method stub
+		return imageDao.getALLImageList();
 	}
 
 }

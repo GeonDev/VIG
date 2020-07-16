@@ -28,31 +28,30 @@
 		WHERE colors.image_id = #{value}		
 	 </select>
 	 
+	 <!-- 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000 -->
+	 
 	  <select id ="getLastImageId" resultType="int">
 		SELECT MAX(image_id) FROM images
-	 </select>
-	 
+	 </select>	 
 	 
 	 <insert id="addImage" parameterType="image">
 	 	INSERT INTO images (imageId, feedId, feedOrder ,isThumbnail, imageFile)
 	 	VALUES(image_id, #{feedId}, #{feedOrder:NUMERIC}, #{isThumbnail:NUMERIC}, #{imageFile})	 
-	 </insert>
-	 
+	 </insert>	 
 	 	 
 	 <delete id="deleteImage" parameterType="int">
 	 	DELETE FROM images
 	 	WHERE image_id = #{value}	 
-	 </delete>
+	 </delete>	
 	
-	
-	<select id="getimage" parameterType="int" resultMap="image">
+	<select id="getimageOne" parameterType="int" resultMap="ImageSelectMap">
 		SELECT * FROM images
-		WHERE image_id = #{value}
+		WHERE image_id = #{value}	
+	</select>	
 	
+	<select id="getimageAll"  resultMap="ImageSelectMap">
+		SELECT * FROM images		
 	</select>
-	
-	
-	
 	 
 </mapper>
 

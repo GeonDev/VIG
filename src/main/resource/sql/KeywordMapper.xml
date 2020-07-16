@@ -18,13 +18,24 @@
 	
 	<insert id ="addkeyword" parameterType="keyword">
 		INSERT INTO keywords (keyword_id, image_id, is_tag, user_code, keyword_en, keyword_origin, keyword_score)
-		VALUES(keyword_id, #{imageId}, #{isTag:NUMERIC}, #{userId:NUMERIC}, #{keywordEn:VARCHAR}, #{keywordOrigin:VARCHAR}, #{score:FLOAT})		
+		VALUES(keyword_id, #{imageId}, #{isTag:NUMERIC}, #{userCode:VARCHAR}, #{keywordEn:VARCHAR}, #{keywordOrigin:VARCHAR}, #{score:FLOAT})		
 	</insert>
 
-	<select id="getTagList" parameterType="string" resultMap="keyword">
+	<select id = "getTagList" parameterType="string" resultMap="keywordSelectMap">
 		SELECT * FROM keywords
 		WHERE is_tag = 1 AND user_code = #{value}		
 	</select>
+	
+	<select id ="getKeywordList" parameterType="int" resultMap="keywordSelectMap">
+		SELECT * FROM keywords
+		WHERE image_id = #{value}		
+	</select>
+	
+	<update id = "updateSaveTag" parameterType="int">
+		UPDATE keywords SET user_code = ""
+		WHERE keyword_id= #{value}
+	</update>
+	
 	 
 </mapper>
 

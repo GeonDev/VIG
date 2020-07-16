@@ -12,12 +12,13 @@ public class Search {
 	
 	// 최근 열람 이미지 키워드 또는 연관 이미지 검색시 사용
 	private List<String> keywords;
-	private int r;
-	private int g;
-	private int b;
+
 	private int searchType;
 	private int currentPage;
 	private int pageSize;
+	private int colorRange;
+	
+	//색상값 입력시 매핑
 	private ImageColor color;
 
 
@@ -36,6 +37,46 @@ public class Search {
 		return (this.currentPage * this.pageSize);
 	}
 
+	public int getStartRed() {
+		if((color.getRed()-colorRange) > 0) {
+			return (int) (color.getRed()-colorRange);
+		}else
+			return 0;
+	}
 	
+	public int getEndRed() {
+		if((color.getRed()+colorRange) < 255) {
+			return (int) (color.getRed()+colorRange);
+		}else
+			return 255;
+	}
+	
+	public int getStartGreen() {
+		if((color.getGreen()-colorRange) > 0) {
+			return (int) (color.getGreen()-colorRange);
+		}else
+			return 0;
+	}
+	
+	public int getEndGreen() {
+		if((color.getGreen()+colorRange) < 255) {
+			return (int) (color.getGreen()+colorRange);
+		}else
+			return 255;
+	}
+	
+	public int getStartBlue() {
+		if((color.getBlue()-colorRange) > 0) {
+			return (int) (color.getBlue()-colorRange);
+		}else
+			return 0;
+	}
+	
+	public int getEndBlue() {
+		if((color.getBlue()+colorRange) < 255) {
+			return (int) (color.getBlue()+colorRange);
+		}else
+			return 255;
+	}
 
 }
