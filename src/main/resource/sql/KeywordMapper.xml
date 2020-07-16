@@ -18,20 +18,21 @@
 	
 	<insert id ="addkeyword" parameterType="keyword">
 		INSERT INTO keywords (keyword_id, image_id, is_tag, keyword_en, keyword_origin, keyword_score)
-		VALUES(keyword_id, #{imageId}, 0,  #{keywordEn:VARCHAR}, #{keywordOrigin:VARCHAR}, #{score:FLOAT})		
+		VALUES(keyword_id, #{imageId}, #{isTag:NUMERIC}, #{keywordEn:VARCHAR}, #{keywordOrigin:VARCHAR}, #{score:FLOAT})		
 	</insert>
 	
 	
-	<!-- 테그는 썸네일 이미지에 저장합니다. -->
+	<!-- 태그만 따로 저장하는 쿼리 -->
 	<insert id ="addTag" parameterType="keyword">
-		INSERT INTO keywords (keyword_id, image_id, is_tag, user_code, keyword_en, keyword_origin, keyword_score)
-		VALUES(keyword_id, #{imageId}, 1, #{userCode:VARCHAR}, #{keywordEn:VARCHAR}, #{keywordOrigin:VARCHAR}, #{score:FLOAT})		
+		INSERT INTO keywords (keyword_id, is_tag, user_code, keyword_en, keyword_origin, keyword_score)
+		VALUES(keyword_id, 1, #{userCode:VARCHAR}, #{keywordEn:VARCHAR}, #{keywordOrigin:VARCHAR}, #{score:FLOAT})		
 	</insert>
 	
 
 	<select id = "getTagList" parameterType="string" resultMap="keywordSelectMap">
 		SELECT * FROM keywords
-		WHERE is_tag = 1 AND user_code = #{value}		
+		WHERE is_tag = 1
+		AND user_code = #{value}		
 	</select>
 	
 	<select id ="getKeywordList" parameterType="int" resultMap="keywordSelectMap">
@@ -44,6 +45,15 @@
 		WHERE keyword_id= #{value}
 	</update>
 	
+	<!-- 피드에 저장된 태그 리스트를 불러온다 (피드 상세 작성용) -->
+	<select id="getFeedTagList" parameterType="int" resultMap="keywordSelectMap">
+		SELECT * FROM keywords ,images ,feeds
+		WHERE feeds.feed_id = images.feed_id
+		AND images.image_id = keywords.image_id
+		AND feeds.feed_id = #{value}
+		AND keywords.is_tag = 1
+		AND images.is_thumbnail = 1	
+	</select>
 	 
 </mapper>
 
