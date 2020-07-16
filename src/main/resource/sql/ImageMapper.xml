@@ -52,6 +52,25 @@
 	<select id="getimageAll"  resultMap="ImageSelectMap">
 		SELECT * FROM images		
 	</select>
+	
+	<select id="getImageListFromColor" parameterType="search" resultMap="ImageSelectMap">
+		SELECT *  FROM
+		(SELECT ROW_NUMBER() OVER(ORDER BY images.image_id) num, images.* FROM images, colors 
+		WHERE images.image_id = colors.image_id AND images.is_thumbnail != 1
+		AND colors.color_r BETWEEN #{startRed} AND #{endRed} 
+		AND colors.color_g BETWEEN #{startGreen} AND #{endGreen} 
+		AND colors.color_b BETWEEN #{startBlue} AND  #{endBlue})
+		WHERE num BETWEEN #{startRowNum} AND #{endRowNum}           
+	</select>
+	
+	
+	<select id ="getImageListFromKeyword" parameterType="search" resultMap="ImageSelectMap">
+		SELECT *  FROM
+		(SELECT ROW_NUMBER() OVER(ORDER BY images.image_id) num, images.* FROM images, keywords 
+		WHERE images.image_id = keywords.image_id AND images.is_thumbnail != 1
+		AND keywords.keyword_en = #{keyword})
+		WHERE num BETWEEN #{startRowNum} AND #{endRowNum}	
+	</select>	
 	 
 </mapper>
 

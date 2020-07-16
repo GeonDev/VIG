@@ -20,7 +20,9 @@ public class Search {
 	
 	//색상값 입력시 매핑
 	private ImageColor color;
-
+	
+	
+	
 
 	
 	public Search() {
