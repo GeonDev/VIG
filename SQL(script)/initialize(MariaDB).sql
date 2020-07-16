@@ -28,7 +28,7 @@ CREATE TABLE users (
 	self_introduce  	 VARCHAR(1024),	
 	sex  				 VARCHAR(10),
 	birth  				 INT(4),
-	state  				 VARCHAR(50),
+	state  				 TINYINT(1),
 	google_id  			 VARCHAR(50),
 	account  			 VARCHAR(50),
 	prime_count  		 INT(11),
@@ -52,12 +52,12 @@ CREATE TABLE feeds (
 	user_code 		 		 VARCHAR(20)  	NOT NULL REFERENCES users(user_code),
 	feed_reg_date 			 VARCHAR(20), 
 	feed_edit_date 			 VARCHAR(20), 
-	feed_view_count 		 INT(11), 
-	feed_is_prime 			 TINYINT(1), 
+	feed_view_count 		 INT(11)		DEFAULT 0, 
+	feed_is_prime 			 TINYINT(1)		DEFAULT 0, 
 	category_id  			 INT(11)   		REFERENCES categories(category_id),  	 	
 	feed_use_gears 		 	 VARCHAR(1024), 
-	feed_is_temp 			 TINYINT(1), 
-	prime_feed_view_count 	 INT(11), 
+	feed_state 				 TINYINT(1) 	DEFAULT 0, 
+	prime_feed_view_count 	 INT(11) 		DEFAULT 0, 
 	comment_range 			 TINYINT(1), 
 	PRIMARY KEY(feed_id)
 );
@@ -67,7 +67,7 @@ CREATE TABLE images (
 	image_id 				 INT(11)  		NOT NULL AUTO_INCREMENT,
 	feed_id  				 INT(11) 		NOT NULL REFERENCES feeds(feed_id),
 	feed_order  			 INT(11), 
-	is_thumbnail 			 TINYINT(1), 	
+	is_thumbnail 			 TINYINT(1)		DEFAULT 0, 	
 	image_file  			 VARCHAR(100)  	NOT NULL,
 	PRIMARY KEY(image_id)
 );
