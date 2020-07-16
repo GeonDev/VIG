@@ -1,5 +1,7 @@
 package com.VIG.mvc.service.user.Impl;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -32,15 +34,26 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public User getUser(int userId) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne("UserMapper.addUser", userId);
+	public User getUser(String userCode) throws Exception {
+		User user =  sqlSession.selectOne("UserMapper.getUser", userCode);
+		return user;
 	}
 
 	@Override
 	public void updateUser(User user) throws Exception {
-		// TODO Auto-generated method stub
-
+		sqlSession.update("UserMapper.updateUser", user);
 	}
+	
+	@Override
+	public void deleteUser(User user) throws Exception{
+		sqlSession.delete("UserMapper.deleteUser", user);
+	}
+	
+	@Override
+	public List<User> getUserList(User user) throws Exception{
+		List<User> userList = sqlSession.selectList("UserMapper.getUser", user);
+		return userList;
+	}
+	
 
 }
