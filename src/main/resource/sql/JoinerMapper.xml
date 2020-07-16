@@ -19,13 +19,15 @@
 			SELECT * FROM user
 			WHERE user_code = #{value}		
 		</select>
+		
+		<!-- 000000000000000000000000000000000000000000000000000000000000000000000000000000000 -->
 				
-		<select id="getLikeUser" parameterType="int" resultMap="joiner" >
+		<select id="getLikeUser" parameterType="int" resultMap="joinerSelectMap" >
 			SELECT * FROM joiner
 			WHERE feed_id = #{value} AND is_like = 1	
 		</select>
 		
-		<select id="getCoworkUser" parameterType="int" resultMap="joiner" >
+		<select id="getCoworkUser" parameterType="int" resultMap="joinerSelectMap" >
 			SELECT * FROM joiner
 			WHERE feed_id = #{value} AND is_like = 0	
 		</select>

@@ -13,14 +13,14 @@
 		<result property="feedRegDate" 			column="feed_reg_date" 			jdbcType="DATE" />
 		<result property="feedEditDate" 		column="feed_edit_date" 		jdbcType="DATE" />
 		<result property="feedViewCount" 		column="feed_view_count" 		jdbcType="NUMERIC" />
-		<result property="feedIsPrime" 			column="feed_is_prime" 			jdbcType="NUMERIC" />
-		<result property="category" 			column="category" 				jdbcType="VARCHAR" />		
+		<result property="feedIsPrime" 			column="feed_is_prime" 			jdbcType="NUMERIC" />		
 		<result property="feedUseGears" 		column="feed_use_gears" 		jdbcType="VARCHAR" />
 		<result property="feedIsTemp" 			column="feed_is_temp" 			jdbcType="NUMERIC" />
 		<result property="primeFeedViewCount" 	column="prime_feed_view_count" 	jdbcType="NUMERIC" />
 		<result property="commentRange" 		column="comment_range" 			jdbcType="NUMERIC" />					
 		
-		<association property="writer"  column="user_code" javaType="user" select="setWriter"/>	
+		<association property="writer"         column="user_code"    javaType="user"      select="setWriter"/>		
+		<association property="feedCategory"   column="category_id"  javaType="category"  select="setCategory"/>		
 			
 		<collection property="images" 		column="feed_id" 	javaType="list" 	ofType="image" 		select="setFeedImages"/>
 		<collection property="likes" 		column="feed_id" 	javaType="list" 	ofType="joiner" 	select="setLikeUserlist"/>
@@ -54,6 +54,11 @@
 			WHERE feed_id = #{value}					
 		</select>
 		
+		<select id="setCategory"  parameterType="int"  resultMap="CategoryMapper.categorySelectMap" >
+			SELECT * FROM categories
+			WHERE category_id = #{value}					
+		</select>
+		
 		
 		<select id = "getlastFeedId" resultType="int">
 			SELECT MAX(feed_id) FROM feeds
@@ -64,25 +69,25 @@
 			VALUES(feed_id, #{writer.userCode}, #{feedTitle}, #{feedExplanation:VARCHAR}, NOW(), #{feedIsPrime:NUMERIC}, #{category:VARCHAR}, #{feedUseGears:VARCHAR}, #{feedIsTemp:NUMERIC}, #{commentRange:NUMERIC})		
 		</insert>
 		
-		<select id="getFeed" parameterType="int" resultMap="feed">
+		<select id="getFeed" parameterType="int" resultMap="FeedSelectMap">
 			SELECT * FROM feeds
 			WHERE feed_id = #{value}
 		</select>		
 		
-		<select id="getMyFeedList" parameterType="string" resultMap="feed">
+		<select id="getMyFeedList" parameterType="string" resultMap="FeedSelectMap">
 			SELECT * FROM feeds
 			WHERE user_code = #{value} AND feed_is_temp = 0
 		</select>
 		
 		
-		<select id ="getFeedListOnlyTag" parameterType="string" resultMap="feed">
+		<select id ="getFeedListOnlyTag" parameterType="string" resultMap="FeedSelectMap">
 			SELECT * FROM feeds, images, keywords
 			WHERE feeds.feed_id = images.feed_id AND images.image_id = keywords.image_id
 			AND keywords.keyword_origin = #{value}			
 		</select>
 		
 		
-		<select id="getTempFeed" parameterType="string" resultMap="feed">
+		<select id="getTempFeed" parameterType="string" resultMap="FeedSelectMap">
 			SELECT * FROM feeds
 			WHERE user_code = #{value} AND feed_is_temp = 1
 		</select>
