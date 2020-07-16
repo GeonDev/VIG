@@ -95,7 +95,7 @@ CREATE TABLE joiner (
 
 CREATE TABLE keywords ( 
 	keyword_id 				 INT(11)  		NOT NULL AUTO_INCREMENT,
-	image_id  				 INT(11) 		NOT NULL REFERENCES images(image_id),
+	image_id  				 INT(11) 		REFERENCES images(image_id),
 	is_tag 					 TINYINT(1),
 	user_code  				 VARCHAR(20)    REFERENCES users(user_code),			 
 	keyword_en 				 VARCHAR(100), 
