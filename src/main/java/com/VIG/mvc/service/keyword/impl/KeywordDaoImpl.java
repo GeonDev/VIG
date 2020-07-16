@@ -56,4 +56,10 @@ public class KeywordDaoImpl implements KeywordDao {
 		
 	}
 
+	@Override
+	public List<ImageKeyword> getFeedKeywordList(int feedId) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("KeywordMapper.getFeedTagList", feedId);
+	}
+
 }

@@ -14,6 +14,8 @@ public interface KeywordDao {
 	
 	public List<ImageKeyword> getKeywordList(int imageId) throws Exception;
 	
+	public List<ImageKeyword> getFeedKeywordList(int feedId) throws Exception;
+	
 	public void updateSaveTag(int keywordId) throws Exception;
 
 }
