@@ -1,11 +1,12 @@
 package com.VIG.mvc.service.domain;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import lombok.Data;
 
 @Data
-public class History {
+public class History implements Serializable{
 	
 	private int historyId;
 	private User watchUser;
