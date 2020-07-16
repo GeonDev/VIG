@@ -31,16 +31,53 @@
 		VALUES (user_code, #{userName}, #{password:VARCHAR}, #{role:VARCHAR}, #{profileImg:VARCHAR}, #{selfIntroduce:VARCHAR}, #{sex:VARCHAR}, #{birth:NUMERIC}, #{state:VARCHAR}, #{googleId:VARCHAR}, #{account:VARCHAR}, #{primeCount:NUMERIC}, #{email:VARCHAR}, NOW())
 	 </insert>
 	 
-	 <select id="getUser" parameterType = "int" resultMap="userSelectMap">
+	 
+	 <select id="getUser" parameterType = "String" resultMap="userSelectMap">
 	 	SELET *
 	 	FROM users
 	 	WHERE user_code = #{value}	
 	 </select>
+	 
+	 
+	 <select id="getUserOne" parameterType = "String" resultMap="userSelectMap">
+	 	SELET 
+	 	user_code
+	 	FROM users
+	 	WHERE user_code = #{value}	
+	 </select>
+		 	 
 	 	 
 	  <select id="getLastUserNum" parameterType = "int" resultType="int">
 	 	SELET COUNT(user_code) FROM users	 	
 	 </select>
-	
+	 
+	 
+	 <update	id="updateUser"	parameterType="user" >
+	   	UPDATE users
+	   		SET 
+	   		user_name 	= #{userName} ,
+			password	= #{password},
+			self_introduce 	= #{selfIntroduce} ,
+			account	=	#{account} 			
+	   	WHERE user_code = #{userCode}
+	 </update>
+	 
+	 
+	 <delete id="deleteUser" parameterType="int">
+	 	DELETE 
+	 	FROM users 
+	 	WHERE user_code = #{value}
+	 </delete>
+	 
+	<!--   
+	 <update id="deleteUser" parameterType="String">
+	 	UPDATE users
+	    SET 
+	    nickname = 'x',
+	    email = 'x'
+	    WHERE user_code = #{userCode}
+	 </update>
+	-->
 	 
 </mapper>
 
