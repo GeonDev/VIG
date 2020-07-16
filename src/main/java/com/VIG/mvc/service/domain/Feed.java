@@ -29,6 +29,9 @@ public class Feed {
 	private List<JoinUser> likes;
 	private List<Comment> comments;
 	
+	//최근 검색 키워드와 겹치는 개수 - 검색시 정렬용으로 사용
+	private int currentKeywordSameCount;
+	
 
 	public Feed() {
 		// TODO Auto-generated constructor stub
