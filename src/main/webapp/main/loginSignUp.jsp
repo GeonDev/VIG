@@ -16,6 +16,15 @@
 		<!-- Material Design Bootstrap -->
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
 		
+	<!-- JQuery -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<!-- Bootstrap tooltips -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<!-- MDB core JavaScript -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+		
 <style>
 </style>
 
@@ -77,15 +86,6 @@
 
 <body>
 	
-	<!-- JQuery -->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<!-- Bootstrap tooltips -->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
-	<!-- Bootstrap core JavaScript -->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
-	<!-- MDB core JavaScript -->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
-	
 
 
 <!--  모달 : 로그인/회원가입 -->
@@ -141,10 +141,10 @@
             <div class="md-form form-sm mb-5">
                 <input type="hidden" id="modalLRInput13" />              
               </div>          
- <!-- 닉네임 -->           
+ <!-- 아이디 -->           
               <div class="md-form form-sm mb-5">
                 <i class=""></i>
-                <input type="text" id="nickName" class="form-control form-control-sm validate">
+                <input type="text" id="userCode" class="form-control form-control-sm validate">
                 <label data-error="wrong" data-success="right" for="nickName">nick name</label>
               </div>
               
@@ -182,17 +182,7 @@
                 <label data-error="wrong" data-success="right" for="password">Your password</label>
               </div> 
               -->                         
- <!-- 성별 -->            
-              <div class="md-form form-sm mb-5">
-               <i class=""></i>        
-                <label data-error="wrong" data-success="right" for="modalLRInput18">Gender</label>         	                      
-              </div>
- <!--  --> 
- 				<div class="md-form form-sm mb-5">
-                <i class=""></i>
-                <input type="password" id="password" class="form-control form-control-sm validate">
-                <label data-error="wrong" data-success="right" for="password">Your password</label>
-              </div> 
+ 
  <!-- 회원가입버튼 -->          
               <div class="text-center form-sm mt-2">
                 <button type="submit" class="btn btn-info">Sign up <i class="fas fa-sign-in ml-1"></i></button>
@@ -200,13 +190,13 @@
 
             </div>
             <!--Footer-->
-            <div class="modal-footer">
+           <!--  <div class="modal-footer">
               <div class="options text-right">
                 <p class="pt-1">Already have an account? <a href="#loginPanel" class="blue-text">Log In</a></p>
               </div>
               <button type="button" class="btn btn-outline-info waves-effect ml-auto" data-dismiss="modal">Close</button>
             </div>
-          </div>
+          </div> -->
           <!--/.Panel 8-->
   </div>
 </div>

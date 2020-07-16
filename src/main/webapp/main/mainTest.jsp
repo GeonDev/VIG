@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>VIG</title>
 
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
@@ -13,7 +13,6 @@
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Material Design Bootstrap -->
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
-		
 		
 	<!-- JQuery -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -26,28 +25,54 @@
 		
 		<style type="text/css">
 		
+		 #category {
+            text-align: center;
+            width: auto;
+            height: 150px;
+            background-color:;
+            padding:;
+        }
+        
+        #thumbname {
+            
+            width: auto;
+            height: auto;
+            background-color:;
+            padding:;
+        }
+
 		
    		 </style>
     
 </head>
 <body>
 
-	<!-- ToolBar Start /////////////////////////////////////-->
-		<jsp:include page="/main/toolbar.jsp" />
-	<!-- ToolBar End /////////////////////////////////////-->
-	
 
 	
 	
-		    	<div id="header2">
-		            <jsp:include page="/searchPage/searchBar.jsp" />
-		        </div>
-		        <div id="main">
-		            <jsp:include page="/main/thumbnail.jsp" />
-		        </div>
-			  </div>
-			</div>
-		</div>
+	<div class="container-fluid">
+		<div id="category">
+            <jsp:include page="/main/category.jsp" />
+        </div>
+     </div>
+     
+     <div class="container-fluid">
+        <div id="banner">
+            <jsp:include page="/main/banner.jsp" />
+        </div>
+     </div>
+     
+     <div class="container-fluid">
+        <div id="thumbname">
+            <jsp:include page="/main/thumbnail.jsp" />
+        </div>
+	</div>
+	
+	
+
+
+
+
 
 </body>
 </html>

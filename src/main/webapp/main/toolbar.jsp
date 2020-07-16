@@ -13,13 +13,22 @@
 		<!-- Material Design Bootstrap -->
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
 		
+	<!-- JQuery -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<!-- Bootstrap tooltips -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<!-- MDB core JavaScript -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+		
 		<link href="/css/left.css" rel="stylesheet" type="text/css">
 	
 	<!-- CDN(Content Delivery Network) 호스트 사용 -->
 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript">
 	
-	/*
+	
 		//==> jQuery 적용 추가된 부분
 		 $(function() {
 			 
@@ -41,11 +50,11 @@
 			}); 
 			
 			
-		 	 $( ".navbar-brand:contains('VIG')" ).on("click" , function() {
-		 		 self.location = "/main/main.jsp"
-		 	 });
+	
+		 	 
+	
 		});	
-		*/
+		
 		
 	</script>		
 	
@@ -53,21 +62,14 @@
 		 
 <body>
 
-<!-- JQuery -->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<!-- Bootstrap tooltips -->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
-	<!-- Bootstrap core JavaScript -->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
-	<!-- MDB core JavaScript -->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+
 	
 
 <!--Navbar -->	
 		<div class="container-lg">
 			<nav class="mb-1 navbar fixed-top navbar-expand-lg navbar-dark secondary-color lighten-1">
 <!-- 로고 -->		
-			  <a class="navbar-brand" href="/main/main.jsp">VIG</a>
+			  <a class="navbar-brand" href="/main/main.jsp" >VIG</a>
 			  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
 			    aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
 			    <span class="navbar-toggler-icon"></span>
@@ -76,13 +78,13 @@
 			    <ul class="navbar-nav ml-auto nav-flex-icons"></ul>
 			   </div>
 <!-- 검색 버튼-->    
-	      <li class="nav-item">
+	      <a class="nav-item">
 	        <a class="nav-link waves-effect waves-light" href="/searchPage/sMain.jsp">
 	          <i class="fas fa-search"></i>
 	        </a>
-	      </li>
+	      </a>
 <!-- 알람버튼 -->     
-	      <li class="nav-item dropdown">
+	      <a class="nav-item dropdown">
 	        <a class="nav-link waves-effect waves-light" id="dropdownMenu3" data-toggle="dropdown"
 	 		   aria-haspopup="true" aria-expanded="false">
 	          <i class="fas fa-bell"></i>
@@ -95,15 +97,14 @@
 			    <div class="dropdown-divider"></div>
 			   		 <a class="dropdown-item" href="#">--</a>
 		  </div>
-	     </li>
+	     </a>
 <!-- 채팅버튼 -->      
-	        <li class="nav-item">
+	        <a class="nav-item">
 	        <a class="nav-link waves-effect waves-light" href="#">
 	          <i class="fas fa-comments"></i></a>
-	      </li>
+	      </a>
 <!-- 로그인 버튼 -->    
-			<li class="nav-item">
-	         <a class="nav-link waves-effect waves-light" href="addUser.jsp" >
+			<a class="nav-link waves-effect waves-light" data-toggle="modal" data-target="#modalLRForm"  href="addUser.jsp">
 	          <i class="fas fa-user"></i>
 	        </a>
 	       </li>

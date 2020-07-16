@@ -13,11 +13,7 @@
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Material Design Bootstrap -->
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
-
-
-</head>
-<body>
-
+		
 	<!-- JQuery -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<!-- Bootstrap tooltips -->
@@ -26,12 +22,29 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+
+
+	<style>
+	
+	.eBanner{
+		width: auto; height: auto;
+	    max-width: 100%;
+	    max-height: 300px;
+        }
+       
+	</style>
+
+
+</head>
+<body>
+
+
 	
 
 	
 
 	<!--Carousel Wrapper-->
-	<div class="container-lg">
+	<div class="container-fulid">
 		<div id="carousel-example-1z" class="carousel slide carousel-fade" data-ride="carousel">
 		  <!--Indicators-->
 		  <ol class="carousel-indicators">
@@ -47,7 +60,7 @@
 <!--First slide-->
 		    <div class="carousel-item active">
 			    <a href="#">
-			      <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(130).jpg"
+			      <img class="eBanner w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(130).jpg"
 			        alt="First slide">
 			    </a>
 		    </div>
@@ -57,7 +70,7 @@
 <!--Second slide-->
 		    <div class="carousel-item">
 		    	 <a href="#">
-				      <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(129).jpg"
+				      <img class="eBanner w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(129).jpg"
 				        alt="Second slide">
 				 </a>
 		    </div>
@@ -67,7 +80,7 @@
 <!--Third slide-->
 		    <div class="carousel-item">
 		    	 <a href="#">
-				      <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(70).jpg"
+				      <img class="eBanner w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(70).jpg"
 				        alt="Third slide">
 			     </a>
 		    </div>
@@ -88,7 +101,7 @@
 		</div>
 		<!--/.Carousel Wrapper-->
 		<br/>
-
+</div>
 
 
 
