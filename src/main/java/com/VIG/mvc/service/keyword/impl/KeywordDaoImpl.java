@@ -49,4 +49,11 @@ public class KeywordDaoImpl implements KeywordDao {
 		sqlSession.update("KeywordMapper.updateSaveTag", keywordId);
 	}
 
+	@Override
+	public void addTag(ImageKeyword keyword) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.insert("KeywordMapper.addTag", keyword);	
+		
+	}
+
 }
