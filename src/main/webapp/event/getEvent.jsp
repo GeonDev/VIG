@@ -32,7 +32,7 @@
 <style>
 	
 	#main { 
-		width: 960px;
+		width: 720px;
 		margin: 0 auto;
 	}
 	
@@ -107,7 +107,7 @@ $(function(){
 	
 	
 	<div id=main>
-	<form action="/VIG/event/addEvent/" enctype="multipart/form-data">
+	<form action="/VIG/event/addEvent/" >
 	
 	<h1> 여긴 이벤트 페이지 등록 화면~ </h1>
 	<p> ${message} </p>
@@ -135,7 +135,7 @@ $(function(){
 	<hr/>
 	<img id="preview" src="" width="700" alt="로컬에 있는 이미지가 보여지는 영역">
 		
-		<input type="file" id="getfile" name="uploadImage" accept="image/*">
+		<input type="file" id="getfile" name="eventImage" accept="image/*">
 	
 	<hr/>
 	<br/>
@@ -146,7 +146,7 @@ $(function(){
 				썸네일  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			</td>
 			<td>
-				<input type="file" name="uploadImage" accept="image/*">
+				<input type="file" name="eventThumbnail" accept="image/*">
 			</td>
 		</tr>
 		<tr>
@@ -154,7 +154,7 @@ $(function(){
 				배너  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			</td>
 			<td>
-				<input type="file" name="uploadImage" accept="image/*">	
+				<input type="file" name="banner" accept="image/*">	
 			</td>
 		</tr>
 	</table>

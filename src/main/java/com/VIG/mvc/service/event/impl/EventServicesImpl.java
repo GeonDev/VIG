@@ -17,12 +17,13 @@ public class EventServicesImpl implements EventServices {
 	//field
 	@Autowired
 	@Qualifier("eventDaoImpl")
-	private EventDao evnetDao;
+	private EventDao eventDao;
 
 	@Override
 	public void addEvent(Event event) throws Exception {
 		// TODO Auto-generated method stub
 		
+		eventDao.addEvent(event);
 		
 	}
 
