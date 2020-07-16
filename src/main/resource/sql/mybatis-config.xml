@@ -17,17 +17,20 @@
 		<typeAlias alias="keyword" 		type="com.VIG.mvc.service.domain.ImageKeyword" />
 		<typeAlias alias="joiner" 		type="com.VIG.mvc.service.domain.JoinUser"/>
 		<typeAlias alias="comment" 		type="com.VIG.mvc.service.domain.Comment"/>
+		<typeAlias alias="report" 		type="com.VIG.mvc.service.domain.Report"/>
+		<typeAlias alias="history" 		type="com.VIG.mvc.service.domain.History"/>
 	</typeAliases>
 	
 	 <!-- SQL Definition :: file include -->
 	<mappers>
 		<mapper resource="sql/UserMapper.xml"/>
+		<mapper resource="sql/CategoryMapper.xml"/>
 		<mapper resource="sql/ImageMapper.xml"/>
 		<mapper resource="sql/KeywordMapper.xml"/>
 		<mapper resource="sql/ColorMapper.xml"/>
 		<mapper resource="sql/JoinerMapper.xml"/>
 		<mapper resource="sql/FeedMapper.xml"/>
-		<mapper resource="sql/CommentMapper.xml"/>
+		<mapper resource="sql/CommentMapper.xml"/>		
 	</mappers>
 
 </configuration>
