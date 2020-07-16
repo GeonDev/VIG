@@ -14,19 +14,7 @@
 		<!-- Material Design Bootstrap -->
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
 		
-		<style>
-		@media (min-width: 768px) {
-		.carousel-multi-item-2 .col-md-3 {
-		float: left;
-		width: 25%;
-		max-width: 100%; } }
 		
-		.carousel-multi-item-2 .card img {
-		border-radius: 2px; }
-		</style>
-</head>
-<body>
-
 	<!-- JQuery -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<!-- Bootstrap tooltips -->
@@ -35,16 +23,39 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+		
+		<style>
+		
+		.carousel-multi-item-2 .col-md-3 {
+		float: left;
+		width: 25%;
+		max-width: 100%; } }
+		
+		.h3-responsive{
+		 text-align:center;
+		}
+		
+		.card{
+		  max-width: 300px;
+	  	  max-height: 100px;
+		}
+		
+		
+		</style>
+</head>
+<body>
+
+
 
 <!-- 상단 툴 바 들어갈 공간/없으면 카테고리 부분이 상단바랑 겹침 -->
-		<div class="container-lg">
+		<div class="container-fluid">
 			<br/>
 			<br/>
 			<br/>		
 		</div>
 		
 		<!--Carousel Wrapper-->
-		<div class="container-lg">
+		<div class="container-fluid">
 		
 		<div id="multi-item-example" class="carousel slide carousel-multi-item carousel-multi-item-2" data-ride="carousel">
 		
@@ -61,13 +72,17 @@
 		    <!--First slide-->
 		    <div class="carousel-item active">
 		
-		      <div class="col-md-3 mb-3">
+		      <div class="col-md-3 mb-3">		 
 		        <div class="card">
-		        	 <a href="#">
-			          <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(38).jpg"
+		         <a href="#">
+			         <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(38).jpg"
 			            alt="Card image cap">
-			         </a>
+			          <div class="carousel-caption">
+				        <h3 class="h3-responsive">카테고리명</h3>			     
+				      </div>
+			       </a>				            	      
 		        </div>
+		     
 		      </div>
 		
 		      <div class="col-md-3 mb-3">
@@ -75,21 +90,34 @@
 		        	 <a href="#">
 			          <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(19).jpg"
 			            alt="Card image cap">
+			           <div class="carousel-caption">
+				        <h3 class="h3-responsive">카테고리명</h3>			     
+				      </div>
 			         </a>
 		        </div>
 		      </div>
 		
 		      <div class="col-md-3 mb-3">
 		        <div class="card">
+		         <a href="#">
 		          <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(42).jpg"
 		            alt="Card image cap">
+		          <div class="carousel-caption">
+				        <h3 class="h3-responsive">카테고리명</h3>			     
+				      </div>
+		          </a>
 		        </div>
 		      </div>
 		
 		      <div class="col-md-3 mb-3">
 		        <div class="card">
+		         <a href="#">
 		          <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(8).jpg"
 		            alt="Card image cap">
+		          <div class="carousel-caption">
+				        <h3 class="h3-responsive">카테고리명</h3>			     
+				      </div>
+		          </a>
 		        </div>
 		      </div>
 		
@@ -101,8 +129,11 @@
 		
 		      <div class="col-md-3 mb-3">
 		        <div class="card">
+		         <a href="#">
 		          <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(53).jpg"
 		            alt="Card image cap">
+		          
+		          </a>
 		        </div>
 		      </div>
 		
@@ -169,7 +200,7 @@
 		
 		</div>
 		<!--/.Carousel Wrapper-->
-
+	</div>
 
 </body>
 </html>

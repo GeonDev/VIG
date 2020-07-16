@@ -13,31 +13,7 @@
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Material Design Bootstrap -->
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
-		
-		<style type="text/css">
-		
-		 #category {
-            text-align: center;
-            width: 960px;
-            height: 150px;
-            background-color:;
-            padding:;
-        }
-		
-		 #banner {
-            text-align: ;
-            width: 960px;
-            height: 500px;
-            background-color:;
-            padding:;
-        }
-
-		
-   		 </style>
-    
-</head>
-<body>
-
+			
 	<!-- JQuery -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<!-- Bootstrap tooltips -->
@@ -46,6 +22,31 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+		
+		<style type="text/css">
+		
+		 #category {
+            text-align: center;
+            width: auto;
+            height: 150px;
+            padding:100;
+        }
+		
+		 #banner {
+            text-align: ;
+            width: auto;
+            height: auto;
+            background-color:;
+            padding:35px;
+        }
+
+		
+   		 </style>
+    
+</head>
+<body>
+
+
 	
 	<!-- ToolBar Start /////////////////////////////////////-->
 		<jsp:include page="toolbar.jsp" />
@@ -53,15 +54,15 @@
 	
 	
 	
-<div class="container-lg">
-  <div class="row">
-    <div id="wrap">
+	<div class="container-fluid">
     	<div id="category">
             <jsp:include page="/main/category.jsp" />
         </div>
+     <div class="container-fluid">
         <div id="banner">
             <jsp:include page="/main/banner.jsp" />
         </div>
+     <div class="container-fluid">
         <div id="main">
             <jsp:include page="/main/thumbnail.jsp" />
         </div>
