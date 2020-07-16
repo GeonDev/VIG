@@ -309,10 +309,10 @@ VALUES(image_id, 20001, 0, 0,'feed02_1.jpg');
 
 INSERT
 INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
-VALUES(image_id, 20001, 0, 0,'feed02_2.jpg');
+VALUES(image_id, 20001, 1, 0,'feed02_2.jpg');
 
 INSERT
 INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
-VALUES(image_id, 20001, 0, 0,'feed02_3.jpg');
+VALUES(image_id, 20001, 2, 0,'feed02_3.jpg');
 
 commit;
