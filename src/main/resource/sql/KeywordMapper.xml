@@ -22,6 +22,7 @@
 	</insert>
 	
 	
+	<!-- 테그는 썸네일 이미지에 저장합니다. -->
 	<insert id ="addTag" parameterType="keyword">
 		INSERT INTO keywords (keyword_id, image_id, is_tag, user_code, keyword_en, keyword_origin, keyword_score)
 		VALUES(keyword_id, #{imageId}, 1, #{userCode:VARCHAR}, #{keywordEn:VARCHAR}, #{keywordOrigin:VARCHAR}, #{score:FLOAT})		
@@ -39,7 +40,7 @@
 	</select>
 	
 	<update id = "updateSaveTag" parameterType="int">
-		UPDATE keywords SET user_code = ""
+		UPDATE keywords SET user_code = NULL
 		WHERE keyword_id= #{value}
 	</update>
 	

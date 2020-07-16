@@ -40,7 +40,6 @@ public class ImageServicesImpl implements ImageServices {
 	public void deleteImage(int image) throws Exception {
 		// TODO Auto-generated method stub
 		imageDao.deleteImage(image);
-
 	}
 
 
@@ -60,6 +59,18 @@ public class ImageServicesImpl implements ImageServices {
 	public List<Image> getImageListFromColor(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		return imageDao.getImageListFromColor(search);
+	}
+
+	@Override
+	public List<Image> getImageListFromCategoroy(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return imageDao.getImageListFromCategoroy(search);
+	}
+
+	@Override
+	public List<Image> getImageListFromImage(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return imageDao.getImageListFromImage(search);
 	}
 
 }

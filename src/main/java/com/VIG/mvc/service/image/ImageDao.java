@@ -20,6 +20,13 @@ public interface ImageDao {
 	
 	//색상을 검색조건으로 입력
 	public List<Image> getImageListFromColor(Search search) throws Exception;
+	
+	//카테고리를 검색 조건으로 입력
+	public List<Image> getImageListFromCategoroy(Search search) throws Exception;
+	
+	//이미지(키워드)를 검색 조건으로 입력
+	public List<Image> getImageListFromImage(Search search) throws Exception;
+	
 		
 	public void deleteImage(int image) throws Exception;
 	
