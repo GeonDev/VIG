@@ -42,31 +42,49 @@ public class ImageDaoImpl implements ImageDao {
 		return sqlSession.selectOne("ImageMapper.getimageOne", imageId);
 	}
 
-	@Override
-	public List<Image> getImageList(Search search) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	@Override
-	public void deleteImage(String image) throws Exception {
+	public void deleteImage(int image) throws Exception {
 		// TODO Auto-generated method stub
 		sqlSession.delete("ImageMapper.deleteImage", image);
 
 	}
 
 
-	@Override
-	public List<Image> getImageListfromColor(Search search) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 	@Override
 	public List<Image> getALLImageList() throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("ImageMapper.getimageAll");
+	}
+
+
+	@Override
+	public List<Image> getImageListFromKeyword(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("ImageMapper.getImageListFromKeyword", search);
+	}
+
+
+	@Override
+	public List<Image> getImageListFromColor(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("ImageMapper.getImageListFromColor", search);
+	}
+
+
+	@Override
+	public List<Image> getImageListFromCategoroy(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("ImageMapper.getImageListFromCategory", search);
+	}
+
+
+	@Override
+	public List<Image> getImageListFromImage(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("ImageMapper.getImageListFromImage", search);
 	}
 
 }

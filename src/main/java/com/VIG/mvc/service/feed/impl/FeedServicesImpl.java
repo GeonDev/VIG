@@ -70,4 +70,22 @@ public class FeedServicesImpl implements FeedServices {
 		return feedDao.getFeedListOnlyTag(tag);
 	}
 
+	@Override
+	public List<Feed> getFeedListFromCategory(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return feedDao.getFeedListFromCategory(search);
+	}
+
+	@Override
+	public List<Feed> getFeedListFromKeyword(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return feedDao.getFeedListFromKeyword(search);
+	}
+
+	@Override
+	public List<Feed> getFeedListFromColor(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return feedDao.getFeedListFromColor(search);
+	}
+
 }
