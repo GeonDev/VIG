@@ -24,7 +24,12 @@
 		<insert id="addComment" parameterType="joiner">
 			INSERT INTO comments (comment_id, user_code, feed_id, comment_text, reg_date)
 			VALUES(comment_id, #{user.userCode}, #{feedId}, #{commentText:VARCHAR}, NOW())
-		</insert>	
+		</insert>
+		
+		<select id = 'getCommentFromFeed' parameterType="int" resultMap="commentSelectMap">
+			SELECT * FROM comments
+			WHERE feed_id = #{value}
+		</select>	
 		
 				 
 </mapper>
