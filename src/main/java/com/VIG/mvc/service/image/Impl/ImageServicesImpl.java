@@ -35,28 +35,31 @@ public class ImageServicesImpl implements ImageServices {
 		return imageDao.getImageOne(imageId);
 	}
 
-	@Override
-	public List<Image> getImageList(Search search) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
-	public void deleteImage(String image) throws Exception {
+	public void deleteImage(int image) throws Exception {
 		// TODO Auto-generated method stub
+		imageDao.deleteImage(image);
 
 	}
 
-	@Override
-	public List<Image> getImageListfromColor(Search search) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public List<Image> getALLImageList() throws Exception {
 		// TODO Auto-generated method stub
 		return imageDao.getALLImageList();
+	}
+
+	@Override
+	public List<Image> getImageListFromKeyword(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return imageDao.getImageListFromKeyword(search);
+	}
+
+	@Override
+	public List<Image> getImageListFromColor(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return imageDao.getImageListFromColor(search);
 	}
 
 }

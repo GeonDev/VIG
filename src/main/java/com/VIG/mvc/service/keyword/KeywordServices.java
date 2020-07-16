@@ -8,6 +8,8 @@ public interface KeywordServices {
 	
 	public void addKeyword(ImageKeyword keyword) throws Exception; 	
 	
+	public void addTag(ImageKeyword keyword) throws Exception; 	
+	
 	public List<ImageKeyword> getTagList(String userCode) throws Exception; 
 	
 	public List<ImageKeyword> getKeywordList(int imageId) throws Exception;
