@@ -15,7 +15,7 @@
 		<result property="selfIntroduce" 	column="self_introduce" 	jdbcType="VARCHAR" />
 		<result property="sex" 				column="sex" 				jdbcType="VARCHAR" />
 		<result property="birth" 			column="birth" 				jdbcType="NUMERIC" />
-		<result property="state" 			column="state" 				jdbcType="VARCHAR" />
+		<result property="state" 			column="state" 				jdbcType="NUMERIC" />
 		<result property="googleId" 		column="google_id" 			jdbcType="VARCHAR" />
 		<result property="account" 			column="account" 			jdbcType="VARCHAR" />
 		<result property="primeCount" 		column="prime_count" 		jdbcType="NUMERIC" />
@@ -28,7 +28,7 @@
 	<insert	id="addUser" parameterType="user" >
 	 	INSERT
 		INTO users('user_code' , user_name , password , role , profile_img, self_introduce, sex, birth, state, google_id, account, prime_count, email, varied_code, reg_date) 
-		VALUES (user_code, #{userName}, #{password:VARCHAR}, #{role:VARCHAR}, #{profileImg:VARCHAR}, #{selfIntroduce:VARCHAR}, #{sex:VARCHAR}, #{birth:NUMERIC}, #{state:VARCHAR}, #{googleId:VARCHAR}, #{account:VARCHAR}, #{primeCount:NUMERIC}, #{email:VARCHAR}, NOW())
+		VALUES (user_code, #{userName}, #{password:VARCHAR}, #{role:VARCHAR}, #{profileImg:VARCHAR}, #{selfIntroduce:VARCHAR}, #{sex:VARCHAR}, #{birth:NUMERIC}, #{state:NUMERIC}, #{googleId:VARCHAR}, #{account:VARCHAR}, #{primeCount:NUMERIC}, #{email:VARCHAR}, NOW())
 	 </insert>
 	 
 	 

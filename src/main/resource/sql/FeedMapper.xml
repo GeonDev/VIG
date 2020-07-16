@@ -15,7 +15,7 @@
 		<result property="feedViewCount" 		column="feed_view_count" 		jdbcType="NUMERIC" />
 		<result property="feedIsPrime" 			column="feed_is_prime" 			jdbcType="NUMERIC" />		
 		<result property="feedUseGears" 		column="feed_use_gears" 		jdbcType="VARCHAR" />
-		<result property="feedIsTemp" 			column="feed_is_temp" 			jdbcType="NUMERIC" />
+		<result property="feedState" 			column="feed_state" 			jdbcType="NUMERIC" />
 		<result property="primeFeedViewCount" 	column="prime_feed_view_count" 	jdbcType="NUMERIC" />
 		<result property="commentRange" 		column="comment_range" 			jdbcType="NUMERIC" />					
 		
@@ -67,8 +67,8 @@
 		</select>		
 		
 		<insert id ="insertFeed" parameterType="feed">
-			Insert INTO feeds(feed_id, user_code feed_title, feed_explanation, feed_reg_date, feed_is_prime, category, feed_use_gears, feed_is_temp, comment_range  )
-			VALUES(feed_id, #{writer.userCode}, #{feedTitle}, #{feedExplanation:VARCHAR}, NOW(), #{feedIsPrime:NUMERIC}, #{category:VARCHAR}, #{feedUseGears:VARCHAR}, #{feedIsTemp:NUMERIC}, #{commentRange:NUMERIC})		
+			Insert INTO feeds(feed_id, user_code feed_title, feed_explanation, feed_reg_date, feed_is_prime, category, feed_use_gears, feed_state, comment_range  )
+			VALUES(feed_id, #{writer.userCode}, #{feedTitle}, #{feedExplanation:VARCHAR}, NOW(), #{feedIsPrime:NUMERIC}, #{category:VARCHAR}, #{feedUseGears:VARCHAR}, #{feedState:NUMERIC}, #{commentRange:NUMERIC})		
 		</insert>
 		
 		<select id="getFeed" parameterType="int" resultMap="FeedSelectMap">
@@ -78,20 +78,22 @@
 		
 		<select id="getMyFeedList" parameterType="string" resultMap="FeedSelectMap">
 			SELECT * FROM feeds
-			WHERE user_code = #{value} AND feed_is_temp = 0
+			WHERE user_code = #{value} AND feed_state = 0
 		</select>
 		
 		
 		<select id ="getFeedListOnlyTag" parameterType="string" resultMap="FeedSelectMap">
 			SELECT * FROM feeds, images, keywords
-			WHERE feeds.feed_id = images.feed_id AND images.image_id = keywords.image_id
+			WHERE feeds.feed_id = images.feed_id
+			AND images.image_id = keywords.image_id
+			AND feed_state = 0
 			AND keywords.keyword_origin = #{value}			
 		</select>
 		
 		
 		<select id="getTempFeed" parameterType="string" resultMap="FeedSelectMap">
 			SELECT * FROM feeds
-			WHERE user_code = #{value} AND feed_is_temp = 1
+			WHERE user_code = #{value} AND feed_state = 1
 		</select>
 		
 		<delete id="deleteFeed" parameterType="int">
@@ -103,7 +105,8 @@
 			SELECT *  FROM
 			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feeds.* FROM feeds, categories
 			WHERE feeds.category_id = categories.category_id 
-			AND feeds.feed_is_temp = 0  AND categories.category_name = #{keyword})
+			AND feeds.feed_state = 0
+			AND categories.category_name = #{keyword})
 			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}		
 		</select>
 		
@@ -111,7 +114,10 @@
 		<select id="getfeedListFromKeyword" parameterType="search" resultMap="FeedSelectMap">
 			SELECT *  FROM
 			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feeds.* FROM feeds, images, keywords
-			WHERE feeds.feed_id = images.feed_id AND images.image_id = keywords.image_id AND images.is_thumbnail = 1
+			WHERE feeds.feed_id = images.feed_id
+			AND images.image_id = keywords.image_id
+			AND images.is_thumbnail = 1
+			AND feeds.feed_state = 0
 			AND keywords.keyword_en = #{keyword})
 			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}		
 		</select>	
@@ -120,7 +126,10 @@
 		<select id="getfeedListFromColor" parameterType="search" resultMap="FeedSelectMap">
 			SELECT *  FROM
 			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feeds.* FROM feeds, images,colors
-			WHERE feeds.feed_id = images.feed_id AND images.image_id = colors.image_id AND images.is_thumbnail = 1
+			WHERE feeds.feed_id = images.feed_id 
+			AND images.image_id = colors.image_id
+			AND images.is_thumbnail = 1
+			AND feeds.feed_state = 0
 			AND colors.color_r BETWEEN #{startRed} AND #{endRed} 
 			AND colors.color_g BETWEEN #{startGreen} AND #{endGreen} 
 			AND colors.color_b BETWEEN #{startBlue} AND #{endBlue})
