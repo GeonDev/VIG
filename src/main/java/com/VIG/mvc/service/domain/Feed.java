@@ -1,12 +1,13 @@
 package com.VIG.mvc.service.domain;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
 import lombok.Data;
 
 @Data
-public class Feed {
+public class Feed implements Serializable{
 	
 	private int feedId;
 	private String feedTitle;

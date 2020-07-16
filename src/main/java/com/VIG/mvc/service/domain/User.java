@@ -1,12 +1,13 @@
 package com.VIG.mvc.service.domain;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
 import lombok.Data;
 
 @Data
-public class User {
+public class User implements Serializable{
 	
 	private int userCode;
 	private String userName;

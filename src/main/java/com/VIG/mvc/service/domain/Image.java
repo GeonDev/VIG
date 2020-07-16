@@ -1,11 +1,12 @@
 package com.VIG.mvc.service.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
 import lombok.Data;
 
 @Data
-public class Image {
+public class Image implements Serializable{
 
 	private int imageId;
 	private int feedId;
