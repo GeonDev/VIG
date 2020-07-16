@@ -16,12 +16,20 @@ public interface ImageDao {
 	public List<Image> getALLImageList() throws Exception;
 	
 	//검색조건을 넣어 이미지 리스트를 출력
-	public List<Image> getImageList(Search search) throws Exception;	
+	public List<Image> getImageListFromKeyword(Search search) throws Exception;
 	
-	//색상을 기준으로 조회
-	public List<Image> getImageListfromColor(Search search) throws Exception;
+	//색상을 검색조건으로 입력
+	public List<Image> getImageListFromColor(Search search) throws Exception;
+	
+	//카테고리를 검색 조건으로 입력
+	public List<Image> getImageListFromCategoroy(Search search) throws Exception;
+	
+	//이미지(키워드)를 검색 조건으로 입력
+	public List<Image> getImageListFromImage(Search search) throws Exception;
+	
 		
-	public void deleteImage(String image) throws Exception;
+	public void deleteImage(int image) throws Exception;
+	
 
 }
 

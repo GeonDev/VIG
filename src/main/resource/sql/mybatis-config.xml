@@ -19,6 +19,7 @@
 		<typeAlias alias="comment" 		type="com.VIG.mvc.service.domain.Comment"/>
 		<typeAlias alias="report" 		type="com.VIG.mvc.service.domain.Report"/>
 		<typeAlias alias="history" 		type="com.VIG.mvc.service.domain.History"/>
+		<typeAlias alias="search" 		type="com.VIG.mvc.service.domain.Search"/>
 	</typeAliases>
 	
 	 <!-- SQL Definition :: file include -->

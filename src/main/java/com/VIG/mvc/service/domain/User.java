@@ -17,7 +17,7 @@ public class User {
 	private String selfIntroduce;
 	private String sex;
 	private int birth;
-	private String state;
+	private int state;
 	private String googleId;
 	private String account;
 	private int primeCount;

@@ -17,9 +17,17 @@
 	</resultMap>	
 	
 	<insert id ="addkeyword" parameterType="keyword">
-		INSERT INTO keywords (keyword_id, image_id, is_tag, user_code, keyword_en, keyword_origin, keyword_score)
-		VALUES(keyword_id, #{imageId}, #{isTag:NUMERIC}, #{userCode:VARCHAR}, #{keywordEn:VARCHAR}, #{keywordOrigin:VARCHAR}, #{score:FLOAT})		
+		INSERT INTO keywords (keyword_id, image_id, is_tag, keyword_en, keyword_origin, keyword_score)
+		VALUES(keyword_id, #{imageId}, 0,  #{keywordEn:VARCHAR}, #{keywordOrigin:VARCHAR}, #{score:FLOAT})		
 	</insert>
+	
+	
+	<!-- 테그는 썸네일 이미지에 저장합니다. -->
+	<insert id ="addTag" parameterType="keyword">
+		INSERT INTO keywords (keyword_id, image_id, is_tag, user_code, keyword_en, keyword_origin, keyword_score)
+		VALUES(keyword_id, #{imageId}, 1, #{userCode:VARCHAR}, #{keywordEn:VARCHAR}, #{keywordOrigin:VARCHAR}, #{score:FLOAT})		
+	</insert>
+	
 
 	<select id = "getTagList" parameterType="string" resultMap="keywordSelectMap">
 		SELECT * FROM keywords
@@ -32,7 +40,7 @@
 	</select>
 	
 	<update id = "updateSaveTag" parameterType="int">
-		UPDATE keywords SET user_code = ""
+		UPDATE keywords SET user_code = NULL
 		WHERE keyword_id= #{value}
 	</update>
 	
