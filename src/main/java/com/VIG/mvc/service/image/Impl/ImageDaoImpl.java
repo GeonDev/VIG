@@ -73,4 +73,18 @@ public class ImageDaoImpl implements ImageDao {
 		return sqlSession.selectList("ImageMapper.getImageListFromColor", search);
 	}
 
+
+	@Override
+	public List<Image> getImageListFromCategoroy(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("ImageMapper.getImageListFromCategory", search);
+	}
+
+
+	@Override
+	public List<Image> getImageListFromImage(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("ImageMapper.getImageListFromImage", search);
+	}
+
 }

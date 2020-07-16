@@ -60,6 +60,8 @@
 		</select>
 		
 		
+		<!-- 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 -->
+		
 		<select id = "getlastFeedId" resultType="int">
 			SELECT MAX(feed_id) FROM feeds
 		</select>		
@@ -96,8 +98,34 @@
 		 	DELETE FROM feeds
 		 	WHERE feed_id = #{value}
 		</delete>
-	
-	
+						
+		<select id="getfeedListFromCategory" parameterType="search" resultMap="FeedSelectMap">
+			SELECT *  FROM
+			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feeds.* FROM feeds, categories
+			WHERE feeds.category_id = categories.category_id 
+			AND feeds.feed_is_temp = 0  AND categories.category_name = #{keyword})
+			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}		
+		</select>
+		
+		
+		<select id="getfeedListFromKeyword" parameterType="search" resultMap="FeedSelectMap">
+			SELECT *  FROM
+			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feeds.* FROM feeds, images, keywords
+			WHERE feeds.feed_id = images.feed_id AND images.image_id = keywords.image_id AND images.is_thumbnail = 1
+			AND keywords.keyword_en = #{keyword})
+			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}		
+		</select>	
+		
+		
+		<select id="getfeedListFromColor" parameterType="search" resultMap="FeedSelectMap">
+			SELECT *  FROM
+			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feeds.* FROM feeds, images,colors
+			WHERE feeds.feed_id = images.feed_id AND images.image_id = colors.image_id AND images.is_thumbnail = 1
+			AND colors.color_r BETWEEN #{startRed} AND #{endRed} 
+			AND colors.color_g BETWEEN #{startGreen} AND #{endGreen} 
+			AND colors.color_b BETWEEN #{startBlue} AND #{endBlue})
+			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}		
+		</select>	
 	 
 </mapper>
 

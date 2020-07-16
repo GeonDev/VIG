@@ -22,5 +22,11 @@ public interface FeedServices {
 	public Feed getTempFeed(String userCode) throws Exception;	
 	
 	public int getLastFeedId() throws Exception;
+	
+	public List<Feed> getFeedListFromCategory(Search search) throws Exception;	
+	
+	public List<Feed> getFeedListFromKeyword(Search search) throws Exception;	
+	
+	public List<Feed> getFeedListFromColor(Search search) throws Exception;	
 
 }
