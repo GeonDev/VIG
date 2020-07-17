@@ -48,7 +48,7 @@
 </head>
 <body>
 	
-		<div class="container-fulid">
+		<div class="container-fluid">
 			<div class="col-md-12">
 				<div class="row">
 
