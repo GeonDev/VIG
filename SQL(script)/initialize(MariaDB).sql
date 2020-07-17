@@ -28,7 +28,7 @@ CREATE TABLE users (
 	self_introduce  	 VARCHAR(1024),	
 	sex  				 VARCHAR(10),
 	birth  				 INT(4),
-	state  				 VARCHAR(50),
+	state  				 TINYINT(1),
 	google_id  			 VARCHAR(50),
 	account  			 VARCHAR(50),
 	prime_count  		 INT(11),
@@ -52,12 +52,12 @@ CREATE TABLE feeds (
 	user_code 		 		 VARCHAR(20)  	NOT NULL REFERENCES users(user_code),
 	feed_reg_date 			 VARCHAR(20), 
 	feed_edit_date 			 VARCHAR(20), 
-	feed_view_count 		 INT(11), 
-	feed_is_prime 			 TINYINT(1), 
+	feed_view_count 		 INT(11)		DEFAULT 0, 
+	feed_is_prime 			 TINYINT(1)		DEFAULT 0, 
 	category_id  			 INT(11)   		REFERENCES categories(category_id),  	 	
 	feed_use_gears 		 	 VARCHAR(1024), 
-	feed_is_temp 			 TINYINT(1), 
-	prime_feed_view_count 	 INT(11), 
+	feed_state 				 TINYINT(1) 	DEFAULT 0, 
+	prime_feed_view_count 	 INT(11) 		DEFAULT 0, 
 	comment_range 			 TINYINT(1), 
 	PRIMARY KEY(feed_id)
 );
@@ -67,7 +67,7 @@ CREATE TABLE images (
 	image_id 				 INT(11)  		NOT NULL AUTO_INCREMENT,
 	feed_id  				 INT(11) 		NOT NULL REFERENCES feeds(feed_id),
 	feed_order  			 INT(11), 
-	is_thumbnail 			 TINYINT(1), 	
+	is_thumbnail 			 TINYINT(1)		DEFAULT 0, 	
 	image_file  			 VARCHAR(100)  	NOT NULL,
 	PRIMARY KEY(image_id)
 );
@@ -95,9 +95,9 @@ CREATE TABLE joiner (
 
 CREATE TABLE keywords ( 
 	keyword_id 				 INT(11)  		NOT NULL AUTO_INCREMENT,
-	image_id  				 INT(11) 		NOT NULL REFERENCES images(image_no),
+	image_id  				 INT(11) 		REFERENCES images(image_id),
 	is_tag 					 TINYINT(1),
-	user_code 				 VARCHAR(20) 	REFERENCES users(user_code),			 
+	user_code  				 VARCHAR(20)    REFERENCES users(user_code),			 
 	keyword_en 				 VARCHAR(100), 
 	keyword_origin 			 VARCHAR(100), 
 	keyword_score 			 FLOAT(5,5), 	
@@ -272,6 +272,87 @@ INTO users (user_code, user_name, password, role, profile_img, self_introduce, s
 VALUES ('user02', 'atom22', '2222', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
 
 INSERT
+INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
+VALUES ('user03', 'atom33', '3333', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+
+INSERT
+INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
+VALUES ('user04', 'atom44', '4444', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+
+INSERT
+INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
+VALUES ('user05', 'atom55', '5555', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
+
+
+
+INSERT
+INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
+VALUES ('user06', 'atom66', '6666', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
+
+INSERT
+INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
+VALUES ('user07', 'atom77', '7777', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+
+INSERT
+INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
+VALUES ('user08', 'atom88', '8888', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+
+INSERT
+INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
+VALUES ('user09', 'atom99', '9999', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+
+INSERT
+INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
+VALUES ('user10', 'atom10', '1010', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
+
+
+
+INSERT
+INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
+VALUES ('user11', 'atom11', '1111', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+
+INSERT
+INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
+VALUES ('user12', 'atom12', '1212', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+
+INSERT
+INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
+VALUES ('user13', 'atom13', '1313', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+
+INSERT
+INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
+VALUES ('user14', 'atom14', '1414', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
+
+INSERT
+INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
+VALUES ('user15', 'atom15', '1515', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+
+
+
+INSERT
+INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
+VALUES ('user16', 'atom16', '1616', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+
+INSERT
+INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
+VALUES ('user17', 'atom17', '1717', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
+
+INSERT
+INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
+VALUES ('user18', 'atom18', '1818', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+
+INSERT
+INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
+VALUES ('user19', 'atom19', '1919', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+
+INSERT
+INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
+VALUES ('user20', 'atom20', '2020', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+
+
+
+
+INSERT
 INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
 VALUES(feed_id, 'After Opportunity', 'After Opportunity centres on the curatorial concept of an exhibition on paper.', 'user01', NOW(), 1, 10003);
 
@@ -285,15 +366,15 @@ VALUES(image_id, 20000, 0, 0,'feed01_1.jpg');
 
 INSERT
 INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
-VALUES(image_id, 20000, 0, 1,'feed01_2.jpg');
+VALUES(image_id, 20000, 1, 0,'feed01_2.jpg');
 
 INSERT
 INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
-VALUES(image_id, 20000, 0, 2,'feed01_3.jpg');
+VALUES(image_id, 20000, 2, 0,'feed01_3.jpg');
 
 INSERT
 INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
-VALUES(image_id, 20000, 0, 3,'feed01_4.jpg');
+VALUES(image_id, 20000, 3, 0,'feed01_4.jpg');
 
 INSERT
 INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
