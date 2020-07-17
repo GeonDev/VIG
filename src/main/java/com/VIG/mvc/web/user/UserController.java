@@ -22,7 +22,7 @@ public class UserController {
 	public UserController() {
 		// TODO Auto-generated constructor stub
 	}
-	
+//=========회원가입===========================================================//
 	@RequestMapping(value="addUser", method=RequestMethod.GET)
 	public ModelAndView addUser() throws Exception{
 		
@@ -51,4 +51,7 @@ public class UserController {
 		
 		return modelAndView;
 	}
+//==========================================================================//
+	
+	
 }
