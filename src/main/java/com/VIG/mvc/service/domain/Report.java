@@ -20,6 +20,13 @@ public class Report implements Serializable{
 	private int banType;	
 	private Date banDate;
 	
+	//누적 신고 횟수 
+	private int totalCount;
+	
+	//최신 신고 횟수
+	private int currentCount;
+	
+	
 
 	public Report() {
 		// TODO Auto-generated constructor stub
