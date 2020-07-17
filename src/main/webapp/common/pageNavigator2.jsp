@@ -1,17 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
  
 <div class="container text-center">
 		 
-		 <nav>
+		 <nav aria-label="Page navigation">
 	
-		  <ul class="pagination" >
+		  <ul class="pagination pg-blue" >
 		    
 		    <!--  <<== 좌측 nav -->
 		  	<c:if test="${ resultPage.currentPage <= resultPage.pageUnit }">
-		 		<li class="disabled">
+		 		<li class="page-item disabled">
 			</c:if>
 			<c:if test="${ resultPage.currentPage > resultPage.pageUnit }">
 				<li>
@@ -26,8 +27,9 @@
 				
 				<c:if test="${ resultPage.currentPage == i }">
 					<!--  현재 page 가르킬경우 : active -->
-				    <li class="active">
-				    	<a href="javascript:funcGetList('${ i }');">${ i }<span class="sr-only">(current)</span></a>
+				    <li class="page-item active">
+				    	<a href="javascript:funcGetList('${ i }');">${ i }
+				    	<span class="sr-only">(current)</span></a>
 				    </li>
 				</c:if>	
 				
@@ -40,7 +42,7 @@
 		    
 		     <!--  우측 nav==>> -->
 		     <c:if test="${ resultPage.endUnitPage >= resultPage.maxPage }">
-		  		<li class="disabled">
+		  		<li class="page-item disabled">
 			</c:if>
 			<c:if test="${ resultPage.endUnitPage < resultPage.maxPage }">
 				<li>
@@ -52,26 +54,4 @@
 		  </ul>
 		</nav>
 		
-</div>
- 
-
-
-<div class="container">
-		<nav>
-		  <ul class="pager">
-		    <li><a href="#">Previous</a></li>
-		    <li><a href="#">Next</a></li>
-		  </ul>
-		</nav>
-</div>
-
-
-<div class="container">
-		<nav>
-		  <ul class="pager">
-		    <li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li>
-
-		    <li class="next"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li>
-		  </ul>
-		</nav>
 </div>
