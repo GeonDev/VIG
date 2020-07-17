@@ -1,12 +1,13 @@
 package com.VIG.mvc.service.domain;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
 import lombok.Data;
 
 @Data
-public class Feed {
+public class Feed implements Serializable{
 	
 	private int feedId;
 	private String feedTitle;
@@ -28,6 +29,9 @@ public class Feed {
 	private List<Image> images;
 	private List<JoinUser> likes;
 	private List<Comment> comments;
+	
+	//최근 검색 키워드와 겹치는 개수 - 검색시 정렬용으로 사용
+	private int currentKeywordSameCount;
 	
 
 	public Feed() {
