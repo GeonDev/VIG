@@ -1,5 +1,7 @@
 package com.VIG.mvc.service.user.Impl;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -26,7 +28,7 @@ public class UserServicesImpl implements UserServices {
 	}
 
 	@Override
-	public User getUser(int userId) throws Exception {
+	public User getUser(String userCode) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -34,7 +36,33 @@ public class UserServicesImpl implements UserServices {
 	@Override
 	public void updateUser(User user) throws Exception {
 		// TODO Auto-generated method stub
-
 	}
+	
+	@Override
+	public Map<String , Object > getUserList(User user) throws Exception{
+		
+		return null;
+	}
+	
+	@Override
+	public boolean sendEmail(String email) throws Exception{
+		
+		return false;
+	}
+	
+	@Override
+	public boolean checkDuplication(String userCode) throws Exception {
+		
+		return false;
+	}
+	
+	@Override
+	public void deleteUser(User user) throws Exception{
+		
+	}
+	
+	
+	
+	
 
 }

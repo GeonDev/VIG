@@ -22,5 +22,11 @@ public interface FeedDao {
 	public int getLastFeedId() throws Exception;
 	
 	public List<Feed> getFeedListOnlyTag(String tag) throws Exception;
+	
+	public List<Feed> getFeedListFromCategory(Search search) throws Exception;	
+	
+	public List<Feed> getFeedListFromKeyword(Search search) throws Exception;	
+	
+	public List<Feed> getFeedListFromColor(Search search) throws Exception;	
 
 }

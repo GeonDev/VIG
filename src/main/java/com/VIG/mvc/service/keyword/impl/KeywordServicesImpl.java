@@ -44,4 +44,17 @@ public class KeywordServicesImpl implements KeywordServices {
 		keywordDao.updateSaveTag(keywordId);
 	}
 
+	@Override
+	public void addTag(ImageKeyword keyword) throws Exception {
+		// TODO Auto-generated method stub
+		keywordDao.addTag(keyword);
+		
+	}
+
+	@Override
+	public List<ImageKeyword> getFeedKeywordList(int feedId) throws Exception {
+		// TODO Auto-generated method stub
+		return keywordDao.getFeedKeywordList(feedId);
+	}
+
 }
