@@ -63,7 +63,7 @@
 		AND feeds.feed_state = 0
 		AND colors.color_r BETWEEN #{startRed} AND #{endRed} 
 		AND colors.color_g BETWEEN #{startGreen} AND #{endGreen} 
-		AND colors.color_b BETWEEN #{startBlue} AND  #{endBlue})
+		AND colors.color_b BETWEEN #{startBlue} AND  #{endBlue}) temp
 		WHERE num BETWEEN #{startRowNum} AND #{endRowNum}           
 	</select>
 	
@@ -75,7 +75,7 @@
 		AND feeds.feed_id = images.feed_id 
 		AND images.is_thumbnail = 0
 		AND feeds.feed_state = 0
-		AND keywords.keyword_en = #{keyword})
+		AND keywords.keyword_en = #{keyword}) temp
 		WHERE num BETWEEN #{startRowNum} AND #{endRowNum}	
 	</select>
 	
@@ -87,7 +87,7 @@
 		AND categories.category_id = feeds.category_id
 		AND categories.category_name = #{keyword}
 		AND images.is_thumbnail = 0
-		AND feeds.feed_state = 0 )
+		AND feeds.feed_state = 0 ) temp
 		WHERE num BETWEEN #{startRowNum} AND #{endRowNum}	
 	</select>
 	
@@ -103,7 +103,7 @@
 		<foreach collection="keywords" item="item" open="(" close=")" separator=",">
 		 #{item}
 		</foreach>	
-		) WHERE num BETWEEN #{startRowNum} AND #{endRowNum}	
+		)temp WHERE num BETWEEN #{startRowNum} AND #{endRowNum}	
 		
 	</select>
 	

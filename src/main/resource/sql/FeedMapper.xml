@@ -106,7 +106,7 @@
 			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feeds.* FROM feeds, categories
 			WHERE feeds.category_id = categories.category_id 
 			AND feeds.feed_state = 0
-			AND categories.category_name = #{keyword})
+			AND categories.category_name = #{keyword}) temp
 			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}		
 		</select>
 		
@@ -118,7 +118,7 @@
 			AND images.image_id = keywords.image_id
 			AND images.is_thumbnail = 1
 			AND feeds.feed_state = 0
-			AND keywords.keyword_en = #{keyword})
+			AND keywords.keyword_en = #{keyword}) temp
 			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}		
 		</select>	
 		
@@ -132,7 +132,7 @@
 			AND feeds.feed_state = 0
 			AND colors.color_r BETWEEN #{startRed} AND #{endRed} 
 			AND colors.color_g BETWEEN #{startGreen} AND #{endGreen} 
-			AND colors.color_b BETWEEN #{startBlue} AND #{endBlue})
+			AND colors.color_b BETWEEN #{startBlue} AND #{endBlue}) temp
 			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}		
 		</select>	
 	 
