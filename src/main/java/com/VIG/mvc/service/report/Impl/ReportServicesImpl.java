@@ -53,4 +53,16 @@ public class ReportServicesImpl implements ReportServices {
 		return reportDao.getCountReportList(search);
 	}
 
+	@Override
+	public List<Report> getReportListFromUser(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return reportDao.getReportListFromUser(search);
+	}
+
+	@Override
+	public int getCountReportListFromUser(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return reportDao.getCountReportListFromUser(search);
+	}
+
 }

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.VIG.mvc.service.domain.Page;
@@ -75,6 +76,34 @@ public class ReportController {
 		// Model 과 View 연결
 		modelAndView.setViewName("forward:/report/getReportlist.jsp");
 		modelAndView.addObject("list", reportService.getReportList(search));
+		modelAndView.addObject("resultPage", resultPage);
+		modelAndView.addObject("search", search);
+
+		return modelAndView;
+	}	
+	
+	@RequestMapping("getReportListFromUser")
+	public ModelAndView getReportListFromUser(@ModelAttribute("search") Search search, @RequestParam("userCode") String userCode) throws Exception { 
+		
+		// 현재 페이지값이 없으면 첫번째 페이지로 설정
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		
+		//유저를 세팅
+		search.setKeyword(userCode);		
+		
+		search.setCurrentDate(currentDate);
+		search.setPageSize(pageSize);
+		
+		Page resultPage = new Page(search.getCurrentPage(), reportService.getCountReportListFromUser(search) , pageUnit, pageSize);
+		
+		
+		ModelAndView modelAndView = new ModelAndView();
+
+		// Model 과 View 연결
+		modelAndView.setViewName("forward:/report/getReportlistFromUser.jsp");
+		modelAndView.addObject("list", reportService.getReportListFromUser(search));
 		modelAndView.addObject("resultPage", resultPage);
 		modelAndView.addObject("search", search);
 

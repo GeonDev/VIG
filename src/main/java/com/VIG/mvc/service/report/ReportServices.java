@@ -11,7 +11,11 @@ public interface ReportServices {
 	
 	public List<Report> getReportList(Search search) throws Exception;
 	
+	public List<Report> getReportListFromUser(Search search) throws Exception;
+	
 	public int getCountReportList (Search search) throws Exception;
+	
+	public int getCountReportListFromUser (Search search) throws Exception;
 
 	public void updateBanState(Report report) throws Exception;
 	
