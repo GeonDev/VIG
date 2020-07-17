@@ -1,11 +1,12 @@
 package com.VIG.mvc.service.domain;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import lombok.Data;
 
 @Data
-public class Comment {
+public class Comment implements Serializable{
 
 	private int commentId;
 	private int feedId;

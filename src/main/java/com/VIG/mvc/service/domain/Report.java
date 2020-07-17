@@ -1,11 +1,12 @@
 package com.VIG.mvc.service.domain;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import lombok.Data;
 
 @Data
-public class Report {
+public class Report implements Serializable{
 	
 	private int reportId;
 	private User violator;

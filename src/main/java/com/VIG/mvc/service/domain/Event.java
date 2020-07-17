@@ -1,10 +1,11 @@
 package com.VIG.mvc.service.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
 
 @Data
-public class Event {
+public class Event implements Serializable{
 	
 	//field
 	public int eventId;

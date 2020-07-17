@@ -1,9 +1,11 @@
 package com.VIG.mvc.service.domain;
 
+import java.io.Serializable;
+
 import lombok.Data;
 
 @Data
-public class ImageColor {	
+public class ImageColor implements Serializable{	
 	
 	private float colorId;
 	private float ImageId;
