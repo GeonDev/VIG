@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.VIG.mvc.service.color.ColorServices;
+import com.VIG.mvc.service.domain.Event;
+import com.VIG.mvc.service.domain.Feed;
 import com.VIG.mvc.service.domain.ImageColor;
 import com.VIG.mvc.service.domain.ImageKeyword;
 import com.VIG.mvc.service.image.ImageServices;
@@ -62,8 +65,16 @@ public class FeedController {
 	
 	
 	@RequestMapping(value = "upload", method = RequestMethod.POST)
-	public ModelAndView updatefile(@RequestParam("uploadFile") List<MultipartFile> files) throws Exception {
+	public ModelAndView updatefile(@ModelAttribute("feed") Feed feed,@RequestParam("uploadFile") List<MultipartFile> files) throws Exception {
 		
+		System.out.println("addFeed : POST");
+		
+		System.out.println(feed);
+		
+		
+		
+		
+		System.out.println("추가한 이미지 파일: "+files);
         String path = context.getRealPath("/");        
         path = path.substring(0,path.indexOf("\\.metadata"));         
         path = path +  uploadPath;  
