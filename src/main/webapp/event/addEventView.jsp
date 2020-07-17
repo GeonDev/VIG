@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -79,7 +79,7 @@ $(function(){
 	$("#submit").on('click', function(){
 		alert("11");
 		
-		$(".myform").attr("method", "post").attr("action", "./addEvent").submit();
+		$(".myform").attr("method", "post").attr("action", "./addEvent").attr( "enctype","multipart/form-data").submit();
 			
 	});
 	
@@ -128,7 +128,7 @@ $(function(){
 	  <input type="radio" class="form-check-input" id="materialChecked2" name="eventType" value="0" checked>
 	  <label class="form-check-label" for="materialChecked2">이벤트</label>
 	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	   <input type="radio" class="form-check-input" id="materialChecked2" name="eventType" value="1" checked>
+	   <input type="radio" class="form-check-input" id="materialChecked2" name="eventType" value="1" >
 	  <label class="form-check-label" for="materialChecked2">당첨자 발표</label>
 	</div>
 
@@ -136,7 +136,7 @@ $(function(){
 	<hr/>
 	<img id="preview" src="" width="700" alt="로컬에 있는 이미지가 보여지는 영역">
 		
-		<input type="file" id="getfile" name="uploadImage" accept="image/*">
+		<input type="file" id="getfile" name="uploadFile" accept="image/*">
 	
 	<hr/>
 	<br/>
@@ -144,10 +144,32 @@ $(function(){
 	<table>
 		<tr>
 			<td>
+				태그  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			</td>
+			<td>
+				<input type="text" name="eventTags">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				기간  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			</td>
+			<td>
+				<input type="date" name="eventStart" >	
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="date" name="eventEnd" >	
+			</td>
+		</tr>
+	</table>
+	
+	
+	<table>
+		<tr>
+			<td>
 				썸네일  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			</td>
 			<td>
-				<input type="file" name="uploadImage" accept="image/*">
+				<input type="file" name="uploadFile" accept="image/*">
 			</td>
 		</tr>
 		<tr>
@@ -155,7 +177,7 @@ $(function(){
 				배너  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			</td>
 			<td>
-				<input type="file" name="uploadImage" accept="image/*">	
+				<input type="file" name="uploadFile" accept="image/*">	
 			</td>
 		</tr>
 	</table>
