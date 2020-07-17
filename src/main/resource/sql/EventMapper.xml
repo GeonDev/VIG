@@ -12,7 +12,7 @@
 		<result property="eventStart" 		column="event_start" 		jdbcType="DATE" />
 		<result property="eventEnd" 	column="event_end" 		jdbcType="DATE" />
 		<result property="eventThumb" 	column="evnet_thumb" 		jdbcType="VARCHAR" />
-		<result property="eventTags" 	column="event_tags" 	jdbcType="VARCHAR" />	
+		<result property="eventTags" 	column="event_tag" 	jdbcType="VARCHAR" />	
 		<result property="eventImage" 	column="event_Image" 	jdbcType="VARCHAR" />
 		<result property="eventRegDate" 	column="event_RegDate" 	jdbcType="DATE" />
 		<result property="banner" 	column="banner" 	jdbcType="VARCHAR" />	
@@ -37,7 +37,7 @@
 		FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 		FROM	(	SELECT event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner
 		FROM event ) inner_table
-		WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE ROWNUM &lt;= #{endRowNum} ) temp
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
 			
 	</select>
