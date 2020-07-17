@@ -54,18 +54,13 @@
 
 	function funcGetList(currentPage) {
 		$("#currentPage").val(currentPage);
-		$("form").attr("action", "/reportController/getReportList");
+		$("form").attr("action", "/reportController/getReportListFromUser");
 		$("form").submit();
 	}
 	
 	
-	$(function(){
-		
-		$("td:nth-child(7)").on("click",function(){					
-			var url = "./getReportListFromUser?userCode=";
-			url = url.concat($(this).children('span').text()); 		
-			self.location.href = url;			
-		});
+	$(function(){		
+
 
 	
 	});
@@ -79,22 +74,25 @@
 	
 		<div class="container">
 			<div class="page-header text-info">
-				<h3>신고목록조회</h3>
-			</div>	
+				<h3>신고 내용 상세 조회</h3>
+			</div>			
 			
-			<hr/>		
+			<hr/>
 		
 			<form method="post">						
 				<table class="table table-hover table-striped" >
 					<thead>
 			          <tr>
 			            <th align="center">No</th>
-			            <th align="left" >유저 이름</th>
-			            <th align="left">최근신고횟수</th>
-			            <th align="left">누적신고횟수</th>
-			            <th align="left">상태</th>
-			            <th align="left">처리 일시</th>
-			            <th align="left">상세 보기</th>
+			            <th align="left">유저 이름</th>
+			            <th align="left">신고자 이름</th>
+			            <th align="left">신고 피드</th>
+			            <th align="left">신고 유형</th>
+			            <th align="left">신고 메세지</th>
+			            <th align="left">신고 일자</th>
+			            <th align="left">현재 상태</th>
+			            <th align="left">재제 일자</th>
+			            <th align="left">이전 처리</th>
 			          </tr>
 			        </thead>
 				
@@ -106,10 +104,27 @@
 			
 								<tr>
 									<td align="center">${i}	</td>
-									<td align="left" >${(report.violator).userName}										
+									<td align="left" >${(report.violator).userName}</td>
+									<td align="left">${(report.reporter).userName}</td>
+									<td align="left">${report.reportFeedId}</td>
+									<td align="left">									
+									 	<c:choose>								
+										<c:when test="${report.reportType == '0'}">		
+											혐오 표현
+										</c:when>
+										<c:when test="${report.reportType == '1'}">
+											음란물
+										</c:when>
+										<c:when test="${report.reportType == '2'}">
+											모욕적인 내용 
+										</c:when>
+										<c:when test="${report.reportType == '3'}">
+											저작권 침해
+										</c:when>								
+										</c:choose>													
 									</td>
-									<td align="left">${report.currentCount}</td>
-									<td align="left">${report.totalCount}</td>												
+									<td align="left">${report.reportMessage}</td>
+									<td align="left">${report.reportDate}</td>																					
 									<td align="left">									
 									 	<c:choose>								
 										<c:when test="${report.banType == '0'}">		
@@ -126,11 +141,23 @@
 										</c:when>								
 										</c:choose>													
 									</td>
-									<td align="left">${report.banDate}</td>									
+									<td align="left">${report.banDate}</td>	
 									<td align="left">									
-										<i class="fas fa-check"></i>
-										<span style="display:none" >${(report.violator).userCode} </span>									
-									</td>											
+									 	<c:choose>								
+										<c:when test="${report.banHistory == '0'}">		
+											정상
+										</c:when>
+										<c:when test="${report.banHistory == '1'}">
+											3일 접속제한
+										</c:when>
+										<c:when test="${report.banHistory == '2'}">
+											7일 접속제한 
+										</c:when>
+										<c:when test="${report.banHistory == '3'}">
+											영구 정지
+										</c:when>								
+										</c:choose>													
+									</td>																			
 								</tr>
 								
 							</c:forEach>	        

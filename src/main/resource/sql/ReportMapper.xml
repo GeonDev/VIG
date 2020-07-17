@@ -70,6 +70,12 @@
 		WHERE num BETWEEN #{startRowNum} AND #{endRowNum}	
 	</select>
 	
+	
+	<select id="getCountReportListFromUser" parameterType="search"  resultType="int">
+		SELECT COUNT(*) FROM report 
+		 WHERE violator_code = #{keyword}
+	</select>
+	
 	<update id="updateBanState" parameterType="report">
 		UPDATE report INNER JOIN users on report.violator_code = users.user_code
 		SET report.current_ban_type = #{banType}, ban_history = #{banType}, report.current_ban_date = DATE_FORMAT(NOW(), '%Y-%m-%d'), users.state = #{banType}
