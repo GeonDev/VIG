@@ -10,19 +10,21 @@
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	
-	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
        body > div.container{
         	border: 3px solid #D6CDB7;
             margin-top: 10px;
           	canvas { border: solid 1px black; display: block; }
         }
+        
+        
+        
+  
         
     </style>
 <script type="text/javascript">
@@ -34,7 +36,7 @@ var iCropLeft, iCropTop, iCropWidth, iCropHeight;
 $(function() {
 	//DOM Object GET 3가지 방법  1. $(tagName) : 2.(#id) : 3.$(.className)
 	$( "button.btn.btn-primary" ).on("click" , function() {
-		document.detailForm.action='testController/upload';
+		document.detailForm.action='feedController/upload';
 		document.detailForm.submit();
 	});
 });	
@@ -179,6 +181,22 @@ function AddCropMoveEvent()
 		bDrag = false;
 	};
 }
+
+//resize Test 돼줘
+function fileCheck(el) { 
+    if(!/\.(jpeg|jpg|png|gif|bmp)$/i.test(el.value)){ 
+        alert('이미지 파일만 업로드 가능합니다.'); 
+        el.value = ''; 
+        el.focus(); 
+        
+    }
+}
+
+
+
+
+
+
 </script>
 </head>
 <body>
@@ -257,7 +275,7 @@ function AddCropMoveEvent()
 		  
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	  <div class="modal-dialog" role="document">
+	  <div class="modal-dialog" role="document" style="max-width:100%; width:auto; display:table;">
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -270,8 +288,7 @@ function AddCropMoveEvent()
 					    <label for="userId" class="col-sm-4 control-label">썸네일생성</label>
 					    <div class="col-sm-6">
 					      
-					      <input type='file' id='image_file' class="form-control"/>
-							<input type='button' value='Load' onclick='LoadImage();' />
+					      <input type='file' id='image_file' accept="image/*" class="form-control"  onchange='fileCheck(this);LoadImage()'/>
 							<canvas id="canvas"></canvas>
 
 							<input type='button' value='크롭미리보기' onclick='CropImage();' />
@@ -292,6 +309,9 @@ function AddCropMoveEvent()
 	    </div>
 	  </div>
 	</div>	
+		<!-- Modal -->
+		
+
 
 </form>
 </div>
