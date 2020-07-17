@@ -32,21 +32,21 @@ var iCropLeft, iCropTop, iCropWidth, iCropHeight;
 
 
 $(function() {
-	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	//DOM Object GET 3가지 방법  1. $(tagName) : 2.(#id) : 3.$(.className)
 	$( "button.btn.btn-primary" ).on("click" , function() {
-		fncAddProduct();
+		document.detailForm.action='testController/upload';
+		document.detailForm.submit();
 	});
 });	
 
 
-//============= "취소"  Event 처리 및  연결 =============
+//취소 이벤트 처리+연결
 $(function() {
-	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 	$("a[href='#' ]").on("click" , function() {
 		$("form")[0].reset();
 	});
 });	
-
+//Modal 
 $('#myModal').on('shown.bs.modal', function () {
 	  $('#myInput').focus()
 	})
@@ -187,7 +187,7 @@ function AddCropMoveEvent()
 
 
 <h1 class="bg-primary text-center">피드작성</h1>
-<form class="form-horizontal" name="detailForm" method="post" enctype="multipart/form-data">
+<form class="form-horizontal" name="detailForm" method="post" enctype="multipart/form-data" >
 
 
 <div class="form-group">
@@ -217,29 +217,33 @@ function AddCropMoveEvent()
 		
 	
 	<input type="button" value="한장더" onclick="add_div()">
+	
 	<div class="form-group" id="room_type">
 		    <label for="fileName" class="col-sm-offset-1 col-sm-3 control-label">피드이미지</label> 
-		    <div class="col-sm-4">
-		     
-		   <td>   <input		type="file" name="uploadFile" id="uploadFile" class="form-control" />
-							
+		    <div class="col-sm-4">		     
+		      <input	type="file" name="uploadFile" id="uploadFile" class="form-control" />							
 		    </div>
 		     <input type="button" value="삭제" onclick="remove_div(this)">
 		  </div>
 		 
-	<div id="field"></div>
+	<div id="field" class="form-group"></div>
 	
-
-
-
-
-
-
-
-
+	<div class="form-group">
+		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">태그</label>
+		    <div class="col-sm-4">
+		      <input type="prodDetail" class="form-control" id="prodDetail" name="prodDetail" >
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">협업자</label>
+		    <div class="col-sm-4">
+		      <input type="prodDetail" class="form-control" id="prodDetail" name="prodDetail" >
+		    </div>
+		  </div>
+		  
 
 	
-		
 
 
 <div class="form-group">
@@ -248,6 +252,9 @@ function AddCropMoveEvent()
 			  <a class="btn btn-primary btn" href="#" role="button">취소</a>
 		    </div>
 		  </div>
+		  
+		  
+		  
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">
