@@ -97,6 +97,10 @@
 			<a href="testController/setImage">이미지 키워드 추출</a>
 		</div>
 		
+		<div class="row">
+			<a href="reportController/getReportList">신고 조회</a>
+		</div>
+		
 		
 	</div>	
 </body>

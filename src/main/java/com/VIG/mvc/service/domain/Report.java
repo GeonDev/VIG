@@ -17,7 +17,8 @@ public class Report implements Serializable{
 	private String reportMessage;
 	private Date reportDate;
 	// 0 = 없음, 1= 3일 접속금지, 2= 7일 금지, 3 = 영구정지 
-	private int banType;	
+	private int banType;
+	private int banHistory;
 	private Date banDate;
 	
 	//누적 신고 횟수 

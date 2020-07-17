@@ -123,8 +123,9 @@ CREATE TABLE report (
 	report_feed_id  	 INT(11) 		NOT NULL REFERENCES feeds(feed_id),
 	report_message 		 VARCHAR(1024), 
 	report_date  		 DATE, 
-	ban_type 			 INT(11), 
-	ban_date  			 DATE, 
+	current_ban_type  	 TINYINT(1),
+	ban_history 	 	 TINYINT(1), 
+	current_ban_date   	 DATE, 
 	PRIMARY KEY(report_id)
 );
 
