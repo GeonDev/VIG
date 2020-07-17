@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class Search {
-	
+		
 	//이미지 검색시 입력된 검색어	
 	private String keyword;
 	
@@ -17,6 +17,7 @@ public class Search {
 	private int currentPage;
 	private int pageSize;
 	private int colorRange;
+	private int currentDate;
 	
 	//색상값 입력시 매핑
 	private ImageColor color;
