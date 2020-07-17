@@ -490,6 +490,29 @@ INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(image_id, 20005, 2, 0,'feed06_3.jpg');
 
 
+commit;
+
+
+
+INSERT
+INTO report (report_id, repoter_code, violator_code, report_Type, report_feed_id, report_date)
+VALUES(report_id, 'user10', 'user01', 0, 20000, NOW());
+
+INSERT
+INTO report (report_id, repoter_code, violator_code, report_Type, report_feed_id, report_date)
+VALUES(report_id, 'user11', 'user01', 1, 20001, DATE_FORMAT('2010-01-03', '%Y-%m-%d'));
+
+INSERT
+INTO report (report_id, repoter_code, violator_code, report_Type, report_feed_id, report_date)
+VALUES(report_id, 'user13', 'user02', 2, 20002, NOW());
+
+INSERT
+INTO report (report_id, repoter_code, violator_code, report_Type, report_feed_id, report_date)
+VALUES(report_id, 'user13', 'user02', 2, 20003, NOW());
+
+INSERT
+INTO report (report_id, repoter_code, violator_code, report_Type, report_feed_id, report_date)
+VALUES(report_id, 'user13', 'user03', 2, 20004, NOW());
 
 
 commit;
