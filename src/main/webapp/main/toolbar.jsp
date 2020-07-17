@@ -65,11 +65,17 @@
 
 	
 
-<!--Navbar -->	
+<!--Navbar start-->	
 		<div class="container-lg">
-			<nav class="mb-1 navbar fixed-top navbar-expand-lg navbar-dark secondary-color lighten-1">
+			<nav class="mb-1 navbar fixed-top navbar-expand-lg navbar-grey lighten-1 py-3">
+			
 <!-- 로고 -->		
 			  <a class="navbar-brand" href="/main/main.jsp" >VIG</a>
+			  
+			      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
+				    aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
+				    <span class="navbar-toggler-icon"></span>
+				  </button>
 			  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
 			    aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
 			    <span class="navbar-toggler-icon"></span>
