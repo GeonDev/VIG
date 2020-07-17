@@ -24,63 +24,63 @@
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 		
+		<script type="text/javascript">
+		
+		
+		
+		
+		</script>
+	
 		<style>
 		
-	
+		.lightbox{
+		 width:380px;
+		 height:280px;
+		}		
+		.container-fulid{
+			padding-right:50px;
+			padding-left:50px;
+		}
+		
 		</style>
+		
 
 </head>
 <body>
+	
+		<div class="container-fulid">
+			<div class="col-md-12">
+				<div class="row">
 
-	
-	<div class="gallery">
-		<div class="container">
-			<div class="row">
-					
-			<div class="col-md-3 ">
-				<a herf="#"><img src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(150).jpg"  class="img-thumbnail"/></a>
-			</div>
+			<figure class="col-md-3 ">
+				<a herf="#" data-size="1600X1050">
+				<img alt="picture" img src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(150).jpg"  class="lightbox"/>
+				</a>
+			</figure>
 			
-			<div class="col-md-3 ">
-				<a herf="#"><img src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(150).jpg"  class="img-thumbnail"/></a>
-			</div>
-			
-			
-			<div class="col-md-3 ">
-				<a herf="#"><img src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(150).jpg"  class="img-thumbnail"/></a>
-			</div>
-			
-			<div class="col-md-3 ">
-				<a herf="#"><img src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(150).jpg"  class="img-thumbnail"/></a>
-			</div>
+			<figure class="col-md-3 ">
+				<a herf="#" data-size="1600X1050">
+				<img alt="picture" img src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(150).jpg"  class="lightbox"/>
+				</a>
+			</figure>
 			
 			
+			<figure class="col-md-3 ">
+				<a herf="#"  data-size="1600X1050">
+				<img alt="picture" img src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(150).jpg"  class="lightbox"/>
+				</a>
+			</figure>
 			
-			<div class="col-md-3 ">
-				<a herf="#"><img src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(150).jpg"  class="img-thumbnail"/></a>
-			</div>
+			<figure class="col-md-3 ">
+				<a herf="#"  data-size="1600X1050">
+				<img alt="picture" img src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(150).jpg"  class="lightbox"/>
+				</a>
+			</figure>
 			
-			<div class="col-md-3 ">
-				<a herf="#"><img src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(150).jpg"  class="img-thumbnail"/></a>
-			</div>
-			
-			
-			<div class="col-md-3 ">
-				<a herf="#"><img src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(150).jpg"  class="img-thumbnail"/></a>
-			</div>
-			
-			<div class="col-md-3 ">
-				<a herf="#"><img src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(150).jpg"  class="img-thumbnail"/></a>
-			</div>
-			
-			
-	
-			
-			
-			
-			</div>
+			</div>	
 		</div>
 	</div>
+
 
 			
 	
