@@ -55,13 +55,13 @@
 	<!-- 왼쪽 사이드 :3 -->	
 				<div class="col-md-3 ">
 					<section class="Section a" >
-					dddd
+				으아아아아
 					</section>
 				</div>
 	<!-- 오른쪽 화면 : 9 -->
 				<div class="col-md-9">
 					<section class="Section b" >
-					dddd
+				아아아아아!!!
 					</div>
 				</div>
 			</div>
