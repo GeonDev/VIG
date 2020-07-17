@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class User implements Serializable{
 	
-	private int userCode;
+	private String userCode;
 	private String userName;
 	private String password;
 	//user, business, curator, admin 

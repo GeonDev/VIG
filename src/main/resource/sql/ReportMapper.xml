@@ -19,15 +19,17 @@
 		<result property="totalCount"  		column="total_count"    	jdbcType="NUMERIC" />
 		<result property="currentCount"  	column="current_count"    	jdbcType="NUMERIC" />
 		
-		<association property="violator"    column="violator_code"    javaType="user"      select="setReporter"/>	
-		<association property="repoter"     column="repoter_code"     javaType="user"      select="setReporter"/>	
+		<association property="violator"    column="violator_code"    javaType="user"   select="setReporter"/>	
+		<association property="reporter"     column="reporter_code"     javaType="user"   select="setReporter"/>	
 						
 	</resultMap>	
 	
 		<select id="setReporter" parameterType="string" resultMap="UserMapper.userSelectMap" >
-			SELECT * FROM users
-			WHERE user_code = #{value}		
+		 	SELECT *
+		 	FROM users
+		 	WHERE user_code = #{value}		
 		</select>
+	
 		
 	<!-- 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000  -->	
 		

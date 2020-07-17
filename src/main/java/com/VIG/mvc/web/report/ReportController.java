@@ -32,6 +32,10 @@ public class ReportController {
 	private ServletContext context;	
 	
 	
+	@Value("#{commonProperties['currentDate'] ?: 30}")
+	int currentDate;
+	
+	
 	@Value("#{commonProperties['pageUnit'] ?: 5}")
 	int pageUnit;
 
@@ -60,6 +64,7 @@ public class ReportController {
 			search.setKeyword("");
 		}
 		
+		search.setCurrentDate(currentDate);
 		search.setPageSize(pageSize);
 		
 		Page resultPage = new Page(search.getCurrentPage(), reportService.getCountReportList(search) , pageUnit, pageSize);
