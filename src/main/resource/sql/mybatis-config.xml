@@ -20,6 +20,7 @@
 		<typeAlias alias="report" 		type="com.VIG.mvc.service.domain.Report"/>
 		<typeAlias alias="history" 		type="com.VIG.mvc.service.domain.History"/>
 		<typeAlias alias="search" 		type="com.VIG.mvc.service.domain.Search"/>
+		<typeAlias alias="event" 		type="com.VIG.mvc.service.domain.Event"/>
 	</typeAliases>
 	
 	 <!-- SQL Definition :: file include -->
@@ -31,7 +32,8 @@
 		<mapper resource="sql/ColorMapper.xml"/>
 		<mapper resource="sql/JoinerMapper.xml"/>
 		<mapper resource="sql/FeedMapper.xml"/>
-		<mapper resource="sql/CommentMapper.xml"/>		
+		<mapper resource="sql/CommentMapper.xml"/>
+		<mapper resource="sql/EventMapper.xml"/>		
 	</mappers>
 
 </configuration>
