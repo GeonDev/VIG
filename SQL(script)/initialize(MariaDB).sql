@@ -119,7 +119,7 @@ CREATE TABLE report (
 	report_id 			 INT(11)  		NOT NULL AUTO_INCREMENT,
 	repoter_code 		 VARCHAR(20) 	REFERENCES users(user_code),
 	violator_code 		 VARCHAR(20) 	REFERENCES users(user_code),
-	report_Type 	 	 INT(11),
+	report_Type 	 	 TINYINT(1),
 	report_feed_id  	 INT(11) 		NOT NULL REFERENCES feeds(feed_id),
 	report_message 		 VARCHAR(1024), 
 	report_date  		 DATE, 
