@@ -396,4 +396,100 @@ INSERT
 INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(image_id, 20001, 2, 0,'feed02_3.jpg');
 
+
+INSERT
+INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
+VALUES(feed_id, 'From the streets of Kathmandu', '', 'user02', NOW(), 1, 10006);
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20002, 0, 1,'feed03_thumbnail.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20002, 0, 0,'feed03_1.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20002, 1, 0,'feed03_2.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20002, 2, 0,'feed03_3.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20002, 3, 0,'feed03_4.jpg');
+
+INSERT
+INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
+VALUES(feed_id, 'TOXIC FASHION', 'Our new series Toxic Fashion dramatizes how impacted we all are from poisonous substances used in the fast fashion textile industry.', 'user02', NOW(), 0, 10006);
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20003, 0, 1,'feed04_thumbnail.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20003, 0, 0,'feed04_1.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20003, 1, 0,'feed04_2.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20003, 2, 0,'feed04_3.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20003, 3, 0,'feed04_4.jpg');
+
+INSERT
+INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
+VALUES(feed_id, 'Kiss me', ' ', 'user03', NOW(), 0, 10004);
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20004, 0, 1,'feed05_thumbnail.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20004, 0, 0,'feed05_1.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20004, 1, 0,'feed05_2.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20004, 2, 0,'feed05_3.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20004, 3, 0,'feed05_4.jpg');
+
+INSERT
+INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
+VALUES(feed_id, 'Sheriff Colt', ' ', 'user04', NOW(), 0, 10008);
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20005, 0, 1,'feed06_thumbnail.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20005, 0, 0,'feed06_1.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20005, 1, 0,'feed06_2.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20005, 2, 0,'feed06_3.jpg');
+
+
+
+
 commit;
