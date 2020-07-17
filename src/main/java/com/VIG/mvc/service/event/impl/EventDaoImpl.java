@@ -25,6 +25,10 @@ public class EventDaoImpl implements EventDao {
 		this.sqlSession = sqlSession;
 	}
 	
+	public EventDaoImpl() {
+		
+	}
+	
 	@Override
 	public void addEvent(Event event) throws Exception {
 		// TODO Auto-generated method stub
@@ -36,7 +40,7 @@ public class EventDaoImpl implements EventDao {
 	@Override
 	public Event getEvent(int eventId) throws Exception {
 		// TODO Auto-generated method stub
-		Event event =sqlSession.selectOne("EventMapper.getEvent", eventId);
+		Event event = sqlSession.selectOne("EventMapper.getEvent", eventId);
 		return event;
 	}
 
