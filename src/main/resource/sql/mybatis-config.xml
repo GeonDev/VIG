@@ -33,7 +33,8 @@
 		<mapper resource="sql/JoinerMapper.xml"/>
 		<mapper resource="sql/FeedMapper.xml"/>
 		<mapper resource="sql/CommentMapper.xml"/>
-		<mapper resource="sql/EventMapper.xml"/>		
+		<mapper resource="sql/EventMapper.xml"/>
+		<mapper resource="sql/ReportMapper.xml"/>		
 	</mappers>
 
 </configuration>
