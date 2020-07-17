@@ -4,31 +4,67 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="ColorMapper"> 	
+<mapper namespace="EventMapper"> 	
  	
-	<resultMap id="ColorSelectMap" 	type="color">
-		<result property="colorId" 	column="color_id" 		jdbcType="NUMERIC"/>
-		<result property="ImageId"	column="image_id" 		jdbcType="NUMERIC" />
-		<result property="red" 		column="color_r" 		jdbcType="NUMERIC" />
-		<result property="green" 	column="color_g" 		jdbcType="NUMERIC" />
-		<result property="blue" 	column="color_b" 		jdbcType="VARCHAR" />
-		<result property="ratio" 	column="color_ratio" 	jdbcType="FLOAT" />							
+	<resultMap id="EventSelectMap" 	type="event">
+		<result property="eventId" 	column="event_id" 		jdbcType="NUMERIC"/>
+		<result property="eventTitle"	column="event_title" 		jdbcType="VARCHAR" />
+		<result property="eventStart" 		column="event_start" 		jdbcType="DATE" />
+		<result property="eventEnd" 	column="event_end" 		jdbcType="DATE" />
+		<result property="eventThumb" 	column="evnet_thumb" 		jdbcType="VARCHAR" />
+		<result property="eventTags" 	column="event_tags" 	jdbcType="VARCHAR" />	
+		<result property="eventImage" 	column="event_Image" 	jdbcType="VARCHAR" />
+		<result property="eventRegDate" 	column="event_RegDate" 	jdbcType="DATE" />
+		<result property="banner" 	column="banner" 	jdbcType="VARCHAR" />	
+		<result property="eventType" 	column="event_type" 	jdbcType="NUMERIC" />							
 	</resultMap>	
 	
-	<insert id="addColor" parameterType="color">
-		INSERT INTO colors(color_id, image_id, color_r, color_g, color_b, color_ratio)
-		VALUES(color_id, #{ImageId}, #{red:NUMERIC} ,#{green:NUMERIC}, #{blue:NUMERIC}, #{ratio:FLOAT})	
+	<insert id="addEvent" parameterType="event">
+		INSERT INTO event(event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner) 
+		VALUES( event_id, #{event_title:VARCHAR}, #{event_sub:VARCHAR}, #{event_start:DATE}, #{event_end:DATE}, 
+		#{event_thumbnail:VARCHAR}, #{event_tag:VARCHAR}, #{event_image:VARCHAR}, #{evenit_type:NUMERIC}, #{banner:VARCHAR})	
 	</insert>
 	
 	
-	<select id="getThumbnailColorList" parameterType="int" resultMap="ColorSelectMap">
-		SELECT * FROM colors, images
-		WHERE colors.image_id = images.image_id 
-		AND images.is_thumbnail = 1
-		AND images.feed_id = #{value}
+	<select id="getEvent" parameterType="int" resultMap="EventSelectMap">
+		SELECT event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner
+		FROM event
+		WHERE event_id=#{value};
+	</select>
+	
+	<select id="getEventList" parameterType="search" resultMap="EventSelectMap">
+		SELECT *
+		FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+		FROM	(	SELECT event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner
+		FROM event ) inner_table
+		WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+			
+	</select>
+	
+	<update id="updateEvent" parameterType="event">
+		UPDATE event
+		SET 
+		event_title=#{event_title:VARCHAR}, event_sub=#{event_sub:VARCHAR}, event_start={event_start:DATE}, event_end=#{event_start:DATE}, 
+		event_thumbnail=#{event_thumbnail:VARCHAR}, event_tag=#{event_tag:VARCHAR}, event_image=#{event_image:VARCHAR}, event_type={evenit_type:NUMERIC}, 
+		banner=#{banner:VARCHAR}
+		WHERE event_id={event_id:NUMERIC}	
+	</update>
+	
+	<delete id="deleteEvent" parameterType="int">
+		DELETE FROM event
+      	WHERE event_id=#{value}
+	</delete>
+	
+	<select id="getTotalCount">
+		SELECT COUNT(*)
+		FROM(	
+		SELECT *
+		FROM event
+		ORDER BY event_id) countTable
+	
 	</select>
 
-	
 	 
 </mapper>
 

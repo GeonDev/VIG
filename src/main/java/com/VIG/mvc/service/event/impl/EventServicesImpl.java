@@ -18,6 +18,10 @@ public class EventServicesImpl implements EventServices {
 	@Autowired
 	@Qualifier("eventDaoImpl")
 	private EventDao eventDao;
+	
+	public EventServicesImpl() {
+		
+	}
 
 	@Override
 	public void addEvent(Event event) throws Exception {
@@ -30,7 +34,8 @@ public class EventServicesImpl implements EventServices {
 	@Override
 	public Event getEvent(int eventId) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		Event event = eventDao.getEvent(eventId);
+		return event;
 	}
 
 	@Override

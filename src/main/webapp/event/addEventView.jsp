@@ -76,9 +76,10 @@ $(function(){
 
 $(function(){
 	
-	$("input#submit").on('click', function(){
+	$("#submit").on('click', function(){
+		alert("11");
 		
-		$(".form").attr("method", "post").attr("action", "VIG/event/addEvent").submit();
+		$(".myform").attr("method", "post").attr("action", "./addEvent").submit();
 			
 	});
 	
@@ -107,7 +108,7 @@ $(function(){
 	
 	
 	<div id=main>
-	<form action="/VIG/event/addEvent/" enctype="multipart/form-data">
+	<form class="myform" enctype="multipart/form-data">
 	
 	<h1> 여긴 이벤트 페이지 등록 화면~ </h1>
 	<p> ${message} </p>
@@ -124,11 +125,11 @@ $(function(){
 	</div>
 	
 	<div class="form-check">
-	  <input type="radio" class="form-check-input" id="materialChecked2" name="materialExample2" checked>
-	  <label class="form-check-label" for="materialChecked2" name="eventType" value="0">이벤트</label>
+	  <input type="radio" class="form-check-input" id="materialChecked2" name="eventType" value="0" checked>
+	  <label class="form-check-label" for="materialChecked2">이벤트</label>
 	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	   <input type="radio" class="form-check-input" id="materialChecked2" name="materialExample2" checked>
-	  <label class="form-check-label" for="materialChecked2" name="eventType" value="1">당첨자 발표</label>
+	   <input type="radio" class="form-check-input" id="materialChecked2" name="eventType" value="1" checked>
+	  <label class="form-check-label" for="materialChecked2">당첨자 발표</label>
 	</div>
 
 	

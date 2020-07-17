@@ -49,42 +49,6 @@
 
 <script type="text/javascript">
 
-$(function(){
-	var file = document.querySelector('#getfile');
-
-	$(file).on('change', function() {
-	  var fileList = file.files;
-		console.log("1");
-	  // 읽기
-	  var reader = new FileReader();
-	  reader.readAsDataURL(fileList[0]);
-	  console.log("2");
-
-	  		//로드 한 후
-		  reader.onload = function() {
-			  console.log("3");
-		    //로컬 이미지를 보여주기
-		    document.querySelector('#preview').src = reader.result;
-		
-		    //썸네일 이미지 생성
-		    var tempImage = new Image(); //drawImage 메서드에 넣기 위해 이미지 객체화
-		    tempImage.src = reader.result; //data-uri를 이미지 객체에 주입
-
-  	};
-	});	
-});
-
-$(function(){
-	
-	$("input#submit").on('click', function(){
-		
-		$(".form").attr("method", "post").attr("action", "VIG/event/addEvent").submit();
-			
-	});
-	
-	
-});
-
 
 </script>
 
@@ -109,7 +73,7 @@ $(function(){
 	<div id=main>
 	<form action="/VIG/event/addEvent/" >
 	
-	<h1> 여긴 이벤트 페이지 등록 화면~ </h1>
+	<h1> 여긴 이벤트 받아오는 곳~~~ </h1>
 	<p> ${message} </p>
 	
 	<div class="md-form form-lg">
