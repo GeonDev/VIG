@@ -30,7 +30,7 @@
 	</resultMap>		
 	
 		<select id="setWriter" parameterType="string" resultMap="UserMapper.userSelectMap" >
-			SELECT * FROM user
+			SELECT * FROM users
 			WHERE user_code = #{value}		
 		</select>	
 		
@@ -81,7 +81,7 @@
 			WHERE user_code = #{value} AND feed_state = 0
 		</select>
 		
-		
+		<!-- 이벤트 참여 피드 조회용 -->
 		<select id ="getFeedListOnlyTag" parameterType="string" resultMap="FeedSelectMap">
 			SELECT * FROM feeds, images, keywords
 			WHERE feeds.feed_id = images.feed_id
@@ -106,7 +106,10 @@
 			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feeds.* FROM feeds, categories
 			WHERE feeds.category_id = categories.category_id 
 			AND feeds.feed_state = 0
-			AND categories.category_name = #{keyword}) temp
+			<if test="keyword !=''">
+				AND categories.category_name = #{keyword}
+			</if>			
+			) temp
 			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}		
 		</select>
 		
@@ -118,7 +121,10 @@
 			AND images.image_id = keywords.image_id
 			AND images.is_thumbnail = 1
 			AND feeds.feed_state = 0
-			AND keywords.keyword_en = #{keyword}) temp
+			<if test="keyword !=''">
+				AND keywords.keyword_en = #{keyword}
+			</if>
+			) temp
 			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}		
 		</select>	
 		

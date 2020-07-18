@@ -16,7 +16,7 @@
 	</resultMap>
 	
 		<select id="setJoiner" parameterType="string" resultMap="UserMapper.userSelectMap" >
-			SELECT * FROM user
+			SELECT * FROM users
 			WHERE user_code = #{value}		
 		</select>
 		
