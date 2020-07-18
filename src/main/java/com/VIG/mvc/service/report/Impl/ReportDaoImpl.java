@@ -46,16 +46,22 @@ public class ReportDaoImpl implements ReportDao {
 	}
 
 	@Override
-	public void updateState(Report report) throws Exception {
-		// TODO Auto-generated method stub
-		sqlSession.update("ReportMapper.updateState", report);
-
-	}
-
-	@Override
 	public int getCountReportList(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("ReportMapper.getCountReportList", search);
 	}
+
+	@Override
+	public List<Report> getReportListFromUser(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("ReportMapper.getReortListFromUser", search);
+	}
+
+	@Override
+	public int getCountReportListFromUser(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("ReportMapper.getCountReportListFromUser", search);
+	}	
+
 
 }

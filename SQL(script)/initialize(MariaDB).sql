@@ -20,6 +20,7 @@ CREATE TABLE users (
 	prime_count  		 INT(11),
 	email 				 VARCHAR(50),
 	reg_date  			 DATE,
+	ban_date  			 DATE,
 	PRIMARY KEY(user_code)
 );
 

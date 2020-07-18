@@ -20,7 +20,8 @@
 		<result property="account" 			column="account" 			jdbcType="VARCHAR" />
 		<result property="primeCount" 		column="prime_count" 		jdbcType="NUMERIC" />
 		<result property="email" 			column="email" 				jdbcType="VARCHAR" />
-		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />		
+		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
+		<result property="banDate" 			column="ban_date" 			jdbcType="DATE" />			
 	</resultMap>	 
 	
 	
@@ -63,7 +64,7 @@
 	 </update>
 	 
 	 
-	 <delete id="deleteUser" parameterType="int">
+	 <delete id="deleteUser" parameterType="String">
 	 	DELETE 
 	 	FROM users 
 	 	WHERE user_code = #{value}
