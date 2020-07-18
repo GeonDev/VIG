@@ -49,5 +49,13 @@ public class EventServicesImpl implements EventServices {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public void deleteEvent(int eventId) throws Exception {
+		// TODO Auto-generated method stub
+		
+		eventDao.deleteEvent(eventId);
+		
+	}
 
 }

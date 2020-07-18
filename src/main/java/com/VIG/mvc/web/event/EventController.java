@@ -46,6 +46,7 @@ public class EventController {
 		
 	}
 	
+	//완료됨
 	@RequestMapping(value="addEvent", method=RequestMethod.POST)
 	public ModelAndView addEvent(@ModelAttribute("event") Event event, @RequestParam("uploadFile") List<MultipartFile> files) throws Exception {
 		
@@ -94,8 +95,8 @@ public class EventController {
 		return modelAndView;
 		
 	}
-	
-	@RequestMapping(value="getEvent/{eventId}", method=RequestMethod.GET)
+	//완료됨 키워드로 피드 받아와야함
+	@RequestMapping(value="getEvent", method=RequestMethod.GET)
 	public ModelAndView getEvent(@RequestParam("eventId") int eventId) throws Exception {
 		
 		System.out.println("getEvent");
@@ -123,6 +124,71 @@ public class EventController {
 		mav.addObject("message", message);
 		
 		return mav;
+		
+	}
+	//완료됨
+	@RequestMapping(value="deleteEvent", method=RequestMethod.GET)
+	public ModelAndView deleteEvent(@RequestParam("eventId") int eventId) throws Exception {
+		
+		
+		
+		System.out.println("deleteEvent");
+		
+		eventServices.deleteEvent(eventId);
+		
+		ModelAndView mav = new ModelAndView("redirect:/event/getEventList");
+		
+		return mav;
+	}
+	
+	@RequestMapping(value="updateEvent", method=RequestMethod.POST)
+	public ModelAndView updateEvent(@ModelAttribute("event") Event event, @RequestParam("uploadFile") List<MultipartFile> files) throws Exception {
+		
+		System.out.println("updateEvent : POST");
+		
+		System.out.println(event);
+		
+		
+		
+		if(files !=null) {
+			int i = 0;
+	        for (MultipartFile multipartFile : files) {
+	        	//파일 업로드시 시간을 이용하여 이름이 중복되지 않게 한다.
+	        	System.out.println("index: "+ i++);
+	        	String inDate   = new java.text.SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date());
+	    
+	    		File f =new File("C://uploadFiles//"+inDate+multipartFile.getOriginalFilename());
+	    		//원하는 위치에 파일 저장
+	    		multipartFile.transferTo(f);
+	    		if(i == 1) {
+	    			event.setEventImage(f.getName());	
+	    		}
+	    		
+	    		if(i == 2) {
+	    			event.setEventThumb(f.getName());
+	    		}
+	    		
+	    		if(i == 3) {
+	    			event.setBanner(f.getName());
+	    		}
+	    		
+	    		System.out.println(i+"    "+f.getName());
+	    		
+			} 			
+		}	
+		
+		
+		System.out.println(event);
+		
+		eventServices.addEvent(event);
+		
+		ModelAndView modelAndView = new ModelAndView();
+		
+		String message = "getEventList다";
+		modelAndView.setViewName("forward:/event/getEventList.jsp");
+		modelAndView.addObject("message", message);
+		
+		return modelAndView;
 		
 	}
 	

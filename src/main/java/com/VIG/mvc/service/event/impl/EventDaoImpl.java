@@ -61,5 +61,13 @@ public class EventDaoImpl implements EventDao {
 		return list;
 	}
 	
+	@Override
+	public void deleteEvent(int eventId) throws Exception {
+		// TODO Auto-generated method stub
+		
+		sqlSession.delete("EventMapper.deleteEvent", eventId);
+		
+	}
+	
 
 }

@@ -14,5 +14,7 @@ public interface EventServices {
 	public void updateEvent(Event event) throws Exception;
 	
 	public List<Event> getEventList(Search search) throws Exception;
+	
+	public void deleteEvent(int eventId) throws Exception;
 
 }

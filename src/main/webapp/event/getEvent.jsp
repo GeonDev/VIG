@@ -31,9 +31,18 @@
 	
 <style>
 	
+	#outline {
+	
+		width: 1300px;
+		margin: 0 auto;s
+	
+	}
+	
 	#main { 
-		width: 720px;
+		
+		width: 960px;
 		margin: 0 auto;
+		
 	}
 	
 	img {
@@ -48,6 +57,17 @@
 
 
 <script type="text/javascript">
+
+$(function(){
+	
+	$("#delete").on("click", function(){
+		
+		self.location="/VIG/event/deleteEvent?eventId=${event.eventId}";
+		
+	});
+	
+	
+})
 
 
 </script>
@@ -69,67 +89,51 @@
 <!--/.Navbar-->
 
 	
+	<div id="outline">
+	<br>
+	<br>
+	<dl class="row">
+	<dt class="col-sm-10"> <h1> 이벤트 상세보기 </h1> </dt>
+	<dt class="col-sm-2"> <input type="button" value="삭제" id="delete"> </dt>
+	<hr>
+	<br>
+	<br>
+	<div id="main">
+
 	
-	<div id=main>
-	<form action="/VIG/event/addEvent/" >
 	
-	<h1> 여긴 이벤트 받아오는 곳~~~ </h1>
-	<p> ${message} </p>
 	
-	<div class="md-form form-lg">
-	  <input type="text" id="inputLGEx" class="form-control form-control-lg" name="eventTitle">
-	  <label for="inputLGEx">제목을 입력해주세요</label>
-	</div>
-	
+	<h2>  ${event.eventTitle}</h2>
+	<br>
 	<!-- Medium input -->
-	<div class="md-form">
-	  <input type="text" id="inputMDEx" class="form-control" name="eventSub">
-	  <label for="inputMDEx">설명을 입력해주세요</label>
-	</div>
+	<h5> ${event.eventSub}</h5>
 	
-	<div class="form-check">
-	  <input type="radio" class="form-check-input" id="materialChecked2" name="materialExample2" checked>
-	  <label class="form-check-label" for="materialChecked2" name="eventType" value="0">이벤트</label>
-	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	   <input type="radio" class="form-check-input" id="materialChecked2" name="materialExample2" checked>
-	  <label class="form-check-label" for="materialChecked2" name="eventType" value="1">당첨자 발표</label>
-	</div>
 
 	
 	<hr/>
-	<img id="preview" src="" width="700" alt="로컬에 있는 이미지가 보여지는 영역">
-		
-		<input type="file" id="getfile" name="eventImage" accept="image/*">
-	
+		<img src="C:/uploadFiles/${event.eventImage}" style="width:960px" class="img-rounded"/>
 	<hr/>
 	<br/>
 	
-	<table>
-		<tr>
-			<td>
-				썸네일  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			</td>
-			<td>
-				<input type="file" name="eventThumbnail" accept="image/*">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				배너  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			</td>
-			<td>
-				<input type="file" name="banner" accept="image/*">	
-			</td>
-		</tr>
-	</table>
+
 		
+			
+			<dl class="row">
+			  <dt class="col-sm-2">태그</dt>
+			  <dd class="col-sm-10">${event.eventTags }</dd>
+			 </dl>
+			 <dl class="row">
+				  <dt class="col-sm-2">기간</dt>
+				  <dd class="col-sm-10">${event.eventStart}&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;${event.eventEnd }</dd>
+			 </dl>
 
-
-	</form>
-	<input id="submit" type="button" value="등록">
+	</div>
+	<br>
+	<hr>
+	<br>
+	
 	
 	</div>
-	
 
 </body>
 </html>

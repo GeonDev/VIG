@@ -15,4 +15,6 @@ public interface EventDao {
 	
 	public List<Event> getEventList(Search search) throws Exception;
 	
+	public void deleteEvent(int eventId) throws Exception;
+	
 }
