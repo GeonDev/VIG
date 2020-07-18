@@ -43,12 +43,15 @@ public class UserController {
 		return "redirect:/index.jsp";
 	}
 */	
+
+	
 	@RequestMapping( value="addUser", method=RequestMethod.POST )
 	public ModelAndView addUser( User user ) throws Exception {
 		
 		System.out.println("addUser(POST):회원가입");
+		userServices.addUser(user);
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:/index.jsp");
+		modelAndView.setViewName("redirect:/user/loginView.jsp");
 		
 		return modelAndView;
 	}
