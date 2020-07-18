@@ -54,7 +54,7 @@
 
 	function funcGetList(currentPage) {
 		$("#currentPage").val(currentPage);
-		$("form").attr("action", "/purchase/listPurchase");
+		$("form").attr("action", "/reportController/getReportList");
 		$("form").submit();
 	}
 	
@@ -105,47 +105,35 @@
 					<tbody>
 				
 						<c:set var="i" value="0" />
-							<c:forEach var="purchase" items="${list}">
+							<c:forEach var="report" items="${list}">
 								<c:set var="i" value="${ i+1 }" />
 			
 								<tr>
 									<td align="center">${i}	</td>
-									<td align="left" >${(purchase.purchaseProd).prodName}
-										<span style="display:none" >${(purchase.purchaseProd).prodNo} </span>
+									<td align="left" >${(report.violator).userName}
+										<span style="display:none" >${(report.violator).userCode} </span>
 									</td>
-									<td align="left">${purchase.receiverName}</td>
-									<td align="left">${purchase.receiverPhone}</td>												
-									<td align="left">
-									현재
-									 	<c:choose>
-								
-										<c:when test="${purchase.tranCode == '1'}">		
-											구매완료(배송 준비)
-											</c:when>
-										<c:when test="${purchase.tranCode == '2'}">
-											배송중
+									<td align="left">${report.currentCount}</td>
+									<td align="left">${report.totalCount}</td>												
+									<td align="left">									
+									 	<c:choose>								
+										<c:when test="${report.banType == '0'}">		
+											정상
 										</c:when>
-										<c:when test="${purchase.tranCode == '3'}">
-											배송완료 
+										<c:when test="${report.banType == '1'}">
+											3일 접속제한
 										</c:when>
-								
-										</c:choose>
-									상태 입니다.					
+										<c:when test="${report.banType == '2'}">
+											7일 접속제한 
+										</c:when>
+										<c:when test="${report.banType == '3'}">
+											영구 정지
+										</c:when>								
+										</c:choose>													
 									</td>
-									<td align="left">
-										<c:choose>			
-											<c:when test="${purchase.tranCode =='2'}">				
-												<i class="glyphicon glyphicon-ok" ></i>
-												<span style="display:none" >${purchase.tranNo} </span>
-											</c:when>					
-										</c:choose>									
-									</td>
-									
-									<td align="left">
-									<c:if test="${purchase.tranCode == '1'}">
-										<i class="glyphicon glyphicon-ok" ></i>
-										<span style="display:none" >${purchase.tranNo} </span>
-									</c:if>	
+									<td align="left">${report.banDate}</td>									
+									<td align="left">									
+										<i class="fas fa-check"></i>									
 									</td>											
 								</tr>
 								

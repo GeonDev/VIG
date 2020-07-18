@@ -1,5 +1,7 @@
 package com.VIG.mvc.web.report;
 
+import java.util.List;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
@@ -11,14 +13,27 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.VIG.mvc.service.domain.Page;
+import com.VIG.mvc.service.domain.Report;
 import com.VIG.mvc.service.domain.Search;
-import com.VIG.mvc.service.keyword.KeywordServices;
+import com.VIG.mvc.service.report.ReportServices;
 
 
 
 @Controller
 @RequestMapping("/reportController/*")
 public class ReportController {	
+	
+	@Autowired
+	@Qualifier("reportServicesImpl")
+	private ReportServices reportService;	
+
+	@Autowired
+	private ServletContext context;	
+	
+	
+	@Value("#{commonProperties['currentDate'] ?: 30}")
+	int currentDate;
 	
 	
 	@Value("#{commonProperties['pageUnit'] ?: 5}")
@@ -27,14 +42,7 @@ public class ReportController {
 	@Value("#{commonProperties['pageSize'] ?: 5}")
 	int pageSize;
 
-	
-	@Autowired 
-	@Qualifier("keywordServicesImpl")
-	private KeywordServices keywordServices;
-	
 
-	@Autowired
-	private ServletContext context;	
 
 	
 	public ReportController() {
@@ -44,9 +52,33 @@ public class ReportController {
 	
 	
 	@RequestMapping("getReportList")
-	public ModelAndView getReportList(@ModelAttribute("search") Search search, HttpSession session) throws Exception {      
+	public ModelAndView getReportList(@ModelAttribute("search") Search search) throws Exception { 
 		
-		return new ModelAndView("forward:/report/getReportlist.jsp");
+		// 현재 페이지값이 없으면 첫번째 페이지로 설정
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		
+		//키워드 데이터가 NULL이라면
+		if(search.getKeyword() == null) {
+			search.setKeyword("");
+		}
+		
+		search.setCurrentDate(currentDate);
+		search.setPageSize(pageSize);
+		
+		Page resultPage = new Page(search.getCurrentPage(), reportService.getCountReportList(search) , pageUnit, pageSize);
+		
+		
+		ModelAndView modelAndView = new ModelAndView();
+
+		// Model 과 View 연결
+		modelAndView.setViewName("forward:/report/getReportlist.jsp");
+		modelAndView.addObject("list", reportService.getReportList(search));
+		modelAndView.addObject("resultPage", resultPage);
+		modelAndView.addObject("search", search);
+
+		return modelAndView;
 	}	
 
 

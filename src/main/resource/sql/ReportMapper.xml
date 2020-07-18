@@ -10,42 +10,59 @@
 		<result property="reportId"  		column="report_id"  		jdbcType="NUMERIC"/>
 		<result property="reportType" 		column="report_Type"  		jdbcType="NUMERIC" />
 		<result property="reportFeedId" 	column="report_feed_id"  	jdbcType="NUMERIC" />
-		<result property="reportMessage"  	column="report_message"  	jdbcType="VERCHAR" />
+		<result property="reportMessage"  	column="report_message"  	jdbcType="VARCHAR" />
 		<result property="reportDate" 		column="report_date"  		jdbcType="DATE" />
 		<result property="banType" 			column="current_ban_type"   jdbcType="NUMERIC" />
 		<result property="banDate" 			column="current_ban_date"   jdbcType="DATE" />
 		<result property="banHistory"  		column="ban_history"    	jdbcType="NUMERIC" />
+		
 		<result property="totalCount"  		column="total_count"    	jdbcType="NUMERIC" />
 		<result property="currentCount"  	column="current_count"    	jdbcType="NUMERIC" />
 		
-		<association property="violator"        column="violator_code"    javaType="user"      select="setReporter"/>	
-		<association property="repoter"         column="repoter_code"     javaType="user"      select="setReporter"/>	
+		<association property="violator"    column="violator_code"    javaType="user"   select="setReporter"/>	
+		<association property="reporter"     column="reporter_code"     javaType="user"   select="setReporter"/>	
 						
 	</resultMap>	
 	
-	
 		<select id="setReporter" parameterType="string" resultMap="UserMapper.userSelectMap" >
-			SELECT * FROM user
-			WHERE user_code = #{value}		
+		 	SELECT *
+		 	FROM users
+		 	WHERE user_code = #{value}		
 		</select>
+	
 		
 	<!-- 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000  -->	
 		
 	
 	<insert id="addReport" parameterType="report">
 		INSERT INTO report(report_id, repoter_code, violator_code, report_Type, report_feed_id, report_message, report_date)
-		VALUES(report_id, #{repoter.userCode}, #{violator.userCode} ,#{report_Type}, #{report_feed_id}, #{report_message:VARCHAR},NOW())	
+		VALUES(report_id, #{repoter.userCode}, #{violator.userCode} ,#{reportType}, #{reportFeedId}, #{reportMessage:VARCHAR},NOW())	
 	</insert>
 	
-	<select id="getReportList" parameterType="search" resultMap="report">
+	<select id="getReportList" parameterType="search" resultMap="ReportSelectMap">
 		SELECT * FROM
 		(SELECT  ROW_NUMBER() OVER(ORDER BY report.report_id) num,
 		COUNT(report_id) AS total_count, COUNT(IF(#{currentDate} > DATEDIFF(NOW(),report_date), 1, NULL )) AS current_count,
-		report.* FROM report GROUP BY violator_code) temp
+		report.* FROM report GROUP BY violator_code
+		<if test="keyword !=''">
+		HAVING violator_code LIKE CONCAT('%',#{keyword},'%')
+		</if>		
+		) temp
 		WHERE num BETWEEN #{startRowNum} AND #{endRowNum}	
 	</select>
 	
-	<select id="getReortListFromUser" parameterType="search" resultMap="report">
+	
+	<select id="getCountReportList"  parameterType="search"  resultType="int">
+		SELECT COUNT(temp.violator_code) FROM 
+		(SELECT violator_code  FROM report GROUP BY violator_code
+			<if test="keyword !=''">
+			 HAVING violator_code LIKE CONCAT('%',#{keyword},'%')
+			 </if>
+		 )temp
+	</select>
+	
+	
+	<select id="getReortListFromUser" parameterType="search" resultMap="ReportSelectMap">
 		SELECT * FROM
 		(SELECT  ROW_NUMBER() OVER(ORDER BY report.report_id) num, report.* FROM report 
 		 WHERE violator_code = #{keyword}

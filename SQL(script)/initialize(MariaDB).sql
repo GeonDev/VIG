@@ -4,20 +4,6 @@ CREATE DATABASE VIG;
 
 USE VIG;
 
-DROP TABLE IF EXISTS images;
-DROP TABLE IF EXISTS keywords;
-DROP TABLE IF EXISTS comments;
-DROP TABLE IF EXISTS colors;
-DROP TABLE IF EXISTS joiner;
-DROP TABLE IF EXISTS report;
-DROP TABLE IF EXISTS follow;
-DROP TABLE IF EXISTS alarm;
-
-
-DROP TABLE IF EXISTS categories CASCADE;
-DROP TABLE IF EXISTS feeds CASCADE;
-DROP TABLE IF EXISTS users CASCADE;
-
 
 CREATE TABLE users ( 
 	user_code  			 VARCHAR(20) 		NOT NULL,
@@ -117,9 +103,9 @@ CREATE TABLE comments (
 
 CREATE TABLE report ( 
 	report_id 			 INT(11)  		NOT NULL AUTO_INCREMENT,
-	repoter_code 		 VARCHAR(20) 	REFERENCES users(user_code),
-	violator_code 		 VARCHAR(20) 	REFERENCES users(user_code),
-	report_Type 	 	 INT(11),
+	reporter_code 		 VARCHAR(20) 	NOT NULL REFERENCES users(user_code),
+	violator_code 		 VARCHAR(20) 	NOT NULL REFERENCES users(user_code),
+	report_Type 	 	 TINYINT(1),
 	report_feed_id  	 INT(11) 		NOT NULL REFERENCES feeds(feed_id),
 	report_message 		 VARCHAR(1024), 
 	report_date  		 DATE, 
@@ -491,29 +477,29 @@ INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(image_id, 20005, 2, 0,'feed06_3.jpg');
 
 
-commit;
-
-
+INSERT
+INTO report (report_id, reporter_code, violator_code, report_Type, report_feed_id, report_date)
+VALUES(report_id, 'user10', 'user02', 0, 20000, NOW());
 
 INSERT
-INTO report (report_id, repoter_code, violator_code, report_Type, report_feed_id, report_date)
-VALUES(report_id, 'user10', 'user01', 0, 20000, NOW());
+INTO report (report_id, reporter_code, violator_code, report_Type, report_feed_id, report_date)
+VALUES(report_id, 'user10', 'user02', 0, 20000, NOW());
 
 INSERT
-INTO report (report_id, repoter_code, violator_code, report_Type, report_feed_id, report_date)
-VALUES(report_id, 'user11', 'user01', 1, 20001, DATE_FORMAT('2010-01-03', '%Y-%m-%d'));
+INTO report (report_id, reporter_code, violator_code, report_Type, report_feed_id, report_date)
+VALUES(report_id, 'user11', 'user02', 1, 20001, DATE_FORMAT('2010-01-03', '%Y-%m-%d'));
 
 INSERT
-INTO report (report_id, repoter_code, violator_code, report_Type, report_feed_id, report_date)
+INTO report (report_id, reporter_code, violator_code, report_Type, report_feed_id, report_date)
 VALUES(report_id, 'user13', 'user02', 2, 20002, NOW());
 
 INSERT
-INTO report (report_id, repoter_code, violator_code, report_Type, report_feed_id, report_date)
-VALUES(report_id, 'user13', 'user02', 2, 20003, NOW());
+INTO report (report_id, reporter_code, violator_code, report_Type, report_feed_id, report_date)
+VALUES(report_id, 'user14', 'user02', 2, 20003, NOW());
 
 INSERT
-INTO report (report_id, repoter_code, violator_code, report_Type, report_feed_id, report_date)
-VALUES(report_id, 'user13', 'user03', 2, 20004, NOW());
+INTO report (report_id, reporter_code, violator_code, report_Type, report_feed_id, report_date)
+VALUES(report_id, 'user15', 'user03', 2, 20004, NOW());
 
 
 commit;
