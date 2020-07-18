@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
+import javax.swing.RepaintManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -108,7 +109,20 @@ public class ReportController {
 		modelAndView.addObject("search", search);
 
 		return modelAndView;
-	}	
+	}
+	
+	@RequestMapping("updateUserBanFromReport")
+	public ModelAndView updateUserBanFromReport(@RequestParam("reportId") int reportId, @RequestParam("banType") int banType ) throws Exception { 		
+		
+		Report updateReport = new Report();
+		updateReport.setReportId(reportId);
+		updateReport.setBanType(banType);
+		
+		reportService.updateBanState(updateReport);
+		
+
+		return new ModelAndView("forward:/common/alertView.jsp", "message", "신고 처리가 완료되었습니다.");
+	}
 
 
 }

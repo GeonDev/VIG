@@ -89,10 +89,10 @@
 			            <th align="left">신고 피드</th>
 			            <th align="left">신고 유형</th>
 			            <th align="left">신고 메세지</th>
-			            <th align="left">신고 일자</th>
-			            <th align="left">현재 상태</th>
+			            <th align="left">신고 일자</th>			         
 			            <th align="left">재제 일자</th>
-			            <th align="left">이전 처리</th>
+			            <th align="left">처리 내용</th>
+			            <th align="left">변경</th>
 			          </tr>
 			        </thead>
 				
@@ -124,11 +124,12 @@
 										</c:choose>													
 									</td>
 									<td align="left">${report.reportMessage}</td>
-									<td align="left">${report.reportDate}</td>																					
+									<td align="left">${report.reportDate}</td>
+									<td align="left">${report.banDate}</td>
 									<td align="left">									
 									 	<c:choose>								
 										<c:when test="${report.banType == '0'}">		
-											정상
+											이상없음
 										</c:when>
 										<c:when test="${report.banType == '1'}">
 											3일 접속제한
@@ -141,23 +142,20 @@
 										</c:when>								
 										</c:choose>													
 									</td>
-									<td align="left">${report.banDate}</td>	
-									<td align="left">									
-									 	<c:choose>								
-										<c:when test="${report.banHistory == '0'}">		
-											정상
-										</c:when>
-										<c:when test="${report.banHistory == '1'}">
-											3일 접속제한
-										</c:when>
-										<c:when test="${report.banHistory == '2'}">
-											7일 접속제한 
-										</c:when>
-										<c:when test="${report.banHistory == '3'}">
-											영구 정지
-										</c:when>								
-										</c:choose>													
-									</td>																			
+									<td align="left">										
+										<div class="dropdown">
+										  <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-expanded="true">
+										    처리유형
+										    <span class="caret"></span>
+										  </button>
+										  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+										    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">이상없음</a></li>
+										    <li role="presentation"><a role="menuitem" tabindex="-1" href="updateUserBanFromReport?reportId=${report.reportId}&banType=1">3일 접속제한</a></li>
+										    <li role="presentation"><a role="menuitem" tabindex="-1" href="updateUserBanFromReport?reportId=${report.reportId}&banType=2">7일 접속제한</a></li>
+										    <li role="presentation"><a role="menuitem" tabindex="-1" href="updateUserBanFromReport?reportId=${report.reportId}&banType=3">영구 정지</a></li>
+										  </ul>
+										</div>								
+									</td>																							
 								</tr>
 								
 							</c:forEach>	        
@@ -168,9 +166,12 @@
 					<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 					<input type="hidden" id="currentPage" name="currentPage" value=""/>	
 			</form>	
-		</div>	
+		</div>
+			
+		<div class="row justify-content-md-center">
+			<jsp:include page="../common/pageNavigator.jsp"/>
+		</div>
 		
-		<jsp:include page="../common/pageNavigator.jsp"/>
 	</div>
 	
 </body>

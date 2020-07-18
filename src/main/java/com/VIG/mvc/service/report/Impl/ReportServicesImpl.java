@@ -42,11 +42,6 @@ public class ReportServicesImpl implements ReportServices {
 		reportDao.updateBanState(report);
 	}
 
-	@Override
-	public void updateState(Report report) throws Exception {
-		// TODO Auto-generated method stub
-		reportDao.updateState(report);
-	}
 
 	@Override
 	public int getCountReportList(Search search) throws Exception {
