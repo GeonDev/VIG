@@ -15,7 +15,6 @@ public class Event implements Serializable{
 	public String eventThumb;
 	public String eventTags;
 	public String eventImage;
-	public String eventRegDate;
 	public String banner;
 	public boolean eventType;
 	
