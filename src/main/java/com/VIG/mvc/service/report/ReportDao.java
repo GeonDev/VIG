@@ -19,6 +19,6 @@ public interface ReportDao {
 
 	public void updateBanState(Report report) throws Exception;
 	
-	public void updateState(Report report) throws Exception;
+	
 
 }

@@ -97,6 +97,7 @@
 		(SELECT ROW_NUMBER() OVER(ORDER BY images.image_id) num, images.* FROM images, keywords, feeds 
 		WHERE images.image_id = keywords.image_id
 		AND feeds.feed_id = images.feed_id
+		AND images.image_id != #{keyword}
 		AND images.is_thumbnail = 0
 		AND feeds.feed_state = 0
 		AND keywords.keyword_en IN
