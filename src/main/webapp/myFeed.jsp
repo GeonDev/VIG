@@ -26,27 +26,33 @@
 	
 	<style>
 	
-		.Section{
-			
+		.container-fluid{
+			display:flex;
 		}
 		.a{
 			background-color: yellow;
-			max-height:stretch;
-		}
-		.b{
-			background-color: red;
-			max-height: 500px;
+			flex: 1;
+			overflow: auto;
 		}
 		
+		}
 		
+		body{ 
+		padding-top: 70px; 
+		}
+		
+		.container-fluid{
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+		}
 		
 	</style>
 	
+
+	
 </head>
 <body>
-
-
-
 
 	<div class="container-fluid">
 			<div class="col-md-12">
@@ -54,9 +60,11 @@
 				
 	<!-- 왼쪽 사이드 :3 -->	
 				<div class="col-md-3 ">
-					<section class="Section a" >
-				으아아아아
+				<aside>
+					<section class="Section a" >	
+					ffffggggg		
 					</section>
+				</aside>
 				</div>
 	<!-- 오른쪽 화면 : 9 -->
 				<div class="col-md-9">

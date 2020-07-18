@@ -8,13 +8,8 @@
 		
 		<script type="text/javascript">
 		
-		function fncAddUser() {
-			var id=$("input[name='email']").val();
-			if(id == null || id.length <1){
-				alert("이메일 입력해주세요.");
-				return;
-			}
-			$("form").attr("method","POST").attr("action", "/user/addUser").submit();
+		function fncAddUser() {			
+			$("form").attr("method" , "POST").attr("action" , "/user/addUser").submit();
 		}
 	
 		//============= "가입"  Event 연결 =============
@@ -53,7 +48,7 @@
 	</div>
 		<div class="container">
 			<div class="row">
-				<button type="button">버튼</button>		
+				<button type="submit">버튼</button>		
 			</div>
 		</div>
 
