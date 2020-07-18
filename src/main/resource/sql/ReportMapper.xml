@@ -13,8 +13,7 @@
 		<result property="reportMessage"  	column="report_message"  	jdbcType="VARCHAR" />
 		<result property="reportDate" 		column="report_date"  		jdbcType="DATE" />
 		<result property="banType" 			column="current_ban_type"   jdbcType="NUMERIC" />
-		<result property="banDate" 			column="current_ban_date"   jdbcType="DATE" />
-		<result property="banHistory"  		column="ban_history"    	jdbcType="NUMERIC" />
+		<result property="banDate" 			column="current_ban_date"   jdbcType="DATE" />	
 		
 		<result property="totalCount"  		column="total_count"    	jdbcType="NUMERIC" />
 		<result property="currentCount"  	column="current_count"    	jdbcType="NUMERIC" />
@@ -70,18 +69,17 @@
 		WHERE num BETWEEN #{startRowNum} AND #{endRowNum}	
 	</select>
 	
+	
+	<select id="getCountReportListFromUser" parameterType="search"  resultType="int">
+		SELECT COUNT(*) FROM report 
+		 WHERE violator_code = #{keyword}
+	</select>
+	
 	<update id="updateBanState" parameterType="report">
 		UPDATE report INNER JOIN users on report.violator_code = users.user_code
-		SET report.current_ban_type = #{banType}, ban_history = #{banType}, report.current_ban_date = DATE_FORMAT(NOW(), '%Y-%m-%d'), users.state = #{banType}
+		SET report.current_ban_type = #{banType}, report.current_ban_date = DATE_FORMAT(NOW(), '%Y-%m-%d'), users.state = #{banType}, users.ban_date = DATE_FORMAT(NOW(), '%Y-%m-%d')  
 		WHERE report_id = #{reportId}	
 	</update>
-	
-	
-	<update id="updateState" parameterType="report">
-		UPDATE report INNER JOIN users on report.violator_code = users.user_code
-		SET report.current_ban_type = #{banType}, users.state = #{banType}
-		WHERE report_id = #{reportId}	
-	</update>	
 	
 	 
 </mapper>
