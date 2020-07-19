@@ -51,20 +51,11 @@
     
 	<script type="text/javascript">
 
-
 	function funcGetList(currentPage) {
 		$("#currentPage").val(currentPage);
-		$("form").attr("action", "/reportController/getReportListFromUser");
+		$("form").attr("action", "./getReportListFromUser?userCode=${search.keyword}");
 		$("form").submit();
 	}
-	
-	
-	$(function(){		
-
-
-	
-	});
-	
 	
 	</script>
 </head>
@@ -72,8 +63,7 @@
 <body>
 
 	<div class="container">
-		<div class="col-md-8">	
-		
+		<div class="col-md-8">			
 			
 				<div class="page-header text-info">
 					<h3>신고 내용 상세 조회</h3>
