@@ -101,6 +101,10 @@
 			<a href="reportController/getReportList">신고 조회</a>
 		</div>
 		
+		<div class="row">
+			<a href="searchController/getSearchResult">검색 페이지</a>
+		</div>
+		
 		
 	</div>	
 </body>
