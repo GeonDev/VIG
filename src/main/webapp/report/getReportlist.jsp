@@ -50,8 +50,6 @@
     </style>
     
 	<script type="text/javascript">
-
-
 	function funcGetList(currentPage) {
 		$("#currentPage").val(currentPage);
 		$("form").attr("action", "./getReportList");
@@ -84,9 +82,11 @@
 </head>
 
 <body>
-	<div class="col-md-8">	
+
+	<div class="container">
+		<div class="col-md-8">	
 	
-		<div class="container">
+		
 			<div class="page-header text-info">
 				<h3>신고목록조회</h3>
 			</div>			
@@ -156,14 +156,14 @@
 						<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 						<input type="hidden" id="currentPage" name="currentPage" value=""/>	
 				</div>
-			</form>			
+			</form>
 			
-		</div>	
-		
-		<div class="row justify-content-md-center">
-			<jsp:include page="../common/pageNavigator.jsp"/>
-		</div>
-		
+				
+			<div class="row justify-content-md-center">
+				<jsp:include page="../common/pageNavigator.jsp"/>
+			</div>			
+			
+		</div>		
 	</div>
 	
 </body>
