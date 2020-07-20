@@ -43,7 +43,7 @@
 		 	<if test="keyword != ''">
 		 		user_name LIKE CONCAT('%',#{keyword},'%')
 		 	</if>	 	
-		 	<if test="#{searchType} == 1">
+		 	<if test="searchType == 0">
 		 		role in('user','business') 
 		 	</if>		 	
 	 	</where> 	

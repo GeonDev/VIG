@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,6 +29,9 @@
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 	
+	<!-- lazyload CDN  -->
+   <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
+	
 	<style>
 	  body {
             padding-top : 50px;
@@ -35,45 +40,93 @@
 	
 	<script type="text/javascript">
 	
+	//최초 입장시 모드 지정
 	var Mode = 'Feed';
+	
+	//최초 페이지 지정
+	var Page = 1; 	
+	
+	function getItemList(Page) {		
+		$.ajax( 
+				{
+					url : "/VIG/searchController/json/getSearchResultList",
+					method : "POST",
+					dataType : "Json",							
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					data :  JSON.stringify({keyword : $("#Keyword").val(), mode : Mode, page : Page}),
+					success : function(JSONData , status) {
+/* 						$.each(JSONData, function(index, item) {
+							
+						
+							var displayValue = '';         
+							              
+							$(".row:last").append(displayValue);
+						});	 */									
+					}
+			});
+	}
+	
+	
+	function getkeywords() {
+		$.ajax("/VIG/searchController/json/getSearchKeyword",
+		  {
+			method : "POST",
+			dataType : "Json",							
+			headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+			},
+			data :  JSON.stringify({keyword : $("#Keyword").val(), mode : Mode }),						
+			success : function(JSONData, status) {
+			var arraylist = JSONData;
+				console.log( JSONData );
+			//alert(JSONData);
+			 	$( "#Keyword" ).autocomplete({
+			 		
+			        source: arraylist
+			    });		
+			}							
+		});
+	}
 	
 	
 	$(function(){	
 		
+			/* 최초 진입시 첫번째 페이지 로딩*/
+			getItemList(1);
 		
 			$("button").on("click",function(){				
 				Mode = $(this).text();				
-			});		
+			});	
+			
+   			
+   			$(window).scroll(function() {
+   			    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+	   			    page++;   			     
+	   			  	getItemList(page);
+   			    }
+   			});		
 		
 		
-			$("#Keyword").on("keyup", function(){		
-				
+			$("#Keyword").on("keyup", function(){				
 				if($("#Keyword").val().length >= 2){
-					$.ajax("/VIG/searchController/json/getSearchKeyword",
-					  {
-						method : "POST",
-						dataType : "Json",							
-						headers : {
-							"Accept" : "application/json",
-							"Content-Type" : "application/json"
-						},
-						data :  JSON.stringify({keyword : $("#Keyword").val(), mode : Mode }),						
-						success : function(JSONData, status) {
-						var arraylist = JSONData;
-							console.log( JSONData );
-						//alert(JSONData);
-						 	$( "#Keyword" ).autocomplete({
-						 		
-						        source: arraylist
-						    });		
-						}							
-					});
+					getkeywords();
 				}					
-			});
-
-	
-	});
-	
+			});	
+			
+	       $("#Keyword").keydown(function(key) {
+	            if (key.keyCode == 13) {
+	            	getItemList(Page);
+	            }
+	        });
+			
+			
+			
+			
+	});	
 	
 	</script>
 		
@@ -111,6 +164,7 @@
 		</div>
 		
 		<div class="row">
+		
 		
 		<hr/>
 		</div>
