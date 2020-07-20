@@ -54,7 +54,7 @@
 		<!--Carousel Wrapper-->
 		<div class="container-fluid">
 		
-		<div id="multi-item-example" class="carousel slide carousel-multi-item carousel-multi-item-2" data-ride="carousel">
+		<div id="multi-item-example" class="carousel carousel-multi-item carousel-multi-item-2" data-ride="carousel">
 		
 		  <!--Controls-->
 		  <div class="controls-top">
