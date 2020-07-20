@@ -1,27 +1,30 @@
-package com.VIG.mvc.web.search;
+package com.VIG.mvc.web.image;
 
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.VIG.mvc.service.color.ColorServices;
-import com.VIG.mvc.service.feed.FeedServices;
+import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.image.ImageServices;
 import com.VIG.mvc.service.keyword.KeywordServices;
 import com.VIG.mvc.service.user.UserServices;
-import com.VIG.mvc.util.CommonUtil;
-
 
 
 @RestController
-@RequestMapping("/searchController/*")
-public class RestSearchController {	
+@RequestMapping("/imageController/*")
+public class RestImageController {
 	
+	
+	@Value("#{commonProperties['uploadPath']}")
+	String uploadPath;
 
 	@Autowired 
 	@Qualifier("userServicesImpl")
@@ -39,30 +42,13 @@ public class RestSearchController {
 	@Autowired 
 	@Qualifier("colorServicesImpl")
 	private ColorServices colorServices;	
-	
-	@Autowired 
-	@Qualifier("feedServicesImpl")
-	private FeedServices feedServices;	
-
 
 	
-	public RestSearchController() {
+	public RestImageController() {
 		// TODO Auto-generated constructor stub		
 	}	
 	
 
-	@RequestMapping(value = "json/getSearchKeyword")
-	public List<String> getAutokeyword(@RequestBody Map<String, String> jsonData) throws Exception {	
-		
-		System.out.println("전달된 값 :"+ jsonData.get("mode"));
-		
-		if(CommonUtil.null2str(jsonData.get("keyword")).equals("")) {
-			return null;
-		}
-		
-		return feedServices.getfeedTitleList(jsonData.get("keyword"));
-	}	
-		
 
 	
 	
