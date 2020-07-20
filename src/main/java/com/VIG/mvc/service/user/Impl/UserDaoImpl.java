@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.user.UserDao;
 
@@ -31,13 +32,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void addUser(User user) throws Exception {
 		sqlSession.insert("UserMapper.addUser", user);
-	}
-
-	@Override
-	public User getUser(String userCode) throws Exception {
-		User user =  sqlSession.selectOne("UserMapper.getUser", userCode);
-		return user;
-	}
+	}	
 
 	@Override
 	public void updateUser(User user) throws Exception {
@@ -48,12 +43,29 @@ public class UserDaoImpl implements UserDao {
 	public void deleteUser(User user) throws Exception{
 		sqlSession.delete("UserMapper.deleteUser", user);
 	}
-	
+
+
 	@Override
-	public List<User> getUserList(User user) throws Exception{
-		List<User> userList = sqlSession.selectList("UserMapper.getUser", user);
-		return userList;
+	public User getUserOne(String userCode) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("UserMapper.getUserOne", userCode);
 	}
+
+
+	@Override
+	public List<User> getUserListFromName(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("UserMapper.getUserListFromName", search);
+	}
+
+
+	@Override
+	public List<String> getAutoUserName(String name) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("UserMapper.getAutoUserName", name);
+	}
+	
+
 	
 
 }

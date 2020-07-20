@@ -1,11 +1,13 @@
 package com.VIG.mvc.service.user.Impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.user.UserDao;
 import com.VIG.mvc.service.user.UserServices;
@@ -27,11 +29,6 @@ public class UserServicesImpl implements UserServices {
 		userDao.addUser(user);
 	}
 
-	@Override
-	public User getUser(String userCode) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public void updateUser(User user) throws Exception {
@@ -60,7 +57,26 @@ public class UserServicesImpl implements UserServices {
 	public void deleteUser(User user) throws Exception{
 		
 	}
-	
+
+	@Override
+	public User getUserOne(String userCode) throws Exception {
+		// TODO Auto-generated method stub
+		return userDao.getUserOne(userCode);
+	}
+
+	@Override
+	public List<User> getUserListFromName(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return userDao.getUserListFromName(search);
+	}
+
+	@Override
+	public List<String> getAutoUserName(String name) throws Exception {
+		// TODO Auto-generated method stub
+		return userDao.getAutoUserName(name);
+	}
+
+
 	
 	
 	

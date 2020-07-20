@@ -78,7 +78,7 @@ public class UserController {
 		
 		System.out.println("login(POST):로그인");
 		
-		User dbUser = userServices.getUser(user.getUserName());
+		User dbUser = userServices.getUserOne(user.getUserCode());
 		if( user.getPassword().equals(dbUser.getPassword())) {
 			session.setAttribute("user", dbUser);
 		}	

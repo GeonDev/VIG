@@ -87,4 +87,11 @@ public class ImageDaoImpl implements ImageDao {
 		return sqlSession.selectList("ImageMapper.getImageListFromImage", search);
 	}
 
+
+	@Override
+	public List<String> getAutoImageKeywordList(String key) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("ImageMapper.getAutoImageKeywordList", key);
+	}
+
 }
