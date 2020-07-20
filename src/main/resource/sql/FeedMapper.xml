@@ -83,11 +83,12 @@
 		
 		<!-- 이벤트 참여 피드 조회용 -->
 		<select id ="getFeedListOnlyTag" parameterType="string" resultMap="FeedSelectMap">
-			SELECT * FROM feeds, images, keywords
+			SELECT feeds.* FROM feeds, images, keywords
 			WHERE feeds.feed_id = images.feed_id
 			AND images.image_id = keywords.image_id
 			AND feed_state = 0
-			AND keywords.keyword_origin = #{value}			
+			AND keywords.keyword_origin = #{value}
+			GROUP BY feeds.feed_id			
 		</select>
 		
 		
@@ -122,9 +123,10 @@
 			AND images.is_thumbnail = 1
 			AND feeds.feed_state = 0
 			<if test="keyword !=''">
-				AND keywords.keyword_en = #{keyword}
-			</if>
-			) temp
+			AND keywords.keyword_en LIKE CONCAT('%',#{keyword},'%')
+			OR feeds.feed_title LIKE CONCAT('%',#{keyword},'%')			
+			</if>			
+			GROUP BY feeds.feed_id) temp
 			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}		
 		</select>	
 		
@@ -138,9 +140,22 @@
 			AND feeds.feed_state = 0
 			AND colors.color_r BETWEEN #{startRed} AND #{endRed} 
 			AND colors.color_g BETWEEN #{startGreen} AND #{endGreen} 
-			AND colors.color_b BETWEEN #{startBlue} AND #{endBlue}) temp
+			AND colors.color_b BETWEEN #{startBlue} AND #{endBlue}
+			GROUP BY feeds.feed_id) temp
 			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}		
 		</select>	
+		
+		
+		<!-- 자동완성용 쿼리문 -->
+		<select id ="getfeedTitleList" parameterType="String" resultType="String">
+			SELECT temp.feed_title FROM
+			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feed_title FROM feeds
+			WHERE feed_title LIKE CONCAT('%',#{value},'%'))temp
+			WHERE num BETWEEN 1 AND 5
+		</select>
+		
+		
+		
 	 
 </mapper>
 

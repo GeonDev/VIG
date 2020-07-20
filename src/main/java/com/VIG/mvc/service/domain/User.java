@@ -25,6 +25,8 @@ public class User implements Serializable{
 	private String email;
 	private String variedCode;
 	private Date regDate;
+	//유저가 벤을 당한 날짜를 저장 - 신고 테이블과 join을 줄이기 위해 추가
+	private Date banDate;
 	
 	//검색을 편하게 하기 위하여 최근 열람 정보를 별도 저장
 	private List<String> currintKeyword;

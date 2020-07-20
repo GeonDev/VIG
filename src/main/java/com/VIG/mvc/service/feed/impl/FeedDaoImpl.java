@@ -96,4 +96,10 @@ public class FeedDaoImpl implements FeedDao {
 		return sqlSession.selectList("FeedMapper.getfeedListFromColor",search);
 	}
 
+	@Override
+	public List<String> getfeedTitleList(String key) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("FeedMapper.getfeedTitleList",key);
+	}
+
 }
