@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>이벤트 목록</title>
+<title>addEventView</title>
 
 <!-- JQuery -->
 	
@@ -31,9 +31,25 @@
 	
 <style>
 	
-	#main { 
-		width: 720px;
+	#outline {
+	
+		width: 1300px;
 		margin: 0 auto;
+	
+	}
+	
+	#main { 
+		
+		width: 960px;
+		margin: 0 auto;
+		
+	}
+	
+	#inline {
+		
+		width: 1150px;
+		margin: 0 auto;
+	
 	}
 	
 	img {
@@ -49,6 +65,17 @@
 
 <script type="text/javascript">
 
+$(function(){
+	
+	$("#delete").on("click", function(){
+		
+		self.location="/VIG/event/deleteEvent?eventId=${event.eventId}";
+		
+	});
+	
+	
+})
+
 
 </script>
 
@@ -58,19 +85,67 @@
 
 
 <!--Navbar-->
-		
+<nav class="navbar navbar-light purple lighten-4 mb-4">
+
+  <!-- Navbar brand -->
+  <a class="navbar-brand" href="#">Navbar</a>
+
+  <!-- Collapse button -->
+
+</nav>
 <!--/.Navbar-->
 
 	
+	<div id="outline">
+	<br>
+	<br>
+	<dl class="row">
+	<dt class="col-sm-10"> <h1> 이벤트 상세보기 </h1> </dt>
+	<dt class="col-sm-2"> <input type="button" value="삭제" id="delete"> </dt>
+	</dl>
+	<hr/>
+	<div id="main">
 	
-	<div id=main>
+	<br/>
+	<br/>
 	
-		${message}
 	
 	
+	<h2>  ${event.eventTitle}</h2>
+	<br>
+	<!-- Medium input -->
+	<h5> ${event.eventSub}</h5>
+	
+
+	
+	<hr/>
+		<img src="C:/uploadFiles/${event.eventImage}" style="width:960px" class="img-rounded"/>
+	<hr/>
+	<br/>
+	
+
+		
+			
+			<dl class="row">
+			  <dt class="col-sm-2">태그</dt>
+			  <dd class="col-sm-10">${event.eventTags }</dd>
+			 </dl>
+			 <dl class="row">
+				  <dt class="col-sm-2">기간</dt>
+				  <dd class="col-sm-10">${event.eventStart}&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;${event.eventEnd }</dd>
+			 </dl>
+
+
+	<br/>
 	
 	</div>
+	<div id="inline">
+			<hr/>
+			<br/>
+			<h1> 참가 작품 모아보기 </h1>
 	
+	</div>
+	</div>
 
 </body>
 </html>

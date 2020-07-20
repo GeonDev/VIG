@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>addEventView</title>
+<title>updateEventView</title>
 
 <!-- JQuery -->
 	
@@ -76,10 +77,10 @@ $(function(){
 
 $(function(){
 	
-	$("#submit").on('click', function(){
+	$("#update").on('click', function(){
 		alert("11");
 		
-		$(".myform").attr("method", "post").attr("action", "./addEvent").attr( "enctype","multipart/form-data").submit();
+		$(".myform").attr("method", "post").attr("action", "./updateEvent").attr( "enctype","multipart/form-data").submit();
 			
 	});
 	
@@ -110,31 +111,29 @@ $(function(){
 	<div id=main>
 	<form class="myform" enctype="multipart/form-data">
 	
-	<h1> 여긴 이벤트 페이지 등록 화면~ </h1>
+	<h1> 여긴 이벤트 페이지 수정 화면~ </h1>
 	<p> ${message} </p>
 	
 	<div class="md-form form-lg">
-	  <input type="text" id="inputLGEx" class="form-control form-control-lg" name="eventTitle">
-	  <label for="inputLGEx">제목을 입력해주세요</label>
+	  <input type="text" id="inputLGEx" class="form-control form-control-lg" name="eventTitle" value="${event.eventTitle}">
 	</div>
 	
 	<!-- Medium input -->
 	<div class="md-form">
-	  <input type="text" id="inputMDEx" class="form-control" name="eventSub">
-	  <label for="inputMDEx">설명을 입력해주세요</label>
+	  <input type="text" id="inputMDEx" class="form-control" name="eventSub" value="${event.eventSub}">
 	</div>
 	
 	<div class="form-check">
-	  <input type="radio" class="form-check-input" id="materialChecked2" name="eventType" value="0" checked>
+	  <input type="radio" class="form-check-input" id="materialChecked2" name="eventType" value="0" ${fn:contains(event.eventType, 'false')? "checked" : "" }>
 	  <label class="form-check-label" for="materialChecked2">이벤트</label>
 	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	   <input type="radio" class="form-check-input" id="materialChecked2" name="eventType" value="1" >
+	   <input type="radio" class="form-check-input" id="materialChecked2" name="eventType" value="1" ${fn:contains(event.eventType, 'true')? "checked" : "" }>
 	  <label class="form-check-label" for="materialChecked2">당첨자 발표</label>
 	</div>
 
 	
 	<hr/>
-	<img id="preview" src="" width="700" alt="로컬에 있는 이미지가 보여지는 영역">
+	<img id="preview" src="../images/${event.eventImage}" width="700" alt="로컬에 있는 이미지가 보여지는 영역">
 		
 		<input type="file" id="getfile" name="uploadFile" accept="image/*">
 	
@@ -147,7 +146,7 @@ $(function(){
 				태그  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			</td>
 			<td>
-				<input type="text" size="70" name="eventTags">
+				<input type="text" name="eventTags" size="70" value="${event.eventTags }">
 			</td>
 		</tr>
 		<tr>
@@ -155,9 +154,9 @@ $(function(){
 				기간  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			</td>
 			<td>
-				<input type="date" name="eventStart" >	
+				<input type="date" name="eventStart" value="${event.eventStart }">	
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="date" name="eventEnd" >	
+				<input type="date" name="eventEnd" value="${event.eventEnd }">	
 			</td>
 		</tr>
 	</table>
@@ -185,7 +184,7 @@ $(function(){
 
 
 	</form>
-	<input id="submit" type="button" value="등록">
+	<input id="update" type="button" value="수정">
 	
 	</div>
 	

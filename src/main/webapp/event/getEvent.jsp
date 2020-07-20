@@ -8,7 +8,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>addEventView</title>
 
-<!-- JQuery -->
 	
 	<!-- Font Awesome -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
@@ -34,7 +33,7 @@
 	#outline {
 	
 		width: 1300px;
-		margin: 0 auto;s
+		margin: 0 auto;
 	
 	}
 	
@@ -43,6 +42,13 @@
 		width: 960px;
 		margin: 0 auto;
 		
+	}
+	
+	#inline {
+		
+		width: 1150px;
+		margin: 0 auto;
+	
 	}
 	
 	img {
@@ -66,6 +72,12 @@ $(function(){
 		
 	});
 	
+	$("#update").on("click", function(){
+		
+		self.location="/VIG/event/updateEvent?eventId=${event.eventId}";
+		
+	});
+	
 	
 })
 
@@ -78,14 +90,7 @@ $(function(){
 
 
 <!--Navbar-->
-<nav class="navbar navbar-light purple lighten-4 mb-4">
-
-  <!-- Navbar brand -->
-  <a class="navbar-brand" href="#">Navbar</a>
-
-  <!-- Collapse button -->
-
-</nav>
+		<jsp:include page="../main/toolbar.jsp" />
 <!--/.Navbar-->
 
 	
@@ -94,12 +99,18 @@ $(function(){
 	<br>
 	<dl class="row">
 	<dt class="col-sm-10"> <h1> 이벤트 상세보기 </h1> </dt>
-	<dt class="col-sm-2"> <input type="button" value="삭제" id="delete"> </dt>
-	<hr>
-	<br>
-	<br>
+	<dt class="col-sm-2"> 
+	
+	<input type="button" value="수정" id="update"> 
+	<input type="button" value="삭제" id="delete"> 
+	
+	</dt>
+	</dl>
+	<hr/>
 	<div id="main">
-
+	
+	<br/>
+	<br/>
 	
 	
 	
@@ -127,12 +138,16 @@ $(function(){
 				  <dd class="col-sm-10">${event.eventStart}&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;${event.eventEnd }</dd>
 			 </dl>
 
+
+	<br/>
+	
 	</div>
-	<br>
-	<hr>
-	<br>
+	<div id="inline">
+			<hr/>
+			<br/>
+			<h1> 참가 작품 모아보기 </h1>
 	
-	
+	</div>
 	</div>
 
 </body>

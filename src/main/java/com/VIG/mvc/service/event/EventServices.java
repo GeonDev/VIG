@@ -1,6 +1,6 @@
 package com.VIG.mvc.service.event;
 
-import java.util.List;
+import java.util.Map;
 
 import com.VIG.mvc.service.domain.Event;
 import com.VIG.mvc.service.domain.Search;
@@ -13,7 +13,7 @@ public interface EventServices {
 	
 	public void updateEvent(Event event) throws Exception;
 	
-	public List<Event> getEventList(Search search) throws Exception;
+	public Map<String, Object> getEventList(Search search) throws Exception;
 	
 	public void deleteEvent(int eventId) throws Exception;
 
