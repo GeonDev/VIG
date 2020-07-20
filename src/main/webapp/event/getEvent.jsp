@@ -88,11 +88,14 @@ $(function(){
 </head>
 <body>
 
+<nav class="navbar navbar-light purple lighten-4 mb-4">
 
-<!--Navbar-->
-		<jsp:include page="../main/toolbar.jsp" />
-<!--/.Navbar-->
+  <!-- Navbar brand -->
+  <a class="navbar-brand" href="#">Navbar</a>
 
+  <!-- Collapse button -->
+
+</nav>
 	
 	<div id="outline">
 	<br>

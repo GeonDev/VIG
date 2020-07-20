@@ -18,10 +18,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.VIG.mvc.service.color.ColorServices;
-import com.VIG.mvc.service.domain.Event;
 import com.VIG.mvc.service.domain.Feed;
 import com.VIG.mvc.service.domain.ImageColor;
 import com.VIG.mvc.service.domain.ImageKeyword;
+import com.VIG.mvc.service.feed.FeedServices;
 import com.VIG.mvc.service.image.ImageServices;
 import com.VIG.mvc.service.keyword.KeywordServices;
 import com.VIG.mvc.service.user.UserServices;
@@ -53,6 +53,9 @@ public class FeedController {
 	@Qualifier("colorServicesImpl")
 	private ColorServices colorServices;
 	
+	@Autowired
+	@Qualifier("feedServicesImpl")
+	private FeedServices feedServices;
 
 	@Autowired
 	private ServletContext context;	
@@ -117,6 +120,19 @@ public class FeedController {
 		
 		return new ModelAndView("forward:/common/alertView.jsp", "message", result);
 	}	
+	
+	@RequestMapping(value="getFeed", method=RequestMethod.GET)
+	public ModelAndView getFeed(@RequestParam("feedId") int feedId) throws Exception {
+		
+		Feed feed = feedServices.getFeed(feedId);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("forward:/feed/getFeed.jsp");
+		mav.addObject("feed", feed);
+		
+		return mav;
+		
+	}
 
 
 }
