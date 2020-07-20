@@ -33,14 +33,9 @@
 		WHERE event_id=#{value};
 	</select>
 	
-	<select id="getEventList" parameterType="search" resultMap="EventSelectMap">
+	<select id="getEventList" resultMap="EventSelectMap">
 		SELECT *
-		FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-		FROM	(	SELECT event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner
-		FROM event ) inner_table
-		WHERE ROWNUM &lt;= #{endRowNum} ) temp
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
-			
+		FROM event	
 	</select>
 	
 	<update id="updateEvent" parameterType="event">
