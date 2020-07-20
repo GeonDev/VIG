@@ -33,16 +33,27 @@
 	 </insert>
 	 
 	 
-	 <select id="getUser" parameterType = "String" resultMap="userSelectMap">
-	 	SELECT *
+	 
+	 <!-- #{searchType}에 따라 비즈니스, 일반 계정만 조회 하거나 전체를 조회함  -->
+	 <select id="getUserListFromName" parameterType = "search" resultMap="userSelectMap">
+	 	SELECT temp.* FROM
+	 	(SELECT ROW_NUMBER() OVER(ORDER BY users.user_code) num, users.*
 	 	FROM users
-	 	WHERE user_code = #{value}	
+	 	<where>
+		 	<if test="keyword != ''">
+		 		user_name LIKE CONCAT('%',#{keyword},'%')
+		 	</if>	 	
+		 	<if test="#{searchType} == 1">
+		 		role in('user','business') 
+		 	</if>		 	
+	 	</where> 	
+	 	)temp
+	 	WHERE num BETWEEN #{startRowNum} AND #{endRowNum}	
 	 </select>
 	 
 	 
 	 <select id="getUserOne" parameterType = "String" resultMap="userSelectMap">
-	 	SELECT 
-	 	user_code
+	 	SELECT *
 	 	FROM users
 	 	WHERE user_code = #{value}	
 	 </select>
@@ -50,6 +61,15 @@
 	 	 
 	  <select id="getLastUserNum" parameterType = "int" resultType="int">
 	 	SELECT COUNT(user_code) FROM users	 	
+	 </select>
+	 
+	 
+	 <select id="getAutoUserName" parameterType="String" resultType="String">
+	 	SELECT temp.user_name FROM
+	 	(SELECT ROW_NUMBER() OVER(ORDER BY users.user_code) num, users.user_name FROM users
+	 	WHERE users.user_name LIKE CONCAT('%',#{value},'%')
+	 	AND users.role in('user','business') )temp
+	    WHERE num BETWEEN 1 AND 5	 
 	 </select>
 	 
 	 
