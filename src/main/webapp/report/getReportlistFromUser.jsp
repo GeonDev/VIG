@@ -62,7 +62,12 @@
 
 <body>
 
-	<div class="container">
+ 	<!-- ToolBar Start /////////////////////////////////////-->
+		<jsp:include page="../main/toolbar.jsp" />
+
+
+
+	<div class="container-fluid">
 		<div class="col-md-8">			
 			
 				<div class="page-header text-info">
