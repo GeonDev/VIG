@@ -157,7 +157,7 @@ public class TestController {
 		//저장되어 있는 모든 이미지를 불러옴		
 		imagelist = imageServices.getALLImageList();
 		
-		System.out.println("[SERVER] : 이미지 정보 추출 시작.....");
+		System.out.println("[SERVER] : 이미지 정보 추출 시작");
 		
 		for(Image image :imagelist) {
 			List<ImageKeyword> keywords = VisionInfo.getKeywordForVision(path+image.getImageFile());
@@ -165,15 +165,16 @@ public class TestController {
 			
 			for(ImageKeyword keyword : keywords) {
 				keyword.setImageId(image.getImageId());
-				keywordServices.addKeyword(keyword);
+				keywordServices.addKeyword(keyword);				
 			}
 			
 			for(ImageColor color : colors) {
 				color.setImageId(image.getImageId());
-				colorServices.addColor(color);
+				colorServices.addColor(color);				
 			}			
+			System.out.println("[SERVER] : "+image.getImageFile()+" 추출 완료");
 		}	
-
+		System.out.println("[SERVER] : 이미지 정보 추출 완료");
 					
 		return new ModelAndView("forward:/common/alertView.jsp", "message", "세팅 완료");
 	}	

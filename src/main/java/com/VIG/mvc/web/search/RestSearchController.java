@@ -1,6 +1,5 @@
 package com.VIG.mvc.web.search;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -57,11 +56,31 @@ public class RestSearchController {
 		
 		System.out.println("전달된 값 :"+ jsonData.get("mode"));
 		
+		//키워드가 비어 있을 경우 종료
 		if(CommonUtil.null2str(jsonData.get("keyword")).equals("")) {
 			return null;
 		}
 		
-		return feedServices.getfeedTitleList(jsonData.get("keyword"));
+		//피드의 타이틀을 자동완성
+		if(jsonData.get("mode").equals("Feed")) {
+			
+			return feedServices.getfeedTitleList(jsonData.get("keyword"));
+		}
+		
+		
+		//이미지의 키워드를 자동완성
+		if(jsonData.get("mode").equals("Image")) {
+			return imageServices.getAutoImageKeywordList(jsonData.get("keyword"));
+					
+		}
+		
+		//유저의 닉네임을 자동완성
+		if(jsonData.get("mode").equals("Writer")) {			
+			return userServices.getAutoUserName(jsonData.get("keyword"));
+		}
+		
+		return null;
+		
 	}	
 		
 

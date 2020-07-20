@@ -25,11 +25,12 @@ public interface ImageDao {
 	public List<Image> getImageListFromCategoroy(Search search) throws Exception;
 	
 	//이미지(키워드)를 검색 조건으로 입력
-	public List<Image> getImageListFromImage(Search search) throws Exception;
-	
+	public List<Image> getImageListFromImage(Search search) throws Exception;	
 		
 	public void deleteImage(int image) throws Exception;
 	
+	//이미지 키워드 자동완성
+	public List<String> getAutoImageKeywordList(String key) throws Exception;	
 
 }
 
