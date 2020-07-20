@@ -4,141 +4,52 @@
 <head>
 <title>VIG</title>
 
-
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-		<!-- Google Fonts -->
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-		<!-- Bootstrap core CSS -->
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
-		<!-- Material Design Bootstrap -->
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
-		
-	<!-- JQuery -->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<!-- Bootstrap tooltips -->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
-	<!-- Bootstrap core JavaScript -->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
-	<!-- MDB core JavaScript -->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
-		
-		<link href="/css/left.css" rel="stylesheet" type="text/css">
-	
-	<!-- CDN(Content Delivery Network) 호스트 사용 -->
-	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<script type="text/javascript">
-	
-	
-		//==> jQuery 적용 추가된 부분
-		 $(function() {
-			 
-			//==> login Event 연결처리부분
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		 	$( "td[width='115']:contains('login')" ).on("click" , function() {
-				//Debug..
-				//alert(  $( "td[width='115']:contains('login')" ).html() );
-				$(window.parent.frames["rightFrame"].document.location).attr("href","/user/login");
-			});
-			
-			
-			//==> logout Event 연결처리부분
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		 	$( "td[width='56']:contains('logout')" ).on("click" , function() {
-				//Debug..
-				//alert(  $( "td[width='56']:contains('logout')" ).html() );
-				$(window.parent.document.location).attr("href","/user/logout");
-			}); 
-			
-			
-	
-		 	 
-	
-		});	
 		
-		
-	</script>		
+	</script>	
+	<style>
+		#toolbar{
+			margin:100;
+		}
+	</style>	
 	
-</head>
-		 
+</head>		 
 <body>
-
-
 	
 
 <!--Navbar start-->	
-	
-			<nav class="mb-1 navbar fixed-top navbar-expand-lg navbar-dark indigo lighten-1 py-3">
-			
+			<nav class="mb-1 navbar fixed-top navbar-expand-xl navbar-dark indigo lighten-1 py-3" id="toolbar">			
 <!-- 로고 -->		
-			  <a class="navbar-brand" href="/main/main.jsp" >VIG</a>
-			  
+			  <a class="navbar-brand" href="main.jsp" >VIG</a>		  
 			      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
 				    aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
 				    <span class="navbar-toggler-icon"></span>
 				  </button>
-			  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
-			    aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
-			    <span class="navbar-toggler-icon"></span>
-			  </button>
-			  <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
-			    <ul class="navbar-nav ml-auto nav-flex-icons"></ul>
-			   </div>
-<!-- 검색 버튼-->    
-	      <a class="nav-item">
-	        <a class="nav-link waves-effect waves-light" href="/searchPage/sMain.jsp">
+				  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
+				    aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+				    <span class="navbar-toggler-icon"></span>
+				  </button>
+				  <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+				    <ul class="navbar-nav ml-auto nav-flex-icons"></ul>
+				  </div>
+<!-- 검색 버튼-->    	      
+	        <a class="nav-link waves-effect waves-light" id="search_btn" href="#">
 	          <i class="fas fa-search"></i>
-	        </a>
-	      </a>
+	        </a>	   
 <!-- 알람버튼 -->     
-	      <a class="nav-item dropdown">
-	        <a class="nav-link waves-effect waves-light" id="dropdownMenu3" data-toggle="dropdown"
-	 		   aria-haspopup="true" aria-expanded="false">
+	        <a class="nav-link waves-effect waves-light" id="alarm_btn" href="#">
 	          <i class="fas fa-bell"></i>
-	        </a>
-	        <div class="dropdown-menu" aria-labelledby="dropdownMenu3">
-			    	<h6 class="dropdown-header">like</h6>
-			    <div class="dropdown-divider"></div>
-				   	 <a class="dropdown-item" href="#">--</a>
-				   	 <a class="dropdown-item" href="#">--</a>
-			    <div class="dropdown-divider"></div>
-			   		 <a class="dropdown-item" href="#">--</a>
-		  </div>
-	     </a>
+	        </a>        
 <!-- 채팅버튼 -->      
-	        <a class="nav-item">
-	        <a class="nav-link waves-effect waves-light" href="#">
+	        <a class="nav-link waves-effect waves-light" id=" chat_btn" href="#">
 	          <i class="fas fa-comments"></i></a>
-	      </a>
 <!-- 로그인 버튼 -->    
-			<a class="nav-link waves-effect waves-light" data-toggle="modal" data-target="#modalLRForm"  href="addUser.jsp">
+			<a class="nav-link waves-effect waves-light" data-toggle="modal" data-target="#modalLoginForm"  href="#">
 	          <i class="fas fa-user"></i>
 	        </a>
-	       </li>
 	      </nav>
-
-	        
-	        
-
-
-			 <!-- 
-	       <li class="nav-item dropdown" >
-	        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-	        <i class="fas fa-user"></i>
-	        </a>
-	        <div class="dropdown-menu dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
-	  
-	      <c:if test="${ empty user }"></c:if>   
-		               <a class="dropdown-item" href="/user/loginView.jsp" target="rightFrame">login</a>
-		   <c:if test="${ ! empty user }"></c:if>
-		 			  <a class="dropdown-item" href="/logout.do" target="rightFrame">logout</a>   
-	       </div>
-	
-	      </li>
-	    </ul>
-	  </div>
-	</nav>
-	<!--/.Navbar -->
-	<br/>	
+		<br/>
+		
 </body>
 </html>
