@@ -1,28 +1,27 @@
 package com.VIG.mvc.web.search;
 
-import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.VIG.mvc.service.color.ColorServices;
-import com.VIG.mvc.service.domain.Search;
-import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.feed.FeedServices;
 import com.VIG.mvc.service.image.ImageServices;
 import com.VIG.mvc.service.keyword.KeywordServices;
 import com.VIG.mvc.service.user.UserServices;
+import com.VIG.mvc.util.CommonUtil;
 
 
-@Controller
+
+@RestController
 @RequestMapping("/searchController/*")
-public class SearchController {	
+public class RestSearchController {	
 	
 
 	@Autowired 
@@ -48,40 +47,24 @@ public class SearchController {
 
 
 	
-	public SearchController() {
+	public RestSearchController() {
 		// TODO Auto-generated constructor stub		
 	}	
 	
 
-	@RequestMapping(value = "getSearchResult")
-	public ModelAndView chat(@ModelAttribute("search") Search search,@RequestParam(value = "mode" ,required=false, defaultValue = "feed") String mode ,HttpSession session) throws Exception {		
+	@RequestMapping(value = "json/getSearchKeyword")
+	public List<String> getAutokeyword(@RequestBody Map<String, String> jsonData) throws Exception {	
 		
-		User user = (User)session.getAttribute("user");
+		System.out.println("전달된 값 :"+ jsonData.get("mode"));
 		
-		if(mode.equals("feed")) {
-			
-		}else if(mode.equals("image")) {
-			
-			
-		}else {
-			
-			
+		if(CommonUtil.null2str(jsonData.get("keyword")).equals("")) {
+			return null;
 		}
 		
-		
-		
-		
-		
-		if(user != null) {
-			
-		}else {
-			
-			
-		}
-		
-				
-		return new ModelAndView("forward:/search/getSearchResult.jsp");
+		return feedServices.getfeedTitleList(jsonData.get("keyword"));
 	}	
+		
+
 	
 	
 	

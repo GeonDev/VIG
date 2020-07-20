@@ -88,9 +88,11 @@
 
 
 
-	<div class="container-fluid">
-		<div class="col-md-8">	
+	<div class="container-fluid">		
 	
+	
+		<div class="col-md-8">		
+			<br/>
 		
 			<div class="page-header text-info">
 				<h3>신고목록조회</h3>

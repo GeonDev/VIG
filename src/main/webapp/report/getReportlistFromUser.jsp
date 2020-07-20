@@ -69,7 +69,7 @@
 
 	<div class="container-fluid">
 		<div class="col-md-8">			
-			
+			<br/>
 				<div class="page-header text-info">
 					<h3>신고 내용 상세 조회</h3>
 				</div>			

@@ -14,15 +14,18 @@
 	<!-- Material Design Bootstrap -->
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">		
 		
-	<!-- JQuery -->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<!-- Bootstrap tooltips -->
+	<!-- JQuery -->	
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js" ></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
 	<!-- Bootstrap core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 	
+	<!-- jQuery UI toolTip 사용 CSS-->
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 	
 	<style>
 	  body {
@@ -31,16 +34,42 @@
     </style>
 	
 	<script type="text/javascript">
-
-	function funcGetList(currentPage) {
-		$("#currentPage").val(currentPage);
-		$("form").attr("action", "/reportController/getReportListFromUser");
-		$("form").submit();
-	}
+	
+	var Mode = 'Feed';
 	
 	
-	$(function(){		
-
+	$(function(){	
+		
+		
+			$("button").on("click",function(){				
+				Mode = $(this).text();				
+			});		
+		
+		
+			$("#Keyword").on("keyup", function(){		
+				
+				if($("#Keyword").val().length >= 2){
+					$.ajax("/VIG/searchController/json/getSearchKeyword",
+					  {
+						method : "POST",
+						dataType : "Json",							
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						data :  JSON.stringify({keyword : $("#Keyword").val(), mode : Mode }),						
+						success : function(JSONData, status) {
+						var arraylist = JSONData;
+							console.log( JSONData );
+						//alert(JSONData);
+						 	$( "#Keyword" ).autocomplete({
+						 		
+						        source: arraylist
+						    });		
+						}							
+					});
+				}					
+			});
 
 	
 	});
@@ -54,7 +83,7 @@
 <body>
 
 	<!-- ToolBar Start /////////////////////////////////////-->
-		<jsp:include page="../main/toolbar.jsp" />
+		<%-- <jsp:include page="../main/toolbar.jsp" /> --%>
 	<!-- ToolBar End /////////////////////////////////////-->
 
 	<div class="container-lg-fluid">
@@ -63,10 +92,11 @@
 			<div class="col-sm-10">
 				<div class="input-group md-form form-sm form-1 pl-5">
 				  <div class="input-group-prepend">
-				    <span class="input-group-text cyan lighten-2" id="basic-text1"><i class="fas fa-search text-white"
-				        aria-hidden="true"></i></span>
+				    <span class="input-group-text cyan lighten-2" >
+				    	<i class="fas fa-search text-white" aria-hidden="true"></i>
+				    </span>
 				  </div>
-				  <input class="form-control my-0 py-1" type="text" placeholder="Search" aria-label="Search">
+				  <input id="Keyword" class="form-control my-0 py-1" type="text" placeholder="Search" aria-label="Search">
 				</div>	
 			</div>			
 			

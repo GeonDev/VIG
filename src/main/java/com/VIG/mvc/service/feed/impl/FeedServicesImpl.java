@@ -88,4 +88,10 @@ public class FeedServicesImpl implements FeedServices {
 		return feedDao.getFeedListFromColor(search);
 	}
 
+	@Override
+	public List<String> getfeedTitleList(String key) throws Exception {
+		// TODO Auto-generated method stub
+		return feedDao.getfeedTitleList(key);
+	}
+
 }
