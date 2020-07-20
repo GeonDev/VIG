@@ -7,9 +7,9 @@
 <mapper namespace="CommentMapper"> 	
  	
 	<resultMap id="commentSelectMap" type="joiner">
-		<result property="commentId" 	column="comment_id" 		jdbcType="NUMERIC"/>
+		<result property="commentId" 	column="comment_id"  	jdbcType="NUMERIC"/>
 		<result property="feedId"		column="feed_id" 		jdbcType="NUMERIC" />
-		<result property="commentText"	column="comment_text" 		jdbcType="VARCHAR" />
+		<result property="commentText"	column="comment_text"  	jdbcType="VARCHAR" />
 		<result property="regDate" 		column="reg_date" 		jdbcType="DATE" />
 		<result property="editDate" 	column="edit_date" 		jdbcType="DATE" />
 				

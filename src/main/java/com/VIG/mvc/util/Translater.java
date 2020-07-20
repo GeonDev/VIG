@@ -41,7 +41,8 @@ public class Translater {
         return sourceLanguage;
     }
 
-    public static String autoDetectTranslate(String text, String target) {
+    public static String autoDetectTranslate(String text, String target) {    	    	
+    	
     	String originlang = detectLanguage(text);    	
     	return translate(text, originlang, target);    	
     }
