@@ -40,6 +40,7 @@
 	  	  max-height: 100px;
 		}
 		
+		body{ padding-top: 70px; }
 		
 		</style>
 </head>
@@ -48,16 +49,12 @@
 
 
 <!-- 상단 툴 바 들어갈 공간/없으면 카테고리 부분이 상단바랑 겹침 -->
-		<div class="container-fluid">
-			<br/>
-			<br/>
-			<br/>		
-		</div>
+		
 		
 		<!--Carousel Wrapper-->
 		<div class="container-fluid">
 		
-		<div id="multi-item-example" class="carousel slide carousel-multi-item carousel-multi-item-2" data-ride="carousel">
+		<div id="multi-item-example" class="carousel carousel-multi-item carousel-multi-item-2" data-ride="carousel">
 		
 		  <!--Controls-->
 		  <div class="controls-top">
