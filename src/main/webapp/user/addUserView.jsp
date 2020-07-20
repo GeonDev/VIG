@@ -15,7 +15,7 @@
 		//============= "가입"  Event 연결 =============
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$( "button" ).on("click" , function() {
+			$( "button.bt:contains()'버튼')" ).on("click" , function() {
 				fncAddUser();
 			});
 		});	
@@ -28,27 +28,30 @@
 
 	<div class="container">
 		<div class="row">
-			email &nbsp;&nbsp;
-				<input type="email" name="email"><br/>
+			user name &nbsp;&nbsp;
+				<input type="text" name="userName"><br/>
 		</div>
 		<div class="row">
 			password &nbsp;
 				<input type="password" name="password"><br/>
 		</div>
 		<div class="row">
-			bio &nbsp;&nbsp;&nbsp;
-				<input type="text" name="email"><br/>
+			profile img &nbsp;&nbsp;&nbsp;
+				<input type="text" name="profileImg"><br/>
 		</div>
 		<div class="row">
-			sex &nbsp;&nbsp;&nbsp;
-				<input type="radio" name="sex" value="male"> male &nbsp;
-				<input type="radio" name="sex" value="female">female<br/>
+			self introduce 
+				<input type="text name="selfIntroduce"/><br/>
 		</div>
-		
+		<div class="row">
+			profile img
+				<input type="radio" name="profileImg" >female<br/>
+		</div>
+			
 	</div>
 		<div class="container">
 			<div class="row">
-				<button type="submit">버튼</button>		
+				<button type="button" id="bt" >버튼</button>		
 			</div>
 		</div>
 
