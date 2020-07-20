@@ -130,6 +130,7 @@ public class EventController {
 		if(search.getCurrentPage() == 0 ){
 			search.setCurrentPage(1);
 		}
+		
 		search.setPageSize(pageSize);
 		
 		Map<String , Object> map=eventServices.getEventList(search);
@@ -138,6 +139,8 @@ public class EventController {
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("forward:/event/getEventList.jsp");
+		mav.addObject("list", map.get("list"));
+		mav.addObject("resultPage", resultPage);
 		mav.addObject("message", message);
 		
 		return mav;

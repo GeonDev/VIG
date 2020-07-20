@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>addEventView</title>
+<title>getFeed</title>
 
 <!-- JQuery -->
 	
@@ -67,11 +67,7 @@
 
 $(function(){
 	
-	$("#delete").on("click", function(){
-		
-		self.location="/VIG/event/deleteEvent?eventId=${event.eventId}";
-		
-	});
+
 	
 	
 })
@@ -111,7 +107,7 @@ $(function(){
 	
 	
 	
-	<h2>  ${event.eventTitle}</h2>
+	<h2>  ${feed.feedTitle}</h2>
 	<br>
 	<!-- Medium input -->
 	<h5> ${event.eventSub}</h5>
