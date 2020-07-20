@@ -109,7 +109,7 @@
 	</select>
 	
 	
-	<select id="getImageKeywordList" parameterType="String" resultType="String">
+	<select id="getAutoImageKeywordList" parameterType="String" resultType="String">
 		SELECT temp.keyword_en  FROM		
 		(SELECT ROW_NUMBER() OVER(ORDER BY images.image_id) num, keywords.keyword_en FROM images, keywords, feeds 
 		WHERE images.image_id = keywords.image_id
