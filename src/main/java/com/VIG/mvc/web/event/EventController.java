@@ -2,11 +2,11 @@ package com.VIG.mvc.web.event;
 
 import java.io.File;
 import java.util.List;
-
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.VIG.mvc.service.domain.Event;
 import com.VIG.mvc.service.event.EventServices;
+import com.VIG.mvc.service.domain.Page;
+import com.VIG.mvc.service.domain.Search;
 
 
 @Controller
@@ -27,6 +29,12 @@ public class EventController {
 	@Autowired
 	@Qualifier("eventServicesImpl")
 	private EventServices eventServices;
+	
+	@Value("#{commonProperties['pageUnit'] ?: 5}")
+	int pageUnit;
+
+	@Value("#{commonProperties['pageSize'] ?: 5}")
+	int pageSize;
 	
 	
 	public EventController(){
@@ -113,11 +121,20 @@ public class EventController {
 	}
 	
 	@RequestMapping(value="getEventList", method=RequestMethod.GET)
-	public ModelAndView getEventList() throws Exception {
+	public ModelAndView getEventList( @ModelAttribute("search") Search search) throws Exception {
 		
 		System.out.println("getEventList");
 		
 		String message = "이벤트 리스트 입니다.";
+		
+		if(search.getCurrentPage() == 0 ){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		
+		Map<String , Object> map=eventServices.getEventList(search);
+		
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("forward:/event/getEventList.jsp");
@@ -141,14 +158,27 @@ public class EventController {
 		return mav;
 	}
 	
+	@RequestMapping(value="updateEvent", method=RequestMethod.GET)
+	public ModelAndView updateEvent(@RequestParam("eventId") int eventId) throws Exception {
+		
+		System.out.println("updateEventView");
+		Event dbEvent = eventServices.getEvent(eventId);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("forward:/event/updateEventView.jsp");
+		mav.addObject("event", dbEvent);
+		
+		return mav;
+		
+	}
+	
 	@RequestMapping(value="updateEvent", method=RequestMethod.POST)
 	public ModelAndView updateEvent(@ModelAttribute("event") Event event, @RequestParam("uploadFile") List<MultipartFile> files) throws Exception {
 		
 		System.out.println("updateEvent : POST");
 		
 		System.out.println(event);
-		
-		
+	
 		
 		if(files !=null) {
 			int i = 0;
@@ -180,7 +210,7 @@ public class EventController {
 		
 		System.out.println(event);
 		
-		eventServices.addEvent(event);
+		eventServices.updateEvent(event);
 		
 		ModelAndView modelAndView = new ModelAndView();
 		

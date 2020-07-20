@@ -17,4 +17,6 @@ public interface EventDao {
 	
 	public void deleteEvent(int eventId) throws Exception;
 	
+	public int getEventCount() throws Exception;
+	
 }

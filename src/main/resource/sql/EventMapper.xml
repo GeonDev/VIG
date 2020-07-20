@@ -12,7 +12,7 @@
 		<result property="eventSub" 	column="event_sub" 		jdbcType="VARCHAR"/>
 		<result property="eventStart" 		column="event_start" 		jdbcType="DATE" />
 		<result property="eventEnd" 	column="event_end" 		jdbcType="DATE" />
-		<result property="eventThumb" 	column="evnet_thumbnail" 		jdbcType="VARCHAR" />
+		<result property="eventThumb" 	column="event_thumbnail" 		jdbcType="VARCHAR" />
 		<result property="eventTags" 	column="event_tag" 	jdbcType="VARCHAR" />	
 		<result property="eventImage" 	column="event_Image" 	jdbcType="VARCHAR" />
 		<result property="eventRegDate" 	column="event_RegDate" 	jdbcType="DATE" />
@@ -57,7 +57,7 @@
       	WHERE event_id=#{value}
 	</delete>
 	
-	<select id="getTotalCount">
+	<select id="getTotalCount" resultType="int">
 		SELECT COUNT(*)
 		FROM(	
 		SELECT *

@@ -1,6 +1,8 @@
 package com.VIG.mvc.service.event.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -42,12 +44,24 @@ public class EventServicesImpl implements EventServices {
 	public void updateEvent(Event event) throws Exception {
 		// TODO Auto-generated method stub
 		
+		eventDao.updateEvent(event);
+		
 	}
 
 	@Override
-	public List<Event> getEventList(Search search) throws Exception {
+	public Map<String, Object> getEventList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		
+		List<Event> list = eventDao.getEventList(search);
+		int totalCount = eventDao.getEventCount();
+		
+		System.out.println(totalCount);
+		
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("totalCount", totalCount);	
+		
+		return map;
 	}
 	
 	@Override

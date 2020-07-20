@@ -56,7 +56,7 @@ public class EventDaoImpl implements EventDao {
 	public List<Event> getEventList(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		
-		List<Event> list = sqlSession.selectList("EventMapper.getEvetnList", search);
+		List<Event> list = sqlSession.selectList("EventMapper.getEventList", search);
 		
 		return list;
 	}
@@ -67,6 +67,12 @@ public class EventDaoImpl implements EventDao {
 		
 		sqlSession.delete("EventMapper.deleteEvent", eventId);
 		
+	}
+
+	@Override
+	public int getEventCount() throws Exception {
+		// TODO Auto-generated method stub
+		return 	sqlSession.selectOne("EventMapper.getTotalCount");
 	}
 	
 
