@@ -102,7 +102,7 @@
 		</div>
 		
 		<div class="row">
-			<a href="searchController/getSearchResult">검색 페이지</a>
+			<a href="search/getSearchResult.jsp">검색 페이지</a>
 		</div>
 		
 		

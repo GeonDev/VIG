@@ -338,8 +338,6 @@ INTO users (user_code, user_name, password, role, profile_img, self_introduce, s
 VALUES ('user20', 'atom20', '2020', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
 
 
-
-
 INSERT
 INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
 VALUES(feed_id, 'After Opportunity', 'After Opportunity centres on the curatorial concept of an exhibition on paper.', 'user01', NOW(), 1, 10003);
@@ -508,6 +506,90 @@ VALUES(image_id, 20006, 4, 0,'feed07_05.jpg');
 
 
 INSERT
+INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
+VALUES(feed_id, 'Vanke Future Town Pavillion in Xuzhou', 'This is a personal project focus on the recreation of existing photos depict Vanke Future Town Pavillion in Xuzhou designed by Continuation Studio and photographed by SHIROMIO Studio.', 'user04', NOW(), 0, 10002);
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20007, 0, 1,'feed08_thumbnail.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20007, 0, 0,'feed08_01.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20007, 1, 0,'feed08_02.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20007, 2, 0,'feed08_03.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20007, 3, 0,'feed08_04.jpg');
+
+INSERT
+INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
+VALUES(feed_id, 'MITI CHIVA', 'LANDSCAPE ARCHITECT : STUDIOJEDT', 'user04', NOW(), 0, 10002);
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20008, 0, 1,'feed09_thumbnail.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20008, 0, 0,'feed09_01.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20008, 0, 0,'feed09_02.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20008, 0, 0,'feed09_03.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20008, 0, 0,'feed09_04.jpg');
+
+
+INSERT
+INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
+VALUES(feed_id, 'Modern Shipping Container Home', 'Modern Shipping Container Modular Home created by DEER Design', 'user04', NOW(), 0, 10002);
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20009, 0, 1,'feed10_thumbnail.jpg');	
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20009, 0, 0,'feed10_01.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20009, 1, 0,'feed10_02.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20009, 2, 0,'feed10_03.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20009, 3, 0,'feed10_04.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20009, 4, 0,'feed10_05.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20009, 5, 0,'feed10_06.jpg');
+
+
+
+
+INSERT
 INTO report (report_id, reporter_code, violator_code, report_Type, report_feed_id, report_date)
 VALUES(report_id, 'user10', 'user02', 0, 20000, NOW());
 
@@ -530,6 +612,11 @@ VALUES(report_id, 'user14', 'user02', 2, 20003, NOW());
 INSERT
 INTO report (report_id, reporter_code, violator_code, report_Type, report_feed_id, report_date)
 VALUES(report_id, 'user15', 'user03', 2, 20004, NOW());
+
+
+
+
+
 
 
 commit;
