@@ -111,13 +111,13 @@
 	
 	<select id="getAutoImageKeywordList" parameterType="String" resultType="String">
 		SELECT temp.keyword_en  FROM		
-		(SELECT ROW_NUMBER() OVER(ORDER BY images.image_id) num, keywords.keyword_en FROM images, keywords, feeds 
+		(SELECT ROW_NUMBER() OVER(ORDER BY keywords.keyword_en) num, keywords.keyword_en FROM images, keywords, feeds 
 		WHERE images.image_id = keywords.image_id
 		AND feeds.feed_id = images.feed_id	
 		AND images.is_thumbnail = 0
 		AND feeds.feed_state = 0
 		AND keywords.keyword_en	LIKE CONCAT('%',#{value},'%')
-		GROUP BY images.image_id
+		GROUP BY keywords.keyword_en
 		)temp
 		WHERE num BETWEEN 1 AND 5	
 	</select>

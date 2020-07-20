@@ -172,7 +172,7 @@ public class TestController {
 				color.setImageId(image.getImageId());
 				colorServices.addColor(color);				
 			}			
-			System.out.println("[SERVER] : "+image.getImageFile()+"추출 완료");
+			System.out.println("[SERVER] : "+image.getImageFile()+" 추출 완료");
 		}	
 		System.out.println("[SERVER] : 이미지 정보 추출 완료");
 					
