@@ -479,6 +479,35 @@ VALUES(image_id, 20005, 2, 0,'feed06_3.jpg');
 
 
 INSERT
+INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
+VALUES(feed_id, 'House no. 337', 'House no. 337 Project and viz.: author', 'user04', NOW(), 0, 10002);
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20006, 0, 1,'feed07_thumbnail.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20006, 0, 0,'feed07_01.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20006, 1, 0,'feed07_02.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20006, 2, 0,'feed07_03.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20006, 3, 0,'feed07_04.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20006, 4, 0,'feed07_05.jpg');
+
+
+INSERT
 INTO report (report_id, reporter_code, violator_code, report_Type, report_feed_id, report_date)
 VALUES(report_id, 'user10', 'user02', 0, 20000, NOW());
 
