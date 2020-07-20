@@ -66,8 +66,8 @@
 	
 
 <!--Navbar start-->	
-		<div class="container-lg">
-			<nav class="mb-1 navbar fixed-top navbar-expand-lg navbar-grey lighten-1 py-3">
+	
+			<nav class="mb-1 navbar fixed-top navbar-expand-lg navbar-dark indigo lighten-1 py-3">
 			
 <!-- 로고 -->		
 			  <a class="navbar-brand" href="/main/main.jsp" >VIG</a>
@@ -115,7 +115,7 @@
 	        </a>
 	       </li>
 	      </nav>
-	     </div>
+
 	        
 	        
 
