@@ -31,6 +31,10 @@
 	
 <style>
 	
+	body {
+	
+	}
+	
 	#outline {
 	
 		width: 1300px;
@@ -45,20 +49,18 @@
 		
 	}
 	
-	#inline {
-		
-		width: 1150px;
-		margin: 0 auto;
-	
-	}
-	
 	img {
 	  margin: 1em 0;
 	  display: block;
 	  background: rgb(240, 240, 240);
 	  border: 1px solid rgb(0, 0, 0);
 	}
-
+	
+	#profile {
+		width: 55px;
+		height: 55px;
+	
+	}
 
 </style>
 
@@ -93,13 +95,7 @@ $(function(){
 
 	
 	<div id="outline">
-	<br>
-	<br>
-	<dl class="row">
-	<dt class="col-sm-10"> <h1> 이벤트 상세보기 </h1> </dt>
-	<dt class="col-sm-2"> <input type="button" value="삭제" id="delete"> </dt>
-	</dl>
-	<hr/>
+
 	<div id="main">
 	
 	<br/>
@@ -107,40 +103,59 @@ $(function(){
 	
 	
 	
-	<h2>  ${feed.feedTitle}</h2>
+	<h2> <strong> ${feed.feedTitle} </strong></h2>
 	<br>
 	<!-- Medium input -->
-	<h5> ${event.eventSub}</h5>
+	<h5> ${feed.feedExplanation}</h5>
 	
 
 	
 	<hr/>
-		<img src="C:/uploadFiles/${event.eventImage}" style="width:960px" class="img-rounded"/>
+	<c:forEach var="images" items="${feed.images}">
+		<c:set var="i" value="0"/>
+		<c:set var="i" value="${i+1 }"/>
+		<c:if test="${images.isThumbnail == '0'}">
+			<div id="image">
+			<img src="../images/uploadFiles/${images.imageFile}" class="rounded" style="width:960px" />
+			</div>
+		</c:if>
+	</c:forEach>
 	<hr/>
+	
 	<br/>
-	
 
-		
+		<div class="container">
+			<div class="row">
+			<div class="col">
+			<div>
+			<img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(27).jpg" id="profile" class="rounded-circle">
+			 </div>
+			 <div><p>${feed.writer.userName}</p></div>
+			</div>
+			</div> 
+
+			<div class="col">
 			
-			<dl class="row">
-			  <dt class="col-sm-2">태그</dt>
-			  <dd class="col-sm-10">${event.eventTags }</dd>
-			 </dl>
-			 <dl class="row">
-				  <dt class="col-sm-2">기간</dt>
-				  <dd class="col-sm-10">${event.eventStart}&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;${event.eventEnd }</dd>
-			 </dl>
-
+			</div>
+			<div class="col">
+			
+			</div>
+			
+			<div class="d-flex flex-row bd-highlight mb-6">
+			  <div class="p-2 bd-highlight">Flex item 1</div>
+			  <div class="p-2 bd-highlight">Flex item 2</div>
+			  <div class="p-2 bd-highlight">Flex item 3</div>
+			</div>
+			 </div>
 
 	<br/>
+	<hr/>
+	<br/>
+	
+	
 	
 	</div>
-	<div id="inline">
-			<hr/>
-			<br/>
-			<h1> 참가 작품 모아보기 </h1>
 	
-	</div>
 	</div>
 
 </body>
