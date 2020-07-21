@@ -32,5 +32,7 @@ public interface FeedServices {
 	public List<String> getfeedTitleList(String key) throws Exception;	
 	
 	public Feed getPrimeFeedOne(Search search) throws Exception;
+	
+	public void updatePrimeFeedViewCount(Feed feed) throws Exception;
 
 }
