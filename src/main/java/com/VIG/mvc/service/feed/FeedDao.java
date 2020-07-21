@@ -15,7 +15,7 @@ public interface FeedDao {
 	
 	public List<Feed> getFeedList(Search search) throws Exception;	
 	
-	public List<Feed> getMyFeedList(String userCode) throws Exception;	
+	public List<Feed> getMyFeedList(Search search) throws Exception;	
 	
 	public Feed getTempFeed(String userCode) throws Exception;	
 	
@@ -30,5 +30,7 @@ public interface FeedDao {
 	public List<Feed> getFeedListFromColor(Search search) throws Exception;	
 	
 	public List<String> getfeedTitleList(String key) throws Exception;	
+	
+	public Feed getPrimeFeedOne(Search search) throws Exception;
 
 }

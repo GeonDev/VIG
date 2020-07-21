@@ -46,12 +46,6 @@ public class FeedServicesImpl implements FeedServices {
 	}
 
 	@Override
-	public List<Feed> getMyFeedList(String userCode) throws Exception {
-		// TODO Auto-generated method stub
-		return feedDao.getMyFeedList(userCode);
-	}
-
-	@Override
 	public Feed getTempFeed(String userCode) throws Exception {
 		// TODO Auto-generated method stub
 		return feedDao.getTempFeed(userCode);
@@ -92,6 +86,18 @@ public class FeedServicesImpl implements FeedServices {
 	public List<String> getfeedTitleList(String key) throws Exception {
 		// TODO Auto-generated method stub
 		return feedDao.getfeedTitleList(key);
+	}
+
+	@Override
+	public List<Feed> getMyFeedList(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return feedDao.getMyFeedList(search);
+	}
+
+	@Override
+	public Feed getPrimeFeedOne(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return feedDao.getPrimeFeedOne(search);
 	}
 
 }

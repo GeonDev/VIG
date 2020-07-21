@@ -125,7 +125,7 @@ public class RestSearchController {
 			}
 			
 			List<Feed> feedlist = feedServices.getFeedListFromKeyword(search);
-			map.put("feedlist", feedlist);
+			map.put("list", feedlist);
 		}		
 		
 		//이미지 검색
@@ -138,7 +138,7 @@ public class RestSearchController {
 			}
 			
 			List<Image> imageList = imageServices.getImageListFromKeyword(search);
-			map.put("imageList", imageList);
+			map.put("list", imageList);
 					
 		}
 		
@@ -154,7 +154,7 @@ public class RestSearchController {
 			search.setSearchType(0);
 			List<User> userList = userServices.getUserListFromName(search);
 			
-			map.put("userList", userList);
+			map.put("list", userList);
 		}		
 
 		return map;		
