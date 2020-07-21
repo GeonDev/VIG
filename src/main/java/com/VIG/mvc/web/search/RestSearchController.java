@@ -1,5 +1,6 @@
 package com.VIG.mvc.web.search;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +57,7 @@ public class RestSearchController {
 	@Value("#{commonProperties['pageUnit'] ?: 5}")
 	int pageUnit;
 
-	@Value("#{commonProperties['pageSize'] ?: 5}")
+	@Value("#{commonProperties['pageSize'] ?: 10}")
 	int pageSize;
 
 
@@ -125,6 +126,15 @@ public class RestSearchController {
 			}
 			
 			List<Feed> feedlist = feedServices.getFeedListFromKeyword(search);
+			
+			//프라임피드를 추가하고 조회수를 늘려준다.
+			Feed primeFeed = feedServices.getPrimeFeedOne(search);
+			primeFeed.setPrimeFeedViewCount(primeFeed.getPrimeFeedViewCount()+1);
+			feedServices.updatePrimeFeedViewCount(primeFeed);
+			feedlist.add(primeFeed);
+			
+			//숨김피드는 빼준다.
+			
 			map.put("list", feedlist);
 		}		
 		
@@ -154,7 +164,21 @@ public class RestSearchController {
 			search.setSearchType(0);
 			List<User> userList = userServices.getUserListFromName(search);
 			
+			List<Feed> feedlist = new ArrayList<Feed>();
+			
+			for(User users : userList) {
+				Search tempSearch = new Search();
+				tempSearch.setKeyword(users.getUserCode());
+				
+				//페이지는 1페이지로 고정 -> 해당 유저가 작성한 피드 1페이지만 불러오면 된다
+				tempSearch.setCurrentPage(1);
+				
+				//검색한 피드리스트를 합친다 - > 화면에서 나누어 준다.
+				feedlist.addAll(feedServices.getMyFeedList(search));
+			}			
+			
 			map.put("list", userList);
+			map.put("feeds", feedlist);
 		}		
 
 		return map;		
