@@ -6,87 +6,89 @@
 <meta charset="UTF-8">
 <title>VIG</title>
 
-		<!-- Font Awesome -->
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-		<!-- Google Fonts -->
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-		<!-- Bootstrap core CSS -->
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
-		<!-- Material Design Bootstrap -->
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
-		
-		<!-- JQuery -->
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<!-- Bootstrap tooltips -->
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
-		<!-- Bootstrap core JavaScript -->
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
-		<!-- MDB core JavaScript -->
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
-			
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+	<!-- Google Fonts -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+	<!-- Bootstrap core CSS -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Material Design Bootstrap -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+				
+	<!-- JQuery -->
+	<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+	<!-- Bootstrap tooltips -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<!-- MDB core JavaScript -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 		<script type="text/javascript">
 		
-		function fncAddUser() {			
-			$("form").attr("method" , "POST").attr("action" , "/user/addUser").submit();
+		function fncAddUser() {
+			
+			$("form").attr("method" , "POST").attr("action" , "addUser").submit();
 		}
-	
-		//============= "가입"  Event 연결 =============
-		 $(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$( "button.bt:contains()'버튼')" ).on("click" , function() {
-				fncAddUser();
-			});
-		});	
 		
+	
+			$(function() {
+				$( "#signUp_btn" ).on("click" , function() {
+					fncAddUser();
+				});
+			});	
+				
 		</script>
 </head>
 <body>
 
 회원가입 페이지
 
-	<div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-
-	<div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Write to us</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <i class="fas fa-user prefix grey-text"></i>
-          <input type="text" id="form34" class="form-control validate">
-          <label data-error="wrong" data-success="right" for="form34">Your name</label>
-        </div>
-	
-				<input type="text" name="userName"><br/>
-		</div>
-		<div class="row">
-			password &nbsp;
-				<input type="password" name="password"><br/>
-		</div>
-		<div class="row">
-			profile img &nbsp;&nbsp;&nbsp;
-				<input type="text" name="profileImg"><br/>
-		</div>
-		<div class="row">
-			self introduce 
-				<input type="text name="selfIntroduce"/><br/>
-		</div>
-		<div class="row">
-			profile img
-				<input type="radio" name="profileImg" >female<br/>
-		</div>
-			
-	</div>
-		<div class="container">
-			<div class="row">
-				<button type="button" id="bt" >버튼</button>		
+<form>
+			<div class="md-form form-sm mb-5">
+                <i class=""></i>
+                <input type="text" id="userCode" name="userCode" class="form-control form-control-sm validate" >
+                <label data-error="wrong" data-success="right" for="userCode">id</label>
+              </div>
+              
+<!-- 비밀번호 -->
+              <div class="md-form form-sm mb-5">
+                <i class=""></i>
+                <input type="password" id="password" name=" pssword" class="form-control form-control-sm validate" >
+                <label data-error="wrong" data-success="right" for="password">Your password</label>
+              </div>
+<!-- 비밀번호확인 -->
+              <div class="md-form form-sm mb-4">
+                <i class=""></i>
+                <input type="text" id="userName" name="userName" class="form-control form-control-sm validate" >
+                <label data-error="wrong" data-success="right" for="password2">userName</label>
+              </div>              
+<!-- 이메일 -->             
+              <div class="md-form form-sm mb-5">
+                <i class=""></i>
+                <input type="email" name="email" id="email" class="form-control form-control-sm validate">
+                <label data-error="wrong" data-success="right" for="email">Your email</label>            
 			</div>
-		</div>
-
+<!-- 생년월일 -->      
+			                    
+ <!-- 성별 -->            
+              <div class="md-form form-sm mb-5">
+               <i class=""></i>        
+                <label data-error="wrong" data-success="right" for="modalLRInput18">Gender</label><br/> 
+               male <input type="radio" id="sex" name="sex" value="male"/> 
+               female <input type="radio" id="sex" name="sex" value="female"/>                       
+              </div>
+              
+              <!--  -->
+             <div class="modal-footer mx-5 pt-3 mb-1">
+          <p class="font-small grey-text d-flex justify-content-end">Already a member? <a href="../user/login" class="blue-text ml-1">
+              Sign In</a></p>
+        </div>
+              
+ <!-- 회원가입버튼 -->          
+              <div class="text-center form-sm mt-2">
+                <input type="button" id="signUp_btn"  class="btn btn-info" value="sign up"><i class="fas fa-sign-in ml-5"></i></button>
+              </div>
+              
+   
+	</form>
 </body>
 </html>
