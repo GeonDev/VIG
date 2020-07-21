@@ -20,7 +20,7 @@
 				alert(  $( "logout" ).html() );
 				$(self.location).attr("href","../user/logout");
 			}); 
-//===로고 버튼 클릭시 메인 페이지로 이동
+//==로고 클릭시 메인 페이지로
 	$(".navbar-brand:contains('VIG')").on("click",function(){
 		self.location="../main/main.jsp";
 		});
@@ -36,7 +36,7 @@
 <!--Navbar start-->	
 			<nav class="mb-1 navbar fixed-top navbar-expand-xl navbar-dark indigo lighten-1 py-3" id="toolbar">			
 <!-- 로고 -->		
-			  <a class="navbar-brand" href="main.jsp" >VIG</a>		  
+			  <a class="navbar-brand"  >VIG</a>		  
 			      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
 				    aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
 				    <span class="navbar-toggler-icon"></span>

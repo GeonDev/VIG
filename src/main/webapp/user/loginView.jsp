@@ -75,17 +75,21 @@
 	.container{
 	  padding-right: 300px;
 	  padding-left: 300px;
+	  padding-top: 100px;'
 	  margin-right: auto;
 	  margin-left: auto;
-
+	 
 	}
 	</style>
 
 </head>
 <body>
-<form class="text-center border border-light p-5">
+<jsp:include page="../main/toolbar.jsp"></jsp:include>
+
+<form >
 
 <div class="container">
+<div class="text-center border border-light p-5">
   <div class="row">
 
     <p class="h4 mb-6">Sign in</p>
@@ -129,7 +133,7 @@
     <a href="#" class="mx-2" role="button"><i class="fab fa-github light-blue-text"></i></a>
 	</div>
 	</div>
-
+	</div>
 </form>
 
 </body>
