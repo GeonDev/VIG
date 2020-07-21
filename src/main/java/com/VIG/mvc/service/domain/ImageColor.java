@@ -7,8 +7,8 @@ import lombok.Data;
 @Data
 public class ImageColor implements Serializable{	
 	
-	private float colorId;
-	private float ImageId;
+	private int colorId;
+	private int ImageId;
 	
 	private float red;
 	private float green;
