@@ -160,6 +160,9 @@ public class TestController {
 		System.out.println("[SERVER] : 이미지 정보 추출 시작");
 		
 		for(Image image :imagelist) {
+			long start = System.currentTimeMillis();
+
+			
 			List<ImageKeyword> keywords = VisionInfo.getKeywordForVision(path+image.getImageFile());
 			List<ImageColor> colors = VisionInfo.getColorForVision(path+image.getImageFile());
 			
@@ -171,8 +174,11 @@ public class TestController {
 			for(ImageColor color : colors) {
 				color.setImageId(image.getImageId());
 				colorServices.addColor(color);				
-			}			
-			System.out.println("[SERVER] : "+image.getImageFile()+" 추출 완료");
+			}
+			long end = System.currentTimeMillis();
+
+			System.out.println("[SERVER] : "+image.getImageFile()+" 추출 완료/ " + "실행 시간 : " + (end - start)/1000.0);
+
 		}	
 		System.out.println("[SERVER] : 이미지 정보 추출 완료");
 					
