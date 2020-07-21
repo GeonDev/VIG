@@ -9,9 +9,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.VIG.mvc.service.domain.User;
@@ -26,10 +28,11 @@ public class UserController {
 	private UserServices userServices;
 	
 	public UserController() {
-		
+		System.out.println(this.getClass());
 	}
 	
 //=========회원가입===========================================================//
+	
 	@RequestMapping(value="addUser", method=RequestMethod.GET)
 	public ModelAndView addUser() throws Exception{
 		
@@ -39,27 +42,14 @@ public class UserController {
 		
 		return modelAndView;
 	}
-/*
+		
 	@RequestMapping( value="addUser", method=RequestMethod.POST )
-	public String addUser( @ModelAttribute("user") User user ) throws Exception {
-
+	public String addUser(@ModelAttribute("user") User user ) throws Exception {
+		
+		System.out.println("addUser(POST):회원가입"+user);
 		userServices.addUser(user);
-		System.out.println("addUser(POST):"+user);
 		
-		return "redirect:/index.jsp";
-	}
-*/	
-
-	
-	@RequestMapping( value="addUser", method=RequestMethod.POST )
-	public ModelAndView addUser( User user ) throws Exception {
-		
-		System.out.println("addUser(POST):회원가입");
-		userServices.addUser(user);
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:/main/main.jsp");
-		
-		return modelAndView;
+		return "redirect:/user/loginView.jsp";
 	}
 
 //=======로그인===============================================================//
@@ -74,15 +64,30 @@ public class UserController {
 		return model;
 	}
 	
-	public String login(User user, HttpSession session) throws Exception{
+	@RequestMapping( value="login", method=RequestMethod.POST )
+	public ModelAndView login(@ModelAttribute("user") User user, HttpSession session) throws Exception{
 		
 		System.out.println("login(POST):로그인");
 		
 		User dbUser = userServices.getUserOne(user.getUserCode());
+		ModelAndView model = new ModelAndView();
+		model.setViewName("redirect:../main/main.jsp");
+		System.out.println("user:"+user);
+
 		if( user.getPassword().equals(dbUser.getPassword())) {
 			session.setAttribute("user", dbUser);
+			}	
+		return model;
 		}	
-		return "redirect:/main/main.jsp";
+	
+//=======로그아웃===============================================================//
+	@RequestMapping( value="logout", method=RequestMethod.GET)
+	public ModelAndView logout(HttpSession session) throws Exception{
+		System.out.println("logout");
+		session.invalidate();
+		ModelAndView model = new ModelAndView();
+		model.setViewName("redirect:../main/main.jsp");
+		return model;
 	}
 
 //=======이메일 보내기============================================================//
@@ -135,4 +140,14 @@ public class UserController {
 		return String.format("%06d", number);		
 	}
 	
+	
+//=======get user===========================================================//
+	
+	public String GetUser(@RequestParam("userCode") String userCode, Model model)throws Exception{
+		System.out.println("get user");
+		User user = userServices.getUserOne(userCode);
+		System.out.println("get/user:"+user);
+		model.addAttribute("user", user);
+		return "forward:main/main.jsp";
+	}
 }
