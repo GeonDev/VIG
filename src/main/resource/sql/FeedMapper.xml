@@ -77,13 +77,13 @@
 		</select>		
 		
 		
-		<!-- 특정유저가 작성한 피드를 불러온다. searchType이 1이면 작성한모든 피드를 불러온다 (내피드조회용) -->
+		<!-- 특정유저가 작성한 피드를 불러온다. searchType이 1이면 최신순 피드 1페이지만 -->
 		<select id="getMyFeedList" parameterType="search" resultMap="FeedSelectMap">
 			SELECT * FROM
 			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feeds.* FROM feeds
-			WHERE user_code = #{value} AND feed_state = 0
+			WHERE user_code = #{value} AND feed_state = 0	
 			<if test="searchType == 0">
-			AND feed_is_prime != 1	
+			ORDER BY feeds.feed_id DESC	
 			</if>
 			)temp WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
 		</select>
@@ -180,7 +180,11 @@
 			WHERE num BETWEEN 1 AND 5
 		</select>
 		
-		
+		<update id ="updatePrimeFeedViewCount" parameterType="feed">
+		 UPDATE feeds
+		 SET prime_feed_view_count = #{primeFeedViewCount}
+		 WHERE feed_id = #{feedId} 		
+		</update>
 		
 	 
 </mapper>

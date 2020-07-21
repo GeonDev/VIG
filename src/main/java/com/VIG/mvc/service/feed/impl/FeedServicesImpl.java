@@ -100,4 +100,11 @@ public class FeedServicesImpl implements FeedServices {
 		return feedDao.getPrimeFeedOne(search);
 	}
 
+	@Override
+	public void updatePrimeFeedViewCount(Feed feed) throws Exception {
+		// TODO Auto-generated method stub
+		feedDao.updatePrimeFeedViewCount(feed);
+		
+	}
+
 }
