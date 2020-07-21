@@ -27,10 +27,9 @@
 	<!-- jQuery UI toolTip 사용 CSS-->
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
 	
-	<!-- lazyload CDN  -->
-   <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
+	<!-- 지연 로딩 플러그 인 -->
+	<script src="/VIG/javascript/lazyloadxt.min.js"></script>
 	
 	<style>
 	body {
@@ -60,11 +59,22 @@
 	//최초 입장시 모드 지정
 	var Mode = 'Feed';
 	
+	//최초 페이지는 0으로 설정
+	var page = 0; 	
 	
-	//최초 페이지 지정
-	var Page = 1; 	
+	//페이지의 끝인지 체크
+	var isPageEnd = false;
 	
-	function getItemList(Page) {		
+	function getItemList() {
+		
+		if(isPageEnd == true){
+			//페이지의 끝이라면 실행안함
+			return;
+		}		
+		page += 1;
+		console.log(page);		
+		
+		
 		$.ajax( 
 				{
 					url : "/VIG/searchController/json/getSearchResultList",
@@ -74,10 +84,15 @@
 						"Accept" : "application/json",
 						"Content-Type" : "application/json"
 					},
-					data :  JSON.stringify({keyword : $("#Keyword").val(), mode : Mode, page : Page}),
+					data :  JSON.stringify({keyword : $("#Keyword").val(), mode : Mode, currentPage : page}),
 					success : function(JSONData , status) {
- 						$.each(JSONData.list, function(index, item) {				 											
-							
+						
+						//불러와야 되는 페이지보다 개수가 적은 경우 페이지가 끝났다
+						if (JSONData.list.length < 10){
+							isPageEnd = true;
+						}
+						
+ 						$.each(JSONData.list, function(index, item) {						
 							
 							if(Mode == 'Feed'){
 								
@@ -121,10 +136,12 @@
 							
 						
 							console.log(displayValue)						              		
-							$(".row:last").append(displayValue);
+							$(".row:last").append(displayValue);							
+						
 						});	 									
 					}
 			});
+		
 	}
 	
 	
@@ -151,24 +168,24 @@
 	}
 	
 	
-	$(function(){	
+	$(function(){			
+			// 최초 진입시 첫번째 페이지 로딩
+			getItemList();
 		
-			/* 최초 진입시 첫번째 페이지 로딩*/
-			getItemList(1);
-		
+			//모드 버튼을 누르는 경우 페이지 초기화
 			$("button").on("click",function(){				
 				Mode = $(this).text();
-				$( 'div' ).remove( '.view' );			
-				Page = 1
+				$( 'div' ).remove('.view');			
+				page = 0;
+				isPageEnd = false;
 				$("#Keyword").val("");
-				getItemList(Page);
+				getItemList();
 			});	
 			
    			
-   			$(window).scroll(function() {
-   			    if ($(window).scrollTop() > $(document).height() - $(window).height() - 310) {
-   			    	Page = Page+1;   			     
-	   			  	getItemList(Page);
+			$(window).scroll(function() {
+   			    if ($(window).scrollTop() == $(document).height() - $(window).height()) {     			     
+	   				getItemList();   			    	
    			    }
    			});		
 		
@@ -182,8 +199,9 @@
 	       $("#Keyword").keydown(function(key) {
 	            if (key.keyCode == 13) {
 	            	$( 'div' ).remove( '.view' );
-					Page = 1					
-	            	getItemList(Page);
+					page = 0;
+					isPageEnd = false;
+	            	getItemList();
 	            }
 	        });			
 			
