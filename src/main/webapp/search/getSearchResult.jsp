@@ -35,13 +35,23 @@
 	<style>
 	  body {
             padding-top : 50px;
-        }
+        }        
+        
+       .max-small {
+	    width: auto; height: auto;
+	    max-width: 400px;
+	    max-height: 300px;
+	    margin: 5px 10px;
+		}
+        
+
     </style>
 	
 	<script type="text/javascript">
 	
 	//최초 입장시 모드 지정
 	var Mode = 'Feed';
+	
 	
 	//최초 페이지 지정
 	var Page = 1; 	
@@ -58,13 +68,39 @@
 					},
 					data :  JSON.stringify({keyword : $("#Keyword").val(), mode : Mode, page : Page}),
 					success : function(JSONData , status) {
-/* 						$.each(JSONData, function(index, item) {
+ 						$.each(JSONData.list, function(index, item) {				 											
+							
+							
+							if(Mode == 'Feed'){
+								
+								var thumbnail = '';								
+								
+								$.each(item.images, function(index, item){
+									if(item.isThumbnail == 1){
+										thumbnail = item.imageFile
+									}									
+								});								
+								
+								
+								var displayValue = "<div class = 'max-small'>"
+									+ "<img src='/VIG/images/uploadFiles/"
+									+ thumbnail 
+									+ "' alt='thumbnail' class='img-thumbnail' style='width: auto; height: 300px;'>"
+									+"</div>";
+															
+								
+							}else if(Mode == 'Image'){			
+								var displayValue = "<div class = 'max-small'>"
+								+ "<img src='/VIG/images/uploadFiles/"
+								+ item.imageFile 
+								+ "' alt='thumbnail' class='img-thumbnail' style='width: auto; height: 300px;'>"
+								+"</div>";
+							}
 							
 						
-							var displayValue = '';         
-							              
+							console.log(displayValue)						              		
 							$(".row:last").append(displayValue);
-						});	 */									
+						});	 									
 					}
 			});
 	}
@@ -99,14 +135,18 @@
 			getItemList(1);
 		
 			$("button").on("click",function(){				
-				Mode = $(this).text();				
+				Mode = $(this).text();
+				$( 'div' ).remove( '.max-small' );
+				Page = 1
+				$("#Keyword").val("");
+				getItemList(Page);
 			});	
 			
    			
    			$(window).scroll(function() {
    			    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-	   			    page++;   			     
-	   			  	getItemList(page);
+   			    	Page = Page+1;   			     
+	   			  	getItemList(Page);
    			    }
    			});		
 		
@@ -119,6 +159,8 @@
 			
 	       $("#Keyword").keydown(function(key) {
 	            if (key.keyCode == 13) {
+					$( 'div' ).remove( '.max-small' );
+					Page = 1					
 	            	getItemList(Page);
 	            }
 	        });			
@@ -166,7 +208,7 @@
 		<hr/>
 		</div>
 		
-		<div class="row">
+		<div class="row justify-content-center" style = "margin: 5px;">
 		
 		</div>
 	

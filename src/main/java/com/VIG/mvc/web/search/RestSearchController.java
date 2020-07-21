@@ -122,6 +122,11 @@ public class RestSearchController {
 			if(CommonUtil.null2str(jsonData.get("keyword")).equals("")) {
 				search.setKeyword("");
 			}else {
+				if(CommonUtil.checkNumber(jsonData.get("keyword"))){
+					//단순 숫자라면 번역안함
+					search.setKeyword(jsonData.get("keyword"));
+				}
+				
 				search.setKeyword(Translater.autoDetectTranslate(jsonData.get("keyword"),"en"));
 			}
 			
@@ -129,9 +134,13 @@ public class RestSearchController {
 			
 			//프라임피드를 추가하고 조회수를 늘려준다.
 			Feed primeFeed = feedServices.getPrimeFeedOne(search);
-			primeFeed.setPrimeFeedViewCount(primeFeed.getPrimeFeedViewCount()+1);
-			feedServices.updatePrimeFeedViewCount(primeFeed);
-			feedlist.add(primeFeed);
+			
+			if(primeFeed != null) {
+				primeFeed.setPrimeFeedViewCount(primeFeed.getPrimeFeedViewCount()+1);
+				feedServices.updatePrimeFeedViewCount(primeFeed);
+				feedlist.add(primeFeed);				
+			}
+
 			
 			//숨김피드는 빼준다.
 			
@@ -144,6 +153,11 @@ public class RestSearchController {
 			if(CommonUtil.null2str(jsonData.get("keyword")).equals("")) {
 				search.setKeyword("");
 			}else {
+				if(CommonUtil.checkNumber(jsonData.get("keyword"))){
+					//단순 숫자라면 번역안함
+					search.setKeyword(jsonData.get("keyword"));
+				}
+				
 				search.setKeyword(Translater.autoDetectTranslate(jsonData.get("keyword"),"en"));
 			}
 			
