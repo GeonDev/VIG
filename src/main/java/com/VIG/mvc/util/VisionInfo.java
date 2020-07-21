@@ -22,37 +22,47 @@ import com.google.protobuf.ByteString;
 
 // 작동을 위해서는 API 키를 적용하야 합니다.
 // Run As - Run Configurations - Environment - New 
-public class VisionInfo {		
+public class VisionInfo extends Thread {	
+	
+	private String imageFilePath;
+	private List<ImageKeyword> keywords;
+	private List<ImageColor> colors;
+	private int imageId;
+	
 	
 	public VisionInfo() {}	
 	
-	//이미지의 키워드를 추출하는 함수
-	public static List<ImageKeyword> getKeywordForVision(String imageFilePath) {	
-		
-		List<ImageKeyword> keywords = new ArrayList<ImageKeyword>();
-		
-		requestVision(imageFilePath, Type.TEXT_DETECTION, keywords);
-		requestVision(imageFilePath, Type.LABEL_DETECTION, keywords);
-		requestVision(imageFilePath, Type.LANDMARK_DETECTION, keywords);
-		requestVision(imageFilePath, Type.LOGO_DETECTION, keywords);
-		
+	public VisionInfo(String imageFilePath, int imageId) {
+		this.imageFilePath = imageFilePath;	
+		this.imageId = imageId;
+		colors = new ArrayList<ImageColor>();
+		keywords = new ArrayList<ImageKeyword>();
+	}	
+	
+	public List<ImageKeyword> getKeywords(){
 		return keywords;
 	}
 	
-	
-	
-	//이미지의 색상정보를 추출하는 함수
-	public static List<ImageColor> getColorForVision(String imageFilePath) {		
-		
-		List<ImageColor> colors = new ArrayList<ImageColor>();
-		
-		requestVision(imageFilePath, Type.IMAGE_PROPERTIES, colors);		
-		
+	public List<ImageColor> getColors(){
 		return colors;
 	}
 	
 	
-	private static void requestVision(String imageFilePath, Type type, List list) {		
+	//이미지의 키워드를 추출하는 함수
+	private void getKeywordForVision() {			
+		requestVision(Type.TEXT_DETECTION);
+		requestVision(Type.LABEL_DETECTION);
+		requestVision(Type.LANDMARK_DETECTION);
+		requestVision(Type.LOGO_DETECTION);		
+	}	
+	
+	//이미지의 색상정보를 추출하는 함수
+	private void getColorForVision() {				
+		requestVision(Type.IMAGE_PROPERTIES);		
+	}
+	
+
+	private void requestVision(Type type) {		
 		try {		
 			
 			List<AnnotateImageRequest> requests = new ArrayList<>();
@@ -77,9 +87,9 @@ public class VisionInfo {
 			    		return;
 			    	}		    	
 			    	if(type == Type.IMAGE_PROPERTIES) {				    		
-			    		addColorList(type, res, list);
+			    		addColorList(type, res);
 			    	}else {
-			    		addKeywordList(type, res, list);	
+			    		addKeywordList(type, res);	
 			    	}
 			    			    	
 			    }		    
@@ -91,57 +101,66 @@ public class VisionInfo {
 				
 	}	
 	
-	
-	
-	
-	private static void addColorList(ColorInfo color, List<ImageColor> result) {
+	private void addColorList(ColorInfo color) {
 		ImageColor imageColor = new ImageColor();		
 		imageColor.setRed(color.getColor().getRed());
 		imageColor.setBlue(color.getColor().getBlue());
 		imageColor.setGreen(color.getColor().getGreen());
 		imageColor.setRatio(color.getPixelFraction());
-		result.add(imageColor);
+		imageColor.setImageId(imageId);
+		colors.add(imageColor);
 	}
 	
 	
 	
-	private static void addKeywordList(Type type, AnnotateImageResponse res, List<ImageKeyword> keys) {
+	private void addKeywordList(Type type, AnnotateImageResponse res) {
 
 		if (type == Type.TEXT_DETECTION) {
 			for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
-				addkeywoad(annotation, keys);
+				addkeywoad(annotation);
 			}
 		} else if (type == Type.LABEL_DETECTION) {
 			for (EntityAnnotation annotation : res.getLabelAnnotationsList()) {
-				addkeywoad(annotation, keys);
+				addkeywoad(annotation);
 			}
 		} else if (type == Type.LANDMARK_DETECTION) {
 			for (EntityAnnotation annotation : res.getLandmarkAnnotationsList()) {
-				addkeywoad(annotation, keys);
+				addkeywoad(annotation);
 			}
 		} else if (type == Type.LOGO_DETECTION) {
 			for (EntityAnnotation annotation : res.getLogoAnnotationsList()) {
-				addkeywoad(annotation, keys);
+				addkeywoad(annotation);
 			}
 		}
 	}
 	
-	private static void addkeywoad(EntityAnnotation annotation, List<ImageKeyword> result) {
+	private  void addkeywoad(EntityAnnotation annotation) {
 		ImageKeyword imageKeyword = new ImageKeyword();
 		
 		if (annotation.getScore() > 0.0f) {
 			imageKeyword.setKeywordEn(annotation.getDescription());	
 			imageKeyword.setScore(annotation.getScore());
-			result.add(imageKeyword);
+			imageKeyword.setImageId(imageId);
+			keywords.add(imageKeyword);
 		}		
 	}
 	
 	
-	private static void addColorList(Type type, AnnotateImageResponse res, List<ImageColor> colorResult) {	
+	private void addColorList(Type type, AnnotateImageResponse res) {	
 		DominantColorsAnnotation colors = res.getImagePropertiesAnnotation().getDominantColors();
 		for(ColorInfo color : colors.getColorsList()) {
-			addColorList(color, colorResult);
+			addColorList(color);
 		}
+	}
+
+	@Override
+	public void run() {
+		long Totalstart = System.currentTimeMillis();
+		System.out.println(imageFilePath + " 추출 시작");
+		getKeywordForVision();
+		getColorForVision();
+		long Totalend = System.currentTimeMillis();
+		System.out.println(imageFilePath + " 추출 종료 / 소요 시간 : "+(Totalend - Totalstart)/1000.0);		
 	}
 	
 }

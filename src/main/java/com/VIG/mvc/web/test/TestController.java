@@ -104,8 +104,8 @@ public class TestController {
 	    		//원하는 위치에 파일 저장
 	    		multipartFile.transferTo(f);	
 	    		
-	    		keys = VisionInfo.getKeywordForVision(path+inDate+multipartFile.getOriginalFilename());	    			
-	    		colors = VisionInfo.getColorForVision(path+inDate+multipartFile.getOriginalFilename());
+	    		//keys = VisionInfo.getKeywordForVision(path+inDate+multipartFile.getOriginalFilename());	    			
+	    		//colors = VisionInfo.getColorForVision(path+inDate+multipartFile.getOriginalFilename());
 			} 			
 		}		
 		
@@ -152,35 +152,40 @@ public class TestController {
 	    path = path.substring(0,path.indexOf("\\.metadata"));
 	    path = path +  uploadPath; 
 		
-		List<Image> imagelist = new ArrayList<Image>();
-		
+		List<Image> imagelist = new ArrayList<Image>();		
 		//저장되어 있는 모든 이미지를 불러옴		
 		imagelist = imageServices.getALLImageList();
 		
-		System.out.println("[SERVER] : 이미지 정보 추출 시작");
+		//비전 정보 + 쓰레드 동작을 위한 비전 배열
+		ArrayList<VisionInfo> visions = new ArrayList<VisionInfo>();
 		
-		for(Image image :imagelist) {
-			long start = System.currentTimeMillis();
-
-			
-			List<ImageKeyword> keywords = VisionInfo.getKeywordForVision(path+image.getImageFile());
-			List<ImageColor> colors = VisionInfo.getColorForVision(path+image.getImageFile());
-			
-			for(ImageKeyword keyword : keywords) {
-				keyword.setImageId(image.getImageId());
-				keywordServices.addKeyword(keyword);				
+		System.out.println("[SERVER] : 이미지 정보 추출 시작");
+		long Totalstart = System.currentTimeMillis();
+				
+		for(Image image :imagelist) {					
+			VisionInfo vision = new VisionInfo(path + image.getImageFile(), image.getImageId());
+			vision.start();			
+			visions.add(vision);
+		}
+		
+		//생성된 쓰래드를 연결하여 모든 쓰레드가 완료 될때 까지 기다림
+		for (VisionInfo vision : visions) {			
+			vision.join();
+		}		
+		
+		//쓰래드 실행이 완료 된 이후 DB에 데이터 삽입
+		for (VisionInfo vision : visions) {			
+			for(ImageKeyword keyword : vision.getKeywords()) {
+				keywordServices.addKeyword(keyword);
 			}
 			
-			for(ImageColor color : colors) {
-				color.setImageId(image.getImageId());
-				colorServices.addColor(color);				
-			}
-			long end = System.currentTimeMillis();
-
-			System.out.println("[SERVER] : "+image.getImageFile()+" 추출 완료/ " + "실행 시간 : " + (end - start)/1000.0);
-
-		}	
-		System.out.println("[SERVER] : 이미지 정보 추출 완료");
+			for(ImageColor color : vision.getColors()) {
+				colorServices.addColor(color);
+			}			
+		}
+		
+		long Totalend = System.currentTimeMillis();
+		System.out.println("[SERVER] : 이미지 정보 추출 완료 / 총 추출 시간 : "+(Totalend - Totalstart)/1000.0);
 					
 		return new ModelAndView("forward:/common/alertView.jsp", "message", "세팅 완료");
 	}	
