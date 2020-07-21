@@ -52,7 +52,7 @@
 			<div class="col-md-12">
 				<div class="row">
 
-			<figure class="col-md-3 ">
+			<figure class="col-md-3">
 				<a herf="#" data-size="1600X1050">
 				<img alt="picture" img src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(150).jpg"  class="lightbox"/>
 				</a>
