@@ -102,8 +102,8 @@ public class FeedController {
 	    		//원하는 위치에 파일 저장
 	    		multipartFile.transferTo(f);	
 	    		
-	    		keys = VisionInfo.getKeywordForVision(path+inDate+multipartFile.getOriginalFilename());	    			
-	    		colors = VisionInfo.getColorForVision(path+inDate+multipartFile.getOriginalFilename());
+	    		//keys = VisionInfo.getKeywordForVision(path+inDate+multipartFile.getOriginalFilename());	    			
+	    		//colors = VisionInfo.getColorForVision(path+inDate+multipartFile.getOriginalFilename());
 			} 			
 		}		
 		
