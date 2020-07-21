@@ -11,11 +11,11 @@
 	
 //===로그인
 	$(function(){
-		$(".login_btn").on("click",function(){
+		$("#login_btn").on("click",function(){
 			self.location="../user/loginView.jsp";
 		});
 //===로그아웃	
-	$( ".logout_btn" ).on("click" , function() {
+	$( "#logout_btn" ).on("click" , function() {
 				//Debug..
 				alert(  $( "logout" ).html() );
 				$(self.location).attr("href","../user/logout");
@@ -37,12 +37,8 @@
 			<nav class="mb-1 navbar fixed-top navbar-expand-xl navbar-dark indigo lighten-1 py-3" id="toolbar">			
 <!-- 로고 -->		
 			  <a class="navbar-brand" href="main.jsp" >VIG</a>		  
-			      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
+			     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
 				    aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
-				    <span class="navbar-toggler-icon"></span>
-				  </button>
-				  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
-				    aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
 				    <span class="navbar-toggler-icon"></span>
 				  </button>
 				  <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
@@ -60,8 +56,12 @@
 	        <a class="nav-link waves-effect waves-light" id=" chat_btn" href="#">
 	          <i class="fas fa-comments"></i></a>
 <!-- 로그인 버튼 -->   			
-			 <c:if test="${ empty user }"> <span class="login_btn">in</span></c:if> 
-			 <c:if test="${ ! empty user }"><span class="logout_btn">out</span></c:if>
+			 <c:if test="${ empty user }"> 	
+       				<i class="fas fa-user" id="login_btn">login</i>	
+			 </c:if> 
+			 <c:if test="${ ! empty user }">
+			 	<i class="fas fa-user" id="logout_btn">logout</i>
+			 </c:if>
 	     	
 	      </nav>
 		<br/>
