@@ -121,10 +121,7 @@
 	            if (key.keyCode == 13) {
 	            	getItemList(Page);
 	            }
-	        });
-			
-			
-			
+	        });			
 			
 	});	
 	

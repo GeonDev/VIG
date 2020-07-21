@@ -108,4 +108,10 @@ public class FeedDaoImpl implements FeedDao {
 		return sqlSession.selectOne("FeedMapper.getPrimeFeedOne",search);
 	}
 
+	@Override
+	public void updatePrimeFeedViewCount(Feed feed) throws Exception {
+		sqlSession.update("FeedMapper.updatePrimeFeedViewCount", feed);
+		
+	}
+
 }
