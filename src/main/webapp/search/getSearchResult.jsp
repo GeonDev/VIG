@@ -33,15 +33,33 @@
    <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
 	
 	<style>
-	  body {
-            padding-top : 50px;
-        }
+	body {
+        padding-top : 50px;
+        }        
+        
+    .img_image {
+	    width: auto; height: auto;
+	    max-width: 600px;
+	    max-height: 300px;	  
+		}
+		
+	.img_feed {	  
+	    max-width: 400px;
+	    max-height: 300px;	
+		}
+		
+	.view {	  
+	margin: 5px 10px;
+		}
+        
+
     </style>
 	
 	<script type="text/javascript">
 	
 	//최초 입장시 모드 지정
 	var Mode = 'Feed';
+	
 	
 	//최초 페이지 지정
 	var Page = 1; 	
@@ -58,13 +76,53 @@
 					},
 					data :  JSON.stringify({keyword : $("#Keyword").val(), mode : Mode, page : Page}),
 					success : function(JSONData , status) {
-/* 						$.each(JSONData, function(index, item) {
+ 						$.each(JSONData.list, function(index, item) {				 											
+							
+							
+							if(Mode == 'Feed'){
+								
+								var thumbnail = '';								
+								
+								$.each(item.images, function(index, item){
+									if(item.isThumbnail == 1){
+										thumbnail = item.imageFile
+									}									
+								});								
+								
+								
+								var displayValue ="<div class = 'view overlay'>"
+									+"<div class = 'img_feed'>"
+									+ "<img src='/VIG/images/uploadFiles/"
+									+ thumbnail 
+									+ "' alt='thumbnail' class='img-fluid rounded-sm' style='width: 400px; height: 300px;'>"
+									+"<div class='mask flex-center waves-effect waves-light rgba-black-strong'>"
+									+"<p class='white-text'>"
+									+ item.feedTitle
+									+"</p>"
+									+"</div>"									
+									+"</div>"
+									+"</div>";
+															
+								
+							}else if(Mode == 'Image'){			
+								var displayValue = "<div class = 'view overlay'>"
+								+"<div class = 'img_image'>"
+								+ "<img src='/VIG/images/uploadFiles/"
+								+ item.imageFile 
+								+ "' alt='thumbnail' class='img-fluid rounded-sm' style='width: auto; height: 300px;'>"
+								+"<div class='mask flex-center waves-effect waves-light rgba-black-strong'>"
+								+"<p class='white-text'>"
+								+ '이것은 이미지'
+								+"</p>"
+								+"</div>"									
+								+"</div>"
+								+"</div>";
+							}
 							
 						
-							var displayValue = '';         
-							              
+							console.log(displayValue)						              		
 							$(".row:last").append(displayValue);
-						});	 */									
+						});	 									
 					}
 			});
 	}
@@ -99,14 +157,18 @@
 			getItemList(1);
 		
 			$("button").on("click",function(){				
-				Mode = $(this).text();				
+				Mode = $(this).text();
+				$( 'div' ).remove( '.view' );			
+				Page = 1
+				$("#Keyword").val("");
+				getItemList(Page);
 			});	
 			
    			
    			$(window).scroll(function() {
-   			    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-	   			    page++;   			     
-	   			  	getItemList(page);
+   			    if ($(window).scrollTop() > $(document).height() - $(window).height() - 310) {
+   			    	Page = Page+1;   			     
+	   			  	getItemList(Page);
    			    }
    			});		
 		
@@ -119,12 +181,11 @@
 			
 	       $("#Keyword").keydown(function(key) {
 	            if (key.keyCode == 13) {
+	            	$( 'div' ).remove( '.view' );
+					Page = 1					
 	            	getItemList(Page);
 	            }
-	        });
-			
-			
-			
+	        });			
 			
 	});	
 	
@@ -169,7 +230,7 @@
 		<hr/>
 		</div>
 		
-		<div class="row">
+		<div class="row justify-content-center" style = "margin: 5px;">
 		
 		</div>
 	

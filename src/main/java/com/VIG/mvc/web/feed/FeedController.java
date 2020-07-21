@@ -67,12 +67,19 @@ public class FeedController {
 	
 	
 	
-	@RequestMapping(value = "upload", method = RequestMethod.POST)
+	@RequestMapping(value = "addFeed", method = RequestMethod.POST)
 	public ModelAndView updatefile(@ModelAttribute("feed") Feed feed,@RequestParam("uploadFile") List<MultipartFile> files) throws Exception {
 		
+		
+		feedServices.addFeed(feed);
+		
+//		ModelAndView mav = new ModelAndView();
+//		mav.setViewName("forward:/feed/addFeed.jsp");
+//		mav.addObject("feed", feed);
 		System.out.println("addFeed : POST");
 		
-		System.out.println(feed);
+		System.out.println("feed : "+feed);
+		
 		
 		
 		

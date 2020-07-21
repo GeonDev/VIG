@@ -76,10 +76,36 @@
 			WHERE feed_id = #{value}
 		</select>		
 		
-		<select id="getMyFeedList" parameterType="string" resultMap="FeedSelectMap">
-			SELECT * FROM feeds
-			WHERE user_code = #{value} AND feed_state = 0
+		
+		<!-- 특정유저가 작성한 피드를 불러온다. searchType이 1이면 최신순 피드 1페이지만 -->
+		<select id="getMyFeedList" parameterType="search" resultMap="FeedSelectMap">
+			SELECT * FROM
+			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feeds.* FROM feeds
+			WHERE user_code = #{value} AND feed_state = 0	
+			<if test="searchType == 0">
+			ORDER BY feeds.feed_id DESC	
+			</if>
+			)temp WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
 		</select>
+		
+		
+		<!-- 우선노출시 출력한 프라임 피드를 불러온다. (노출이 가장 작은 프라임피드 -->
+		
+		<select id ="getPrimeFeedOne" parameterType="search" resultMap="FeedSelectMap">
+			SELECT feeds.* FROM feeds, images, keywords
+			WHERE feed_is_prime = 1 AND feed_state = 0
+			AND feeds.feed_id = images.feed_id
+			AND images.is_thumbnail = 1
+			AND images.image_id = keywords.image_id
+			<if test="keyword !=''">
+			AND keywords.keyword_en LIKE CONCAT('%',#{keyword},'%')				
+			</if>
+			GROUP BY feeds.feed_id
+			ORDER BY feeds.prime_feed_view_count
+			limit 1 	
+		</select>
+		
+		
 		
 		<!-- 이벤트 참여 피드 조회용 -->
 		<select id ="getFeedListOnlyTag" parameterType="string" resultMap="FeedSelectMap">
@@ -154,7 +180,11 @@
 			WHERE num BETWEEN 1 AND 5
 		</select>
 		
-		
+		<update id ="updatePrimeFeedViewCount" parameterType="feed">
+		 UPDATE feeds
+		 SET prime_feed_view_count = #{primeFeedViewCount}
+		 WHERE feed_id = #{feedId} 		
+		</update>
 		
 	 
 </mapper>

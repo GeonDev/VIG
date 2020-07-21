@@ -76,8 +76,9 @@
 		AND images.is_thumbnail = 0
 		AND feeds.feed_state = 0
 		<if test="keyword !=''">
-			AND keywords.keyword_en LIKE CONCAT('%',#{keyword},'%'}
+			AND keywords.keyword_en LIKE CONCAT('%',#{keyword},'%')
 		</if>
+		GROUP BY images.image_id
 		) temp
 		WHERE num BETWEEN #{startRowNum} AND #{endRowNum}	
 	</select>

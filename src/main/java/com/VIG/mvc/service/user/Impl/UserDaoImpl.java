@@ -48,7 +48,8 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public User getUserOne(String userCode) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("UserMapper.getUserOne", userCode);
+		User user = sqlSession.selectOne("UserMapper.getUserOne", userCode);
+		return user;
 	}
 
 
