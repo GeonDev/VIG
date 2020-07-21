@@ -33,15 +33,23 @@
    <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
 	
 	<style>
-	  body {
-            padding-top : 50px;
+	body {
+        padding-top : 50px;
         }        
         
-       .max-small {
+    .img_image {
 	    width: auto; height: auto;
+	    max-width: 600px;
+	    max-height: 300px;	  
+		}
+		
+	.img_feed {	  
 	    max-width: 400px;
-	    max-height: 300px;
-	    margin: 5px 10px;
+	    max-height: 300px;	
+		}
+		
+	.view {	  
+	margin: 5px 10px;
 		}
         
 
@@ -82,18 +90,32 @@
 								});								
 								
 								
-								var displayValue = "<div class = 'max-small'>"
+								var displayValue ="<div class = 'view overlay'>"
+									+"<div class = 'img_feed'>"
 									+ "<img src='/VIG/images/uploadFiles/"
 									+ thumbnail 
-									+ "' alt='thumbnail' class='img-thumbnail' style='width: auto; height: 300px;'>"
+									+ "' alt='thumbnail' class='img-fluid rounded-sm' style='width: 400px; height: 300px;'>"
+									+"<div class='mask flex-center waves-effect waves-light rgba-black-strong'>"
+									+"<p class='white-text'>"
+									+ item.feedTitle
+									+"</p>"
+									+"</div>"									
+									+"</div>"
 									+"</div>";
 															
 								
 							}else if(Mode == 'Image'){			
-								var displayValue = "<div class = 'max-small'>"
+								var displayValue = "<div class = 'view overlay'>"
+								+"<div class = 'img_image'>"
 								+ "<img src='/VIG/images/uploadFiles/"
 								+ item.imageFile 
-								+ "' alt='thumbnail' class='img-thumbnail' style='width: auto; height: 300px;'>"
+								+ "' alt='thumbnail' class='img-fluid rounded-sm' style='width: auto; height: 300px;'>"
+								+"<div class='mask flex-center waves-effect waves-light rgba-black-strong'>"
+								+"<p class='white-text'>"
+								+ '이것은 이미지'
+								+"</p>"
+								+"</div>"									
+								+"</div>"
 								+"</div>";
 							}
 							
@@ -136,7 +158,7 @@
 		
 			$("button").on("click",function(){				
 				Mode = $(this).text();
-				$( 'div' ).remove( '.max-small' );
+				$( 'div' ).remove( '.view' );			
 				Page = 1
 				$("#Keyword").val("");
 				getItemList(Page);
@@ -144,7 +166,7 @@
 			
    			
    			$(window).scroll(function() {
-   			    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+   			    if ($(window).scrollTop() > $(document).height() - $(window).height() - 310) {
    			    	Page = Page+1;   			     
 	   			  	getItemList(Page);
    			    }
@@ -159,7 +181,7 @@
 			
 	       $("#Keyword").keydown(function(key) {
 	            if (key.keyCode == 13) {
-					$( 'div' ).remove( '.max-small' );
+	            	$( 'div' ).remove( '.view' );
 					Page = 1					
 	            	getItemList(Page);
 	            }
