@@ -43,12 +43,18 @@ public class Translater {
 
     public static String autoDetectTranslate(String text, String target) {    	    	
     	
-    	String originlang = detectLanguage(text);    	
+    	String originlang = detectLanguage(text);  
+    	
+    	//번역하는 언어와 타겟 언어가 같다면 번역 안함
+    	if(originlang.equals(target)) {
+    		return text;
+    	}
+    	
     	return translate(text, originlang, target);    	
     }
 	
-        
-    public static String autoDetectTranslate(String text) {
+    //한국어는 영어로 영어는 한국어로 번역
+    public static String autoDetectTranslateEntoKo(String text) {
     	String originlang = detectLanguage(text);    	
     
     	if(originlang.equals("en")) {

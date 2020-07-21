@@ -164,14 +164,14 @@ public class CommonUtil {
 		return result;
 	}
 	
-	private static void writeFile(MultipartFile multipartFile, String saveFileName, String SAVE_PATH) throws IOException{
+	public static void writeFile(MultipartFile multipartFile, String saveFileName, String SAVE_PATH) throws IOException{
 		
 		byte[] data = multipartFile.getBytes();
 		FileOutputStream fos = new FileOutputStream(SAVE_PATH + "/" + saveFileName);
 		fos.write(data);
 		fos.close();
 		
-		}
+	}
 	
 	
 		public static String getHttpConnection(String uri, String param) throws ServletException, IOException {

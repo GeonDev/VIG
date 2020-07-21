@@ -77,7 +77,7 @@ public class TestController {
 	public ModelAndView trans(@ModelAttribute("Trans") String target ) throws Exception {
 		String result = new String("Translate : ");	
 		
-		result = result + Translater.autoDetectTranslate(target);
+		result = result + Translater.autoDetectTranslateEntoKo(target);
 		
 		return new ModelAndView("forward:/common/alertView.jsp", "message", result);
 	}
