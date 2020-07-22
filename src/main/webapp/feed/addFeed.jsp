@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     
 <html>
 <head>
@@ -34,15 +34,15 @@ var iCropLeft, iCropTop, iCropWidth, iCropHeight;
 
 
 $(function() {
-	//DOM Object GET 3°¡Áö ¹æ¹ı  1. $(tagName) : 2.(#id) : 3.$(.className)
+	//DOM Object GET 3ê°€ì§€ ë°©ë²•  1. $(tagName) : 2.(#id) : 3.$(.className)
 	$( "button.btn.btn-primary" ).on("click" , function() {
-		document.detailForm.action='feedController/upload';
+		document.detailForm.action='feedController/addFeed';
 		document.detailForm.submit();
 	});
 });	
 
 
-//Ãë¼Ò ÀÌº¥Æ® Ã³¸®+¿¬°á
+//ì·¨ì†Œ ì´ë²¤íŠ¸ ì²˜ë¦¬+ì—°ê²°
 $(function() {
 	$("a[href='#' ]").on("click" , function() {
 		$("form")[0].reset();
@@ -52,7 +52,7 @@ $(function() {
 $('#myModal').on('shown.bs.modal', function () {
 	  $('#myInput').focus()
 	})
-//div µ¿Àû»ı¼º	
+//div ë™ì ìƒì„±	
 	function add_div(){
     var div = document.createElement('div');
     div.innerHTML = document.getElementById('room_type').innerHTML;
@@ -66,41 +66,42 @@ document.getElementById('field').removeChild(obj.parentNode);
 
 
 
-	// ·ÎÄÃ ÀÌ¹ÌÁö ÆÄÀÏÀ» Canvas ¿¡ ·ÎµåÇÑ´Ù.
-	function LoadImage()
+//ë¡œì»¬ ì´ë¯¸ì§€ íŒŒì¼ì„ Canvas ì— ë¡œë“œí•œë‹¤.
+function LoadImage()
+	{
+	
+		if( typeof window.FileReader !== 'function' )
 		{
-			if( typeof window.FileReader !== 'function' )
-			{
-				alert("FileReader is not supported");
-				return;
-			}
+			alert("FileReader is not supported");
+			return;
+		}
 
-			var inputFile = document.getElementById('image_file');
-			var clsFileReader = new FileReader();
-			clsFileReader.onload = function(){
-				clsImage = new Image();
-				clsImage.onload = function(){
-					var canvas = document.getElementById("canvas");
-					canvas.width = clsImage.width;
-					canvas.height = clsImage.height;
+		var inputFile = document.getElementById('image_file');
+		var clsFileReader = new FileReader();
+		clsFileReader.onload = function(){
+			clsImage = new Image();
+			clsImage.onload = function(){
+				var canvas = document.getElementById("canvas");
+				canvas.width = clsImage.width;
+				canvas.height = clsImage.height;
 
-					iCropLeft = 100;
-					iCropTop = 100;
-					iCropWidth = clsImage.width - 200;
-					iCropHeight = clsImage.height - 200;
-					iImageWidth = clsImage.width;
-					iImageHeight = clsImage.height;
+				iCropLeft = 100;
+				iCropTop = 100;
+				iCropWidth = clsImage.width - 200;
+				iCropHeight = clsImage.height - 200;
+				iImageWidth = clsImage.width;
+				iImageHeight = clsImage.height;
 
-					DrawCropRect();
-					AddCropMoveEvent();
-				};
-
-				clsImage.src = clsFileReader.result;
+				DrawCropRect();
+				AddCropMoveEvent();
 			};
 
-			clsFileReader.readAsDataURL(inputFile.files[0]);
-		}
-//·ÎÄÃ ÀÌ¹ÌÁö ÆÄÀÏ°ú Crop À» À§ÇÑ »ç°¢Çü ¹Ú½º¸¦ ±×·ÁÁØ´Ù.
+			clsImage.src = clsFileReader.result;
+		};
+
+		clsFileReader.readAsDataURL(inputFile.files[0]);
+	}
+//ë¡œì»¬ ì´ë¯¸ì§€ íŒŒì¼ê³¼ Crop ì„ ìœ„í•œ ì‚¬ê°í˜• ë°•ìŠ¤ë¥¼ ê·¸ë ¤ì¤€ë‹¤.
 function DrawCropRect()
 {
 	var canvas = document.getElementById("canvas");
@@ -115,7 +116,7 @@ function DrawCropRect()
 	ctx.stroke();
 }
 
-// ÀÌ¹ÌÁö¸¦ crop ÇÏ¿©¼­ ÇÏ´Ü Canvas ¿¡ ±×·ÁÁØ´Ù.
+// ì´ë¯¸ì§€ë¥¼ crop í•˜ì—¬ì„œ í•˜ë‹¨ Canvas ì— ê·¸ë ¤ì¤€ë‹¤.
 function CropImage()
 {
 	var canvas = document.getElementById("canvas");
@@ -132,7 +133,7 @@ function CropImage()
 	img.src = canvas.toDataURL();
 }
 
-//¸¶¿ì½º ÀÌµ¿¿¡ µû¸¥ Crop »ç°¢ ¹Ú½ºÀ» ÀÌµ¿ÇÏ±â À§ÇÑ ÀÌº¥Æ® ÇÚµé·¯¸¦ µî·ÏÇÑ´Ù.
+//ë§ˆìš°ìŠ¤ ì´ë™ì— ë”°ë¥¸ Crop ì‚¬ê° ë°•ìŠ¤ì„ ì´ë™í•˜ê¸° ìœ„í•œ ì´ë²¤íŠ¸ í•¸ë“¤ëŸ¬ë¥¼ ë“±ë¡í•œë‹¤.
 function AddCropMoveEvent()
 {
 	var canvas = document.getElementById("canvas");
@@ -182,10 +183,10 @@ function AddCropMoveEvent()
 	};
 }
 
-//resize Test µÅÁà
+//ì´ë¯¸ì§€íŒŒì¼ ìœ íš¨ì„±ì²´í¬ 
 function fileCheck(el) { 
     if(!/\.(jpeg|jpg|png|gif|bmp)$/i.test(el.value)){ 
-        alert('ÀÌ¹ÌÁö ÆÄÀÏ¸¸ ¾÷·Îµå °¡´ÉÇÕ´Ï´Ù.'); 
+        alert('ì´ë¯¸ì§€ íŒŒì¼ë§Œ ì—…ë¡œë“œ ê°€ëŠ¥í•©ë‹ˆë‹¤.'); 
         el.value = ''; 
         el.focus(); 
         
@@ -204,59 +205,91 @@ function fileCheck(el) {
 <div class="container">
 
 
-<h1 class="bg-primary text-center">ÇÇµåÀÛ¼º</h1>
+<h1 class="bg-primary text-center">í”¼ë“œì‘ì„±</h1>
 <form class="form-horizontal" name="detailForm" method="post" enctype="multipart/form-data" >
 
 
+
+
+
 <div class="form-group">
-		    <label for="prodName" class="col-sm-offset-1 col-sm-3 control-label">½æ³×ÀÏ</label>
+		    <label for="ThumbNail" class="col-sm-offset-1 col-sm-3 control-label">ì¸ë„¤ì¼</label>
 		    <div class="col-sm-4">
-		      <input type="prodName" class="form-control" id="prodName" name="prodName" >
-		      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">½æ³×ÀÏ»ı¼º</button>
+		      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">ì¸ë„¤ì¼ìƒì„±</button>
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="category" class="col-sm-offset-1 col-sm-3 control-label">ì¹´í…Œê³ ë¦¬</label>
+		    <div class="col-sm-4">
+		      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal2">ì¹´í…Œê³ ë¦¬ëª¨ë‹¬</button>
 		    </div>
 		  </div>
 		
 	<div class="form-group">
-		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">ÇÇµåÅ¸ÀÌÆ²</label>
+		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">í”¼ë“œíƒ€ì´í‹€</label>
 		    <div class="col-sm-4">
-		      <input type="prodDetail" class="form-control" id="prodDetail" name="prodDetail" >
+		      <input type="prodDetail" class="form-control" id="feedTitle" name="feedTitle" >
 		    </div>
 		  </div>
 		
 	<div class="form-group">
-		    <label for="manuDate" class="col-sm-offset-1 col-sm-3 control-label">ÇÇµå³»¿ë</label>
+		    <label for="manuDate" class="col-sm-offset-1 col-sm-3 control-label">í”¼ë“œì„¤ëª…</label>
 		    <div class="col-sm-4">
-		      <input type="manuDate" class="form-control" id="manuDate" name="manuDate" >
-		      <img src="../images/ct_icon_date.gif" width="15" height="15" 
-							onclick="show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value)"/>
+		      <input type="manuDate" class="form-control" id="feedExplanation" name="feedExplanation" >
+		      
 		    </div>
 		  </div>
 		
 		
 	
-	<input type="button" value="ÇÑÀå´õ" onclick="add_div()">
+	<input type="button" value="í•œì¥ë”" onclick="add_div()">
 	
 	<div class="form-group" id="room_type">
-		    <label for="fileName" class="col-sm-offset-1 col-sm-3 control-label">ÇÇµåÀÌ¹ÌÁö</label> 
+		    <label for="fileName" class="col-sm-offset-1 col-sm-3 control-label">í”¼ë“œì´ë¯¸ì§€</label> 
 		    <div class="col-sm-4">		     
 		      <input	type="file" name="uploadFile" id="uploadFile" class="form-control" />							
 		    </div>
-		     <input type="button" value="»èÁ¦" onclick="remove_div(this)">
+		     <input type="button" value="ì‚­ì œ" onclick="remove_div(this)">
 		  </div>
 		 
 	<div id="field" class="form-group"></div>
 	
 	<div class="form-group">
-		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">ÅÂ±×</label>
+		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">íƒœê·¸</label>
 		    <div class="col-sm-4">
 		      <input type="prodDetail" class="form-control" id="prodDetail" name="prodDetail" >
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">Çù¾÷ÀÚ</label>
+		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">í˜‘ì—…ì</label>
 		    <div class="col-sm-4">
 		      <input type="prodDetail" class="form-control" id="prodDetail" name="prodDetail" >
+		    </div>
+		  </div>
+		  
+		   <div class="form-group">
+		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">ì‚¬ìš©ì¥ë¹„</label>
+		    <div class="col-sm-4">
+		      <input type="prodDetail" class="form-control" id="prodDetail" name="feedUseGears" >
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">í”„ë¼ì„í”¼ë“œì—¬ë¶€</label>
+		    <div class="col-sm-4">
+		      <input type="radio"  id="prodDetail" name="feedIsPrime" checked="checked" value="0">ì¼ë°˜
+		      <input type="radio"  id="prodDetail" name="feedIsPrime" value="1">í”„ë¼ì„
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">ëŒ“ê¸€ê¶Œí•œ</label>
+		    <div class="col-sm-4">
+		      <input type="radio"  id="prodDetail" name="commentRange" checked="checked" value="0">ëª¨ë‘í—ˆìš©
+		      <input type="radio"  id="prodDetail" name="commentRange" value="1">íŒ”ë¡œì›Œì—ê²Œë§Œí—ˆìš©
+		      <input type="radio"  id="prodDetail" name="commentRange" value="2">ëŒ“ê¸€í—ˆìš©ê¸ˆì§€
 		    </div>
 		  </div>
 		  
@@ -266,8 +299,9 @@ function fileCheck(el) {
 
 <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >°Ô½ÃÇÏ±â</button>
-			  <a class="btn btn-primary btn" href="#" role="button">Ãë¼Ò</a>
+		      <button type="button" class="btn btn-primary"  >ê²Œì‹œí•˜ê¸°</button>
+		      <button type="button">ì„ì‹œì €ì¥</button>
+			  <a class="btn btn-primary btn" href="#" role="button">ì·¨ì†Œ</a>
 		    </div>
 		  </div>
 		  
@@ -279,19 +313,19 @@ function fileCheck(el) {
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title" id="myModalLabel">½æ³×ÀÏ»ı¼º</h4>
+	        <h4 class="modal-title" id="myModalLabel">ì¸ë„¤ì¼ìƒì„±</h4>
 	      </div>
 	      <div class="modal-body">
 	      		<form class="form-horizontal">
 		  
 					  <div class="form-group">
-					    <label for="userId" class="col-sm-4 control-label">½æ³×ÀÏ»ı¼º</label>
+					    <label for="ThumbNail" class="col-sm-4 control-label">ì¸ë„¤ì¼ìƒì„±</label>
 					    <div class="col-sm-6">
 					      
-					      <input type='file' id='image_file' accept="image/*" class="form-control"  onchange='fileCheck(this);LoadImage()'/>
+					      <input type='file' id='image_file' accept="image/*" class="form-control" name="uploadFile" onchange='fileCheck(this);LoadImage()'/>
 							<canvas id="canvas"></canvas>
 
-							<input type='button' value='Å©·Ó¹Ì¸®º¸±â' onclick='CropImage();' />
+							<input type='button' value='í¬ë¡­ë¯¸ë¦¬ë³´ê¸°' onclick='CropImage();' />
 							<canvas id="canvas_crop"></canvas>
 					    </div>
 					  </div>
@@ -302,8 +336,8 @@ function fileCheck(el) {
 
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-primary">¿Ï·á</button>
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Ãë¼Ò</button>
+	        <button type="button" class="btn btn-primary">ì™„ë£Œ</button>
+	        <button type="button" class="btn btn-default" data-dismiss="modal">ì·¨ì†Œ</button>
 	        
 	      </div>
 	    </div>

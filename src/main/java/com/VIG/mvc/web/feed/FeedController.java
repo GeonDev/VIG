@@ -29,7 +29,7 @@ import com.VIG.mvc.util.VisionInfo;
 
 
 @Controller
-@RequestMapping("/feedController/*")
+@RequestMapping("/feed/feedController/*")
 public class FeedController {
 	
 	
@@ -70,18 +70,11 @@ public class FeedController {
 	@RequestMapping(value = "addFeed", method = RequestMethod.POST)
 	public ModelAndView updatefile(@ModelAttribute("feed") Feed feed,@RequestParam("uploadFile") List<MultipartFile> files) throws Exception {
 		
-		
-		feedServices.addFeed(feed);
-		
-//		ModelAndView mav = new ModelAndView();
-//		mav.setViewName("forward:/feed/addFeed.jsp");
-//		mav.addObject("feed", feed);
-		System.out.println("addFeed : POST");
-		
 		System.out.println("feed : "+feed);
+	//	feedServices.addFeed(feed);
 		
-		
-		
+
+		System.out.println("addFeed : POST");	
 		
 		
 		System.out.println("추가한 이미지 파일: "+files);
