@@ -127,12 +127,12 @@
  						<a href="#">통 계</a></button>	
  
 <!-- 일단 관리자용 신고 네비 여기다 표시 -->			
- 			<c:choose>
- 				<c:when test="${ user.role == 'admin' })">
+ 			
+ 				<c:if test="${ user.userCode == 'admin'}">
  					<button type="button" class="btn btn-block" onclick='nav_payment("follow.jsp")'>
  						<a href="#">신 고</a></button>
- 				</c:when>
- 			</c:choose>
+ 				</c:if>
+ 			
  		
  					<br/>						
  			</div>

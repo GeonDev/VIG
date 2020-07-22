@@ -155,12 +155,11 @@ public class VisionInfo extends Thread {
 
 	@Override
 	public void run() {
-		long Totalstart = System.currentTimeMillis();
-		System.out.println(imageFilePath + " 추출 시작");
+		long start = System.currentTimeMillis();	
 		getKeywordForVision();
 		getColorForVision();
-		long Totalend = System.currentTimeMillis();
-		System.out.println(imageFilePath + " 추출 종료 / 소요 시간 : "+(Totalend - Totalstart)/1000.0);		
+		long end = System.currentTimeMillis();
+		System.out.println(imageFilePath + " 추출 종료 / 소요 시간 : "+(end - start)/1000.0);		
 	}
 	
 }
