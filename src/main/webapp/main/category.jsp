@@ -24,6 +24,15 @@
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 		
+		<script type="text/javascript">
+		
+		$(function(){
+			
+
+		});
+		</script>
+		
+		
 		<style>
 		
 		.carousel-multi-item-2 .col-md-3 {

@@ -26,9 +26,9 @@ public RestUserController() {
 
 @RequestMapping(value="json/login", method=RequestMethod.POST)
 public User login( @RequestBody User user, HttpSession session) throws Exception{
-	System.out.println("json/login");
+		System.out.println("json/login");
 	User dbUser = userServices.getUserOne(user.getUserCode());
-	System.out.println("json/dbUser:"+dbUser);
+		System.out.println("json/dbUser:"+dbUser);
 	if( user.getPassword().equals(user.getPassword())) {
 		session.setAttribute("user", dbUser);
 	}
