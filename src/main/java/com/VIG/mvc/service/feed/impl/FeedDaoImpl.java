@@ -56,7 +56,7 @@ public class FeedDaoImpl implements FeedDao {
 	@Override
 	public List<Feed> getMyFeedList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("FeedMapper.getMyFeedList",search);
+		return sqlSession.selectList("FeedMapper.getMyFeedList", search);
 	}
 
 	@Override
@@ -112,6 +112,12 @@ public class FeedDaoImpl implements FeedDao {
 	public void updatePrimeFeedViewCount(Feed feed) throws Exception {
 		sqlSession.update("FeedMapper.updatePrimeFeedViewCount", feed);
 		
+	}
+
+	@Override
+	public List<Feed> getFeedListFromTitle(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("FeedMapper.getfeedListFromTitle",search);
 	}
 
 }
