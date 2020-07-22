@@ -1,5 +1,7 @@
 package com.VIG.mvc.service.feed.impl;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,8 +74,15 @@ public class FeedServicesImpl implements FeedServices {
 
 	@Override
 	public List<Feed> getFeedListFromKeyword(Search search) throws Exception {
-		// TODO Auto-generated method stub
-		return feedDao.getFeedListFromKeyword(search);
+		
+		List<Feed> list = feedDao.getFeedListFromKeyword(search);		
+		list.addAll(feedDao.getFeedListFromTitle(search));
+				
+		//중복값 제거 용 HashSET
+		HashSet<Feed> tempSet = new HashSet<Feed>(list);		
+		list = new ArrayList<Feed>(tempSet);
+		
+		return list;
 	}
 
 	@Override
@@ -106,5 +115,6 @@ public class FeedServicesImpl implements FeedServices {
 		feedDao.updatePrimeFeedViewCount(feed);
 		
 	}
+
 
 }
