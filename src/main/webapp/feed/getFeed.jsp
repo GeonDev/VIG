@@ -170,12 +170,52 @@ $(function(){
 		//self.location="../팔로우 add 팔로우";
 		if(fm == "Follow"){
 		
-		self.location="../../follow/addFollow?userCode=user02&followerCode=${feed.writer.userCode}";
-		$("#follow").text("following").attr("class", "btn btn-default btn-rounded");
+		$.ajax(
+			
+				{ url: "../../follow/addFollow?userCode=user06&followerCode=${feed.writer.userCode}",
+					method : "GET",	
+					dataType: "json",
+					headers : {
+						
+						"Accept" : "applicion/json",
+						"Content-Type" : "application/json"
+					},
+					success : function(JSONData, status) {
+						
+					alert(status);	
+					
+					}
+					
+				
+				});
+		
+				$("#follow").text("following").attr("class", "btn btn-default btn-rounded");
+			
+			
+		
 		
 		} else {
 		
 			//alert("Do you really want to unfollow?");
+			$.ajax(
+			
+				{ url: "../../follow/deleteFollow?userCode=user06&followerCode=${feed.writer.userCode}",
+					method : "GET",	
+					dataType: "json",
+					headers : {
+						
+						"Accept" : "applicion/json",
+						"Content-Type" : "application/json"
+					},
+					success : function(JSONData, status) {
+						
+					alert(status);	
+					
+					}
+					
+				
+				});
+			
 			$("#follow").text("Follow").attr("class", "btn btn-outline-default btn-rounded");
 			
 		}
@@ -316,7 +356,7 @@ $(function(){
 		 </span>
 		 </div>
 		 <!-- 팔로우와 후원 -->
-	    <div class="col-4 dofo" align="center">
+	    <div class="col-4 dofo" align="left">
 	    	<c:if test="${feed.writer.role == 'business' }">
 	    	<span id="donation"><i class="fas fa-dollar-sign"></i></span>
 			</c:if>
