@@ -90,8 +90,9 @@
 				+ "<img src='/VIG/images/uploadFiles/" + thumbnail + "' alt='thumbnail' class='img-fluid rounded-sm' style='width: 400px; height: 300px;'>"
 					+"<div class='mask flex-center waves-effect waves-light rgba-black-strong'>"
 						+"<p class='white-text'>"
-						+ item.feedTitle
-						+"</p>"
+						+"<a href='/VIG/feed/getFeed?feedId="+ item.feedId +"'/>"
+						+ item.feedTitle						
+						+"</p>"						
 					+"</div>"									
 				+"</div>"
 			+"</div>";
@@ -106,6 +107,7 @@
 				+ "<img src='/VIG/images/uploadFiles/" + item.imageFile + "' alt='thumbnail' class='img-fluid rounded-sm' style='width: auto; height: 300px;'>"
 					+"<div class='mask flex-center waves-effect waves-light rgba-black-strong'>"
 						+"<p class='white-text'>"
+						+"<a href='/VIG/searchController/getSearchImages?imageId="+ item.imageId +"'/>"
 						+ '이것은 이미지'
 						+"</p>"
 					+"</div>"									
@@ -117,8 +119,10 @@
 	
 	function getUserlistFromAjax(item) {
 		var displayValue =
-				"<div class = 'view row'>"									
-					+ "<img src='/VIG/images/uploadFiles/" + item.profileImg + "' alt='thumbnail' class='img-fluid rounded-circle col-md-1' style='width: 100px; height: 100px;'>"
+				"<div class = 'view row'>"
+					+"<a class = 'col-md-1' href='/VIG/myfeed/getMyFeedList?userCode="+ item.userCode + "'>"
+					+ "<img src='/VIG/images/uploadFiles/" + item.profileImg + "' alt='thumbnail' class='img-fluid rounded-circle' style='width: 100px; height: 100px;'>"
+					+"</a>"
 					+"<div class='userInfo col-md-4'>"
 						+"<h3>" + item.userName +"</h3>"
 						+"<h5>" + item.selfIntroduce +"</h5>"
@@ -148,7 +152,9 @@
 		var displayValue =
 		"<div class = 'view_small'>"
 			+"<div class = 'img_feed_thumb'>"
+			+"<a href='/VIG/feed/getFeed?feedId="+ item.feedId +"'>"
 			+ "<img src='/VIG/images/uploadFiles/" + thumbnail 	+ "' alt='thumbnail' class='img-fluid rounded-sm' style='width: 125px; height: 100px;'>" 	 							
+			+"</a>"
 			+"</div>"
 		+"</div>";
 		
@@ -236,10 +242,9 @@
 			success : function(JSONData, status) {
 			var arraylist = JSONData;
 				console.log( JSONData );
-			//alert(JSONData);
-			 	$( "#Keyword" ).autocomplete({
-			 		
-			        source: arraylist
+			
+			 	$( "#Keyword" ).autocomplete({			 		
+			        source: JSONData
 			    });		
 			}							
 		});
@@ -296,7 +301,7 @@
 <body>
 
 	<!-- ToolBar Start /////////////////////////////////////-->
-		<%-- <jsp:include page="../main/toolbar.jsp" /> --%>
+		<jsp:include page="../main/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
 
 	<div class="container-lg-fluid">

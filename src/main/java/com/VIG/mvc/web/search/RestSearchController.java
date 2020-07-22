@@ -3,6 +3,7 @@ package com.VIG.mvc.web.search;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -69,10 +70,8 @@ public class RestSearchController {
 	
 
 	@RequestMapping(value = "json/getSearchKeyword")
-	public List<String> getAutokeyword(@RequestBody Map<String, String> jsonData) throws Exception {	
-		
-		System.out.println("전달된 값 :"+ jsonData.get("mode"));
-		
+	public List<String> getAutokeyword(@RequestBody Map<String, String> jsonData) throws Exception {			
+	
 		//키워드가 비어 있을 경우 종료
 		if(CommonUtil.null2str(jsonData.get("keyword")).equals("")) {
 			return null;
@@ -105,8 +104,6 @@ public class RestSearchController {
 	public Map<String, Object> getSearchResult(@RequestBody Map<String, String> jsonData, HttpSession session) throws Exception {	
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		
-		System.out.println("전달된 키워드 :"+ jsonData.get("keyword"));		
 		
 		Search search = new Search();		
 		
@@ -141,7 +138,10 @@ public class RestSearchController {
 				feedServices.updatePrimeFeedViewCount(primeFeed);
 				feedlist.add(primeFeed);				
 			}
-
+			
+			//피드 중복을 제거한다.
+			HashSet<Feed> temp = new HashSet<Feed>(feedlist);			
+			feedlist = new ArrayList<Feed>(temp);
 			
 			//숨김피드는 빼준다.
 			

@@ -96,18 +96,18 @@
 	</select>
 	
 	
-	<!-- 연관이미지 검색시에 사용 -->
+	<!-- 연관이미지 검색시에 사용, ketword가 String타입이기 때문에 image_id 비교에 searchType필드를 사용 -->
 	<select id="getImageListFromImage" parameterType="search" resultMap="ImageSelectMap">
 		SELECT *  FROM		
 		(SELECT ROW_NUMBER() OVER(ORDER BY images.image_id) num, images.* FROM images, keywords, feeds 
 		WHERE images.image_id = keywords.image_id
 		AND feeds.feed_id = images.feed_id
-		AND images.image_id != #{keyword}
+		AND images.image_id != #{searchType}
 		AND images.is_thumbnail = 0
 		AND feeds.feed_state = 0
 		AND keywords.keyword_en IN
 		<foreach collection="keywords" item="item" open="(" close=")" separator=",">
-		 #{item}
+		 #{item.keywordEn}
 		</foreach>	
 		)temp WHERE num BETWEEN #{startRowNum} AND #{endRowNum}	
 		

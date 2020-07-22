@@ -6,7 +6,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class Image implements Serializable{
+public class Image implements Serializable , Comparable<Image>{
 
 	private int imageId;
 	private int feedId;
@@ -21,6 +21,18 @@ public class Image implements Serializable{
 	
 	public Image() {
 		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public int compareTo(Image o) {
+		//내림차순 정렬		
+		if(this.currentKeywordSameCount > o.currentKeywordSameCount) {
+			return -1;
+		}else if(this.currentKeywordSameCount < o.currentKeywordSameCount) {
+			return 1;
+		}		
+		
+		return 0;
 	}
 
 }

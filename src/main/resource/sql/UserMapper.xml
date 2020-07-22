@@ -44,7 +44,7 @@
 		 		user_name LIKE CONCAT('%',#{keyword},'%')
 		 	</if>	 	
 		 	<if test="searchType == 0">
-		 		role in('user','business') 
+		 		AND role in('user','business') 
 		 	</if>		 	
 	 	</where> 	
 	 	)temp

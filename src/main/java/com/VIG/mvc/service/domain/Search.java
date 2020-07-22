@@ -11,7 +11,7 @@ public class Search {
 	private String keyword;
 	
 	// 최근 열람 이미지 키워드 또는 연관 이미지 검색시 사용
-	private List<String> keywords;
+	private List<ImageKeyword> keywords;
 
 	private int searchType;
 	private int currentPage;
