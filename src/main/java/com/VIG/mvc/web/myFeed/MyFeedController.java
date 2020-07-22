@@ -40,7 +40,7 @@ public class MyFeedController {
 		
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("forward:../myFeed/myFeedListTest.jsp");
+		mav.setViewName("forward:/myFeed/myFeedListTest.jsp");
 		
 		return mav; 
 	}

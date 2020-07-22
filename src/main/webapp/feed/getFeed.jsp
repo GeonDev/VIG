@@ -71,13 +71,16 @@
 	padding-top: 5px;
 	font-size: 18px;
 	color: #000000;
+	font-style: bold;
 		
 	}
+	
 	#scrolltop {
 	  position: fixed;
 	  left: 85%;
 	  bottom: 50px;
 	}
+	
 	#profile {
 	 display: inline-block;	
 	 margin-top: 10px;
@@ -112,6 +115,25 @@
 	padding: 0px 0px;
 	
 	}
+	#donation {
+	
+	display:inline-block;
+	width: 35px;
+	height: 35px;
+	border-radius: 23px;
+	background-color: #5CA45B;
+	padding: 3px 3px 3px 3px;
+	
+	
+	}
+	#donation i {
+	
+	
+	vertical-align: middle;
+	color: White;
+	font-size: 27px;
+	
+	}
 	
 
 
@@ -135,6 +157,7 @@ $(function(){
 			$( '.top' ).fadeOut();
 		}
 	} );
+	
 	//스크롤탑 애니메이션
 	$( '.top' ).click( function() {
 		$( 'html, body' ).animate( { scrollTop : 0 }, 400 );
@@ -164,17 +187,14 @@ $(function(){
 		
 	});
 	
+	//신고 모달창
 	$("i:contains('신고')").on("hover", function(){
 		
 		$('[data-toggle="tooltip"]').tooltip();
 		
 	});
 	
-	$("i:contains('신고')").on("click", function(){
-		
-		alert("addReport임돠");
-		
-	});
+
 	
 	//좋아요 연결
 	$("body").on("dblclick", function(){
@@ -208,6 +228,23 @@ $(function(){
 		}
 		
 	});
+	
+	$("#donation").on("click", function(){
+		
+		var cf = confirm("후원을 진행 하시겠습니까?");
+		
+		if(cf==true){
+			
+		self.location="../payment/addPayment?feedId=${feed.feedId}&userCode=${user.userCode}"; //세션에서 user코드를 가져온다.
+		
+		} else if (cf==false) {
+			
+			
+			
+		}
+		
+	});
+	
 	
 
 	
@@ -263,7 +300,7 @@ $(function(){
 		<c:set var="i" value="${i+1 }"/>
 		<c:if test="${images.isThumbnail == '0'}">
 			<div id="image">
-			<img src="../images/uploadFiles/${images.imageFile}" style="width:960px" />
+			<img src="../../images/uploadFiles/${images.imageFile}" style="width:960px" />
 			</div>
 		</c:if>
 	</c:forEach>
@@ -274,13 +311,13 @@ $(function(){
 	 <div class="row">
 		 <div class="col-8">
 		 <span id="profile">
-		<img src="../images/others/default-profile-picture1.jpg" class="rounded-circle" width="35px"> &nbsp; <a id="writerName" href="../myfeed/getMyFeedList?userCode=${feed.writer.userCode}">${feed.writer.userName}</a>
+		<img src="../../images/others/default-profile-picture1.jpg" class="rounded-circle" width="35px"> &nbsp; <a id="writerName" href="../../myfeed/getMyFeedList?userCode=${feed.writer.userCode}">${feed.writer.userName}</a>
 		 </span>
 		 </div>
 		 <!-- 팔로우와 후원 -->
 	    <div class="col-4 dofo" align="center">
 	    	<c:if test="${feed.writer.role == 'business' }">
-	    	<div id="donation"><i class="fas fa-dollar-sign"></i></div>
+	    	<span id="donation"><i class="fas fa-dollar-sign"></i></span>
 			</c:if>
 	    	<button type="button" id="follow" class="btn btn-outline-default btn-rounded" >Follow</button>
 	    </div>
@@ -288,7 +325,7 @@ $(function(){
 </div>
 	<hr/>
 	<br/>
-	
+	<!--  getFeed 하단부 -->
 	<div class="container">
 	 <div class="row">
 		<div class="col-8">
@@ -384,17 +421,29 @@ $(function(){
 		<br>
 		<div id="feedbottom">	
 			<h6>태그</h6>
-		
+			<c:forEach var="images" items="${feed.images}" begin="0" end="0">
+			<c:if test="${!empty keyword }">
+				<c:forEach var="tag" items="${images.keyword}">
+				<c:set var="i" value="0"/>
+				<c:set var="i" value="${i+1}"/>
+				
+					<a href="/search/getSearchResult/${tag}">${tag}</a>
+				
+				</c:forEach>
+			</c:if>
 			<c:if test="${empty keyword }">
 				
 					<p align="center" style="font-size: 13px; font-style:italic;">태그가 없습니다..</p>
 			
 			</c:if>	
 
-			
+			</c:forEach>
 		</div>	
+			
 			<div align="right">
-			<a href="#" data-toggle="tooltip" title="여기를 눌러 신고하세요"><i class="fas fa-exclamation-triangle">신고</i></a>
+			<br>
+			<a id="modalbutton"><i class="fas fa-exclamation-triangle">신고</i></a>
+
 			</div>
 		</div>
 			
