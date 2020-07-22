@@ -83,11 +83,6 @@
 
 <body>
 
- 	<!-- ToolBar Start /////////////////////////////////////-->
-		<jsp:include page="../main/toolbar.jsp" />
-
-
-
 	<div class="container-fluid">		
 	
 	
