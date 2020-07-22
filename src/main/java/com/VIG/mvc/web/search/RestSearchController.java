@@ -1,6 +1,7 @@
 package com.VIG.mvc.web.search;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -162,6 +163,10 @@ public class RestSearchController {
 			}
 			
 			List<Image> imageList = imageServices.getImageListFromKeyword(search);
+			
+			//선택된 이미지의 순서를 랜덤으로 섞어준다. -> 같은 피드의 이미지가 연속으로 나오지 않게 한다.
+			Collections.shuffle(imageList);
+			
 			map.put("list", imageList);
 					
 		}
@@ -184,15 +189,18 @@ public class RestSearchController {
 				Search tempSearch = new Search();
 				tempSearch.setKeyword(users.getUserCode());
 				
-				//페이지는 1페이지로 고정 -> 해당 유저가 작성한 피드 1페이지만 불러오면 된다
+				//페이지는 1페이지로 고정 -> 해당 유저가 작성한 피드의 1페이지만 불러오면 된다
 				tempSearch.setCurrentPage(1);
+				// 최대 5개의 피드만 가지고 옴
+				tempSearch.setPageSize(5);
 				
 				//검색한 피드리스트를 합친다 - > 화면에서 나누어 준다.
-				feedlist.addAll(feedServices.getMyFeedList(search));
-			}			
+				feedlist.addAll(feedServices.getMyFeedList(tempSearch));
+			}						
 			
 			map.put("list", userList);
-			map.put("feeds", feedlist);
+			map.put("feeds", feedlist);				
+			
 		}		
 
 		return map;		

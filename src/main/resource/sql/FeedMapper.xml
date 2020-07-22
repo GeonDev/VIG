@@ -80,14 +80,13 @@
 		<!-- 특정유저가 작성한 피드를 모두 불러온다.  -->
 		<select id="getMyFeedList" parameterType="search" resultMap="FeedSelectMap">
 			SELECT * FROM
-			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feeds.* FROM feeds
-			WHERE user_code = #{keyword} AND feed_state = 0				
-			ORDER BY feeds.feed_id DESC				
+			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id DESC) num, feeds.* FROM feeds
+			WHERE user_code = #{keyword} AND feed_state = 0						
 			)temp WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
 		</select>
 		
 		
-		<!-- 우선노출시 출력한 프라임 피드를 불러온다. (노출이 가장 작은 프라임피드 -->
+		<!-- 우선 노출시 출력한 프라임 피드를 불러온다. (노출이 가장 작은 프라임피드 -->
 		
 		<select id ="getPrimeFeedOne" parameterType="search" resultMap="FeedSelectMap">
 			SELECT feeds.* FROM feeds, images, keywords
@@ -147,12 +146,24 @@
 			AND images.is_thumbnail = 1
 			AND feeds.feed_state = 0
 			<if test="keyword !=''">
-			AND keywords.keyword_en LIKE CONCAT('%',#{keyword},'%')
-			OR feeds.feed_title LIKE CONCAT('%',#{keyword},'%')			
+			AND keywords.keyword_en LIKE CONCAT('%',#{keyword},'%')				
 			</if>			
 			GROUP BY feeds.feed_id) temp
 			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}		
 		</select>	
+		
+		
+		<select id="getfeedListFromTitle" parameterType="search" resultMap="FeedSelectMap">
+			SELECT *  FROM
+			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feeds.* FROM feeds
+			WHERE feeds.feed_state = 0
+			<if test="keyword !=''">
+			AND feeds.feed_title LIKE CONCAT('%',#{keyword},'%')				
+			</if>			
+			) temp
+			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}		
+		</select>	
+		
 		
 		
 		<select id="getfeedListFromColor" parameterType="search" resultMap="FeedSelectMap">
