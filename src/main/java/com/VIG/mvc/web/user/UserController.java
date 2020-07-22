@@ -150,4 +150,11 @@ public class UserController {
 		model.addAttribute("user", user);
 		return "forward:main/main.jsp";
 	}
+	
+	
+	@RequestMapping("/loginModal")
+	public String loginModal() {
+		System.out.println("모달띄우기 나오나요");
+		return "VIG/user/loginView.jsp";
+	}
 }
