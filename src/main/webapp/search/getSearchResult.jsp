@@ -45,8 +45,17 @@
 	    max-height: 300px;	
 		}
 		
+	.img_feed_thumb {	  
+	    max-width: 125px;
+	    max-height: 100px;	
+		}
+		
 	.view {	  
 	margin: 5px 10px;
+		}
+		
+	.view_small {	  
+	margin: 2px 5px;
 		}
         
 
@@ -63,6 +72,92 @@
 	//페이지의 끝인지 체크
 	var isPageEnd = false;
 	
+	
+	
+	
+	function getfeedlistFromAjax(item){
+		var thumbnail = '';								
+		
+		$.each(item.images, function(index, item){
+			if(item.isThumbnail == 1){
+				thumbnail = item.imageFile
+			}									
+		});										
+		
+		var displayValue =
+			"<div class = 'view overlay'>"
+				+"<div class = 'img_feed'>"
+				+ "<img src='/VIG/images/uploadFiles/" + thumbnail + "' alt='thumbnail' class='img-fluid rounded-sm' style='width: 400px; height: 300px;'>"
+					+"<div class='mask flex-center waves-effect waves-light rgba-black-strong'>"
+						+"<p class='white-text'>"
+						+ item.feedTitle
+						+"</p>"
+					+"</div>"									
+				+"</div>"
+			+"</div>";
+									
+			$(".row:last").append(displayValue);		
+	}
+	
+	function getImagelistFromAjax(item){
+		var displayValue = 
+			"<div class = 'view overlay'>"
+				+"<div class = 'img_image'>"
+				+ "<img src='/VIG/images/uploadFiles/" + item.imageFile + "' alt='thumbnail' class='img-fluid rounded-sm' style='width: auto; height: 300px;'>"
+					+"<div class='mask flex-center waves-effect waves-light rgba-black-strong'>"
+						+"<p class='white-text'>"
+						+ '이것은 이미지'
+						+"</p>"
+					+"</div>"									
+				+"</div>"
+			+"</div>";
+			
+			$(".row:last").append(displayValue);		
+	}
+	
+	function getUserlistFromAjax(item) {
+		var displayValue =
+				"<div class = 'view row'>"									
+					+ "<img src='/VIG/images/uploadFiles/" + item.profileImg + "' alt='thumbnail' class='img-fluid rounded-circle col-md-1' style='width: 100px; height: 100px;'>"
+					+"<div class='userInfo col-md-4'>"
+						+"<h3>" + item.userName +"</h3>"
+						+"<h5>" + item.selfIntroduce +"</h5>"
+						+"<button type='button' class='btn btn-outline-info waves-effect btn-sm'>Fallow</button>"
+					+"</div>"
+					+"<div class='feedList col-md-6 row' id = 'feed_" + item.userCode + "'>"
+					
+					
+					+"</div>"				
+				+"</div>";			
+			
+			$("#users").append(displayValue);
+	}
+	
+	function getUserFeedlistFromAjax(item){
+		var thumbnail = '';
+		
+		var feed_code = "feed_" + item.writer.userCode;	 	 							
+		
+		//썸네일 이미지 찾기
+		$.each(item.images, function(index, item){
+			if(item.isThumbnail == 1){
+				thumbnail = item.imageFile
+			}									
+		});
+		
+		var displayValue =
+		"<div class = 'view_small'>"
+			+"<div class = 'img_feed_thumb'>"
+			+ "<img src='/VIG/images/uploadFiles/" + thumbnail 	+ "' alt='thumbnail' class='img-fluid rounded-sm' style='width: 125px; height: 100px;'>" 	 							
+			+"</div>"
+		+"</div>";
+		
+		
+		$("#"+feed_code).append(displayValue);
+		
+	}
+	
+	
 	function getItemList() {
 		
 		if(isPageEnd == true){
@@ -77,8 +172,7 @@
 				{
 					url : "/VIG/searchController/json/getSearchResultList",
 					method : "POST",
-					dataType : "Json",
-					async: false,
+					dataType : "Json",					
 					headers : {
 						"Accept" : "application/json",
 						"Content-Type" : "application/json"
@@ -91,53 +185,38 @@
 							isPageEnd = true;
 						}
 						
- 						$.each(JSONData.list, function(index, item) {						
-							
-							if(Mode == 'Feed'){
-								
-								var thumbnail = '';								
-								
-								$.each(item.images, function(index, item){
-									if(item.isThumbnail == 1){
-										thumbnail = item.imageFile
-									}									
-								});								
-								
-								
-								var displayValue ="<div class = 'view overlay'>"
-									+"<div class = 'img_feed'>"
-									+ "<img src='/VIG/images/uploadFiles/"
-									+ thumbnail 
-									+ "' alt='thumbnail' class='img-fluid rounded-sm' style='width: 400px; height: 300px;'>"
-									+"<div class='mask flex-center waves-effect waves-light rgba-black-strong'>"
-									+"<p class='white-text'>"
-									+ item.feedTitle
-									+"</p>"
-									+"</div>"									
-									+"</div>"
-									+"</div>";
-															
-								
-							}else if(Mode == 'Image'){			
-								var displayValue = "<div class = 'view overlay'>"
-								+"<div class = 'img_image'>"
-								+ "<img src='/VIG/images/uploadFiles/"
-								+ item.imageFile 
-								+ "' alt='thumbnail' class='img-fluid rounded-sm' style='width: auto; height: 300px;'>"
-								+"<div class='mask flex-center waves-effect waves-light rgba-black-strong'>"
-								+"<p class='white-text'>"
-								+ '이것은 이미지'
-								+"</p>"
-								+"</div>"									
-								+"</div>"
-								+"</div>";
-							}
-							
-						
-							console.log(displayValue)						              		
-							$(".row:last").append(displayValue);							
-						
-						});	 									
+
+ 						
+ 						//유저를 불러올 경우 유저리스트를 생성한 후 피드를 삽입한다 
+ 						if(Mode == 'Writer'){							
+ 							
+ 	 						$.each(JSONData.list, function(index, item) { 						
+ 								getUserlistFromAjax(item); 									
+ 													
+ 							});	
+ 	 						
+ 	 						$.each(JSONData.feeds, function(index, item) { 						
+ 	 							getUserFeedlistFromAjax(item);	 							
+ 													
+ 							});	
+ 	 
+ 							
+ 							
+ 						}else{
+ 	 						$.each(JSONData.list, function(index, item) {						
+ 								
+ 								if(Mode == 'Feed'){								
+ 									getfeedlistFromAjax(item);
+ 										
+ 								}else if(Mode == 'Image'){			
+ 									getImagelistFromAjax(item); 									
+ 								}					
+ 							});	
+ 							
+ 						}
+ 						
+ 						
+ 						
 					}
 			});
 		
@@ -174,7 +253,8 @@
 			//모드 버튼을 누르는 경우 페이지 초기화
 			$("button").on("click",function(){				
 				Mode = $(this).text();
-				$( 'div' ).remove('.view');			
+				$( 'div' ).remove('.view');	
+				$( 'div' ).remove('.view');	
 				page = 0;
 				isPageEnd = false;
 				$("#Keyword").val("");
@@ -197,10 +277,12 @@
 			
 	       $("#Keyword").keydown(function(key) {
 	            if (key.keyCode == 13) {
-	            	$( 'div' ).remove( '.view' );
-					page = 0;
-					isPageEnd = false;
-	            	getItemList();
+	            	if($("#Keyword").val().length >= 1){
+		            	$( 'div' ).remove( '.view' );
+						page = 0;
+						isPageEnd = false;
+		            	getItemList();
+	            	}
 	            }
 	        });			
 			
@@ -247,9 +329,11 @@
 		<hr/>
 		</div>
 		
-		<div class="row justify-content-center" style = "margin: 5px;">
+		<!-- 피드, 이미지가 출력되는 부분  -->
+		<div class="row justify-content-center" style = "margin: 5px;"></div>
 		
-		</div>
+		<!-- 유저 정보를 넣을 부분  -->
+		<div class="userlist" id="users" ></div>
 	
 	</div>
 
