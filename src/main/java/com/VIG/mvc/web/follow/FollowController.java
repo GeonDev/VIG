@@ -49,10 +49,24 @@ public class FollowController {
 
 		ModelAndView modelAndView = new ModelAndView();
 		
-		modelAndView.setViewName("redirect:../feed/feedController/getFeed?feedId=20000");
 		
 		return modelAndView;
 		
+	}
+	
+	@RequestMapping(value="deleteFollow", method=RequestMethod.GET)
+	public ModelAndView deleteFollow(@RequestParam("userCode") String userCode, @RequestParam("followerCode") String followerCode) throws Exception {
+		
+		System.out.println(userCode+":"+followerCode);
+		Map<String, Object> follow = new HashMap<String, Object>();
+		follow.put("userCode", userCode);
+		follow.put("followerCode", followerCode);
+		
+		followServices.deleteFollow(follow);
+		
+		ModelAndView modelAndView = new ModelAndView();
+		
+		return modelAndView;
 	}
 	
 
