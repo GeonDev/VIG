@@ -11,7 +11,7 @@ import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.follow.FollowDao;
 import com.VIG.mvc.service.follow.FollowServices;
 
-@Service("followServiceImpl")
+@Service("followServicesImpl")
 public class FollowServicesImpl implements FollowServices {
 
 	@Autowired
