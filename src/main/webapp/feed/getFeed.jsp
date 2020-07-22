@@ -122,13 +122,14 @@
 	height: 35px;
 	border-radius: 23px;
 	background-color: #5CA45B;
-	padding: 3px 3px 3px 3px;
-	
+	padding: 3px 3px 3px 9px;
+	box-shadow: 3px 3px 3px #888888;
+
 	
 	}
 	#donation i {
 	
-	
+	align: center;
 	vertical-align: middle;
 	color: White;
 	font-size: 27px;
@@ -341,7 +342,7 @@ $(function(){
 		<c:set var="i" value="${i+1 }"/>
 		<c:if test="${images.isThumbnail == '0'}">
 			<div id="image">
-			<img src="../../images/uploadFiles/${images.imageFile}" style="width:960px" />
+			<img src="../images/uploadFiles/${images.imageFile}" style="width:960px" />
 			</div>
 		</c:if>
 	</c:forEach>
@@ -352,7 +353,7 @@ $(function(){
 	 <div class="row">
 		 <div class="col-8">
 		 <span id="profile">
-		<img src="../../images/others/default-profile-picture1.jpg" class="rounded-circle" width="35px"> &nbsp; <a id="writerName" href="../../myfeed/getMyFeedList?userCode=${feed.writer.userCode}">${feed.writer.userName}</a>
+		<img src="../images/others/default-profile-picture1.jpg" class="rounded-circle" width="35px"> &nbsp; <a id="writerName" href="../../myfeed/getMyFeedList?userCode=${feed.writer.userCode}">${feed.writer.userName}</a>
 		 </span>
 		 </div>
 		 <!-- 팔로우와 후원 -->
