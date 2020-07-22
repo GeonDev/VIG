@@ -169,7 +169,8 @@ $(function(){
 		var fm = $("#follow").text();
 		//self.location="../팔로우 add 팔로우";
 		if(fm == "Follow"){
-			
+		
+		self.location="../../follow/addFollow?userCode=user02&followerCode=${feed.writer.userCode}";
 		$("#follow").text("following").attr("class", "btn btn-default btn-rounded");
 		
 		} else {

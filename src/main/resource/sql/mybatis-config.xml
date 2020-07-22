@@ -34,7 +34,8 @@
 		<mapper resource="sql/FeedMapper.xml"/>
 		<mapper resource="sql/CommentMapper.xml"/>
 		<mapper resource="sql/EventMapper.xml"/>
-		<mapper resource="sql/ReportMapper.xml"/>		
+		<mapper resource="sql/ReportMapper.xml"/>
+		<mapper resource="sql/FollowMapper.xml"/>		
 	</mappers>
 
 </configuration>
