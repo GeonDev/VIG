@@ -1,5 +1,9 @@
-package com.VIG.mvc.web.myFeed;
+package com.VIG.mvc.web.follow;
 
+
+import java.util.HashMap;
+
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -9,19 +13,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.VIG.mvc.service.feed.FeedServices;
+import com.VIG.mvc.service.follow.FollowServices;
 
 
-@Controller
-@RequestMapping("/myfeed/*")
-public class MyFeedController {
+@RestController
+@RequestMapping("/follow/*")
+public class RestFollowController {
 	
 	
 	@Autowired
-	@Qualifier("feedServicesImpl")
-	private FeedServices feedServices;
+	@Qualifier("followServicesImpl")
+	private FollowServices followServices;
 	
 	@Value("#{commonProperties['pageUnit'] ?: 5}")
 	int pageUnit;
@@ -30,22 +35,12 @@ public class MyFeedController {
 	int pageSize;
 	
 	
-	public MyFeedController(){
-	}
-	
-	@RequestMapping(value="getMyFeedList", method=RequestMethod.GET)
-	public ModelAndView getMyFeedList(@RequestParam("userCode") String userCode) throws Exception {
-		
-		System.out.println("getMyFeedList");
-		
-		
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("forward:/myFeed/myFeedListTest.jsp");
-		
-		return mav; 
+	public RestFollowController(){
 	}
 	
 	
+	
+
 	
 	
 
