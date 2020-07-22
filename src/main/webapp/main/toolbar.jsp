@@ -45,7 +45,7 @@
    					 <ul class="navbar-nav ml-auto">
 				 </ul>		
 <!-- 검색 버튼-->    	      
-	        <a class="nav-link waves-effect waves-light" id="search_btn" href="#">
+	        <a class="nav-link waves-effect waves-light" id="search_btn" href="/VIG/search/getSearchResult.jsp">
 	          <i class="fas fa-search"></i>
 	        </a>	   
 <!-- 알람버튼 -->     

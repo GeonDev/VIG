@@ -302,7 +302,7 @@
 
 	<!-- ToolBar Start /////////////////////////////////////-->
 		<jsp:include page="../main/toolbar.jsp" />
-	<!-- ToolBar End /////////////////////////////////////-->
+
 
 	<div class="container-lg-fluid">
 	
