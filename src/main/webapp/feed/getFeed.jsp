@@ -33,13 +33,15 @@
 	
 	body {
 	
+		background-color: #F9F9F9;	
+	
 	}
 	
 	#outline {
 	
 		width: 1300px;
-		margin: 0 auto;
-	
+		margin: 70px auto;
+		
 	}
 	
 	#main { 
@@ -93,11 +95,24 @@
 	}
 	#feedbottom {
 	
-	border: 1px solid #B8B8B8;
+	border: 1px solid #DADADA;
 	padding: 10px 5px 10px 8px;
+	border-radius: 5px;
+	background-color: white;
 	
 	}
-
+	
+	#comform {
+	
+		padding: 0px 0px 0px 13px;
+	
+	}
+	#combutton {
+	
+	padding: 0px 0px;
+	
+	}
+	
 
 
 </style>
@@ -206,17 +221,8 @@ $(function(){
 <body>
 
 
-<!--Navbar-->
-<nav class="navbar navbar-light purple lighten-4 mb-4">
 
-  <!-- Navbar brand -->
-  <a class="navbar-brand" href="#">Navbar</a>
-
-  <!-- Collapse button -->
-
-</nav>
-<!--/.Navbar-->
-
+<jsp:include page="../main/toolbar.jsp" />
 	
 	<div id="outline">
 
@@ -225,7 +231,7 @@ $(function(){
 	<br/>
 	<br/>
 	
-	
+	<!-- 피드 제목, 설명  -->
 	<div class="container">
 	<div class="row">
 	<div class="col-10">
@@ -237,6 +243,7 @@ $(function(){
 	
 	<div class="col-2">
 	<br>
+		<!-- 좋아요 & 조회수 -->
 		<div align="right">
 		<i id="like" class="far fa-heart" style="font-size: 25px"></i>
 		</div>
@@ -250,6 +257,7 @@ $(function(){
 	</div>
 	
 	<hr/>
+	<!-- 피드의 이미지 -->
 	<c:forEach var="images" items="${feed.images}">
 		<c:set var="i" value="0"/>
 		<c:set var="i" value="${i+1 }"/>
@@ -261,17 +269,19 @@ $(function(){
 	</c:forEach>
 
 	<hr/>
-	
+	<!-- 작성자 프로필 -->
 	<div class="container">
 	 <div class="row">
 		 <div class="col-8">
 		 <span id="profile">
-		<img src="../images/others/default-profile-picture1.jpg" class="rounded-circle" width="35px"> &nbsp; <a id="writerName" href="../myfeed/getMyFeedList/${feed.writer.userCode}">${feed.writer.userName}</a>
+		<img src="../images/others/default-profile-picture1.jpg" class="rounded-circle" width="35px"> &nbsp; <a id="writerName" href="../myfeed/getMyFeedList?userCode=${feed.writer.userCode}">${feed.writer.userName}</a>
 		 </span>
 		 </div>
-	    <div class="col-4">
-	    	<span class="badge badge-pill green"><i class="fas fa-dollar-sign"></i></span>
-
+		 <!-- 팔로우와 후원 -->
+	    <div class="col-4 dofo" align="center">
+	    	<c:if test="${feed.writer.role == 'business' }">
+	    	<div id="donation"><i class="fas fa-dollar-sign"></i></div>
+			</c:if>
 	    	<button type="button" id="follow" class="btn btn-outline-default btn-rounded" >Follow</button>
 	    </div>
 	  </div>
@@ -282,22 +292,22 @@ $(function(){
 	<div class="container">
 	 <div class="row">
 		<div class="col-8">
-		<div class="container">
+
 		<div class="row">
-		<div class="col-8">
+		<div class="col-10" id="comform">
 		<form id="myform">
-			<div class="md-form" style="width:100%;">
+			<div class="md-form">
 			  <textarea id="textarea-char-counter" class="form-control md-textarea" length="500" rows="2"></textarea>
 			  <label for="textarea-char-counter">Type your Comment</label>
 			</div>
 		</form>
 		</div>
-		<div class="col-4">
+		<div class="col-2" align="right" id="combutton">
 		<br>
-		<button type="button" class="btn btn-indigo">등록</button>
+		<button type="submit" class="btn btn-indigo">등록</button>
 		</div>
 		</div>
-		</div>
+
 		<div id="feedbottom">
 		<c:choose>
 		
