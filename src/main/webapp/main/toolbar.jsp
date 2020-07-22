@@ -6,16 +6,16 @@
 <head>
 <title>VIG</title>
 
-	<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+
 	<script type="text/javascript">
 	
 //===로그인
 	$(function(){
-		$(".login_btn").on("click",function(){
-			self.location="../user/loginView.jsp";
+		$("#login_btn").on("click",function(){
+			$(self.location).attr("href","../user/login");
 		});
 //===로그아웃	
-	$( ".logout_btn" ).on("click" , function() {
+	$( "#logout_btn" ).on("click" , function() {
 				//Debug..
 				alert(  $( "logout" ).html() );
 				$(self.location).attr("href","../user/logout");
@@ -41,13 +41,9 @@
 				    aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
 				    <span class="navbar-toggler-icon"></span>
 				  </button>
-				  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
-				    aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
-				    <span class="navbar-toggler-icon"></span>
-				  </button>
-				  <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
-				    <ul class="navbar-nav ml-auto nav-flex-icons"></ul>
-				  </div>
+				   <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+   					 <ul class="navbar-nav ml-auto">
+				 </ul>		
 <!-- 검색 버튼-->    	      
 	        <a class="nav-link waves-effect waves-light" id="search_btn" href="#">
 	          <i class="fas fa-search"></i>
@@ -60,9 +56,9 @@
 	        <a class="nav-link waves-effect waves-light" id=" chat_btn" href="#">
 	          <i class="fas fa-comments"></i></a>
 <!-- 로그인 버튼 -->   			
-			 <c:if test="${ empty user }"> <span class="login_btn">in</span></c:if> 
-			 <c:if test="${ ! empty user }"><span class="logout_btn">out</span></c:if>
-	     	
+			 <c:if test="${ empty user }"> <span id="login_btn">login/sign up</span></c:if> 
+			 <c:if test="${ !empty user }"> <span id="logout_btn">logout</span></c:if>
+	     	</div>
 	      </nav>
 		<br/>
 		

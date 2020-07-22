@@ -55,8 +55,15 @@
 	  background: rgb(240, 240, 240);
 	  border: 1px solid rgb(0, 0, 0);
 	}
+	#canvas{
+	    width:700px;
+	}
+	#feedbottom {
 	
+	border: 1px solid #B8B8B8;
+	padding: 10px 5px 10px 8px;
 	
+	}
 
 </style>
         
@@ -220,6 +227,7 @@ function AddCropMoveEvent()
 	};
 }
 
+ $
 //이미지파일 유효성체크 
 function fileCheck(el) { 
     if(!/\.(jpeg|jpg|png|gif|bmp)$/i.test(el.value)){ 
@@ -311,46 +319,43 @@ $(function(){
 		 
 	<div id="field" class="form-group"></div>
 
-
-
-		  
-		 
 		
-	
-	
-		
-		
-	
-	
-	
-	<div class="form-group">
-		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">태그</label>
+		<div class="col-4" id="feedInfo">
+		<div id="feedbottom">
+		사용장비<input type="feedUseGears" class="form-control" id="feedUseGears" name="feedUseGears" >
+	</div>
+		<br>
+			
+	</div>
+			  
+		  <div class="form-group">
+		    <label for="joinUser" class="col-sm-offset-1 col-sm-3 control-label">협업자</label>
 		    <div class="col-sm-4">
-		      <input type="prodDetail" class="form-control" id="prodDetail" name="prodDetail" >
+		      <input type="text" class="form-control" id="joinUser" name="joinUser[0]" >
+		       <input type="text" class="form-control" id="joinUser" name="joinUser[0]" >
+		        <input type="text" class="form-control" id="joinUser" name="joinUser[0]" >
+		      
 		    </div>
 		  </div>
+		  
 		  
 		  <div class="form-group">
-		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">협업자</label>
+		    <label for="categoryId" class="col-sm-offset-1 col-sm-3 control-label">카테고리</label>
 		    <div class="col-sm-4">
-		      <input type="prodDetail" class="form-control" id="prodDetail" name="prodDetail" >
+		      <input type="categoryId" class="form-control" id="categoryId" name="categoryId" >
 		    </div>
 		  </div>
 		  
-		   <div class="form-group">
-		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">사용장비</label>
-		    <div class="col-sm-4">
-		      <input type="prodDetail" class="form-control" id="prodDetail" name="feedUseGears" >
-		    </div>
-		  </div>
+		
 		  
 		  <div class="form-group">
-		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">프라임피드여부</label>
+		    <label for="feedIsPrime" class="col-sm-offset-1 col-sm-3 control-label">프라임피드여부</label>
 		    <div class="col-sm-4">
-		      <input type="radio"  id="prodDetail" name="feedIsPrime" checked="checked" value="0">일반
-		      <input type="radio"  id="prodDetail" name="feedIsPrime" value="1">프라임
+		      <input type="radio"  id="feedIsPrime" name="feedIsPrime" checked="checked" value="0">일반
+		      <input type="radio"  id="feedIsPrime" name="feedIsPrime" value="1">프라임
 		    </div>
 		  </div>
+		  
 		  
 		  <div class="form-group">
 		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">댓글권한</label>
@@ -361,17 +366,23 @@ $(function(){
 		    </div>
 		  </div>
 		  
+		  
+		  
+		  <div class="form-group">
+		    <div class="col-sm-offset-4  col-sm-4 text-center">
+		      <button type="button" class="btn btn-primary"  >게시하기</button>
+		      <a class="btn btn-primary btn" href="#" role="button">취소</a>
+		      <button type="button">임시저장</button>
+			  
+		    </div>
+		  </div>
+</div>
+		  
+		  
 
 	
 
 
-<div class="form-group">
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >게시하기</button>
-		      <button type="button">임시저장</button>
-			  <a class="btn btn-primary btn" href="#" role="button">취소</a>
-		    </div>
-		  </div>
 		  
 		  
 		  
