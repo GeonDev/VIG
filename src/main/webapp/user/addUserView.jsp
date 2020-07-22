@@ -52,10 +52,13 @@
 				$( "#signUp_btn" ).on("click" , function() {
 					fncAddUser();
 				});
-			
-				
+				$( function() {
+					$("#ty").on("click" , function() {
+						self.location = "../user/loginView.jsp";
+					});
+				});				
 			});
-			
+
 				
 		</script>
 		<style type="text/css">
@@ -73,13 +76,13 @@
 
 <jsp:include page="../main/toolbar.jsp"></jsp:include>
 
-<form >
+>
 <div class="container">
 <div class="text-center border border-light p-5">
   <div class="row">
 
     <p class="h4 mb-6">Sign up</p>
-
+<form>
     <!-- id -->
     <input type="text" id="userCode" name="userCode" class="form-control mb-4" placeholder="id">
 	<label data-error="wrong" data-success="right" for="userName"></label>
@@ -98,12 +101,12 @@
    	
    	<input type="email" id="email" name="email" class="form-control mb-4" placeholder="email">
     <label data-error="wrong" data-success="right" for="email"></label>  
-    
+ </form>   
  
         <button  class="btn btn-info btn-block my-4" id="signUp_btn" >Sign up</button>   
          
           <p >Already a member? 
-          <a href="../user/login" class="blue-text ml-1"> sign in</a>
+          <span id="ty" class="blue-text ml-1"> sign in</span>
            
            
 
@@ -115,7 +118,7 @@
 	</div>
 	</div>
 
-</form>
+
 
 <!--       <div class="row">        
     <input type="radio" id="sex" name="sex" value="male" /> 
