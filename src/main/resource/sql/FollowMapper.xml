@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="FollowMapper"> 	
+	
+	
+	<insert id="addFollow" parameterType="hashMap">
+		INSERT INTO follow( follow_id, user_code, follower_code)
+		VALUES (follow_id, #{userCode}, #{followerCode})
+
+	</insert>
+	
+	
+	<select id="getFollowerList" resultMap="EventSelectMap">
+		SELECT *
+		FROM event	
+	</select>
+	
+	<update id="updateEvent" parameterType="event">
+		UPDATE event
+		SET 
+		event_title=#{eventTitle:VARCHAR}, event_sub=#{eventSub:VARCHAR}, event_start={eventStart:DATE}, event_end=#{eventEnd:DATE}, 
+		event_thumbnail=#{eventThumb:VARCHAR}, event_tag=#{eventTags:VARCHAR}, event_image=#{eventImage:VARCHAR}, event_type={eventType:NUMERIC}, 
+		banner=#{banner:VARCHAR}
+		WHERE event_id={eventId:NUMERIC}	
+	</update>
+	
+	<delete id="deleteFollow" parameterType="hashMap">
+		DELETE FROM follow
+      	WHERE user_code=#{userCode} and follower_code=#{followerCode}
+	</delete>
+	
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(*)
+		FROM(	
+		SELECT *
+		FROM event
+		ORDER BY event_id) countTable
+	
+	</select>
+
+	 
+</mapper>
+
+
