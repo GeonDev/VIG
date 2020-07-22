@@ -52,10 +52,19 @@
 <!-- style part======================== -->	
 	<style>
 	
-	#btn_group{
-		text-align: center;
-	}
+		.col-md-10{
+			
+		}
+	    .title_h1{
+				padding:30px;
+			}
+			
+			#btn_group{
+			padding:30px;
+			text-align: center;
+			}
 	.lightbox{
+		padding:50;
 		 width:300px;
 		 height:200px;
 	}
@@ -68,57 +77,41 @@
 <body>
 		
 
-	 	<div class=" container">
+	 	
 <!-- 페이지 타이틀 ========================================== -->
-			<div class=" col-md-12">
-				<div class="row">
- 					<h1>{WIN98} 님의 마이피드</h1>	
- 				</div>
- 			</div>	
- 			<br/><hr/><br/>
-
-
-
-<!-- 버튼 모음 ============================================ -->
-
-			<div id="btn_group">
-	 			<button type="button" class="btn btn-light ml-5 mr-5">팔로워</button>
-	 			<button type="button" class="btn btn-light ml-5 mr-5">팔로잉</button>
-	 			<button type="button" class="btn btn-light ml-5 mr-5">채 팅</button>
-	 		</div>
- 			<br/><br/>
- 			
- 			
- <!-- 피드 목록 ============================================ -->
- 
- 			<div class="container-fluid">
-			<div class="col-md-12">
-				<div class="row">
-
-			<figure class="col-md-4 ">
+			<div class="col-md-10">
+						<div class="row">
+							<div class="title_h1"><h1>{WIN98} 님의 마이피드</h1></div>	
+	 					</div>
+	 				<div class="row">
+			 		<div id="btn_group">
+			 			<button type="button" class="btn btn-light ml-5 mr-5">팔로워</button>
+			 			<button type="button" class="btn btn-light ml-5 mr-5">팔로잉</button>
+			 			<button type="button" class="btn btn-light ml-5 mr-5">채 팅</button>
+			 		</div>
+					</div>
+	
+		<div class="row">
+			<figure class="col-md-3 ">
 				<a herf="#" data-size="1600X1050">
 				<img alt="picture" img src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(150).jpg"  class="lightbox"/>
 				</a>
 			</figure>
 			
-			<figure class="col-md-4 ">
+			<figure class="col-md-3 ">
 				<a herf="#" data-size="1600X1050">
 				<img alt="picture" img src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(150).jpg"  class="lightbox"/>
 				</a>
 			</figure>
 			
-			<figure class="col-md-4 ">
+			<figure class="col-md-3 ">
 				<a herf="#" data-size="1600X1050">
 				<img alt="picture" img src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(150).jpg"  class="lightbox"/>
 				</a>
 			</figure>
  
  			</div>
- 		</div>
- 			
- 			
- 
-		</div>
+					</div>
 
 </body>
 </html>

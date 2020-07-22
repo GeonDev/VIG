@@ -1,101 +1,212 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <title>VIG</title>
 
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-	<!-- Google Fonts -->
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-	<!-- Bootstrap core CSS -->
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
-	<!-- Material Design Bootstrap -->
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
-				
+		<!-- Google Fonts -->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+		<!-- Bootstrap core CSS -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Material Design Bootstrap -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+		
+		
 	<!-- JQuery -->
-	<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<!-- Bootstrap tooltips -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
 	<!-- Bootstrap core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
-	<script type="text/javascript">
-	
-//===로그인
-	$(function(){
-		$(".login_btn").on("click",function(){
-			self.location="../user/loginView.jsp";
-		});
-//===로그아웃	
-	$( ".logout_btn" ).on("click" , function() {
-				//Debug..
-				alert(  $( "logout" ).html() );
-				$(self.location).attr("href","../user/logout");
-			}); 
-//==로고 클릭시 메인 페이지로
-	$(".navbar-brand:contains('VIG')").on("click",function(){
-		self.location="../main/main.jsp";
-		});
 		
+		<script type="text/javascript">
 		
-		$(".modal-content").load("/loginModal");
-	});
-	</script>	
-	<style>
-	</style>	
-	
-</head>		 
-<body>
-	
+		$(function(){
+			
 
-<!--Navbar start-->	
-			<nav class="mb-1 navbar fixed-top navbar-expand-xl navbar-dark indigo lighten-1 py-3" id="toolbar">			
-<!-- 로고 -->		
-			  <a class="navbar-brand"  >VIG</a>		  
-			      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
-				    aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
-				    <span class="navbar-toggler-icon"></span>
-				  </button>
-				  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
-				    aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
-				    <span class="navbar-toggler-icon"></span>
-				  </button>
-				  <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
-				    <ul class="navbar-nav ml-auto nav-flex-icons"></ul>
-				  </div>
-<!-- 검색 버튼-->    	      
-	        <a class="nav-link waves-effect waves-light" id="search_btn" href="#">
-	          <i class="fas fa-search"></i>
-	        </a>	   
-<!-- 알람버튼 -->     
-	        <a class="nav-link waves-effect waves-light" id="alarm_btn" href="#">
-	          <i class="fas fa-bell"></i>
-	        </a>        
-<!-- 채팅버튼 -->      
-	        <a class="nav-link waves-effect waves-light" id=" chat_btn" href="#">
-	          <i class="fas fa-comments"></i></a>
-<!-- 로그인 버튼 -->   			
-			 <c:if test="${ empty user }"> <span class="login_btn">in</span></c:if> 
-			 <c:if test="${ ! empty user }"><span class="logout_btn">out</span></c:if>
-	     	
-	     	<!-- 모달띄우는 버튼 -->
-	     	<a id="login" data-toggle="modal" data-target="#modal" role="button" data-remote="/user/loginView.jsp"> 
-	     	<span class="login_btn">modal!!</span></a>
-	     	
-	     	<!-- 모달 불러오려는 화면 -->
-	     	<div id="modal" class="modal fade" tabindex="-1" role="dialog">
-	     		<div class="modal-dialog">
-	     			<div class="modal-content">
-	     			</div>
-	     		</div>
-	     	</div>
-	     	
-	     	
-	      </nav>
-		<br/>
+		});
+		</script>
 		
+		
+		<style>
+		
+		.carousel-multi-item-2 .col-md-3 {
+		float: left;
+		width: 25%;
+		max-width: 100%; } }
+		
+		.h3-responsive{
+		 text-align:center;
+		}
+		
+		.card{
+		  max-width: 300px;
+	  	  max-height: 100px;
+		}
+		
+		body{ padding-top: 70px; }
+		
+		</style>
+</head>
+<body>
+
+
+
+<!-- 상단 툴 바 들어갈 공간/없으면 카테고리 부분이 상단바랑 겹침 -->
+		
+		
+		<!--Carousel Wrapper-->
+		<div class="container-fluid">
+		
+		<div id="multi-item-example" class="carousel carousel-multi-item carousel-multi-item-2" data-ride="carousel">
+		
+		  <!--Controls-->
+		  <div class="controls-top">
+		    <a class="carousel-control-prev" href="#multi-item-example" data-slide="prev"><i class="fas fa-angle-left fa-3x pr-3"></i></a>
+		    <a class="carousel-control-next" href="#multi-item-example" data-slide="next"><i class="fas fa-angle-right fa-3x pl-3"></i></a>
+		  </div>
+		  <!--/.Controls-->
+		
+		  <!--Slides-->
+		  <div class="carousel-inner" role="listbox">
+		
+		    <!--First slide-->
+		    <div class="carousel-item active">
+		
+		      <div class="col-md-3 mb-3">		 
+		        <div class="card">
+		         <a href="#">
+			         <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(38).jpg"
+			            alt="Card image cap">
+			          <div class="carousel-caption">
+				        <h3 class="h3-responsive">카테고리명</h3>			     
+				      </div>
+			       </a>				            	      
+		        </div>
+		     
+		      </div>
+		
+		      <div class="col-md-3 mb-3">
+		        <div class="card">
+		        	 <a href="#">
+			          <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(19).jpg"
+			            alt="Card image cap">
+			           <div class="carousel-caption">
+				        <h3 class="h3-responsive">카테고리명</h3>			     
+				      </div>
+			         </a>
+		        </div>
+		      </div>
+		
+		      <div class="col-md-3 mb-3">
+		        <div class="card">
+		         <a href="#">
+		          <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(42).jpg"
+		            alt="Card image cap">
+		          <div class="carousel-caption">
+				        <h3 class="h3-responsive">카테고리명</h3>			     
+				      </div>
+		          </a>
+		        </div>
+		      </div>
+		
+		      <div class="col-md-3 mb-3">
+		        <div class="card">
+		         <a href="#">
+		          <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(8).jpg"
+		            alt="Card image cap">
+		          <div class="carousel-caption">
+				        <h3 class="h3-responsive">카테고리명</h3>			     
+				      </div>
+		          </a>
+		        </div>
+		      </div>
+		
+		    </div>
+		    <!--/.First slide-->
+		
+		    <!--Second slide-->
+		    <div class="carousel-item">
+		
+		      <div class="col-md-3 mb-3">
+		        <div class="card">
+		         <a href="#">
+		          <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(53).jpg"
+		            alt="Card image cap">
+		          
+		          </a>
+		        </div>
+		      </div>
+		
+		      <div class="col-md-3 mb-3">
+		        <div class="card">
+		          <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(25).jpg"
+		            alt="Card image cap">
+		        </div>
+		      </div>
+		
+		      <div class="col-md-3 mb-3">
+		        <div class="card">
+		          <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(47).jpg"
+		            alt="Card image cap">
+		        </div>
+		      </div>
+		
+		      <div class="col-md-3 mb-3">
+		        <div class="card">
+		          <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(26).jpg"
+		            alt="Card image cap">
+		        </div>
+		      </div>
+		
+		    </div>
+		    <!--/.Second slide-->
+		
+		    <!--Third slide-->
+		    <div class="carousel-item">
+		
+		      <div class="col-md-3 mb-3">
+		        <div class="card">
+		          <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(64).jpg"
+		            alt="Card image cap">
+		        </div>
+		      </div>
+		
+		      <div class="col-md-3 mb-3">
+		        <div class="card">
+		          <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(51).jpg"
+		            alt="Card image cap">
+		        </div>
+		      </div>
+		
+		      <div class="col-md-3 mb-3">
+		        <div class="card">
+		          <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(59).jpg"
+		            alt="Card image cap">
+		        </div>
+		      </div>
+		
+		      <div class="col-md-3 mb-3">
+		        <div class="card">
+		          <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(63).jpg"
+		            alt="Card image cap">
+		        </div>
+		      </div>
+		
+		    </div>
+		    <!--/.Third slide-->
+		
+		  </div>
+		  <!--/.Slides-->
+		
+		</div>
+		<!--/.Carousel Wrapper-->
+	</div>
+
 </body>
 </html>
