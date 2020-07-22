@@ -571,6 +571,10 @@ INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(image_id, 20009, 4, 0,'feed10_05.jpg');
 
 INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20009, 5, 0,'feed10_06.jpg');
+
+INSERT
 INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
 VALUES(20010, 'Extreme Sports', ' ', 'user05', NOW(), 0, 10000);
 
@@ -639,9 +643,35 @@ INSERT
 INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(image_id, 20011, 5, 0,'feed12_06.jpg');
 
+
+
+INSERT
+INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
+VALUES(20012, 'BB', 'Project is questioning our life in a simulation for 4 years. Since then it has been seen in Tokyo, Beijing...', 'user03', NOW(), 0, 10006);
+
 INSERT
 INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
-VALUES(image_id, 20009, 5, 0,'feed10_06.jpg');
+VALUES(image_id, 20012, 0, 1,'feed13_thumbnail.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20012, 0, 0,'feed13_01.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20012, 1, 0,'feed13_02.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20012, 2, 0,'feed13_03.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20012, 3, 0,'feed13_04.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20012, 4, 0,'feed13_05.jpg');
 
 INSERT
 INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
