@@ -15,7 +15,7 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
 				
 	<!-- JQuery -->
-	<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<!-- Bootstrap tooltips -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
 	<!-- Bootstrap core JavaScript -->
@@ -23,18 +23,22 @@
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 			
-
-		<script type="text/javascript">
 		
-	function fncLogin() {		
-			$("form").attr("method" , "POST").attr("action" , "login").submit();
-		}
+	<script type="text/javascript">
+		
+
+	function fncloginGo(){
+		alert("1");
+		$("form").attr("method", "post").attr("action", "login").submit();
+	}
+	
 		$( function(){
-			
-			$("#login_btn").on("click" ,function(){
-				var code=$("input[name='userCode']").val();
+			alert("2");
+			$("#login").on("click" ,function(){
+				alert("3");
+				var id=$("input[name='userCode']").val();
 				var pw=$("input[name='password']").val();
-				fncLogin();
+				fncloginGo();		
 				$.ajax( 
 						{
 							url : "json/login",
@@ -45,28 +49,29 @@
 								"Content-Type" : "application/json"
 								},
 							data : JSON.stringify({
-								userCode : code,
+								userCode : id,
 								password : pw
 								}),
 							success : function(JSONData , status) {			
-								//alert(status);
-								//alert("JSONData : \n"+JSONData);
-								//alert( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
-								//alert( JSONData != null );
+								alert(status);
+								alert("JSONData : \n"+JSONData);
+								alert( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
+								alert( JSONData != null );
 								alert("로그인완료");
 								if( JSONData != null ){								
-									//$(self.location).attr("href","../myFeed/myFeed.jsp");		
+									$(self.location).attr("href","../myFeed/myFeed");		
 									
 								}else{
 									alert("아이디 또는 비밀번호가 틀렸습니다.");
 									}
 								}
 							}); 
+				
 						});
 					});
 			
 		$( function() {
-			$("#signUp_btn").on("click" , function() {
+			$("#ty").on("click" , function() {
 				self.location = "../user/addUserView.jsp";
 			});
 		});
@@ -87,12 +92,11 @@
 <body>
 <jsp:include page="../main/toolbar.jsp"></jsp:include>
 
-<form >
 
 <div class="container">
 <div class="text-center border border-light p-5">
   <div class="row">
-
+<form>
     <p class="h4 mb-6">Sign in</p>
 
     <!-- id -->
@@ -100,42 +104,21 @@
 
     <!-- Password -->
     <input type="password" id="password" name="password" class="form-control mb-5" placeholder="Password">
-
-    <div class="d-flex justify-content-around">
-        <div>
-            <!-- Remember me -->
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="defaultLoginFormRemember">
-                <label class="custom-control-label" for="defaultLoginFormRemember">Remember me</label>
-            </div>
-        </div>
-        <div>
-            <!-- Forgot password -->
-          
-        </div>
-    </div>
-
+</form>
     <!-- Sign in button -->
-    <button class="btn btn-info btn-block my-4" id="login_btn" type="submit">Sign in</button>
+    <button  class="btn btn-info btn-block my-4" id="login" >Sign in</button>
 
     <!-- Register -->
   
     <p>Not a member?
-        <a href="../user/addUser">Register</a>
+        <!-- <a href="../user/addUser">Register</a> -->
+        <span id="ty">Register</span>
     </p>
-	<hr/>
+	</div>
+	</div>
+	</div>
 
-    <!-- Social login -->
-    <p>or sign in with:</p>
 
-    <a href="#" class="mx-2" role="button"><i class="fab fa-facebook-f light-blue-text"></i></a>
-    <a href="#" class="mx-2" role="button"><i class="fab fa-twitter light-blue-text"></i></a>
-    <a href="#" class="mx-2" role="button"><i class="fab fa-linkedin-in light-blue-text"></i></a>
-    <a href="#" class="mx-2" role="button"><i class="fab fa-github light-blue-text"></i></a>
-	</div>
-	</div>
-	</div>
-</form>
 
 </body>
 </html>

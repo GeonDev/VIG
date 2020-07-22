@@ -54,26 +54,25 @@ public class UserController {
 
 //=======로그인===============================================================//
 	
+	
 	@RequestMapping( value="login", method=RequestMethod.GET)
 	public ModelAndView login() throws Exception{
 		
-		System.out.println("login(GET):로그인 페이지로 이동");
-		
+			System.out.println("login(GET):로그인 페이지로 이동");	
 		ModelAndView model = new ModelAndView();
-		model.setViewName("redirect:/user/loginView.jsp");		
+		model.setViewName("forward:../user/loginView.jsp");		
 		return model;
 	}
+	
 	
 	@RequestMapping( value="login", method=RequestMethod.POST )
 	public ModelAndView login(@ModelAttribute("user") User user, HttpSession session) throws Exception{
 		
-		System.out.println("login(POST):로그인");
-		
+			System.out.println("login(POST):로그인");	
 		User dbUser = userServices.getUserOne(user.getUserCode());
 		ModelAndView model = new ModelAndView();
 		model.setViewName("redirect:../main/main.jsp");
-		System.out.println("user:"+user);
-
+			System.out.println("user:"+user);
 		if( user.getPassword().equals(dbUser.getPassword())) {
 			session.setAttribute("user", dbUser);
 			}	
@@ -83,7 +82,7 @@ public class UserController {
 //=======로그아웃===============================================================//
 	@RequestMapping( value="logout", method=RequestMethod.GET)
 	public ModelAndView logout(HttpSession session) throws Exception{
-		System.out.println("logout");
+			System.out.println("logout");
 		session.invalidate();
 		ModelAndView model = new ModelAndView();
 		model.setViewName("redirect:../main/main.jsp");
