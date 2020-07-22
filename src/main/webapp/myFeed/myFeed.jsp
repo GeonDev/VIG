@@ -35,6 +35,7 @@
 	
 	function nav_myFeedList(url) {
 	$('#my_frame').attr('src', url);
+	
 	}	
 	function nav_history(url) {
 		$('#my_frame').attr('src', url);
@@ -45,8 +46,9 @@
 	function nav_analysis(url) {
 		$('#my_frame').attr('src', url);
 	}
-	
-	
+	function nav_report(url) {
+		$('#my_frame').attr('src', url);
+	}
 
 	</script>
 	
@@ -54,11 +56,9 @@
 	<style>
 		
 		
-		.col-md-12{
-			padding:40px;
-		}
-		.col-md-3{
-			padding-right:10;
+		
+		.col-md-2{
+		padding:100px 0 0 20px;
 			background-color;
 			height: 100%;
 			border-right: 2px solid;
@@ -74,6 +74,14 @@
 		    max-width: 150px;
 		    max-height: 150px;
 		    border-radius:50%;
+		    }
+		 #my_frame{
+		 padding:50px;
+		 }
+		   .btn{
+		   margin: 0px;
+		   }
+		
 		}
 	</style>
 <!-- style part end =====================-->		
@@ -82,13 +90,10 @@
 
 <body>
 <!-- 상단 툴바 ================================================= -->
-	<div class=" container-fluid">
-		<div class="col-md-12">
+	
 			<div class="row">
 			<jsp:include page="/main/toolbar.jsp"></jsp:include>
 			</div>
-		</div>
-	</div>
 	
 
  		
@@ -114,7 +119,7 @@
  					<br/><br/><hr/><br/>
  				</div>
  	<!-- 메뉴 네비게이션 -->
- 					<button type="button" class="btn btn-block" onclick='nav_myFeedList("myFeedList.jsp")'>
+ 					<button type="button" class="btn btn-block" onclick='nav_myFeedList("../myFeed/myFeedListTest.jsp")'>
  						마이피드 목록</button>
  					<br/>
  					<button type="button" class="btn btn-block" onclick='nav_history("history.jsp")'>
@@ -124,28 +129,22 @@
  						<a href="#">결 제</a></button>
  					<br/>
  					<button type="button" class="btn btn-block" onclick='nav_analysis(".jsp")'>
- 						<a href="#">통 계</a></button>	
- 
-<!-- 일단 관리자용 신고 네비 여기다 표시 -->			
- 			
- 				<c:if test="${ user.userCode == 'admin'}">
- 					<button type="button" class="btn btn-block" onclick='nav_payment("follow.jsp")'>
- 						<a href="#">신 고</a></button>
- 				</c:if>
- 			
- 		
- 					<br/>						
- 			</div>
-	
+ 						<a href="#">통 계</a></button>
+ 					<br/>
+ 					<button type="button" class="btn btn-block" onclick='nav_report("../report/getReportlist.jsp")'>
+ 						<a href="#">신 고</a></button>	
+				</div>
 
-
-<!-- 오른쪽 메인 시작 ================================================= -->		
+<!-- 일단 관리자용 신고 네비 여기다 표시 -->	
+						
+					
+					<iframe id='my_frame' class="col-md-10 "></iframe>	
+	 				
+					
+					</div>
 				
-			
-	
-			</div>
-		</div>
-	</div>
-
-</body>
-</html>
+ 			
+ 					</body>
+ 					</html>
+ 					
+ 			
