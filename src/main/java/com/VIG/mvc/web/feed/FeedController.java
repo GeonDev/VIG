@@ -17,10 +17,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.VIG.mvc.service.category.CategoryServices;
 import com.VIG.mvc.service.color.ColorServices;
+import com.VIG.mvc.service.domain.Category;
+import com.VIG.mvc.service.domain.Event;
 import com.VIG.mvc.service.domain.Feed;
 import com.VIG.mvc.service.domain.ImageColor;
 import com.VIG.mvc.service.domain.ImageKeyword;
+import com.VIG.mvc.service.domain.JoinUser;
+import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.feed.FeedServices;
 import com.VIG.mvc.service.image.ImageServices;
 import com.VIG.mvc.service.keyword.KeywordServices;
@@ -68,14 +73,25 @@ public class FeedController {
 	
 	
 	@RequestMapping(value = "addFeed", method = RequestMethod.POST)
-	public ModelAndView updatefile(@ModelAttribute("feed") Feed feed,@RequestParam("uploadFile") List<MultipartFile> files) throws Exception {
+	public ModelAndView updatefile(@RequestParam("joinUser") List<JoinUser> joinUser,@ModelAttribute("feed") Feed feed, @ModelAttribute("category") Category category,@RequestParam("uploadFile") List<MultipartFile> files) throws Exception {
+				
+		System.out.println(joinUser);
+		String userCode = "user11";
 		
+		feed.setCoworkers(joinUser);
+		
+		feed.setFeedCategory(category);	
+				
+		User user = userServices.getUserOne(userCode);
+		feed.setWriter(user);
+		
+		System.out.println("협업자 : ");
+		System.out.println("category :"+category);
 		System.out.println("feed : "+feed);
+	//	
+		
+		
 	//	feedServices.addFeed(feed);
-		
-
-		System.out.println("addFeed : POST");	
-		
 		
 		System.out.println("추가한 이미지 파일: "+files);
         String path = context.getRealPath("/");        
