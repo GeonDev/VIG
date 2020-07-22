@@ -67,7 +67,7 @@
 		</select>		
 		
 		<insert id ="insertFeed" parameterType="feed">
-			Insert INTO feeds(feed_id, user_code feed_title, feed_explanation, feed_reg_date, feed_is_prime, category, feed_use_gears, feed_state, comment_range  )
+			Insert INTO feeds(feed_id, user_code, feed_title, feed_explanation, feed_reg_date, feed_is_prime, category, feed_use_gears, feed_state, comment_range  )
 			VALUES(feed_id, #{writer.userCode}, #{feedTitle}, #{feedExplanation:VARCHAR}, NOW(), #{feedIsPrime:NUMERIC}, #{category:VARCHAR}, #{feedUseGears:VARCHAR}, #{feedState:NUMERIC}, #{commentRange:NUMERIC})		
 		</insert>
 		
