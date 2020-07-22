@@ -67,7 +67,7 @@
 		</select>		
 		
 		<insert id ="insertFeed" parameterType="feed">
-			Insert INTO feeds(feed_id, user_code feed_title, feed_explanation, feed_reg_date, feed_is_prime, category, feed_use_gears, feed_state, comment_range  )
+			Insert INTO feeds(feed_id, user_code, feed_title, feed_explanation, feed_reg_date, feed_is_prime, category, feed_use_gears, feed_state, comment_range  )
 			VALUES(feed_id, #{writer.userCode}, #{feedTitle}, #{feedExplanation:VARCHAR}, NOW(), #{feedIsPrime:NUMERIC}, #{category:VARCHAR}, #{feedUseGears:VARCHAR}, #{feedState:NUMERIC}, #{commentRange:NUMERIC})		
 		</insert>
 		
@@ -77,14 +77,12 @@
 		</select>		
 		
 		
-		<!-- 특정유저가 작성한 피드를 불러온다. searchType이 1이면 최신순 피드 1페이지만 -->
+		<!-- 특정유저가 작성한 피드를 모두 불러온다.  -->
 		<select id="getMyFeedList" parameterType="search" resultMap="FeedSelectMap">
 			SELECT * FROM
 			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feeds.* FROM feeds
-			WHERE user_code = #{value} AND feed_state = 0	
-			<if test="searchType == 0">
-			ORDER BY feeds.feed_id DESC	
-			</if>
+			WHERE user_code = #{keyword} AND feed_state = 0				
+			ORDER BY feeds.feed_id DESC				
 			)temp WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
 		</select>
 		

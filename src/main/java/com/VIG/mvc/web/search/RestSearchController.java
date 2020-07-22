@@ -109,7 +109,7 @@ public class RestSearchController {
 		
 		Search search = new Search();		
 		
-		search.setCurrentPage(Integer.valueOf(jsonData.get("page")));
+		search.setCurrentPage(Integer.valueOf(jsonData.get("currentPage")));
 		search.setPageSize(pageSize);
 		
 		//로그인한 유저 정보를 받아옴

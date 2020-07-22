@@ -1,369 +1,422 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE html>
-
-
 <html>
-    <head>
-    <style>
-        .upload-btn-wrapper {
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-        }
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>addFeed</title>
+
+<!-- JQuery -->
+	
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+	<!-- Google Fonts -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+	<!-- Bootstrap core CSS -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Material Design Bootstrap -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+	
+		<!-- JQuery -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<!-- Bootstrap tooltips -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<!-- MDB core JavaScript -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+
+	
+<style>
+	
+	body {
+	
+	}
+	
+	#outline {
+	
+		width: 1300px;
+		margin: 0 auto;
+	
+	}
+	
+	#main { 
+		
+		width: 960px;
+		margin: 0 auto;
+		
+	}
+	
+	img {
+	  margin: 1em 0;
+	  display: block;
+	  background: rgb(240, 240, 240);
+	  border: 1px solid rgb(0, 0, 0);
+	}
+	
+	
+
+</style>
         
-        .upload-btn {
-            border: 2px solid gray;
-            color: gray;
-            background-color: white;
-            padding: 8px 20px;
-            border-radius: 8px;
-            font-size: 20px;
-            font-weight: bold;
-        }
         
-        .upload-btn-wrapper input[type=file] {
-            font-size: 100px;
-            position: absolute;
-            left: 0;
-            top: 0;
-            opacity: 0;
-        }
+  
         
-        #fileDragDesc {
-            width: 100%; 
-            height: 100%; 
-            margin-left: auto; 
-            margin-right: auto; 
-            padding: 5px; 
-            text-align: center; 
-            line-height: 300px; 
-            vertical-align:middle;
-        }
-    </style>
     
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    
-    
-    
-        <script type="text/javascript">
-        
-        //ÇÁ¸®ºä
-        
-        function LoadImage()
+<script type="text/javascript">
+var clsImage;
+var iCropLeft, iCropTop, iCropWidth, iCropHeight;
+
+
+
+$(function() {
+	//DOM Object GET 3ê°€ì§€ ë°©ë²•  1. $(tagName) : 2.(#id) : 3.$(.className)
+	$( "button.btn.btn-primary" ).on("click" , function() {
+		document.detailForm.action='feedController/addFeed';
+		document.detailForm.submit();
+	});
+});	
+
+
+//ì·¨ì†Œ ì´ë²¤íŠ¸ ì²˜ë¦¬+ì—°ê²°
+$(function() {
+	$("a[href='#' ]").on("click" , function() {
+		$("form")[0].reset();
+	});
+});	
+//Modal 
+$('#myModal').on('shown.bs.modal', function () {
+	  $('#myInput').focus()
+	})
+//div ë™ì ìƒì„±	
+	function add_div(){
+    var div = document.createElement('div');
+    div.innerHTML = document.getElementById('room_type').innerHTML;
+    document.getElementById('field').appendChild(div);
+}
+
+function remove_div(obj){
+document.getElementById('field').removeChild(obj.parentNode);
+}
+
+
+
+
+//ë¡œì»¬ ì´ë¯¸ì§€ íŒŒì¼ì„ Canvas ì— ë¡œë“œí•œë‹¤.
+function LoadImage()
+	{
+	
+		if( typeof window.FileReader !== 'function' )
 		{
-			if( typeof window.FileReader !== 'function' )
-			{
-				alert("FileReader is not supported");
-				return;
-			}
+			alert("FileReader is not supported");
+			return;
+		}
 
-			var inputFile = document.getElementById('image_file');
-			var clsFileReader = new FileReader();
-			clsFileReader.onload = function(){
-				clsImage = new Image();
-				clsImage.onload = function(){
-					var canvas = document.getElementById("canvas");
-					canvas.width = clsImage.width;
-					canvas.height = clsImage.height;
+		var inputFile = document.getElementById('image_file');
+		var clsFileReader = new FileReader();
+		clsFileReader.onload = function(){
+			clsImage = new Image();
+			clsImage.onload = function(){
+				var canvas = document.getElementById("canvas");
+				canvas.width = clsImage.width;
+				canvas.height = clsImage.height;
 
-					iCropLeft = 100;
-					iCropTop = 100;
-					iCropWidth = clsImage.width - 200;
-					iCropHeight = clsImage.height - 200;
-					iImageWidth = clsImage.width;
-					iImageHeight = clsImage.height;
+				iCropLeft = 100;
+				iCropTop = 100;
+				iCropWidth = clsImage.width - 200;
+				iCropHeight = clsImage.height - 200;
+				iImageWidth = clsImage.width;
+				iImageHeight = clsImage.height;
 
-					DrawCropRect();
-					AddCropMoveEvent();
-				};
-
-				clsImage.src = clsFileReader.result;
+				DrawCropRect();
+				AddCropMoveEvent();
 			};
 
-			clsFileReader.readAsDataURL(inputFile.files[0]);
-		}
-        
-        //
-            $(document).ready(function() {
-                $("#input_file").bind('change', function() {
-                    selectFile(this.files);
-                    //this.files[0].size gets the size of your file.
-                    //alert(this.files[0].size);
-                });
-            });
-        
-            // ÆÄÀÏ ¸®½ºÆ® ¹øÈ£
-            var fileIndex = 0;
-            // µî·ÏÇÒ ÀüÃ¼ ÆÄÀÏ »çÀÌÁî
-            var totalFileSize = 0;
-            // ÆÄÀÏ ¸®½ºÆ®
-            var fileList = new Array();
-            // ÆÄÀÏ »çÀÌÁî ¸®½ºÆ®
-            var fileSizeList = new Array();
-            // µî·Ï °¡´ÉÇÑ ÆÄÀÏ »çÀÌÁî MB
-            var uploadSize = 50;
-            // µî·Ï °¡´ÉÇÑ ÃÑ ÆÄÀÏ »çÀÌÁî MB
-            var maxUploadSize = 500;
-    
-            $(function() {
-                // ÆÄÀÏ µå·Ó ´Ù¿î
-                fileDropDown();
-            });
-    
-            // ÆÄÀÏ µå·Ó ´Ù¿î
-            function fileDropDown() {
-                var dropZone = $("#dropZone");
-                //Drag±â´É 
-                dropZone.on('dragenter', function(e) {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    // µå·Ó´Ù¿î ¿µ¿ª css
-                    dropZone.css('background-color', '#E3F2FC');
-                });
-                dropZone.on('dragleave', function(e) {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    // µå·Ó´Ù¿î ¿µ¿ª css
-                    dropZone.css('background-color', '#FFFFFF');
-                });
-                dropZone.on('dragover', function(e) {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    // µå·Ó´Ù¿î ¿µ¿ª css
-                    dropZone.css('background-color', '#E3F2FC');
-                });
-                dropZone.on('drop', function(e) {
-                    e.preventDefault();
-                    // µå·Ó´Ù¿î ¿µ¿ª css
-                    dropZone.css('background-color', '#FFFFFF');
-    
-                    var files = e.originalEvent.dataTransfer.files;
-                    if (files != null) {
-                        if (files.length < 1) {
-                            /* alert("Æú´õ ¾÷·Îµå ºÒ°¡"); */
-                            console.log("Æú´õ ¾÷·Îµå ºÒ°¡");
-                            return;
-                        } else {
-                            selectFile(files)
-                        }
-                    } else {
-                        alert("ERROR");
-                    }
-                });
-            }
-    
-            // ÆÄÀÏ ¼±ÅÃ½Ã
-            function selectFile(fileObject) {
-                var files = null;
-    
-                if (fileObject != null) {
-                    // ÆÄÀÏ Drag ÀÌ¿ëÇÏ¿© µî·Ï½Ã
-                    files = fileObject;
-                } else {
-                    // Á÷Á¢ ÆÄÀÏ µî·Ï½Ã
-                    files = $('#multipaartFileList_' + fileIndex)[0].files;
-                }
-    
-                // ´ÙÁßÆÄÀÏ µî·Ï
-                if (files != null) {
-                    
-                    if (files != null && files.length > 0) {
-                        $("#fileDragDesc").hide(); 
-                        $("fileListTable").show();
-                    } else {
-                        $("#fileDragDesc").show(); 
-                        $("fileListTable").hide();
-                    }
-                    
-                    for (var i = 0; i < files.length; i++) {
-                        // ÆÄÀÏ ÀÌ¸§
-                        var fileName = files[i].name;
-                        var fileNameArr = fileName.split("\.");
-                        // È®ÀåÀÚ
-                        var ext = fileNameArr[fileNameArr.length - 1];
-                        
-                        var fileSize = files[i].size; // ÆÄÀÏ »çÀÌÁî(´ÜÀ§ :byte)
-                        console.log("fileSize="+fileSize);
-                        if (fileSize <= 0) {
-                            console.log("0kb file return");
-                            return;
-                        }
-                        
-                        var fileSizeKb = fileSize / 1024; // ÆÄÀÏ »çÀÌÁî(´ÜÀ§ :kb)
-                        var fileSizeMb = fileSizeKb / 1024;    // ÆÄÀÏ »çÀÌÁî(´ÜÀ§ :Mb)
-                        
-                        var fileSizeStr = "";
-                        if ((1024*1024) <= fileSize) {    // ÆÄÀÏ ¿ë·®ÀÌ 1¸Ş°¡ ÀÌ»óÀÎ °æ¿ì 
-                            console.log("fileSizeMb="+fileSizeMb.toFixed(2));
-                            fileSizeStr = fileSizeMb.toFixed(2) + " Mb";
-                        } else if ((1024) <= fileSize) {
-                            console.log("fileSizeKb="+parseInt(fileSizeKb));
-                            fileSizeStr = parseInt(fileSizeKb) + " kb";
-                        } else {
-                            console.log("fileSize="+parseInt(fileSize));
-                            fileSizeStr = parseInt(fileSize) + " byte";
-                        }
-    
-                        /* if ($.inArray(ext, [ 'exe', 'bat', 'sh', 'java', 'jsp', 'html', 'js', 'css', 'xml' ]) >= 0) {
-                            // È®ÀåÀÚ Ã¼Å©
-                            alert("µî·Ï ºÒ°¡ È®ÀåÀÚ");
-                            break; */
-                        if ($.inArray(ext, [ 'hwp', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'png', 'pdf', 'jpg', 'jpeg', 'gif', 'zip' ]) <= 0) {
-                            // È®ÀåÀÚ Ã¼Å©
-                            /* alert("µî·ÏÀÌ ºÒ°¡´ÉÇÑ ÆÄÀÏ ÀÔ´Ï´Ù.");
-                            break; */
-                            alert("µî·ÏÀÌ ºÒ°¡´ÉÇÑ ÆÄÀÏ ÀÔ´Ï´Ù.("+fileName+")");
-                        } else if (fileSizeMb > uploadSize) {
-                            // ÆÄÀÏ »çÀÌÁî Ã¼Å©
-                            alert("¿ë·® ÃÊ°ú\n¾÷·Îµå °¡´É ¿ë·® : " + uploadSize + " MB");
-                            break;
-                        } else {
-                            // ÀüÃ¼ ÆÄÀÏ »çÀÌÁî
-                            totalFileSize += fileSizeMb;
-    
-                            // ÆÄÀÏ ¹è¿­¿¡ ³Ö±â
-                            fileList[fileIndex] = files[i];
-    
-                            // ÆÄÀÏ »çÀÌÁî ¹è¿­¿¡ ³Ö±â
-                            fileSizeList[fileIndex] = fileSizeMb;
-    
-                            // ¾÷·Îµå ÆÄÀÏ ¸ñ·Ï »ı¼º
-                            addFileList(fileIndex, fileName, fileSizeStr);
-    
-                            // ÆÄÀÏ ¹øÈ£ Áõ°¡
-                            fileIndex++;
-                        }
-                    }
-                } else {
-                    alert("ERROR");
-                }
-            }
-    
-            // ¾÷·Îµå ÆÄÀÏ ¸ñ·Ï »ı¼º
-            function addFileList(fIndex, fileName, fileSizeStr) {
-                /* if (fileSize.match("^0")) {
-                    alert("start 0");
-                } */
-    
-                var html = "";
-                html += "<tr id='fileTr_" + fIndex + "'>";
-                html += "    <td id='dropZone' class='left' >";
-                html += fileName + " (" + fileSizeStr +") " 
-                        //+ "<a href='#' onclick='deleteFile(" + fIndex + "); return false;' class='btn small bg_02'> »èÁ¦</a>"
-                        
-                        + "<input value='»èÁ¦' type='button' href='#' onclick='deleteFile(" + fIndex + "); return false;'>"
-                html += "    </td>"
-                html += "</tr>"
-    
-                $('#fileTableTbody').append(html);
-            }
-    
-            // ¾÷·Îµå ÆÄÀÏ »èÁ¦
-            function deleteFile(fIndex) {
-                console.log("deleteFile.fIndex=" + fIndex);
-                // ÀüÃ¼ ÆÄÀÏ »çÀÌÁî ¼öÁ¤
-                totalFileSize -= fileSizeList[fIndex];
-    
-                // ÆÄÀÏ ¹è¿­¿¡¼­ »èÁ¦
-                delete fileList[fIndex];
-    
-                // ÆÄÀÏ »çÀÌÁî ¹è¿­ »èÁ¦
-                delete fileSizeList[fIndex];
-    
-                // ¾÷·Îµå ÆÄÀÏ Å×ÀÌºí ¸ñ·Ï¿¡¼­ »èÁ¦
-                $("#fileTr_" + fIndex).remove();
-                
-                console.log("totalFileSize="+totalFileSize);
-                
-                if (totalFileSize > 0) {
-                    $("#fileDragDesc").hide(); 
-                    $("fileListTable").show();
-                } else {
-                    $("#fileDragDesc").show(); 
-                    $("fileListTable").hide();
-                }
-            }
-    
-            // ÆÄÀÏ µî·Ï
-            function uploadFile() {
-                // µî·ÏÇÒ ÆÄÀÏ ¸®½ºÆ®
-                var uploadFileList = Object.keys(fileList);
-    
-                // ÆÄÀÏÀÌ ÀÖ´ÂÁö Ã¼Å©
-                if (uploadFileList.length == 0) {
-                    // ÆÄÀÏµî·Ï °æ°íÃ¢
-                    alert("ÆÄÀÏÀÌ ¾ø½À´Ï´Ù.");
-                    return;
-                }
-    
-                // ¿ë·®À» 500MB¸¦ ³ÑÀ» °æ¿ì ¾÷·Îµå ºÒ°¡
-                if (totalFileSize > maxUploadSize) {
-                    // ÆÄÀÏ »çÀÌÁî ÃÊ°ú °æ°íÃ¢
-                    alert("ÃÑ ¿ë·® ÃÊ°ú\nÃÑ ¾÷·Îµå °¡´É ¿ë·® : " + maxUploadSize + " MB");
-                    return;
-                }
-    
-                if (confirm("µî·Ï ÇÏ½Ã°Ú½À´Ï±î?")) {
-                    // µî·ÏÇÒ ÆÄÀÏ ¸®½ºÆ®¸¦ formData·Î µ¥ÀÌÅÍ ÀÔ·Â
-                    var form = $('#uploadForm');
-                    var formData = new FormData(form);
-                    for (var i = 0; i < uploadFileList.length; i++) {
-                        formData.append('files', fileList[uploadFileList[i]]);
-                    }
-    
-                    $.ajax({
-                        url : "¾÷·Îµå °æ·Î",
-                        data : formData,
-                        type : 'POST',
-                        enctype : 'multipart/form-data',
-                        processData : false,
-                        contentType : false,
-                        dataType : 'json',
-                        cache : false,
-                        success : function(result) {
-                            if (result.data.length > 0) {
-                                alert("¼º°ø");
-                                location.reload();
-                            } else {
-                                alert("½ÇÆĞ");
-                                location.reload();
-                            }
-                        }
-                    });
-                }
-            }
-        </script>
-    </head>
-    <body>
-        
-        <div class="upload-btn-wrapper">
-            <input type="file" id="input_file" multiple="multiple" style="height: 100%;" onclick='LoadImage();'/>
-            <button class="upload-btn">ÆÄÀÏ¼±ÅÃ</button>
-        </div>
-        <br />
-    
-        <form name="uploadForm" id="uploadForm" enctype="multipart/form-data" method="post">
-    
-            <div id="dropZone" style="width: 500px; height: 300px; border-style: solid; border-color: black; ">
-                <div id="fileDragDesc" > ÆÄÀÏÀ» µå·¡±× ÇØÁÖ¼¼¿ä. </div>
-            
-                
-                <table id="fileListTable" width="100%" border="0px">
-                    <tbody id="fileTableTbody">
-    
-                    </tbody>
-                </table>
-            </div>
-    
-        </form>
-        
-        
-        <input type="button" onclick="uploadFile(); return false;" class="btn bg_01" value="ÆÄÀÏ ¾÷·Îµå">
-    
-    
-    
-    </body>
-</html>
+			clsImage.src = clsFileReader.result;
+		};
 
+		clsFileReader.readAsDataURL(inputFile.files[0]);
+	}
+//ë¡œì»¬ ì´ë¯¸ì§€ íŒŒì¼ê³¼ Crop ì„ ìœ„í•œ ì‚¬ê°í˜• ë°•ìŠ¤ë¥¼ ê·¸ë ¤ì¤€ë‹¤.
+function DrawCropRect()
+{
+	var canvas = document.getElementById("canvas");
+	var ctx = canvas.getContext("2d");
+	
+	
+	ctx.drawImage( clsImage, 0, 0 );
+	ctx.setLineDash([4, 2]);
+	ctx.strokeStyle = "#ff0000";
+	ctx.beginPath();
+	ctx.rect( iCropLeft, iCropTop, iCropWidth, iCropHeight );
+	ctx.stroke();
+}
+
+// ì´ë¯¸ì§€ë¥¼ crop í•˜ì—¬ì„œ í•˜ë‹¨ Canvas ì— ê·¸ë ¤ì¤€ë‹¤.
+function CropImage()
+{
+	var canvas = document.getElementById("canvas");
+
+	img = new Image();
+	img.onload = function(){
+		var canvas = document.getElementById("canvas_crop");
+		canvas.width = iCropWidth;
+		canvas.height = iCropHeight;
+		var ctx = canvas.getContext("2d");
+		ctx.drawImage( img, iCropLeft, iCropTop, iCropWidth, iCropHeight, 0, 0, iCropWidth, iCropHeight );
+	};
+
+	img.src = canvas.toDataURL();
+}
+
+//ë§ˆìš°ìŠ¤ ì´ë™ì— ë”°ë¥¸ Crop ì‚¬ê° ë°•ìŠ¤ì„ ì´ë™í•˜ê¸° ìœ„í•œ ì´ë²¤íŠ¸ í•¸ë“¤ëŸ¬ë¥¼ ë“±ë¡í•œë‹¤.
+function AddCropMoveEvent()
+{
+	var canvas = document.getElementById("canvas");
+	var bDrag = false;
+	var iOldX, iOldY;
+	var iCropLeftOld, iCropTopOld;
+
+	canvas.onmousedown = function(e){
+		bDrag = true;
+		iOldX = e.clientX;
+		iOldY = e.clientY;
+		iCropLeftOld = iCropLeft;
+		iCropTopOld = iCropTop;
+	};
+
+	canvas.onmousemove = function(e){
+		if( bDrag == false ) return;
+
+		var iX = e.clientX - iOldX;
+		var iY = e.clientY - iOldY;
+
+		iCropLeft = iCropLeftOld + iX;
+		if( iCropLeft < 0 )
+		{
+			iCropLeft = 0;
+		}
+		else if( iCropLeft + iCropWidth > clsImage.width )
+		{
+			iCropLeft = clsImage.width - iCropWidth;
+		}
+
+		iCropTop = iCropTopOld + iY;
+		if( iCropTop < 0 )
+		{
+			iCropTop = 0;
+		}
+		else if( iCropTop + iCropHeight > clsImage.height )
+		{
+			iCropTop = clsImage.height - iCropHeight;
+		}
+
+		DrawCropRect();
+	};
+
+	canvas.onmouseup = function(e){
+		bDrag = false;
+	};
+}
+
+//ì´ë¯¸ì§€íŒŒì¼ ìœ íš¨ì„±ì²´í¬ 
+function fileCheck(el) { 
+    if(!/\.(jpeg|jpg|png|gif|bmp)$/i.test(el.value)){ 
+        alert('ì´ë¯¸ì§€ íŒŒì¼ë§Œ ì—…ë¡œë“œ ê°€ëŠ¥í•©ë‹ˆë‹¤.'); 
+        el.value = ''; 
+        el.focus(); 
+        
+    }
+}
+
+
+
+//ë¯¸ë¦¬ë³´ê¸° ì¸ë„¤ì¼X
+$(function(){
+	var file = document.querySelector('#uploadFile');
+
+	$(file).on('change', function() {
+	  var fileList = file.files;
+		console.log("1");
+	  // ì½ê¸°
+	  var reader = new FileReader();
+	  reader.readAsDataURL(fileList[0]);
+	  console.log("2");
+
+	  		//ë¡œë“œ í•œ í›„
+		  reader.onload = function() {
+			  console.log("3");
+		    //ë¡œì»¬ ì´ë¯¸ì§€ë¥¼ ë³´ì—¬ì£¼ê¸°
+		    document.querySelector('#preview').src = reader.result;
+		
+		    //ì¸ë„¤ì¼ ì´ë¯¸ì§€ ìƒì„±
+		    var tempImage = new Image(); //drawImage ë©”ì„œë“œì— ë„£ê¸° ìœ„í•´ ì´ë¯¸ì§€ ê°ì²´í™”
+		    tempImage.src = reader.result; //data-urië¥¼ ì´ë¯¸ì§€ ê°ì²´ì— ì£¼ì…
+
+  	};
+	});	
+});
+
+
+</script>
+</head>
+<body>
+<!--Navbar-->
+<nav class="navbar navbar-light purple lighten-4 mb-4">
+
+  <!-- Navbar brand -->
+  <a class="navbar-brand" href="#">Navbar</a>
+
+  <!-- Collapse button -->
+
+</nav>
+<!--/.Navbar-->
+
+
+
+
+
+
+
+
+<div id=main>
+<form class="myform" name="detailForm" method="post" enctype="multipart/form-data" >
+<h1> í”¼ë“œì‘ì„±TEST  
+		    <div>
+		      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">ì¸ë„¤ì¼ìƒì„±</button>
+		      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal2">ì¹´í…Œê³ ë¦¬ëª¨ë‹¬</button>
+		    </div>
+		  
+</h1>
+
+<div class="md-form form-lg">
+	  <input type="text" id="feedTitle" class="form-control form-control-lg" name="feedTitle">
+	  <label for="feedTitle">ì œëª©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”</label>
+	</div>
+	
+	<div class="md-form">
+	  <input type="text" id="feedExplanation" class="form-control" name="feedExplanation">
+	  <label for="feedExplanation">ì„¤ëª…ì„ ì…ë ¥í•´ì£¼ì„¸ìš”</label>
+	</div>
+
+<input type="button" value="í•œì¥ë”" onclick="add_div()" class="form-control">
+	<div id="room_type">
+		    <div class="form-control">		     
+		      <input	type="file" name="uploadFile" id="uploadFile"  />							
+		    </div>
+		    <img id="preview" src="" width="700" >
+		     <input type="button" value="ì‚­ì œ" onclick="remove_div(this)" class="form-control">
+		  </div>
+		 
+	<div id="field" class="form-group"></div>
+
+
+
+		  
+		 
+		
+	
+	
+		
+		
+	
+	
+	
+	<div class="form-group">
+		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">íƒœê·¸</label>
+		    <div class="col-sm-4">
+		      <input type="prodDetail" class="form-control" id="prodDetail" name="prodDetail" >
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">í˜‘ì—…ì</label>
+		    <div class="col-sm-4">
+		      <input type="prodDetail" class="form-control" id="prodDetail" name="prodDetail" >
+		    </div>
+		  </div>
+		  
+		   <div class="form-group">
+		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">ì‚¬ìš©ì¥ë¹„</label>
+		    <div class="col-sm-4">
+		      <input type="prodDetail" class="form-control" id="prodDetail" name="feedUseGears" >
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">í”„ë¼ì„í”¼ë“œì—¬ë¶€</label>
+		    <div class="col-sm-4">
+		      <input type="radio"  id="prodDetail" name="feedIsPrime" checked="checked" value="0">ì¼ë°˜
+		      <input type="radio"  id="prodDetail" name="feedIsPrime" value="1">í”„ë¼ì„
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">ëŒ“ê¸€ê¶Œí•œ</label>
+		    <div class="col-sm-4">
+		      <input type="radio"  id="prodDetail" name="commentRange" checked="checked" value="0">ëª¨ë‘í—ˆìš©
+		      <input type="radio"  id="prodDetail" name="commentRange" value="1">íŒ”ë¡œì›Œì—ê²Œë§Œí—ˆìš©
+		      <input type="radio"  id="prodDetail" name="commentRange" value="2">ëŒ“ê¸€í—ˆìš©ê¸ˆì§€
+		    </div>
+		  </div>
+		  
+
+	
+
+
+<div class="form-group">
+		    <div class="col-sm-offset-4  col-sm-4 text-center">
+		      <button type="button" class="btn btn-primary"  >ê²Œì‹œí•˜ê¸°</button>
+		      <button type="button">ì„ì‹œì €ì¥</button>
+			  <a class="btn btn-primary btn" href="#" role="button">ì·¨ì†Œ</a>
+		    </div>
+		  </div>
+		  
+		  
+		  
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document" style="max-width:100%; width:auto; display:table;">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">ì¸ë„¤ì¼ìƒì„±</h4>
+	      </div>
+	      <div class="modal-body">
+	      		<form class="form-horizontal">
+		  
+					  <div class="form-group">
+					    <label for="ThumbNail" class="col-sm-4 control-label">ì¸ë„¤ì¼ìƒì„±</label>
+					    <div class="col-sm-6">
+					      
+					      <input type='file' id='image_file' accept="image/*" class="form-control" name="uploadFile" onchange='fileCheck(this);LoadImage()'/>
+							<canvas id="canvas"></canvas>
+
+							<input type='button' value='í¬ë¡­ë¯¸ë¦¬ë³´ê¸°' onclick='CropImage();' />
+							<canvas id="canvas_crop"></canvas>
+					    </div>
+					  </div>
+					  
+					 
+			
+				</form>
+
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary">ì™„ë£Œ</button>
+	        <button type="button" class="btn btn-default" data-dismiss="modal">ì·¨ì†Œ</button>
+	        
+	      </div>
+	    </div>
+	  </div>
+	</div>	
+		<!-- Modal -->
+		
+
+
+</form>
+</div>
+</div>
+</body>
+</html>
