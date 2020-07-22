@@ -30,7 +30,6 @@
 			$("form").attr("method" , "POST").attr("action" , "login").submit();
 		}
 		$( function(){
-			
 			$("#login_btn").on("click" ,function(){
 				var code=$("input[name='userCode']").val();
 				var pw=$("input[name='password']").val();
