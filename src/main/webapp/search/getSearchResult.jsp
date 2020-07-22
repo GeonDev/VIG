@@ -26,10 +26,8 @@
 	
 	<!-- jQuery UI toolTip 사용 CSS-->
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	
-	<!-- 지연 로딩 플러그 인 -->
-	<script src="/VIG/javascript/lazyloadxt.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>	
+
 	
 	<style>
 	body {
@@ -79,7 +77,8 @@
 				{
 					url : "/VIG/searchController/json/getSearchResultList",
 					method : "POST",
-					dataType : "Json",							
+					dataType : "Json",
+					async: false,
 					headers : {
 						"Accept" : "application/json",
 						"Content-Type" : "application/json"
