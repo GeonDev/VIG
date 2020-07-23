@@ -26,13 +26,20 @@
 		<script type="text/javascript">
 		
 		function fncAddUser() {
-			
-			$("form").attr("method" , "POST").attr("action" , "addUser").submit();
+			alert("add 1");
+			$("form").attr("method" , "post").attr("action" , "addUser").submit();
 		}
-			
+		$(function() {
+			$("#signUp_btn").on("click",function(){
+				alert("add 2");
+				fncAddUser();
+			});
+		});
+			/*
 			$(function() {
 				
 				$('#password').focusout(function () {
+					
 					var pwd = $("input[name='password']").val();
 			        var pwd2 = $("input[name='password2']").val();
 			 
@@ -58,7 +65,7 @@
 					});
 				});				
 			});
-
+			*/
 				
 		</script>
 		<style type="text/css">
@@ -76,36 +83,41 @@
 
 <jsp:include page="../main/toolbar.jsp"></jsp:include>
 
->
+<form>
 <div class="container">
 <div class="text-center border border-light p-5">
   <div class="row">
 
     <p class="h4 mb-6">Sign up</p>
-<form>
+
     <!-- id -->
-    <input type="text" id="userCode" name="userCode" class="form-control mb-4" placeholder="id">
-	<label data-error="wrong" data-success="right" for="userName"></label>
-	
-	<input type="text" id="userName" name="userName" class="form-control mb-4" placeholder="nickName">
+    <input type="text" id="userCode" name="userCode" class="form-control mb-4" placeholder="userCode" required>
+	<label data-error="wrong" data-success="right" for="userCode"></label>
+   
+	<input type="text" id="userName" name="userName" class="form-control mb-4" placeholder="nickName" required>
 	<label data-error="wrong" data-success="right" for="nickName"></label>
     
     <!-- Password -->
-    <input type="password" id="password" name="password" class="form-control mb-4" placeholder="Password">
+    <input type="password" id="password" name="password" class="form-control mb-4" placeholder="Password" required>
 	<label data-error="wrong" data-success="right" for="password"></label>
 	
-	<input type="text" id="password" name="password2" class="form-control mb-4" placeholder="Password">
+	<!--  <input type="text" id="password" name="password2" class="form-control mb-4" placeholder="Password" >
     <label data-error="wrong" data-success="right" for="password2"></label>
                  <span id="alert-success" style="display: none;">비밀번호가 일치합니다.</span>
    				 <span id="alert-danger" style="display: none; color: #d92742; font-weight: bold; ">비밀번호가 일치하지 않습니다.</span>
-   	
+   	-->
+   	 <div class="row">        
+    <input type="radio" id="sex" name="sex" value="male" /> 
+    <label data-error="wrong" data-success="right" >male</label>
+    <input type="radio" id="sex" name="sex" value="female"/>
+     <label data-error="wrong" data-success="right" >female</label>
+     </div>
    	<input type="email" id="email" name="email" class="form-control mb-4" placeholder="email">
-    <label data-error="wrong" data-success="right" for="email"></label>  
- </form>   
+    <label data-error="wrong" data-success="right" for="email"></label>   
  
         <button  class="btn btn-info btn-block my-4" id="signUp_btn" >Sign up</button>   
          
-          <p >Already a member? 
+          <p >Already a member? </p>
           <span id="ty" class="blue-text ml-1"> sign in</span>
            
            
@@ -118,7 +130,7 @@
 	</div>
 	</div>
 
-
+</form>
 
 <!--       <div class="row">        
     <input type="radio" id="sex" name="sex" value="male" /> 

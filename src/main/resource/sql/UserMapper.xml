@@ -25,13 +25,20 @@
 	</resultMap>	 
 	
 	
-		<!-- SQL : INSERT -->
+		<!-- SQL : INSERT 
 	<insert	id="addUser" parameterType="user" >
 	 	INSERT
 		INTO users('user_code' , user_name , password , role , profile_img, self_introduce, sex, birth, state, google_id, account, prime_count, email, varied_code, reg_date) 
 		VALUES (user_code, #{userName}, #{password:VARCHAR}, #{role:VARCHAR}, #{profileImg:VARCHAR}, #{selfIntroduce:VARCHAR}, #{sex:VARCHAR}, #{birth:NUMERIC}, #{state:NUMERIC}, #{googleId:VARCHAR}, #{account:VARCHAR}, #{primeCount:NUMERIC}, #{email:VARCHAR}, NOW())
 	 </insert>
+	 -->
 	 
+	 <!-- SQL : INSERT -->
+	<insert	id="addUser" parameterType="user" >
+	 	INSERT
+		INTO users(user_code , user_name , password , role , profile_img, self_introduce, sex, birth, state, google_id, account, prime_count, email, reg_date) 
+		VALUES (#{userCode}, #{userName}, #{password:VARCHAR}, 'user', 'profile_img.jpg', 'selfIntroduce', #{sex:VARCHAR}, 0, 0, 'googleId', 'account', 0, #{email:VARCHAR}, NOW())
+	 </insert>
 	 
 	 
 	 <!-- #{searchType}에 따라 비즈니스, 일반 계정만 조회 하거나 전체를 조회함  -->
