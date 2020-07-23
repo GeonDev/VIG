@@ -16,5 +16,7 @@ public interface FollowDao {
 	
 	//내가 팔로우 한 유저 List 
 	public List<User> getFollowingList(String userCode) throws Exception;
+	
+	public int getFollow(Map<String, Object> follow) throws Exception;
 
 }

@@ -54,5 +54,11 @@ public class FollowDaoImpl implements FollowDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public int getFollow(Map<String, Object> follow) throws Exception{
+
+		return sqlSession.selectOne("FollowMapper.getFollow", follow);
+		
+	}
 
 }
