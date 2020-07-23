@@ -219,18 +219,11 @@ public class RestSearchController {
 		
 		Search search = new Search();		
 		
-		ImageColor color = new ImageColor();	
-		int tempR = 0;
-		int tempG = 0;
-		int tempB = 0;
-		
-		setColorsRange(tempR, jsonData.get("red"));		
-		setColorsRange(tempG, jsonData.get("green"));	
-		setColorsRange(tempB, jsonData.get("blue"));
-		
-		color.setRed(tempR);
-		color.setGreen(tempG);
-		color.setBlue(tempB);
+		ImageColor color = new ImageColor();		
+	
+		color.setRed(setColorsRange(jsonData.get("red")));
+		color.setGreen(setColorsRange(jsonData.get("green")));
+		color.setBlue(setColorsRange(jsonData.get("blue")));
 		
 		search.setCurrentPage(Integer.valueOf(jsonData.get("currentPage")));
 		search.setPageSize(pageSize);
@@ -263,19 +256,22 @@ public class RestSearchController {
 	
 	
 	
-	private void setColorsRange(int colors, String jsonData) {
+	private int setColorsRange(String jsonData) {
+		int colors = 0;
+		
 		//입력된 값이 정상적인 숫자인지 체크
 		if(CommonUtil.checkNumber(jsonData)) {
 			colors = Integer.parseInt(jsonData);
-			if(colors > 255 + colorRange) {
+			if(colors + colorRange > 255 ) {
 				colors = 255-colorRange;
-			}else if(colors < colorRange) {
+			}else if(colors - colorRange < 0) {
 				colors = colorRange;
-			}			
-			
+			}						
 		}else {
 			colors = colorRange;
 		}
+		
+		return colors;
 		
 	}
 	

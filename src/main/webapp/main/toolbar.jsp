@@ -8,7 +8,7 @@
 
 
 
-		<script type="text/javascript">
+	<script type="text/javascript">
 
 		
 //===로그인
@@ -21,7 +21,7 @@
 			$(location).attr("href","../user/logout");
 			}); 
 			
-	$( "#" ).on("click" , function() {
+	$( "#myfeed" ).on("click" , function() {
 		//Debug..
 		$(self.location).attr("href","VIG/myFeed/myFeed.jsp");
 	}); 

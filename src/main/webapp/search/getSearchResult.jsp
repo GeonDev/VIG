@@ -88,10 +88,12 @@
 			if(item.isThumbnail == 1){
 				thumbnail = item.imageFile
 			}									
-		});										
+		});
 		
-		var displayValue =
-			"<div class = 'view overlay'>"
+		//변수  초기화
+		var displayValue ='';
+		
+		displayValue = "<div class = 'view overlay'>"
 				+"<div class = 'img_feed'>"
 				+ "<a href='/VIG/feed/getFeed?feedId="+ item.feedId +"' class='text-light'>"
 					+ "<img src='/VIG/images/uploadFiles/" + thumbnail + "' alt='thumbnail' class='img-fluid rounded-sm' style='width: 400px; height: 300px;'>"
@@ -115,7 +117,9 @@
 	
 	//전달받은 이미지 리스트를 화면에 그림
 	function getImagelistFromAjax(item){
-		var displayValue = 
+		//변수  초기화
+		var displayValue ='';
+		displayValue =
 			"<div class = 'view overlay'>"
 				+ "<div class = 'img_image'>"
 					+ "<a href='/VIG/searchController/getSearchImages?imageId="+ item.imageId +"' class='text-light'>"
@@ -131,7 +135,9 @@
 	
 	//전달받은 유저 리스트를 화면에 그림
 	function getUserlistFromAjax(item) {
-		var displayValue =
+		//변수  초기화
+		var displayValue ='';
+		displayValue =
 			"<div class = 'view'>"
 				+"<div class = 'row'>"
 					+"<a class = 'col-md-1' href='/VIG/myfeed/getMyFeedList?userCode="+ item.userCode + "'>"
@@ -325,29 +331,14 @@
 	function startColorSearch(){    	
     	
 		if(searchOption == 'Color'){
-    		if($("#colorR").val() > 255 || $("#colorR").val() < 0){
-    			alert('R은 0~255만 가능합니다.');
-    			$("#colorR").val(0);
-    			return;
-    		}
-    		else if($("#colorG").val() > 255 || $("#colorG").val() < 0){
-    			alert('G은 0~255만 가능합니다.');
-    			$("#colorG").val(0);
-    			return;
-    		}
-    		else if($("#colorB").val() > 255 || $("#colorB").val() < 0){
-    			alert('B은 0~255만 가능합니다.');
-    			$("#colorB").val(0);
-    			return;
-    		}else{
-    	    	$( 'div' ).remove( '.view' );
-    			page = 0;
-    			isPageEnd = false;
-    			isLoadPage = false;
-    			getColorItemList();
-    		}
-    	}		
-	}
+        	$('div').remove( '.view' );
+    		page = 0;
+    		isPageEnd = false;
+    		isLoadPage = false;
+    		getColorItemList();
+    	}
+    }		
+	
 	
 	
 	
