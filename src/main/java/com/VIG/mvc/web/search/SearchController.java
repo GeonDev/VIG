@@ -73,10 +73,6 @@ public class SearchController {
 		//키워드 연관 이미지 추출
 		List<Image> relatedImages = imageServices.getImageListFromImage(search);
 		
-		//중복제거를 위한 SET
-		HashSet<Image> temp = new HashSet<Image>(relatedImages);
-		relatedImages = new ArrayList<Image>(temp);
-		
 		//추출된 이미지리스트에 있는 이미지가 선택된 이미지의 키워드와 얼마나 유사한 값을 가지고 있는지 체크
 		if(relatedImages.size() > 0) {						
 			for(Image target : relatedImages) {

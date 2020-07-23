@@ -122,13 +122,14 @@
 	height: 35px;
 	border-radius: 23px;
 	background-color: #5CA45B;
-	padding: 3px 3px 3px 3px;
+	padding: 3px 3px 3px 9px;
 	
+
 	
 	}
 	#donation i {
 	
-	
+	align: center;
 	vertical-align: middle;
 	color: White;
 	font-size: 27px;
@@ -145,7 +146,7 @@
 $(function(){
 	
 	$("#writerInfo").on("click", function (){
-		self.location="../myfeed/getMyFeed/${feed.writer.userCode}";
+		self.location="/VIG/myfeed/getMyFeed/${feed.writer.userCode}";
 		
 	});
 	
@@ -172,7 +173,7 @@ $(function(){
 		
 		$.ajax(
 			
-				{ url: "../../follow/addFollow?userCode=user06&followerCode=${feed.writer.userCode}",
+				{ url: "/VIG/follow/addFollow?userCode=${user.userCode}&followerCode=${feed.writer.userCode}",
 					method : "GET",	
 					dataType: "json",
 					headers : {
@@ -199,7 +200,7 @@ $(function(){
 			//alert("Do you really want to unfollow?");
 			$.ajax(
 			
-				{ url: "../../follow/deleteFollow?userCode=user06&followerCode=${feed.writer.userCode}",
+				{ url: "/VIG/follow/deleteFollow?userCode=${user.userCode}&followerCode=${feed.writer.userCode}",
 					method : "GET",	
 					dataType: "json",
 					headers : {
@@ -276,7 +277,7 @@ $(function(){
 		
 		if(cf==true){
 			
-		self.location="../payment/addPayment?feedId=${feed.feedId}&userCode=${user.userCode}"; //세션에서 user코드를 가져온다.
+		self.location="/VIG/payment/addPayment?feedId=${feed.feedId}&userCode=${user.userCode}"; //세션에서 user코드를 가져온다.
 		
 		} else if (cf==false) {
 			
@@ -327,7 +328,7 @@ $(function(){
 		</div>
 		<br>
 		<div align="right">
-		<i class="far fa-eye" style="font-size: 25px">                         ${feed.feedViewCount}</i>
+		<i class="far fa-eye" style="font-size: 22px">                         ${feed.feedViewCount}</i>
 		</div>
 		
 	</div>
@@ -341,7 +342,7 @@ $(function(){
 		<c:set var="i" value="${i+1 }"/>
 		<c:if test="${images.isThumbnail == '0'}">
 			<div id="image">
-			<img src="../../images/uploadFiles/${images.imageFile}" style="width:960px" />
+			<img src="/VIG/images/uploadFiles/${images.imageFile}" style="width:960px" />
 			</div>
 		</c:if>
 	</c:forEach>
@@ -352,7 +353,7 @@ $(function(){
 	 <div class="row">
 		 <div class="col-8">
 		 <span id="profile">
-		<img src="../../images/others/default-profile-picture1.jpg" class="rounded-circle" width="35px"> &nbsp; <a id="writerName" href="../../myfeed/getMyFeedList?userCode=${feed.writer.userCode}">${feed.writer.userName}</a>
+		<img src="/VIG/images/others/default-profile-picture1.jpg" class="rounded-circle" width="35px"> &nbsp; <a id="writerName" href="/VIG/myfeed/getMyFeedList?userCode=${feed.writer.userCode}">${feed.writer.userName}</a>
 		 </span>
 		 </div>
 		 <!-- 팔로우와 후원 -->
@@ -393,7 +394,7 @@ $(function(){
 			<c:forEach var="comments" items="${feed.comments}">
 			<c:set var="i" value="0"/>
 			<c:set var="i" value="${i+1 }"/>
-			<img src="../images/others/default-profile-picture1.jpg" class="rounded-circle" width="15px"><a href="/마이피드/${comments.user.userCode}">${ comments.user.userName}</a>
+			<img src="/VIG/images/others/default-profile-picture1.jpg" class="rounded-circle" width="15px"><a href="/마이피드/${comments.user.userCode}">${ comments.user.userName}</a>
 			comment ${comments.commentText }
 			</c:forEach>
 		</c:when>
