@@ -68,6 +68,8 @@
 	<!-- ToolBar Start /////////////////////////////////////-->
 		<jsp:include page="./main/toolbar.jsp" />
 
+	<br/>
+	<br/>
 	<div class="container">
 		<form action="testController/chatting" name="Login">
 			<div class="row">		

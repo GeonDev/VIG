@@ -109,7 +109,8 @@
 		<foreach collection="keywords" item="item" open="(" close=")" separator=",">
 		 #{item.keywordEn}
 		</foreach>	
-		)temp WHERE num BETWEEN #{startRowNum} AND #{endRowNum}	
+		GROUP BY images.image_id)temp
+		WHERE num BETWEEN #{startRowNum} AND #{endRowNum}	
 		
 	</select>
 	
