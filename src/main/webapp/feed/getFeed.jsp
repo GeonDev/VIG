@@ -173,7 +173,7 @@ $(function(){
 		
 		$.ajax(
 			
-				{ url: "/VIG/follow/addFollow?userCode=user06&followerCode=${feed.writer.userCode}",
+				{ url: "/VIG/follow/addFollow?userCode=${user.userCode}&followerCode=${feed.writer.userCode}",
 					method : "GET",	
 					dataType: "json",
 					headers : {
@@ -200,7 +200,7 @@ $(function(){
 			//alert("Do you really want to unfollow?");
 			$.ajax(
 			
-				{ url: "/VIG/follow/deleteFollow?userCode=user06&followerCode=${feed.writer.userCode}",
+				{ url: "/VIG/follow/deleteFollow?userCode=${user.userCode}&followerCode=${feed.writer.userCode}",
 					method : "GET",	
 					dataType: "json",
 					headers : {
@@ -328,7 +328,7 @@ $(function(){
 		</div>
 		<br>
 		<div align="right">
-		<i class="far fa-eye" style="font-size: 25px">                         ${feed.feedViewCount}</i>
+		<i class="far fa-eye" style="font-size: 22px">                         ${feed.feedViewCount}</i>
 		</div>
 		
 	</div>
