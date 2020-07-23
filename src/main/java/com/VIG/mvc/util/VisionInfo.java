@@ -24,6 +24,10 @@ import com.google.protobuf.ByteString;
 // Run As - Run Configurations - Environment - New 
 public class VisionInfo extends Thread {	
 	
+	
+	private static final float targetScore = 0.01f;
+	
+	
 	private String imageFilePath;
 	private List<ImageKeyword> keywords;
 	private List<ImageColor> colors;
@@ -102,10 +106,11 @@ public class VisionInfo extends Thread {
 	}	
 	
 	private void addColorList(ColorInfo color) {
-		ImageColor imageColor = new ImageColor();		
-		imageColor.setRed(color.getColor().getRed());
-		imageColor.setBlue(color.getColor().getBlue());
-		imageColor.setGreen(color.getColor().getGreen());
+		ImageColor imageColor = new ImageColor();	
+		
+		imageColor.setRed((int) color.getColor().getRed());
+		imageColor.setBlue((int)color.getColor().getBlue());
+		imageColor.setGreen((int)color.getColor().getGreen());
 		imageColor.setRatio(color.getPixelFraction());
 		imageColor.setImageId(imageId);
 		colors.add(imageColor);
@@ -135,9 +140,9 @@ public class VisionInfo extends Thread {
 	}
 	
 	private  void addkeywoad(EntityAnnotation annotation) {
-		ImageKeyword imageKeyword = new ImageKeyword();
+		ImageKeyword imageKeyword = new ImageKeyword();		
 		
-		if (annotation.getScore() > 0.0f) {
+		if ((annotation.getScore()) > targetScore) {
 			imageKeyword.setKeywordEn(annotation.getDescription());	
 			imageKeyword.setScore(annotation.getScore());
 			imageKeyword.setImageId(imageId);
@@ -147,9 +152,11 @@ public class VisionInfo extends Thread {
 	
 	
 	private void addColorList(Type type, AnnotateImageResponse res) {	
-		DominantColorsAnnotation colors = res.getImagePropertiesAnnotation().getDominantColors();
-		for(ColorInfo color : colors.getColorsList()) {
-			addColorList(color);
+		DominantColorsAnnotation colorList = res.getImagePropertiesAnnotation().getDominantColors();
+		for(ColorInfo color : colorList.getColorsList()) {
+			if((color.getPixelFraction()) > targetScore) {
+				addColorList(color);
+			}			
 		}
 	}
 
