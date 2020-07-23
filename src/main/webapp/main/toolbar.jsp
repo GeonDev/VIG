@@ -7,26 +7,44 @@
 <title>VIG</title>
 
 
-	<script type="text/javascript">
-	
+
+		<script type="text/javascript">
+
+		
 //===로그인
 	$(function(){
 		$("#login_btn").on("click",function(){
-			$(self.location).attr("href","../user/login");
+			$(location).attr("href","../user/login");
 		});
 //===로그아웃	
-	$( "#logout_btn" ).on("click" , function() {
-				//Debug..
-				alert(  $( "logout" ).html() );
-				$(self.location).attr("href","../user/logout");
+	$( "#logout_btn:contains('Log Out')" ).on("click" , function() {
+			$(location).attr("href","../user/logout");
 			}); 
+			
+	$( "#" ).on("click" , function() {
+		//Debug..
+		$(self.location).attr("href","VIG/myFeed/myFeed.jsp");
+	}); 
 //==로고 클릭시 메인 페이지로
-	$(".navbar-brand:contains('VIG')").on("click",function(){
-		self.location="../main/main.jsp";
-		});
+	//$("logoTop").on("click",function(){
+	//	self.location="VIG/main/main.jsp";
+	//	});
 	});
 	</script>	
 	<style>
+	#logoTop{
+	 width: 90px;
+	 height: 40px;
+	}
+	#login_btn , #logout_btn{
+	color: white;
+	}
+	.fas{
+	color: #ffb74d;
+	}
+	p{
+	color: black;
+	}
 	</style>	
 	
 </head>		 
@@ -34,9 +52,9 @@
 	
 
 <!--Navbar start-->	
-			<nav class="mb-1 navbar fixed-top navbar-expand-xl navbar-dark indigo lighten-1 py-2" id="toolbar">			
+			<nav class="mb-1 navbar fixed-top navbar-expand-xl navbar-dark bg-dark py-2" id="toolbar">			
 <!-- 로고 -->		
-			  <a class="navbar-brand text-white"><b>VIG</b></a>		  
+			  <img src='/VIG/images/others/VIG_logo.png' id="logoTop" >	  
 			      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
 				    aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
 				    <span class="navbar-toggler-icon"></span>
@@ -56,8 +74,24 @@
 	        <a class="nav-link waves-effect waves-light" id=" chat_btn" href="#">
 	          <i class="fas fa-comments"></i></a>
 <!-- 로그인 버튼 -->   			
-			 <c:if test="${ empty user }"> <span id="login_btn">login/sign up</span></c:if> 
-			 <c:if test="${ !empty user }"> <span id="logout_btn">logout</span></c:if>
+			 <c:if test="${ empty user }"> <div id="login_btn"><i class="far fa-user"></i></div></c:if> 
+			 <c:if test="${ !empty user }"> 
+				<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
+		          aria-haspopup="true" aria-expanded="false">
+		          <i class="fas fa-user"></i>
+		        </a>
+		        <div class="dropdown-menu dropdown-menu-right dropdown-default"
+		          aria-labelledby="navbarDropdownMenuLink-333">
+		          <h6 class="dropdown-header">${user.userName}</h6>
+		          <div class="dropdown-divider"></div>
+		          <a class="dropdown-item" id="myFeed_btn" href="../myFeed/myFeed.jsp">My Feed</a>
+		          <a class="dropdown-item" id="" href="../Feed/addFeed.jsp"><p>Upload</p></a>
+		          <a class="dropdown-item" id="" href="../user/getUserInfo.jsp"><p>Profile</p></a>
+		          <a class="dropdown-item" ><p>------</p></a>
+		        </div>
+		        <div id="logout_btn" >Log Out</div>
+			</c:if>	     
+			
 	     	</div>
 	      </nav>
 		<br/>
