@@ -23,7 +23,7 @@
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 		
-		<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+		
 		<script type="text/javascript">
 		
 		</script>

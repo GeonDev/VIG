@@ -6,40 +6,43 @@
 <meta charset="UTF-8">
 <title>VIG</title>
 
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-	<!-- Google Fonts -->
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-	<!-- Bootstrap core CSS -->
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
-	<!-- Material Design Bootstrap -->
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+	<!-- Font Awesome -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<!-- Google Fonts -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<!-- Bootstrap core CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+<!-- Material Design Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
 				
-	<!-- JQuery -->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<!-- Bootstrap tooltips -->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
-	<!-- Bootstrap core JavaScript -->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
-	<!-- MDB core JavaScript -->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+<!-- JQuery -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 			
 		
 	<script type="text/javascript">
 		
 
 	function fncloginGo(){
-		alert("1");
 		$("form").attr("method", "post").attr("action", "login").submit();
+	}
+	function fncReset(){
+		//로그인 실패하면 input내용 지워주기
 	}
 	
 	
 		$( function(){
-			alert("2");
+			$("#userCode").focus();
 			$("#login").on("click" ,function(){
-				alert("3");
+				
 				var id=$("input[name='userCode']").val();
 				var pw=$("input[name='password']").val();
-				fncloginGo();		
+						
 				$.ajax( 
 						{
 							url : "json/login",
@@ -53,24 +56,24 @@
 								userCode : id,
 								password : pw
 								}),
-							success : function(JSONData , status) {			
-								alert(status);
-								alert("JSONData : \n"+JSONData);
-								alert( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
-								alert( JSONData != null );
-								alert("로그인완료");
-								if( JSONData != null ){								
-									$(self.location).attr("href","../main/main.jsp");		
-									
-								}else{
+							success : function(JSONData , status) {										
+								
+								//if( JSONData != null ){
+								if( JSONData.userCode != id | JSONData.password != pw ){	
 									alert("아이디 또는 비밀번호가 틀렸습니다.");
+									
+								}else if(JSONData.userCode == id && JSONData.password == pw ){
+									alert("로그인성공");	
+									$(self.location).attr("href","../main/main.jsp");	
 									}
 								}
 							}); 
+				return false;
+				
+				fncloginGo();
 				
 						});
 					});
-			
 		$( function() {
 			$("#ty").on("click" , function() {
 				self.location = "../user/addUserView.jsp";
@@ -98,10 +101,11 @@
 <div class="text-center border border-light p-5">
   <div class="row">
 
-    <p class="h4 mb-6">Sign in</p>
+    <p class="h4 mb-6">Login</p>
 
     <!-- id -->
     <input type="text" id="userCode" name="userCode" class="form-control mb-5" placeholder="id">
+    <span class="glyphicon glyphicon-ok form-control-feedback"></span>
 
     <!-- Password -->
     <input type="password" id="password" name="password" class="form-control mb-5" placeholder="Password">
@@ -113,7 +117,7 @@
   
     <p>Not a member?
         <!-- <a href="../user/addUser">Register</a> -->
-        <span id="ty">Register</span>
+        <span id="ty" class="blue-text ml-1">Register</span>
     </p>
 	</div>
 	</div>

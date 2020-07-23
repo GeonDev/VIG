@@ -26,41 +26,24 @@
 
 //jQuery===================================//
 
-	$(function(){
-		$( "button.btn.btn-block:contains('마이피드 목록')").on("click",function(){
-			self.location.href="#";
-		});
-	});
-	$(function(){
-		$( "button.btn.btn-block:contains('내 활동 보기')").on("click",function(){
-			self.location.href="#";
-		});
-	});
-	$(function(){
-		$( "button.btn.btn-block:contains('결 제')").on("click",function(){
-			self.location.href="#";
-		});
-	});
-	$(function(){
-		$( "button.btn.btn-block:contains('통 계')").on("click",function(){
-			self.location.href="#";
-		});
-	});
 
 	</script>
 	
 <!-- style part======================== -->	
 	<style>
 	
+		.row.1{
+		margin: 50px;
+		}
 		.col-md-10{
-			
+			margin: auto;
 		}
 	    .title_h1{
 				padding:30px;
 			}
 			
 			#btn_group{
-			padding:30px;
+			margin: auto;
 			text-align: center;
 			}
 	.lightbox{
@@ -80,9 +63,10 @@
 	 	
 <!-- 페이지 타이틀 ========================================== -->
 			<div class="col-md-10">
-						<div class="row">
+						<div class="row 1">
 							<div class="title_h1"><h1>${user.userName} 님의 마이피드</h1></div>	
 	 					</div>
+	 					<hr/>
 	 				<div class="row">
 			 		<div id="btn_group">
 			 			<button type="button" class="btn btn-light ml-5 mr-5">팔로워</button>

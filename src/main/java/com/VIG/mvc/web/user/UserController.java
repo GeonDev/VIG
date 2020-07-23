@@ -86,7 +86,7 @@ public class UserController {
 			System.out.println("logout");
 		session.invalidate();
 		ModelAndView model = new ModelAndView();
-		model.setViewName("redirect:../main/main.jsp");
+		model.setViewName("redirect:/main/main.jsp");
 		return model;
 	}
 
@@ -151,10 +151,11 @@ public class UserController {
 		return "forward:main/main.jsp";
 	}
 	
-	
-	@RequestMapping("/loginModal")
-	public String loginModal() {
+
+//======모달 계속 수정중==================================//
+	@RequestMapping("followModal")
+	public String followModal() {
 		System.out.println("모달띄우기 나오나요");
-		return "VIG/user/loginView.jsp";
+		return "VIG/myFeed/followTest.jsp";
 	}
 }

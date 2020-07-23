@@ -31,7 +31,7 @@
 	    max-width: 100%;
 	    max-height: 300px;
         }
-       
+      
 	</style>
 
 
@@ -89,7 +89,7 @@
 		  <!--/.Slides-->
 		  		  
 <!--Controls-->
-		  <a class="carousel-control-prev" href="#carousel-example-1z" role="button" data-slide="prev">
+		  <a class="carousel-control-prev" href="#carousel-example-1z" role="button" data-slide="prev" >
 		    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 		    <span class="sr-only">Previous</span>
 		  </a>
