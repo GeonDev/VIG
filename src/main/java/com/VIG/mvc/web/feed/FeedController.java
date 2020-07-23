@@ -2,10 +2,12 @@ package com.VIG.mvc.web.feed;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.ServletContext;
 
+import org.apache.ibatis.javassist.compiler.ast.Keyword;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -73,25 +75,51 @@ public class FeedController {
 	
 	
 	@RequestMapping(value = "addFeed", method = RequestMethod.POST)
-	public ModelAndView updatefile(@RequestParam("joinUser") List<JoinUser> joinUser,@ModelAttribute("feed") Feed feed, @ModelAttribute("category") Category category,@RequestParam("uploadFile") List<MultipartFile> files) throws Exception {
-				
+	public ModelAndView addFeed(@RequestParam("keyword") String keyword,@ModelAttribute("joinUser") JoinUser joinUser,@ModelAttribute("feed") Feed feed, @ModelAttribute("category") Category category,@RequestParam("uploadFile") List<MultipartFile> files) throws Exception {
+			
 		System.out.println(joinUser);
+		
+				
+//		String[] aa = joinUser.split(",");
+//		
+//		List<String> bb = new ArrayList<String>();
+//		
+//		for(int i=0; i>aa.length; i++) {
+//			bb.add(aa[i]);
+//		}
+//		User user = new User();
+//		for(int j=0; j<bb.size(); j++) {
+//			JoinUser joinUser2 = new JoinUser();
+//			userServices.getUserOne(userCode);
+//			joinUser2.setUser
+//		}
+//		List<JoinUser> coworkers = new ArrayList<JoinUser>();
+//		
+		
+		
+	//	System.out.println(coworkers);
+	  
+		
 		String userCode = "user11";
 		
-		feed.setCoworkers(joinUser);
+		
+		
 		
 		feed.setFeedCategory(category);	
-				
+		
 		User user = userServices.getUserOne(userCode);
 		feed.setWriter(user);
 		
-		System.out.println("협업자 : ");
+		
 		System.out.println("category :"+category);
 		System.out.println("feed : "+feed);
 	//	
 		
 		
 	//	feedServices.addFeed(feed);
+		
+		
+	
 		
 		System.out.println("추가한 이미지 파일: "+files);
         String path = context.getRealPath("/");        
