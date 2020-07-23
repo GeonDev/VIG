@@ -66,9 +66,7 @@
 	//최초 입장시 모드 지정
 	var Mode = 'Feed';	
 	
-	//검색 옵션 지정
-	var searchOption = 'Keyword';
-	
+
 	//최초 페이지는 0으로 설정
 	var page = 0; 	
 	
@@ -140,7 +138,7 @@
 		displayValue =
 			"<div class = 'view'>"
 				+"<div class = 'row'>"
-					+"<a class = 'col-md-1' href='/VIG/myfeed/getMyFeedList?userCode="+ item.userCode + "'>"
+					+"<a class = 'col-md-1 pl-5' href='/VIG/myfeed/getMyFeedList?userCode="+ item.userCode + "'>"
 					+ "<img src='/VIG/images/uploadFiles/" + item.profileImg + "' alt='thumbnail' class='img-fluid rounded-circle' style='width: 100px; height: 100px;'>"
 					+"</a>"
 					+"<div class='userInfo col-md-4'>"
@@ -319,28 +317,14 @@
 	
 	function startKeywordSearch(){	   	
     	
-    	if($("#Keyword").val().length > 0 && searchOption == 'Keyword'){
+    	if($("#Keyword").val().length > 0 ){
         	$( 'div' ).remove( '.view' );
     		page = 0;
     		isPageEnd = false;
     		isLoadPage = false;	   
         	getItemList();		            	
     	}		
-	}
-	
-	function startColorSearch(){    	
-    	
-		if(searchOption == 'Color'){
-        	$('div').remove( '.view' );
-    		page = 0;
-    		isPageEnd = false;
-    		isLoadPage = false;
-    		getColorItemList();
-    	}
-    }		
-	
-	
-	
+	}	
 	
 	
 	$(function(){			
@@ -361,41 +345,14 @@
 				
 				
 				//작가 검색은 색상 옵션 불가
-				if(Mode=='Writer'){
-					searchOption = 'Keyword';
-					$(".searchOptions").attr("class","btn btn-outline-default waves-effect btn-sm searchOptions");
-					$('.searchOptions:contains("Keyword")').attr("class","btn btn-primary waves-effect btn-sm searchOptions");
-				}
-				
-				if(searchOption == 'Keyword'){
-					getItemList();
-				}else if(searchOption == 'Color'){
-					getColorItemList();
-				}
-				
-			});				
+				if(Mode=='Writer'){					
+		
+				}				
 			
-			
-			//검색옵션 버튼을 누르는 경우 페이지 초기화
-			$(".searchOptions").on("click",function(){				
-				searchOption = $(this).text();
-				$( 'div' ).remove('.view');			
-				page = 0;
-				isPageEnd = false;
-				isLoadPage = false;	
-				$("#Keyword").val("");
-				
-				$(".searchOptions").attr("class","btn btn-sm btn-outline-default waves-effect searchOptions");
-				$(this).attr("class","btn btn-sm btn-primary waves-effect searchOptions");
-				
-				if(searchOption == 'Keyword'){
-					getItemList();
-				}else if(searchOption == 'Color'){
-					getColorItemList();
-				}
-			
-			});	
-			
+				//모드를 변경했음으로 페이지 다시 로드
+				getItemList();
+	
+			});					
 			
    			
 			$(window).scroll(function() {
@@ -422,8 +379,9 @@
 			
 			
 			//버튼을 누르면 검색을 수행한다.
-	       $("#searchColorbase").keydown(function(key) {	        
-	    	   startColorSearch();	            
+	       $("#selectColorCode").on("change",function() {	        
+	    	   $("#Keyword").val($("#selectColorCode").val());
+	    	   
 	        });	
 			
 			
@@ -466,14 +424,7 @@
 		</div>
 		
 		<!-- 검색 옵션을 지정하는 곳 -->
-		<div class="row ">			
-			<div class="col-sm-2 pl-5 ">
-				<div class="btn-group btn-group-sm pl-5" role="group" aria-label="Basic">
-				  <button type="button" class="btn btn-sm btn-indigo waves-effect  searchOptions">Keyword</button>
-				  <button type="button" class="btn btn-sm btn-outline-default waves-effect  searchOptions">Color</button>			
-				</div>
-			</div>
-				
+		<div class="row">							
 			<div class="col-sm-4">			
 				<div class="md-form input-group form-sm form-1 pl-5 my-0">
 					<div class="input-group-prepend">
@@ -486,18 +437,23 @@
 			</div>
 			
 			<div class="col-sm-2">
-				<button type="button" id="searchColorbase" class="btn btn-sm btn-indigo" ><i class="fas fa-search"></i></button>					
-		</div>
-	
+				<button type="button" id="searchColorbase" class="btn btn-sm btn-indigo" ><i class="fas fa-search"></i></button>
+				<input type="color" id="selectColorCode">						
+			</div>	
 
-		<hr/>
 		</div>
+			
+		<hr/>
 		
 		<!-- 피드, 이미지가 출력되는 부분  -->
 		<div class="row justify-content-center" style = "margin: 5px;"></div>
 		
 		<!-- 유저 정보를 넣을 부분  -->
-		<div class="userlist" id="users" ></div>
+		<div class="userlist " id="users" ></div>
+		
+		
+
+
 	
 	</div>
 
