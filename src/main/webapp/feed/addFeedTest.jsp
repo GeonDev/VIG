@@ -80,7 +80,7 @@ var iCropLeft, iCropTop, iCropWidth, iCropHeight;
 $(function() {
 	//DOM Object GET 3가지 방법  1. $(tagName) : 2.(#id) : 3.$(.className)
 	$( "button.btn.btn-primary" ).on("click" , function() {
-		document.detailForm.action='feedController/addFeed';
+		document.detailForm.action='addFeed';
 		document.detailForm.submit();
 	});
 });	
@@ -266,6 +266,7 @@ $(function(){
 	});	
 });
 
+//레스트로 협업자 가져오기
 
 </script>
 </head>
@@ -274,8 +275,8 @@ $(function(){
 <nav class="navbar navbar-light purple lighten-4 mb-4">
 
   <!-- Navbar brand -->
-  <a class="navbar-brand" href="#">Navbar</a>
-
+ 
+<jsp:include page="../main/toolbar.jsp" />
   <!-- Collapse button -->
 
 </nav>
@@ -290,13 +291,13 @@ $(function(){
 
 <div id=main>
 <form class="myform" name="detailForm" method="post" enctype="multipart/form-data" >
-<h1> 피드작성TEST  
+<h3> 피드작성TEST  
 		    <div>
 		      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">썸네일생성</button>
 		      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal2">카테고리모달</button>
 		    </div>
 		  
-</h1>
+</h3>
 
 <div class="md-form form-lg">
 	  <input type="text" id="feedTitle" class="form-control form-control-lg" name="feedTitle">
@@ -329,15 +330,24 @@ $(function(){
 	</div>
 			  
 		  <div class="form-group">
-		    <label for="joinUser" class="col-sm-offset-1 col-sm-3 control-label">협업자</label>
+		    <label for="user" class="col-sm-offset-1 col-sm-3 control-label">협업자</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="joinUser" name="joinUser[0]" >
-		       <input type="text" class="form-control" id="joinUser" name="joinUser[0]" >
-		        <input type="text" class="form-control" id="joinUser" name="joinUser[0]" >
+		      <input type="text" class="form-control" id="user" name="user" >
+		      
+		       
 		      
 		    </div>
 		  </div>
 		  
+		  <div class="form-group">
+		    <label for="keyword" class="col-sm-offset-1 col-sm-3 control-label">태그</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="keyword" name="keyword" >
+		      
+		       
+		      
+		    </div>
+		  </div>
 		  
 		  <div class="form-group">
 		    <label for="categoryId" class="col-sm-offset-1 col-sm-3 control-label">카테고리</label>
