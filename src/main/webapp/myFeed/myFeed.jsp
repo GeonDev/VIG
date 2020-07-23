@@ -78,19 +78,23 @@
 		 #my_frame{
 		 padding:50px;
 		 }
-		   .btn.btn-block{
+		 .btn.btn-block{
 		   padding: 10px 0px;
 		   margin-left:auto;
-			margin-right:auto;
+		   margin-right:auto;
 		   width: 200px;
 		   }
-		   #sns_nav{
+		 #sns_nav{
+		   display:flex;
 		   margin-left:auto;
 			margin-right:auto;
+			flex-direction: row;
+			justify-content: center;
 		   }
-		   .social_cons{
-		   margin-left:auto;
-			margin-right:auto;
+		 .fab{	    
+		    flex-direction: row;
+			justify-content: center;
+			
 		   }
 		
 		}
@@ -121,9 +125,9 @@
  					<br><br/>
  			<!-- 소셜 아이콘 이미지 변경하기 -->
  					<div class="row" id="sns_nav">
- 					<div class="social_cons" id="sns_nav1"><i class="fab fa-twitter" id="sns_nav1"></i></div>
- 					<div class="social_cons" id="sns_nav2"><i class="fab fa-twitter" id="sns_nav2"></i></div>
- 					<div class="social_cons" id="sns_nav3"><i class="fab fa-twitter" id="sns_nav3"></i></div>
+ 					<i class="fab fa-facebook-f fa-lg blue-text ml-3 mr-3 fa-1x"></i>
+ 					<i class="fab fa-twitter fa-lg blue-text ml-3 mr-3  fa-1x"></i>
+ 					<i class="fab fa-instagram fa-lg blue-text ml-3 mr-3 fa-1x"></i>
  					</div>
  					<br/>
  					<p class="sign_date" align="center"> Member Since :: ${user.regDate}</p>

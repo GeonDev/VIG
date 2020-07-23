@@ -65,11 +65,12 @@
 			margin-right:auto;
 			position:relative;
 		    }
-		    #imgUpdate{
+		   #imgUpdate{
 		    position: absolute;
 		    top:0;
 		    left:0;
 		    }
+		    
 		    #update{
 		    position: absolute;
 		    top:0;
@@ -88,6 +89,21 @@
 			}
 			#userInfo.1{
 			padding: auto;
+			}
+			.list-group-item{
+				margin: 5px;
+			}
+			.userInfo{
+			text-align: center;
+			}
+			.btn_1{
+			
+			
+			}
+			.btn.btn-elegant{
+			display:block;
+			margin-left:auto;
+			margin-right:auto;
 			}
 		</style>
 		
@@ -109,21 +125,24 @@
  				<div class="profile">
  				<img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg" id="pImg"  alt="profile_img">
  				</div>
- 				<div class="update">
- 				<i class="fas fa-cog" id="imgUpdate"></i>
- 				</div>
+ 				
  				</div>	
+ 				<br/>
  	<!-- 내 정보 보기 -->
  	<div class="row">
  			<div class="infoList">
- 				<div  id="userInfo" name="userName">${user.userName}<br/></div>
- 				<div  id="userInfo" name="userName">${user.selfIntroduce}<br/></div>
- 				<div  id="userInfo" name="userName">${user.account}<br/></div>
- 				<div  id="userInfo" name="userName">계좌번호<br/></div>
+ 				<div class="list-group">
+ 					<div class="userInfo" >user code</div><br/>
+ 					 <div class="userInfo">user name</div><br/>
+ 					 <div class="userInfo">self introduce</div><br/>
+ 					 <div class="userInfo">bank name</div><br/>
+ 					 <div class="userInfo">account</div>
+ 				</div>    
  			</div>
  	</div>
- 	
- 	<button  class="btn btn-info btn-block my-1" id="update_btn" >정보수정</button>
+ 	<div class="btn_1">
+ 	<button  class="btn btn-elegant" id="update_btn" >Edit Profile</button>
+	</div>
 	</div>
 		</div>
 	</div>
