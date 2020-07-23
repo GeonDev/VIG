@@ -20,6 +20,12 @@
       	WHERE user_code=#{userCode} and follower_code=#{followerCode}
 	</delete>
 	
+	<select id="getFollow" parameterType="hashMap" resultType="int">
+	
+		SELECT COUNT(*) FROM follow
+		WHERE user_code=#{userCode} and follower_code=#{followerCode};
+	
+	</select>
 
 
 	 
