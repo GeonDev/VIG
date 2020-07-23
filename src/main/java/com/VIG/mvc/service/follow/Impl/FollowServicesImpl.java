@@ -49,5 +49,11 @@ public class FollowServicesImpl implements FollowServices {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public int getFollow(Map<String, Object> follow) throws Exception{
+		
+		return followDao.getFollow(follow);
+		
+	}
 
 }

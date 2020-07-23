@@ -33,7 +33,7 @@
 	
 	#main { 
 		width: 960px;
-		margin: 0 auto;
+		margin: 70px auto;
 	}
 	
 	img {
@@ -94,16 +94,8 @@ $(function(){
 <body>
 
 
-<!--Navbar-->
-<nav class="navbar navbar-light purple lighten-4 mb-4">
-
-  <!-- Navbar brand -->
-  <a class="navbar-brand" href="#">Navbar</a>
-
-  <!-- Collapse button -->
-
-</nav>
-<!--/.Navbar-->
+	<!-- 툴바 include -->
+	<jsp:include page="../main/toolbar.jsp" />
 
 	
 	
