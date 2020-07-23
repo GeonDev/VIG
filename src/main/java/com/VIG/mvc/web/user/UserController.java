@@ -76,6 +76,7 @@ public class UserController {
 		if( user.getPassword().equals(dbUser.getPassword())) {
 			session.setAttribute("user", dbUser);
 			}	
+	System.out.println("dbUser.userCode:"+dbUser.getUserCode());
 		return model;
 		}	
 	
