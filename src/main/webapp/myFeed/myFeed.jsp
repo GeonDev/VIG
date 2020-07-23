@@ -35,7 +35,6 @@
 	
 	function nav_myFeedList(url) {
 	$('#my_frame').attr('src', url);
-	
 	}	
 	function nav_history(url) {
 		$('#my_frame').attr('src', url);
@@ -49,6 +48,7 @@
 	function nav_report(url) {
 		$('#my_frame').attr('src', url);
 	}
+	
 
 	</script>
 	
@@ -78,8 +78,19 @@
 		 #my_frame{
 		 padding:50px;
 		 }
-		   .btn{
-		   margin: 0px;
+		   .btn.btn-block{
+		   padding: 10px 0px;
+		   margin-left:auto;
+			margin-right:auto;
+		   width: 200px;
+		   }
+		   #sns_nav{
+		   margin-left:auto;
+			margin-right:auto;
+		   }
+		   .social_cons{
+		   margin-left:auto;
+			margin-right:auto;
 		   }
 		
 		}
@@ -104,19 +115,19 @@
  				<img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg" id="pImg"  alt="profile_img">
  	<!-- 프로필 내용 -->
  				<div class="card-body">
- 					<h4 class="user_name" align="center"> name </h4>
+ 					<h4 class="user_name" align="center"> ${user.userName} </h4>
  					<hr>
- 					<p class="user_bio" align="center"> self introduce </p>
- 					<br><br/><hr/>
- 					<p class="sign_date" align="center"> Member Since :: 2020.07.19</p>
- 					<hr/><br/>
+ 					<p class="user_bio" align="center"> ${user.selfIntroduce} </p>
+ 					<br><br/>
  			<!-- 소셜 아이콘 이미지 변경하기 -->
- 					여기에 소셜 링크 아이콘 들어옴.
- 					<p>MDB아이콘은 유료..</p>
- 					<button type="button" class="btn btn-mdb-white btn-sm" href="#"></button>
- 					<button type="button" class="btn btn-mdb-white btn-sm" href="#"></button>
- 					<button type="button" class="btn btn-mdb-white btn-sm" href="#"></button>
- 					<br/><br/><hr/><br/>
+ 					<div class="row" id="sns_nav">
+ 					<div class="social_cons" id="sns_nav1"><i class="fab fa-twitter" id="sns_nav1"></i></div>
+ 					<div class="social_cons" id="sns_nav2"><i class="fab fa-twitter" id="sns_nav2"></i></div>
+ 					<div class="social_cons" id="sns_nav3"><i class="fab fa-twitter" id="sns_nav3"></i></div>
+ 					</div>
+ 					<br/>
+ 					<p class="sign_date" align="center"> Member Since :: ${user.regDate}</p>
+ 					<hr/><br/>
  				</div>
  	<!-- 메뉴 네비게이션 -->
  					<button type="button" class="btn btn-block" onclick='nav_myFeedList("../myFeed/myFeedListTest.jsp")'>
@@ -131,18 +142,19 @@
  					<button type="button" class="btn btn-block" onclick='nav_analysis(".jsp")'>
  						<a href="#">통 계</a></button>
  					<br/>
+ 					<c:if test="${! empty sessionScope.User}">
  					<button type="button" class="btn btn-block" onclick='nav_report("../report/getReportlist.jsp")'>
  						<a href="#">신 고</a></button>	
+ 					</c:if>
 				</div>
 
 <!-- 일단 관리자용 신고 네비 여기다 표시 -->	
 						
 					
-					<iframe id='my_frame' class="col-md-10 "></iframe>	
-	 				
+					<iframe id='my_frame' class="col-md-10 "></iframe>
 					
 					</div>
-				
+					
  			
  					</body>
  					</html>

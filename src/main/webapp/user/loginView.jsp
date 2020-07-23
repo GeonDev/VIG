@@ -32,6 +32,7 @@
 		$("form").attr("method", "post").attr("action", "login").submit();
 	}
 	
+	
 		$( function(){
 			alert("2");
 			$("#login").on("click" ,function(){
@@ -59,7 +60,7 @@
 								alert( JSONData != null );
 								alert("로그인완료");
 								if( JSONData != null ){								
-									$(self.location).attr("href","../myFeed/myFeed");		
+									$(self.location).attr("href","../main/main.jsp");		
 									
 								}else{
 									alert("아이디 또는 비밀번호가 틀렸습니다.");
@@ -92,11 +93,11 @@
 <body>
 <jsp:include page="../main/toolbar.jsp"></jsp:include>
 
-
+<form>
 <div class="container">
 <div class="text-center border border-light p-5">
   <div class="row">
-<form>
+
     <p class="h4 mb-6">Sign in</p>
 
     <!-- id -->
@@ -104,7 +105,7 @@
 
     <!-- Password -->
     <input type="password" id="password" name="password" class="form-control mb-5" placeholder="Password">
-</form>
+
     <!-- Sign in button -->
     <button  class="btn btn-info btn-block my-4" id="login" >Sign in</button>
 
@@ -117,7 +118,7 @@
 	</div>
 	</div>
 	</div>
-
+</form>
 
 
 </body>
