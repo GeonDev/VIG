@@ -59,13 +59,12 @@
 				$( "#signUp_btn" ).on("click" , function() {
 					fncAddUser();
 				});
+				*/
 				$( function() {
 					$("#ty").on("click" , function() {
 						self.location = "../user/loginView.jsp";
 					});
-				});				
-			});
-			*/
+				});
 				
 		</script>
 		<style type="text/css">
@@ -118,7 +117,7 @@
         <button  class="btn btn-info btn-block my-4" id="signUp_btn" >Sign up</button>   
          
           <p >Already a member? </p>
-          <span id="ty" class="blue-text ml-1"> sign in</span>
+          <span id="ty" class="blue-text ml-1"> login</span>
            
            
 
