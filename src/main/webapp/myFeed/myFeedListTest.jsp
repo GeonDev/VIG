@@ -81,7 +81,7 @@
 <!-- 페이지 타이틀 ========================================== -->
 			<div class="col-md-10">
 						<div class="row">
-							<div class="title_h1"><h1>{WIN98} 님의 마이피드</h1></div>	
+							<div class="title_h1"><h1>${user.userName} 님의 마이피드</h1></div>	
 	 					</div>
 	 				<div class="row">
 			 		<div id="btn_group">

@@ -23,7 +23,7 @@ public class User implements Serializable{
 	private String account;
 	private int primeCount;
 	private String email;
-	private String variedCode;
+	private int variedCode;
 	private Date regDate;
 	//유저가 벤을 당한 날짜를 저장 - 신고 테이블과 join을 줄이기 위해 추가
 	private Date banDate;
