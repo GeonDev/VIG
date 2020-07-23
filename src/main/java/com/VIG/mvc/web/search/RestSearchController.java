@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.VIG.mvc.service.color.ColorServices;
 import com.VIG.mvc.service.domain.Feed;
 import com.VIG.mvc.service.domain.Image;
+import com.VIG.mvc.service.domain.ImageColor;
 import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.feed.FeedServices;
@@ -61,6 +62,9 @@ public class RestSearchController {
 
 	@Value("#{commonProperties['pageSize'] ?: 10}")
 	int pageSize;
+	
+	@Value("#{commonProperties['colorRange'] ?: 5}")
+	int colorRange;
 
 
 	
@@ -113,6 +117,7 @@ public class RestSearchController {
 		//로그인한 유저 정보를 받아옴
 		User user = (User)session.getAttribute("user");
 		
+		System.out.println("전달된 키워드 : "+ jsonData.get("keyword"));
 		
 		//피드 검색
 		if(jsonData.get("mode").equals("Feed")) {
@@ -207,8 +212,72 @@ public class RestSearchController {
 	}
 		
 
+	@RequestMapping(value = "json/getColorSearchResultList")
+	public Map<String, Object> getColorSearchResultList(@RequestBody Map<String, String> jsonData) throws Exception {	
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		Search search = new Search();		
+		
+		ImageColor color = new ImageColor();	
+		int tempR = 0;
+		int tempG = 0;
+		int tempB = 0;
+		
+		setColorsRange(tempR, jsonData.get("red"));		
+		setColorsRange(tempG, jsonData.get("green"));	
+		setColorsRange(tempB, jsonData.get("blue"));
+		
+		color.setRed(tempR);
+		color.setGreen(tempG);
+		color.setBlue(tempB);
+		
+		search.setCurrentPage(Integer.valueOf(jsonData.get("currentPage")));
+		search.setPageSize(pageSize);
+		search.setColor(color);
+		search.setColorRange(colorRange);
+				
+		System.out.println("전달된 색상 : "+color.getRed() +" "+ color.getBlue() + " "+ color.getGreen() );
+		
+		
+		//피드 검색
+		if(jsonData.get("mode").equals("Feed")) {
+			
+			List<Feed> feedlist = feedServices.getFeedListFromColor(search);
+			
+			map.put("list", feedlist);
+		}		
+		
+		//이미지 검색
+		if(jsonData.get("mode").equals("Image")) {
+
+			
+			List<Image> imageList = imageServices.getImageListFromColor(search);
+			
+			map.put("list", imageList);					
+		}		
+		
+
+		return map;		
+	}
 	
 	
+	
+	private void setColorsRange(int colors, String jsonData) {
+		//입력된 값이 정상적인 숫자인지 체크
+		if(CommonUtil.checkNumber(jsonData)) {
+			colors = Integer.parseInt(jsonData);
+			if(colors > 255 + colorRange) {
+				colors = 255-colorRange;
+			}else if(colors < colorRange) {
+				colors = colorRange;
+			}			
+			
+		}else {
+			colors = colorRange;
+		}
+		
+	}
 	
 	
 

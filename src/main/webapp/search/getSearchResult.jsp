@@ -64,7 +64,10 @@
 	<script type="text/javascript">
 	
 	//최초 입장시 모드 지정
-	var Mode = 'Feed';
+	var Mode = 'Feed';	
+	
+	//검색 옵션 지정
+	var searchOption = 'Keyword';
 	
 	//최초 페이지는 0으로 설정
 	var page = 0; 	
@@ -77,7 +80,7 @@
 	
 	
 	
-	
+	//전달받은 피드 리스트를 화면에 그림
 	function getfeedlistFromAjax(item){
 		var thumbnail = '';								
 		
@@ -93,7 +96,13 @@
 				+ "<a href='/VIG/feed/getFeed?feedId="+ item.feedId +"' class='text-light'>"
 					+ "<img src='/VIG/images/uploadFiles/" + thumbnail + "' alt='thumbnail' class='img-fluid rounded-sm' style='width: 400px; height: 300px;'>"
 					+ "<div class='mask waves-effect waves-light rgba-black-strong'>"
-						+ "<h5 style='font-weight: bold;'>&ensp;"+ item.feedTitle +"</h5>"					
+						+ "<h5 style='font-weight: bold; margin: 5px 10px;'>";
+						
+						if(item.feedIsPrime == 1){
+							displayValue += "<span class='badge badge-primary'>Prime</span>&nbsp;";
+						}						
+						
+			displayValue += item.feedTitle + "</h5>"					
 					+ "</div>"
 				+ "</a>"
 				+"</div>"
@@ -102,6 +111,9 @@
 			$(".row:last").append(displayValue);		
 	}
 	
+	
+	
+	//전달받은 이미지 리스트를 화면에 그림
 	function getImagelistFromAjax(item){
 		var displayValue = 
 			"<div class = 'view overlay'>"
@@ -117,6 +129,7 @@
 			$(".row:last").append(displayValue);		
 	}
 	
+	//전달받은 유저 리스트를 화면에 그림
 	function getUserlistFromAjax(item) {
 		var displayValue =
 			"<div class = 'view'>"
@@ -138,6 +151,7 @@
 			$("#users").append(displayValue);
 	}
 	
+	//유저의 피드리스트를 작게 그려줌 - getUserlistFromAjax와 같이 사용됨
 	function getUserFeedlistFromAjax(item){
 		var thumbnail = '';
 		
@@ -164,6 +178,8 @@
 	}
 	
 	
+	
+	//키워드 검색을 통하여 불러온 이미지를 출력한다.
 	function getItemList() {
 		
 		if(isPageEnd == true || isLoadPage == true){
@@ -224,6 +240,55 @@
 	}
 	
 	
+	
+	//색상 검색을 통하여 불러온 이미지를 출력한다.
+	function getColorItemList() {
+		console.log('이미지 검색 출력');	
+		
+		if(isPageEnd == true || isLoadPage == true){
+			//페이지의 끝, 또는 페이지 로드중 이라면 실행안함
+			return;
+		}		
+		isLoadPage = true;
+		page += 1;				
+		
+		$.ajax( 
+				{
+					url : "/VIG/searchController/json/getColorSearchResultList",
+					method : "POST",
+					dataType : "Json",					
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					data :  JSON.stringify({red : $("#colorR").val(), green : $("#colorG").val(), blue : $("#colorB").val(),  mode : Mode, currentPage : page}),
+					success : function(JSONData , status) {
+						
+						//불러와야 되는 페이지보다 개수가 적은 경우 페이지가 끝났다
+						if (JSONData.list.length < 10){
+							isPageEnd = true;
+						}
+ 						
+ 		
+ 						$.each(JSONData.list, function(index, item) {						
+							
+							if(Mode == 'Feed'){								
+								getfeedlistFromAjax(item);
+									
+							}else if(Mode == 'Image'){			
+								getImagelistFromAjax(item); 									
+							}					
+						});	 							
+					
+ 						
+ 						//로드가 완료되면 로딩이 되었다고 체크
+ 						isLoadPage = false;						
+					}
+			});		
+	}
+	
+	
+	
 	function getkeywords() {
 		$.ajax("/VIG/searchController/json/getSearchKeyword",
 		  {
@@ -246,24 +311,100 @@
 	}
 	
 	
+	function startKeywordSearch(){	   	
+    	
+    	if($("#Keyword").val().length > 0 && searchOption == 'Keyword'){
+        	$( 'div' ).remove( '.view' );
+    		page = 0;
+    		isPageEnd = false;
+    		isLoadPage = false;	   
+        	getItemList();		            	
+    	}		
+	}
+	
+	function startColorSearch(){    	
+    	
+		if(searchOption == 'Color'){
+    		if($("#colorR").val() > 255 || $("#colorR").val() < 0){
+    			alert('R은 0~255만 가능합니다.');
+    			$("#colorR").val(0);
+    			return;
+    		}
+    		else if($("#colorG").val() > 255 || $("#colorG").val() < 0){
+    			alert('G은 0~255만 가능합니다.');
+    			$("#colorG").val(0);
+    			return;
+    		}
+    		else if($("#colorB").val() > 255 || $("#colorB").val() < 0){
+    			alert('B은 0~255만 가능합니다.');
+    			$("#colorB").val(0);
+    			return;
+    		}else{
+    	    	$( 'div' ).remove( '.view' );
+    			page = 0;
+    			isPageEnd = false;
+    			isLoadPage = false;
+    			getColorItemList();
+    		}
+    	}		
+	}
+	
+	
+	
+	
 	$(function(){			
 			// 최초 진입시 첫번째 페이지 로딩
 			getItemList();
 		
 			//모드 버튼을 누르는 경우 페이지 초기화
-			$("button").on("click",function(){				
+			$(".mode").on("click",function(){				
 				Mode = $(this).text();
-				$( 'div' ).remove('.view');	
-				$( 'div' ).remove('.view');	
+				$( 'div' ).remove('.view');			
 				page = 0;
 				isPageEnd = false;
 				isLoadPage = false;	
 				$("#Keyword").val("");
 				
-				$(".mode").attr("class","btn btn-cyan");
+				$(".mode").attr("class","btn btn-cyan mode");
 				$(this).attr("class","btn btn-indigo mode");
-				getItemList();
+				
+				
+				//작가 검색은 색상 옵션 불가
+				if(Mode=='Writer'){
+					searchOption = 'Keyword';
+					$(".searchOptions").attr("class","btn btn-outline-default waves-effect btn-sm searchOptions");
+					$('.searchOptions:contains("Keyword")').attr("class","btn btn-primary waves-effect btn-sm searchOptions");
+				}
+				
+				if(searchOption == 'Keyword'){
+					getItemList();
+				}else if(searchOption == 'Color'){
+					getColorItemList();
+				}
+				
+			});				
+			
+			
+			//검색옵션 버튼을 누르는 경우 페이지 초기화
+			$(".searchOptions").on("click",function(){				
+				searchOption = $(this).text();
+				$( 'div' ).remove('.view');			
+				page = 0;
+				isPageEnd = false;
+				isLoadPage = false;	
+				$("#Keyword").val("");
+				
+				$(".searchOptions").attr("class","btn btn-sm btn-outline-default waves-effect searchOptions");
+				$(this).attr("class","btn btn-sm btn-primary waves-effect searchOptions");
+				
+				if(searchOption == 'Keyword'){
+					getItemList();
+				}else if(searchOption == 'Color'){
+					getColorItemList();
+				}
+			
 			});	
+			
 			
    			
 			$(window).scroll(function() {
@@ -279,18 +420,22 @@
 				}					
 			});	
 			
-			//검색어 입력 
+			
+			
+			//엔터를 누르면 키워드 검색을 수행한다.
 	       $("#Keyword").keydown(function(key) {
 	            if (key.keyCode == 13) {
-	            	if($("#Keyword").val().length > 0){
-		            	$( 'div' ).remove( '.view' );
-						page = 0;
-						isPageEnd = false;
-						isLoadPage = false;	
-		            	getItemList();
-	            	}
+	            	startKeywordSearch();
 	            }
-	        });			
+	        });	
+			
+			
+			//버튼을 누르면 검색을 수행한다.
+	       $("#searchColorbase").keydown(function(key) {	        
+	    	   startColorSearch();	            
+	        });	
+			
+			
 			
 	});	
 	
@@ -309,7 +454,7 @@
 	
 		<div class="row align-items-center justify-content-md-center">
 			<div class="col-sm-10">
-				<div class="input-group md-form form-sm form-1 pl-5">
+				<div class="input-group md-form form-sm form-1 pl-5 my-0">
 				  <div class="input-group-prepend">
 				    <span class="input-group-text cyan lighten-2" >
 				    	<i class="fas fa-search text-white" aria-hidden="true"></i>
@@ -322,16 +467,38 @@
 			
 			<div class="col-sm-2">
 				<div class="btn-group btn-group-sm" role="group" aria-label="Basic">
-				  <button type="button" class="btn  btn-cyan mode">Feed</button>
-				  <button type="button" class="btn  btn-cyan mode">Image</button>
-				  <button type="button" class="btn  btn-cyan mode">Writer</button>
+				  <button type="button" class="btn btn-indigo mode">Feed</button>
+				  <button type="button" class="btn btn-cyan mode">Image</button>
+				  <button type="button" class="btn btn-cyan mode">Writer</button>
 				</div>
-			</div>
+			</div>					
 		</div>
 		
-		<div class="row">
-		
-		
+		<!-- 검색 옵션을 지정하는 곳 -->
+		<div class="row ">			
+			<div class="col-sm-2 pl-5 ">
+				<div class="btn-group btn-group-sm pl-5" role="group" aria-label="Basic">
+				  <button type="button" class="btn btn-sm btn-indigo waves-effect  searchOptions">Keyword</button>
+				  <button type="button" class="btn btn-sm btn-outline-default waves-effect  searchOptions">Color</button>			
+				</div>
+			</div>
+				
+			<div class="col-sm-4">			
+				<div class="md-form input-group form-sm form-1 pl-5 my-0">
+					<div class="input-group-prepend">
+						<span class="input-group-text md-addon">Colors</span>
+					</div>
+						<input id="colorR" type="text" aria-label="R" class="form-control" placeholder="Red">
+						<input id="colorG" type="text" aria-label="G" class="form-control" placeholder="Green">
+						<input id="colorB" type="text" aria-label="B" class="form-control" placeholder="Blue">
+				</div>						
+			</div>
+			
+			<div class="col-sm-2">
+				<button type="button" id="searchColorbase" class="btn btn-sm btn-indigo" ><i class="fas fa-search"></i></button>					
+		</div>
+	
+
 		<hr/>
 		</div>
 		
