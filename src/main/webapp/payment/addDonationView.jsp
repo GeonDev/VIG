@@ -5,7 +5,6 @@
 <%@page import="com.VIG.mvc.service.domain.*" %>
 <% 
 //화면용  temp 데이터 구성
-	request.setAttribute("feedId", 20004);
 	User writer = new User();
 	writer.setUserCode("user07");
 	request.setAttribute("writer", writer);
@@ -61,12 +60,7 @@
 		margin: 70px auto;
 	}
 	
-	img {
-	  margin: 1em 0;
-	  display: block;
-	  background: rgb(240, 240, 240);
-	  border: 1px solid rgb(0, 0, 0);
-	}
+
 	
 	#priceRadio {
 	

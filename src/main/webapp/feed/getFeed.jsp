@@ -285,13 +285,14 @@ $(function(){
 		
 	});
 	
+	//후원
 	$("#donation").on("click", function(){
 		
 		var cf = confirm("후원을 진행 하시겠습니까?");
 		
 		if(cf==true){
 			
-		self.location="/VIG/payment/addPayment?feedId=${feed.feedId}&userCode=${user.userCode}"; //세션에서 user코드를 가져온다.
+		self.location="/VIG/payment/addPayment?productType=2&feedId=${feed.feedId}"; //세션에서 user코드를 가져온다.
 		
 		} else if (cf==false) {
 			
