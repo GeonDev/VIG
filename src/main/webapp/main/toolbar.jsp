@@ -8,26 +8,27 @@
 
 
 
-	<script type="text/javascript">
+		<script type="text/javascript">
 
 		
 //===로그인
 	$(function(){
 		$("#login_btn").on("click",function(){
 			$(location).attr("href","../user/login");
+			alert("session:"+sessionScope.getUserCode);
 		});
 //===로그아웃	
 	$( "#logout_btn:contains('Log Out')" ).on("click" , function() {
 			$(location).attr("href","../user/logout");
 			}); 
 			
-	$( "#myfeed" ).on("click" , function() {
+	$( "#myFeed" ).on("click" , function() {
 		//Debug..
-		$(self.location).attr("href","VIG/myFeed/myFeed.jsp");
+		$(self.location).attr("href","../myFeed/myFeed.jsp");
 	}); 
 //==로고 클릭시 메인 페이지로
 	//$("logoTop").on("click",function(){
-	//	self.location="VIG/main/main.jsp";
+	//	$(self.location).attr("href","../main/main.jsp");
 	//	});
 	});
 	</script>	
@@ -54,7 +55,7 @@
 <!--Navbar start-->	
 			<nav class="mb-1 navbar fixed-top navbar-expand-xl navbar-dark bg-dark py-2" id="toolbar">			
 <!-- 로고 -->		
-			  <img src='/VIG/images/others/VIG_logo.png' id="logoTop" >	  
+			  <a href="/VIG/main/main.jsp"><img src='/VIG/images/others/VIG_logo.png' id="logoTop" alt="VIG" ></a>
 			      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
 				    aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
 				    <span class="navbar-toggler-icon"></span>
@@ -63,7 +64,7 @@
    					 <ul class="navbar-nav ml-auto">
 				 </ul>		
 <!-- 검색 버튼-->    	      
-	        <a class="nav-link waves-effect waves-light" id="search_btn" href="/VIG/search/getSearchResult.jsp">
+	        <a class="nav-link waves-effect waves-light" id="" href="/VIG/search/getSearchResult.jsp">
 	          <i class="fas fa-search"></i>
 	        </a>	   
 <!-- 알람버튼 -->     
@@ -75,7 +76,7 @@
 	          <i class="fas fa-comments"></i></a>
 <!-- 로그인 버튼 -->   			
 			 <c:if test="${ empty user }"> <div id="login_btn"><i class="far fa-user"></i></div></c:if> 
-			 <c:if test="${ !empty user }"> 
+			 <c:if test="${ user.role == 'user' ||  user.role == 'business'}"> 
 				<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
 		          aria-haspopup="true" aria-expanded="false">
 		          <i class="fas fa-user"></i>
@@ -90,6 +91,19 @@
 		          <a class="dropdown-item" ><p>------</p></a>
 		        </div>
 		        <div id="logout_btn" >Log Out</div>
+			</c:if>	     
+			<c:if test="${ user.role == 'admin'}">
+				<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
+		          aria-haspopup="true" aria-expanded="false">
+		          <i class="fas fa-user"></i>
+		        </a>
+		        <div class="dropdown-menu dropdown-menu-right dropdown-default"
+		          aria-labelledby="navbarDropdownMenuLink-333">
+		          <h6 class="dropdown-header">${user.userName}</h6>
+		          <div class="dropdown-divider"></div>
+		          <a class="dropdown-item" id="myFeed_btn" href="">관리자페이지</a>		          
+		        </div>	
+		         <div id="logout_btn" >Log Out</div>	
 			</c:if>	     
 			
 	     	</div>
