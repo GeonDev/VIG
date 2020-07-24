@@ -46,10 +46,12 @@ public class UserController {
 	@RequestMapping( value="addUser", method=RequestMethod.POST )
 	public String addUser(@ModelAttribute("user") User user, HttpSession session ) throws Exception {
 		
+		
+		
 		System.out.println("addUser(POST):회원가입"+user);
 		userServices.addUser(user);
 		session.setAttribute("user",userServices.getUserOne(user.getUserCode()));
-		System.out.println("session:"+user);
+			System.out.println("session:"+user);
 		return "redirect:/user/loginView.jsp";
 	}
 

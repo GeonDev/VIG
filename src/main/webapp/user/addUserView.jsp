@@ -6,6 +6,10 @@
 <meta charset="UTF-8">
 <title>VIG</title>
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+
 	<!-- Font Awesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 <!-- Google Fonts -->
@@ -23,49 +27,50 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 		<script type="text/javascript">
 		
-		function fncAddUser() {
-			alert("add 1");
+		
+		
+			
+		function fncAddUser() {	
+			var data=$("input[name='birth']").val();
+			var birthInt = data.replace(/\-/g,"");
+			alert(birthInt);			
 			$("form").attr("method" , "post").attr("action" , "addUser").submit();
 		}
-		$(function() {
-			$("#signUp_btn").on("click",function(){
-				alert("add 2");
+		
+	 
+		
+
+
+		       
+		$(function(){
+			$( "#signUp_btn" ).on("click" , function() {				
 				fncAddUser();
 			});
 		});
-			/*
-			$(function() {
-				
-				$('#password').focusout(function () {
-					
-					var pwd = $("input[name='password']").val();
-			        var pwd2 = $("input[name='password2']").val();
-			 
-			        if ( pwd != '' && pwd2 == '' ) {
-			            null;
-			        } else if (pwd != "" || pwd2 != "") {
-			            if (pwd == pwd2) {
-			                $("#alert-success").css('display', 'inline-block');
-			                $("#alert-danger").css('display', 'none');
-			            } else {
-			                //alert("비밀번호가 일치하지 않습니다. 비밀번호를 재확인해주세요.");
-			                $("#alert-success").css('display', 'none');
-			                $("#alert-danger").css('display', 'inline-block');
-			            }
-			       	  }
-					});
-				$( "#signUp_btn" ).on("click" , function() {
-					fncAddUser();
+		$(function(){
+			$( function() {
+				$("#ty").on("click" , function() {
+					self.location = "/VIG/user/loginView.jsp";
 				});
-				*/
-				$( function() {
-					$("#ty").on("click" , function() {
-						self.location = "../user/loginView.jsp";
-					});
-				});
-				
+			});
+		
+		
+			
+			$( function() {
+			    $( "#datepicker" ).datepicker({
+			    showMonthAfterYear: true, 
+				 dateFormat: "yy-mm-dd"	    
+			    });
+			  });
+		
+			
+		});
+		
 		</script>
 		<style type="text/css">
 		.container{
@@ -74,6 +79,9 @@
 	  padding-top: 100px;'
 	  margin-right: auto;
 	  margin-left: auto;
+	  }
+		
+	
 	 
 	}
 		</style>
@@ -89,41 +97,42 @@
 
     <p class="h4 mb-6">Sign up</p>
 
-    <!-- id -->
-    <input type="text" id="userCode" name="userCode" class="form-control mb-4" placeholder="userCode" required>
-	<label data-error="wrong" data-success="right" for="userCode"></label>
-   
+
+<!-- id -->  
 	<input type="text" id="userName" name="userName" class="form-control mb-4" placeholder="nickName" required>
-	<label data-error="wrong" data-success="right" for="nickName"></label>
-    
-    <!-- Password -->
+	<label data-error="wrong" data-success="right" for="nickName"></label>   
+<!-- 비밀번호 -->
     <input type="password" id="password" name="password" class="form-control mb-4" placeholder="Password" required>
 	<label data-error="wrong" data-success="right" for="password"></label>
+<!-- 비밀번호2 -->      
+	 <input type="password" id="password2" name="password2" class="form-control mb-4" placeholder="Password2" required>
+     <label data-error="wrong" data-success="right" for="password2"></label>
+ <!-- 성별 -->
+ 	<div class="row">
+ 	<div class="form-control mb-4" id="genderBox">
+	  <input type="radio" id="sex" name="sex" value="female" >
+	  <label for="sex">female</label>
+	  <input type="radio" id="sex" name="sex" value="male">
+	  <label for="sex">male</label>
+	  </div>
+	</div>
+<!-- 생년월일-->
+	<hr/>
+	<p>Date: <input type="text" id="datepicker" name="birth"></p>
+	<label data-error="wrong" data-success="right" for="birth"></label>
 	
-	<!--  <input type="text" id="password" name="password2" class="form-control mb-4" placeholder="Password" >
-    <label data-error="wrong" data-success="right" for="password2"></label>
-                 <span id="alert-success" style="display: none;">비밀번호가 일치합니다.</span>
-   				 <span id="alert-danger" style="display: none; color: #d92742; font-weight: bold; ">비밀번호가 일치하지 않습니다.</span>
-   	-->
-   	 <div class="row">        
-    <input type="radio" id="sex" name="sex" value="male" /> 
-    <label data-error="wrong" data-success="right" >male</label>
-    <input type="radio" id="sex" name="sex" value="female"/>
-     <label data-error="wrong" data-success="right" >female</label>
-     </div>
+ <!-- 이메ㄴ일 -->	 
    	<input type="email" id="email" name="email" class="form-control mb-4" placeholder="email">
     <label data-error="wrong" data-success="right" for="email"></label>   
- 
+    
+    
+    
+<!-- 가입버튼 -->
         <button  class="btn btn-info btn-block my-4" id="signUp_btn" >Sign up</button>   
          
           <p >Already a member? </p>
           <span id="ty" class="blue-text ml-1"> login</span>
-           
-           
-
-    
-
-   
+ 
 
 	</div>
 	</div>
@@ -131,12 +140,6 @@
 
 </form>
 
-<!--       <div class="row">        
-    <input type="radio" id="sex" name="sex" value="male" /> 
-    <label data-error="wrong" data-success="right" >male</label>
-    <input type="radio" id="sex" name="sex" value="female"/>
-     <label data-error="wrong" data-success="right" >female</label>
-     </div>     -->
 
 </body>
 </html>

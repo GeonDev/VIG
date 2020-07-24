@@ -8,7 +8,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>addEventView</title>
 
-<!-- JQuery -->
 	
 	<!-- Font Awesome -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
@@ -28,6 +27,7 @@
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 
+
 	
 <style>
 	
@@ -36,7 +36,7 @@
 		margin: 70px auto;
 	}
 	
-	img {
+	#preview {
 	  margin: 1em 0;
 	  display: block;
 	  background: rgb(240, 240, 240);
@@ -76,7 +76,7 @@ $(function(){
 
 $(function(){
 	
-	$("#submit").on('click', function(){
+	$("button:contains('등록')").on('click', function(){
 		alert("11");
 		
 		$(".myform").attr("method", "post").attr("action", "./addEvent").attr( "enctype","multipart/form-data").submit();
@@ -177,7 +177,7 @@ $(function(){
 
 
 	</form>
-	<input id="submit" type="button" value="등록">
+	<button type="button" class="btn btn-info">등록</button>
 	
 	</div>
 	

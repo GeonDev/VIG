@@ -28,6 +28,12 @@ public class ImageServicesImpl implements ImageServices {
 		// TODO Auto-generated method stub
 		imageDao.addImage(image);
 	}
+	
+	@Override
+	public int getLastImageId() throws Exception {
+		// TODO Auto-generated method stub
+	return	imageDao.getLastImageId();
+	}
 
 	@Override
 	public Image getImageOne(int imageId) throws Exception {

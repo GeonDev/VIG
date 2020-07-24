@@ -56,7 +56,9 @@
 	<style>
 		
 		
-		
+		.col-md-10{
+		border:0;
+		}
 		.col-md-2{
 		padding:100px 0 0 20px;
 			background-color;
@@ -146,7 +148,7 @@
  					<button type="button" class="btn btn-block" onclick='nav_analysis(".jsp")'>
  						<a href="#">통 계</a></button>
  					<br/>
- 					<c:if test="${! empty sessionScope.User}">
+ 				<c:if test="${user.role == 'business'}">
  					<button type="button" class="btn btn-block" onclick='nav_report("../report/getReportlist.jsp")'>
  						<a href="#">신 고</a></button>	
  					</c:if>
@@ -155,7 +157,7 @@
 <!-- 일단 관리자용 신고 네비 여기다 표시 -->	
 						
 					
-					<iframe id='my_frame' class="col-md-10 "></iframe>
+					<iframe id='my_frame' class="col-md-10 " border="0"></iframe>
 					
 					</div>
 					

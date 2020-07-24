@@ -31,5 +31,7 @@ public void addImage(Image image) throws Exception;
 	
 	//이미지 키워드 자동완성
 	public List<String> getAutoImageKeywordList(String key) throws Exception;
+	//마지막 이미지의 Id를 get
+	public int getLastImageId() throws Exception;
 
 }
