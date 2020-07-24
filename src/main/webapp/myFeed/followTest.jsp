@@ -4,7 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
 <title>VIG</title>
+
+
 
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 	<!-- Google Fonts -->
@@ -23,16 +26,26 @@
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 	<script src="//code.jquery.com/jquery.min.js"></script>
+	
 	<script>
+	
+	
+	
 	</script>
-	
-	
 </head>
 <body>
-팔로우 팔로잉 모달창 예정
+
+<div class="container">
+	<div class="row">
+		팔로우 팔로잉 모달창 예정 
+		다른 페이지에서 모달 연결 시도
+	</div>
+
+</div>
 
 
 
+			
 
 
 </body>

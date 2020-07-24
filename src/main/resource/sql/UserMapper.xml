@@ -36,8 +36,8 @@
 	 <!-- SQL : INSERT -->
 	<insert	id="addUser" parameterType="user" >
 	 	INSERT
-		INTO users(user_code , user_name , password , role , profile_img, self_introduce, sex, birth, state, google_id, account, prime_count, email, reg_date) 
-		VALUES (#{userCode}, #{userName}, #{password:VARCHAR}, 'user', 'profile_img.jpg', 'selfIntroduce', #{sex:VARCHAR}, 0, 0, 'googleId', 'account', 0, #{email:VARCHAR}, NOW())
+		INTO users(user_code , user_name , password , profile_img, self_introduce, sex, birth, state, google_id, account, prime_count, email, role, reg_date) 
+		VALUES (user_code, #{userName}, #{password:VARCHAR},  #{sex:VARCHAR}, #{birth:NUMERIC}, #{email:VARCHAR}, NOW())
 	 </insert>
 	 
 	 
