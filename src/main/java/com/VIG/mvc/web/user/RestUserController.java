@@ -38,6 +38,23 @@ public User login( @RequestBody User user, HttpSession session) throws Exception
 	return dbUser;	
 }
 
+
+@RequestMapping(value="json/checkId", method=RequestMethod.POST)
+public User checkId( @RequestBody User user, HttpSession session) throws Exception{
+		System.out.println("json/checkId");
+	User dbUser = userServices.getUserOne(user.getUserCode());
+		System.out.println("json/dbUser:"+dbUser);
+	if( user.getUserCode().equals(user.getUserCode())) {
+		session.setAttribute("user", dbUser);
+	}
+	return dbUser;	
+}
+
+
+
+
+
+
 @RequestMapping( value = "json/getUser/{userCode}" , method=RequestMethod.GET)
 public User getUser(@PathVariable String userCode) throws Exception{
 	System.out.println("json get");

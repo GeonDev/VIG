@@ -7,8 +7,7 @@
 <title>VIG</title>
 
 
-
-		<script type="text/javascript">
+<script type="text/javascript">
 
 		
 //===로그인
@@ -25,14 +24,12 @@
 	$( "#myFeed" ).on("click" , function() {
 		//Debug..
 		$(self.location).attr("href","../myFeed/myFeed.jsp");
-	}); 
-//==로고 클릭시 메인 페이지로
-	//$("logoTop").on("click",function(){
-	//	$(self.location).attr("href","../main/main.jsp");
-	//	});
+		}); 
 	});
 	</script>	
+	
 	<style>
+	
 	#logoTop{
 	 width: 90px;
 	 height: 40px;
@@ -40,7 +37,7 @@
 	#login_btn , #logout_btn{
 	color: white;
 	}
-	.fas{
+	#fas_ntn{
 	color: #ffb74d;
 	}
 	p{
@@ -65,33 +62,36 @@
 				 </ul>		
 <!-- 검색 버튼-->    	      
 	        <a class="nav-link waves-effect waves-light" id="" href="/VIG/search/getSearchResult.jsp">
-	          <i class="fas fa-search"></i>
+	          <i class="fas fa-search" id="fas_ntn"></i>
 	        </a>	   
 <!-- 알람버튼 -->     
 	        <a class="nav-link waves-effect waves-light" id="alarm_btn" href="#">
-	          <i class="fas fa-bell"></i>
+	          <i class="fas fa-bell" id="fas_ntn"></i>
 	        </a>        
 <!-- 채팅버튼 -->      
 	        <a class="nav-link waves-effect waves-light" id=" chat_btn" href="#">
-	          <i class="fas fa-comments"></i></a>
+	          <i class="fas fa-comments" id="fas_ntn"></i></a>
 <!-- 로그인 버튼 -->   			
-			 <c:if test="${ empty user }"> <div id="login_btn"><i class="far fa-user"></i></div></c:if> 
+			 <c:if test="${ empty user }"> <a class="nav-link waves-effect waves-light" id="login_btn"><i class="far fa-user" id="fas_ntn"></i></a></c:if> 
+			
 			 <c:if test="${ user.role == 'user' ||  user.role == 'business'}"> 
-				<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
-		          aria-haspopup="true" aria-expanded="false">
-		          <i class="fas fa-user"></i>
-		        </a>
+				 <div class="nav-link dropdown-toggle" id="DropdownMenu" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-user"></i>
+        </div>
 		        <div class="dropdown-menu dropdown-menu-right dropdown-default"
-		          aria-labelledby="navbarDropdownMenuLink-333">
+		          aria-labelledby="DropdownMenu">
 		          <h6 class="dropdown-header">${user.userName}</h6>
 		          <div class="dropdown-divider"></div>
 		          <a class="dropdown-item" id="myFeed_btn" href="../myFeed/myFeed.jsp">My Feed</a>
-		          <a class="dropdown-item" id="" href="../Feed/addFeed.jsp"><p>Upload</p></a>
+		          <a class="dropdown-item" id="" href="../feed/addFeed.jsp"><p>Upload</p></a>
 		          <a class="dropdown-item" id="" href="../user/getUserInfo.jsp"><p>Profile</p></a>
 		          <a class="dropdown-item" ><p>------</p></a>
+		          
 		        </div>
-		        <div id="logout_btn" >Log Out</div>
-			</c:if>	     
+		       <div id="logout_btn" >Log Out</div>
+			</c:if>	  
+			   
 			<c:if test="${ user.role == 'admin'}">
 				<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
 		          aria-haspopup="true" aria-expanded="false">
@@ -101,9 +101,9 @@
 		          aria-labelledby="navbarDropdownMenuLink-333">
 		          <h6 class="dropdown-header">${user.userName}</h6>
 		          <div class="dropdown-divider"></div>
-		          <a class="dropdown-item" id="myFeed_btn" href="">관리자페이지</a>		          
-		        </div>	
-		         <div id="logout_btn" >Log Out</div>	
+		          <a class="dropdown-item" id="myFeed_btn" href="">관리자페이지</a>		
+		          <div id="logout_btn" ><p>Log Out</p></div>          
+		        </div>		      
 			</c:if>	     
 			
 	     	</div>

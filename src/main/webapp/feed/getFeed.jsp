@@ -33,6 +33,7 @@
 	
 	body {
 	
+	
 		background-color: #F9F9F9;	
 	
 	}
@@ -68,7 +69,7 @@
 	}
 	#writerName {
 	
-	padding-top: 5px;
+	margin-top: 10px;
 	font-size: 18px;
 	color: #000000;
 	font-style: bold;
@@ -91,7 +92,7 @@
 	
 	}
 	
-	.fa-exclamation-triangle {
+	#modalbutton {
 	
 	color: red;
 	
@@ -133,6 +134,19 @@
 	vertical-align: middle;
 	color: White;
 	font-size: 27px;
+	
+	}
+	
+	#color {
+	
+	display:inline-block;
+	width: 35px;
+	height: 35px;
+	border-radius: 23px;
+	background-color: #5CA45B;
+	padding: 3px 3px 3px 9px;
+	margin: 1px auto;
+	border: 1px solid white;
 	
 	}
 	
@@ -271,19 +285,27 @@ $(function(){
 		
 	});
 	
+	//후원
 	$("#donation").on("click", function(){
 		
 		var cf = confirm("후원을 진행 하시겠습니까?");
 		
 		if(cf==true){
 			
-		self.location="/VIG/payment/addPayment?feedId=${feed.feedId}&userCode=${user.userCode}"; //세션에서 user코드를 가져온다.
+		self.location="/VIG/payment/addPayment?productType=2&feedId=${feed.feedId}"; //세션에서 user코드를 가져온다.
 		
 		} else if (cf==false) {
 			
 			
 			
 		}
+		
+	});
+	
+	$("#color").on("click", function(){
+		
+		
+		
 		
 	});
 	
@@ -314,12 +336,15 @@ $(function(){
 	<div class="container">
 	<div class="row">
 	<div class="col-10">
+
+	
+	
+	<!-- Medium input -->
 	<h2> <strong> ${feed.feedTitle} </strong></h2>
 	<br>
-	<!-- Medium input -->
 	<h5> ${feed.feedExplanation}</h5>
+
 	</div>
-	
 	<div class="col-2">
 	<br>
 		<!-- 좋아요 & 조회수 -->
@@ -353,7 +378,7 @@ $(function(){
 	 <div class="row">
 		 <div class="col-8">
 		 <span id="profile">
-		<img src="/VIG/images/others/default-profile-picture1.jpg" class="rounded-circle" width="35px"> &nbsp; <a id="writerName" href="/VIG/myfeed/getMyFeedList?userCode=${feed.writer.userCode}">${feed.writer.userName}</a>
+		<img src="/VIG/images/uploadFiles/${feed.writer.profileImg}" class="rounded-circle" width="35px"> &nbsp; <a id="writerName" href="/VIG/myfeed/getMyFeedList?userCode=${feed.writer.userCode}">${feed.writer.userName}</a>
 		 </span>
 		 </div>
 		 <!-- 팔로우와 후원 -->
@@ -409,84 +434,106 @@ $(function(){
 		</c:choose>
 		</div>
 		
+		<div align="left">
+			<br>
+			<a id="modalbutton"><i class="fas fa-exclamation-triangle">신고</i></a>
+
+			</div>
+		
 		</div>
 		
 		<div class="col-4" id="feedInfo">
-		<div id="feedbottom">
-			<h6>사용장비</h6>
+		
+			<div id="feedbottom">
+			
+			<h6 style="font-weight: bold">카테고리  | <a style="display: inline-block; color: black;" href="카테고리서칭">${feed.feedCategory.categoryName }</a></h6>
+			
+			</div>
+			<br>
+			
+			
+		
 			<c:if test="${!empty feed.feedUseGears }">
+			<div id="feedbottom">
+			<h6 style="font-weight: bold">사용장비</h6>
 			
 			${feed.feedUseGears}
-			
+			</div>
+			<br>
 			</c:if>
-			<c:if test="${empty feed.feedUseGears }">
-				<p align="center" style="font-size: 13px; font-style:italic;">사용 장비가 없습니다.</p>
-			</c:if>
-		</div>
-		<br>
-		<div id="feedbottom">
-			<h6>색 상</h6>
+		
+		
+		
 			<c:forEach var="images" items="${feed.images}" begin="0" end="0">
-			<c:if test="${!empty image.color }">
-			<c:if test="${images.isThumbnail == '1' }">
+			<c:if test="${!empty images.color }">
+
+			<div id="feedbottom">
+			<h6 style="font-weight: bold">색 상</h6>
 			
 			<c:forEach var="color" items="${images.color}">
 			<c:if test="${!empty color }">
-				R: ${color.red}  G: ${color.green } B: ${color.blue}
-			</c:if>
-
-			</c:forEach>
-			</c:if>
-			</c:if>
-			<c:if test="${empty color }">
-				<p align="center" style="font-size: 13px; font-style:italic;">No colors</p>
+				
+				<div id="color" style="background-color: rgb( ${color.red} ,${color.green } ,${color.blue} );"> &nbsp;  </div>
+			
 			</c:if>
 			</c:forEach>
-		</div>
-		<br>
-		<div id="feedbottom">	
-			<h6>협업자</h6>
+			</div>
+			</c:if>
+			<br>
+			
+			</c:forEach>
+	
+		
+		
+		
 			
 			<c:if test="${!empty feed.coworkers }">
+			<div id="feedbottom">	
+			<h6 style="font-weight: bold">협업자</h6>
 			
 			<c:forEach var="coworkers" items="${feed.coworkers}">
 				<c:set var="i" value="0"/>
 				<c:set var="i" value="${i+1 }"/>
 				<a href="/myfeed/${coworkers.user.userCode}">${coworkers.user.userName}</a>
 			</c:forEach>
-			</c:if>
-			<c:if test="${empty feed.coworkers }">
-				<p align="center" style="font-size: 13px; font-style:italic;">협업자가 없습니다.</p>
+			</div>
+			<br>
 			</c:if>
 
-		</div>
-		<br>
-		<div id="feedbottom">	
-			<h6>태그</h6>
+		
+		
+		
 			<c:forEach var="images" items="${feed.images}" begin="0" end="0">
-			<c:if test="${!empty keyword }">
-				<c:forEach var="tag" items="${images.keyword}">
-				<c:set var="i" value="0"/>
-				<c:set var="i" value="${i+1}"/>
 				
-					<a href="/search/getSearchResult/${tag}">${tag}</a>
-				
-				</c:forEach>
-			</c:if>
-			<c:if test="${empty keyword }">
-				
-					<p align="center" style="font-size: 13px; font-style:italic;">태그가 없습니다..</p>
 			
-			</c:if>	
+				
+				
+				
+				
+				<c:if test="${images.keyword[0].isTag == '1' }">
+				<div id="feedbottom">
+				<h6 style="font-weight: bold">태그</h6>
+				<div style="padding: 4px 4px 4px 4px;">
+				<c:forEach var="keyword" items="${images.keyword}">
+				
+				
+			<a style="font-weight: bold" href="/VIG/searchController/getSearchImages?imageId=${images.imageId}">#${keyword.keywordOrigin != null ? keyword.keywordOrigin : keyword.keywordEn }</a>
+				
 
+				</c:forEach>
+				</div>
+				</div>
+				</c:if>
+				
+				
+				
+
+				
 			</c:forEach>
+			
 		</div>	
 			
-			<div align="right">
-			<br>
-			<a id="modalbutton"><i class="fas fa-exclamation-triangle">신고</i></a>
-
-			</div>
+			
 		</div>
 			
 	</div>
@@ -495,7 +542,7 @@ $(function(){
 	
 	</div>
 	
-	</div>
+	
 
 </body>
 </html>

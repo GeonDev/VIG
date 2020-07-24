@@ -35,6 +35,12 @@ public class ImageDaoImpl implements ImageDao {
 		sqlSession.insert("ImageMapper.addImage", image);
 
 	}
+	@Override
+	public int getLastImageId() throws Exception {
+		
+	return	sqlSession.selectOne("ImageMapper.getLastImageId");
+
+	}
 
 	@Override
 	public Image getImageOne(int imageId) throws Exception {
