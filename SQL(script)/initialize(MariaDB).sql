@@ -111,7 +111,6 @@ CREATE TABLE report (
 	report_message 		 VARCHAR(1024), 
 	report_date  		 DATE, 
 	current_ban_type  	 TINYINT(1),
-	ban_history 	 	 TINYINT(1), 
 	current_ban_date   	 DATE, 
 	PRIMARY KEY(report_id)
 );
@@ -119,7 +118,7 @@ CREATE TABLE report (
 CREATE TABLE history ( 
 	history_id 				INT(11)  		NOT NULL AUTO_INCREMENT,
 	feed_id  				INT(11) 		NOT NULL REFERENCES feeds(feed_id),
-	watch_user_code   		VARCHAR(20) 	NOT NULL REFERENCES users(user_code),
+	watch_user_code   		VARCHAR(20) 	REFERENCES users(user_code),
 	show_date  			    DATE, 
 	ip_address 				VARCHAR(20), 
 	history_type 			TINYINT(1), 
@@ -1823,5 +1822,47 @@ VALUES(report_id, 'user14', 'user02', 2, 20003, NOW());
 INSERT
 INTO report (report_id, reporter_code, violator_code, report_Type, report_feed_id, report_date)
 VALUES(report_id, 'user15', 'user03', 2, 20004, NOW());
+
+
+
+INSERT
+INTO history (history_id, feed_id, watch_user_code, show_date, history_type)
+VALUES(history_id, 20174, 'user01', NOW(), 1);
+
+INSERT
+INTO history (history_id, feed_id, watch_user_code, show_date, history_type)
+VALUES(history_id, 20170, 'user01', NOW(), 1);
+
+INSERT
+INTO history (history_id, feed_id, watch_user_code, show_date, history_type)
+VALUES(history_id, 20168, 'user01', NOW(), 1);
+
+INSERT
+INTO history (history_id, feed_id, watch_user_code, show_date, history_type)
+VALUES(history_id, 20166, 'user01', NOW(), 1);
+
+INSERT
+INTO history (history_id, feed_id, watch_user_code, show_date, history_type)
+VALUES(history_id, 20160, 'user01', NOW(), 1);
+
+INSERT
+INTO history (history_id, feed_id, watch_user_code, show_date, history_type)
+VALUES(history_id, 20174, 'user01', NOW(), 1);
+
+INSERT
+INTO history (history_id, feed_id, watch_user_code, show_date, history_type)
+VALUES(history_id, 20003, 'user01', NOW(), 0);
+
+INSERT
+INTO history (history_id, feed_id, watch_user_code, show_date, history_type)
+VALUES(history_id, 20054, 'user01', NOW(), 0);
+
+INSERT
+INTO history (history_id, feed_id, watch_user_code, show_date, history_type)
+VALUES(history_id, 20011, 'user01', NOW(), 0);
+
+INSERT
+INTO history (history_id, feed_id, watch_user_code, show_date, history_type)
+VALUES(history_id, 20012, 'user01', NOW(), 0);
 
 commit;
