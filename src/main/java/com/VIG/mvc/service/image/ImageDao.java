@@ -30,7 +30,9 @@ public interface ImageDao {
 	public void deleteImage(int image) throws Exception;
 	
 	//이미지 키워드 자동완성
-	public List<String> getAutoImageKeywordList(String key) throws Exception;	
+	public List<String> getAutoImageKeywordList(String key) throws Exception;
+	//마지막 이미지의 ID get
+	public int getLastImageId() throws Exception;	
 
 }
 
