@@ -75,53 +75,31 @@ public class FeedController {
 	
 	
 	@RequestMapping(value = "addFeed", method = RequestMethod.POST)
-	public ModelAndView addFeed(@RequestParam("keyword") String keyword,@ModelAttribute("joinUser") JoinUser joinUser,@ModelAttribute("feed") Feed feed, @ModelAttribute("category") Category category,@RequestParam("uploadFile") List<MultipartFile> files) throws Exception {
-			
-		System.out.println(joinUser);
-		
+	public ModelAndView addFeed(@RequestParam("keyword") String keyword,@ModelAttribute("feed") Feed feed, @ModelAttribute("category") Category category,@RequestParam("uploadFile") List<MultipartFile> files) throws Exception {
+										
+         
+				String[] originKeyword = keyword.split(","); //스트링으로 받은 키워드를 파싱후 string[]에 담는다
 				
-//		String[] aa = joinUser.split(",");
-//		
-//		List<String> bb = new ArrayList<String>();
-//		
-//		for(int i=0; i>aa.length; i++) {
-//			bb.add(aa[i]);
-//		}
-//		User user = new User();
-//		for(int j=0; j<bb.size(); j++) {
-//			JoinUser joinUser2 = new JoinUser();
-//			userServices.getUserOne(userCode);
-//			joinUser2.setUser
-//		}
-//		List<JoinUser> coworkers = new ArrayList<JoinUser>();
-//		
-		
-		
-	//	System.out.println(coworkers);
-	  
+				for(int i =0; i < originKeyword.length;  i++) {			
+				int imageId=30000;			//Test용 이미지아이디
+				ImageKeyword imageKeyword = new ImageKeyword();          
+				imageKeyword.setKeywordOrigin(originKeyword[i]);                //이미지키워드에 오리진키워드 set
+				imageKeyword.setImageId(imageId);
+		//		keywordServices.addKeyword(imageKeyword);                		  
+				System.out.println(imageKeyword);	
+				}
+									
 		
 		String userCode = "user11";
 		
-		
-		
-		
-		feed.setFeedCategory(category);	
-		
 		User user = userServices.getUserOne(userCode);
-		feed.setWriter(user);
-		
-		
+		feed.setWriter(user);									
+		feed.setFeedCategory(category);	
+				
 		System.out.println("category :"+category);
-		System.out.println("feed : "+feed);
-	//	
+		System.out.println("feed : "+feed);			
+		System.out.println("추가한 이미지 파일: ");
 		
-		
-	//	feedServices.addFeed(feed);
-		
-		
-	
-		
-		System.out.println("추가한 이미지 파일: "+files);
         String path = context.getRealPath("/");        
         path = path.substring(0,path.indexOf("\\.metadata"));         
         path = path +  uploadPath;  
@@ -177,6 +155,6 @@ public class FeedController {
 		return mav;
 		
 	}
-
+	
 
 }
