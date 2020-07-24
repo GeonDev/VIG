@@ -18,5 +18,12 @@ public class Comment implements Serializable{
 	public Comment() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	public User getUser() {
+		User value = this.user;
+		value.setPassword("");
+		value.setGoogleId("");
+		return value;
+	}
 
 }
