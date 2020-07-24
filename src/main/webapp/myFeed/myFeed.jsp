@@ -116,7 +116,7 @@
  	<!-- 프로필 이미지 -->						
  		<div class="row">
  			<div class="col-md-2 "> 							
- 				<img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg" id="pImg"  alt="profile_img">
+ 				<img class="card-img-top" src="/VIG/images/uploadFiles/profile_img.jpg" id="pImg"  alt="profile_img">
  	<!-- 프로필 내용 -->
  				<div class="card-body">
  					<h4 class="user_name" align="center"> ${user.userName} </h4>
