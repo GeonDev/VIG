@@ -86,7 +86,7 @@
 		          <h6 class="dropdown-header">${user.userName}</h6>
 		          <div class="dropdown-divider"></div>
 		          <a class="dropdown-item" id="myFeed_btn" href="../myFeed/myFeed.jsp">My Feed</a>
-		          <a class="dropdown-item" id="" href="../Feed/addFeed.jsp"><p>Upload</p></a>
+		          <a class="dropdown-item" id="" href="../feed/addFeed.jsp"><p>Upload</p></a>
 		          <a class="dropdown-item" id="" href="../user/getUserInfo.jsp"><p>Profile</p></a>
 		          <a class="dropdown-item" ><p>------</p></a>
 		        </div>
