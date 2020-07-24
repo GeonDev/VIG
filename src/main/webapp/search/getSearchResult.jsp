@@ -27,6 +27,10 @@
 	<!-- jQuery UI toolTip 사용 CSS-->
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>	
+	
+	<!-- 색상선택기 플러그인 -->
+	<script type="text/javascript" src="/VIG/javascript/farbtastic.js"></script>
+ 	<link rel="stylesheet" href="/VIG/css/farbtastic.css" type="text/css" />
 
 	
 	<style>
@@ -244,55 +248,6 @@
 	}
 	
 	
-	
-	//색상 검색을 통하여 불러온 이미지를 출력한다.
-	function getColorItemList() {
-		console.log('이미지 검색 출력');	
-		
-		if(isPageEnd == true || isLoadPage == true){
-			//페이지의 끝, 또는 페이지 로드중 이라면 실행안함
-			return;
-		}		
-		isLoadPage = true;
-		page += 1;				
-		
-		$.ajax( 
-				{
-					url : "/VIG/searchController/json/getColorSearchResultList",
-					method : "POST",
-					dataType : "Json",					
-					headers : {
-						"Accept" : "application/json",
-						"Content-Type" : "application/json"
-					},
-					data :  JSON.stringify({red : $("#colorR").val(), green : $("#colorG").val(), blue : $("#colorB").val(),  mode : Mode, currentPage : page}),
-					success : function(JSONData , status) {
-						
-						//불러와야 되는 페이지보다 개수가 적은 경우 페이지가 끝났다
-						if (JSONData.list.length < 10){
-							isPageEnd = true;
-						}
- 						
- 		
- 						$.each(JSONData.list, function(index, item) {						
-							
-							if(Mode == 'Feed'){								
-								getfeedlistFromAjax(item);
-									
-							}else if(Mode == 'Image'){			
-								getImagelistFromAjax(item); 									
-							}					
-						});	 							
-					
- 						
- 						//로드가 완료되면 로딩이 되었다고 체크
- 						isLoadPage = false;						
-					}
-			});		
-	}
-	
-	
-	
 	function getkeywords() {
 		$.ajax("/VIG/searchController/json/getSearchKeyword",
 		  {
@@ -330,6 +285,9 @@
 	$(function(){			
 			// 최초 진입시 첫번째 페이지 로딩
 			getItemList();
+			
+			//색상 선택기 로드
+			 $('#picker').farbtastic('#color');
 		
 			//모드 버튼을 누르는 경우 페이지 초기화
 			$(".mode").on("click",function(){				
@@ -341,13 +299,8 @@
 				$("#Keyword").val("");
 				
 				$(".mode").attr("class","btn btn-cyan mode");
-				$(this).attr("class","btn btn-indigo mode");
-				
-				
-				//작가 검색은 색상 옵션 불가
-				if(Mode=='Writer'){					
+				$(this).attr("class","btn btn-indigo mode");			
 		
-				}				
 			
 				//모드를 변경했음으로 페이지 다시 로드
 				getItemList();
@@ -366,8 +319,7 @@
 				if($("#Keyword").val().length >= 2){
 					getkeywords();
 				}					
-			});	
-			
+			});				
 			
 			
 			//엔터를 누르면 키워드 검색을 수행한다.
@@ -375,12 +327,23 @@
 	            if (key.keyCode == 13) {
 	            	startKeywordSearch();
 	            }
-	        });	
+	        });				
 			
 			
-			//버튼을 누르면 검색을 수행한다.
-	       $("#selectColorCode").on("change",function() {	        
-	    	   $("#Keyword").val($("#selectColorCode").val());
+			$("#color").on("click", function(){				
+								
+			});	
+			
+			//색상값 변경이 생기면 키워드로 세팅
+			$("#picker").on("click", function(){				
+				$("#Keyword").val($("#color").val());			
+			});	
+			
+			
+			
+			
+	       $("#color").change(function() {	        
+	    	   $("#Keyword").val($("#color").val());
 	    	   
 	        });	
 			
@@ -397,6 +360,8 @@
 
 	<!-- ToolBar Start /////////////////////////////////////-->
 		<jsp:include page="../main/toolbar.jsp" />
+		
+
 
 
 	<div class="container-lg-fluid">
@@ -423,23 +388,31 @@
 			</div>					
 		</div>
 		
-		<!-- 검색 옵션을 지정하는 곳 -->
-		<div class="row">							
-			<div class="col-sm-4">			
-				<div class="md-form input-group form-sm form-1 pl-5 my-0">
-					<div class="input-group-prepend">
-						<span class="input-group-text md-addon">Colors</span>
-					</div>
-						<input id="colorR" type="text" aria-label="R" class="form-control" placeholder="Red">
-						<input id="colorG" type="text" aria-label="G" class="form-control" placeholder="Green">
-						<input id="colorB" type="text" aria-label="B" class="form-control" placeholder="Blue">
-				</div>						
-			</div>
-			
+		<div class="row ">			
 			<div class="col-sm-2">
-				<button type="button" id="searchColorbase" class="btn btn-sm btn-indigo" ><i class="fas fa-search"></i></button>
-				<input type="color" id="selectColorCode">						
+				<div class="btn-group btn-group-sm  pl-5">
+					<button type="button" class="btn btn-info">Colors</button>
+					<button class="btn btn-info waves-effect dropdown-toggle btn-sm" type="button" data-toggle="dropdown" ></button>
+					
+					<div class="dropdown-menu">
+						<div id="picker" ></div>	
+					</div>
+				</div>
 			</div>	
+			
+			
+			<div class="col-sm-1">					
+				<form action="" >
+					<div class="form-item">							
+				  		<input class="form-control form-control-sm" type="hidden" id="color" name="color" value="#123456"/>
+				  	</div>						
+				</form>				
+			</div>	
+			
+
+		</div>
+		
+
 
 		</div>
 			

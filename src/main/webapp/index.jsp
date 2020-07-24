@@ -115,6 +115,10 @@
 			<a href="search/getSearchResult.jsp">검색 페이지</a>
 		</div>
 		
+		<div class="row">
+			<a href="demo.jsp">색상 도구 예시</a>
+		</div>
+		
 		
 	</div>	
 </body>

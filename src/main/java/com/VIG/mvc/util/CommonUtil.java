@@ -15,8 +15,13 @@ import java.text.SimpleDateFormat;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.VIG.mvc.service.domain.ImageColor;
+import com.VIG.mvc.service.domain.Search;
 
 
 public class CommonUtil {
@@ -221,6 +226,92 @@ public class CommonUtil {
 			}
 			return buffer.toString();
 		}
+		
+		
+		//헥사코드를 RGB로 변환
+		public static Search getHaxtoRGB(Search search, int colorRange ) {
+			
+			ImageColor rgb = new ImageColor();
+			
+			//핵사코드의 길이가 맞지 않다면 리턴해버림
+			if(search.getKeyword().length() !=7) {
+				return null;
+			} 
+						
+			String hax = search.getKeyword();			
+			
+			rgb.setRed(cheackColorRange(getColorNumber(hax.substring(1, 3)),colorRange));
+			rgb.setGreen(cheackColorRange(getColorNumber(hax.substring(3, 5)),colorRange));
+			rgb.setBlue(cheackColorRange(getColorNumber(hax.substring(5)),colorRange));
+						
+			search.setColor(rgb);
+			
+			return search;
+		}
+		
+		
+		public static int getColorNumber(String Code) {
+			
+			//두자리가 아닌 값이 들어오면
+			if(Code.length() !=2) {
+				return -1;
+			}		
+			int num = Integer.parseInt(Code, 16);
+			return num;	
+		}
+		
+		public static int cheackColorRange(int num, int range) {
+			
+			int result = 0;
+						
+			if(num+range > 255) {
+				result = 255;
+			}else if(num-range <0) {
+				result = 0;
+			}else {
+				result = num;
+			}		
+			
+			return result;
+		}
+		
+		
+		//사용자의 IP를 리턴하는 코드
+		public static String getUserIp(HttpServletRequest request) throws Exception {
+			
+	        String ip = null;
+	     //   HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+
+	        ip = request.getHeader("X-Forwarded-For");
+	        
+	        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
+	            ip = request.getHeader("Proxy-Client-IP"); 
+	        } 
+	        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
+	            ip = request.getHeader("WL-Proxy-Client-IP"); 
+	        } 
+	        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
+	            ip = request.getHeader("HTTP_CLIENT_IP"); 
+	        } 
+	        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
+	            ip = request.getHeader("HTTP_X_FORWARDED_FOR"); 
+	        }
+	        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
+	            ip = request.getHeader("X-Real-IP"); 
+	        }
+	        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
+	            ip = request.getHeader("X-RealIP"); 
+	        }
+	        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
+	            ip = request.getHeader("REMOTE_ADDR");
+	        }
+	        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
+	            ip = request.getRemoteAddr(); 
+	        }
+			
+			return ip;
+		}
+		
 
 	
 }

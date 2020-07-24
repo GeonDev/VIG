@@ -121,19 +121,37 @@ public class RestSearchController {
 		
 		//피드 검색
 		if(jsonData.get("mode").equals("Feed")) {
+			
+			//리턴시킬 피드 리스트를 초기화
+			List<Feed> feedlist = new ArrayList<Feed>();
+			
+			
 			//검색어를 영어로 변역
 			if(CommonUtil.null2str(jsonData.get("keyword")).equals("")) {
 				search.setKeyword("");
+				feedlist = feedServices.getFeedListFromKeyword(search);
 			}else {
 				if(CommonUtil.checkNumber(jsonData.get("keyword"))){
-					//단순 숫자라면 번역안함
+					//단순 숫자라면 번역 하지 않고 바로 적용
 					search.setKeyword(jsonData.get("keyword"));
-				}
+					feedlist = feedServices.getFeedListFromKeyword(search);
+				}else if( jsonData.get("keyword").charAt(0) == '#' ) {
+					//첫글자가 #이라면 RGB로 바꾸어 본다.
+					search.setKeyword(jsonData.get("keyword"));
+					search = CommonUtil.getHaxtoRGB(search, colorRange);
+					System.out.println("색상변환 : "+search.getColor().getRed() +", "+search.getColor().getGreen()+", "+search.getColor().getBlue()) ;
+					if(search !=null) {
+						//색상 기반으로 검색
+						feedlist = feedServices.getFeedListFromColor(search);
+					}
 				
-				search.setKeyword(Translater.autoDetectTranslate(jsonData.get("keyword"),"en"));
+				}else {
+					search.setKeyword(Translater.autoDetectTranslate(jsonData.get("keyword"),"en"));
+					feedlist = feedServices.getFeedListFromKeyword(search);
+				}				
+				
 			}
 			
-			List<Feed> feedlist = feedServices.getFeedListFromKeyword(search);
 			
 			//프라임피드를 추가하고 조회수를 늘려준다.
 			Feed primeFeed = feedServices.getPrimeFeedOne(search);
@@ -144,9 +162,12 @@ public class RestSearchController {
 				feedlist.add(primeFeed);				
 			}
 			
-			//피드 중복을 제거한다.
-			HashSet<Feed> temp = new HashSet<Feed>(feedlist);			
+			//피드 중복을 제거하기 위하여 Set에 넣었다 뺀다.
+			HashSet<Feed> temp = new HashSet<Feed>(feedlist);
+			feedlist.clear();
 			feedlist = new ArrayList<Feed>(temp);
+			
+			
 			
 			//숨김피드는 빼준다.
 			
@@ -155,23 +176,39 @@ public class RestSearchController {
 		
 		//이미지 검색
 		if(jsonData.get("mode").equals("Image")) {
+			
+			//결과를 리턴할 이미지 객체
+			List<Image> imageList = new ArrayList<Image>();
+			
 			//검색어를 영어로 변역
 			if(CommonUtil.null2str(jsonData.get("keyword")).equals("")) {
 				search.setKeyword("");
+				imageList = imageServices.getImageListFromKeyword(search);
 			}else {
+				
 				if(CommonUtil.checkNumber(jsonData.get("keyword"))){
 					//단순 숫자라면 번역안함
 					search.setKeyword(jsonData.get("keyword"));
-				}
-				
-				search.setKeyword(Translater.autoDetectTranslate(jsonData.get("keyword"),"en"));
-			}
+					imageList = imageServices.getImageListFromKeyword(search);
+				}else if(jsonData.get("keyword").charAt(0) == '#') {
+					//첫글자가 #이라면 RGB로 바꾸어 본다.
+					search.setKeyword(jsonData.get("keyword"));
+					search = CommonUtil.getHaxtoRGB(search, colorRange);
+					
+					if(search != null) {
+						//색상 기반으로 검색
+						imageList = imageServices.getImageListFromColor(search);
+					}
+					
+				}else {
+					search.setKeyword(Translater.autoDetectTranslate(jsonData.get("keyword"),"en"));
+					imageList = imageServices.getImageListFromKeyword(search);
+				}			
+			}			
 			
-			List<Image> imageList = imageServices.getImageListFromKeyword(search);
 			
 			//선택된 이미지의 순서를 랜덤으로 섞어준다. -> 같은 피드의 이미지가 연속으로 나오지 않게 한다.
-			Collections.shuffle(imageList);
-			
+			Collections.shuffle(imageList);			
 			map.put("list", imageList);
 					
 		}
@@ -209,71 +246,9 @@ public class RestSearchController {
 		}		
 
 		return map;		
-	}
-		
+	}	
+	
 
-	@RequestMapping(value = "json/getColorSearchResultList")
-	public Map<String, Object> getColorSearchResultList(@RequestBody Map<String, String> jsonData) throws Exception {	
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		Search search = new Search();		
-		
-		ImageColor color = new ImageColor();		
-	
-		color.setRed(setColorsRange(jsonData.get("red")));
-		color.setGreen(setColorsRange(jsonData.get("green")));
-		color.setBlue(setColorsRange(jsonData.get("blue")));
-		
-		search.setCurrentPage(Integer.valueOf(jsonData.get("currentPage")));
-		search.setPageSize(pageSize);
-		search.setColor(color);
-		search.setColorRange(colorRange);
-				
-		System.out.println("전달된 색상 : "+color.getRed() +" "+ color.getBlue() + " "+ color.getGreen() );
-		
-		
-		//피드 검색
-		if(jsonData.get("mode").equals("Feed")) {
-			
-			List<Feed> feedlist = feedServices.getFeedListFromColor(search);
-			
-			map.put("list", feedlist);
-		}		
-		
-		//이미지 검색
-		if(jsonData.get("mode").equals("Image")) {
-
-			
-			List<Image> imageList = imageServices.getImageListFromColor(search);
-			
-			map.put("list", imageList);					
-		}		
-		
-
-		return map;		
-	}
-	
-	
-	
-	private int setColorsRange(String jsonData) {
-		int colors = 0;
-		
-		//입력된 값이 정상적인 숫자인지 체크
-		if(CommonUtil.checkNumber(jsonData)) {
-			colors = Integer.parseInt(jsonData);
-			if(colors + colorRange > 255 ) {
-				colors = 255-colorRange;
-			}else if(colors - colorRange < 0) {
-				colors = colorRange;
-			}						
-		}else {
-			colors = colorRange;
-		}
-		
-		return colors;
-		
-	}
 	
 	
 
