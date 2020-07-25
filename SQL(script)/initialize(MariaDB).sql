@@ -111,7 +111,6 @@ CREATE TABLE report (
 	report_message 		 VARCHAR(1024), 
 	report_date  		 DATE, 
 	current_ban_type  	 TINYINT(1),
-	ban_history 	 	 TINYINT(1), 
 	current_ban_date   	 DATE, 
 	PRIMARY KEY(report_id)
 );
@@ -119,7 +118,7 @@ CREATE TABLE report (
 CREATE TABLE history ( 
 	history_id 				INT(11)  		NOT NULL AUTO_INCREMENT,
 	feed_id  				INT(11) 		NOT NULL REFERENCES feeds(feed_id),
-	watch_user_code   		VARCHAR(20) 	NOT NULL REFERENCES users(user_code),
+	watch_user_code   		VARCHAR(20) 	REFERENCES users(user_code),
 	show_date  			    DATE, 
 	ip_address 				VARCHAR(20), 
 	history_type 			TINYINT(1), 
@@ -775,6 +774,68 @@ VALUES(image_id, 20014, 6, 0,'feed15_07.jpg');
 INSERT
 INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(image_id, 20014, 7, 0,'feed15_08.jpg');
+
+INSERT
+INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
+VALUES(20015, 'Mix Code', 'Mix Code混合編碼工作室   品牌識別更新設計', 'user03', NOW(), 0, 10001);
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20015, 0, 1,'feed16_thumbnail.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20015, 0, 0,'feed16_01.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20015, 1, 0,'feed16_02.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20015, 2, 0,'feed16_03.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20015, 3, 0,'feed16_04.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20015, 4, 0,'feed16_05.jpg');
+
+INSERT
+INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
+VALUES(20016, 'NB Akademie Pro Test (MMXX Edition)', 'Four years after the successful release of NB Akademie™ Std Editon in 2016<br> the typeset got expanded with 12 additional typesets and an OpenType Pro Edition supporting 110+ latin based languages.', 'user02', NOW(), 0, 10010);
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20016, 0, 1,'feed17_thumbnail.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20016, 0, 0,'feed17_01.gif');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20016, 1, 0,'feed17_02.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20016, 2, 0,'feed17_03.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20016, 3, 0,'feed17_04.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20016, 4, 0,'feed17_05.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20016, 5, 0,'feed17_06.jpg');
+
+
 
 INSERT
 INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
@@ -1761,5 +1822,47 @@ VALUES(report_id, 'user14', 'user02', 2, 20003, NOW());
 INSERT
 INTO report (report_id, reporter_code, violator_code, report_Type, report_feed_id, report_date)
 VALUES(report_id, 'user15', 'user03', 2, 20004, NOW());
+
+
+
+INSERT
+INTO history (history_id, feed_id, watch_user_code, show_date, history_type)
+VALUES(history_id, 20174, 'user01', NOW(), 1);
+
+INSERT
+INTO history (history_id, feed_id, watch_user_code, show_date, history_type)
+VALUES(history_id, 20170, 'user01', NOW(), 1);
+
+INSERT
+INTO history (history_id, feed_id, watch_user_code, show_date, history_type)
+VALUES(history_id, 20168, 'user01', NOW(), 1);
+
+INSERT
+INTO history (history_id, feed_id, watch_user_code, show_date, history_type)
+VALUES(history_id, 20166, 'user01', NOW(), 1);
+
+INSERT
+INTO history (history_id, feed_id, watch_user_code, show_date, history_type)
+VALUES(history_id, 20160, 'user01', NOW(), 1);
+
+INSERT
+INTO history (history_id, feed_id, watch_user_code, show_date, history_type)
+VALUES(history_id, 20174, 'user01', NOW(), 1);
+
+INSERT
+INTO history (history_id, feed_id, watch_user_code, show_date, history_type)
+VALUES(history_id, 20003, 'user01', NOW(), 0);
+
+INSERT
+INTO history (history_id, feed_id, watch_user_code, show_date, history_type)
+VALUES(history_id, 20054, 'user01', NOW(), 0);
+
+INSERT
+INTO history (history_id, feed_id, watch_user_code, show_date, history_type)
+VALUES(history_id, 20011, 'user01', NOW(), 0);
+
+INSERT
+INTO history (history_id, feed_id, watch_user_code, show_date, history_type)
+VALUES(history_id, 20012, 'user01', NOW(), 0);
 
 commit;
