@@ -27,6 +27,10 @@
 	<!-- jQuery UI toolTip 사용 CSS-->
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>	
+	
+	<!-- 색상선택기 플러그인 -->
+	<script type="text/javascript" src="/VIG/javascript/farbtastic.js"></script>
+ 	<link rel="stylesheet" href="/VIG/css/farbtastic.css" type="text/css" />
 
 	
 	<style>
@@ -66,9 +70,7 @@
 	//최초 입장시 모드 지정
 	var Mode = 'Feed';	
 	
-	//검색 옵션 지정
-	var searchOption = 'Keyword';
-	
+
 	//최초 페이지는 0으로 설정
 	var page = 0; 	
 	
@@ -88,10 +90,12 @@
 			if(item.isThumbnail == 1){
 				thumbnail = item.imageFile
 			}									
-		});										
+		});
 		
-		var displayValue =
-			"<div class = 'view overlay'>"
+		//변수  초기화
+		var displayValue ='';
+		
+		displayValue = "<div class = 'view overlay'>"
 				+"<div class = 'img_feed'>"
 				+ "<a href='/VIG/feed/getFeed?feedId="+ item.feedId +"' class='text-light'>"
 					+ "<img src='/VIG/images/uploadFiles/" + thumbnail + "' alt='thumbnail' class='img-fluid rounded-sm' style='width: 400px; height: 300px;'>"
@@ -115,7 +119,9 @@
 	
 	//전달받은 이미지 리스트를 화면에 그림
 	function getImagelistFromAjax(item){
-		var displayValue = 
+		//변수  초기화
+		var displayValue ='';
+		displayValue =
 			"<div class = 'view overlay'>"
 				+ "<div class = 'img_image'>"
 					+ "<a href='/VIG/searchController/getSearchImages?imageId="+ item.imageId +"' class='text-light'>"
@@ -131,10 +137,12 @@
 	
 	//전달받은 유저 리스트를 화면에 그림
 	function getUserlistFromAjax(item) {
-		var displayValue =
+		//변수  초기화
+		var displayValue ='';
+		displayValue =
 			"<div class = 'view'>"
 				+"<div class = 'row'>"
-					+"<a class = 'col-md-1' href='/VIG/myfeed/getMyFeedList?userCode="+ item.userCode + "'>"
+					+"<a class = 'col-md-1 pl-5' href='/VIG/myfeed/getMyFeedList?userCode="+ item.userCode + "'>"
 					+ "<img src='/VIG/images/uploadFiles/" + item.profileImg + "' alt='thumbnail' class='img-fluid rounded-circle' style='width: 100px; height: 100px;'>"
 					+"</a>"
 					+"<div class='userInfo col-md-4'>"
@@ -240,55 +248,6 @@
 	}
 	
 	
-	
-	//색상 검색을 통하여 불러온 이미지를 출력한다.
-	function getColorItemList() {
-		console.log('이미지 검색 출력');	
-		
-		if(isPageEnd == true || isLoadPage == true){
-			//페이지의 끝, 또는 페이지 로드중 이라면 실행안함
-			return;
-		}		
-		isLoadPage = true;
-		page += 1;				
-		
-		$.ajax( 
-				{
-					url : "/VIG/searchController/json/getColorSearchResultList",
-					method : "POST",
-					dataType : "Json",					
-					headers : {
-						"Accept" : "application/json",
-						"Content-Type" : "application/json"
-					},
-					data :  JSON.stringify({red : $("#colorR").val(), green : $("#colorG").val(), blue : $("#colorB").val(),  mode : Mode, currentPage : page}),
-					success : function(JSONData , status) {
-						
-						//불러와야 되는 페이지보다 개수가 적은 경우 페이지가 끝났다
-						if (JSONData.list.length < 10){
-							isPageEnd = true;
-						}
- 						
- 		
- 						$.each(JSONData.list, function(index, item) {						
-							
-							if(Mode == 'Feed'){								
-								getfeedlistFromAjax(item);
-									
-							}else if(Mode == 'Image'){			
-								getImagelistFromAjax(item); 									
-							}					
-						});	 							
-					
- 						
- 						//로드가 완료되면 로딩이 되었다고 체크
- 						isLoadPage = false;						
-					}
-			});		
-	}
-	
-	
-	
 	function getkeywords() {
 		$.ajax("/VIG/searchController/json/getSearchKeyword",
 		  {
@@ -313,48 +272,22 @@
 	
 	function startKeywordSearch(){	   	
     	
-    	if($("#Keyword").val().length > 0 && searchOption == 'Keyword'){
+    	if($("#Keyword").val().length > 0 ){
         	$( 'div' ).remove( '.view' );
     		page = 0;
     		isPageEnd = false;
     		isLoadPage = false;	   
         	getItemList();		            	
     	}		
-	}
-	
-	function startColorSearch(){    	
-    	
-		if(searchOption == 'Color'){
-    		if($("#colorR").val() > 255 || $("#colorR").val() < 0){
-    			alert('R은 0~255만 가능합니다.');
-    			$("#colorR").val(0);
-    			return;
-    		}
-    		else if($("#colorG").val() > 255 || $("#colorG").val() < 0){
-    			alert('G은 0~255만 가능합니다.');
-    			$("#colorG").val(0);
-    			return;
-    		}
-    		else if($("#colorB").val() > 255 || $("#colorB").val() < 0){
-    			alert('B은 0~255만 가능합니다.');
-    			$("#colorB").val(0);
-    			return;
-    		}else{
-    	    	$( 'div' ).remove( '.view' );
-    			page = 0;
-    			isPageEnd = false;
-    			isLoadPage = false;
-    			getColorItemList();
-    		}
-    	}		
-	}
-	
-	
+	}	
 	
 	
 	$(function(){			
 			// 최초 진입시 첫번째 페이지 로딩
 			getItemList();
+			
+			//색상 선택기 로드
+			 $('#picker').farbtastic('#color');
 		
 			//모드 버튼을 누르는 경우 페이지 초기화
 			$(".mode").on("click",function(){				
@@ -366,45 +299,13 @@
 				$("#Keyword").val("");
 				
 				$(".mode").attr("class","btn btn-cyan mode");
-				$(this).attr("class","btn btn-indigo mode");
-				
-				
-				//작가 검색은 색상 옵션 불가
-				if(Mode=='Writer'){
-					searchOption = 'Keyword';
-					$(".searchOptions").attr("class","btn btn-outline-default waves-effect btn-sm searchOptions");
-					$('.searchOptions:contains("Keyword")').attr("class","btn btn-primary waves-effect btn-sm searchOptions");
-				}
-				
-				if(searchOption == 'Keyword'){
-					getItemList();
-				}else if(searchOption == 'Color'){
-					getColorItemList();
-				}
-				
-			});				
+				$(this).attr("class","btn btn-indigo mode");			
+		
 			
-			
-			//검색옵션 버튼을 누르는 경우 페이지 초기화
-			$(".searchOptions").on("click",function(){				
-				searchOption = $(this).text();
-				$( 'div' ).remove('.view');			
-				page = 0;
-				isPageEnd = false;
-				isLoadPage = false;	
-				$("#Keyword").val("");
-				
-				$(".searchOptions").attr("class","btn btn-sm btn-outline-default waves-effect searchOptions");
-				$(this).attr("class","btn btn-sm btn-primary waves-effect searchOptions");
-				
-				if(searchOption == 'Keyword'){
-					getItemList();
-				}else if(searchOption == 'Color'){
-					getColorItemList();
-				}
-			
-			});	
-			
+				//모드를 변경했음으로 페이지 다시 로드
+				getItemList();
+	
+			});					
 			
    			
 			$(window).scroll(function() {
@@ -418,8 +319,7 @@
 				if($("#Keyword").val().length >= 2){
 					getkeywords();
 				}					
-			});	
-			
+			});				
 			
 			
 			//엔터를 누르면 키워드 검색을 수행한다.
@@ -427,12 +327,24 @@
 	            if (key.keyCode == 13) {
 	            	startKeywordSearch();
 	            }
-	        });	
+	        });				
 			
 			
-			//버튼을 누르면 검색을 수행한다.
-	       $("#searchColorbase").keydown(function(key) {	        
-	    	   startColorSearch();	            
+			$("#color").on("click", function(){				
+								
+			});	
+			
+			//색상값 변경이 생기면 키워드로 세팅
+			$("#picker").on("click", function(){				
+				$("#Keyword").val($("#color").val());			
+			});	
+			
+			
+			
+			
+	       $("#color").change(function() {	        
+	    	   $("#Keyword").val($("#color").val());
+	    	   
 	        });	
 			
 			
@@ -448,6 +360,8 @@
 
 	<!-- ToolBar Start /////////////////////////////////////-->
 		<jsp:include page="../main/toolbar.jsp" />
+		
+
 
 
 	<div class="container-lg-fluid">
@@ -474,39 +388,45 @@
 			</div>					
 		</div>
 		
-		<!-- 검색 옵션을 지정하는 곳 -->
 		<div class="row ">			
-			<div class="col-sm-2 pl-5 ">
-				<div class="btn-group btn-group-sm pl-5" role="group" aria-label="Basic">
-				  <button type="button" class="btn btn-sm btn-indigo waves-effect  searchOptions">Keyword</button>
-				  <button type="button" class="btn btn-sm btn-outline-default waves-effect  searchOptions">Color</button>			
-				</div>
-			</div>
-				
-			<div class="col-sm-4">			
-				<div class="md-form input-group form-sm form-1 pl-5 my-0">
-					<div class="input-group-prepend">
-						<span class="input-group-text md-addon">Colors</span>
-					</div>
-						<input id="colorR" type="text" aria-label="R" class="form-control" placeholder="Red">
-						<input id="colorG" type="text" aria-label="G" class="form-control" placeholder="Green">
-						<input id="colorB" type="text" aria-label="B" class="form-control" placeholder="Blue">
-				</div>						
-			</div>
-			
 			<div class="col-sm-2">
-				<button type="button" id="searchColorbase" class="btn btn-sm btn-indigo" ><i class="fas fa-search"></i></button>					
-		</div>
-	
+				<div class="btn-group btn-group-sm  pl-5">
+					<button type="button" class="btn btn-info">Colors</button>
+					<button class="btn btn-info waves-effect dropdown-toggle btn-sm" type="button" data-toggle="dropdown" ></button>
+					
+					<div class="dropdown-menu">
+						<div id="picker" ></div>	
+					</div>
+				</div>
+			</div>	
+			
+			
+			<div class="col-sm-1">					
+				<form action="" >
+					<div class="form-item">							
+				  		<input class="form-control form-control-sm" type="hidden" id="color" name="color" value="#123456"/>
+				  	</div>						
+				</form>				
+			</div>	
+			
 
-		<hr/>
 		</div>
+		
+
+
+		</div>
+			
+		<hr/>
 		
 		<!-- 피드, 이미지가 출력되는 부분  -->
 		<div class="row justify-content-center" style = "margin: 5px;"></div>
 		
 		<!-- 유저 정보를 넣을 부분  -->
-		<div class="userlist" id="users" ></div>
+		<div class="userlist " id="users" ></div>
+		
+		
+
+
 	
 	</div>
 
