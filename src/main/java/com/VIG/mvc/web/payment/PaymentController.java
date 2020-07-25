@@ -3,12 +3,15 @@ package com.VIG.mvc.web.payment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.VIG.mvc.service.domain.Feed;
+import com.VIG.mvc.service.domain.Payment;
+import com.VIG.mvc.service.feed.FeedServices;
 import com.VIG.mvc.service.payment.PaymentServices;
 
 @Controller
@@ -19,6 +22,10 @@ public class PaymentController {
 	@Autowired
 	@Qualifier("paymentServicesImpl")
 	private PaymentServices paymentServices;
+	
+	@Autowired
+	@Qualifier("feedServicesImpl")
+	private FeedServices feedServices;
 	
 	public PaymentController() {
 		// TODO Auto-generated constructor stub
@@ -34,21 +41,39 @@ public class PaymentController {
 		//0: 프라임피드결제 , 1: 비즈니스전환결제, 2:후원결제
 		if(productType == 0) {
 			//프라임 피드 결제
-			mav.setViewName("forward:/VIG/payment/addPrimeView.jsp");
+			mav.setViewName("forward:/payment/addPrimeView.jsp");
 			
-		} else if(productType == 1) {
+		}
+		
+		if(productType == 1) {
 			//비즈니스 전환 결제
-			mav.setViewName("forward:/VIG/payment/addBusinessView.jsp");
+			mav.setViewName("forward:/payment/addBusinessView.jsp");
 			
 			
-		}else if(productType == 2) {
+		}
+		
+		if(productType == 2) {
 			//후원 결제
-			mav.setViewName("forward:/VIG/payment/addDonationView.jsp");
-			mav.addObject("feedId", feedId);
+			mav.setViewName("forward:/payment/addDonationView.jsp");
+			Feed feed = feedServices.getFeed(feedId);
+			mav.addObject("feed", feed);
 		}
 		
 		return mav;
 		
+	}
+	
+	@RequestMapping(value="addDonation", method=RequestMethod.POST)
+	public ModelAndView addDonation(@ModelAttribute("payment") Payment payment) throws Exception {
+		
+		
+		System.out.println(payment);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("forward:/payment/addDonation.jsp");
+		mav.addObject("payment", payment);
+		
+		return mav;
 	}
 
 }
