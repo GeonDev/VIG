@@ -11,13 +11,14 @@
 		<result property="ImageId"	column="image_id" 		jdbcType="NUMERIC" />
 		<result property="red" 		column="color_r" 		jdbcType="NUMERIC" />
 		<result property="green" 	column="color_g" 		jdbcType="NUMERIC" />
-		<result property="blue" 	column="color_b" 		jdbcType="VARCHAR" />
+		<result property="blue" 	column="color_b" 		jdbcType="NUMERIC" />
+		<result property="haxcode" 	column="haxcode" 		jdbcType="VARCHAR" />
 		<result property="ratio" 	column="color_ratio" 	jdbcType="FLOAT" />							
 	</resultMap>	
 	
 	<insert id="addColor" parameterType="color">
-		INSERT INTO colors(color_id, image_id, color_r, color_g, color_b, color_ratio)
-		VALUES(color_id, #{ImageId}, #{red:NUMERIC} ,#{green:NUMERIC}, #{blue:NUMERIC}, #{ratio:FLOAT})	
+		INSERT INTO colors(color_id, image_id, color_r, color_g, color_b, haxcode, color_ratio)
+		VALUES(color_id, #{ImageId}, #{red:NUMERIC} ,#{green:NUMERIC}, #{blue:NUMERIC}, #{haxcode:VARCHAR}, #{ratio:FLOAT} )	
 	</insert>
 
 	

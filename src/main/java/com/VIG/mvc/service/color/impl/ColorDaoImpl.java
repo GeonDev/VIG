@@ -27,6 +27,7 @@ public class ColorDaoImpl implements ColorDao {
 	@Override
 	public void addColor(ImageColor color) throws Exception {
 		// TODO Auto-generated method stub
+		
 		sqlSession.insert("ColorMapper.addColor", color);
 	}
 

@@ -153,26 +153,20 @@
 		
 		
 		<!--  이미지가 출력되는 부분  -->
-		<div class="row justify-content-center" style = "margin: 5px;">
-		
-		
-		
-		<c:forEach var="image" items="${list}">
-			<div class = "view overlay">
-				<div class = "img_image">
-				<img src="/VIG/images/uploadFiles/${image.imageFile}"  class="img-fluid rounded-sm" style="width: auto; height: 300px;">
-					<div class="mask flex-center waves-effect waves-light rgba-black-strong">
-						<p class="white-text">
-						<a href="/VIG/searchController/getSearchImages?imageId=${image.imageId}"/>
-						유사 이미지 보기
-						</p>
-					</div>							
-				</div>
-			</div>	
-		
-		</c:forEach>
-	
-		
+		<div class="row justify-content-center" style = "margin: 5px;">		
+			<c:forEach var="image" items="${list}">
+				<div class = "view overlay">
+					<div class = "img_image">
+					<img src="/VIG/images/uploadFiles/${image.imageFile}"  class="img-fluid rounded-sm" style="width: auto; height: 300px;">
+						<div class="mask flex-center waves-effect waves-light rgba-black-strong">
+							<p class="white-text">
+							<a href="/VIG/searchController/getSearchImages?imageId=${image.imageId}"/>
+							유사 이미지 보기
+							</p>
+						</div>							
+					</div>
+				</div>		
+			</c:forEach>		
 		</div>	
 	</div>
 
