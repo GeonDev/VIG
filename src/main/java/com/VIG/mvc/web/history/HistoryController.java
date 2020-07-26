@@ -1,4 +1,4 @@
-package com.VIG.mvc.web.image;
+package com.VIG.mvc.web.history;
 
 import javax.servlet.http.HttpSession;
 
@@ -18,8 +18,8 @@ import com.VIG.mvc.service.user.UserServices;
 
 
 @Controller
-@RequestMapping("/imageController/*")
-public class ImageController {
+@RequestMapping("/history/*")
+public class HistoryController {
 	
 	
 	@Value("#{commonProperties['uploadPath']}")
@@ -30,40 +30,17 @@ public class ImageController {
 	private UserServices userServices;
 	
 
-	@Autowired 
-	@Qualifier("imageServicesImpl")
-	private ImageServices imageServices;
-	
-	@Autowired 
-	@Qualifier("keywordServicesImpl")
-	private KeywordServices keywordServices;
-	
-	@Autowired 
-	@Qualifier("colorServicesImpl")
-	private ColorServices colorServices;	
 
-	
-	public ImageController() {
+	public HistoryController() {
 		// TODO Auto-generated constructor stub		
 	}	
 	
-
-	@RequestMapping(value = "chatting")
-	public ModelAndView chat(@ModelAttribute("user") User user, HttpSession session) throws Exception {		
 	
-		user.setUserName("temp");
-		userServices.addUser(user);
-		
-		//사용자 정보 세션 삽입				
-		session.setAttribute("user", user);
-		
-		System.out.println("user name :" + user.getUserName());	
+	@RequestMapping("getMyHistory")
+	public ModelAndView getMyHistory(HttpSession session) throws Exception {		
+	
 				
-		return new ModelAndView("forward:/ChattingView.jsp", "userid", user.getUserName());
-	}	
+		return new ModelAndView("forward:/history/getMyHistory.jsp");
+	}
 	
-	
-	
-	
-
 }

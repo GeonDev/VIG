@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import com.VIG.mvc.service.domain.ImageColor;
 import com.VIG.mvc.service.domain.ImageKeyword;
 import com.google.cloud.vision.v1.AnnotateImageRequest;
@@ -27,11 +29,15 @@ public class VisionInfo extends Thread {
 	
 	private static final float targetScore = 0.01f;
 	
+	private static final int colorRange = 10;
 	
 	private String imageFilePath;
 	private List<ImageKeyword> keywords;
 	private List<ImageColor> colors;
 	private int imageId;
+	
+	
+	
 	
 	
 	public VisionInfo() {}	
@@ -110,12 +116,17 @@ public class VisionInfo extends Thread {
 		
 		imageColor.setImageId(imageId);
 		
-		imageColor.setRed((int) color.getColor().getRed());		
-		imageColor.setGreen((int)color.getColor().getGreen());
-		imageColor.setBlue((int)color.getColor().getBlue());
+		imageColor.setRed((int) (color.getColor().getRed()/colorRange)*colorRange);		
+		imageColor.setGreen((int)(color.getColor().getGreen()/colorRange)*colorRange);
+		imageColor.setBlue((int)(color.getColor().getBlue()/colorRange)*colorRange);
 		imageColor.setRatio(color.getPixelFraction());		
 		
-		imageColor.setHaxcode(getHaxcode((int) color.getColor().getRed(),(int)color.getColor().getGreen(),(int)color.getColor().getBlue() ));
+		String haxcode ="#";		
+		haxcode += getHaxcode((int) (color.getColor().getRed()/colorRange)*colorRange);
+		haxcode += getHaxcode((int) (color.getColor().getGreen()/colorRange)*colorRange);
+		haxcode += getHaxcode((int) (color.getColor().getBlue()/colorRange)*colorRange);		
+		
+		imageColor.setHaxcode(haxcode);
 		
 		colors.add(imageColor);
 	}
@@ -164,12 +175,14 @@ public class VisionInfo extends Thread {
 		}
 	}
 	
-	private String getHaxcode(int red, int green, int blue) {
-		String hax="#";		
+	private String getHaxcode(int num) {		
 		
-		hax += Integer.toHexString(red);
-		hax += Integer.toHexString(green);
-		hax += Integer.toHexString(blue);	
+		String hax = Integer.toHexString(num);
+		if(hax.length() == 1) {
+			String temp = "0";
+			temp += hax;
+			hax = temp; 
+		}
 		
 		return hax;
 	}

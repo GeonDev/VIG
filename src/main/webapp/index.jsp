@@ -113,7 +113,11 @@
 		
 		<div class="row">
 			<a href="search/getSearchList">검색 페이지</a>
-		</div>		
+		</div>	
+		
+		<div class="row">
+			<a href="history/getMyHistory">히스토리</a>
+		</div>	
 		
 		
 	</div>	
