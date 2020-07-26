@@ -25,6 +25,9 @@ public class PaymentDaoImpl implements PaymentDao {
 	@Override
 	public void addPayment(Payment payment) throws Exception {
 		// TODO Auto-generated method stub
+		
+		sqlSession.insert("addPayment", payment);
+		
 
 	}
 

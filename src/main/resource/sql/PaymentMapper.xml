@@ -6,9 +6,53 @@
 
 <mapper namespace="PaymentMapper"> 	
  	
+	<resultMap id="paymentSelectMap" type="payment">
+		<result property="paymentId" column="payment_id" jdbcType="VARCHAR"/>
+		<result property="buyer.userCode" column="buyer" jdbcType="VARCHAR"/>
+		<result property="beneficiary" column="beneficiary" jdbcType="VARCHAR"/>
+		<result property="feedId" column="feed_id" jdbcType="NUMERIC"/>
+		<result property="paymentOption" column="payment_option" jdbcType="NUMERIC"/>
+		<result property="productType" column="product_type" jdbcType="NUMERIC"/>
+		<result property="selectPrice" column="select_price" jdbcType="NUMERIC"/>
+		<result property="lastPrice" column="last_price" jdbcType="NUMERIC"/>
+		<result property="paymentDate" column="payment_date" jdbcType="DATE"/>
+		<result property="isWithdraw" column="is_withdraw" jdbcType="NUMERIC"/>
+		<result property="isCancel" column="is_cancel" jdbcType="NUMERIC"/>
+	</resultMap>
 	
+	<insert id="addPayment" parameterType="payment">
 	
-
+		INSERT INTO payment(payment_id, buyer, beneficiary, product_type,
+							feed_id, payment_option, select_price, last_price, payment_date, 
+							is_withdraw, is_cancel)
+		VALUE (#{paymentId}, #{buyer.userCode}, #{beneficiary:VARCHAR}, #{productType:NUMERIC}, #{feedId:NUMERIC},
+				#{paymentOption:NUMERIC}, #{selectPrice:NUMERIC}, #{lastPrice:NUMERIC}, NOW(),
+				#{isWithdraw:NUMERIC}, #{isCancel:NUMERIC})
+	
+	</insert>
+	
+	<select id="getPayment" parameterType="String" resultMap="paymentSelectMap">
+		
+		SELECT * FROM payment
+		WHERE payment_id = #{value}
+	
+	</select>
+	
+	<update id="cancelPayment" parameterType="payment">
+		
+		UPDATE payment
+		SET is_cancel = #{isCancel:NUMERIC}
+		WHERE payment_id = #{paymentId:VARCHAR}
+	
+	</update>
+	
+	<select id="getPaymentList" parameterType="String" resultMap="paymentSelectMap">
+		
+		SELECT * FROM payment
+		WHERE buyer = #{value:VARCHAR}
+		
+	
+	</select>
 
 	 
 </mapper>

@@ -27,6 +27,8 @@ public class PaymentServicesImpl implements PaymentServices {
 	@Override
 	public void addPayment(Payment payment) throws Exception {
 		// TODO Auto-generated method stub
+		
+		paymentDao.addPayment(payment);
 
 	}
 
