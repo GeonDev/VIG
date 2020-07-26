@@ -131,7 +131,7 @@ $(function(){
 	
 
 	var IMP = window.IMP; // 생략가능
-	IMP.init('iamport');
+	IMP.init('imp09736662');
 	
 	
 	$('input:radio').on("change", function(){
@@ -143,8 +143,10 @@ $(function(){
 		var commission = selectPrice*0.1;
 		var lastPrice = parseInt(selectPrice)+parseInt(commission);
 		$("#select").text(selectPrice);
+		$("input[name='selectPrice']").val(selectPrice);
 		$("#commission").text(commission);
 		$("#last").text(lastPrice);
+		
 		
 		} 
 		else {
@@ -167,7 +169,7 @@ $(function(){
 	});
 	
 	
-	
+
 	
 	$("button:contains('결제')").on("click", function(){
 		
@@ -176,6 +178,12 @@ $(function(){
 		var lastPrice = parseInt($("#last").text());
 		
 		var option = $("select option:selected").val();
+		if(option == 'card'){
+		$("input[name='paymentOption']").val(0);
+		} else if(option == 'trans') {
+		$("input[name='paymentOption']").val(1);
+		}
+		
 		
 		IMP.request_pay({
 		    pg : 'inicis', // version 1.1.0부터 지원.
@@ -184,7 +192,7 @@ $(function(){
 		    name : '주문명:결제테스트',
 		    amount : lastPrice,
 		    buyer_email : 'iamport@siot.do',
-		    buyer_name : '구매자이름',
+		    buyer_name : "주문자이름",
 		    buyer_tel : '010-1234-5678',
 		    buyer_addr : '서울특별시 강남구 삼성동',
 		    buyer_postcode : '123-456',
@@ -196,11 +204,15 @@ $(function(){
 		        msg += '상점 거래ID : ' + rsp.merchant_uid;
 		        msg += '결제 금액 : ' + rsp.paid_amount;
 		        msg += '카드 승인번호 : ' + rsp.apply_num;
+		        $("input[name='lastPrice']").val(rsp.paid_amount);
+		        $("input[name='paymentId']").val(rsp.merchant_uid);
+		        $("form").attr("action", "/VIG/payment/addDonation").attr("method", "post").submit();
 		    } else {
 		        var msg = '결제에 실패하였습니다.';
 		        msg += '에러내용 : ' + rsp.error_msg;
 		    }
 		    alert(msg);
+		   
 		    
 		});
 		
@@ -259,7 +271,7 @@ $(function(){
 	<div class="col-6">
 	
 	
-	<input type="hidden" name="" value="${feed.writer.userCode}">
+	<input type="hidden" name="beneficiary" value="${feed.writer.userCode}">
 	<input type="hidden" name="feedId" value="${feed.feedId}">
 	<span style="font-size:18px;">${feed.writer.userCode} (${feed.feedId})</span>
 		${session.user.userCode}
@@ -299,8 +311,11 @@ $(function(){
 		<div id="commissionPrice"><span style="font-weight: bold">수수료(VAT 10%) : </span><span id="commission"></span><p style="display:inline-block ; width: 200px">원</p></div>
 		<div id="lastPrice"><span style="font-weight: bold">총 결제 금액 : </span><span id="last"></span><p style="display:inline-block ; width: 200px">원</p></div>
 		</div>
-	
-	
+		<input type="hidden" name="selectPrice">
+		<input type="hidden" name="lastPrice">
+		<input type="hidden" name="paymentId">
+		<input type="hidden" name="paymentType">
+		<input type="hidden" name="productType" value="2">
 	
 	
 	</div>
