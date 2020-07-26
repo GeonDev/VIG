@@ -2,17 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 
-<%@page import="com.VIG.mvc.service.domain.*" %>
-<% 
-//화면용  temp 데이터 구성
-	User writer = new User();
-	writer.setUserCode("user07");
-	request.setAttribute("writer", writer);
-
-%>
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -186,7 +175,6 @@ $(function(){
 		
 		var lastPrice = parseInt($("#last").text());
 		
-		
 		var option = $("select option:selected").val();
 		
 		IMP.request_pay({
@@ -271,9 +259,9 @@ $(function(){
 	<div class="col-6">
 	
 	
-	<input type="hidden" name="" value="${writer.userCode}">
-	<input type="hidden" name="feedId" value="${feedId}">
-	<span style="font-size:18px;">${writer.userCode} (${feedId})</span>
+	<input type="hidden" name="" value="${feed.writer.userCode}">
+	<input type="hidden" name="feedId" value="${feed.feedId}">
+	<span style="font-size:18px;">${feed.writer.userCode} (${feed.feedId})</span>
 		${session.user.userCode}
 	<br><br>
 		<div class="form-check" align="left" style=" font-weight: bold; padding-top: 10px">

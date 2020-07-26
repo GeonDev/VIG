@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 	<!-- Google Fonts -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+
 	<!-- Bootstrap core CSS -->
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
 	<!-- Material Design Bootstrap -->
@@ -52,14 +53,13 @@
 		
 	}
 	
-	img #image {
-	  margin: 1em 0;
+	#image {
+	  margin: 7px auto;
 	  display: block;
 	  background: rgb(240, 240, 240);
-	  border: 1px solid rgb(0, 0, 0);
 	}
 	
-	}
+	
 	#writerInfo {
 
     display: table-cell;
@@ -144,9 +144,17 @@
 	height: 35px;
 	border-radius: 23px;
 	background-color: #5CA45B;
-	padding: 3px 3px 3px 9px;
-	margin: 1px auto;
+	margin: 5px 10px 5px 10px;
 	border: 1px solid white;
+	
+	}
+	
+	@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+	#tag {
+	
+	 font-family: 'Nanum Gothic';
+	
+	
 	
 	}
 	
@@ -253,21 +261,6 @@ $(function(){
 
 	
 	//좋아요 연결
-	$("body").on("dblclick", function(){
-		var likeClass = $("#like").attr("class");
-		console.log(likeClass);
-		if(likeClass =='far fa-heart'){
-			
-		$("#like").attr("class", "fas fa-heart");
-		//addLike 추가
-		}else{
-			
-		$("#like").attr("class", "far fa-heart");
-		//deleteLike 추가
-		}
-
-	});
-	
 	$("#like").on("click", function(){
 		
 		var likeClass = $("#like").attr("class");
@@ -302,12 +295,20 @@ $(function(){
 		
 	});
 	
+	//색상클릭시 색상검색으로 넘어감
 	$("#color").on("click", function(){
 		
 		
 		
 		
 	});
+	
+	//이미지 클릭시 모달로 원본 이미지 띄우기
+	
+	$("")
+	
+	
+	
 	
 	
 
@@ -391,12 +392,11 @@ $(function(){
 	  </div>
 </div>
 	<hr/>
-	<br/>
 	<!--  getFeed 하단부 -->
 	<div class="container">
 	 <div class="row">
 		<div class="col-8">
-
+		<div style="font-size: 25px; font-weight: bold"> Comments </div>
 		<div class="row">
 		<div class="col-10" id="comform">
 		<form id="myform">
@@ -446,7 +446,7 @@ $(function(){
 		
 			<div id="feedbottom">
 			
-			<h6 style="font-weight: bold">카테고리  | <a style="display: inline-block; color: black;" href="카테고리서칭">${feed.feedCategory.categoryName }</a></h6>
+			<h6 style="font-weight: bold">카테고리    | <a style="display: inline-block; color: black;" href="카테고리서칭">${feed.feedCategory.categoryName }</a></h6>
 			
 			</div>
 			<br>
@@ -516,10 +516,10 @@ $(function(){
 				<div style="padding: 4px 4px 4px 4px;">
 				<c:forEach var="keyword" items="${images.keyword}">
 				
+				<div id="tag" style=" border: 1px solid #C2C3C2; margin: 3px 1px 3px 1px; padding: 1px 3px 1px 3px; display: inline-block; border-radius: 5px;">
+			    <a style="color: black; font-size: 13px;" href="/VIG/searchController/getSearchImages?imageId=${images.imageId}">${keyword.keywordOrigin != null ? keyword.keywordOrigin : keyword.keywordEn }</a>
+				</div>
 				
-			<a style="font-weight: bold" href="/VIG/searchController/getSearchImages?imageId=${images.imageId}">#${keyword.keywordOrigin != null ? keyword.keywordOrigin : keyword.keywordEn }</a>
-				
-
 				</c:forEach>
 				</div>
 				</div>
