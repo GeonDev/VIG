@@ -108,11 +108,15 @@ public class VisionInfo extends Thread {
 	private void addColorList(ColorInfo color) {
 		ImageColor imageColor = new ImageColor();	
 		
-		imageColor.setRed((int) color.getColor().getRed());
-		imageColor.setBlue((int)color.getColor().getBlue());
-		imageColor.setGreen((int)color.getColor().getGreen());
-		imageColor.setRatio(color.getPixelFraction());
 		imageColor.setImageId(imageId);
+		
+		imageColor.setRed((int) color.getColor().getRed());		
+		imageColor.setGreen((int)color.getColor().getGreen());
+		imageColor.setBlue((int)color.getColor().getBlue());
+		imageColor.setRatio(color.getPixelFraction());		
+		
+		imageColor.setHaxcode(getHaxcode((int) color.getColor().getRed(),(int)color.getColor().getGreen(),(int)color.getColor().getBlue() ));
+		
 		colors.add(imageColor);
 	}
 	
@@ -159,11 +163,25 @@ public class VisionInfo extends Thread {
 			}			
 		}
 	}
+	
+	private String getHaxcode(int red, int green, int blue) {
+		String hax="#";		
+		
+		hax += Integer.toHexString(red);
+		hax += Integer.toHexString(green);
+		hax += Integer.toHexString(blue);	
+		
+		return hax;
+	}
+	
+	
 
 	@Override
 	public void run() {		
 		getKeywordForVision();
 		getColorForVision();		
 	}
+	
+
 	
 }

@@ -32,13 +32,12 @@ import com.VIG.mvc.util.Translater;
 
 
 @RestController
-@RequestMapping("/searchController/*")
+@RequestMapping("/search/*")
 public class RestSearchController {	
 
 	@Autowired 
 	@Qualifier("userServicesImpl")
-	private UserServices userServices;
-	
+	private UserServices userServices;	
 
 	@Autowired 
 	@Qualifier("imageServicesImpl")
@@ -246,10 +245,6 @@ public class RestSearchController {
 		}		
 
 		return map;		
-	}	
-	
-
-	
-	
+	}		
 
 }

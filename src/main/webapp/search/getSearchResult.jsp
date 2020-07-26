@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -68,19 +67,16 @@
 	<script type="text/javascript">
 	
 	//최초 입장시 모드 지정
-	var Mode = 'Feed';	
-	
+	var Mode = 'Feed';		
 
-	//최초 페이지는 0으로 설정
-	var page = 0; 	
+	//최초 페이지는 1으로 설정
+	var page = 1; 	
 	
 	//페이지의 끝인지 체크
 	var isPageEnd = false;
 	
 	//페이지 로드가 완료 되었는지 체크(ajax 중복 호출 방지용)
-	var isLoadPage = false;
-	
-	
+	var isLoadPage = false;	
 	
 	//전달받은 피드 리스트를 화면에 그림
 	function getfeedlistFromAjax(item){
@@ -95,7 +91,8 @@
 		//변수  초기화
 		var displayValue ='';
 		
-		displayValue = "<div class = 'view overlay'>"
+		displayValue = 
+			"<div class = 'view overlay'>"
 				+"<div class = 'img_feed'>"
 				+ "<a href='/VIG/feed/getFeed?feedId="+ item.feedId +"' class='text-light'>"
 					+ "<img src='/VIG/images/uploadFiles/" + thumbnail + "' alt='thumbnail' class='img-fluid rounded-sm' style='width: 400px; height: 300px;'>"
@@ -124,7 +121,7 @@
 		displayValue =
 			"<div class = 'view overlay'>"
 				+ "<div class = 'img_image'>"
-					+ "<a href='/VIG/searchController/getSearchImages?imageId="+ item.imageId +"' class='text-light'>"
+					+ "<a href='/VIG/search/getSearchImages?imageId="+ item.imageId +"' class='text-light'>"
 					+ "<img src='/VIG/images/uploadFiles/" + item.imageFile + "' alt='thumbnail' class='img-fluid rounded-sm' style='width: auto; height: 300px;'>"
 						+"<div class='mask flex-center waves-effect waves-light rgba-black-strong'>"						
 						+"</div>"
@@ -181,8 +178,7 @@
 			+"</div>"
 		+"</div>";		
 		
-		$("#"+feed_code).append(displayValue);
-		
+		$("#"+feed_code).append(displayValue);		
 	}
 	
 	
@@ -201,7 +197,7 @@
 		
 		$.ajax( 
 				{
-					url : "/VIG/searchController/json/getSearchResultList",
+					url : "/VIG/search/json/getSearchResultList",
 					method : "POST",
 					dataType : "Json",					
 					headers : {
@@ -249,7 +245,7 @@
 	
 	
 	function getkeywords() {
-		$.ajax("/VIG/searchController/json/getSearchKeyword",
+		$.ajax("/VIG/search/json/getSearchKeyword",
 		  {
 			method : "POST",
 			dataType : "Json",							
@@ -262,7 +258,7 @@
 			var arraylist = JSONData;
 				console.log( JSONData );
 			
-			 	$( "#Keyword" ).autocomplete({			 		
+			 	$("#Keyword").autocomplete({			 		
 			        source: JSONData
 			    });		
 			}							
@@ -271,20 +267,15 @@
 	
 	
 	function startKeywordSearch(){	   	
-    	
-    	if($("#Keyword").val().length > 0 ){
-        	$( 'div' ).remove( '.view' );
-    		page = 0;
-    		isPageEnd = false;
-    		isLoadPage = false;	   
-        	getItemList();		            	
-    	}		
+    	$( 'div' ).remove( '.view' );
+    	page = 0;
+    	isPageEnd = false;
+    	isLoadPage = false;	   
+        getItemList();		            	    			
 	}	
 	
 	
-	$(function(){			
-			// 최초 진입시 첫번째 페이지 로딩
-			getItemList();
+	$(function(){		
 			
 			//색상 선택기 로드
 			 $('#picker').farbtastic('#color');
@@ -298,9 +289,8 @@
 				isLoadPage = false;	
 				$("#Keyword").val("");
 				
-				$(".mode").attr("class","btn btn-cyan mode");
-				$(this).attr("class","btn btn-indigo mode");			
-		
+				$(".mode").attr("class","btn btn-sm btn-cyan mode");
+				$(this).attr("class","btn btn-sm btn-indigo mode");			
 			
 				//모드를 변경했음으로 페이지 다시 로드
 				getItemList();
@@ -309,7 +299,7 @@
 			
    			
 			$(window).scroll(function() {
-   			    if ($(window).scrollTop() == $(document).height() - $(window).height()) {     			     
+   			    if ($(window).scrollTop() + 300 >= $(document).height() - $(window).height()) {     			     
 	   				getItemList();   			    	
    			    }
    			});		
@@ -330,25 +320,10 @@
 	        });				
 			
 			
-			$("#color").on("click", function(){				
-								
-			});	
-			
 			//색상값 변경이 생기면 키워드로 세팅
 			$("#picker").on("click", function(){				
 				$("#Keyword").val($("#color").val());			
-			});	
-			
-			
-			
-			
-	       $("#color").change(function() {	        
-	    	   $("#Keyword").val($("#color").val());
-	    	   
-	        });	
-			
-			
-			
+			});					
 	});	
 	
 	</script>
@@ -359,45 +334,38 @@
 <body>
 
 	<!-- ToolBar Start /////////////////////////////////////-->
-		<jsp:include page="../main/toolbar.jsp" />
+	<jsp:include page="../main/toolbar.jsp" />
 		
-
-
-
 	<div class="container-lg-fluid">
 	
-		<div class="row align-items-center justify-content-md-center">
-			<div class="col-sm-10">
-				<div class="input-group md-form form-sm form-1 pl-5 my-0">
+		<div class="row">
+			<div class="col-md-10 pl-5">
+				<div class="input-group md-form form-sm form-1 my-0 ">
 				  <div class="input-group-prepend">
 				    <span class="input-group-text cyan lighten-2" >
 				    	<i class="fas fa-search text-white" aria-hidden="true"></i>
 				    </span>
 				  </div>
-				  <input id="Keyword" class="form-control my-0 py-1" type="text" placeholder="Search" aria-label="Search">
-				</div>	
-			</div>			
+				  <input id="Keyword" class="form-control" type="text" placeholder="Search" aria-label="Search" value="${keyword}">
+				</div>					
+			</div>
 			
-			
-			<div class="col-sm-2">
-				<div class="btn-group btn-group-sm" role="group" aria-label="Basic">
-				  <button type="button" class="btn btn-indigo mode">Feed</button>
-				  <button type="button" class="btn btn-cyan mode">Image</button>
-				  <button type="button" class="btn btn-cyan mode">Writer</button>
-				</div>
-			</div>					
+			<div class="col-md-2 pl-5">
+				<button type="button" class="btn btn-sm btn-indigo mode" style=" margin-right:0px; padding-left: 15px; padding-right: 15px;">Feed</button>
+				<button type="button" class="btn btn-sm btn-cyan mode" style="margin-left: 0px; margin-right: 0px; padding-left: 10px; padding-right: 10px;">Image</button>
+				<button type="button" class="btn btn-sm btn-cyan mode" style="margin-left: 0px; padding-left: 8px; padding-right: 8px;">Writer</button>										
+			</div>							
 		</div>
 		
-		<div class="row ">			
-			<div class="col-sm-2">
-				<div class="btn-group btn-group-sm  pl-5">
-					<button type="button" class="btn btn-info">Colors</button>
-					<button class="btn btn-info waves-effect dropdown-toggle btn-sm" type="button" data-toggle="dropdown" ></button>
-					
-					<div class="dropdown-menu">
-						<div id="picker" ></div>	
-					</div>
-				</div>
+	
+		
+		<div class="row">			
+			<div class="col-sm-2 pl-5">		
+				<button id="colorSelecter" class="btn btn-info waves-effect dropdown-toggle btn-sm" type="button" data-toggle="dropdown" style="margin-left:50px; padding-left: 10px; padding-right: 10px;">Colors</button>
+				
+				<div class="dropdown-menu">
+					<div id="picker" ></div>	
+				</div>		
 			</div>	
 			
 			
@@ -408,25 +376,57 @@
 				  	</div>						
 				</form>				
 			</div>	
-			
-
-		</div>
-		
-
-
-		</div>
+		</div>		
 			
 		<hr/>
 		
 		<!-- 피드, 이미지가 출력되는 부분  -->
-		<div class="row justify-content-center" style = "margin: 5px;"></div>
+		<div class="row justify-content-center" style="margin-left: 10px; margin-right: 10px;">	
+		
+		<c:choose>
+			<c:when test="${mode =='Feed'}">
+				<c:forEach var="feed" items="${feedlist}">				
+					<div class = "view overlay">
+						<div class = "img_feed">
+							<a href="/VIG/feed/getFeed?feedId=${feed.feedId}" class="text-light">
+								<c:forEach var="thumbnail" items="${feed.images}">
+									<c:if test="${thumbnail.isThumbnail == 1}">									
+										<img src="/VIG/images/uploadFiles/${thumbnail.imageFile}" alt="thumbnail" class="img-fluid rounded-sm" style="width: 400px; height: 300px;">										
+									</c:if>
+								</c:forEach>						
+								<div class="mask waves-effect waves-light rgba-black-strong">
+									<h5 style="font-weight: bold; margin: 5px 10px;">								
+										<c:if test="${feed.feedIsPrime  == 1}">
+											<span class="badge badge-primary">Prime</span>&nbsp;
+										</c:if>								
+										${feed.feedTitle}
+									 </h5>					
+								</div>
+							</a>
+						</div>
+					</div>
+				</c:forEach>				
+				
+			</c:when>
+			
+			<c:when test="${mode =='Image'}">
+				<c:forEach var="image" items="${imagelist}">
+					<div class = "view overlay">
+						<div class = "img_image">
+							<a href="/VIG/search/getSearchImages?imageId=${image.imageId}" class="text-light">
+								<img src="/VIG/images/uploadFiles/${image.imageFile}" class="img-fluid rounded-sm" style="width: auto; height: 300px;"/>
+								<div class="mask flex-center waves-effect waves-light rgba-black-strong"></div>						
+							</a>
+						</div>												
+					</div>		
+				</c:forEach>			
+			</c:when>
+		</c:choose>	
+		
+		</div>
 		
 		<!-- 유저 정보를 넣을 부분  -->
 		<div class="userlist " id="users" ></div>
-		
-		
-
-
 	
 	</div>
 

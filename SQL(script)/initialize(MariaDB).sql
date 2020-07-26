@@ -63,6 +63,7 @@ CREATE TABLE images (
 CREATE TABLE colors ( 
 	color_id 				 INT(11)   NOT NULL AUTO_INCREMENT,
 	image_id 				 INT(11)   NOT NULL REFERENCES images(image_id),
+	haxcode					 VARCHAR(7),
 	color_r 				 TINYINT(4)  UNSIGNED,
 	color_g 				 TINYINT(4)  UNSIGNED,
 	color_b 				 TINYINT(4)  UNSIGNED,

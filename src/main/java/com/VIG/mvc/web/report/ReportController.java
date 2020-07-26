@@ -23,7 +23,7 @@ import com.VIG.mvc.service.report.ReportServices;
 
 
 @Controller
-@RequestMapping("/reportController/*")
+@RequestMapping("/report/*")
 public class ReportController {	
 	
 	@Autowired

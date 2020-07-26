@@ -16,6 +16,8 @@ public class Feed implements Serializable{
 	private Date feedRegDate;
 	private Date feedEditDate;
 	private int feedViewCount;
+	
+	// 0 = 일반피드, 1= 프라임피드
 	private int feedIsPrime;
 	//카테고리 저장
 	private Category feedCategory;

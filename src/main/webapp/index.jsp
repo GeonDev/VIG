@@ -108,16 +108,12 @@
 		</div>
 		
 		<div class="row">
-			<a href="reportController/getReportList">신고 조회</a>
+			<a href="report/getReportList">신고 조회</a>
 		</div>
 		
 		<div class="row">
-			<a href="search/getSearchResult.jsp">검색 페이지</a>
-		</div>
-		
-		<div class="row">
-			<a href="demo.jsp">색상 도구 예시</a>
-		</div>
+			<a href="search/getSearchList">검색 페이지</a>
+		</div>		
 		
 		
 	</div>	
