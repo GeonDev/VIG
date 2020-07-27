@@ -40,18 +40,31 @@
 	<select id="getHistoryListFormUser" parameterType="search" resultMap="HistorySelectMap">
 		SELECT * FROM 
 		(SELECT ROW_NUMBER() OVER(ORDER BY history.history_id) num, history.* FROM history
-		WHERE history.history_type = #{searchType}
-		AND watch_user_code = #{keyword})temp
+		WHERE watch_user_code = #{keyword}	
+		AND history.history_type = #{searchType})temp
 		WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
 	</select>
 	
 	
 	<!-- 피드 검색시 필터용으로 사용될 전체 데이터 조회용 데이터 -->
-		<select id="getAllHistoryFromUser" parameterType="search" resultMap="HistorySelectMap">
-			SELECT history.* FROM history
-			WHERE history.history_type = #{searchType}
-			AND watch_user_code = #{keyword}			
-		</select>
+	<select id="getAllHistoryFromUser" parameterType="search" resultMap="HistorySelectMap">
+		SELECT history.* FROM history
+		WHERE history.history_type = #{searchType}
+		AND watch_user_code = #{keyword}			
+	</select>
+		
+	<!-- 전체 페이지 확인용 데이터 -->	
+	<select id="getHistoryCount" parameterType="search" resultType="int">
+		SELECT COUNT(history_id) FROM history
+		WHERE watch_user_code = #{keyword}	
+		AND history.history_type = #{searchType} 		
+	</select>
+	
+	<delete id="deleteHistory" parameterType="int">
+		DELETE 
+	 	FROM history 
+	 	WHERE history_id = #{value} 
+	</delete>
 	
 	 
 </mapper>
