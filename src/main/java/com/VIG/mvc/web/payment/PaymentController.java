@@ -195,6 +195,41 @@ public class PaymentController {
 		return mav;
 	}
 	
+	@RequestMapping(value="getAllPaymentList", method=RequestMethod.GET)
+	public ModelAndView getAllPaymentList(HttpSession session) throws Exception {
+		
+		
+		ModelAndView mav = new ModelAndView();
+		User sessionUser = (User) session.getAttribute("user");
+		if((sessionUser.getRole()).contains("admin")) {
+		
+			Search search = new Search();
+			if (search.getCurrentPage() == 0) {
+				search.setCurrentPage(1);
+			}
+
+		System.out.println(search);	
+		List<Payment> list = paymentServices.getPaymentList(search);
+		Page resultPage = new Page(search.getCurrentPage(), paymentServices.getCountPayment(search) , pageUnit, pageSize);
+		System.out.println(resultPage);
+		System.out.println(list);
+		
+		mav.setViewName("forward:/payment/getAllPaymentList.jsp");
+		mav.addObject("list", list);
+		mav.addObject("resultPage", resultPage);
+		
+		}else {
+			System.out.println("잘못된접근");
+			String message = "관리자만 접근할 수 있습니다.";
+			mav.setViewName("forward:/common/alertView.jsp");
+			mav.addObject("message", message);
+		}
+		
+		return mav;
+		
+		
+	}
+	
 	
 
 }
