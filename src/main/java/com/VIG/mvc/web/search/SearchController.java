@@ -21,11 +21,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.VIG.mvc.service.color.ColorServices;
 import com.VIG.mvc.service.domain.Feed;
+import com.VIG.mvc.service.domain.History;
 import com.VIG.mvc.service.domain.Image;
 import com.VIG.mvc.service.domain.ImageKeyword;
 import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.feed.FeedServices;
+import com.VIG.mvc.service.history.HistoryServices;
 import com.VIG.mvc.service.image.ImageServices;
 import com.VIG.mvc.service.keyword.KeywordServices;
 import com.VIG.mvc.service.user.UserServices;
@@ -56,7 +58,11 @@ public class SearchController {
 	
 	@Autowired 
 	@Qualifier("feedServicesImpl")
-	private FeedServices feedServices;	
+	private FeedServices feedServices;
+		
+	@Autowired 
+	@Qualifier("historyServicesImpl")
+	private HistoryServices historyServices;
 	
 	
 	@Value("#{commonProperties['pageUnit'] ?: 5}")
@@ -137,6 +143,18 @@ public class SearchController {
 					
 			
 			//숨김피드는 빼준다.
+			if(user !=null) {
+				Search tempSearch = new Search();
+				tempSearch.setKeyword(user.getUserCode());
+				tempSearch.setSearchType(1);				
+				
+				List<History> hidelist = historyServices.getAllHistoryList(tempSearch);				
+				
+				for(History key : hidelist) {					
+					feedlist.remove(key.getShowFeed());
+				}				
+			}			
+			
 			
 			model.addAttribute("feedlist", feedlist);			
 		}		
@@ -179,7 +197,14 @@ public class SearchController {
 			model.addAttribute("imageList", imageList);					
 		}	
 		
-		model.addAttribute("mode", mode);
+		model.addAttribute("mode", mode);		
+		
+		if(user !=null) {
+			//외부로 비밀번호와 구글 ID가 노출되지 않도록 한다.
+			user.setGoogleId("");
+			user.setPassword("");
+		}
+		model.addAttribute("user", user);
 		
 		return new ModelAndView("forward:/search/getSearchResult.jsp");
 	}
