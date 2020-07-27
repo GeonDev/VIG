@@ -14,5 +14,7 @@ public interface PaymentServices {
 	public Payment getPayment(String paymentId) throws Exception;
 	
 	public List<Payment> getPaymentList(Search search) throws Exception;	
+	
+	public int getCountPayment(Search search) throws Exception;
 
 }

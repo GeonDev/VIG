@@ -46,7 +46,19 @@ public class PaymentDaoImpl implements PaymentDao {
 	@Override
 	public List<Payment> getPaymentList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		
+		List<Payment> list = sqlSession.selectList("getPaymentList", search);
+		
+		return list;
 	}
+
+	@Override
+	public int getCountPayment(Search search) throws Exception {
+		// TODO Auto-generated method stub
+
+		return sqlSession.selectOne("getCountPayment", search);
+	}
+	
+	
 
 }
