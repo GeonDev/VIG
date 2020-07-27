@@ -11,4 +11,8 @@ public interface HistoryDao {
 	
 	public void addHistory(History history) throws Exception;
 	
+	public int getHistoryCount(Search search) throws Exception;
+	
+	public void deleteHistory(int historyId) throws Exception;
+	
 }
