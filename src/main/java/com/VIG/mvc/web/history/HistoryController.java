@@ -1,17 +1,23 @@
 package com.VIG.mvc.web.history;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.VIG.mvc.service.color.ColorServices;
+import com.VIG.mvc.service.domain.Page;
+import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.domain.User;
+import com.VIG.mvc.service.history.HistoryServices;
 import com.VIG.mvc.service.image.ImageServices;
 import com.VIG.mvc.service.keyword.KeywordServices;
 import com.VIG.mvc.service.user.UserServices;
@@ -22,12 +28,23 @@ import com.VIG.mvc.service.user.UserServices;
 public class HistoryController {
 	
 	
-	@Value("#{commonProperties['uploadPath']}")
-	String uploadPath;
+	@Autowired
+	private ServletContext context;	
+	
+	
+	@Value("#{commonProperties['currentDate'] ?: 30}")
+	int currentDate;	
+	
+	@Value("#{commonProperties['pageUnit'] ?: 5}")
+	int pageUnit;
 
-	@Autowired 
-	@Qualifier("userServicesImpl")
-	private UserServices userServices;
+	@Value("#{commonProperties['pageSize'] ?: 5}")
+	int pageSize;
+
+	
+	@Autowired
+	@Qualifier("historyServicesImpl")
+	private HistoryServices historyServices;
 	
 
 
@@ -36,11 +53,55 @@ public class HistoryController {
 	}	
 	
 	
-	@RequestMapping("getMyHistory")
-	public ModelAndView getMyHistory(HttpSession session) throws Exception {		
+	@RequestMapping("getMyHistoryList")
+	public ModelAndView getMyHistory(HttpSession session, @ModelAttribute("search") Search search) throws Exception {		
 	
+		User user = (User)session.getAttribute("user");
+		
+		// 현재 페이지값이 없으면 첫번째 페이지로 설정
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		
+		//키워드 데이터가 NULL이라면
+		if(search.getKeyword() == null) {
+			search.setKeyword("");
+		}
+		
+		search.setCurrentDate(currentDate);
+		search.setPageSize(pageSize);
+		
+		//유저가 본것만 조회
+		search.setSearchType(0);
+		//search.setKeyword(user.getUserCode());
+		// 테스트를 위하여 임시로 user01 세팅
+		search.setKeyword("user01");
+		
+		Page resultPage = new Page(search.getCurrentPage(), historyServices.getHistoryCount(search) , pageUnit, pageSize);
+		
+		
+		ModelAndView modelAndView = new ModelAndView();
+
+		modelAndView.setViewName("forward:/history/getMyHistory.jsp");
+		modelAndView.addObject("historylist", historyServices.getHistoryList(search));
+		
+		// 유저의 숨김 리스트 출력
+		search.setSearchType(1);
+		modelAndView.addObject("hidelist", historyServices.getHistoryList(search));
+		modelAndView.addObject("resultPage", resultPage);
+		modelAndView.addObject("search", search);
 				
-		return new ModelAndView("forward:/history/getMyHistory.jsp");
+		return modelAndView;
+	}
+	
+	@RequestMapping("deleteHistory")
+	public ModelAndView deleteHistory(@RequestParam("Id") int historyId) throws Exception {
+		
+		historyServices.deleteHistory(historyId);
+		
+		return new ModelAndView("forward:/common/alertView.jsp", "message", "해당 기록이 삭제되었습니다.");
+		
+		
 	}
 	
 }
