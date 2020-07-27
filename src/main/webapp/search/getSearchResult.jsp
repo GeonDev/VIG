@@ -105,15 +105,22 @@
 				+"<div class = 'img_feed'>"
 				+ "<a href='/VIG/feed/getFeed?feedId="+ item.feedId +"' class='text-light'>"
 					+ "<img src='/VIG/images/uploadFiles/" + thumbnail + "' alt='thumbnail' class='img-fluid rounded-sm' style='width: 400px; height: 300px;'>"
-					+ "<div class='mask waves-effect waves-light rgba-black-strong'>"
-						+"<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>"
-						+ "<h5 class='txt_line' style='font-weight: bold; margin: 5px 10px;'>";
+					+ "<div class='mask waves-effect waves-light rgba-black-strong' style='text-align: right;'>";					
+						if('${user}' != null){
+							displayValue +="<button type='button' onclick='addhideFeed("+ item.feedId +")' class='btn btn-link' style='width: 50px; height:50px; padding-left: 0px; padding-right: 0px;'>"											
+								+ "<h4><i class='far fa-times-circle' style='color: white; text-align: center;'></i></h4>"
+							+"</button>";					
+						}else{
+							displayValue +="<br/>";
+						}					
+						displayValue +="<br/><br/><br/><br/><br/><br/><br/><br/><br/>"
+						+ "<h5 class='txt_line' style='font-weight: bold; margin: 5px 10px; text-align: left;'>";
 						
 						if(item.feedIsPrime == 1){
 							displayValue += "<span class='badge badge-primary'>Prime</span>&nbsp;";
 						}						
 						
-			displayValue += item.feedTitle + "</h5>"					
+						displayValue += item.feedTitle + "</h5>"					
 					+ "</div>"
 				+ "</a>"
 				+"</div>"
@@ -282,10 +289,22 @@
     	isPageEnd = false;
     	isLoadPage = false;	   
         getItemList();		            	    			
+	}
+	
+	
+	function addhideFeed(feedId){	   	
+		event.preventDefault();
+		console.log(feedId);
+		var result = confirm("해당 피드를 숨기시겠습니까?");
+		if(result){
+			var link ='/VIG/history/addHideFeed?Id=';
+			link =  link.concat(feedId);
+			$(location).attr("href", link); 
+		}      	    			
 	}	
 	
 	
-	$(function(){		
+	$(function(){			
 			
 			//색상 선택기 로드
 			 $('#picker').farbtastic('#color');
@@ -404,9 +423,22 @@
 										<img src="/VIG/images/uploadFiles/${thumbnail.imageFile}" alt="thumbnail" class="img-fluid rounded-sm" style="width: 400px; height: 300px;">										
 									</c:if>
 								</c:forEach>						
-								<div class="mask waves-effect waves-light rgba-black-strong">
-									<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-									<h5 class="txt_line" style="font-weight: bold; margin: 5px 10px;">								
+								<div class="mask waves-effect waves-light rgba-black-strong" style="text-align: right;">							
+								
+									<c:choose>
+										<c:when test="${user != null }">
+											<button type="button" onclick="addhideFeed(${feed.feedId})" class="btn btn-link" style="width: 50px; height:50px; padding-left: 0px; padding-right: 0px;">											
+												<h4><i class="far fa-times-circle" style="color: white; text-align: center;"></i></h4>
+											</button>
+										
+										</c:when>
+										<c:when test="${user == null }">										
+											<br/>
+										</c:when>									
+									</c:choose>					
+									
+									<br/><br/><br/><br/><br/><br/><br/><br/><br/>
+									<h5 class="txt_line" style="font-weight: bold; margin: 5px 10px; text-align: left;">								
 										<c:if test="${feed.feedIsPrime  == 1}">
 											<span class="badge badge-primary">Prime</span>&nbsp;
 										</c:if>	
