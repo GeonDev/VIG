@@ -46,13 +46,27 @@
 	
 	</update>
 	
-	<select id="getPaymentList" parameterType="String" resultMap="paymentSelectMap">
+	<select id="getPaymentList" parameterType="search" resultMap="paymentSelectMap">
 		
-		SELECT * FROM payment
-		WHERE buyer = #{value:VARCHAR}
-		
+		SELECT * FROM
+		(SELECT ROW_NUMBER() OVER(ORDER BY payment.payment_date DESC) num, payment.* 
+		FROM payment
+		WHERE buyer = #{keyword}
+		)temp WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
 	
 	</select>
+	
+	<select id="getCountPayment"  parameterType="search"   resultType="int">
+		
+		SELECT COUNT(temp.payment_id) FROM
+		(SELECT payment_id FROM payment 
+		<if test="keyword != null || keyword != ''">
+		WHERE buyer = #{keyword}
+		</if>
+		) temp
+	
+	</select>
+	
 
 	 
 </mapper>

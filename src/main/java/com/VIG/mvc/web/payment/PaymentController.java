@@ -1,9 +1,13 @@
 package com.VIG.mvc.web.payment;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
+import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.VIG.mvc.service.domain.Feed;
+import com.VIG.mvc.service.domain.Page;
 import com.VIG.mvc.service.domain.Payment;
+import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.feed.FeedServices;
 import com.VIG.mvc.service.payment.PaymentServices;
@@ -29,6 +35,12 @@ public class PaymentController {
 	@Autowired
 	@Qualifier("feedServicesImpl")
 	private FeedServices feedServices;
+
+	@Value("#{commonProperties['pageSize'] ?: 5}")
+	int pageSize;
+	
+	@Value("#{commonProperties['pageUnit'] ?: 5}")
+	int pageUnit;
 	
 	public PaymentController() {
 		// TODO Auto-generated constructor stub
@@ -91,6 +103,34 @@ public class PaymentController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("forward:/payment/addPayment.jsp");
 		mav.addObject("payment", payment);
+		
+		return mav;
+	}
+	
+	@RequestMapping(value="getPaymentList", method=RequestMethod.GET)
+	public ModelAndView getPaymentList(@ModelAttribute("search") Search search) throws Exception {
+
+		
+		// 현재 페이지값이 없으면 첫번째 페이지로 설정
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		
+		//키워드 데이터가 NULL이라면
+		if(search.getKeyword() == null) {
+			search.setKeyword("");
+		}
+
+		search.setPageSize(pageSize);
+		
+		List<Payment> list = paymentServices.getPaymentList(search);
+		
+		Page resultPage = new Page(search.getCurrentPage(), paymentServices.getCountPayment(search) , pageUnit, pageSize);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("foward:/payment/getPaymentList.jsp");
+		mav.addObject("list", list);
+		mav.addObject("resultPage", resultPage);
 		
 		return mav;
 	}

@@ -1,22 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-<%-- <%@ page import="com.VIG.mvc.service.domain.*" %>
 
-<%
-	
-	Payment payment = new Payment();
-	payment.setProductType(1);
-	request.setAttribute("payment", payment);
-
-%> --%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>addPayment</title>
+<title>getPaymentList</title>
 
 <!-- JQuery -->
 	
@@ -82,21 +74,6 @@
 
 <script type="text/javascript">
 
-$(function (){
-	
-
-	$("button:contains('확인')").on("click", function(){
-		
-
-		self.location="/VIG";
-		
-	
-	});
-	
-	
-	
-});
-
 
 </script>
 
@@ -112,102 +89,13 @@ $(function (){
 	
 <div id=main>
 	
+	<div class="container">
+		
+		
 	
-	<h2 align="center" style="font-weight: bold;" > 
-		
-		<c:if test="${payment.productType == '0' }">
-			프라임피드 추가 결제
-		</c:if>
-		
-		<c:if test="${payment.productType == '1' }">
-			비즈니스 전환 결제
-		</c:if>
-		
-		<c:if test="${payment.productType == '2' }">
-			후원결제
-		</c:if>
 	
-	 </h2>
-	<hr>
-	<br>
-	<br>
-	<br>
-	<div>
-	
-		<h4 align="center" style="font-weight: bold;">결제가 완료되었습니다.</h4>
-		
 	</div>
-	<br>
-	<br>
-	<br>
-	<c:if test="${payment.productType == '0' }">
-			
-			<div id="content">
-			<div align="center">
-			기존 프라임 피드 카운트 :
-			<br>
-			현재 프라임 피드 카운트 :
-			</div>
-			</div>
-	</c:if>
-	<c:if test="${payment.productType == '1' }">
-			
-			<div id="content">
-			<div align="center">
-			<h6>비즈니스user만의 혜택</h6>
-			<br>
-			- 프라임피드 설정
-			<br>
-			- 프라임피드 노출 횟수 1000건
-			<br>
-			- 다른 사용자로 부터 후원 받기!
-			<br>
-			모두 누릴 수 있습니다!
-			</div>
-			</div>
-
-			
-	</c:if>
-	<c:if test="${payment.productType == '2' }">
-			
-			<div id="content">
-			<div align="center">
-			후원 대상 : ${payment.beneficiary} ( ${payment.feedId} )
-			<br>
-			후원 금액 : ${payment.selectPrice}
-			<br>
-			<br>
-			<br>
-			
-			<h5 style="align:center;">소중한 후원
-			<br>
-			감사합니다.
-			</h5>
-			</div>
-			
-			
-			</div>
-			
-			
-	</c:if>	
-		
-			<br>
-			<br>
-			<br>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-		<!-- 하단 버튼 -->
-		<hr>
-		<div align="center">
-		<button type="button" class="btn btn-primary">확인</button>
-		</div>
 	
 
 	
