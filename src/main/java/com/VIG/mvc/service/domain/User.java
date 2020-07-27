@@ -17,7 +17,7 @@ public class User implements Serializable{
 	private String profileImg;
 	private String selfIntroduce;
 	private String sex;
-	private int birth;
+	private String birth;
 	private int state;
 	private String googleId;
 	private String account;

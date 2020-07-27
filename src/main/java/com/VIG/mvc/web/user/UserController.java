@@ -45,13 +45,12 @@ public class UserController {
 		
 	@RequestMapping( value="addUser", method=RequestMethod.POST )
 	public String addUser(@ModelAttribute("user") User user, HttpSession session ) throws Exception {
-		
-		
-		
+
+		user.setBirth(user.getBirth().replaceAll("-", ""));
 		System.out.println("addUser(POST):회원가입"+user);
 		userServices.addUser(user);
 		session.setAttribute("user",userServices.getUserOne(user.getUserCode()));
-			System.out.println("session:"+user);
+
 		return "redirect:/user/loginView.jsp";
 	}
 
@@ -76,10 +75,11 @@ public class UserController {
 		ModelAndView model = new ModelAndView();
 		model.setViewName("redirect:../main/main.jsp");
 			System.out.println("user:"+user);
-		if( user.getPassword().equals(dbUser.getPassword())) {
-			session.setAttribute("user", dbUser);
+		if( user.getUserCode().equals(dbUser.getUserCode())) {
+			if( user.getPassword().equals(dbUser.getPassword()))
+			session.setAttribute("userInfo", user.getUserCode()); 
 			}	
-	System.out.println("dbUser.userCode:"+dbUser.getUserCode());
+	System.out.println("session:"+session);
 		return model;
 		}	
 	

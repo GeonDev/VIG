@@ -14,7 +14,7 @@
 		<result property="profileImg" 		column="profile_img" 		jdbcType="VARCHAR" />
 		<result property="selfIntroduce" 	column="self_introduce" 	jdbcType="VARCHAR" />
 		<result property="sex" 				column="sex" 				jdbcType="VARCHAR" />
-		<result property="birth" 			column="birth" 				jdbcType="NUMERIC" />
+		<result property="birth" 			column="birth" 				jdbcType="VARCHAR" />
 		<result property="state" 			column="state" 				jdbcType="NUMERIC" />
 		<result property="googleId" 		column="google_id" 			jdbcType="VARCHAR" />
 		<result property="account" 			column="account" 			jdbcType="VARCHAR" />
@@ -36,8 +36,8 @@
 	 <!-- SQL : INSERT -->
 	<insert	id="addUser" parameterType="user" >
 	 	INSERT
-		INTO users(user_code , user_name , password , profile_img, self_introduce, sex, birth, state, google_id, account, prime_count, email, role, reg_date) 
-		VALUES (user_code, #{userName}, #{password:VARCHAR},  #{sex:VARCHAR}, #{birth:NUMERIC}, #{email:VARCHAR}, NOW())
+		INTO users(user_code , user_name , password , profile_img, sex, birth, state, prime_count, email, role, reg_date) 
+		VALUES (#{userCode}, #{userName}, #{password:VARCHAR}, #{profileImg:VARCHAR},  #{sex:VARCHAR}, #{birth:VARCHAR}, #{state:NUMERIC}, #{primeCount:NUMERIC}, #{email:VARCHAR}, DEFAULT, NOW())
 	 </insert>
 	 
 	 
@@ -108,5 +108,3 @@
 	-->
 	 
 </mapper>
-
-
