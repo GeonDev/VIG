@@ -38,13 +38,6 @@
 	
 	</select>
 	
-	<update id="cancelPayment" parameterType="payment">
-		
-		UPDATE payment
-		SET is_cancel = #{isCancel:NUMERIC}
-		WHERE payment_id = #{paymentId:VARCHAR}
-	
-	</update>
 	
 	<select id="getPaymentList" parameterType="search" resultMap="paymentSelectMap">
 		
@@ -60,12 +53,21 @@
 		
 		SELECT COUNT(temp.payment_id) FROM
 		(SELECT payment_id FROM payment 
-		<if test="keyword != null || keyword != ''">
+		<if test="keyword != null">
 		WHERE buyer = #{keyword}
+		AND is_cancel = 0
 		</if>
 		) temp
 	
 	</select>
+	
+	<update id="cancelPayment" parameterType="String">
+		
+		UPDATE payment
+		SET is_cancel = 1
+		WHERE payment_id = #{value}	
+	
+	</update>
 	
 
 	 
