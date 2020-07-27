@@ -12,6 +12,8 @@ public interface PaymentDao {
 	
 	public void deletePayment(Payment payment) throws Exception;
 	
+	public void cancelPayment(String paymentId) throws Exception;
+	
 	public Payment getPayment(String paymentId) throws Exception;
 	
 	public List<Payment> getPaymentList(Search search) throws Exception;

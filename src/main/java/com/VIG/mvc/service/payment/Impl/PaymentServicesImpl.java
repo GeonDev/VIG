@@ -58,6 +58,14 @@ public class PaymentServicesImpl implements PaymentServices {
 		return paymentDao.getCountPayment(search);
 		
 	}
+
+	@Override
+	public void cancelPayment(String paymentId) throws Exception {
+		// TODO Auto-generated method stub
+		
+		paymentDao.cancelPayment(paymentId);
+		
+	}
 	
 	
 	

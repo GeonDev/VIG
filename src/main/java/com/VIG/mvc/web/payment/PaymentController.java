@@ -108,9 +108,10 @@ public class PaymentController {
 	}
 	
 	@RequestMapping(value="getPaymentList", method=RequestMethod.GET)
-	public ModelAndView getPaymentList(@ModelAttribute("search") Search search) throws Exception {
-
+	public ModelAndView getPaymentList(@ModelAttribute("search") Search search, HttpSession session) throws Exception {
 		
+		User user = (User) session.getAttribute("user");
+		search.setKeyword(user.getUserCode());
 		// 현재 페이지값이 없으면 첫번째 페이지로 설정
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
@@ -120,18 +121,30 @@ public class PaymentController {
 		if(search.getKeyword() == null) {
 			search.setKeyword("");
 		}
-
+		
 		search.setPageSize(pageSize);
+		
+		System.out.println(search);
 		
 		List<Payment> list = paymentServices.getPaymentList(search);
 		
 		Page resultPage = new Page(search.getCurrentPage(), paymentServices.getCountPayment(search) , pageUnit, pageSize);
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("foward:/payment/getPaymentList.jsp");
+		mav.setViewName("/payment/getPaymentList.jsp");
 		mav.addObject("list", list);
 		mav.addObject("resultPage", resultPage);
 		
+		return mav;
+	}
+	
+	@RequestMapping(value="cancelPayment", method=RequestMethod.GET)
+	public ModelAndView cancelPayment(@RequestParam("paymentId") String paymentId) throws Exception {
+		
+		paymentServices.cancelPayment(paymentId);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:/payment/getPaymentList");
 		return mav;
 	}
 

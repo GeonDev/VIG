@@ -47,7 +47,8 @@
 	
 	#main { 
 		width: 960px;
-		margin: 70px auto;
+		margin-top: 70px;
+		margin-left: 30px;
 		align:  center;
 	}
 	
@@ -75,6 +76,22 @@
 <script type="text/javascript">
 
 
+
+ function fncdeletepay(paymentId){
+	 
+
+	 alert("취소합니다.");
+	 alert(paymentId);
+	 
+	 //아임포트 ajax 환불하는 곳
+	 
+	 self.location="/VIG/payment/cancelPayment?paymentId="+paymentId;
+	 
+ }
+ 
+
+
+
 </script>
 
 
@@ -89,11 +106,80 @@
 	
 <div id=main>
 	
+	<h2> 내 결제 목록 </h2>
+	<hr>
+	
 	<div class="container">
 		
+		<table class="table">
+		  <thead>
+		    <tr>
+		      <th scope="col">결제번호</th>
+		      <th scope="col">결제자</th>
+		      <th scope="col">결제유형</th>
+		      <th scope="col">상품유형</th>
+		      <th scope="col">결제금액</th>
+		      <th scope="col">결제일</th>
+		      <th scope="col">취소</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+			<c:if test="${list != null }">
+				<c:forEach var="payment" items="${list}">
+				<c:set var="i" value="0"/>
+				<c:set var="i" value="${i+1}"/>
+				
+				
+					<tr>
+					<th scope="row"><div style="width: 120px">${payment.paymentId}</div></th>
+					<td>${payment.buyer.userCode }</td>
+					<td>
+						<c:if test="${payment.paymentOption== '0' }">
+						카드결제
+						</c:if>
+						<c:if test="${payment.paymentOption== '1' }">
+						실시간계좌이체
+						</c:if>
+					</td>
+					<td>
+						<c:if test="${payment.productType== '0' }">
+						프라임피드추가
+						</c:if>
+						<c:if test="${payment.productType== '1' }">
+						비즈니스전환
+						</c:if>
+						<c:if test="${payment.productType== '2' }">
+						후원
+						</c:if>
+					</td>
+					<td>
+						${payment.lastPrice}
+					</td>
+					<td>
+						${payment.paymentDate }
+					</td>
+					<td>
+					<c:if test="${payment.isCancel == '0' }">
+					<c:if test="${payment.isWithdraw == '0' }">
+					<button class="btn blue-gradient" onclick="fncdeletepay('${payment.paymentId}')" >결제취소</button>
+					</c:if>
+					<c:if test="${payment.isWithdraw == '1' }">
+						취소불가
+					</c:if>
+					</c:if>
+					<c:if test="${payment.isCancel == '1' }">
+					취소됨
+					</c:if>
+					</td>
+				
+					</tr>
+				
+				
+				</c:forEach>
+			</c:if>
 		
-	
-	
+		</tbody>
+		</table>
 	</div>
 	
 	
