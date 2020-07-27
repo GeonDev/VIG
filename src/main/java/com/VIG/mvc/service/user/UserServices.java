@@ -3,6 +3,9 @@ package com.VIG.mvc.service.user;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.domain.User;
 
@@ -39,4 +42,7 @@ public interface UserServices {
 	public List<String> getAutoUserName(String name) throws Exception;
 
 	
+	
+	//
+//	public void loginCheck(String userCode, HttpServletResponse response) throws Exception;
 }
