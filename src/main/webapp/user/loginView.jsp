@@ -42,7 +42,18 @@
 				
 				var id=$("input[name='userCode']").val();
 				var pw=$("input[name='password']").val();
-						
+				if(id == null || id.length <1) {
+					alert('ID 를 입력하지 않으셨습니다.');
+					$("#userId").focus();
+					return;
+				}
+				
+				if(pw == null || pw.length <1) {
+					alert('패스워드를 입력하지 않으셨습니다.');
+					$("#password").focus();
+					return;
+				}	
+				
 				$.ajax( 
 						{
 							url : "json/login",
@@ -57,18 +68,18 @@
 								password : pw
 								}),
 							success : function(JSONData , status) {										
-								
+								alert(JSONData.userCode);
 								//if( JSONData != null ){
-								if( JSONData.userCode != id | JSONData.password != pw ){	
-									alert("아이디 또는 비밀번호가 틀렸습니다.");
-									
-								}else if(JSONData.userCode == id && JSONData.password == pw ){
+								 if(JSONData.userCode == id && JSONData.password == pw ){
 									alert("로그인성공");	
 									$(self.location).attr("href","../main/main.jsp");	
+									}else{
+									alert("아이디 또는 비밀번호를 확인해주세요.");
+									$("#userId").focus();
+									return;
 									}
 								}
 							}); 
-				return false;
 				
 				fncloginGo();
 				
