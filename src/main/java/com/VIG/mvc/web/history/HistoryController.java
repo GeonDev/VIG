@@ -1,5 +1,6 @@
 package com.VIG.mvc.web.history;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.VIG.mvc.service.color.ColorServices;
+import com.VIG.mvc.service.domain.History;
 import com.VIG.mvc.service.domain.Page;
 import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.domain.User;
+import com.VIG.mvc.service.feed.FeedServices;
 import com.VIG.mvc.service.history.HistoryServices;
 import com.VIG.mvc.service.image.ImageServices;
 import com.VIG.mvc.service.keyword.KeywordServices;
@@ -46,7 +49,10 @@ public class HistoryController {
 	@Qualifier("historyServicesImpl")
 	private HistoryServices historyServices;
 	
-
+	@Autowired 
+	@Qualifier("feedServicesImpl")
+	private FeedServices feedServices;	
+	
 
 	public HistoryController() {
 		// TODO Auto-generated constructor stub		
@@ -73,7 +79,13 @@ public class HistoryController {
 		
 		//유저가 본것만 조회
 		search.setSearchType(0);
-		//search.setKeyword(user.getUserCode());
+		
+		if(user != null) {
+			search.setKeyword(user.getUserCode());
+		}else {			
+			return new ModelAndView("forward:/common/alertView.jsp", "message", "로그인 후 이용가능합니다.");
+		}			
+		
 		// 테스트를 위하여 임시로 user01 세팅
 		search.setKeyword("user01");
 		
@@ -100,6 +112,29 @@ public class HistoryController {
 		historyServices.deleteHistory(historyId);
 		
 		return new ModelAndView("forward:/common/alertView.jsp", "message", "해당 기록이 삭제되었습니다.");
+		
+		
+	}
+	
+	@RequestMapping("addHideFeed")
+	public ModelAndView addHideFeed(@RequestParam("Id") int feedId, HttpSession session) throws Exception {
+		
+		User user = (User)session.getAttribute("user");
+		
+		if(user == null) {
+			return new ModelAndView("forward:/common/alertView.jsp", "message", "로그인 후 이용가능합니다.");
+		}
+		
+		
+		History history = new History();
+		
+		//숨김피드
+		history.setHistoryType(1);
+		history.setShowFeed(feedServices.getFeed(feedId));
+		history.setWatchUser(user);
+		historyServices.addHistory(history);
+		
+		return new ModelAndView("forward:/common/alertView.jsp", "message", "해당 피드가 숨김처리 됬습니다.");
 		
 		
 	}

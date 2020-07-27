@@ -65,6 +65,7 @@
 	
 	
 	function deleteHistory(historyId){
+		event.preventDefault();
 		console.log(historyId);
 		var result = confirm("해당 기록을 지우시겠습니까?");
 		if(result){
@@ -72,6 +73,7 @@
 			link =  link.concat(historyId);
 			$(location).attr("href", link); 
 		}
+		
 	}
 	
 	
@@ -87,11 +89,9 @@
 
 <body>
 
-	<div class="container-fluid">		
+	<div class="container-fluid">			
 	
-	
-		<!--href와 ID를 연결해야 작동함  -->
-	
+		<!--href와 ID를 연결해야 작동함 -->	
 		<div class="col-md-8">	
 			<br/>
 			
@@ -133,7 +133,7 @@
 												<img src="/VIG/images/uploadFiles/${thumbnail.imageFile}" alt="thumbnail" class="img-fluid rounded-sm" style="width: 300px; height: 225px;">																						
 											</c:if>
 										</c:forEach>										
-										<div class="mask waves-effect waves-light rgba-black-strong" style="text-align: right">	
+										<div class="mask waves-effect waves-light rgba-black-strong" style="text-align: right;">	
 											<button type="button" onclick="deleteHistory(${history.historyId})" class="btn btn-link" style="padding-left: 15px; padding-right: 15px;">
 												<i class="far fa-trash-alt" style="color: white; padding: 0px;"></i>
 											</button>										

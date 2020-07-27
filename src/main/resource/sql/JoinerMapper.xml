@@ -37,7 +37,15 @@
 		 	VALUES (joiner_id, #{feedId}, #{isLike}, NOW(), #{user.userCode})
 		</insert>	
 		
-				 
+		<delete id="deleteJoinUser" parameterType="joiner">
+			DELETE FROM joiner
+			WHERE joiner_id = #{value} 
+		</delete>
+		
+		<select id="getLikeState" parameterType="joiner" resultMap="joinerSelectMap">
+			SELECT * FROM joiner 
+			WHERE feed_id = #{feedId} AND is_like=1 AND user_code = #{user.userCode}
+			</select>
 </mapper>
 
 

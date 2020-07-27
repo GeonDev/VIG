@@ -46,4 +46,10 @@ public class HistoryServicesImpl implements HistoryServices {
 		
 	}
 
+	@Override
+	public List<History> getAllHistoryList(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return historyDao.getAllHistoryList(search);
+	}
+
 }
