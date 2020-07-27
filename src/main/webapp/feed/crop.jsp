@@ -3,38 +3,36 @@
 <!doctype html>
 <html>
 <head>
-<link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<link rel="stylesheet" href="http://jcrop-cdn.tapmodo.com/v2.0.0-RC1/css/Jcrop.css" type="text/css">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://jcrop-cdn.tapmodo.com/v2.0.0-RC1/js/Jcrop.js"></script>
+<script>
+var showCoords = function(c)
+{
+    $('#x').val(c.x);
+    $('#y').val(c.y);
+    $('#w').val(c.w);
+    $('#h').val(c.h);
+};
+
+// JCrop 호출
+$('#img').Jcrop({
+    setSelect: [0,0,width,height],
+    onChange: showCoords,
+    onSelect: showCoords
+});
+</script>
+
+
+
 
 <style>
-body{
-background-color: #002a3f;
-padding:0;
-margin:0;
-}
-input[type="file"]{
-	display:none;
-}
-label{
-	color:black;
-	height:500px;
-	width:847px;
-	background-color : #99ffff;
-	position: absolute;
-	margin:auto;
-	top:0;
-	bottom:0;
-	left:0;
-	right:0;
-	font-size:20px;
-	display:flex;
-	justify-content:center;
-	align-item:center;
-	}
-</style>
-<script>
 
-</script>
+</style>
+
+
+
 
   </head>
   
@@ -42,10 +40,17 @@ label{
     
   </head>
   <body>
-		<input type="file" id="file" accpt="image"/*>
-		<label for="file">
-		
-		</label>
+		<form action="/crop">
+     <input type="hidden" name="x" id="x" />
+     <input type="hidden" name="y" id="y" />
+     <input type="hidden" name="w" id="w" />
+     <input type="hidden" name="h" id="h" />
+</form>
+
+<img src="" id="img">
+
+
+
 
 
 

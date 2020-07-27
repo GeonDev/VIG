@@ -95,10 +95,12 @@ public class FeedController {
         List<ImageColor> colors = new ArrayList<ImageColor>();
         
 		if(files !=null) {
-			
+			int k=0;	
 			
 	        for (MultipartFile multipartFile : files) {
+	        	System.out.println("이미지순서: "+ k++);
 	        	
+	        		
 	        	//파일 업로드시 시간을 이용하여 이름이 중복되지 않게 한다.
 	        	String inDate   = new java.text.SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date());
 	        	
@@ -107,9 +109,13 @@ public class FeedController {
 	    		multipartFile.transferTo(f);		    		
 	    		
 	    		Image image = new Image();
-	    		
+	    		if(k==0) {
+	    			image.setIsThumbnail(1);					//이미지 순서가 0번째면 썸네일 
+	    		}
 	    		String imageFile=inDate+multipartFile.getOriginalFilename();
 	    	    System.out.println("imageFile:"+imageFile);
+	    	    
+	    	    
 	    	    
 	    		int getfeedId = feedServices.getLastFeedId();				//마지막 피드아이디 = getfeedId
 	    		image.setFeedId(getfeedId);											//이미지에 피드ID,이미지파일 셋
@@ -117,6 +123,7 @@ public class FeedController {
 	    		imageServices.addImage(image);												
 	    		
 	    		int imageId = imageServices.getLastImageId();				//마지막 이미지Id  = imageId
+	    		
 	    		
 	    		
 				String[] originKeyword = keyword.split(","); //스트링으로 받은 키워드를 파싱후 string[]에 담는다
@@ -134,7 +141,8 @@ public class FeedController {
 	    		
 	    		//keys = VisionInfo.getKeywordForVision(path+inDate+multipartFile.getOriginalFilename());	    			
 	    		//colors = VisionInfo.getColorForVision(path+inDate+multipartFile.getOriginalFilename());
-			} 			
+			}
+	        
 		}		
 		
 		if(keys.size() > 1) {
