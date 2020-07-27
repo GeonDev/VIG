@@ -199,10 +199,11 @@ public class SearchController {
 		
 		model.addAttribute("mode", mode);		
 		
-		
-		//외부로 비밀번호와 구글 ID가 노출되지 않도록 한다.
-		user.setGoogleId("");
-		user.setPassword("");
+		if(user !=null) {
+			//외부로 비밀번호와 구글 ID가 노출되지 않도록 한다.
+			user.setGoogleId("");
+			user.setPassword("");
+		}
 		model.addAttribute("user", user);
 		
 		return new ModelAndView("forward:/search/getSearchResult.jsp");
