@@ -61,7 +61,7 @@
    					 <ul class="navbar-nav ml-auto">
 				 </ul>		
 <!-- 검색 버튼-->    	      
-	        <a class="nav-link waves-effect waves-light" id="" href="/VIG/search/getSearchResult.jsp">
+	        <a class="nav-link waves-effect waves-light" id="" href="/VIG/search/getSearchList">
 	          <i class="fas fa-search" id="fas_ntn"></i>
 	        </a>	   
 <!-- 알람버튼 -->     
