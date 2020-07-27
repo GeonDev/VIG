@@ -44,7 +44,9 @@
 		SELECT * FROM
 		(SELECT ROW_NUMBER() OVER(ORDER BY payment.payment_date DESC) num, payment.* 
 		FROM payment
+		<if test="keyword != null">
 		WHERE buyer = #{keyword}
+		</if>
 		)temp WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
 	
 	</select>
