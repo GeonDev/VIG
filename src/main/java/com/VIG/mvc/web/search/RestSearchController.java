@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.VIG.mvc.service.color.ColorServices;
 import com.VIG.mvc.service.domain.Feed;
+import com.VIG.mvc.service.domain.History;
 import com.VIG.mvc.service.domain.Image;
 import com.VIG.mvc.service.domain.ImageColor;
 import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.feed.FeedServices;
+import com.VIG.mvc.service.history.HistoryServices;
 import com.VIG.mvc.service.image.ImageServices;
 import com.VIG.mvc.service.keyword.KeywordServices;
 import com.VIG.mvc.service.user.UserServices;
@@ -54,6 +56,11 @@ public class RestSearchController {
 	@Autowired 
 	@Qualifier("feedServicesImpl")
 	private FeedServices feedServices;	
+	
+	@Autowired 
+	@Qualifier("historyServicesImpl")
+	private HistoryServices historyServices;
+	
 	
 	
 	@Value("#{commonProperties['pageUnit'] ?: 5}")
@@ -169,6 +176,17 @@ public class RestSearchController {
 			
 			
 			//숨김피드는 빼준다.
+			if(user !=null) {
+				Search tempSearch = new Search();
+				tempSearch.setKeyword(user.getUserCode());
+				tempSearch.setSearchType(1);				
+				
+				List<History> hidelist = historyServices.getAllHistoryList(tempSearch);				
+				
+				for(History key : hidelist) {					
+					feedlist.remove(key.getShowFeed());
+				}				
+			}
 			
 			map.put("list", feedlist);
 		}		

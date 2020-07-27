@@ -47,4 +47,11 @@ public class HistoryDaoImpl implements HistoryDao {
 		sqlSession.delete("HistoryMapper.deleteHistory", historyId);
 	}
 
+
+	@Override
+	public List<History> getAllHistoryList(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("HistoryMapper.getAllHistoryFromUser", search);
+	}
+
 }
