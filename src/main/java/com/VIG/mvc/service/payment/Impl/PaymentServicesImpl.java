@@ -47,7 +47,28 @@ public class PaymentServicesImpl implements PaymentServices {
 	@Override
 	public List<Payment> getPaymentList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		
+		return paymentDao.getPaymentList(search);
 	}
+
+	@Override
+	public int getCountPayment(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		
+		return paymentDao.getCountPayment(search);
+		
+	}
+
+	@Override
+	public void cancelPayment(String paymentId) throws Exception {
+		// TODO Auto-generated method stub
+		
+		paymentDao.cancelPayment(paymentId);
+		
+	}
+	
+	
+	
+	
 
 }

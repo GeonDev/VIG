@@ -27,18 +27,20 @@ public RestUserController() {
 	System.out.println("REST CON");		
 	}
 
+
+
 @RequestMapping(value="json/login", method=RequestMethod.POST)
 public User login( @RequestBody User user, HttpSession session) throws Exception{
 		System.out.println("json/login");
 	User dbUser = userServices.getUserOne(user.getUserCode());
 		System.out.println("json/dbUser:"+dbUser);
-	if( user.getPassword().equals(user.getPassword())) {
+	if( user.getPassword().equals(dbUser.getPassword())) {
 		session.setAttribute("user", dbUser);
 	}
 	return dbUser;	
 }
 
-
+/*
 @RequestMapping(value="json/checkId", method=RequestMethod.POST)
 public User checkId( @RequestBody User user, HttpSession session) throws Exception{
 		System.out.println("json/checkId");
@@ -49,7 +51,7 @@ public User checkId( @RequestBody User user, HttpSession session) throws Excepti
 	}
 	return dbUser;	
 }
-
+*/
 
 
 

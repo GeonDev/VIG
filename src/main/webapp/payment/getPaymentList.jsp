@@ -1,22 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-<%-- <%@ page import="com.VIG.mvc.service.domain.*" %>
 
-<%
-	
-	Payment payment = new Payment();
-	payment.setProductType(1);
-	request.setAttribute("payment", payment);
-
-%> --%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>addPayment</title>
+<title>getPaymentList</title>
 
 <!-- JQuery -->
 	
@@ -55,7 +47,8 @@
 	
 	#main { 
 		width: 960px;
-		margin: 70px auto;
+		margin-top: 70px;
+		margin-left: 30px;
 		align:  center;
 	}
 	
@@ -82,20 +75,21 @@
 
 <script type="text/javascript">
 
-$(function (){
-	
 
-	$("button:contains('확인')").on("click", function(){
-		
 
-		self.location="/VIG";
-		
-	
-	});
-	
-	
-	
-});
+ function fncdeletepay(paymentId){
+	 
+
+	 alert("취소합니다.");
+	 alert(paymentId);
+	 
+	 //아임포트 ajax 환불하는 곳
+	 
+	 self.location="/VIG/payment/cancelPayment?paymentId="+paymentId;
+	 
+ }
+ 
+
 
 
 </script>
@@ -112,102 +106,82 @@ $(function (){
 	
 <div id=main>
 	
-	
-	<h2 align="center" style="font-weight: bold;" > 
-		
-		<c:if test="${payment.productType == '0' }">
-			프라임피드 추가 결제
-		</c:if>
-		
-		<c:if test="${payment.productType == '1' }">
-			비즈니스 전환 결제
-		</c:if>
-		
-		<c:if test="${payment.productType == '2' }">
-			후원결제
-		</c:if>
-	
-	 </h2>
+	<h2> 내 결제 목록 </h2>
 	<hr>
-	<br>
-	<br>
-	<br>
-	<div>
 	
-		<h4 align="center" style="font-weight: bold;">결제가 완료되었습니다.</h4>
+	<div class="container">
 		
+		<table class="table">
+		  <thead>
+		    <tr>
+		      <th scope="col">결제번호</th>
+		      <th scope="col">결제자</th>
+		      <th scope="col">결제유형</th>
+		      <th scope="col">상품유형</th>
+		      <th scope="col">결제금액</th>
+		      <th scope="col">결제일</th>
+		      <th scope="col">취소</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+			<c:if test="${list != null }">
+				<c:forEach var="payment" items="${list}">
+				<c:set var="i" value="0"/>
+				<c:set var="i" value="${i+1}"/>
+				
+				
+					<tr>
+					<th scope="row"><div style="width: 120px">${payment.paymentId}</div></th>
+					<td>${payment.buyer.userCode }</td>
+					<td>
+						<c:if test="${payment.paymentOption== '0' }">
+						카드결제
+						</c:if>
+						<c:if test="${payment.paymentOption== '1' }">
+						실시간계좌이체
+						</c:if>
+					</td>
+					<td>
+						<c:if test="${payment.productType== '0' }">
+						프라임피드추가
+						</c:if>
+						<c:if test="${payment.productType== '1' }">
+						비즈니스전환
+						</c:if>
+						<c:if test="${payment.productType== '2' }">
+						후원
+						</c:if>
+					</td>
+					<td>
+						${payment.lastPrice}
+					</td>
+					<td>
+						${payment.paymentDate }
+					</td>
+					<td>
+					<c:if test="${payment.isCancel == '0' }">
+					<c:if test="${payment.isWithdraw == '0' }">
+					<button class="btn blue-gradient" onclick="fncdeletepay('${payment.paymentId}')" >결제취소</button>
+					</c:if>
+					<c:if test="${payment.isWithdraw == '1' }">
+						취소불가
+					</c:if>
+					</c:if>
+					<c:if test="${payment.isCancel == '1' }">
+					취소됨
+					</c:if>
+					</td>
+				
+					</tr>
+				
+				
+				</c:forEach>
+			</c:if>
+		
+		</tbody>
+		</table>
 	</div>
-	<br>
-	<br>
-	<br>
-	<c:if test="${payment.productType == '0' }">
-			
-			<div id="content">
-			<div align="center">
-			기존 프라임 피드 카운트 :
-			<br>
-			현재 프라임 피드 카운트 :
-			</div>
-			</div>
-	</c:if>
-	<c:if test="${payment.productType == '1' }">
-			
-			<div id="content">
-			<div align="center">
-			<h6>비즈니스user만의 혜택</h6>
-			<br>
-			- 프라임피드 설정
-			<br>
-			- 프라임피드 노출 횟수 1000건
-			<br>
-			- 다른 사용자로 부터 후원 받기!
-			<br>
-			모두 누릴 수 있습니다!
-			</div>
-			</div>
-
-			
-	</c:if>
-	<c:if test="${payment.productType == '2' }">
-			
-			<div id="content">
-			<div align="center">
-			후원 대상 : ${payment.beneficiary} ( ${payment.feedId} )
-			<br>
-			후원 금액 : ${payment.selectPrice}
-			<br>
-			<br>
-			<br>
-			
-			<h5 style="align:center;">소중한 후원
-			<br>
-			감사합니다.
-			</h5>
-			</div>
-			
-			
-			</div>
-			
-			
-	</c:if>	
-		
-			<br>
-			<br>
-			<br>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-		<!-- 하단 버튼 -->
-		<hr>
-		<div align="center">
-		<button type="button" class="btn btn-primary">확인</button>
-		</div>
 	
 
 	

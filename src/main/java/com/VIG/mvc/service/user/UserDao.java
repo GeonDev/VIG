@@ -25,9 +25,16 @@ public interface UserDao {
 	
 	//유저 검색 시 자동생성
 	public List<String> getAutoUserName(String name) throws Exception;
+
+	
+	
+	
+	
+	//int loginCheck(String userCode) throws Exception;
 	
 		
-	
+	//
+	//public boolean loginCheck(User user) throws Exception;
 
 	
 }

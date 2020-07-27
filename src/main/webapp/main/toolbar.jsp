@@ -11,21 +11,12 @@
 
 		
 //===로그인
-	$(function(){
-		$("#login_btn").on("click",function(){
-			$(location).attr("href","../user/login");
-			alert("session:"+sessionScope.getUserCode);
-		});
+	
 //===로그아웃	
 	$( "#logout_btn:contains('Log Out')" ).on("click" , function() {
 			$(location).attr("href","../user/logout");
 			}); 
 			
-	$( "#myFeed" ).on("click" , function() {
-		//Debug..
-		$(self.location).attr("href","../myFeed/myFeed.jsp");
-		}); 
-	});
 	</script>	
 	
 	<style>
@@ -71,44 +62,20 @@
 <!-- 채팅버튼 -->      
 	        <a class="nav-link waves-effect waves-light" id=" chat_btn" href="#">
 	          <i class="fas fa-comments" id="fas_ntn"></i></a>
-<!-- 로그인 버튼 -->   			
-			 <c:if test="${ empty user }"> <a class="nav-link waves-effect waves-light" id="login_btn"><i class="far fa-user" id="fas_ntn"></i></a></c:if> 
+<!-- 로그인 버튼 -->   
+				
+			 <c:if test="${empty user}"> 
+			  <a href="../user/login" id="login_btn" >Log in</a>
+			</c:if> 
 			
-			 <c:if test="${ user.role == 'user' ||  user.role == 'business'}"> 
-				 <div class="nav-link dropdown-toggle" id="DropdownMenu" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-user"></i>
-        </div>
-		        <div class="dropdown-menu dropdown-menu-right dropdown-default"
-		          aria-labelledby="DropdownMenu">
-		          <h6 class="dropdown-header">${user.userName}</h6>
-		          <div class="dropdown-divider"></div>
-		          <a class="dropdown-item" id="myFeed_btn" href="../myFeed/myFeed.jsp">My Feed</a>
-		          <a class="dropdown-item" id="" href="../feed/addFeed.jsp"><p>Upload</p></a>
-		          <a class="dropdown-item" id="" href="../user/getUserInfo.jsp"><p>Profile</p></a>
-		          <a class="dropdown-item" ><p>------</p></a>
-		          
-		        </div>
+			 <c:if test="${!empty user}"> 
 		       <div id="logout_btn" >Log Out</div>
 			</c:if>	  
-			   
-			<c:if test="${ user.role == 'admin'}">
-				<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
-		          aria-haspopup="true" aria-expanded="false">
-		          <i class="fas fa-user"></i>
-		        </a>
-		        <div class="dropdown-menu dropdown-menu-right dropdown-default"
-		          aria-labelledby="navbarDropdownMenuLink-333">
-		          <h6 class="dropdown-header">${user.userName}</h6>
-		          <div class="dropdown-divider"></div>
-		          <a class="dropdown-item" id="myFeed_btn" href="">관리자페이지</a>		
-		          <div id="logout_btn" ><p>Log Out</p></div>          
-		        </div>		      
-			</c:if>	     
-			
+
 	     	</div>
 	      </nav>
 		<br/>
+		
 		
 </body>
 </html>
