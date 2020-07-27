@@ -9,6 +9,12 @@ public interface HistoryServices {
 	
 	public List<History> getHistoryList(Search search) throws Exception;
 	
+	public List<History> getAllHistoryList(Search search) throws Exception;
+	
 	public void addHistory(History history) throws Exception;
+	
+	public int getHistoryCount(Search search) throws Exception;
+	
+	public void deleteHistory(int historyId) throws Exception;
 
 }

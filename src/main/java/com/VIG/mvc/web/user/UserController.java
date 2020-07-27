@@ -46,11 +46,12 @@ public class UserController {
 	@RequestMapping( value="addUser", method=RequestMethod.POST )
 	public String addUser(@ModelAttribute("user") User user, HttpSession session ) throws Exception {
 
+		
 		user.setBirth(user.getBirth().replaceAll("-", ""));
 		System.out.println("addUser(POST):회원가입"+user);
 		userServices.addUser(user);
 		session.setAttribute("user",userServices.getUserOne(user.getUserCode()));
-
+		
 		return "redirect:/user/loginView.jsp";
 	}
 
@@ -60,27 +61,22 @@ public class UserController {
 	@RequestMapping( value="login", method=RequestMethod.GET)
 	public ModelAndView login() throws Exception{
 		
-			System.out.println("login(GET):로그인 페이지로 이동");	
+		System.out.println("login(GET):로그인 페이지로 이동");	
 		ModelAndView model = new ModelAndView();
 		model.setViewName("forward:../user/loginView.jsp");		
 		return model;
 	}
 	
-	
+
 	@RequestMapping( value="login", method=RequestMethod.POST )
-	public ModelAndView login(@ModelAttribute("user") User user, HttpSession session) throws Exception{
-		
-			System.out.println("login(POST):로그인");	
+	public String login(@ModelAttribute("user") User user, HttpSession session) throws Exception{
+	
 		User dbUser = userServices.getUserOne(user.getUserCode());
-		ModelAndView model = new ModelAndView();
-		model.setViewName("redirect:../main/main.jsp");
-			System.out.println("user:"+user);
-		if( user.getUserCode().equals(dbUser.getUserCode())) {
-			if( user.getPassword().equals(dbUser.getPassword()))
-			session.setAttribute("userInfo", user.getUserCode()); 
-			}	
-	System.out.println("session:"+session);
-		return model;
+			if( user.getPassword().equals(dbUser.getPassword())){
+				session.setAttribute("user", dbUser);
+			}
+			
+		return "redirect:../main/main.jsp";
 		}	
 	
 //=======로그아웃===============================================================//
@@ -161,4 +157,37 @@ public class UserController {
 		System.out.println("모달띄우기 나오나요");
 		return "VIG/myFeed/followTest.jsp";
 	}
+	
+	//=============
+	@RequestMapping( value="updateUser", method=RequestMethod.POST )
+	public String updateUser(@ModelAttribute("user") User user, Model model,HttpSession session)throws Exception{ 
+		System.out.println("/user/updateUser : POST");
+		userServices.updateUser(user);
+		
+		String sessionCode=((User)session.getAttribute("user")).getUserCode();
+		if(sessionCode.equals(user.getUserCode())) {
+			session.setAttribute("user",user);
+		}
+		return "redirect:/user/getUserInfo?userCode="+user.getUserCode();
+	}
+	
+	//==
+
+	/*
+	  @RequestMapping( value="loginCheck", method=RequestMethod.POST )
+		public void loginCheck(@ModelAttribute User user, HttpSession session) throws Exception{
+	  boolean result = userServices.loginCheck(user, session);
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("login");
+		
+		if(result) {
+			mav.addObject("msg","성공");
+		}else {
+			mav.addObject("msg","실패");
+		}
+		return mav;
+	}
+	*/
+	
 }

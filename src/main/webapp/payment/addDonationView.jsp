@@ -205,7 +205,7 @@ $(function(){
 		        msg += '결제 금액 : ' + rsp.paid_amount;
 		        msg += '카드 승인번호 : ' + rsp.apply_num;
 		        $("input[name='lastPrice']").val(rsp.paid_amount);
-		        $("input[name='paymentId']").val(rsp.merchant_uid);
+		        $("input[name='paymentId']").val(rsp.imp_uid);
 		        $("form").attr("action", "/VIG/payment/addDonation").attr("method", "post").submit();
 		    } else {
 		        var msg = '결제에 실패하였습니다.';

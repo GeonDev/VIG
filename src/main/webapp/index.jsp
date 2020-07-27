@@ -116,7 +116,7 @@
 		</div>	
 		
 		<div class="row">
-			<a href="history/getMyHistory">히스토리</a>
+			<a href="history/getMyHistoryList">히스토리</a>
 		</div>	
 		
 		

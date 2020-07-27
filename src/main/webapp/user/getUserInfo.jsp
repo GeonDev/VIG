@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,15 +27,43 @@
 		
 		<script type="text/javascript">
 		
-		function fncUpdateUserInfo(){
-			alert("����?");
-			$("form").attr("method","post").sttr("action","update").submit();
-		}
+
 		$( function(){
-			#("#update_btn").on("click",function(){
-				$.ajax( 
-						
+			$("#update_btn").on("click",function(){
+				alert("업뎃?");
+				self.location="../user/updateUser.jsp"
 			});
+		});
+		
+		$(function(){
+			$("#back").on("click",function(){
+				alert("history-1")
+			});
+		});
+		
+		$(function(){
+			var file = document.querySelector('#getfile');
+
+			$(file).on('change', function() {
+			  var fileList = file.files;
+				console.log("1");
+			  // 읽기
+			  var reader = new FileReader();
+			  reader.readAsDataURL(fileList[0]);
+			  console.log("2");
+
+			  		//로드 한 후
+				  reader.onload = function() {
+					  console.log("3");
+				    //로컬 이미지를 보여주기
+				    document.querySelector('#preview').src = reader.result;
+				
+				    //썸네일 이미지 생성
+				    var tempImage = new Image(); //drawImage 메서드에 넣기 위해 이미지 객체화
+				    tempImage.src = reader.result; //data-uri를 이미지 객체에 주입
+
+		  	};
+			});	
 		});
 
 		</script>
@@ -47,17 +76,20 @@
 		.col-md-10{
 			padding: 20px auto;
 		}
-		#pImg{
+		#preview{
 			display:block;
 			margin-left:auto;
 			margin-right:auto;
 			width: auto; height: auto;
 		    max-width: 300px;
-		    max-height: 300px;
-		    border-radius:50%;
+		    max-height: 200px;
+		    border-radius:100%;
 		    position: relative; 
 		    z-index: 2;
 		    }
+		   #getfile{
+		   padding: auto;
+		   }
 		    .uuu{
 		    margin:0;
 		    padding:0;
@@ -97,8 +129,15 @@
 			text-align: center;
 			}
 			.btn_1{
-			
-			
+			margin:auto;			
+			}
+			#sns_nav{
+		   display:flex;
+		   margin-left:auto;
+			margin-right:auto;
+			flex-direction: row;
+			justify-content: center;
+		   }
 			}
 			.btn.btn-elegant{
 			display:block;
@@ -111,43 +150,52 @@
 <body>
 
 <div class="container">
-<div class="row">
-			<jsp:include page="/main/toolbar.jsp"></jsp:include>
-			</div>
+
 	<div class="row">
 		<div class="col-md-12">
-		<div class="sangdan"><h1>�� ���� ����</h1></div>
+		<div class="sangdan"><h1>내 정보 수정</h1></div>
 		<hr/>
 	<div class="row">
  			<div class="col-md-12 "> 
- 	<!-- ������ ���� -->	
+ 	<!-- 프로필 사진 -->	
  	<div class="uuu">					
  				<div class="profile">
- 				<img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg" id="pImg"  alt="profile_img">
+ 			
+ 				<img id="preview" src="/VIG/images/uploadFiles/profile_img.jpg" id="pImg"  alt="profile_img">
  				</div>
  				
- 				</div>	
+ 				
+ 					<input type="file" id="getfile" name="uploadFile" accept="image/*">
+ 				
  				<br/>
- 	<!-- �� ���� ���� -->
+ 	<!-- 내 정보 보기 -->
  	<div class="row">
  			<div class="infoList">
  				<div class="list-group">
- 					<div class="userInfo" >user code</div><br/>
- 					 <div class="userInfo">user name</div><br/>
- 					 <div class="userInfo">self introduce</div><br/>
- 					 <div class="userInfo">bank name</div><br/>
- 					 <div class="userInfo">account</div>
+ 					<div class="userInfo" >user code : ${user.userCode}</div><br/>
+ 					 <div class="userInfo">user name : ${user.userName}</div><br/>
+ 					 <div class="userInfo">self introduce : ${user.selfIntroduce}</div><br/>
+ 					 <div class="userInfo">account : ${user.account}</div><br/>
+ 					 <div class="userInfo">Member Since : ${user.regDate}</div>
  				</div>    
  			</div>
+ 		</div>	
+ 			<div class="row" id="sns_nav">
+ 					<a href="#"><i class="fab fa-facebook-f fa-lg blue-text ml-3 mr-3 fa-1x"></i></a>
+ 					<a href="#"><i class="fab fa-twitter fa-lg blue-text ml-3 mr-3  fa-1x"></i></a>
+ 					<a href="#"><i class="fab fa-instagram fa-lg blue-text ml-3 mr-3 fa-1x"></i></a>
+ 			</div>
+ 			
  	</div>
  	<div class="btn_1">
- 	<button  class="btn btn-elegant" id="update_btn" >Edit Profile</button>
+ 	<button  class="btn btn-elegant" id="update_btn" >수정완료</button>
+ 	<button  class="btn btn-elegant" id="back" >취소</button>
 	</div>
 	</div>
 		</div>
 	</div>
 </div>
-</div>
+
 
 </body>
 </html>

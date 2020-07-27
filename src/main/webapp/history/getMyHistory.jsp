@@ -31,22 +31,28 @@
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 	
-	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-    <!-- Bootstrap Dropdown Hover JS -->
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-   
-   
+
    <!-- jQuery UI toolTip 사용 CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
-	  body {
-            padding-top : 50px;
-        }
+	
+	body {
+    	padding-top : 50px;
+        }           
+		
+	.img_feed {	  
+	    max-width: 300px;
+	    max-height: 225px;	
+		}
+				
+	.view {	  
+	margin: 5px 10px;
+		}
+		
+
     </style>
     
 	<script type="text/javascript">
@@ -54,10 +60,24 @@
 		$("#currentPage").val(currentPage);
 		$("form").attr("action", "./getReportList");
 		$("form").submit();
+	}	
+	
+	
+	
+	function deleteHistory(historyId){
+		event.preventDefault();
+		console.log(historyId);
+		var result = confirm("해당 기록을 지우시겠습니까?");
+		if(result){
+			var link ='/VIG/history/deleteHistory?Id=';
+			link =  link.concat(historyId);
+			$(location).attr("href", link); 
+		}
+		
 	}
 	
 	
-	$(function(){
+	$(function(){	
 		
 
 	
@@ -69,47 +89,108 @@
 
 <body>
 
-	<div class="container-fluid">		
+	<div class="container-fluid">			
 	
-	
-		<div class="col-md-8">		
+		<!--href와 ID를 연결해야 작동함 -->	
+		<div class="col-md-8">	
+			<br/>
+			
+			<div class="page-header text-info">
+				<h3>내 활동정보 보기</h3>
+			</div>			
+			<hr/>		
+				
+			
 			<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 			  <li class="nav-item">
-			    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
-			      aria-controls="pills-home" aria-selected="true">Home</a>
+			    <a class="nav-link active" id="pills-show-tab" data-toggle="pill" href="#pills-show" role="tab"
+			      aria-controls="pills-home" aria-selected="true">최근열람피드</a>
 			  </li>
 			  <li class="nav-item">
-			    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
-			      aria-controls="pills-profile" aria-selected="false">Profile</a>
+			    <a class="nav-link" id="pills-comment-tab" data-toggle="pill" href="#pills-comment" role="tab"
+			      aria-controls="pills-profile" aria-selected="false">댓글 보기</a>
 			  </li>
 			  <li class="nav-item">
-			    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab"
-			      aria-controls="pills-contact" aria-selected="false">Contact</a>
+			    <a class="nav-link" id="pills-like-tab" data-toggle="pill" href="#pills-like" role="tab"
+			      aria-controls="pills-contact" aria-selected="false">좋아요 한 피드</a>
 			  </li>
-			</ul>
+			  <li class="nav-item">
+			    <a class="nav-link" id="pills-hide-tab" data-toggle="pill" href="#pills-hide" role="tab"
+			      aria-controls="pills-contact" aria-selected="false">숨긴 피드</a>
+			  </li>
+			</ul>			
+			
 			
 			<div class="tab-content pt-2 pl-1" id="pills-tabContent">
-			  <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">Consequat
-			    occaecat ullamco amet non eiusmod nostrud dolore irure incididunt est duis anim sunt officia. Fugiat
-			    velit proident aliquip nisi incididunt nostrud exercitation proident est nisi. Irure magna elit commodo
-			    anim ex veniam culpa eiusmod id nostrud sit cupidatat in veniam ad. Eiusmod consequat eu adipisicing
-			    minim anim aliquip cupidatat culpa excepteur quis. Occaecat sit eu exercitation irure Lorem incididunt
-			    nostrud.</div>
-			  <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">Ad
-			    pariatur nostrud pariatur exercitation ipsum ipsum culpa mollit commodo mollit ex. Aute sunt incididunt
-			    amet commodo est sint nisi deserunt pariatur do. Aliquip ex eiusmod voluptate exercitation cillum id
-			    incididunt elit sunt. Qui minim sit magna Lorem id et dolore velit Lorem amet exercitation duis
-			    deserunt. Anim id labore elit adipisicing ut in id occaecat pariatur ut ullamco ea tempor duis.</div>
-			  <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">Est
-			    quis nulla laborum officia ad nisi ex nostrud culpa Lorem excepteur aliquip dolor aliqua irure ex.
-			    Nulla ut duis ipsum nisi elit fugiat commodo sunt reprehenderit laborum veniam eu veniam. Eiusmod minim
-			    exercitation fugiat irure ex labore incididunt do fugiat commodo aliquip sit id deserunt reprehenderit
-			    aliquip nostrud. Amet ex cupidatat excepteur aute veniam incididunt mollit cupidatat esse irure officia
-			    elit do ipsum ullamco Lorem. Ullamco ut ad minim do mollit labore ipsum laboris ipsum commodo sunt
-			    tempor enim incididunt. Commodo quis sunt dolore aliquip aute tempor irure magna enim minim
-			    reprehenderit. Ullamco consectetur culpa veniam sint cillum aliqua incididunt velit ullamco sunt
-			    ullamco quis quis commodo voluptate. Mollit nulla nostrud adipisicing aliqua cupidatat aliqua pariatur
-			    mollit voluptate voluptate consequat non.</div>
+			  <div class="tab-pane fade show active" id="pills-show" role="tabpanel" aria-labelledby="pills-show-tab">
+			  
+				  <div class="row justify-content-start" style="margin-left: 10px; margin-right: 10px;">
+					  <c:forEach var="history" items="${historylist}">				
+							<div class = "view overlay">
+									<div class = "img_feed">								
+										<c:forEach var="thumbnail" items="${history.showFeed.images}">
+											<c:if test="${thumbnail.isThumbnail == 1}">									
+												<img src="/VIG/images/uploadFiles/${thumbnail.imageFile}" alt="thumbnail" class="img-fluid rounded-sm" style="width: 300px; height: 225px;">																						
+											</c:if>
+										</c:forEach>										
+										<div class="mask waves-effect waves-light rgba-black-strong" style="text-align: right;">	
+											<button type="button" onclick="deleteHistory(${history.historyId})" class="btn btn-link" style="padding-left: 15px; padding-right: 15px;">
+												<i class="far fa-trash-alt" style="color: white; padding: 0px;"></i>
+											</button>										
+										</div>																			
+									</div>
+								<h5 style="font-weight: bold; margin: 5px 10px;">													
+									${history.showFeed.feedTitle}
+								</h5>	
+							</div>
+						</c:forEach>			  
+				  </div>			  
+			  
+			  </div>
+			  <div class="tab-pane fade" id="pills-comment" role="tabpanel" aria-labelledby="pills-comment-tab">
+				댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다.
+				댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다.
+				댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다.
+			  </div>
+			  <div class="tab-pane fade" id="pills-like" role="tabpanel" aria-labelledby="pills-like-tab">
+		        좋아요한 글입니다. 좋아요한 글입니다. 좋아요한 글입니다. 좋아요한 글입니다. 좋아요한 글입니다.
+			    좋아요한 글입니다. 좋아요한 글입니다. 좋아요한 글입니다. 좋아요한 글입니다. 좋아요한 글입니다.
+			    좋아요한 글입니다. 좋아요한 글입니다. 좋아요한 글입니다. 좋아요한 글입니다. 좋아요한 글입니다.
+			  </div>
+			  <div class="tab-pane fade" id="pills-hide" role="tabpanel" aria-labelledby="pills-hide-tab">
+			  
+				  <div class="row justify-content-start" style="margin-left: 10px; margin-right: 10px;">
+					  <c:forEach var="history" items="${hidelist}">				
+							<div class = "view overlay">
+								<div class = "img_feed">							
+									<c:forEach var="thumbnail" items="${history.showFeed.images}">
+										<c:if test="${thumbnail.isThumbnail == 1}">									
+											<img src="/VIG/images/uploadFiles/${thumbnail.imageFile}" alt="thumbnail" class="img-fluid rounded-sm" style="width: 300px; height: 225px;">																						
+										</c:if>
+									</c:forEach>
+									<a href="/VIG/feed/getFeed?feedId=${history.showFeed.feedId}">
+										<div class="mask waves-effect waves-light rgba-black-strong" style="text-align: right">	
+											<button type="button" onclick="deleteHistory('${history.historyId}')" class="btn btn-link" style="padding-left: 15px; padding-right: 15px;">
+												<i class="far fa-trash-alt" style="color: white; padding: 0px;"></i>
+											</button>										
+										</div>																		
+									</a>
+								</div>
+								<h5 style="font-weight: bold; margin: 5px 10px;">													
+									${history.showFeed.feedTitle}
+								</h5>	
+							</div>
+						</c:forEach>			  
+				  </div>	
+	
+			  </div>
+			</div>
+			
+			
+			
+			
+			<div class="row justify-content-md-center">
+				<jsp:include page="../common/pageNavigator.jsp"/>
 			</div>
 			
 		</div>		
