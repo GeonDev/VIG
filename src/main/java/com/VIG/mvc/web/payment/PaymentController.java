@@ -2,6 +2,7 @@ package com.VIG.mvc.web.payment;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.omg.CORBA.Request;
@@ -22,6 +23,7 @@ import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.feed.FeedServices;
 import com.VIG.mvc.service.payment.PaymentServices;
+import com.VIG.mvc.service.user.UserServices;
 
 @Controller
 @RequestMapping("/payment/*")
@@ -47,10 +49,10 @@ public class PaymentController {
 	}
 	
 	@RequestMapping(value="addPayment", method=RequestMethod.GET)
-	public ModelAndView addPayment(@RequestParam("productType") int productType, @RequestParam("feedId") int feedId) throws Exception {
+	public ModelAndView addPayment(@RequestParam("productType") int productType, HttpServletRequest request) throws Exception {
 		
 		System.out.println("addPayment:GET");
-		System.out.println(productType+" : "+feedId);
+		System.out.println(productType+" : ");
 		ModelAndView mav = new ModelAndView();
 		
 		
@@ -70,6 +72,8 @@ public class PaymentController {
 		
 		if(productType == 2) {
 			//후원 결제
+			int feedId = Integer.parseInt(request.getParameter("feedId"));
+			System.out.println(feedId);
 			Feed feed = feedServices.getFeed(feedId);
 			User writer = feed.getWriter();
 			System.out.println(writer);
@@ -87,7 +91,7 @@ public class PaymentController {
 		return mav;
 		
 	}
-	
+	//후원추가
 	@RequestMapping(value="addDonation", method=RequestMethod.POST)
 	public ModelAndView addDonation(@ModelAttribute("payment") Payment payment, HttpSession session) throws Exception {
 		
@@ -106,6 +110,49 @@ public class PaymentController {
 		
 		return mav;
 	}
+	//프라임피드 1000건 추가
+	@RequestMapping(value="addPrime", method=RequestMethod.POST)
+	public ModelAndView addPrime(@ModelAttribute("payment") Payment payment, HttpSession session) throws Exception {
+		
+		System.out.println(payment);
+		User sessionUser = (User)session.getAttribute("user");
+		
+		//feedCount 추가
+		int pc = sessionUser.getPrimeCount();
+		pc += 1000;
+		sessionUser.setPrimeCount(pc);
+		//UserServices.updatePrime
+		
+		payment.setBuyer(sessionUser);
+		
+		
+		
+		paymentServices.addPayment(payment);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("forward:/payment/addPayment.jsp");
+		mav.addObject("payment", payment);
+		return mav;
+	}
+	//비즈니스유저로 변경
+	@RequestMapping(value="addBusiness", method=RequestMethod.POST)
+	public ModelAndView addBusiness(@ModelAttribute("payment") Payment payment, HttpSession session) throws Exception {
+		
+		System.out.println(payment);
+		User sessionUser = (User)session.getAttribute("user");
+		
+		//role 변경
+		sessionUser.setRole("business");
+		//userServices.updateUser
+		
+		paymentServices.addPayment(payment);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("forward:/payment/addPayment.jsp");
+		mav.addObject("payment", payment);
+		return mav;
+	}
+	
 	
 	@RequestMapping(value="getPaymentList", method=RequestMethod.GET)
 	public ModelAndView getPaymentList(@ModelAttribute("search") Search search, HttpSession session) throws Exception {
@@ -147,5 +194,7 @@ public class PaymentController {
 		mav.setViewName("redirect:/payment/getPaymentList");
 		return mav;
 	}
+	
+	
 
 }

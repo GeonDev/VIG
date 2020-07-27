@@ -67,106 +67,13 @@
 
 $(function(){
 	
-	
-	//아래부터는 input text에 금액 입력하는 곳
-	function addCommas(x) {
-	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	}
-	 
-	//모든 콤마 제거
-	function removeCommas(x) {
-	    if(!x || x.length == 0) return "";
-	    else return x.split(",").join("");
-	}
-
-	$("input:text[numberOnly]").on("keyup", function() {
-	    $(this).val(addCommas($(this).val().replace(/[^0-9]/g,"")));
-	});
-
-	
-	$("input:text[numberOnly]").on("focus", function() {
-	    var x = $(this).val();
-	    x = removeCommas(x);
-	    $(this).val(x);
-	}).on("focusout", function() {
-	    var x = $(this).val();
-	    if(x && x.length > 0) {
-	        if(!$.isNumeric(x)) {
-	            x = x.replace(/[^0-9]/g,"");
-	        }
-	        x = addCommas(x);
-	        $(this).val(x);
-	    }
-	}).on("keyup", function() {
-	    $(this).val($(this).val().replace(/[^0-9]/g,""));
-	});
-
-
-});
-
-$(function(){
-	
-	
-	$("#after").on("click", function(){
-		
-		
-		var num = $("#after");
-		
-		if(num.is(':checked')==true){
-			
-			$("input:text[numberOnly]").removeAttr('disabled');
-			
-		} else {
-			
-			$("input:text[numberOnly]").attr("disabled").val("");
-			$("#before").val("");
-			
-		}
-
-		
-	});
-	
-		
 
 	
 
 	var IMP = window.IMP; // 생략가능
 	IMP.init('imp09736662');
 	
-	
-	$('input:radio').on("change", function(){
 		
-		var selectPrice;
-		if($('input[name="price"]:checked').val() != '0'){
-			
-		selectPrice = $('input[name="price"]:checked').val();
-		var commission = selectPrice*0.1;
-		var lastPrice = parseInt(selectPrice)+parseInt(commission);
-		$("#select").text(selectPrice);
-		$("input[name='selectPrice']").val(selectPrice);
-		$("#commission").text(commission);
-		$("#last").text(lastPrice);
-		
-		
-		} 
-		else {
-			
-		$("#before").on("keyup", function(){
-			
-			var change = parseInt($("#before").val());
-			$("#after").val(change);
-			selectPrice = $("#after").val();
-			var commission = selectPrice*0.1;
-			var lastPrice = parseInt(selectPrice)+parseInt(commission);
-			$("#select").text(selectPrice);
-			$("#commission").text(commission);
-			$("#last").text(lastPrice);
-		
-		});
-
-		}
-		
-	});
 	
 	
 
@@ -175,7 +82,7 @@ $(function(){
 		
 		
 		
-		var lastPrice = parseInt($("#last").text());
+		var lastPrice = $("input[name='lastPrice']").val();
 		
 		var option = $("select option:selected").val();
 		if(option == 'card'){
@@ -185,12 +92,12 @@ $(function(){
 		}
 		
 		
-		IMP.request_pay({
+		 IMP.request_pay({
 		    pg : 'inicis', // version 1.1.0부터 지원.
 		    pay_method : option,
 		    merchant_uid : 'merchant_' + new Date().getTime(),
 		    name : '주문명:결제테스트',
-		    amount : lastPrice,
+		    amount : 100,
 		    buyer_email : 'iamport@siot.do',
 		    buyer_name : "주문자이름",
 		    buyer_tel : '010-1234-5678',
@@ -206,13 +113,14 @@ $(function(){
 		        msg += '카드 승인번호 : ' + rsp.apply_num;
 		        $("input[name='lastPrice']").val(rsp.paid_amount);
 		        $("input[name='paymentId']").val(rsp.imp_uid);
-		        $("form").attr("action", "/VIG/payment/addDonation").attr("method", "post").submit();
+		        $("form").attr("action", "/VIG/payment/addPrime").attr("method", "post").submit();
 		    } else {
 		        var msg = '결제에 실패하였습니다.';
 		        msg += '에러내용 : ' + rsp.error_msg;
+		        
 		    }
-		    alert(msg);
-		   
+		    alert(msg); 
+		  
 		    
 		});
 		
@@ -247,58 +155,32 @@ $(function(){
 	<div id=main>
 	
 	
-	<h2 align="center" style="font-weight: bold;" > 후원결제 </h2>
+	<h2 align="center" style="font-weight: bold;" > 프라임 피드 추가 결제 </h2>
 	<hr>
 	<br>
 	<form class="donationform">
 	<div class="container">
 	<div class="row">
 	<div class="col-6">
-	<div align="right"> <span style="font-size:20px; font-weight: bold;" > 후원 유저 코드 (피드ID) :  </span> &nbsp;&nbsp;</div>
+	<div align="right"> <span style="font-size:20px; font-weight: bold;" > 상품명 :  </span> &nbsp;&nbsp;</div>
 	<br>
 	<div align="right"> <span style="font-size:20px; font-weight: bold;" > 금액 :  </span> &nbsp;&nbsp;</div>
 	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
+
+
 	<div align="right"> <span style="font-size:20px; font-weight: bold;" > 결제 수단 :   </span> &nbsp;&nbsp;</div>
 	</div>
-	
-	
-	
 	<div class="col-6">
 	
 	
-	<input type="hidden" name="beneficiary" value="${feed.writer.userCode}">
-	<input type="hidden" name="feedId" value="${feed.feedId}">
-	<span style="font-size:18px;">${feed.writer.userCode} (${feed.feedId})</span>
-		${session.user.userCode}
+
+	<span style="font-size:18px;">프라임 피드 노출 수 1000건 추가</span>
+
 	<br><br>
-		<div class="form-check" align="left" style=" font-weight: bold; padding-top: 10px">
-		<div id="priceRadio">
-		  <input type="radio" class="form-check-input" id="materialChecked2" name="price" value="1000" checked> 1,000원
-		  </div>
-		  
-		  <div id="priceRadio">
-		   <input type="radio" class="form-check-input" id="materialChecked2" name="price" value="3000" > 3,000원
-		  </div>
-		    
-		    <div id="priceRadio">
-		   <input type="radio" class="form-check-input" id="materialChecked2" name="price" value="5000" > 5,000원
-		  </div>
-		    
-		    <div id="priceRadio">
-		   <input type="radio" class="form-check-input" id="materialChecked2" name="price" value="10000" > 10,000원
-		  </div>
-		    
-		    <div id="priceRadio">
-		   <input type="radio" class="form-check-input" id="after" name="price" value="0" >기타 :
-		   <input type="text" id="before" name="price" numberOnly disabled="disabled" placeholder="금액을 입력하세요"> 원
-		  </div>
-		</div>
+			10,000 원
 		<br>
+		<br>
+
 			<select class="browser-default custom-select"  name="paymentType" style="width: 200px">  
 			  <option value="card">카드결제</option>
 			  <option value="trans">실시간 계좌이체</option>
@@ -307,15 +189,15 @@ $(function(){
 			
 			<hr/>
 		
-		<div id="selectPrice" > <span style="font-weight: bold">선택 금액 : </span><span id="select"></span><p style="display:inline-block ; width: 200px">원</p></div>
-		<div id="commissionPrice"><span style="font-weight: bold">수수료(VAT 10%) : </span><span id="commission"></span><p style="display:inline-block ; width: 200px">원</p></div>
-		<div id="lastPrice"><span style="font-weight: bold">총 결제 금액 : </span><span id="last"></span><p style="display:inline-block ; width: 200px">원</p></div>
+		<div id="selectPrice" > <span style="font-weight: bold">선택 금액 :</span><span id="select">10,000</span><p style="display:inline-block ; width: 200px">원</p></div>
+		<div id="commissionPrice"><span style="font-weight: bold">수수료(VAT 10%) : </span><span id="commission">1,000</span><p style="display:inline-block ; width: 200px">원</p></div>
+		<div id="lastPrice"><span style="font-weight: bold">총 결제 금액 : </span><span id="last">11,000</span><p style="display:inline-block ; width: 200px">원</p></div>
 		</div>
-		<input type="hidden" name="selectPrice">
-		<input type="hidden" name="lastPrice">
+		<input type="hidden" name="selectPrice" value="10000">
+		<input type="hidden" name="lastPrice" value="11000">
 		<input type="hidden" name="paymentId">
 		<input type="hidden" name="paymentType">
-		<input type="hidden" name="productType" value="2">
+		<input type="hidden" name="productType" value="0">
 	
 	
 	</div>

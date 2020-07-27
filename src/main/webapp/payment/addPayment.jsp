@@ -16,7 +16,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>addPayment</title>
+<title>VIG</title>
 
 <!-- JQuery -->
 	
@@ -84,7 +84,13 @@
 
 $(function (){
 	
-
+	var afterPrime = ${user.primeCount};
+	var beforePrime = parseInt(afterPrime) - 1000;
+	alter(beforePrime);
+	$("#beforePrime").text(beforePrime);
+	
+	
+	
 	$("button:contains('확인')").on("click", function(){
 		
 
@@ -144,9 +150,9 @@ $(function (){
 			
 			<div id="content">
 			<div align="center">
-			기존 프라임 피드 카운트 :
+			기존 프라임 피드 카운트 : <p id="beforePrime"></p>
 			<br>
-			현재 프라임 피드 카운트 :
+			현재 프라임 피드 카운트 : <p>${user.primeCount }</p>
 			</div>
 			</div>
 	</c:if>
