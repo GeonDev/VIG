@@ -36,8 +36,7 @@
 			
 			var id=$("input[name='userCode']").val();
 			var pw=$("input[name='password']").val();
-			var pw_confirm=$("input[name='password2']").val();
-			var name=$("input[name='userName']").val();
+			var pw_confirm=$("input[name='password2']").val();	
 			
 			if(id == null || id.length <1){
 				alert("아이디는 반드시 입력하셔야 합니다.");
@@ -49,10 +48,6 @@
 			}
 			if(pw_confirm == null || pw_confirm.length <1){
 				alert("패스워드 확인은  반드시 입력하셔야 합니다.");
-				return;
-			}
-			if(name == null || name.length <1){
-				alert("이름은  반드시 입력하셔야 합니다.");
 				return;
 			}
 			
@@ -70,54 +65,14 @@
 				fncAddUser();
 			});
 		});
-		$(function(){
-			$( function() {
-				$("#ty").on("click" , function() {
-					self.location = "/VIG/user/loginView.jsp";
-				});
-			});
-		/*
-			$("#userCode").blur(function() {
-			var userCode = $('#userCode').val();
-			
-			$.ajax({
-				url : "json/checkId" + userCode,
-				type : "post",
-				dataType : "json" ,
-				data : JSON.stringify({
-						userCode : code
-				}),
-				success : function(JSONData , status) {
-
-					alert("id 2");
-					if (JSONData != userCode) {
-						alert("id중복");
-						$("#id_check").text("사용중인 아이디입니다 :p");
-						$("#id_check").css("color", "red");
-					} else if(JSONData == userCode){
-						alert("id고고");
-						$('#id_check').text('아이디를 입력해주세요 :)');
-						$('#id_check').css('color', 'red');
-						$("#reg_submit").attr("disabled", true);
-					}
-				
-			},	error : function() {
-						console.log("실패");
-					}
-				});
-			});
-			
-			*/
-			
-			
+		
 		$( function() {
 			   $( "#datepicker" ).datepicker({
 			    showMonthAfterYear: true, 
 				 dateFormat: "yy-mm-dd"	    
 			    });
 			  });
-					
-		});
+
 		
 </script>
 <style type="text/css">
@@ -188,7 +143,7 @@
         <button  class="btn btn-info btn-block my-4" id="signUp_btn" >Sign up</button>   
          
           <p >Already a member? </p>
-          <span id="ty" class="blue-text ml-1"> login</span>
+          <a href="/VIG/user/loginView.jsp" id="ty" class="blue-text ml-1"> login</span></a>
  
 
 	</div>

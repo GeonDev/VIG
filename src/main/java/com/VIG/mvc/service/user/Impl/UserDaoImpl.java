@@ -65,8 +65,13 @@ public class UserDaoImpl implements UserDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("UserMapper.getAutoUserName", name);
 	}
-	
 
+		
 	
+//	@Override
+	//public int loginCheck(String userCode) throws Exception {
+		// TODO Auto-generated method stub
+//		return sqlSession.selectOne("UserMapper.loginCheck", userCode);
+//	}
 
 }

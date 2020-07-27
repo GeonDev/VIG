@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>getFeed</title>
+<title>VIG</title>
 
 <!-- JQuery -->
 	
@@ -436,7 +436,7 @@ $(function(){
 		
 		<div align="left">
 			<br>
-			<a id="modalbutton"><i class="fas fa-exclamation-triangle">신고</i></a>
+			<a id="modalbutton"><i class="fas fa-exclamation-triangle" data-toggle="modal" data-target="#basicExampleModal">신고</i></a>
 
 			</div>
 		
@@ -541,6 +541,75 @@ $(function(){
 	
 	
 	</div>
+	
+					<!-- Modal -->
+				<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+				  aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">신고 하기</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				       
+					       <div class="container-fluid">					  
+					       
+						       <div class="row">
+						      
+								<div class="custom-control custom-radio">
+								  <input type="radio" class="custom-control-input" id="defaultGroupExample1" name="groupOfDefaultRadios" checked>
+								  <label class="custom-control-label" for="defaultGroupExample1">혐오 표현 </label>
+								</div>							
+
+						       </div>
+						       
+						       <div class="row">
+						       	
+									<div class="custom-control custom-radio">
+									  <input type="radio" class="custom-control-input" id="defaultGroupExample2" name="groupOfDefaultRadios">
+									  <label class="custom-control-label" for="defaultGroupExample2">성인 콘텐츠/음란물</label>
+									</div>
+						       </div>
+						       
+						      <div class="row">
+						     
+								<div class="custom-control custom-radio">
+								  <input type="radio" class="custom-control-input" id="defaultGroupExample3" name="groupOfDefaultRadios">
+								  <label class="custom-control-label" for="defaultGroupExample3">타인을 모욕하는 내용</label>
+								</div>
+						      </div>
+						      
+						      <div class="row">
+						      						      
+								<div class="custom-control custom-radio">
+								  <input type="radio" class="custom-control-input" id="defaultGroupExample4" name="groupOfDefaultRadios">
+								  <label class="custom-control-label" for="defaultGroupExample4">저작권 침해</label>
+								</div>
+						      
+						      
+						      </div>
+						       
+					       
+						       <div class="row">
+							       <div class="md-form col-md-12">
+								   <textarea id="form" class="md-textarea form-control" rows="1"></textarea>
+								   <label for="form">추가 메세지 입력</label>
+							   		</div>
+						       </div>
+					       
+					       </div>
+				       
+				       
+				      </div>
+				      <div class="modal-footer">				        
+				        <button type="button" class="btn btn-primary">제출</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
 	
 	
 

@@ -196,7 +196,7 @@ ALTER TABLE alarm AUTO_INCREMENT 		 = 110000;
 ALTER TABLE payment AUTO_INCREMENT 		 = 120000;
 ALTER TABLE withdraw AUTO_INCREMENT 	 = 130000;
 ALTER TABLE event AUTO_INCREMENT 	 	 = 140000;
-
+ALTER TABLE history AUTO_INCREMENT 	 	 = 150000;
 
 INSERT
 INTO categories (category_id, category_name, category_img)
