@@ -56,8 +56,8 @@
 				
 				$.ajax( 
 						{
-							url : "json/login",
-							method : "POST" ,
+							url : "user/json/login",
+							method : "post" ,
 							dataType : "json" ,
 							headers : {
 								"Accept" : "application/json",
@@ -69,20 +69,14 @@
 								}),
 							success : function(JSONData , status) {										
 								alert(JSONData.userCode);
-								//if( JSONData != null ){
-								 if(JSONData.userCode == id && JSONData.password == pw ){
-									alert("로그인성공");	
+								if( JSONData != null ){
 									$(self.location).attr("href","../main/main.jsp");	
-									}else{
-									alert("아이디 또는 비밀번호를 확인해주세요.");
-									$("#userId").focus();
-									return;
-									}
+								}else{
+									alert("아이디 , 패스워드를 확인하시고 다시 로그인...");
 								}
-							}); 
-				
-				fncloginGo();
-				
+								}
+							});
+				fncloginGo()
 						});
 					});
 		$( function() {
