@@ -138,3 +138,19 @@
 
 </body>
 </html>
+
+
+
+<!--  <p class="h4 mb-6">Login</p>
+
+    <!-- id -->
+    <input type="text" id="userCode" name="userCode" class="form-control mb-5" placeholder="id">
+    <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+
+    <!-- Password -->
+    <input type="password" id="password" name="password" class="form-control mb-5" placeholder="Password">
+
+    <!-- Sign in button -->
+    <button  class="btn btn-info btn-block my-4" id="login" >Sign in</button>
+    
+  </form> -->

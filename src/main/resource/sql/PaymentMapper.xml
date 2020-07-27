@@ -38,21 +38,37 @@
 	
 	</select>
 	
-	<update id="cancelPayment" parameterType="payment">
+	
+	<select id="getPaymentList" parameterType="search" resultMap="paymentSelectMap">
+		
+		SELECT * FROM
+		(SELECT ROW_NUMBER() OVER(ORDER BY payment.payment_date DESC) num, payment.* 
+		FROM payment
+		WHERE buyer = #{keyword}
+		)temp WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
+	
+	</select>
+	
+	<select id="getCountPayment"  parameterType="search"   resultType="int">
+		
+		SELECT COUNT(temp.payment_id) FROM
+		(SELECT payment_id FROM payment 
+		<if test="keyword != null">
+		WHERE buyer = #{keyword}
+		AND is_cancel = 0
+		</if>
+		) temp
+	
+	</select>
+	
+	<update id="cancelPayment" parameterType="String">
 		
 		UPDATE payment
-		SET is_cancel = #{isCancel:NUMERIC}
-		WHERE payment_id = #{paymentId:VARCHAR}
+		SET is_cancel = 1
+		WHERE payment_id = #{value}	
 	
 	</update>
 	
-	<select id="getPaymentList" parameterType="String" resultMap="paymentSelectMap">
-		
-		SELECT * FROM payment
-		WHERE buyer = #{value:VARCHAR}
-		
-	
-	</select>
 
 	 
 </mapper>

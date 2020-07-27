@@ -136,11 +136,16 @@
  					<hr/><br/>
  				</div>
  	<!-- 메뉴 네비게이션 -->
+ 			<c:choose>
+			<c:when test="${empty sessionScope.userCode}">
  					<button type="button" class="btn btn-block" onclick='nav_myFeedList("../myFeed/myFeedListTest.jsp")'>
  						마이피드 목록</button>
  					<br/>
  					<button type="button" class="btn btn-block" onclick='nav_history("history.jsp")'>
  						<a href="#">내 활동 보기</a></button>
+ 					 <br/>
+ 					 <button type="button" class="btn btn-block" onclick='nav_history("/VIG/user/getUserInfo.jsp")'>
+ 						<a href="#">내 정보 수정</a></button>
  					 <br/>
  					<button type="button" class="btn btn-block" onclick='nav_payment("follow.jsp")'>
  						<a href="#">결 제</a></button>
@@ -148,10 +153,10 @@
  					<button type="button" class="btn btn-block" onclick='nav_analysis(".jsp")'>
  						<a href="#">통 계</a></button>
  					<br/>
- 				<c:if test="${user.role == 'business'}">
- 					<button type="button" class="btn btn-block" onclick='nav_report("../report/getReportlist.jsp")'>
- 						<a href="#">신 고</a></button>	
- 					</c:if>
+ 					<button type="button" class="btn btn-block" onclick='nav_report("")'>
+ 					<a href="#">결제 확인</a></button>	
+ 				</c:when>
+ 				</c:choose>
 				</div>
 
 <!-- 일단 관리자용 신고 네비 여기다 표시 -->	

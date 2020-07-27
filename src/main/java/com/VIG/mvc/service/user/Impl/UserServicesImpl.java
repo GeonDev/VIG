@@ -3,6 +3,9 @@ package com.VIG.mvc.service.user.Impl;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -77,6 +80,11 @@ public class UserServicesImpl implements UserServices {
 	}
 
 
+	
+	//
+	//@Override
+	//public void loginCheck(String userCode, HttpServletResponse response) throws Exception {
+	//}
 	
 	
 	

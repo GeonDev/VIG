@@ -26,7 +26,7 @@ public class PaymentDaoImpl implements PaymentDao {
 	public void addPayment(Payment payment) throws Exception {
 		// TODO Auto-generated method stub
 		
-		sqlSession.insert("addPayment", payment);
+		sqlSession.insert("PaymentMapper.addPayment", payment);
 		
 
 	}
@@ -46,7 +46,27 @@ public class PaymentDaoImpl implements PaymentDao {
 	@Override
 	public List<Payment> getPaymentList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		
+		List<Payment> list = sqlSession.selectList("PaymentMapper.getPaymentList", search);
+		
+		return list;
 	}
+
+	@Override
+	public int getCountPayment(Search search) throws Exception {
+		// TODO Auto-generated method stub
+
+		return sqlSession.selectOne("PaymentMapper.getCountPayment", search);
+	}
+
+	@Override
+	public void cancelPayment(String paymentId) throws Exception {
+		// TODO Auto-generated method stub
+		
+		sqlSession.update("PaymentMapper.cancelPayment", paymentId);
+		
+	}
+	
+	
 
 }

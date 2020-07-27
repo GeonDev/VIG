@@ -34,7 +34,7 @@
 	 -->
 	 
 	 <!-- SQL : INSERT -->
-	<insert	id="addUser" parameterType="user" >
+	<insert	id="addUser" parameterType="user"  >
 	 	INSERT
 		INTO users(user_code , user_name , password , profile_img, sex, birth, state, prime_count, email, role, reg_date) 
 		VALUES (#{userCode}, #{userName}, #{password:VARCHAR}, #{profileImg:VARCHAR},  #{sex:VARCHAR}, #{birth:VARCHAR}, #{state:NUMERIC}, #{primeCount:NUMERIC}, #{email:VARCHAR}, DEFAULT, NOW())
@@ -60,9 +60,16 @@
 	 
 	 
 	 <select id="getUserOne" parameterType = "String" resultMap="userSelectMap">
-	 	SELECT *
+	 	SELECT user_code, user_name, password, role, email, reg_date
 	 	FROM users
 	 	WHERE user_code = #{value}	
+	 </select>
+	 
+	 <!--  -->
+	 <select id="loginCheck" parameterType="String" resultType = "int" >
+		SELECT count(*)
+	 	FROM users
+	 	WHERE user_code = #{userCode}
 	 </select>
 		 	 
 	 	 
