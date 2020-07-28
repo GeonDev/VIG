@@ -67,6 +67,12 @@
 	
 	}
 	
+	table {
+	
+	text-align: center;
+	
+	}
+	
 
 
 
@@ -118,6 +124,7 @@
 		      <th scope="col">결제자</th>
 		      <th scope="col">결제유형</th>
 		      <th scope="col">상품유형</th>
+		      <th scope="col">후원자</th>
 		      <th scope="col">결제금액</th>
 		      <th scope="col">결제일</th>
 		      <th scope="col">취소</th>
@@ -153,7 +160,17 @@
 						</c:if>
 					</td>
 					<td>
-						${payment.lastPrice}
+						<c:if test="${payment.beneficiary !=  null }">
+						
+						${payment.beneficiary }
+						<br>
+						( ${payment.feedId } )
+						
+						
+						</c:if>
+					</td>
+					<td>
+						${payment.lastPrice} 원
 					</td>
 					<td>
 						${payment.paymentDate }

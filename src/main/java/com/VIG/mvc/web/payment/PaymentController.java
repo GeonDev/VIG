@@ -207,9 +207,10 @@ public class PaymentController {
 			if (search.getCurrentPage() == 0) {
 				search.setCurrentPage(1);
 			}
-
+		search.setPageSize(pageSize);
 		System.out.println(search);	
 		List<Payment> list = paymentServices.getPaymentList(search);
+		
 		Page resultPage = new Page(search.getCurrentPage(), paymentServices.getCountPayment(search) , pageUnit, pageSize);
 		System.out.println(resultPage);
 		System.out.println(list);
@@ -219,6 +220,7 @@ public class PaymentController {
 		mav.addObject("resultPage", resultPage);
 		
 		}else {
+			
 			System.out.println("잘못된접근");
 			String message = "관리자만 접근할 수 있습니다.";
 			mav.setViewName("forward:/common/alertView.jsp");

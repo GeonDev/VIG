@@ -42,12 +42,12 @@
 	<select id="getPaymentList" parameterType="search" resultMap="paymentSelectMap">
 		
 		SELECT * FROM
-		(SELECT ROW_NUMBER() OVER(ORDER BY payment.payment_date DESC) num, payment.* 
+		(SELECT ROW_NUMBER() OVER(ORDER BY payment.payment_date ASC) num, payment.* 
 		FROM payment
-		<if test="keyword != null">
+		<if test="keyword !=null">
 		WHERE buyer = #{keyword}
 		</if>
-		)temp WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
+		) temp WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
 	
 	</select>
 	
@@ -59,6 +59,7 @@
 		WHERE buyer = #{keyword}
 		AND is_cancel = 0
 		</if>
+		
 		) temp
 	
 	</select>
