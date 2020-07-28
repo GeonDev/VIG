@@ -268,12 +268,48 @@ $(function(){
 		if(likeClass =='far fa-heart'){
 			
 		$("#like").attr("class", "fas fa-heart");
-		//addLike 추가
+		//deleteLike 추가
+		$.ajax(
+				
+				{ url: "/VIG/like/json/addLike?feedId=${feed.feedId}",
+					method : "GET",	
+					dataType: "json",
+					headers : {
+						
+						"Accept" : "applicion/json",
+						"Content-Type" : "application/json"
+					},
+					success : function(JSONData, status) {
+						
+					alert(status);	
+					
+					}
+					
+				
+				});
 		
 		}else{
 			
-		$("#like").attr("class", "far fa-heart");
-		//deleteLike 추가
+		$("#like").attr("class", "far fa-heart");	
+		//addLike 추가 
+		$.ajax(
+				
+				{ url: "/VIG/like/json/addLike?feedId=${feed.feedId}",
+					method : "GET",	
+					dataType: "json",
+					headers : {
+						
+						"Accept" : "applicion/json",
+						"Content-Type" : "application/json"
+					},
+					success : function(JSONData, status) {
+						
+					alert(status);	
+					
+					}
+					
+				
+				});
 		}
 		
 	});
