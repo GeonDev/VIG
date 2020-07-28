@@ -76,7 +76,7 @@
 	<script type="text/javascript">
 	
 	//최초 입장시 모드 지정
-	var Mode = 'Feed';		
+	var Mode = 'Feed';	
 
 	//최초 페이지는 1으로 설정
 	var page = 1; 	
@@ -88,7 +88,7 @@
 	var isLoadPage = false;	
 	
 	//전달받은 피드 리스트를 화면에 그림
-	function getfeedlistFromAjax(item){
+	function getfeedlistFromAjax(item, user){
 		var thumbnail = '';								
 		
 		$.each(item.images, function(index, item){
@@ -106,7 +106,7 @@
 				+ "<a href='/VIG/feed/getFeed?feedId="+ item.feedId +"' class='text-light'>"
 					+ "<img src='/VIG/images/uploadFiles/" + thumbnail + "' alt='thumbnail' class='img-fluid rounded-sm' style='width: 400px; height: 300px;'>"
 					+ "<div class='mask waves-effect waves-light rgba-black-strong' style='text-align: right;'>";					
-						if('${user}' != null){
+						if(user != ''){
 							displayValue +="<button type='button' onclick='addhideFeed("+ item.feedId +")' class='btn btn-link' style='width: 50px; height:50px; padding-left: 0px; padding-right: 0px;'>"											
 								+ "<h4><i class='far fa-times-circle' style='color: white; text-align: center;'></i></h4>"
 							+"</button>";					
@@ -245,8 +245,8 @@
  						}else{
  	 						$.each(JSONData.list, function(index, item) {						
  								
- 								if(Mode == 'Feed'){								
- 									getfeedlistFromAjax(item);
+ 								if(Mode == 'Feed'){						 								
+ 									getfeedlistFromAjax(item, '${user}');
  										
  								}else if(Mode == 'Image'){			
  									getImagelistFromAjax(item); 									

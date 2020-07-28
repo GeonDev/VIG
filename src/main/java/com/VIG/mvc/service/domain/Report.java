@@ -12,6 +12,9 @@ public class Report implements Serializable{
 	private User violator;
 	private User reporter;
 	
+	//신고할 유저의 정보를 받아오기 위한 처리
+	private String violatorCode;
+	
 	// 0 = 혐오표현, 1 = 음란물, 2 =모욕적인내용, 3= 저작권 침해
 	private int reportType;	
 	private int reportFeedId;
