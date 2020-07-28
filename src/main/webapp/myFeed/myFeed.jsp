@@ -119,7 +119,7 @@
  					<button type="button" class="btn btn-block" onclick='nav_myFeedList("../myFeed/myFeedListTest.jsp")'>
  						마이피드 목록</button>
  					<br/>
- 					<button type="button" class="btn btn-block" onclick='nav_history("history.jsp")'>
+ 					<button type="button" class="btn btn-block" onclick='nav_history("/VIG/history/getMyHistoryList")'>
  						<a href="#">내 활동 보기</a></button>
  					 <br/>
  					 <button type="button" class="btn btn-block" onclick='nav_history("/VIG/user/updateUser.jsp")'>

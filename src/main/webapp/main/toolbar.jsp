@@ -49,7 +49,7 @@ $(function() {
 <!--Navbar start-->	
 			<nav class="mb-1 navbar fixed-top navbar-expand-xl navbar-dark bg-dark py-2" id="toolbar">			
 <!-- 로고 -->		
-			  <a href="/VIG/main/main.jsp"><img src='/VIG/images/others/VIG_logo.png' id="logoTop" alt="VIG" ></a>
+			  <a href="/VIG/main/VIG"><img src='/VIG/images/others/VIG_logo.png' id="logoTop" alt="VIG" ></a>
 			      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="toolbar_logo"
 				    aria-controls="toolbar_logo" aria-expanded="false" aria-label="Toggle navigation">
 				    <span class="navbar-toggler-icon"></span>
