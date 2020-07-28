@@ -41,7 +41,17 @@
 	
 	body {
     	padding-top : 50px;
-        }           
+        }       
+        
+        
+      .txt_lineSize {
+	 width:280px; 
+	 padding:0 5px; 
+	 overflow:hidden; 
+	 text-overflow:ellipsis; 
+	 white-space:nowrap; 
+	 }	
+            
 		
 	.img_feed {	  
 	    max-width: 300px;
@@ -52,6 +62,7 @@
 	margin: 5px 10px;
 		}
 		
+	
 
     </style>
     
@@ -139,7 +150,7 @@
 											</button>										
 										</div>																			
 									</div>
-								<h5 style="font-weight: bold; margin: 5px 10px;">													
+								<h5 class="txt_lineSize" style="font-weight: bold; margin: 5px 10px;">													
 									${history.showFeed.feedTitle}
 								</h5>	
 							</div>
@@ -176,7 +187,7 @@
 										</div>																		
 									</a>
 								</div>
-								<h5 style="font-weight: bold; margin: 5px 10px;">													
+								<h5 class="txt_lineSize" style="font-weight: bold; margin: 5px 10px;">													
 									${history.showFeed.feedTitle}
 								</h5>	
 							</div>

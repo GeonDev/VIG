@@ -38,6 +38,14 @@
 		FROM event	
 	</select>
 	
+	<select id="getLastEventList" resultMap="EventSelectMap">
+		SELECT *
+		FROM event
+		ORDER BY event_id DESC
+		LIMIT 5	
+	</select>
+	
+	
 	<update id="updateEvent" parameterType="event">
 		UPDATE event
 		SET 
