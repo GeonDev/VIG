@@ -37,6 +37,7 @@
 			var id=$("input[name='userCode']").val();
 			var pw=$("input[name='password']").val();
 			var pw_confirm=$("input[name='password2']").val();	
+			var name=$("input[name='userName']").val();
 			
 			if(id == null || id.length <1){
 				alert("아이디는 반드시 입력하셔야 합니다.");
@@ -50,7 +51,10 @@
 				alert("패스워드 확인은  반드시 입력하셔야 합니다.");
 				return;
 			}
-			
+			if(name == null || name.length <1){
+				alert("이름은  반드시 입력하셔야 합니다.");
+				return;
+			}
 			if( pw != pw_confirm ) {				
 				alert("비밀번호 확인이 일치하지 않습니다.");
 				$("input:text[name='password2']").focus();
@@ -58,14 +62,62 @@
 			}
 			$("form").attr("method" , "post").attr("action" , "addUser").submit();
 		}
-	    
 		
+	    
+	//=======	
 		$(function(){
 			$( "#signUp_btn" ).on("click" , function() {	
 				fncAddUser();
 			});
 		});
+	//======
+		$(function(){
+			$("input[name=password2]").keyup( function(){
+				 				
+				var password = $("input[name=password]").val();
+				var password2 = $("input[name=password2]").val();				
+				if(password==password2){					
+					var correct = "<p style='color:green;'>비밀번호가 확인되었습니다.</p>";
+					$(".check").html(correct);
+					
+				}else{
+										
+					var alert = "<p style='color:red;'>비밀번호가 다릅니다.</p>";
+					$(".check").html(alert);					
+				}				
+			});			
+		});			
 		
+	//======
+		$( function() {
+			$("#userCode").keyup(function(){				
+				var userCode = $("#userCode").val();
+				$.ajax(
+						{
+						url : "/user/json/getCode/"+userCode ,
+						method : "GET" ,
+						dataType : "json" ,
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						success : function(JSONData , status) {														
+							if(JSONData.userCode!=checkedId){
+								
+								var correct = "<p style='color:green'> 사용가능합니다. </p>"
+								$("span> .check").html(correct);							
+							}else{								
+								var alert = "<p style='color:red'> 이미 존재하는 아이디입니다.</p>"
+								$("span> .check").html(alert);							
+							}			
+						}
+				});
+			});
+		});
+		
+			
+			
+	//=====	
 		$( function() {
 			   $( "#datepicker" ).datepicker({
 			    showMonthAfterYear: true, 
@@ -92,30 +144,41 @@
 
 <jsp:include page="../main/toolbar.jsp"></jsp:include>
 
-<form>
+
 <div class="container">
 <div class="text-center border border-light p-5">
   <div class="row">
 
     <p class="h4 mb-6">Sign up</p>
 
-
+<form>
 <!-- id -->  
+<div class="form-group">
 	<label data-error="wrong" data-success="right" for="userCode"></label>
 	<input type="text" id="userCode" name="userCode" class="form-control mb-4" placeholder="userCode" required>   
-	<div class="check_font" id="id_check"></div>
+	<span class="check"></span>
+</div>	
 <!-- name -->
+<div class="form-group">
 	<input type="text" id="userName" name="userName" class="form-control mb-4" placeholder="nickName" required>
 	<label data-error="wrong" data-success="right" for="nickName"></label>   
+</div>
 <!-- 비밀번호 -->
+<div class="form-group">
     <input type="password" id="password" name="password" class="form-control mb-4" placeholder="Password" required>
 	<label data-error="wrong" data-success="right" for="password"></label>
-<!-- 비밀번호2 -->      
+</div>
+<!-- 비밀번호2 -->  
+<div class="form-group">    
 	 <input type="password" id="password2" name="password2" class="form-control mb-4" placeholder="Password2" required>
      <label data-error="wrong" data-success="right" for="password2"></label>
-     <!-- 플필 -->
+     <span id="helpBlock" class="help-block">
+		      	  <span class="check"></span>
+</span>
+     <!-- 플필 -->  
      <input type="hidden" id="profileImg" name="profileImg" class="form-control mb-4" value="profile_img.jpg">
  <!-- 성별 -->
+<div class="form-group">
  	<div class="row">
  	<div class="form-control mb-4" id="genderBox">
 	  <input type="radio" id="sex" name="sex" value="female" >
@@ -123,20 +186,25 @@
 	  <input type="radio" id="sex" name="sex" value="male">
 	  <label for="sex">male</label>
 	  </div>
+</div>
 	</div>
 <!-- 생년월일-->
+<<div class="form-group">
 	<hr/>
 	<p>Date: <input type="text" id="datepicker" name="birth"></p>
 	<label data-error="wrong" data-success="right" for="birth"></label>
+</div>
 	<!--  -->
      <input type="hidden" id="state" name="state" class="form-control mb-4" value="0">
      <!--  -->
      <input type="hidden" id="primeCount" name="primeCount" class="form-control mb-4" value="0">
      
- <!-- 이메ㄴ일 -->	 
+ <!-- 이메ㄴ일 -->	
+ <div class="form-group"> 
    	<input type="email" id="email" name="email" class="form-control mb-4" placeholder="email">
     <label data-error="wrong" data-success="right" for="email"></label>   
-    
+ </div>
+ </form>   
     
     
 <!-- 가입버튼 -->
@@ -150,7 +218,7 @@
 	</div>
 	</div>
 
-</form>
+
 
 
 </body>

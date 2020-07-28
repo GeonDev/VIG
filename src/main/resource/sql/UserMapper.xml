@@ -69,9 +69,16 @@
 	 <select id="loginCheck" parameterType="String" resultType = "int" >
 		SELECT count(*)
 	 	FROM users
-	 	WHERE user_code = #{userCode}
+	 	WHERE user_code = #{value}
 	 </select>
-		 	 
+	 
+	 <!--  -->
+		<select 	id="getCode"	parameterType="String"	resultMap="userSelectMap">
+		SELECT
+		user_code	
+		FROM users 
+		WHERE user_code = #{value}
+	 </select> 	 
 	 	 
 	  <select id="getLastUserNum" parameterType = "int" resultType="int">
 	 	SELECT COUNT(user_code) FROM users	 	
@@ -90,6 +97,7 @@
 	 <update	id="updateUser"	parameterType="user" >
 	   	UPDATE users
 	   		SET 
+	   		user_code 	= #{userCode} ,
 	   		user_name 	= #{userName} ,
 			password	= #{password},
 			self_introduce 	= #{selfIntroduce} ,
