@@ -111,7 +111,7 @@
 		
 		$(function(){			
 			// 최초 진입시 첫번째 페이지 로딩
-			getCategoryList();
+		
 			getFeedItemList('일러스트레이션');
 		});
 		
