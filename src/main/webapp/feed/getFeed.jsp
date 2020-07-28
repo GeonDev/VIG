@@ -268,12 +268,48 @@ $(function(){
 		if(likeClass =='far fa-heart'){
 			
 		$("#like").attr("class", "fas fa-heart");
-		//addLike 추가
+		//deleteLike 추가
+		$.ajax(
+				
+				{ url: "/VIG/like/json/addLike?feedId=${feed.feedId}",
+					method : "GET",	
+					dataType: "json",
+					headers : {
+						
+						"Accept" : "applicion/json",
+						"Content-Type" : "application/json"
+					},
+					success : function(JSONData, status) {
+						
+					alert(status);	
+					
+					}
+					
+				
+				});
 		
 		}else{
 			
-		$("#like").attr("class", "far fa-heart");
-		//deleteLike 추가
+		$("#like").attr("class", "far fa-heart");	
+		//addLike 추가 
+		$.ajax(
+				
+				{ url: "/VIG/like/json/addLike?feedId=${feed.feedId}",
+					method : "GET",	
+					dataType: "json",
+					headers : {
+						
+						"Accept" : "applicion/json",
+						"Content-Type" : "application/json"
+					},
+					success : function(JSONData, status) {
+						
+					alert(status);	
+					
+					}
+					
+				
+				});
 		}
 		
 	});
@@ -503,13 +539,7 @@ $(function(){
 		
 		
 		
-			<c:forEach var="images" items="${feed.images}" begin="0" end="0">
-				
-			
-				
-				
-				
-				
+			<c:forEach var="images" items="${feed.images}" begin="0" end="0">			
 				<c:if test="${images.keyword[0].isTag == '1' }">
 				<div id="feedbottom">
 				<h6 style="font-weight: bold">태그</h6>
@@ -523,11 +553,7 @@ $(function(){
 				</c:forEach>
 				</div>
 				</div>
-				</c:if>
-				
-				
-				
-
+				</c:if>		
 				
 			</c:forEach>
 			
@@ -538,78 +564,11 @@ $(function(){
 			
 	</div>
 	</div>
-	
+			<jsp:include page="/report/addReport.jsp" />
 	
 	</div>
 	
-					<!-- Modal -->
-				<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-				  aria-hidden="true">
-				  <div class="modal-dialog" role="document">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <h5 class="modal-title" id="exampleModalLabel">신고 하기</h5>
-				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				          <span aria-hidden="true">&times;</span>
-				        </button>
-				      </div>
-				      <div class="modal-body">
-				       
-					       <div class="container-fluid">					  
-					       
-						       <div class="row">
-						      
-								<div class="custom-control custom-radio">
-								  <input type="radio" class="custom-control-input" id="defaultGroupExample1" name="groupOfDefaultRadios" checked>
-								  <label class="custom-control-label" for="defaultGroupExample1">혐오 표현 </label>
-								</div>							
 
-						       </div>
-						       
-						       <div class="row">
-						       	
-									<div class="custom-control custom-radio">
-									  <input type="radio" class="custom-control-input" id="defaultGroupExample2" name="groupOfDefaultRadios">
-									  <label class="custom-control-label" for="defaultGroupExample2">성인 콘텐츠/음란물</label>
-									</div>
-						       </div>
-						       
-						      <div class="row">
-						     
-								<div class="custom-control custom-radio">
-								  <input type="radio" class="custom-control-input" id="defaultGroupExample3" name="groupOfDefaultRadios">
-								  <label class="custom-control-label" for="defaultGroupExample3">타인을 모욕하는 내용</label>
-								</div>
-						      </div>
-						      
-						      <div class="row">
-						      						      
-								<div class="custom-control custom-radio">
-								  <input type="radio" class="custom-control-input" id="defaultGroupExample4" name="groupOfDefaultRadios">
-								  <label class="custom-control-label" for="defaultGroupExample4">저작권 침해</label>
-								</div>
-						      
-						      
-						      </div>
-						       
-					       
-						       <div class="row">
-							       <div class="md-form col-md-12">
-								   <textarea id="form" class="md-textarea form-control" rows="1"></textarea>
-								   <label for="form">추가 메세지 입력</label>
-							   		</div>
-						       </div>
-					       
-					       </div>
-				       
-				       
-				      </div>
-				      <div class="modal-footer">				        
-				        <button type="button" class="btn btn-primary">제출</button>
-				      </div>
-				    </div>
-				  </div>
-				</div>
 	
 	
 
