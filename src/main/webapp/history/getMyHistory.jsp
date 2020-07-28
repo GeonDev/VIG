@@ -100,11 +100,7 @@
 
 <body>
 
-	<div class="container-fluid">			
-	
-		<!--href와 ID를 연결해야 작동함 -->	
-		<div class="col-md-8">	
-			<br/>
+	<div class="container-fluid">						
 			
 			<div class="page-header text-info">
 				<h3>내 활동정보 보기</h3>
@@ -204,7 +200,7 @@
 				<jsp:include page="../common/pageNavigator.jsp"/>
 			</div>
 			
-		</div>		
+			
 	</div>
 	
 </body>
