@@ -1,5 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="com.VIG.mvc.service.domain.*"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -111,57 +114,94 @@
 		
 		$(function(){			
 			// 최초 진입시 첫번째 페이지 로딩
-		
 			getFeedItemList('일러스트레이션');
 		});
 		
-		</script>
+	</script>
 		
-		<style type="text/css">
+	<style type="text/css">	
+	
+
+
 		
-		 #category {
-            text-align: center;
-            width: auto;
-            height: 150px;
-            padding:100;
-        }
-		
-		 #banner {
-            text-align: ;
-            width: auto;
-            height: 200px;
-            background-color:;
-            padding:35px;
-        }
-		
-   		 </style>
+	body {
+    padding-top : 50px;
+    } 
+    
+    .img_feed {	  
+	max-width: 400px;
+	max-height: 300px;	
+	}
+	
+	.img_categories {	  
+	max-width: 160px;
+	max-height: 90px;	
+	}
+	    
+   	.eBanner{
+	width: auto; height: auto;
+    max-width: 100%;
+    max-height: 300px;
+    }
+       
+     .txt_line {
+	 width:380px; 
+	 padding:0 5px; 
+	 overflow:hidden; 
+	 text-overflow:ellipsis; 
+	 white-space:nowrap; 
+	 }
+	 
+	.view {	  
+	margin: 5px 10px;
+	}
+    
+   	</style>
     
 </head>
 <body>
-
-
 	
 	<!-- ToolBar Start /////////////////////////////////////-->
 		<jsp:include page="toolbar.jsp" />
-	<!-- ToolBar End /////////////////////////////////////-->
-	
 	
 	
 	<div class="container-fluid">
-    	<div id="category" class="row">
-           
-        </div>
+     
+		<div id="categories" class="row justify-content-center" style="margin-left: 10px; margin-right: 10px;">
+			<div class="col-md-11">
+				
+					
+				
+					<c:forEach var="category" items="${categoryList}">
+				    	
+				    </c:forEach>
+	
+			</div>
+			<div class="col-md-1">
+					<div class="dropdown">
+				  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuMenu" data-toggle="dropdown"
+				    aria-haspopup="true" aria-expanded="false" style="padding-left: 15px; padding-right: 15px;">
+				   <i class="fas fa-align-justify"></i>
+				  </button>
+				  <div class="dropdown-menu" aria-labelledby="dropdownMenuMenu">
+				    
+				    <c:forEach var="category" items="${categoryList}">
+				    	<button class="dropdown-item" type="button">${category.categoryName}</button>
+				    </c:forEach>
+			
+				  </div>
+				</div>
+			</div>
+		
+		
+		</div>	
 
-        <div id="banner" class="row">
-            <jsp:include page="/main/banner.jsp" />
-        </div>
+        <div id="banner" class="row"></div>
   
-        <div id="main" class="row">
-         
-        </div>
+        <div id="main" class="row justify-content-center" style="margin-left: 10px; margin-right: 10px;"></div>
 
 
-</div>
+	</div>
 	
 	
 
