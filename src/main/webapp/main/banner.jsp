@@ -39,10 +39,6 @@
 <body>
 
 
-	
-
-	<!-- 으아아아 -->
-
 	<!--Carousel Wrapper-->
 	<div class="container-fulid">
 		<div id="carousel-example-1z" class="carousel slide carousel-fade" data-ride="carousel">

@@ -38,7 +38,8 @@
 		.carousel-multi-item-2 .col-md-3 {
 		float: left;
 		width: 25%;
-		max-width: 100%; } }
+		max-width: 100%;
+		 } 
 		
 		.h3-responsive{
 		 text-align:center;

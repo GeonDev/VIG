@@ -100,7 +100,7 @@
 		</div>	
 		
 		<div class="row">
-			<a href="main/vig">메인 페이지로</a>
+			<a href="main/VIG">메인 페이지로</a>
 		</div>	
 		
 		
