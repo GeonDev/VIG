@@ -1,10 +1,7 @@
 package com.VIG.mvc.web.report;
 
-import java.util.List;
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
-import javax.swing.RepaintManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,7 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.VIG.mvc.service.domain.Page;
 import com.VIG.mvc.service.domain.Report;
 import com.VIG.mvc.service.domain.Search;
+import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.report.ReportServices;
+import com.VIG.mvc.service.user.UserServices;
 
 
 
@@ -28,7 +27,12 @@ public class ReportController {
 	
 	@Autowired
 	@Qualifier("reportServicesImpl")
-	private ReportServices reportService;	
+	private ReportServices reportService;
+	
+	@Autowired
+	@Qualifier("userServicesImpl")
+	private UserServices userService;
+	
 
 	@Autowired
 	private ServletContext context;	
@@ -50,6 +54,25 @@ public class ReportController {
 	public ReportController() {
 		// TODO Auto-generated constructor stub		
 	}	
+	
+	@RequestMapping("addReport")
+	public ModelAndView addReport(@ModelAttribute("report") Report report, HttpSession session ) throws Exception {
+		
+		User user = (User)session.getAttribute("user");
+		
+		if(user == null) {
+			return new ModelAndView("forward:/common/alertView.jsp", "message", "로그인후 이용가능합니다..");
+		}
+		
+		report.setReporter(user);
+		
+		report.setViolator(userService.getUserOne(report.getViolatorCode()));
+		reportService.addReport(report);		
+		
+		return new ModelAndView("forward:/common/alertView.jsp", "message", "신고가 접수 되었습니다.");
+	}
+	
+	
 	
 	
 	
