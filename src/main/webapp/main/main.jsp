@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -111,54 +112,102 @@
 		
 		$(function(){			
 			// 최초 진입시 첫번째 페이지 로딩
-			getCategoryList();
 			getFeedItemList('일러스트레이션');
 		});
 		
-		</script>
+	</script>
 		
-		<style type="text/css">
+	<style type="text/css">	
+	
+
+
 		
-		 #category {
-            text-align: center;
-            width: auto;
-            height: 150px;
-            padding:100;
-        }
-		
-		 #banner {
-            text-align: ;
-            width: auto;
-            height: 200px;
-            background-color:;
-            padding:35px;
-        }
-		
-   		 </style>
+	body {
+    padding-top : 50px;
+    } 
+    
+    .img_feed {	  
+	max-width: 400px;
+	max-height: 300px;	
+	}
+	
+	.img_categories {	  
+	max-width: 160px;
+	max-height: 90px;	
+	}
+	    
+   	.eBanner{
+	width: auto; height: auto;
+    max-width: 100%;
+    max-height: 300px;
+    }
+       
+     .txt_line {
+	 width:380px; 
+	 padding:0 5px; 
+	 overflow:hidden; 
+	 text-overflow:ellipsis; 
+	 white-space:nowrap; 
+	 }
+	 
+	.view {	  
+	margin: 5px 10px;
+	}
+    
+   	</style>
     
 </head>
 <body>
-
-
 	
 	<!-- ToolBar Start /////////////////////////////////////-->
 		<jsp:include page="toolbar.jsp" />
-	<!-- ToolBar End /////////////////////////////////////-->
 	
 	
-	
-	<div class="container-fluid">
-    	<div id="category" class="row">
-           
+	<div class="container-lg-fluid">
+    	<div id="categories" class="row justify-content-start" style="margin-left: 10px; margin-right: 10px; text-align: center;">    
+    		
+    		<!-- data-ride="carousel" -->
+	    	<div id="multi-item-example" class="carousel carousel-multi-item carousel-multi-item-2"  >
+			
+				  <!--Controls-->
+				  <div class="controls-top">
+				    <a class="carousel-control-prev" href="#multi-item-example" data-slide="prev"><i class="fas fa-angle-left fa-3x pr-3"></i></a>
+				    <a class="carousel-control-next" href="#multi-item-example" data-slide="next"><i class="fas fa-angle-right fa-3x pl-3"></i></a>
+				  </div>
+				  
+				  <div class="carousel-inner" role="listbox">
+				  
+					  <c:set var="i" value="0" />
+					  <c:forEach var="category" items="${categoryList}">						  
+						  <c:choose>
+						  	<c:when test="${i == 0}">
+						  		<div class="carousel-item active ">				  		
+						  	</c:when>
+						  	
+						  	<c:when test="${i%4 == 0}">
+						  		</div>
+						  		<div class="carousel-item">					  		
+						  	</c:when>				  
+						  </c:choose>
+						 <div class="col-md-2"> 					  
+					  		<div class="view">					  							  							  										
+								<img class="img-fluid rounded-pill" src="/VIG/images/others/${category.categoryImg}" >
+							  	<div class="mask rgba-black-strong rounded-pill"  style="text-align:center;">							  							  		
+							  		<br/><br/><h4 style="color: white; ">${category.categoryName}</h4><br/>							  	
+							  	</div>							  							 		
+					 		</div>
+						 </div>				  
+					  		<c:set var="i" value="${ i+1 }" />
+					  </c:forEach>
+				  	  </div>
+				  </div>
+				  
+	         </div>  
         </div>
 
-        <div id="banner" class="row">
-            <jsp:include page="/main/banner.jsp" />
-        </div>
+        <div id="banner" class="row"></div>
   
-        <div id="main" class="row">
-         
-        </div>
+        <div id="main" class="row justify-content-center" style="margin-left: 10px; margin-right: 10px;"></div>
 
 
 </div>
