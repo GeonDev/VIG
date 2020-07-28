@@ -10,7 +10,7 @@
 		<result property="joinerId" 	column="joiner_id" 		jdbcType="NUMERIC"/>
 		<result property="feedId"		column="feed_id" 		jdbcType="NUMERIC" />
 		<result property="isLike"		column="is_like" 		jdbcType="NUMERIC" />
-		<result property="addDate" 		column="like_date" 		jdbcType="DATE" />
+		<result property="addDate" 		column="add_date" 		jdbcType="DATE" />
 				
 		<association property="user" column="user_code" javaType="user" select="setJoiner" />					
 	</resultMap>
@@ -33,13 +33,13 @@
 		</select>
 		
 		<insert id="addJoinUser" parameterType="joiner">
-		 	INSERT INTO joiner (joiner_id, feed_id ,is_like, like_date, user_code)
+		 	INSERT INTO joiner (joiner_id, feed_id ,is_like, add_date, user_code)
 		 	VALUES (joiner_id, #{feedId}, #{isLike}, NOW(), #{user.userCode})
 		</insert>	
 		
-		<delete id="deleteJoinUser" parameterType="joiner">
+		<delete id="deleteJoinUser" parameterType="joiner" >
 			DELETE FROM joiner
-			WHERE joiner_id = #{value} 
+			WHERE feed_id = #{feedId} AND is_like=1 AND user_code = #{user.userCode} 
 		</delete>
 		
 		<select id="getLikeState" parameterType="joiner" resultMap="joinerSelectMap">
