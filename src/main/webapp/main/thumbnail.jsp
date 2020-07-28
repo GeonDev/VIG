@@ -77,7 +77,7 @@
 			
 			$.ajax( 
 					{
-						url : "/VIG/searchController/json/getSearchResultList",
+						url : "/VIG/search/json/getSearchResultList",
 						method : "POST",
 						dataType : "Json",					
 						headers : {

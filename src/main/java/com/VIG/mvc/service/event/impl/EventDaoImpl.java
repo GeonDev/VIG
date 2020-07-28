@@ -74,6 +74,12 @@ public class EventDaoImpl implements EventDao {
 		// TODO Auto-generated method stub
 		return 	sqlSession.selectOne("EventMapper.getTotalCount");
 	}
+
+	@Override
+	public List<Event> getLastEventList() throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("EventMapper.getLastEventList");
+	}
 	
 
 }

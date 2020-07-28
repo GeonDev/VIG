@@ -72,4 +72,10 @@ public class EventServicesImpl implements EventServices {
 		
 	}
 
+	@Override
+	public List<Event> getLastEventList() throws Exception {
+		// TODO Auto-generated method stub
+		return eventDao.getLastEventList();
+	}
+
 }

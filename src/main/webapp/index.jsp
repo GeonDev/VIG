@@ -63,10 +63,6 @@
 </head>
 
 <body>
-<h1>Hello World!</h1>
-
-	<!-- ToolBar Start /////////////////////////////////////-->
-		<jsp:include page="./main/toolbar.jsp" />
 
 	<br/>
 	<br/>
@@ -102,6 +98,11 @@
 		<div class="row">
 			<a href="ApiTestPage.jsp">테스트 코드로</a>
 		</div>	
+		
+		<div class="row">
+			<a href="main/vig">메인 페이지로</a>
+		</div>	
+		
 		
 		<div class="row">
 			<a href="testController/setImage">이미지 키워드 추출</a>

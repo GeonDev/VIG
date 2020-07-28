@@ -65,13 +65,7 @@ public class TestController {
 	public TestController() {
 		// TODO Auto-generated constructor stub		
 	}	
-	
-	@Scheduled(cron="0 */10 * * * *")
-	public void TestScheduler() {	  
-		 Date now = new Date();
-		 System.out.println("[SERVER] : Scheduler " + now);
-	}
-	
+
 	
 	@RequestMapping(value = "trans", method = RequestMethod.POST)
 	public ModelAndView trans(@ModelAttribute("Trans") String target ) throws Exception {

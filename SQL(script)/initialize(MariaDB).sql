@@ -27,7 +27,8 @@ CREATE TABLE users (
 CREATE TABLE categories ( 
 	category_id 			 INT(11)  		NOT NULL AUTO_INCREMENT,
 	category_name 			 VARCHAR(100) 	NOT NULL,
-	category_img 			 VARCHAR(100), 
+	category_img 			 VARCHAR(100),
+	UNIQUE (category_name),
 	PRIMARY KEY(category_id)
 );
 
