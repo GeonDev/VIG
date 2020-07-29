@@ -1971,4 +1971,8 @@ INSERT
 INTO history (history_id, feed_id, watch_user_code, show_date, history_type)
 VALUES(history_id, 20012, 'user01', NOW(), 0);
 
+INSERT
+INTO history (history_id, feed_id, watch_user_code, show_date, history_type)
+VALUES(history_id, 20012, 'user01', NOW(), 0);
+
 commit;
