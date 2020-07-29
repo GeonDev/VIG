@@ -34,5 +34,7 @@ public interface FeedServices {
 	public Feed getPrimeFeedOne(Search search) throws Exception;
 	
 	public void updatePrimeFeedViewCount(Feed feed) throws Exception;
+	
+	public List<Feed> getHightViewFeedList(Search search) throws Exception;
 
 }

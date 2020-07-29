@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,6 +24,7 @@ import com.VIG.mvc.service.domain.Event;
 import com.VIG.mvc.service.domain.Image;
 import com.VIG.mvc.service.domain.ImageColor;
 import com.VIG.mvc.service.domain.ImageKeyword;
+import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.event.EventServices;
 import com.VIG.mvc.service.feed.FeedServices;
 import com.VIG.mvc.service.image.ImageServices;
@@ -81,13 +83,28 @@ public class mainController {
 	}
 	
 	@RequestMapping("VIG")
-	public ModelAndView getMain(Model model ) throws Exception {
+	public ModelAndView getMain(Model model, HttpSession session) throws Exception {
 		
 		List<Category> categoryList = categoryServices.getAllCategoryList();
 		List<Event> eventList = eventServices.getLastEventList();
 		
+		
+		User user = (User)session.getAttribute("user");
+		
+		if(user !=null) {
+			user.setGoogleId("");
+			user.setPassword("");
+		}
+		
+		model.addAttribute("user", user);	
+		
 		model.addAttribute("eventList", eventList);		
-		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("categoryList", categoryList);		
+		
+		model.addAttribute("categoryCount", categoryList.size());
+		
+		// 카테고리는 한페이지당 6개로 고정, 소수점을 얻기 위하여 캐스팅
+		model.addAttribute("categoryTotal", (int)Math.ceil((double)categoryList.size()/6.0) );
 		
 		return new ModelAndView("forward:/main/main.jsp");
 	}
