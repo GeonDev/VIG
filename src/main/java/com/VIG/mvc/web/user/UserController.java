@@ -103,7 +103,7 @@ public class UserController {
 			System.out.println("logout");
 		session.invalidate();
 		ModelAndView model = new ModelAndView();
-		model.setViewName("redirect:/main/main.jsp");
+		model.setViewName("redirect:/main/VIG");
 		return model;
 	}
 

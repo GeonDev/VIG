@@ -30,6 +30,7 @@
 	<!-- 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 -->
 	
 	
+	<!-- 유저가 열람한 히스토리를 넣어준다. -->
 	<insert id="addHistory" parameterType="history">
 		INSERT INTO history(history_id, show_date, ip_address, history_type, watch_user_code, feed_id )
 		VALUES(history_id, NOW(), #{ipAddress:VARCHAR}, #{historyType}, #{watchUser.userCode:VARCHAR}, #{showFeed.feedId:NUMERIC}  ) 		
