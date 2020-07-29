@@ -40,6 +40,13 @@ public User login( @RequestBody User user, HttpSession session) throws Exception
 	return dbUser;	
 }
 
+@RequestMapping( value="json/getCode{userCode}", method=RequestMethod.POST )
+public User getCode( @PathVariable String userCode ) throws Exception{
+	
+	System.out.println("/user/json/getUser : GET");
+		return userServices.getCode(userCode);
+}
+
 /*
 @RequestMapping(value="json/checkId", method=RequestMethod.POST)
 public User checkId( @RequestBody User user, HttpSession session) throws Exception{
@@ -57,7 +64,7 @@ public User checkId( @RequestBody User user, HttpSession session) throws Excepti
 
 
 
-@RequestMapping( value = "json/getUser/{userCode}" , method=RequestMethod.GET)
+@RequestMapping( value = "json/getUser" , method=RequestMethod.POST)
 public User getUser(@PathVariable String userCode) throws Exception{
 	System.out.println("json get");
 	return userServices.getUserOne(userCode);

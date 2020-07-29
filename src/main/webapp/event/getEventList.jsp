@@ -31,6 +31,12 @@
 
 	
 <style>
+	body {
+	
+	margin-top: 70px;
+	
+	
+	}
 	
 	#main { 
 		width: 720px;
@@ -38,7 +44,7 @@
 		margin: 0 auto;
 	}
 	
-	img {
+	#thumb {
 	  margin: 1em 0;
 	  display: block;
 	  background: rgb(240, 240, 240);
@@ -58,15 +64,8 @@
 </head>
 <body>
 
-<!--Navbar-->
-<nav class="navbar navbar-light purple lighten-4 mb-4">
-
-  <!-- Navbar brand -->
-  <a class="navbar-brand" href="#">Navbar</a>
-
-  <!-- Collapse button -->
-
-</nav>
+	<!-- 툴바 include -->
+	<jsp:include page="../main/toolbar.jsp" />
 	
 	
 	<div class="row">
@@ -83,7 +82,7 @@
 		<c:set var="i" value="${i+1 }"/>
 		<div class="col-12">
 		 <div class="media position-relative">
-		  <img class="d-flex mr-3"" style="height: 150px; width: 200px" src="/images/uploadFiles/${event.eventThumb }"
+		  <img id="thumb" class="d-flex mr-3" style="height: 150px; width: 200px" src="/images/uploadFiles/${event.eventThumb }"
 		    alt="image">
 		
 		  <div class="media-body">
@@ -99,7 +98,6 @@
     </div>
   	</c:forEach>
 	</div>
-		${message}
 		
 		
 	
