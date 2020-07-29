@@ -158,7 +158,9 @@
 	
 	}
 	
-
+	#deleteComments{
+		float:right;
+	}
 
 </style>
 
@@ -254,7 +256,7 @@ $(function(){
 			obj.feedId='${feed.feedId}';
 			obj.commentText =commentText;
 		var jsonData = JSON.stringify(obj);
-		alert("댓글등록완료");
+		
 			
 			
 			$.ajax(
@@ -286,6 +288,18 @@ $(function(){
 			
 		
 	});
+	
+	
+	
+	//댓글 삭제
+	$("#deleteComments").on("click", function(){
+		
+		$('p').remove("{comment.commentId}");
+	
+	});
+	
+	
+	
 	
 	//신고 모달창
 	$("i:contains('신고')").on("hover", function(){
@@ -377,15 +391,7 @@ $(function(){
 	
 	//이미지 클릭시 모달로 원본 이미지 띄우기
 	
-	$("")
-	
-	
-	
-	
-	
-
-	
-})
+});
 
 
 </script>
@@ -484,16 +490,22 @@ $(function(){
 		</div>
 		</div>
 
-		<div id="feedbottom">
+		<div id="feedbottom" class="text-monospace">
 		<c:choose>
 		
 		<c:when test="${!empty feed.comments }">
 			<c:forEach var="comments" items="${feed.comments}">
 			<c:set var="i" value="0"/>
 			<c:set var="i" value="${i+1 }"/>
+			<div>
+			<p id="{comments.commentId}">
 			<img src="/VIG/images/others/default-profile-picture1.jpg" class="rounded-circle" width="15px"><a href="/마이피드/${comments.user.userCode}">${ comments.user.userName}</a>
-			comment ${comments.commentText}
+			 ${comments.commentText}  <i class="fas fa-trash" id="deleteComments" ></i></p>
+			 <hr>
+			 </div>
+			 
 			</c:forEach>
+			
 		</c:when>
 		<c:when test="${empty feed.comments}">
 			<br>
