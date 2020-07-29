@@ -123,9 +123,18 @@ public class RestSearchController {
 		search.setPageSize(pageSize);
 		search.setKeyword(jsonData.get("category"));
 		//로그인한 유저 정보를 받아옴
-		User user = (User)session.getAttribute("user");		
+		User user = (User)session.getAttribute("user");
 		
-		List<Feed> feedlist = feedServices.getFeedListFromCategory(search);
+		List<Feed> feedlist = new ArrayList<Feed>();
+		
+		
+		//이미지가 사용자 추천인지 체크
+		if(search.getKeyword().equals("RECOMMEND") ) {
+			
+		}else {
+			feedlist = feedServices.getFeedListFromCategory(search);
+		}
+		
 		
 		
 		//숨김피드는 빼준다.

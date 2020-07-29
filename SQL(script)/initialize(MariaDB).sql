@@ -245,7 +245,12 @@ VALUES (category_id, '타이포그래피', 'category11.jpg');
 
 INSERT
 INTO categories (category_id, category_name, category_img)
-VALUES (category_id, '인터랙션', 'category12.jpg');
+VALUES (category_id, 'UI/UX', 'category12.jpg');
+
+INSERT
+INTO categories (category_id, category_name, category_img)
+VALUES (category_id, 'RECOMMEND', 'recommend.jpg');
+
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, state, reg_date)
@@ -837,7 +842,102 @@ INSERT
 INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(image_id, 20016, 5, 0,'feed17_06.jpg');
 
+INSERT
+INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
+VALUES(20017, 'HATSU BEYONDCOLOR', '', 'user01', NOW(), 0, 10005);
 
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20017, 0, 1,'feed18_thumbnail.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20017, 0, 0,'feed18_01.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20017, 1, 0,'feed18_02.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20017, 2, 0,'feed18_03.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20017, 3, 0,'feed18_04.jpg');
+
+INSERT
+INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
+VALUES(20018, 'summer paintings01', '', 'user05', NOW(), 0, 10007);
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20018, 0, 1,'feed19_thumbnail.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20018, 0, 0,'feed19_01.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20018, 1, 0,'feed19_02.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20018, 2, 0,'feed19_03.jpg');
+
+INSERT
+INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
+VALUES(20019, 'summer paintings02', '', 'user05', NOW(), 0, 10007);
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20019, 0, 1,'feed20_thumbnail.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20019, 0, 0,'feed20_01.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20019, 1, 0,'feed20_02.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20019, 2, 0,'feed20_03.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20019, 3, 0,'feed20_04.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20019, 4, 0,'feed20_05.jpg');
+
+
+INSERT
+INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
+VALUES(20020, 'Neumorphism icons', '', 'user03', NOW(), 0, 10011);
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20020, 0, 1,'feed21_thumbnail.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20020, 0, 0,'feed21_01.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20020, 1, 0,'feed21_02.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20020, 2, 0,'feed21_03.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20020, 3, 0,'feed21_04.jpg');
 
 INSERT
 INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
@@ -1862,6 +1962,10 @@ VALUES(history_id, 20054, 'user01', NOW(), 0);
 INSERT
 INTO history (history_id, feed_id, watch_user_code, show_date, history_type)
 VALUES(history_id, 20011, 'user01', NOW(), 0);
+
+INSERT
+INTO history (history_id, feed_id, watch_user_code, show_date, history_type)
+VALUES(history_id, 20012, 'user01', NOW(), 0);
 
 INSERT
 INTO history (history_id, feed_id, watch_user_code, show_date, history_type)
