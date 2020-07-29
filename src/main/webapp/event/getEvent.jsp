@@ -124,7 +124,7 @@ $(function(){
 
 	
 	<hr/>
-		<img id="evimg" src="C:/uploadFiles/${event.eventImage}" style="width:960px" class="img-rounded"/>
+		<img id="evimg" src="/VIG/images/others/${event.eventImage}" style="width:960px" class="img-rounded"/>
 	<hr/>
 	<br/>
 	
