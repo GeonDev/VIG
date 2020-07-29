@@ -29,6 +29,11 @@
 
 	
 <style>
+	body {
+	
+	margin-top: 70px;
+	
+	}
 	
 	#outline {
 	
@@ -51,7 +56,7 @@
 	
 	}
 	
-	img {
+	#evimg {
 	  margin: 1em 0;
 	  display: block;
 	  background: rgb(240, 240, 240);
@@ -88,14 +93,8 @@ $(function(){
 </head>
 <body>
 
-<nav class="navbar navbar-light purple lighten-4 mb-4">
-
-  <!-- Navbar brand -->
-  <a class="navbar-brand" href="#">Navbar</a>
-
-  <!-- Collapse button -->
-
-</nav>
+	<!-- 툴바 include -->
+	<jsp:include page="../main/toolbar.jsp" />
 	
 	<div id="outline">
 	<br>
@@ -125,7 +124,7 @@ $(function(){
 
 	
 	<hr/>
-		<img src="C:/uploadFiles/${event.eventImage}" style="width:960px" class="img-rounded"/>
+		<img id="evimg" src="C:/uploadFiles/${event.eventImage}" style="width:960px" class="img-rounded"/>
 	<hr/>
 	<br/>
 	
