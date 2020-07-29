@@ -69,7 +69,7 @@
 		}
 		
 	    
-	//====
+	//====ㅌ
 		$(function(){
 			$("#sendEmail").on("click",function(){
 				alert("인증메일보냄");
@@ -101,31 +101,20 @@
 		});			
 		
 	//======
-		$( function() {
-			$("#userCode").keyup(function(){				
-				var userCode = $("#userCode").val();
-				$.ajax(
-						{
-						url : "/user/json/getCode/"+userCode ,
-						method : "GET" ,
-						dataType : "json" ,
-						headers : {
-							"Accept" : "application/json",
-							"Content-Type" : "application/json"
-						},
-						success : function(JSONData , status) {														
-							if(JSONData.userCode!=userCode){
-								
-								var correct = "<p style='color:green'> 사용가능합니다. </p>"
-								$("span> .check").html(correct);							
-							}else{								
-								var alert = "<p style='color:red'> 이미 존재하는 아이디입니다.</p>"
-								$("span> .check").html(alert);							
-							}			
-						}
-				});
+		
+		//==>"ID중복확인" Event 처리 및 연결
+		 $(function() {
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
+			 $("#iDcheck").on("click" , function() {
+				//alert($("td.ct_btn:contains('ID중복확인')").html());
+				popWin 
+				= window.open("/VIG/user/checkDuplication.jsp",
+											"popWin", 
+											"left=300,top=200,width=300,height=200,marginwidth=0,marginheight=0,"+
+											"scrollbars=no,scrolling=no,menubar=no,resizable=no");
 			});
-		});
+		});	
 		
 			
 			
@@ -169,7 +158,7 @@
 <!-- id -->  
 	<label data-error="wrong" data-success="right" for="userCode"></label>
 	<input type="text" id="userCode" name="userCode" class="form-control mb-4" placeholder="userCode" required>   
-
+	<button type="button" class="btn btn-primary btn-sm" id="iDcheck">IDcheck</button>
 <!-- name -->
 	<input type="text" id="userName" name="userName" class="form-control mb-4" placeholder="nickName" required>
 	<label data-error="wrong" data-success="right" for="nickName"></label>   

@@ -53,8 +53,12 @@ public class UserServicesImpl implements UserServices {
 	
 	@Override
 	public boolean checkDuplication(String userCode) throws Exception {
-		
-		return false;
+		boolean result=true;
+		User user=userDao.getUserOne(userCode);
+		if(user != null) {
+			result=false;
+		}
+		return result;
 	}
 	
 	@Override
