@@ -265,7 +265,7 @@
    	.eBanner{
 	width: auto; height: auto;
     max-width: 100%;
-    max-height: 300px;
+    max-height: 200px;
     }
        
      .txt_line {
@@ -291,11 +291,11 @@
 	
 	<div class="container-fluid">
      
-		<div id="categories" class="row justify-content-center" style="margin-left: 10px; margin-right: 10px;">
+		<div id="categories" class="row d-flex justify-content-center" style="margin-left: 10px; margin-right: 10px;">
 										
 				<div class="row justify-content-center">
 				
-					<div class="col-md-1">
+					<div class="col-md-1" style="margin-top: 20px">
 						<button class="btn btn btn-primary" onclick="CategoriesMinus()" type="button" > <i class="fas fa-angle-left"></i></button>	        					      				
 					</div>
 				
@@ -317,7 +317,7 @@
 						</div>	
 					</div>
 					
-					<div class="col-md-1">
+					<div class="col-md-1" style="margin-top: 20px;">
 						<button class="btn btn btn-primary" type="button" onclick="CategoriesPlue()"> <i class="fas fa-angle-right"></i></button>		  					      				
 					</div>				
 				</div>					
@@ -357,9 +357,9 @@
 			  <div class="carousel-inner" role="listbox">
 	
 				<!--First slide-->
-			    <div class="carousel-item active">
+			    <div class="carousel-item active" style="text-align: center;">
 				    <a href="#">
-				      <img class="eBanner rounded mb-0" src="https://mdbootstrap.com/img/Photos/Slides/img%20(130).jpg"
+				      <img class="eBanner rounded mb-0" src="/VIG/images/others/noname.jpg"
 				        alt="First slide">
 				    </a>
 			    </div>
@@ -367,7 +367,7 @@
 			    
 	
 				<!--Second slide-->
-			    <div class="carousel-item">
+			    <div class="carousel-item" style="text-align: center;">
 			    	 <a href="#">
 					      <img class="eBanner rounded mb-0" src="https://mdbootstrap.com/img/Photos/Slides/img%20(129).jpg"
 					        alt="Second slide">
@@ -377,7 +377,7 @@
 			    
 	
 				<!--Third slide-->
-			    <div class="carousel-item">
+			    <div class="carousel-item" style="text-align: center;">
 			    	 <a href="#">
 					      <img class="eBanner rounded mb-0" src="https://mdbootstrap.com/img/Photos/Slides/img%20(70).jpg"
 					        alt="Third slide">
