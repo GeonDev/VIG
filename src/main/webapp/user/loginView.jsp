@@ -26,64 +26,37 @@
 			
 		
 	<script type="text/javascript">
-		
-
-	function fncloginGo(){
-		$("form").attr("method", "post").attr("action", "login").submit();
-	}
-	function fncReset(){
-		//로그인 실패하면 input내용 지워주기
-	}
 	
-	
-		$( function(){
-			$("#userCode").focus();
-			$("#login").on("click" ,function(){
-				
-				var id=$("input[name='userCode']").val();
-				var pw=$("input[name='password']").val();
-				if(id == null || id.length <1) {
-					alert('ID 를 입력하지 않으셨습니다.');
-					$("#userId").focus();
-					return;
-				}
-				
-				if(pw == null || pw.length <1) {
-					alert('패스워드를 입력하지 않으셨습니다.');
-					$("#password").focus();
-					return;
-				}	
-				
-				$.ajax( 
-						{
-							url : "user/json/login",
-							method : "post" ,
-							dataType : "json" ,
-							headers : {
-								"Accept" : "application/json",
-								"Content-Type" : "application/json"
-								},
-							data : JSON.stringify({
-								userCode : id,
-								password : pw
-								}),
-							success : function(JSONData , status) {										
-								alert(JSONData.userCode);
-								if( JSONData != null ){
-									$(self.location).attr("href","../main/main.jsp");	
-								}else{
-									alert("아이디 , 패스워드를 확인하시고 다시 로그인...");
-								}
-								}
-							});
-				fncloginGo()
-						});
-					});
-		$( function() {
-			$("#ty").on("click" , function() {
-				self.location = "../user/addUserView.jsp";
-			});
+//=====
+	$( function() {
+		$("#ty").on("click" , function() {
+			self.location = "../user/addUserView.jsp";
 		});
+	});
+//====	
+	$( function() {
+		
+		$("#userCode").focus();
+	
+		$("#login").on("click" , function() {
+			var id=$("input:text").val();
+			var pw=$("input:password").val();
+			
+			if(id == null || id.length <1) {
+				alert('ID 를 입력하지 않으셨습니다.');
+				$("#userCode").focus();
+				return;
+			}
+			
+			if(pw == null || pw.length <1) {
+				alert('패스워드를 입력하지 않으셨습니다.');
+				$("#password").focus();
+				return;
+			}
+			
+			$("form").attr("method","POST").attr("action","login").submit();
+		});
+	});
 		
 	</script>
 	<style type="text/css">
