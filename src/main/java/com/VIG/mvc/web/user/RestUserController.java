@@ -40,7 +40,7 @@ public User login( @RequestBody User user, HttpSession session) throws Exception
 	return dbUser;	
 }
 
-@RequestMapping( value="json/getCode{userCode}", method=RequestMethod.GET )
+@RequestMapping( value="json/getCode{userCode}", method=RequestMethod.POST )
 public User getCode( @PathVariable String userCode ) throws Exception{
 	
 	System.out.println("/user/json/getUser : GET");
