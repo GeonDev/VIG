@@ -94,17 +94,12 @@ public class UserController {
 	public String login(@ModelAttribute("user") User user, HttpSession session, Model model) throws Exception{
 	
 		User dbUser = userServices.getUserOne(user.getUserCode());
-		if(dbUser == null) {
-			model.addAttribute("message", "일치하는 아이디가 없습니다.");
-			return "forward:../user/loginView.jsp";
-		}else if( user.getPassword().equals(dbUser.getPassword())){
+		
+		if( user.getPassword().equals(dbUser.getPassword())){
 			session.setAttribute("user", dbUser);
-			return "redirect:/main/main.jsp";
-		}else {
-			model.addAttribute("message", "비밀번호가 틀렸습니다.");
-			return "forward:../user/loginView.jsp";
-		}		
-		}	
+		}
+			return "redirect:/main/VIG";
+	}
 	
 //=======로그아웃===============================================================//
 	@RequestMapping( value="logout", method=RequestMethod.GET)
