@@ -107,7 +107,49 @@ public class RestSearchController {
 		
 		return null;
 		
-	}	
+	}
+	
+	
+	//선택된 카테고리에 해당하는 피드를 리턴한다.
+	@RequestMapping(value = "json/getSearchCategoryResult")
+	public Map<String, Object> getSearchCategoryResult(@RequestBody Map<String, String> jsonData, HttpSession session) throws Exception {
+		
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		Search search = new Search();		
+		
+		search.setCurrentPage(Integer.valueOf(jsonData.get("currentPage")));
+		search.setPageSize(pageSize);
+		search.setKeyword(jsonData.get("category"));
+		//로그인한 유저 정보를 받아옴
+		User user = (User)session.getAttribute("user");		
+		
+		List<Feed> feedlist = feedServices.getFeedListFromCategory(search);
+		
+		
+		//숨김피드는 빼준다.
+		if(user !=null) {
+			Search tempSearch = new Search();
+			tempSearch.setKeyword(user.getUserCode());
+			tempSearch.setSearchType(1);				
+			
+			List<History> hidelist = historyServices.getAllHistoryList(tempSearch);				
+			
+			for(History key : hidelist) {					
+				feedlist.remove(key.getShowFeed());
+			}				
+		}
+		
+		
+		map.put("list",feedlist);
+		
+		return map;	
+		
+	}
+	
+	
+	
 	
 	
 	@RequestMapping(value = "json/getSearchResultList")

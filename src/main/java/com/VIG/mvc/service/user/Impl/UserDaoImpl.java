@@ -52,6 +52,22 @@ public class UserDaoImpl implements UserDao {
 		return user;
 	}
 
+	@Override
+	public User getCode(String userCode) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("UserMapper.getUserOne", userCode);
+	}
+	
+	@Override
+	public List<User> getUserList(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("UserMapper.getUserList",search);
+	}
+	
+	
+	
+	
+	
 
 	@Override
 	public List<User> getUserListFromName(Search search) throws Exception {

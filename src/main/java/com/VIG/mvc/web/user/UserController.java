@@ -34,12 +34,10 @@ public class UserController {
 //=========회원가입===========================================================//
 	
 	@RequestMapping(value="addUser", method=RequestMethod.GET)
-	public ModelAndView addUser() throws Exception{
-		
+	public ModelAndView addUser() throws Exception{		
 		System.out.println("addUser(GET):회원가입 페이지로 이동");
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:/user/addUserView.jsp");
-		
+		modelAndView.setViewName("redirect:/user/addUserView.jsp");	
 		return modelAndView;
 	}
 		
@@ -59,8 +57,7 @@ public class UserController {
 	
 	
 	@RequestMapping( value="login", method=RequestMethod.GET)
-	public ModelAndView login() throws Exception{
-		
+	public ModelAndView login() throws Exception{		
 		System.out.println("login(GET):로그인 페이지로 이동");	
 		ModelAndView model = new ModelAndView();
 		model.setViewName("forward:../user/loginView.jsp");		
@@ -69,14 +66,19 @@ public class UserController {
 	
 
 	@RequestMapping( value="login", method=RequestMethod.POST )
-	public String login(@ModelAttribute("user") User user, HttpSession session) throws Exception{
+	public String login(@ModelAttribute("user") User user, HttpSession session, Model model) throws Exception{
 	
 		User dbUser = userServices.getUserOne(user.getUserCode());
-			if( user.getPassword().equals(dbUser.getPassword())){
-				session.setAttribute("user", dbUser);
-			}
-			
-		return "redirect:../main/main.jsp";
+		if(dbUser == null) {
+			model.addAttribute("message", "일치하는 아이디가 없습니다.");
+			return "forward:../user/loginView.jsp";
+		}else if( user.getPassword().equals(dbUser.getPassword())){
+			session.setAttribute("user", dbUser);
+			return "redirect:/main/main.jsp";
+		}else {
+			model.addAttribute("message", "비밀번호가 틀렸습니다.");
+			return "forward:../user/loginView.jsp";
+		}		
 		}	
 	
 //=======로그아웃===============================================================//
@@ -89,88 +91,100 @@ public class UserController {
 		return model;
 	}
 
-//=======이메일 보내기============================================================//
-	
-	public boolean sendEmail(User user) {
-		boolean test=false;
-		
-		String toEmail = user.getEmail(); //받을 이메일 주소
-		String fromEmail = "win98@gmail.com"; //보내는 메일 주소
-		String ePassword = "win98";
-		
-		try {
-			Properties pr = new Properties();
-			pr.put("mail.smtp.auth" , "true");
-			pr.put("mail.smtp.starttls.enable" , "true");
-			pr.put("mail.smtp.host" , "smtp.gmail.com");
-			pr.put("mail.smtp.port" , "587");
-		/*	//  maven 추가하기
-			Session session = Session.getInstance(pr, new Authenticator() {
-				@Override
-				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication(fromEmail, password);
-				}
-			});		
-			Message mes = new Message(session);
-			mes.setFrom(new InternetAddress(fromEmail));
-			
-			System.out.println("sendEmail: toEmail="+toEmail);
-			
-			mess.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
-			mess.setSubject("subject"); //메일 제목
-			mess.setText("text:"+user.getCode()); //메일 내용+인증 코드
-			
-			Transport.send(mess);			
-			test=true;
-		*/	
-		} catch (Exception e) {
-			e.printStackTrace();
-		}		
-		return test;
-	}
 
-//=======인증코드생성===========================================================//
-	
-	public String getRandom() {
-		Random rnd = new Random();
-		int number = rnd.nextInt(999999);			
-		System.out.println("number="+number);
-		
-		return String.format("%06d", number);		
-	}
-	
 	
 //=======get user===========================================================//
-	
-	public String GetUser(@RequestParam("userCode") String userCode, Model model)throws Exception{
+	@RequestMapping( value="getUser", method=RequestMethod.GET )
+	public String getUser(@RequestParam("userCode") String userCode, Model model)throws Exception{
 		System.out.println("get user");
 		User user = userServices.getUserOne(userCode);
-		System.out.println("get/user:"+user);
 		model.addAttribute("user", user);
-		return "forward:main/main.jsp";
+		return "forward:../main/main.jsp";
 	}
 	
 
-//======모달 계속 수정중==================================//
-	@RequestMapping("followModal")
-	public String followModal() {
-		System.out.println("모달띄우기 나오나요");
-		return "VIG/myFeed/followTest.jsp";
-	}
-	
 	//=============
-	@RequestMapping( value="updateUser", method=RequestMethod.POST )
-	public String updateUser(@ModelAttribute("user") User user, Model model,HttpSession session)throws Exception{ 
-		System.out.println("/user/updateUser : POST");
-		userServices.updateUser(user);
-		
-		String sessionCode=((User)session.getAttribute("user")).getUserCode();
-		if(sessionCode.equals(user.getUserCode())) {
-			session.setAttribute("user",user);
-		}
-		return "redirect:/user/getUserInfo?userCode="+user.getUserCode();
+	@RequestMapping( value="updateUser", method=RequestMethod.GET )
+	public String updateUser(@RequestParam("uesrCode") String userCode, Model model)throws Exception{ 
+		System.out.println("/user/updateUser : GEt");
+		User user = userServices.getUserOne(userCode);
+		model.addAttribute("user",user);
+		return "forward:/user/updateUser.jsp";
 	}
 	
+	@RequestMapping( value="updateUser", method=RequestMethod.POST )
+	public String updateUser(@ModelAttribute("uesr") User user, Model model, HttpSession session )throws Exception{ 
+		System.out.println("/user/updateUser : POST");
+		userServices.updateUser(user);	
+		
+		String sessionId=((User)session.getAttribute("user")).getUserCode();
+		System.out.println(sessionId);
+		if(sessionId.equals(user.getUserCode())){
+			session.setAttribute("user", user);
+		}
+		return "redirect:/user/updateUser.jsp";
+		//return "redirect:/user/getUser?userCode="+user.getUserCode();
+	}
+	
+	
+	
+	//=======이메일 보내기============================================================//
+	
+		public boolean sendEmail(User user) {
+			boolean test=false;
+			
+			String toEmail = user.getEmail(); //받을 이메일 주소
+			String fromEmail = "win98@gmail.com"; //보내는 메일 주소
+			String ePassword = "win98";
+			
+			try {
+				Properties pr = new Properties();
+				pr.put("mail.smtp.auth" , "true");
+				pr.put("mail.smtp.starttls.enable" , "true");
+				pr.put("mail.smtp.host" , "smtp.gmail.com");
+				pr.put("mail.smtp.port" , "587");
+			/*	//  maven 추가하기
+				Session session = Session.getInstance(pr, new Authenticator() {
+					@Override
+					protected PasswordAuthentication getPasswordAuthentication() {
+						return new PasswordAuthentication(fromEmail, password);
+					}
+				});		
+				Message mes = new Message(session);
+				mes.setFrom(new InternetAddress(fromEmail));
+				
+				System.out.println("sendEmail: toEmail="+toEmail);
+				
+				mess.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
+				mess.setSubject("subject"); //메일 제목
+				mess.setText("text:"+user.getCode()); //메일 내용+인증 코드
+				
+				Transport.send(mess);			
+				test=true;
+			*/	
+			} catch (Exception e) {
+				e.printStackTrace();
+			}		
+			return test;
+		}
+
+	//=======인증코드생성===========================================================//
+		
+		public String getRandom() {
+			Random rnd = new Random();
+			int number = rnd.nextInt(999999);			
+			System.out.println("number="+number);
+			
+			return String.format("%06d", number);		
+		}
+		
+	
+	//======모달 계속 수정중==================================//
+		@RequestMapping("followModal")
+		public String followModal() {
+			System.out.println("모달띄우기 나오나요");
+			return "VIG/myFeed/followTest.jsp";
+		}
 	//==
 
 	/*
