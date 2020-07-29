@@ -40,6 +40,16 @@
 		//최초 페이지는 0으로 설정
 		var page = 0; 	
 		
+		//카테고리의 페이지 
+		var categoryPage = 0;
+		
+		//카테고리가 총 몆개인지 확인
+		var categoryCount = '${categoryCount}';
+		
+		//페이지수가 몆개인지 확인
+		var categorytotalpage = '${categoryTotal}';
+		
+		
 		//페이지의 끝인지 체크
 		var isPageEnd = false;
 		
@@ -47,7 +57,8 @@
 		var isLoadPage = false;	
 		
 		//선택된 카테고리를 세팅		
-		var selectCategory ='일러스트레이션';
+		var selectCategory ='RECOMMEND';
+		
 		
 		
 		
@@ -93,7 +104,7 @@
 				$(".row:last").append(displayValue);		
 		}
 		
-		
+		//피드를 그려주는 부분 (Ajax) 호출
 		function getFeedItemList(categoryName) {				
 			
 			if(isPageEnd == true || isLoadPage == true){
@@ -123,7 +134,7 @@
 							}
 	 							 				
 		 	 				$.each(JSONData.list, function(index, item) { 														
-		 						getfeedlistFromAjax(item);	 												
+		 						getfeedlistFromAjax(item,'${user}');	 												
 		 					});	 							
 	 						
 	 						
@@ -133,20 +144,67 @@
 				});	
 		}
 		
+		
+		
 		//카테고리를 변경했을때 처리
 		function setCategories(categoryName) {
 			$( 'div' ).remove( '.overlay' );
 	    	page = 0;
 	    	isPageEnd = false;
 	    	isLoadPage = false;	   
-			selectCategory = categoryName;
+			selectCategory = categoryName;	
+			
 			
 			getFeedItemList(categoryName);
 		}
 		
+		//카테고리 +버튼을 누름
+		function CategoriesPlue() {
+			categoryPage =  (categoryPage+1)%categorytotalpage;		
+			hideCategory(categoryPage);
+		}
+		
+		//카테고리 -버튼을 누름
+		function CategoriesMinus() {
+			categoryPage -= 1;
+			if(categoryPage <0){
+				categoryPage=0;
+			}
+			hideCategory(categoryPage);			
+		}		
+		
+		//선택된 페이지 외 나머지 카테고리를 지워준다.
+		function hideCategory(categoryPage) {
+			for(i = 0; i<categoryCount; i++){
+				var id = '#category_';
+				id =  id.concat(i);
+				console.log(id);
+				$(id).attr('style','padding-left: 0px; padding-right: 0px; display:none;');
+			}
+			
+			var start = (categoryPage)*6;
+			var end = (categoryPage+1)*6;
+			
+			for(i = start; i<end; i++){
+				var id = '#category_';
+				id =  id.concat(i);
+				console.log(id);
+				$(id).attr('style','padding-left: 0px; padding-right: 0px;');
+			}			
+		}
 		
 		
-		
+		//피드를 숨길지 물어본다.
+		function addhideFeed(feedId){	   	
+			event.preventDefault();
+			console.log(feedId);
+			var result = confirm("해당 피드를 숨기시겠습니까?");
+			if(result){
+				var link ='/VIG/history/addHideFeed?Id=';
+				link =  link.concat(feedId);
+				$(location).attr("href", link); 
+			}      	    			
+		}		
 		
 		
 	
@@ -162,7 +220,7 @@
    			    }
    			});	
 			
-			
+			hideCategory(0);
 			
 			//F1 버튼을 누르면 키워드 추출 설정 
 		         $(document).keydown(function(key) {
@@ -195,14 +253,19 @@
 	}
 	
 	.img_categories {	  
-	max-width: 200px;
-	max-height: 100px;	
+	max-width: 180px;
+	max-height: 90px;
+	padding-left: 0px;
+	padding-right: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+	text-align: center; 	
 	}
 	    
    	.eBanner{
 	width: auto; height: auto;
     max-width: 100%;
-    max-height: 300px;
+    max-height: 200px;
     }
        
      .txt_line {
@@ -228,40 +291,114 @@
 	
 	<div class="container-fluid">
      
-		<div id="categories" class="row justify-content-center " style="margin-left: 10px; margin-right: 10px;">
-			<div class="col-md-11">								
-				<div class="row">
-					<c:forEach var="category" items="${categoryList}">				
-						<div class="col-md-2">
-							<div class="view img_categories">			    			
-				    			<img src="/VIG/images/others/${category.categoryImg}" alt="thumbnail" class="img-fluid rounded-pill" style="width: 200px; height: 100px;">
-				    		    <div class="mask flex-center rgba-black-strong rounded-pill">
-				    		   		<button class="btn btn-link" style="padding: 0px" type="button" onclick="setCategories('${category.categoryName}')"><p class="white-text" style="font-weight:bold ; font-size: large; padding: 0px;">${category.categoryName}</p></button>	        					      						
-		   						</div>    						
-				    		</div>	
-						</div>												  
-				    </c:forEach>
-				</div>	
-			</div>
+		<div id="categories" class="row d-flex justify-content-center" style="margin-left: 10px; margin-right: 10px;">
+										
+				<div class="row justify-content-center">
+				
+					<div class="col-md-1" style="margin-top: 20px">
+						<button class="btn btn btn-primary" onclick="CategoriesMinus()" type="button" > <i class="fas fa-angle-left"></i></button>	        					      				
+					</div>
+				
+				
+					<div class="col-md-10" style="padding-left: 0px; padding-right: 0px;">
+						<div class="row">
+						<c:set var="i" value="0" />
+						<c:forEach var="category" items="${categoryList}">				
+							<div class="col-md-2" id="category_${i}" style="padding-left: 0px; padding-right: 0px;">
+								<div class="view img_categories">			    			
+					    			<img src="/VIG/images/others/${category.categoryImg}" alt="thumbnail" class="img-fluid rounded-pill img_categories" >
+					    		    <div class="mask flex-center rgba-black-strong rounded-pill">
+					    		   		<button class="btn btn-link" style="padding-left: 0px; padding-right: 0px;" type="button" onclick="setCategories('${category.categoryName}')"><p class="white-text" style="font-weight:bold ; font-size: large; padding: 0px;">${category.categoryName}</p></button>	        					      						
+			   						</div>    						
+					    		</div>	
+							</div>	
+							<c:set var="i" value="${i+1}" />											  
+					    </c:forEach>
+						</div>	
+					</div>
+					
+					<div class="col-md-1" style="margin-top: 20px;">
+						<button class="btn btn btn-primary" type="button" onclick="CategoriesPlue()"> <i class="fas fa-angle-right"></i></button>		  					      				
+					</div>				
+				</div>					
+			
+<%-- 			
 			<div class="col-md-1">
-					<div class="dropdown">
-				  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownCategories" data-toggle="dropdown"
-				    aria-haspopup="true" aria-expanded="false" style="padding-left: 15px; padding-right: 15px;">
-				   <i class="fas fa-align-justify"></i>
+				<div class="dropdown">
+				  <button class="btn btn btn-light dropdown-toggle" type="button" id="dropdownCategories" data-toggle="dropdown"
+				    aria-haspopup="false" aria-expanded="false" data-offset="10,20" style="padding-left: 5px; padding-right: 5px; width: 80px; height: 80px;">				  
+				  <p>ALL</p>
 				  </button>
-				  <div class="dropdown-menu" aria-labelledby="dropdownCategories">				    
-				    <c:forEach var="category" items="${categoryList}">
-				    	<button class="dropdown-item" type="button" onclick="setCategories('${category.categoryName}')">${category.categoryName}</button>
-				    </c:forEach>			
+				  <div class="dropdown-menu" aria-labelledby="dropdownCategories">
+					 
+				  	<c:forEach var="category" items="${categoryList}">					  		
+				  		<button class="dropdown-item" type="button" onclick="setCategories('${category.categoryName}')" >${category.categoryName}</button>					  					    
+				    </c:forEach>
+								
 				  </div>
 				</div>
-			</div>
+			</div> 
+--%>
 		
 		
 		</div>	
 
-        <div id="banner" class="row"></div>
-  
+        <div id="banner" class="row" style="margin-left: 10px; margin-right: 10px; margin-bottom: 20px; margin-top: 20px;">
+	  		<div id="carousel-example-1z" class="carousel slide carousel-fade col-md-12" data-ride="carousel">
+			  <!--Indicators-->
+			  <ol class="carousel-indicators">
+			    <li data-target="#carousel-example-1z" data-slide-to="0" class="active"></li>
+			    <li data-target="#carousel-example-1z" data-slide-to="1"></li>
+			    <li data-target="#carousel-example-1z" data-slide-to="2"></li>
+			  </ol>
+			  <!--/.Indicators-->
+			  
+			  <!--Slides-->
+			  <div class="carousel-inner" role="listbox">
+	
+				<!--First slide-->
+			    <div class="carousel-item active" style="text-align: center;">
+				    <a href="#">
+				      <img class="eBanner rounded mb-0" src="/VIG/images/others/noname.jpg"
+				        alt="First slide">
+				    </a>
+			    </div>
+			    <!--/First slide-->
+			    
+	
+				<!--Second slide-->
+			    <div class="carousel-item" style="text-align: center;">
+			    	 <a href="#">
+					      <img class="eBanner rounded mb-0" src="https://mdbootstrap.com/img/Photos/Slides/img%20(129).jpg"
+					        alt="Second slide">
+					 </a>
+			    </div>
+			    <!--/Second slide-->
+			    
+	
+				<!--Third slide-->
+			    <div class="carousel-item" style="text-align: center;">
+			    	 <a href="#">
+					      <img class="eBanner rounded mb-0" src="https://mdbootstrap.com/img/Photos/Slides/img%20(70).jpg"
+					        alt="Third slide">
+				     </a>
+			    </div>
+			    <!--/Third slide-->
+			  </div>
+			  <!--/.Slides-->
+			  		  
+				<!--Controls-->
+			  <a class="carousel-control-prev" href="#carousel-example-1z" role="button" data-slide="prev" >
+			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			    <span class="sr-only">Previous</span>
+			  </a>
+			  <a class="carousel-control-next" href="#carousel-example-1z" role="button" data-slide="next">
+			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+			    <span class="sr-only">Next</span>
+			  </a>
+			  <!--/.Controls-->
+			</div>
+		</div>
         <div id="main" class="row justify-content-center" style="margin-left: 10px; margin-right: 10px;"></div>
 
 

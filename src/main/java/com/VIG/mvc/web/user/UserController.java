@@ -3,7 +3,16 @@ package com.VIG.mvc.web.user;
 import java.util.Properties;
 import java.util.Random;
 
-
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +42,7 @@ public class UserController {
 	
 //=========회원가입===========================================================//
 	
-	@RequestMapping(value="addUser", method=RequestMethod.GET)
+	@RequestMapping(value="addUserView", method=RequestMethod.GET)
 	public ModelAndView addUser() throws Exception{		
 		System.out.println("addUser(GET):회원가입 페이지로 이동");
 		ModelAndView modelAndView = new ModelAndView();
@@ -50,7 +59,7 @@ public class UserController {
 		userServices.addUser(user);
 		session.setAttribute("user",userServices.getUserOne(user.getUserCode()));
 		
-		return "redirect:/user/loginView.jsp";
+		return "redirect:/main/VIG";
 	}
 	
 //====id 체크 =====
@@ -85,17 +94,12 @@ public class UserController {
 	public String login(@ModelAttribute("user") User user, HttpSession session, Model model) throws Exception{
 	
 		User dbUser = userServices.getUserOne(user.getUserCode());
-		if(dbUser == null) {
-			model.addAttribute("message", "일치하는 아이디가 없습니다.");
-			return "forward:../user/loginView.jsp";
-		}else if( user.getPassword().equals(dbUser.getPassword())){
+		
+		if( user.getPassword().equals(dbUser.getPassword())){
 			session.setAttribute("user", dbUser);
-			return "redirect:/main/main.jsp";
-		}else {
-			model.addAttribute("message", "비밀번호가 틀렸습니다.");
-			return "forward:../user/loginView.jsp";
-		}		
-		}	
+		}
+			return "redirect:/main/VIG";
+	}
 	
 //=======로그아웃===============================================================//
 	@RequestMapping( value="logout", method=RequestMethod.GET)
@@ -103,7 +107,7 @@ public class UserController {
 			System.out.println("logout");
 		session.invalidate();
 		ModelAndView model = new ModelAndView();
-		model.setViewName("redirect:/main/main.jsp");
+		model.setViewName("redirect:/main/VIG");
 		return model;
 	}
 
@@ -119,7 +123,7 @@ public class UserController {
 	}
 	
 
-	//=============
+	//=============업데이트 유저
 	@RequestMapping( value="updateUser", method=RequestMethod.GET )
 	public String updateUser(@RequestParam("uesrCode") String userCode, Model model)throws Exception{ 
 		System.out.println("/user/updateUser : GEt");
@@ -147,6 +151,10 @@ public class UserController {
 	
 	//=======이메일 보내기============================================================//
 	
+	
+	
+	
+	/*
 		public boolean sendEmail(User user) {
 			boolean test=false;
 			
@@ -160,33 +168,33 @@ public class UserController {
 				pr.put("mail.smtp.starttls.enable" , "true");
 				pr.put("mail.smtp.host" , "smtp.gmail.com");
 				pr.put("mail.smtp.port" , "587");
-			/*	//  maven 추가하기
+				//  maven 추가하기
 				Session session = Session.getInstance(pr, new Authenticator() {
 					@Override
 					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication(fromEmail, password);
+						return new PasswordAuthentication(fromEmail, ePassword);
 					}
 				});		
-				Message mes = new Message(session);
-				mes.setFrom(new InternetAddress(fromEmail));
+				Message mess = new MimeMessage(session);
+				mess.setFrom(new InternetAddress(fromEmail));
 				
 				System.out.println("sendEmail: toEmail="+toEmail);
 				
 				mess.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
 				mess.setSubject("subject"); //메일 제목
-				mess.setText("text:"+user.getCode()); //메일 내용+인증 코드
+				mess.setText("text:"+user.getVariedCode()); //메일 내용+인증 코드
 				
 				Transport.send(mess);			
 				test=true;
-			*/	
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}		
 			return test;
 		}
-
+*/
 	//=======인증코드생성===========================================================//
-		
+		@RequestMapping(value="email")
 		public String getRandom() {
 			Random rnd = new Random();
 			int number = rnd.nextInt(999999);			

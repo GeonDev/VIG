@@ -30,7 +30,7 @@
 //=====
 	$( function() {
 		$("#ty").on("click" , function() {
-			self.location = "../user/addUserView.jsp";
+			self.location = "/VIG/user/addUserView";
 		});
 	});
 //====	
@@ -53,8 +53,28 @@
 				$("#password").focus();
 				return;
 			}
+			$.ajax( 
+					{
+						url : "/user/json/login",
+						method : "POST" ,
+						dataType : "json" ,
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						data : JSON.stringify({
+							userCode : id,
+							password : pw
+						}),
+						success : function(JSONData , status) {
+
+							alert(status);
+							if( JSONData != null ){
+								//$(window.parent.document.location).attr("href","");
+							}
+						}
 			
-			$("form").attr("method","POST").attr("action","login").submit();
+			//$("form").attr("method","POST").attr("action","login").submit();
 		});
 	});
 		
@@ -74,7 +94,7 @@
 <body>
 <jsp:include page="../main/toolbar.jsp"></jsp:include>
 
-<form>
+<form method="post">
 <div class="container">
 <div class="text-center border border-light p-5">
   <div class="row">

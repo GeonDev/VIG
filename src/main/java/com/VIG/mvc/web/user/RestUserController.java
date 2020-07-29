@@ -1,7 +1,15 @@
 package com.VIG.mvc.web.user;
 
 import java.util.List;
+import java.util.Properties;
 
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,5 +86,48 @@ public List<User> getUserListFromName(@PathVariable("userName") String name) thr
 	System.out.println("jsondata!! : "+name);
 	return userServices.getUserListFromName(search);
 }
+
+//===================
+
+//=======이메일 보내기============================================================//
+
+@RequestMapping( value="json/sendEmail", method=RequestMethod.POST )
+		public boolean sendEmail(User user) {
+			boolean test=false;
+			
+			String toEmail = user.getEmail(); //받을 이메일 주소
+			String fromEmail = "win98@gmail.com"; //보내는 메일 주소
+			String ePassword = "win98";
+			
+			try {
+				Properties pr = new Properties();
+				pr.put("mail.smtp.auth" , "true");
+				pr.put("mail.smtp.starttls.enable" , "true");
+				pr.put("mail.smtp.host" , "smtp.gmail.com");
+				pr.put("mail.smtp.port" , "587");
+				//  maven 추가하기
+				Session session = Session.getInstance(pr, new Authenticator() {
+					@Override
+					protected PasswordAuthentication getPasswordAuthentication() {
+						return new PasswordAuthentication(fromEmail, ePassword);
+					}
+				});		
+				Message mess = new MimeMessage(session);
+				mess.setFrom(new InternetAddress(fromEmail));
+				
+				System.out.println("sendEmail: toEmail="+toEmail);
+				
+				mess.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
+				mess.setSubject("subject"); //메일 제목
+				mess.setText("text:"+user.getVariedCode()); //메일 내용+인증 코드
+				
+				Transport.send(mess);			
+				test=true;
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}		
+			return test;
+		}
 
 }
