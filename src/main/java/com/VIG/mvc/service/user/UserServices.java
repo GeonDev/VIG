@@ -16,6 +16,8 @@ public interface UserServices {
 
 	// SELECT ONE
 	public User getUserOne(String userCode) throws Exception;	
+	
+	public User getCode(String userCode) throws Exception;
 
 	// UPDATE 
 	public void updateUser(User user) throws Exception;
@@ -27,7 +29,7 @@ public interface UserServices {
 	//public void deleteUser(String userCode) throws Exception;
 
 	// user list 
-	public Map<String , Object> getUserList(User user) throws Exception;
+	public Map<String , Object> getUserList( Search search) throws Exception;
 	
 	// send email
 	public boolean sendEmail(String email) throws Exception;
@@ -40,6 +42,7 @@ public interface UserServices {
 	
 	//유저 검색 시 자동생성
 	public List<String> getAutoUserName(String name) throws Exception;
+
 
 	
 	

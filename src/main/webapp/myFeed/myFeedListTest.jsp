@@ -141,47 +141,34 @@
 
 		</script>
 	
-		<style>
-		
+	<style>
 		.lightbox{
-		 width:350px;
-		 height:250px;
+			 width:350px; height:250px;
 		}		
 		.container-fulid{
-			padding-right:50px;
-			padding-left:50px;
+			padding-right:50px; padding-left:50px;
 		}
-
 		.row.1{
-		margin: 50px;
+			margin: 50px;
 		}
 		.col-md-10{
 			margin: auto;
 		}
 	    .title_h1{
-				padding:30px;
-			}
-			
-			#btn_group{
-			margin: auto;
-			text-align: center;
-			}
-	.lightbox{
-		padding:50;
-		 width:300px;
-		 height:200px;
-	}
-
+			padding:30px;
+		}
+		#btn_group{
+			margin: auto; text-align: center;
+		}
+		.lightbox{
+			padding:50; width:300px; height:200px;
+		}
 	</style>
-<!-- style part end =====================-->		
 
 </head>
-
 <body>
-		
-
 	 	
-<!-- 페이지 타이틀 ========================================== -->
+		<!-- 페이지 타이틀 ========================================== -->
 			<div class="col-md-10">
 						<div class="row 1">
 							<div class="title_h1"><h1>${user.userName} 님의 마이피드</h1></div>	
@@ -192,16 +179,16 @@
 			 			<div class="text-center">
 			 			 <button class="btn btn-light ml-5 mr-5" data-toggle="modal" data-target="#theModal">
 							   팔로워</button>
-						<button class="btn btn-light ml-5 mr-5" data-toggle="modal" data-target="#theModal">
+						<button class="btn btn-light ml-5 mr-5" data-toggle="modal" data-target="#theModal2">
 							   팔로잉</button>
-						<a  type="button" class="btn btn-light ml-5 mr-5" href="#">
+						<a type="button" class="btn btn-light ml-5 mr-5" href="#">
 							   채 팅</a>
 						</div>	 			
-			 		</div>
+				 		</div>
 					</div>
 
-<!-- 모달창 -->	
-			
+		<!-- 모달창 -->		
+						
 				<div class="modal fade" id="theModal" role="dialog" >
 				  <div class="modal-dialog">
 				    <div class="modal-content">
@@ -212,9 +199,7 @@
 				        </button>
 				      </div>
 				      <div class="modal-body"> 
-		<!-- 여기에 팔로워 리스트 -->
-				     리스트
-				     
+				     ㅁㅁㅁㅁㅁㅁㅁ
 				      
 				       </div>
 				      <div class="modal-footer d-flex justify-content-center">
@@ -224,10 +209,28 @@
 				  </div>
 				</div>
 				
-					
-					
-					
-<!-- 피드 리스트 -->				
+		<!-- 모달 하나로 합치기 -->
+				<div class="modal fade" id="theModal2" role="dialog" >
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header text-center">
+				        <h4 class="modal-title w-100 font-weight-bold">following</h4>		
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body"> 
+				     ㅁㅁㅁㅁㅁㅁㅁ
+				      
+				       </div>
+				      <div class="modal-footer d-flex justify-content-center">
+				        <button type="button" class="btn btn-deep-orange" data-dismiss="modal" aria-label="Close">확인</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+			
+		<!-- 피드 리스트 -->				
 			<div class="container-lg-fluid">
 			<div class="row align-items-center justify-content-md-center">
 			<div class="row justify-content-center" style = "margin: 5px;"></div>

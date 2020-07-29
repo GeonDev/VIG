@@ -13,9 +13,12 @@ public interface UserDao {
 	// SELECT ONE
 	public User getUserOne(String userCode) throws Exception;	
 	
+	public User getCode(String userCode) throws Exception;
 
 	// UPDATE 
 	public void updateUser(User user) throws Exception;	
+	
+	public List<User> getUserList(Search search) throws Exception;
 	
 	// delete 
 	public void deleteUser(User user) throws Exception;

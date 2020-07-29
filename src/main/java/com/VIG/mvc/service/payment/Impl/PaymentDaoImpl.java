@@ -47,7 +47,9 @@ public class PaymentDaoImpl implements PaymentDao {
 	public List<Payment> getPaymentList(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		
+		
 		List<Payment> list = sqlSession.selectList("PaymentMapper.getPaymentList", search);
+
 		
 		return list;
 	}

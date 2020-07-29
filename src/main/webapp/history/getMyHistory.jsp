@@ -41,7 +41,17 @@
 	
 	body {
     	padding-top : 50px;
-        }           
+        }       
+        
+        
+      .txt_lineSize {
+	 width:280px; 
+	 padding:0 5px; 
+	 overflow:hidden; 
+	 text-overflow:ellipsis; 
+	 white-space:nowrap; 
+	 }	
+            
 		
 	.img_feed {	  
 	    max-width: 300px;
@@ -52,6 +62,7 @@
 	margin: 5px 10px;
 		}
 		
+	
 
     </style>
     
@@ -89,11 +100,7 @@
 
 <body>
 
-	<div class="container-fluid">			
-	
-		<!--href와 ID를 연결해야 작동함 -->	
-		<div class="col-md-8">	
-			<br/>
+	<div class="container-fluid">						
 			
 			<div class="page-header text-info">
 				<h3>내 활동정보 보기</h3>
@@ -139,7 +146,7 @@
 											</button>										
 										</div>																			
 									</div>
-								<h5 style="font-weight: bold; margin: 5px 10px;">													
+								<h5 class="txt_lineSize" style="font-weight: bold; margin: 5px 10px;">													
 									${history.showFeed.feedTitle}
 								</h5>	
 							</div>
@@ -176,7 +183,7 @@
 										</div>																		
 									</a>
 								</div>
-								<h5 style="font-weight: bold; margin: 5px 10px;">													
+								<h5 class="txt_lineSize" style="font-weight: bold; margin: 5px 10px;">													
 									${history.showFeed.feedTitle}
 								</h5>	
 							</div>
@@ -193,7 +200,7 @@
 				<jsp:include page="../common/pageNavigator.jsp"/>
 			</div>
 			
-		</div>		
+			
 	</div>
 	
 </body>
