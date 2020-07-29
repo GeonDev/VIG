@@ -246,8 +246,44 @@ $(function(){
 	
 	//댓글 구현
 	$("button:contains('등록')").on("click", function(){
-	
-		alert("등록되었습니다.");
+			
+		
+		var obj = new Object();			
+		commentText=$('#textarea-char-counter').val();
+		    
+			obj.feedId='${feed.feedId}';
+			obj.commentText =commentText;
+		var jsonData = JSON.stringify(obj);
+		alert("댓글등록완료");
+			
+			
+			$.ajax(
+					
+					{ url: "/VIG/comment/json/addComment",
+						method : "POST",	
+						dataType: "json",
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						data : jsonData,
+						   
+						success : function(JSONData, status) {
+							
+							
+							alert("등록되었습니다.");
+							
+					    var displayValue = "<img src='/VIG/images/others/default-profile-picture1.jpg' class='rounded-circle' width='15px'><a href='/VIG/myfeed/getMyFeedList?userCode='"+JSONData.user.userCode+">"+JSONData.user.userName+"</a>"+JSONData.commentText
+							
+					    
+					    $('#textarea-char-counter').val("");
+					    
+					    $('#feedbottom').append(displayValue);
+						}
+						
+					
+					});
+			
 		
 	});
 	
@@ -456,7 +492,7 @@ $(function(){
 			<c:set var="i" value="0"/>
 			<c:set var="i" value="${i+1 }"/>
 			<img src="/VIG/images/others/default-profile-picture1.jpg" class="rounded-circle" width="15px"><a href="/마이피드/${comments.user.userCode}">${ comments.user.userName}</a>
-			comment ${comments.commentText }
+			comment ${comments.commentText}
 			</c:forEach>
 		</c:when>
 		<c:when test="${empty feed.comments}">

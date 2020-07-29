@@ -37,7 +37,7 @@ public class RestLikeController {
 			}
 	
 		@RequestMapping(value="json/addLike",method = RequestMethod.GET)
-		public ModelAndView addLike(HttpSession session,@RequestParam int feedId)throws Exception{
+		public void addLike(HttpSession session,@RequestParam int feedId)throws Exception{
 			
 			
 			User user = (User)session.getAttribute("user");
@@ -58,12 +58,7 @@ public class RestLikeController {
 						likeServices.deleteLike(joinUser);					
 						System.out.println("좋아요 취소");
 			}
-			
-			
-			
-			ModelAndView modelAndView = new ModelAndView();
-			
-			return modelAndView;
+
 			
 		}
 	
