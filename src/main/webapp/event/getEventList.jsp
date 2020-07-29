@@ -82,12 +82,12 @@
 		<c:set var="i" value="${i+1 }"/>
 		<div class="col-12">
 		 <div class="media position-relative">
-		  <img id="thumb" class="d-flex mr-3" style="height: 150px; width: 200px" src="/images/uploadFiles/${event.eventThumb }"
+		  <img id="thumb" class="d-flex mr-3" style="height: 150px; width: 200px" src="/VIG/images/others/${event.eventThumb }"
 		    alt="image">
 		
 		  <div class="media-body">
 		  	<br>
-		    <h5 class="mt-0">${event.eventTitle }</h5>
+		    <h5 class="mt-0" style="font-weight: bold;">${event.eventTitle }</h5>
 		    <p> ${event.eventSub }</p>
 		    	<p><strong>기 간</strong>       ${event.eventStart}    ~    ${event.eventEnd}</p>
 		    <a href="./getEvent?eventId=${event.eventId}" class="stretched-link"></a>

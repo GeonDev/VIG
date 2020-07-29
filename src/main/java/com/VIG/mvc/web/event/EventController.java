@@ -73,15 +73,21 @@ public class EventController {
 	    		//원하는 위치에 파일 저장
 	    		multipartFile.transferTo(f);
 	    		if(i == 1) {
+	    			if(f!=null) {
 	    			event.setEventImage(f.getName());	
+	    			}
 	    		}
 	    		
 	    		if(i == 2) {
+	    			if(f!=null) {
 	    			event.setEventThumb(f.getName());
+	    			}
 	    		}
 	    		
 	    		if(i == 3) {
+	    			if(f!=null) {
 	    			event.setBanner(f.getName());
+	    			}
 	    		}
 	    		
 	    		System.out.println(i+"    "+f.getName());
@@ -194,22 +200,27 @@ public class EventController {
 	    		//원하는 위치에 파일 저장
 	    		multipartFile.transferTo(f);
 	    		if(i == 1) {
+	    			if(f!=null) {
 	    			event.setEventImage(f.getName());	
+	    			}
 	    		}
 	    		
 	    		if(i == 2) {
+	    			if(f!=null) {
 	    			event.setEventThumb(f.getName());
+	    			}
 	    		}
 	    		
 	    		if(i == 3) {
+	    			if(f!=null) {
 	    			event.setBanner(f.getName());
+	    			}
 	    		}
 	    		
 	    		System.out.println(i+"    "+f.getName());
 	    		
 			} 			
 		}	
-		
 		
 		System.out.println(event);
 		
