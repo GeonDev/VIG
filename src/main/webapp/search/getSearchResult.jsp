@@ -260,7 +260,7 @@
 			});		
 	}
 	
-	
+	//검색어 자동완성을 처리한다.
 	function getkeywords() {
 		$.ajax("/VIG/search/json/getSearchKeyword",
 		  {
@@ -292,6 +292,7 @@
 	}
 	
 	
+	//피드를 숨길지 물어본다.
 	function addhideFeed(feedId){	   	
 		event.preventDefault();
 		console.log(feedId);

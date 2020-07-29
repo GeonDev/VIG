@@ -120,4 +120,10 @@ public class FeedDaoImpl implements FeedDao {
 		return sqlSession.selectList("FeedMapper.getfeedListFromTitle",search);
 	}
 
+	@Override
+	public List<Feed> getHightViewFeedList(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("FeedMapper.getHightViewFeedList",search);
+	}
+
 }

@@ -164,8 +164,7 @@
 			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}		
 		</select>	
 		
-		
-		
+				
 		<select id="getfeedListFromColor" parameterType="search" resultMap="FeedSelectMap">
 			SELECT *  FROM
 			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feeds.* FROM feeds, images,colors
@@ -195,6 +194,13 @@
 		 WHERE feed_id = #{feedId} 		
 		</update>
 		
+		
+		<!-- 가장 많이 조회한 피드 리스트를 불러온다. (방문유저 세팅용) -->
+		<select id="getHightViewFeedList" parameterType="search" resultMap="FeedSelectMap">
+			SELECT *  FROM
+			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_view_count DESC) num, feeds.* FROM feeds) temp
+			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}			
+		</select>
 	 
 </mapper>
 

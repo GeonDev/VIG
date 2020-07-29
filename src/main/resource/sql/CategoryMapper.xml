@@ -20,8 +20,7 @@
 	
 	<select id="getAllCategoryList" resultMap="categorySelectMap">
 		SELECT * FROM categories
-	</select>
-	
+	</select>	
 	 
 </mapper>
 
