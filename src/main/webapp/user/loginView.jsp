@@ -70,7 +70,7 @@
 
 							alert(status);
 							if( JSONData != null ){
-								$(window.parent.document.location).attr("href","/VIg/main/VIG");
+								//$(window.parent.document.location).attr("href","");
 							}
 						}
 			
