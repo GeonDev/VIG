@@ -63,7 +63,19 @@
 			$("form").attr("method" , "post").attr("action" , "addUser").submit();
 		}
 		
+		function sndEmail(){
+			var em=$("input[name='email']").val();
+			$("form").attr("method" , "post").attr("action" , "sendEmail").submit();
+		}
+		
 	    
+	//====
+		$(function(){
+			$("#sendEmail").on("click",function(){
+				alert("인증메일보냄");
+				sendEmail();
+			});
+		});
 	//=======	
 		$(function(){
 			$( "#signUp_btn" ).on("click" , function() {	
@@ -102,7 +114,7 @@
 							"Content-Type" : "application/json"
 						},
 						success : function(JSONData , status) {														
-							if(JSONData.userCode!=checkedId){
+							if(JSONData.userCode!=userCode){
 								
 								var correct = "<p style='color:green'> 사용가능합니다. </p>"
 								$("span> .check").html(correct);							
@@ -130,13 +142,15 @@
 <style type="text/css">
 	
 	.container{
-	  padding-right: 300px;
-	  padding-left: 300px;
-	  padding-top: 100px;'
-	  margin-right: auto;
-	  margin-left: auto;
+		  padding-right: 300px;
+		  padding-left: 300px;
+		  padding-top: 100px;'
+		  margin-right: auto;
+		  margin-left: auto;
 	 }
-	 
+	 #variedCode{
+	 	margin:auto;
+	 }
 	
 </style>
 </head>
@@ -144,81 +158,71 @@
 
 <jsp:include page="../main/toolbar.jsp"></jsp:include>
 
-
+<form>
 <div class="container">
 <div class="text-center border border-light p-5">
   <div class="row">
 
     <p class="h4 mb-6">Sign up</p>
 
-<form>
+
 <!-- id -->  
-<div class="form-group">
 	<label data-error="wrong" data-success="right" for="userCode"></label>
 	<input type="text" id="userCode" name="userCode" class="form-control mb-4" placeholder="userCode" required>   
-	<span class="check"></span>
-</div>	
+
 <!-- name -->
-<div class="form-group">
 	<input type="text" id="userName" name="userName" class="form-control mb-4" placeholder="nickName" required>
 	<label data-error="wrong" data-success="right" for="nickName"></label>   
-</div>
+
 <!-- 비밀번호 -->
-<div class="form-group">
     <input type="password" id="password" name="password" class="form-control mb-4" placeholder="Password" required>
 	<label data-error="wrong" data-success="right" for="password"></label>
-</div>
-<!-- 비밀번호2 -->  
-<div class="form-group">    
+
+<!-- 비밀번호2 -->      
 	 <input type="password" id="password2" name="password2" class="form-control mb-4" placeholder="Password2" required>
      <label data-error="wrong" data-success="right" for="password2"></label>
      <span id="helpBlock" class="help-block">
-		      	  <span class="check"></span>
-</span>
-     <!-- 플필 -->  
+		<span class="check"></span>
+	</span>
+<!-- 플필 -->  
      <input type="hidden" id="profileImg" name="profileImg" class="form-control mb-4" value="profile_img.jpg">
- <!-- 성별 -->
-<div class="form-group">
+
+<!-- 성별 -->
  	<div class="row">
  	<div class="form-control mb-4" id="genderBox">
 	  <input type="radio" id="sex" name="sex" value="female" >
 	  <label for="sex">female</label>
 	  <input type="radio" id="sex" name="sex" value="male">
 	  <label for="sex">male</label>
-	  </div>
-</div>
 	</div>
+	</div>	
+
 <!-- 생년월일-->
-<<div class="form-group">
 	<hr/>
 	<p>Date: <input type="text" id="datepicker" name="birth"></p>
 	<label data-error="wrong" data-success="right" for="birth"></label>
-</div>
-	<!--  -->
+<!--  -->
      <input type="hidden" id="state" name="state" class="form-control mb-4" value="0">
-     <!--  -->
      <input type="hidden" id="primeCount" name="primeCount" class="form-control mb-4" value="0">
      
- <!-- 이메ㄴ일 -->	
- <div class="form-group"> 
+<!-- 이메일 -->	
    	<input type="email" id="email" name="email" class="form-control mb-4" placeholder="email">
-    <label data-error="wrong" data-success="right" for="email"></label>   
- </div>
- </form>   
-    
-    
-<!-- 가입버튼 -->
-        <button  class="btn btn-info btn-block my-4" id="signUp_btn" >Sign up</button>   
-         
-          <p >Already a member? </p>
-          <a href="/VIG/user/loginView.jsp" id="ty" class="blue-text ml-1"> login</span></a>
+    <label data-error="wrong" data-success="right" for="email"></label> 
  
-
+<!-- 이메일 인증 폼만 구현중-->   
+    <button type="button" class="btn btn-primary btn-sm" id="sendEmail">send email</button>  
+	<input type="text" id="variedCode" name="variedCode" class="form-control mb-4" placeholder="variedCode" width="50px">
+	<button type="button" class="btn btn-primary btn-sm" id="sendEmail">check</button>  
+	
+<!-- 가입버튼 -->
+    <button  class="btn btn-info btn-block my-4" id="signUp_btn" >Sign up</button>   
+		<p >Already a member? </p>
+          <a href="/VIG/user/loginView.jsp" id="ty" class="blue-text ml-1"> login</a>
+			</div>
+		</div>
 	</div>
-	</div>
-	</div>
 
-
+</form> 
 
 
 </body>
