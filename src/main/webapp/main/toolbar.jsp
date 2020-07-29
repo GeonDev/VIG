@@ -68,14 +68,12 @@ $(function() {
 <!-- 채팅버튼 -->      
 	        <a class="nav-link waves-effect waves-light" id=" chat_btn" href="#">
 	          <i class="fas fa-comments" id="fas_ntn"></i></a>
-   
-<!-- 왜 메인에서 로그인 드롭다운 메뉴가 안되는것인가...아니 왜죠 -->				
-		
-		<!-- //비로그인 상태 -->
+   	
+<!-- //비로그인 상태 -->
 			<c:if test="${empty sessionScope.user }"> 
 			  <a href="#" id="login_btn" >Log in</a>
 			</c:if> 
-		<!-- //로그인 후 드롭다운 -->
+<!-- //로그인 후 드롭다운 -->
 			<c:if test="${ !empty sessionScope.user }"> 
 				<li class="dropdown">
 		             <a href="#" class="dropdown-toggle" id="login_dropdown" data-toggle="dropdown"
