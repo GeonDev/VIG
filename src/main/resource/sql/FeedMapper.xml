@@ -201,6 +201,33 @@
 			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_view_count DESC) num, feeds.* FROM feeds) temp
 			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}			
 		</select>
+		
+		<select id="getViewHistory" parameterType="map" resultType="int">
+			SELECT COUNT(*)
+			FROM(	
+			SELECT *
+			FROM ip_count
+			WHERE ip=INET_ATON(#{ip}) AND feed_id=#{feed.feedId} 
+			<if test="userCode != null">
+				userCode=#{userCode}
+			</if>
+			AND view_date <![CDATA[>]]> CURRENT_DATE( );
+
+			) countTable
+		
+		</select>
+		
+		<update id="updateViewCount" parameterType="int">
+			UPDATE feeds set feed_view_count=feed_view_count+1 
+			WHERE feed_id=#{value}
+		</update>
+		
+	<insert id="addViewHistory" parameterType="map">
+		INSERT INTO ip_count (feed_id, ip, user_code, view_date)
+		VALUES(#{feedId:NUMERIC}, INET_ATON(#{ip:VARCHAR}), #{userCode:VARCHAR}, NOW())
+	
+	</insert>
+		
 	 
 </mapper>
 

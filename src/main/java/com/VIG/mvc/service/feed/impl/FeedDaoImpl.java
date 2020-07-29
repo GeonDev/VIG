@@ -1,7 +1,9 @@
 package com.VIG.mvc.service.feed.impl;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,5 +127,35 @@ public class FeedDaoImpl implements FeedDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("FeedMapper.getHightViewFeedList",search);
 	}
+
+	@Override
+	public void updateViewCount(int feedId) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.update("FeedMapper.updateViewCount", feedId);
+		
+	}
+
+	@Override
+	public int getViewHistory(Feed feed, String ip, String userCode) throws Exception {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("feed", feed);
+		map.put("ip", ip);
+		map.put("userCode", userCode);
+		
+		return sqlSession.selectOne("FeedMapper.getViewHistory", map);
+	}
+
+	@Override
+	public void addViewHistory(Feed feed, String ip, String userCode) throws Exception {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("feed", feed);
+		map.put("ip", ip);
+		map.put("userCode", userCode);
+		
+		sqlSession.insert("FeedMapper.addViewHistory", map);
+	}
+	
 
 }

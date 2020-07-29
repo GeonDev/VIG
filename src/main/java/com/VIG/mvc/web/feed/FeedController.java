@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.javassist.compiler.ast.Keyword;
@@ -37,6 +38,7 @@ import com.VIG.mvc.service.history.HistoryServices;
 import com.VIG.mvc.service.image.ImageServices;
 import com.VIG.mvc.service.keyword.KeywordServices;
 import com.VIG.mvc.service.user.UserServices;
+import com.VIG.mvc.util.CommonUtil;
 import com.VIG.mvc.util.VisionInfo;
 
 
@@ -177,7 +179,7 @@ public class FeedController {
 	}	
 	
 	@RequestMapping(value="getFeed", method=RequestMethod.GET)
-	public ModelAndView getFeed(@RequestParam("feedId") int feedId, HttpSession session) throws Exception {
+	public ModelAndView getFeed(@RequestParam("feedId") int feedId, HttpSession session, HttpServletRequest request) throws Exception {
 		
 		Feed feed = feedServices.getFeed(feedId);
 		
@@ -185,12 +187,41 @@ public class FeedController {
 		mav.setViewName("forward:/feed/getFeed.jsp");
 		mav.addObject("feed", feed);
 				
+		String ip = CommonUtil.getUserIp(request);
+		System.out.println(ip);
 		
-		
-		
+		User user = (User)session.getAttribute("user");
+		//비회원이면
+		if(session.getAttribute("user")==null) {
+			String userCode = null;
+			int history = feedServices.getViewHistory(feed, ip, userCode);
+			if(history == 0 ) {
+				
+				feedServices.updateViewCount(feedId);
+				feedServices.addViewHistory(feed, ip, userCode);
+				
+			}
+			
+		} else if(user.getRole() != null) {			//회원이면
+			User writer = feed.getWriter();
+			if(user.getUserCode() == writer.getUserCode() ) { //작성자와 세션유저가 같으면...
+				
+			}else if(user.getUserCode() != writer.getUserCode()) {
+				
+				int history = feedServices.getViewHistory(feed, ip, user.getUserCode());
+				if(history == 0 ) {
+					
+					feedServices.updateViewCount(feedId);
+					feedServices.addViewHistory(feed, ip, user.getUserCode());
+				}
+				
+			}
+			
+			
+		}
 		
 		// 로그인한 유저정보가 있는지 체크 - 히스토리를 남기는 부분입니다. 삭제 X(손건)
-		User user = (User)session.getAttribute("user");
+		
 		
 		if(user !=null) {
 			History history = new History();		

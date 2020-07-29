@@ -68,6 +68,12 @@
 		ORDER BY event_id) countTable
 	
 	</select>
+	
+	<insert id="addViewHistory" parameterType="map">
+		INSERT INTO ip_count (feed_id, ip, user_code, view_date)
+		VALUES(#{feedId:NUMERIC}, #{ip:VARCHAR}, #{userCode:VARCHAR}, NOW())
+	
+	</insert>
 
 	 
 </mapper>

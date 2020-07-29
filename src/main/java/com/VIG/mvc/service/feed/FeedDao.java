@@ -38,5 +38,11 @@ public interface FeedDao {
 	public void updatePrimeFeedViewCount(Feed feed) throws Exception;
 	
 	public List<Feed> getHightViewFeedList(Search search) throws Exception;	
+	
+	public void updateViewCount(int feedId) throws Exception;
+	
+	public int getViewHistory(Feed feed, String ip, String userCode) throws Exception;
+	
+	public void addViewHistory(Feed feed, String ip, String userCode) throws Exception;
 
 }
