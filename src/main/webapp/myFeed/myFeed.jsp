@@ -116,7 +116,7 @@
  	<!-- 메뉴 네비게이션 -->
  			<c:choose>
 			<c:when test="${empty sessionScope.userCode}">
- 					<button type="button" class="btn btn-block" onclick='nav_myFeedList("../myFeed/myFeedListTest.jsp")'>
+ 					<button type="button" class="btn btn-block" onclick='nav_myFeedList("/VIG/myFeed/myFeedListTest.jsp")'>
  						마이피드 목록</button>
  					<br/>
  					<button type="button" class="btn btn-block" onclick='nav_history("/VIG/history/getMyHistoryList")'>
@@ -128,8 +128,9 @@
  					<button type="button" class="btn btn-block" onclick='nav_payment("follow.jsp")'>
  						<a href="#">결 제</a></button>
  					<br/>
- 					<button type="button" class="btn btn-block" onclick='nav_report("")'>
- 						<a href="#">결제 확인</a></button>	
+ 				<!-- 수하님 테이블 업뎃받아야함 -->	
+ 					<button type="button" class="btn btn-block" onclick='nav_report("/VIG/payment/getPaymentList")'>
+ 						<a href="#">내 결제 목록</a></button>	
  					<br/>
  		<!-- 비지니스 유저만 통계-->
  				<c:if test="${sessionScope.user.role=='business'}">

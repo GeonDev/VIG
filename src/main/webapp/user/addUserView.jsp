@@ -62,10 +62,10 @@
 			}
 			$("form").attr("method" , "post").attr("action" , "addUser").submit();
 		}
+	//=======
 		
-		function sndEmail(){
-			var em=$("input[name='email']").val();
-			$("form").attr("method" , "post").attr("action" , "sendEmail").submit();
+		function sendEmail(){
+			$("form").attr("method" , "post").attr("action" , "/sendEmail").submit();
 		}
 		
 	    
@@ -156,6 +156,7 @@
 
 
 <!-- id -->  
+<!-- 중복체크하고 아이디 왜 안들어오냐 -->
 	<label data-error="wrong" data-success="right" for="userCode"></label>
 	<input type="text" id="userCode" name="userCode" class="form-control mb-4" placeholder="userCode" required>   
 	<button type="button" class="btn btn-primary btn-sm" id="iDcheck">IDcheck</button>

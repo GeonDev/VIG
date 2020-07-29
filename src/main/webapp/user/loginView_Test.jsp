@@ -47,15 +47,11 @@
 								userCode : code,
 								password : pw
 								}),
-							success : function(JSONData , status) {			
-								//alert(status);
-								//alert("JSONData : \n"+JSONData);
-								//alert( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
-								//alert( JSONData != null );
+							success : function(JSONData , status) {					
 								alert("로그인완료");
 								if( JSONData != null ){								
-									//$(self.location).attr("href","../myFeed/myFeed.jsp");		
-									
+									$(self.location).attr("href","/VIG/main/VIG");		
+								
 								}else{
 									alert("아이디 또는 비밀번호가 틀렸습니다.");
 									}

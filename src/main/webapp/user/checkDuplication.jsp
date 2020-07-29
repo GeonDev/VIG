@@ -87,7 +87,7 @@
 				
 				if(opener) {
 					opener.$("input[name='userCode']").val("${userCode}");
-					opener.$("input[name='password']").focus();
+					opener.$("input[name='userName']").focus();
 				}
 				
 				window.close();
