@@ -64,7 +64,7 @@ public User checkId( @RequestBody User user, HttpSession session) throws Excepti
 
 
 
-@RequestMapping( value = "json/getUser/{userCode}" , method=RequestMethod.GET)
+@RequestMapping( value = "json/getUser" , method=RequestMethod.POST)
 public User getUser(@PathVariable String userCode) throws Exception{
 	System.out.println("json get");
 	return userServices.getUserOne(userCode);

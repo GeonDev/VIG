@@ -126,7 +126,20 @@ public class UserController {
 		//return "redirect:/user/getUser?userCode="+user.getUserCode();
 	}
 	
+	//=================
 	
+	@RequestMapping( value="checkDuplication", method=RequestMethod.POST )
+	public String checkDuplication( @RequestParam("userId") String userId , Model model ) throws Exception{
+		
+		System.out.println("/user/checkDuplication : POST");
+		//Business Logic
+		boolean result=userServices.checkDuplication(userId);
+		// Model 과 View 연결
+		model.addAttribute("result", new Boolean(result));
+		model.addAttribute("userId", userId);
+
+		return "forward:/user/checkDuplication.jsp";
+	}
 	
 	//=======이메일 보내기============================================================//
 	
