@@ -105,9 +105,6 @@
 <body>
 	
 
-	<!-- 툴바 include -->
-	<jsp:include page="../main/toolbar.jsp" />
-
 	
 	
 <div id=main>
