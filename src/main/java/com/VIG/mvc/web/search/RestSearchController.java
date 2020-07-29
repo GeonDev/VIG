@@ -128,8 +128,16 @@ public class RestSearchController {
 		List<Feed> feedlist = new ArrayList<Feed>();
 		
 		
-		//이미지가 사용자 추천인지 체크
+		//선택된 카테고리가 사용자 추천인지 체크
 		if(search.getKeyword().equals("RECOMMEND") ) {
+			
+			//로그인 하지 않았다면 조회수가 가장 많은 피드를 추천
+			if(user == null) {
+				feedlist = feedServices.getHightViewFeedList(search);
+			}else {
+				
+			}		
+			
 			
 		}else {
 			feedlist = feedServices.getFeedListFromCategory(search);

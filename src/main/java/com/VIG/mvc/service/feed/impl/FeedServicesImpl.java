@@ -116,5 +116,11 @@ public class FeedServicesImpl implements FeedServices {
 		
 	}
 
+	@Override
+	public List<Feed> getHightViewFeedList(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return feedDao.getHightViewFeedList(search);
+	}
+
 
 }
