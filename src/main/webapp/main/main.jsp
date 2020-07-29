@@ -57,7 +57,7 @@
 		var isLoadPage = false;	
 		
 		//선택된 카테고리를 세팅		
-		var selectCategory ='일러스트레이션';
+		var selectCategory ='RECOMMEND';
 		
 		
 		
@@ -134,7 +134,7 @@
 							}
 	 							 				
 		 	 				$.each(JSONData.list, function(index, item) { 														
-		 						getfeedlistFromAjax(item);	 												
+		 						getfeedlistFromAjax(item,'${user}');	 												
 		 					});	 							
 	 						
 	 						

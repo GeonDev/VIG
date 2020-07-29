@@ -26,12 +26,14 @@ import com.VIG.mvc.service.color.ColorServices;
 import com.VIG.mvc.service.domain.Category;
 import com.VIG.mvc.service.domain.Event;
 import com.VIG.mvc.service.domain.Feed;
+import com.VIG.mvc.service.domain.History;
 import com.VIG.mvc.service.domain.Image;
 import com.VIG.mvc.service.domain.ImageColor;
 import com.VIG.mvc.service.domain.ImageKeyword;
 import com.VIG.mvc.service.domain.JoinUser;
 import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.feed.FeedServices;
+import com.VIG.mvc.service.history.HistoryServices;
 import com.VIG.mvc.service.image.ImageServices;
 import com.VIG.mvc.service.keyword.KeywordServices;
 import com.VIG.mvc.service.user.UserServices;
@@ -66,6 +68,13 @@ public class FeedController {
 	@Autowired
 	@Qualifier("feedServicesImpl")
 	private FeedServices feedServices;
+	
+	@Autowired
+	@Qualifier("historyServicesImpl")
+	private HistoryServices historyServices;
+	
+	
+	
 
 	@Autowired
 	private ServletContext context;	
@@ -168,13 +177,29 @@ public class FeedController {
 	}	
 	
 	@RequestMapping(value="getFeed", method=RequestMethod.GET)
-	public ModelAndView getFeed(@RequestParam("feedId") int feedId) throws Exception {
+	public ModelAndView getFeed(@RequestParam("feedId") int feedId, HttpSession session) throws Exception {
 		
 		Feed feed = feedServices.getFeed(feedId);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("forward:/feed/getFeed.jsp");
 		mav.addObject("feed", feed);
+				
+		
+		
+		
+		
+		// 로그인한 유저정보가 있는지 체크 - 히스토리를 남기는 부분입니다. 삭제 X(손건)
+		User user = (User)session.getAttribute("user");
+		
+		if(user !=null) {
+			History history = new History();		
+			history.setWatchUser(user);
+			history.setHistoryType(0);
+			history.setShowFeed(feed);
+			historyServices.addHistory(history);
+			
+		}			
 		
 		return mav;
 		
