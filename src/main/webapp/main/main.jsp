@@ -142,19 +142,17 @@
 			selectCategory = categoryName;	
 			
 			getFeedItemList(categoryName);				
-		}
-		
-		
-		
+		}		
 		
 		//카테고리 +버튼을 누름
-		function CategoriesPlue() {
+		function CategoriesPlue() {			 
+			$('#categoryList').scrollLeft($('#categoryList').scrollLeft() + 200);
 
 		}
 		
 		//카테고리 -버튼을 누름
-		function CategoriesMinus() {
-		
+		function CategoriesMinus() {			
+			$('#categoryList').scrollLeft($('#categoryList').scrollLeft() - 200);
 		}		
 		
 		//피드를 숨길지 물어본다.
@@ -250,14 +248,6 @@
 	.view {	  
 	margin: 5px 10px;
 	}
-	
-	ul {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-	}
-	ul::-webkit-scrollbar {
-	    display: none;
-	}
     
    	</style>
     
@@ -268,22 +258,21 @@
 		<jsp:include page="toolbar.jsp" />
 	
 	
-	<div class="container-fluid">
+	<div class="container-lg-fluid">
      
-		<div id="categories" class="row justify-content-between" style="margin-left: 10px; margin-right: 10px;">
+		<div id="categories" class="row">
 										
 				<div class="row">
 				
-					<div class="col-md-1" style="margin-top: 20px">
-						<button class="btn btn-link" onclick="CategoriesMinus()" type="button" > <i class="fas fa-angle-left"></i></button>	        					      				
-					</div>
-				
+					<div class="col-md-1" style="margin-top: 20px; text-align: center;">
+						<button class="btn btn-light" onclick="CategoriesMinus()" type="button" > <i class="fas fa-angle-left"></i></button>	        					      				
+					</div>				
 				
 					<div class="col-md-10" >
-						<div class="row" style="max-height:100px; flex-wrap: nowrap; overflow: auto;">
+						<div id="categoryList" class="row" style="max-height:100px; flex-wrap: nowrap; overflow: auto;">
 						<c:set var="i" value="0" />						
 						<c:forEach var="category" items="${categoryList}">				
-							<div class="col-md-2" id="category_${i}" style="padding-left: 0px; padding-right: 0px;">
+							<div class="col-md-2" id="category_${i}">
 								<div class="view img_categories ">			    			
 					    			<img src="/VIG/images/others/${category.categoryImg}" alt="thumbnail" class="img-fluid overflow-hidden" >
 					    			
@@ -303,8 +292,8 @@
 						</div>	
 					</div>
 					
-					<div class="col-md-1" style="margin-top: 20px;">
-						<button class="btn btn-link" type="button" onclick="CategoriesPlue()" > <i class="fas fa-angle-right"></i></button>		  					      				
+					<div class="col-md-1" style="margin-top: 20px; text-align: center;">
+						<button class="btn btn-light" type="button" onclick="CategoriesPlue()" > <i class="fas fa-angle-right"></i></button>		  					      				
 					</div>				
 				</div>		
 		
