@@ -3,7 +3,9 @@ package com.VIG.mvc.web.feed;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -35,9 +37,11 @@ import com.VIG.mvc.service.domain.ImageKeyword;
 import com.VIG.mvc.service.domain.JoinUser;
 import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.feed.FeedServices;
+import com.VIG.mvc.service.follow.FollowServices;
 import com.VIG.mvc.service.history.HistoryServices;
 import com.VIG.mvc.service.image.ImageServices;
 import com.VIG.mvc.service.keyword.KeywordServices;
+import com.VIG.mvc.service.like.LikeServices;
 import com.VIG.mvc.service.user.UserServices;
 import com.VIG.mvc.util.CommonUtil;
 import com.VIG.mvc.util.VisionInfo;
@@ -79,6 +83,14 @@ public class FeedController {
 	@Autowired
 	@Qualifier("commentServicesImpl")
 	private CommentServices commentServices;
+	
+	@Autowired
+	@Qualifier("likeServicesImpl")
+	private LikeServices likeServices;
+	
+	@Autowired
+	@Qualifier("followServicesImpl")
+	private FollowServices followServices;
 	
 	
 	
@@ -203,6 +215,7 @@ public class FeedController {
 		System.out.println("Writer"+writer);
 		
 		
+		
 		// 로그인한 유저정보가 있는지 체크 - 히스토리를 남기는 부분입니다. 삭제 X(손건)
 		History history = new History();		
 		history.setWatchUser(user);
@@ -211,6 +224,22 @@ public class FeedController {
 		history.setIpAddress(ipAddress);
 		
 		if(user !=null) {
+			
+			//좋아요, 팔로우 여부 체크
+			JoinUser joinUser = new JoinUser();
+			joinUser.setFeedId(feedId);
+			joinUser.setUser(user);
+			joinUser.setIsLike(1);
+			boolean isLike = likeServices.getLikeState(joinUser);
+			
+			Map<String, Object> follow = new HashMap<String, Object>();
+			follow.put("userCode", user.getUserCode());
+			follow.put("followerCode", writer.getUserCode());
+			int isFollow = followServices.getFollow(follow);
+			
+			mav.addObject("isFollow", isFollow);
+			mav.addObject("isLike", isLike);
+			
 			System.out.println("회원조회");
 			
 			int count = historyServices.getViewHistory(history);
