@@ -503,17 +503,21 @@ function removeComment(commentId){
 		 </span>
 		 </div>
 		 <!-- 팔로우와 후원 -->
-	    <div class="col-4 dofo" align="left">
-	    	<c:if test="${feed.writer.role == 'business' }">
-	    	<span id="donation"><i class="fas fa-dollar-sign"></i></span>
-			</c:if>
-			<c:if test="${ isFollow == 0}">
-	    	<button type="button" id="follow" class="btn btn-outline-default btn-rounded" >Follow</button>
-	    	</c:if>
-	    	<c:if test="${ isFollow == 1}">
-	    	<button type="button" id="follow" class="btn btn-default btn-rounded" >follow</button>
-	    	</c:if>
-	    </div>
+		 <c:if test="${!empty user.role }">
+		
+		    <div class="col-4 dofo" align="left">
+		    	<c:if test="${feed.writer.role == 'business' }">
+		    	<span id="donation"><i class="fas fa-dollar-sign"></i></span>
+				</c:if>
+				<c:if test="${ isFollow == 0}">
+		    	<button type="button" id="follow" class="btn btn-outline-default btn-rounded" >Follow</button>
+		    	</c:if>
+		    	<c:if test="${ isFollow == 1}">
+		    	<button type="button" id="follow" class="btn btn-default btn-rounded" >follow</button>
+		    	</c:if>
+		    </div>
+		    
+		  </c:if>
 	  </div>
 </div>
 	<hr/>

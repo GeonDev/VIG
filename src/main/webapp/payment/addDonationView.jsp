@@ -51,7 +51,7 @@
 	
 
 	
-	#priceRadio {
+	.priceRadio {
 	
 		margin: 3px auto;
 	
@@ -116,7 +116,7 @@ $(function(){
 			
 			$("input:text[numberOnly]").removeAttr('disabled');
 			
-		} else {
+		} else if(num.is(':unchecked')== true) {
 			
 			$("input:text[numberOnly]").attr("disabled").val("");
 			$("#before").val("");
@@ -136,12 +136,17 @@ $(function(){
 	
 	$('input:radio').on("change", function(){
 		
+		
+		
 		var selectPrice;
 		if($('input[name="price"]:checked').val() != '0'){
 			
 		selectPrice = $('input[name="price"]:checked').val();
 		var commission = selectPrice*0.1;
 		var lastPrice = parseInt(selectPrice)+parseInt(commission);
+		if(!$('input[name="price"]:checked').val(){
+			$('input[name="price"]:checked').val(0)
+		}
 		$("#select").text(selectPrice);
 		$("input[name='selectPrice']").val(selectPrice);
 		$("#commission").text(commission);
@@ -277,23 +282,23 @@ $(function(){
 		${session.user.userCode}
 	<br><br>
 		<div class="form-check" align="left" style=" font-weight: bold; padding-top: 10px">
-		<div id="priceRadio">
+		<div class="priceRadio">
 		  <input type="radio" class="form-check-input" id="materialChecked2" name="price" value="1000" checked> 1,000원
 		  </div>
 		  
-		  <div id="priceRadio">
+		  <div class="priceRadio">
 		   <input type="radio" class="form-check-input" id="materialChecked2" name="price" value="3000" > 3,000원
 		  </div>
 		    
-		    <div id="priceRadio">
+		    <div class="priceRadio">
 		   <input type="radio" class="form-check-input" id="materialChecked2" name="price" value="5000" > 5,000원
 		  </div>
 		    
-		    <div id="priceRadio">
+		    <div class="priceRadio">
 		   <input type="radio" class="form-check-input" id="materialChecked2" name="price" value="10000" > 10,000원
 		  </div>
 		    
-		    <div id="priceRadio">
+		    <div class="priceRadio">
 		   <input type="radio" class="form-check-input" id="after" name="price" value="0" >기타 :
 		   <input type="text" id="before" name="price" numberOnly disabled="disabled" placeholder="금액을 입력하세요"> 원
 		  </div>
