@@ -27,17 +27,15 @@
 		
 	<script type="text/javascript">
 	
-//=====
+//=====회원가입으로 이동
 	$( function() {
 		$("#ty").on("click" , function() {
 			self.location = "/VIG/user/addUserView";
 		});
 	});
-//====	
-	$( function() {
-		
-		$("#userCode").focus();
-	
+//=======
+	$( function() {		
+		$("#userCode").focus();	
 		$("#login").on("click" , function() {
 			
 			var id=$("input:text").val();
@@ -48,7 +46,6 @@
 				$("#userCode").focus();
 				return;
 			}
-			
 			if(pw == null || pw.length <1) {
 				alert('패스워드를 입력하지 않으셨습니다.');
 				$("#password").focus();
@@ -56,7 +53,7 @@
 			}
 			$.ajax( 
 					{
-						url : "/json/login",
+						url : "json/login",
 						method : "POST" ,
 						dataType : "json" ,
 						headers : {
@@ -67,20 +64,21 @@
 							userCode : id,
 							password : pw
 						}),
-						success : function(JSONData ) {
+						success : function(JSONData , status) {
 
-							alert("TT");
-							if( JSONData != null ){
-								//$(window.parent.document.location).attr("href","");
+							if(JSONData.userCode === id && JSONData.password === pw){
+	
+								alert("로그인 ");
+								$(window.parent.document.location).attr("href","/VIG/main/VIG");
+								
 							}else{
-								alert("아이디 , 패스워드를 확인하시고 다시 로그인...");
+								alert("아이디 또는 패스워드를 확인해주세요.");
 							}
 						}
-			
-			//$("form").attr("method","POST").attr("action","login").submit();
+				}); 
 		});
 	});
-	});	
+	
 	</script>
 	<style type="text/css">
 	.container{
@@ -98,28 +96,28 @@
 <jsp:include page="../main/toolbar.jsp"></jsp:include>
 
 <form method="post">
-<div class="container">
-<div class="text-center border border-light p-5">
-  <div class="row">
-
+	<div class="container">
+		<div class="text-center border border-light p-5">
+  			<div class="row">
     <p class="h4 mb-6">Login</p>
 
     <!-- id -->
-    <input type="text" id="userCode" name="userCode" class="form-control mb-5" placeholder="id">
-    <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+	    <input type="text" id="userCode" name="userCode" class="form-control mb-5" placeholder="id" required>
+	    <span class="glyphicon glyphicon-ok form-control-feedback"></span>
 
     <!-- Password -->
-    <input type="password" id="password" name="password" class="form-control mb-5" placeholder="Password">
+   		<input type="password" id="password" name="password" class="form-control mb-5" placeholder="Password" required>
 
     <!-- Sign in button -->
-    <button  class="btn btn-info btn-block my-4" id="login" >Sign in</button>
+    	<button  class="btn btn-info btn-block my-4" id="login" >Sign in</button>
 
     <!-- Register -->
   
-    <p>Not a member?
-        <!-- <a href="../user/addUser">Register</a> -->
-        <span id="ty" class="blue-text ml-1">Register</span>
-    </p>
+	    <p>Not a member?
+	        <!-- <a href="../user/addUser">Register</a> -->
+	        <span id="ty" class="blue-text ml-1">Register</span>
+	    </p>
+	    
 	</div>
 	</div>
 	</div>
