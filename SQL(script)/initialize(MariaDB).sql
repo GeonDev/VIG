@@ -144,15 +144,16 @@ CREATE TABLE alarm (
 );
 
 
-CREATE TABLE payment ( 
-	payment_id 		INT(11)  		NOT NULL AUTO_INCREMENT,
-	sponser 		VARCHAR(20) 	NOT NULL REFERENCES users(user_code), 
-	beneficlal 		VARCHAR(20) 	NOT NULL REFERENCES users(user_code), 
+CREATE TABLE payment(
+	payment_id VARCHAR(50) not NULL,
+	buyer VARCHAR(20) NOT NULL REFERENCES users(user_code), 
+	beneficiary VARCHAR(20) REFERENCES users(user_code),
+	feed_id 	INT(11) REFERENCES feeds(feed_id),
 	payment_option 	TINYINT(1), 
-	product_type 	TINYINT(1), 
-	product_name 	VARCHAR(100), 
-	price 			INT(11), 
-	payment_date 	DATE, 
+	product_type 	TINYINT(1),
+	select_price 		INT(11),
+	last_price  		INT(11),
+	payment_date 	DATE,
 	is_cancel 		TINYINT(1), 
 	is_withdraw 	TINYINT(1), 
 	PRIMARY KEY(payment_id)
@@ -180,6 +181,13 @@ CREATE TABLE event (
 	event_type 			TINYINT(1),
 	banner 				VARCHAR(100),
 	PRIMARY KEY(event_id)
+);
+
+CREATE TABLE ip_count(
+	feed_id INT(11)  NOT NULL REFERENCES feeds(feed_id),
+	ip INT(11) UNSIGNED,
+	user_code VARCHAR(20),
+	view_date DATE
 );
 
 
