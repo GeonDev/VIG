@@ -32,6 +32,9 @@ public class Feed implements Serializable{
 	private List<JoinUser> likes;
 	private List<Comment> comments;
 	
+	// 피드가 가지고 있는 키워드 - 서비스에서 세팅해 주어야 한다.
+	private List<ImageKeyword> keywords;
+	
 	//최근 검색 키워드와 겹치는 개수 - 검색시 정렬용으로 사용
 	private int currentKeywordSameCount;
 	

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.VIG.mvc.service.domain.Feed;
+import com.VIG.mvc.service.domain.ImageKeyword;
 import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.feed.FeedDao;
 import com.VIG.mvc.service.feed.FeedServices;
@@ -135,7 +136,5 @@ public class FeedServicesImpl implements FeedServices {
 		// TODO Auto-generated method stub
 		return feedDao.getLikedFeedList(search);
 	}
-
-
-
+	
 }

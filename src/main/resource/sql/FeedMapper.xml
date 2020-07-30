@@ -25,7 +25,8 @@
 		<collection property="images" 		column="feed_id" 	javaType="list" 	ofType="image" 		select="setFeedImages"/>
 		<collection property="likes" 		column="feed_id" 	javaType="list" 	ofType="joiner" 	select="setLikeUserlist"/>
 		<collection property="coworkers" 	column="feed_id" 	javaType="list" 	ofType="joiner" 	select="setCoworkUserlist"/>
-		<collection property="comments" 	column="feed_id" 	javaType="list" 	ofType="comment"	select="setCommentlist"/>	
+		<collection property="comments" 	column="feed_id" 	javaType="list" 	ofType="comment"	select="setCommentlist"/>
+		<collection property="keywords" 	column="feed_id" 	javaType="list" 	ofType="keyword"	select="setKeywordlist"/>	
 			
 	</resultMap>		
 	
@@ -57,6 +58,14 @@
 		<select id="setCategory"  parameterType="int"  resultMap="CategoryMapper.categorySelectMap" >
 			SELECT * FROM categories
 			WHERE category_id = #{value}					
+		</select>
+		
+		<select id="setKeywordlist"  parameterType="int"  resultMap="KeywordMapper.keywordSelectMap" >
+			SELECT keywords.* FROM images, keywords
+			WHERE images.image_id = keywords.image_id
+			AND images.is_thumbnail = 1
+			AND images.feed_id = #{value}
+								
 		</select>
 		
 		
