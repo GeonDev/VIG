@@ -220,7 +220,7 @@
 			//F1 버튼을 누르면 키워드 추출 설정 
 	         $(document).keydown(function(key) {
 	            if (key.keyCode == 113) {
-	        		var result = confirm("회원정보 해쉬 및 	이미지 정보를 추출 하시겠습니까?");
+	        		var result = confirm("비밀번호 해쉬 및 이미지 정보를 추출 하시겠습니까?");
 	        		if(result){
 	        			var link ='/VIG/main/setImage';		        		
 	        			$(location).attr("href", link); 

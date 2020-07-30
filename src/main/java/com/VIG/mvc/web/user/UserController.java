@@ -29,15 +29,15 @@ import org.springframework.web.servlet.ModelAndView;
 import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.user.UserServices;
 
-//import org.springframework.security.crypto.bcrypt.BCrypt;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Controller
 @RequestMapping("/user/*")
 public class UserController {
 	
-//	@Autowired
-//	BCryptPasswordEncoder passwordEncoder;
+	@Autowired
+	BCryptPasswordEncoder passwordEncoder;
 	
 	@Autowired 
 	@Qualifier("userServicesImpl")
@@ -56,19 +56,7 @@ public class UserController {
 		modelAndView.setViewName("redirect:/user/addUserView.jsp");	
 		return modelAndView;
 	}
-	@RequestMapping( value="addUser", method=RequestMethod.POST )
-	public String addUser(@ModelAttribute("user") User user, HttpSession session ) throws Exception {
-		
-		user.setBirth(user.getBirth().replaceAll("-", ""));
-		System.out.println("addUser(POST):회원가입");
-		userServices.addUser(user);		
-		//User userInfo = userServices.getUserOne(user.getUserCode());
-		session.setAttribute("userInfo", userServices.getUserOne(user.getUserCode()));
-		return "redirect:/main/VIG";
-	}
-	
-//// 비크립트 나중에 작업하기 
-	/*
+
 	@RequestMapping( value="addUser", method=RequestMethod.POST )
 	public String addUser(@ModelAttribute("user") User user, HttpSession session ) throws Exception {
 		
@@ -83,7 +71,7 @@ public class UserController {
 		System.out.println(pwdBycrypt);
 		return "redirect:/main/VIG";
 	}
-	*/			
+			
 //====id 체크 =====
 	
 	@RequestMapping( value="checkDuplication", method=RequestMethod.POST )
@@ -109,19 +97,7 @@ public class UserController {
 		return model;
 	}
 	
-	@RequestMapping( value="login", method=RequestMethod.POST )
-	public String login(@ModelAttribute("user") User user, HttpSession session) throws Exception{
-			
-		User dbUser = userServices.getUserOne(user.getUserCode());
-		System.out.println("로그인post");
-		if( user.getPassword().equals(dbUser.getPassword())){
-			session.setAttribute("user", dbUser);
-		}
-		return "redirect:/main/VIG";
-	}
 
-////비크립트 나중에 따로 작업 하기////
-	/*
 	@RequestMapping( value="login", method=RequestMethod.POST )
 	public String login(@ModelAttribute("user") User user, HttpSession session ) throws Exception{
 		
@@ -141,7 +117,7 @@ public class UserController {
 			return "redirect:/user/loginView.jsp";
 		}
 	}
-	*/
+
 
 //=======로그아웃===============================================================//
 	@RequestMapping( value="logout", method=RequestMethod.GET)
@@ -196,11 +172,7 @@ public class UserController {
 
 	
 	//=======이메일 보내기============================================================//
-	
-	
-	
-	
-	/*
+
 		public boolean sendEmail(User user) {
 			boolean test=false;
 			
@@ -238,7 +210,7 @@ public class UserController {
 			}		
 			return test;
 		}
-*/
+
 	//=======인증코드생성===========================================================//
 		@RequestMapping(value="email")
 		public String getRandom() {
@@ -258,21 +230,4 @@ public class UserController {
 		}
 	//==
 
-	/*
-	  @RequestMapping( value="loginCheck", method=RequestMethod.POST )
-		public void loginCheck(@ModelAttribute User user, HttpSession session) throws Exception{
-	  boolean result = userServices.loginCheck(user, session);
-		ModelAndView mav = new ModelAndView();
-		
-		mav.setViewName("login");
-		
-		if(result) {
-			mav.addObject("msg","성공");
-		}else {
-			mav.addObject("msg","실패");
-		}
-		return mav;
-	}
-	*/
-	
 }
