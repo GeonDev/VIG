@@ -184,7 +184,7 @@
  	<!-- 프로필 사진 -->	
  	<div class="uuu">					
  				<div class="profile">
-			<img id="preview" src="/VIG/images/uploadFiles/profile_img.jpg" id="pImg"  alt="profile_img">
+			<img id="preview" src="/VIG/images/uploadFiles/"+${user.profileImg } id="pImg"  alt="profile_img">
  				</div>
  				<!-- test -->
  					<div class="input-group">

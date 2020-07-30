@@ -28,9 +28,15 @@ import org.springframework.web.servlet.ModelAndView;
 import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.user.UserServices;
 
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 @Controller
 @RequestMapping("/user/*")
 public class UserController {
+	
+	@Autowired
+	BCryptPasswordEncoder passwordEncoder;
 	
 	@Autowired 
 	@Qualifier("userServicesImpl")
@@ -40,7 +46,7 @@ public class UserController {
 		System.out.println(this.getClass());
 	}
 	
-//=========회원가입===========================================================//
+//=========회원가입===========================================================//    코드 정리하기!
 	
 	@RequestMapping(value="addUserView", method=RequestMethod.GET)
 	public ModelAndView addUser() throws Exception{		
@@ -49,19 +55,34 @@ public class UserController {
 		modelAndView.setViewName("redirect:/user/addUserView.jsp");	
 		return modelAndView;
 	}
-		
+//	
 	@RequestMapping( value="addUser", method=RequestMethod.POST )
 	public String addUser(@ModelAttribute("user") User user, HttpSession session ) throws Exception {
-
 		
 		user.setBirth(user.getBirth().replaceAll("-", ""));
-		System.out.println("addUser(POST):회원가입"+user);
-		userServices.addUser(user);
-		session.setAttribute("user",userServices.getUserOne(user.getUserCode()));
+		System.out.println("addUser(POST):회원가입");
 		
+		String pwdBycrypt = passwordEncoder.encode(user.getPassword());
+	    user.setPassword(pwdBycrypt);
+		userServices.addUser(user);		
+		//User userInfo = userServices.getUserOne(user.getUserCode());
+		session.setAttribute("userInfo", userServices.getUserOne(user.getUserCode()));
+		System.out.println(pwdBycrypt);
 		return "redirect:/main/VIG";
 	}
-	
+				
+	/*
+	@RequestMapping( value="addUser", method=RequestMethod.POST )
+	public String addUser(@ModelAttribute("user") User user, HttpSession session ) throws Exception {
+		
+		user.setBirth(user.getBirth().replaceAll("-", ""));
+		System.out.println("addUser(POST):회원가입");
+		userServices.addUser(user);		
+		//User userInfo = userServices.getUserOne(user.getUserCode());
+		session.setAttribute("userInfo", userServices.getUserOne(user.getUserCode()));
+		return "redirect:/main/VIG";
+	}
+	*/
 //====id 체크 =====
 	
 
@@ -89,18 +110,38 @@ public class UserController {
 		return model;
 	}
 	
-
 	@RequestMapping( value="login", method=RequestMethod.POST )
-	public String login(@ModelAttribute("user") User user, HttpSession session, Model model) throws Exception{
-	
-		User dbUser = userServices.getUserOne(user.getUserCode());
+	public String login(@ModelAttribute("user") User user, HttpSession session ) throws Exception{
 		
+			User dbUser = userServices.getUserOne(user.getUserCode());
+		
+		if(dbUser == null) {
+			System.out.println("1");
+			return "redirect:/user/loginView.jsp";
+			
+		} else if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())){	
+			dbUser.setPassword(null);
+			session.setAttribute("user", dbUser);
+			System.out.println("2");
+			return "redirect:/main/VIG";
+		} else {
+			System.out.println("3");
+			return "redirect:/user/loginView.jsp";
+		}
+	}
+	
+	/*
+	@RequestMapping( value="login", method=RequestMethod.POST )
+	public String login(@ModelAttribute("user") User user, HttpSession session) throws Exception{
+			
+		User dbUser = userServices.getUserOne(user.getUserCode());
+		System.out.println("로그인post");
 		if( user.getPassword().equals(dbUser.getPassword())){
 			session.setAttribute("user", dbUser);
 		}
 			return "redirect:/main/VIG";
 	}
-	
+	*/
 //=======로그아웃===============================================================//
 	@RequestMapping( value="logout", method=RequestMethod.GET)
 	public ModelAndView logout(HttpSession session) throws Exception{
@@ -135,6 +176,10 @@ public class UserController {
 	@RequestMapping( value="updateUser", method=RequestMethod.POST )
 	public String updateUser(@ModelAttribute("uesr") User user, Model model, HttpSession session )throws Exception{ 
 		System.out.println("/user/updateUser : POST");
+		
+		
+		
+		
 		userServices.updateUser(user);	
 		
 		String sessionId=((User)session.getAttribute("user")).getUserCode();
