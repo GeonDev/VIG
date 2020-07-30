@@ -83,7 +83,7 @@
 		});
 		//이메일 인증
 		$(function(){
-			$("#sendEmail").on("click",function(){
+			$("").on("click",function(){
 				alert("인증메일보냄");
 				sendEmail();
 			});
@@ -105,11 +105,10 @@
 		//ID중복확인
 		 $(function() {
 			 $("#iDcheck").on("click" , function() {
-				alert($("td.ct_btn:contains('ID중복확인')").html());
 				popWin 
 				= window.open("/VIG/user/checkDuplication.jsp",
 											"popWin", 
-											"left=300,top=200,width=300,height=200,marginwidth=0,marginheight=0,"+
+											"left=300,top=200,width=530,height=150,marginwidth=0,marginheight=0,"+
 											"scrollbars=no,scrolling=no,menubar=no,resizable=no");
 			});
 		});	
@@ -147,7 +146,7 @@
 	<!-- id -->  
 	<!-- 중복체크하고 아이디 왜 안들어오냐 -->
 		<label data-error="wrong" data-success="right" for="userCode"></label>
-		<input type="text" id="userCode" name="userCode" class="form-control mb-4" placeholder="userCode" required>   
+		<input type="text" id="userCode" name="userCode" class="form-control mb-4" placeholder="userCode" readonly>   
 		<button type="button" class="btn btn-primary btn-sm" id="iDcheck">IDcheck</button>
 		
 	<!-- name -->
@@ -192,7 +191,7 @@
 	    <button type="button" class="btn btn-primary btn-sm" id="sendEmail">send email</button>  
 		<input type="hidden" id="variedCode" name="variedCode" value="0" class="form-control mb-4" placeholder="variedCode" width="50px">
 		<button type="button" class="btn btn-primary btn-sm" id="sendEmail">check</button>  
-		<span> <-일단 모양만 구현해놓았습니다...</span>
+
 	<!-- role -->
 		<input type="hidden" id="role" name="role" class="form-control mb-4"  value="user">
 		

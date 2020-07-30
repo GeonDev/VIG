@@ -50,7 +50,7 @@
 //===페이지 로드시 바로 보여줄 화면
 	$(function(){
 		$(document).ready(function() { 
-			iframe.location.href="/VIG/myFeed/myFeedListTest.jsp";
+			iframe.location.href="/VIG/myFeed/myFeedList.jsp";
 		});
 	});
 	
@@ -119,7 +119,7 @@
  	<!-- 메뉴 네비게이션 -->
  			<c:choose>
 			<c:when test="${empty sessionScope.userCode}">
- 					<button type="button" class="btn btn-block" onclick='nav_myFeedList("/VIG/myFeed/myFeedListTest.jsp")'>
+ 					<button type="button" class="btn btn-block" onclick='nav_myFeedList("/VIG/myFeed/myFeedList.jsp")'>
  						마이피드 목록</button>
  					<br/>
  					<button type="button" class="btn btn-block" onclick='nav_history("/VIG/history/getMyHistoryList")'>
