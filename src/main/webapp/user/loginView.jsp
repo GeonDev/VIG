@@ -39,6 +39,7 @@
 		$("#userCode").focus();
 	
 		$("#login").on("click" , function() {
+			
 			var id=$("input:text").val();
 			var pw=$("input:password").val();
 			
@@ -55,7 +56,7 @@
 			}
 			$.ajax( 
 					{
-						url : "/user/json/login",
+						url : "/json/login",
 						method : "POST" ,
 						dataType : "json" ,
 						headers : {
@@ -63,21 +64,23 @@
 							"Content-Type" : "application/json"
 						},
 						data : JSON.stringify({
-							userCode : id,
+							userId : id,
 							password : pw
 						}),
-						success : function(JSONData , status) {
+						success : function(JSONData ) {
 
-							alert(status);
+							alert("TT");
 							if( JSONData != null ){
 								//$(window.parent.document.location).attr("href","");
+							}else{
+								alert("아이디 , 패스워드를 확인하시고 다시 로그인...");
 							}
 						}
 			
 			//$("form").attr("method","POST").attr("action","login").submit();
 		});
 	});
-		
+	});	
 	</script>
 	<style type="text/css">
 	.container{
