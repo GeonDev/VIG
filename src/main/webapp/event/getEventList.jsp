@@ -48,7 +48,7 @@
 	  margin: 1em 0;
 	  display: block;
 	  background: rgb(240, 240, 240);
-	  border: 1px solid rgb(0, 0, 0);
+	  
 	}
 
 
@@ -81,18 +81,23 @@
 		<c:set var="i" value="0"/>
 		<c:set var="i" value="${i+1 }"/>
 		<div class="col-12">
-		 <div class="media position-relative">
-		  <img id="thumb" class="d-flex mr-3" style="height: 150px; width: 200px" src="/VIG/images/others/${event.eventThumb }"
-		    alt="image">
+
+
+				 <div class="media position-relative">
+				  <img id="thumb" class="d-flex mr-3" style="height: 150px; width: 200px" src="/VIG/images/others/${event.eventThumb }"
+				    alt="image">
+
 		
-		  <div class="media-body">
-		  	<br>
-		    <h5 class="mt-0" style="font-weight: bold;">${event.eventTitle }</h5>
-		    <p> ${event.eventSub }</p>
-		    	<p><strong>기 간</strong>       ${event.eventStart}    ~    ${event.eventEnd}</p>
-		    <a href="./getEvent?eventId=${event.eventId}" class="stretched-link"></a>
-		  </div>
+				  <div class="media-body">
+				  	<br>
+				    <h5 class="mt-0" style="font-weight: bold;">${event.eventTitle }</h5>
+				    <p> ${event.eventSub }</p>
+				    	<p><strong>기 간</strong>       ${event.eventStart}    ~    ${event.eventEnd}</p>
+				    <a href="./getEvent?eventId=${event.eventId}" class="stretched-link"></a>
+				  </div>
+
 		</div>
+		
 		<hr>
 		<br/>
     </div>
