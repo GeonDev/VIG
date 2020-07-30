@@ -21,6 +21,7 @@ import com.VIG.mvc.service.domain.Feed;
 import com.VIG.mvc.service.domain.History;
 import com.VIG.mvc.service.domain.Image;
 import com.VIG.mvc.service.domain.ImageColor;
+import com.VIG.mvc.service.domain.ImageKeyword;
 import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.feed.FeedServices;
@@ -110,11 +111,36 @@ public class RestSearchController {
 	}
 	
 	
+	
+	//선택된 유저가 작성한 피드 리스트를 반환한다.
+	@RequestMapping(value = "json/getSearchUserFeedResult")
+	public Map<String, Object> getSearchUserFeedResult(@RequestBody Map<String, String> jsonData) throws Exception {
+		
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		Search search = new Search();		
+		
+		search.setCurrentPage(Integer.valueOf(jsonData.get("currentPage")));
+		search.setPageSize(pageSize);		
+				
+		search.setKeyword(jsonData.get("userCode"));
+		
+		List<Feed> feedlist = new ArrayList<Feed>();		
+		feedlist = feedServices.getMyFeedList(search);
+		
+		map.put("list",feedlist);
+		
+		return map;	
+		
+	}
+	
+	
+	
 	//선택된 카테고리에 해당하는 피드를 리턴한다.
 	@RequestMapping(value = "json/getSearchCategoryResult")
 	public Map<String, Object> getSearchCategoryResult(@RequestBody Map<String, String> jsonData, HttpSession session) throws Exception {
-		
-		
+				
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		Search search = new Search();		
@@ -135,22 +161,44 @@ public class RestSearchController {
 			if(user == null) {
 				feedlist = feedServices.getHightViewFeedList(search);
 			}else {
+				Search tempSearch = new Search();
+				tempSearch.setKeyword(user.getUserCode());
+				tempSearch.setSearchType(0);
 				
+				//최근 본 피드정보를 가지고 온다.
+				List<History> historyList =	historyServices.getHistoryList(tempSearch);	
+				
+				List<ImageKeyword> keywordList = new ArrayList<ImageKeyword>();
+				
+				
+				//최근 본 피드의 썸네일 키워드 리스트를 가지고 온다.
+				for(History history : historyList) {					
+					for(Image tempImage : history.getShowFeed().getImages()) {
+						if(tempImage.getIsThumbnail() == 1) {
+							for(ImageKeyword key :tempImage.getKeyword()) {
+								keywordList.add(key);
+							}							
+						}
+					}
+				}
+					
+					
+					 				
 			}		
 			
 			
 		}else {
 			feedlist = feedServices.getFeedListFromCategory(search);
-		}
+		}		
 		
 		
-		
-		//숨김피드는 빼준다.
+		//숨김피드는 빼준다. -> 모든 카테고리 공통
 		if(user !=null) {
 			Search tempSearch = new Search();
 			tempSearch.setKeyword(user.getUserCode());
 			tempSearch.setSearchType(1);				
 			
+			//숨김처리한 모든 피드리스트를 가지고 온다.
 			List<History> hidelist = historyServices.getAllHistoryList(tempSearch);				
 			
 			for(History key : hidelist) {					
