@@ -21,9 +21,13 @@ public class History implements Serializable{
 	}
 	
 	public User getWatchUser() {
+		
 		User user = this.watchUser;
+		if(user!=null) {
+		
 		user.setPassword("");
 		user.setGoogleId("");
+		}
 		return user;
 	}
 

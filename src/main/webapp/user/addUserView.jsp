@@ -201,9 +201,10 @@
  
 <!-- 이메일 인증 폼만 구현중-->   
     <button type="button" class="btn btn-primary btn-sm" id="sendEmail">send email</button>  
-	<input type="text" id="variedCode" name="variedCode" class="form-control mb-4" placeholder="variedCode" width="50px">
+	<input type="hidden" id="variedCode" name="variedCode" value="0" class="form-control mb-4" placeholder="variedCode" width="50px">
 	<button type="button" class="btn btn-primary btn-sm" id="sendEmail">check</button>  
-	
+<!-- role -->
+	<input type="hidden" id="role" name="role" class="form-control mb-4"  value="user">
 <!-- 가입버튼 -->
     <button  class="btn btn-info btn-block my-4" id="signUp_btn" >Sign up</button>   
 		<p >Already a member? </p>

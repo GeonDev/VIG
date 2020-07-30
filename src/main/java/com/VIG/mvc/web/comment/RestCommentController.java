@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.VIG.mvc.service.comment.CommentServices;
 import com.VIG.mvc.service.domain.Comment;
@@ -59,5 +61,15 @@ public class RestCommentController {
 		
 		return comment2;
 	}
+	@RequestMapping(value="json/deleteComment", method = RequestMethod.GET)
+	public void deleteComment(HttpSession session, @RequestParam("commentId") int commentId, @RequestParam("userCode") String userCode, @RequestParam("feedId") int feedId) throws Exception {
 	
+		System.out.println("컨트롤러 들어옴 "+  commentId+userCode);
+		
+		commentServices.deleteComment(commentId);
+		
+		
+		
+
+	}
 }
