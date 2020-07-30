@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.javassist.compiler.ast.Keyword;
@@ -37,6 +38,7 @@ import com.VIG.mvc.service.history.HistoryServices;
 import com.VIG.mvc.service.image.ImageServices;
 import com.VIG.mvc.service.keyword.KeywordServices;
 import com.VIG.mvc.service.user.UserServices;
+import com.VIG.mvc.util.CommonUtil;
 import com.VIG.mvc.util.VisionInfo;
 
 
@@ -177,20 +179,58 @@ public class FeedController {
 	}	
 	
 	@RequestMapping(value="getFeed", method=RequestMethod.GET)
-	public ModelAndView getFeed(@RequestParam("feedId") int feedId, HttpSession session) throws Exception {
+	public ModelAndView getFeed(@RequestParam("feedId") int feedId, HttpSession session, HttpServletRequest request) throws Exception {
 		
+		System.out.println(feedId);
 		Feed feed = feedServices.getFeed(feedId);
-		
+		System.out.println(feed);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("forward:/feed/getFeed.jsp");
 		mav.addObject("feed", feed);
+		
+		//ip로 조회수 counting 하는 부분
+		String ip = CommonUtil.getUserIp(request);
+		System.out.println(ip);
+		
+		User user = (User)session.getAttribute("user");
+		User writer = feed.getWriter();
+		System.out.println("User"+user);
+		System.out.println("Writer"+writer);
+		String userCode;
+		//비회원이면
+		if(user==null) {
+			userCode=null;
+			int history = feedServices.getViewHistory(feedId, ip, userCode);
+			System.out.println(history);
+			if(history == 0 ) {
 				
-		
-		
-		
+				feedServices.addViewHistory(feedId, ip, userCode);
+				feedServices.updateViewCount(feedId);
+				
+			}
+			
+		} else if(user!= null) {			//회원이면
+			
+			if(user.getUserCode() == writer.getUserCode() ) { //작성자와 세션유저가 같으면...
+				
+			}else if(user.getUserCode() != writer.getUserCode()) {
+				userCode=user.getUserCode();
+				System.out.println(userCode);
+				int history = feedServices.getViewHistory(feedId, ip, userCode);
+				System.out.println(history);
+				if(history == 0 ) {
+					
+					feedServices.updateViewCount(feedId);
+					feedServices.addViewHistory(feedId, ip, userCode);
+				}
+				
+			}
+			
+			
+		}
 		
 		// 로그인한 유저정보가 있는지 체크 - 히스토리를 남기는 부분입니다. 삭제 X(손건)
-		User user = (User)session.getAttribute("user");
+		
 		
 		if(user !=null) {
 			History history = new History();		
