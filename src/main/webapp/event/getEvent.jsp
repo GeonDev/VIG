@@ -163,16 +163,22 @@ $(function(){
 	<div id="inline">
 			<hr/>
 			<br/>
+			<div style="align:center;">
 			<h3 align="center"> 참가 작품 모아보기 </h3>
 			<br>
 			<br>
-
+			</div>
 			<c:if test="${empty feedList }">
 			<div align="center">
 			아직 등록된 피드가 없습니다.
 			</div>
 			</c:if>
+			<c:if test="${!empty feedList }">
+			<c:forEach var="feeds" items="${feedList}">
+				
 			
+			</c:forEach>
+			</c:if>
 			
 	
 	</div>
