@@ -145,8 +145,12 @@ public class UserController {
 //=======로그아웃===============================================================//
 	@RequestMapping( value="logout", method=RequestMethod.GET)
 	public ModelAndView logout(HttpSession session) throws Exception{
+		
 			System.out.println("logout");
-		session.invalidate();
+		
+			session.removeAttribute("login");
+			session.invalidate();
+			
 		ModelAndView model = new ModelAndView();
 		model.setViewName("redirect:/main/VIG");
 		return model;

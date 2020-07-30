@@ -64,7 +64,7 @@
 							"Content-Type" : "application/json"
 						},
 						data : JSON.stringify({
-							userId : id,
+							userCode : id,
 							password : pw
 						}),
 						success : function(JSONData ) {
