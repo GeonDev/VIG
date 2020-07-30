@@ -207,11 +207,11 @@
 			FROM(	
 			SELECT *
 			FROM ip_count
-			WHERE ip=INET_ATON(#{ip}) AND feed_id=#{feed.feedId} 
+			WHERE ip=INET_ATON(#{ip}) AND feed_id=#{feedId} 
 			<if test="userCode != null">
-				userCode=#{userCode}
+			AND user_code=#{userCode}
 			</if>
-			AND view_date <![CDATA[>]]> CURRENT_DATE( );
+			AND view_date = CURRENT_DATE( )
 
 			) countTable
 		

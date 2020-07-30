@@ -136,10 +136,10 @@ public class FeedDaoImpl implements FeedDao {
 	}
 
 	@Override
-	public int getViewHistory(Feed feed, String ip, String userCode) throws Exception {
+	public int getViewHistory(int feedId, String ip, String userCode) throws Exception {
 		// TODO Auto-generated method stub
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("feed", feed);
+		map.put("feedId", feedId);
 		map.put("ip", ip);
 		map.put("userCode", userCode);
 		
@@ -147,10 +147,10 @@ public class FeedDaoImpl implements FeedDao {
 	}
 
 	@Override
-	public void addViewHistory(Feed feed, String ip, String userCode) throws Exception {
+	public void addViewHistory(int feedId, String ip, String userCode) throws Exception {
 		// TODO Auto-generated method stub
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("feed", feed);
+		map.put("feedId", feedId);
 		map.put("ip", ip);
 		map.put("userCode", userCode);
 		

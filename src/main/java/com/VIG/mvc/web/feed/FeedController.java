@@ -181,38 +181,47 @@ public class FeedController {
 	@RequestMapping(value="getFeed", method=RequestMethod.GET)
 	public ModelAndView getFeed(@RequestParam("feedId") int feedId, HttpSession session, HttpServletRequest request) throws Exception {
 		
+		System.out.println(feedId);
 		Feed feed = feedServices.getFeed(feedId);
-		
+		System.out.println(feed);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("forward:/feed/getFeed.jsp");
 		mav.addObject("feed", feed);
-				
+		
+		//ip로 조회수 counting 하는 부분
 		String ip = CommonUtil.getUserIp(request);
 		System.out.println(ip);
 		
 		User user = (User)session.getAttribute("user");
+		User writer = feed.getWriter();
+		System.out.println("User"+user);
+		System.out.println("Writer"+writer);
+		String userCode;
 		//비회원이면
-		if(session.getAttribute("user")==null) {
-			String userCode = null;
-			int history = feedServices.getViewHistory(feed, ip, userCode);
+		if(user==null) {
+			userCode=null;
+			int history = feedServices.getViewHistory(feedId, ip, userCode);
+			System.out.println(history);
 			if(history == 0 ) {
 				
+				feedServices.addViewHistory(feedId, ip, userCode);
 				feedServices.updateViewCount(feedId);
-				feedServices.addViewHistory(feed, ip, userCode);
 				
 			}
 			
-		} else if(user.getRole() != null) {			//회원이면
-			User writer = feed.getWriter();
+		} else if(user!= null) {			//회원이면
+			
 			if(user.getUserCode() == writer.getUserCode() ) { //작성자와 세션유저가 같으면...
 				
 			}else if(user.getUserCode() != writer.getUserCode()) {
-				
-				int history = feedServices.getViewHistory(feed, ip, user.getUserCode());
+				userCode=user.getUserCode();
+				System.out.println(userCode);
+				int history = feedServices.getViewHistory(feedId, ip, userCode);
+				System.out.println(history);
 				if(history == 0 ) {
 					
 					feedServices.updateViewCount(feedId);
-					feedServices.addViewHistory(feed, ip, user.getUserCode());
+					feedServices.addViewHistory(feedId, ip, userCode);
 				}
 				
 			}

@@ -131,16 +131,16 @@ public class FeedServicesImpl implements FeedServices {
 	}
 
 	@Override
-	public int getViewHistory(Feed feed, String ip, String userCode) throws Exception {
+	public int getViewHistory(int feedId, String ip, String userCode) throws Exception {
 		// TODO Auto-generated method stub
-		return feedDao.getViewHistory(feed, ip, userCode);
+		return feedDao.getViewHistory(feedId, ip, userCode);
 	}
 
 
 	@Override
-	public void addViewHistory(Feed feed, String ip, String userCode) throws Exception {
+	public void addViewHistory(int feedId, String ip, String userCode) throws Exception {
 		// TODO Auto-generated method stub
-		feedDao.addViewHistory(feed, ip, userCode);
+		feedDao.addViewHistory(feedId, ip, userCode);
 	}
 
 
