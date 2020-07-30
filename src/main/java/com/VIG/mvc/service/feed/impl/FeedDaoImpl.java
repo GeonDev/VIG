@@ -134,28 +134,6 @@ public class FeedDaoImpl implements FeedDao {
 		sqlSession.update("FeedMapper.updateViewCount", feedId);
 		
 	}
-
-	@Override
-	public int getViewHistory(int feedId, String ip, String userCode) throws Exception {
-		// TODO Auto-generated method stub
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("feedId", feedId);
-		map.put("ip", ip);
-		map.put("userCode", userCode);
-		
-		return sqlSession.selectOne("FeedMapper.getViewHistory", map);
-	}
-
-	@Override
-	public void addViewHistory(int feedId, String ip, String userCode) throws Exception {
-		// TODO Auto-generated method stub
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("feedId", feedId);
-		map.put("ip", ip);
-		map.put("userCode", userCode);
-		
-		sqlSession.insert("FeedMapper.addViewHistory", map);
-	}
 	
 
 }

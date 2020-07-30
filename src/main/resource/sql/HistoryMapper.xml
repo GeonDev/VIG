@@ -67,6 +67,20 @@
 	 	WHERE history_id = #{value} 
 	</delete>
 	
+	<select id="getViewHistory" parameterType="history" resultType="int">
+		SELECT COUNT(*)
+		FROM 
+		(SELECT * FROM history
+		WHERE feed_id=#{showFeed.feedId} AND ip_address=#{ipAddress}
+		<if test="watchUser!=null">
+			<if test="watchUser.userCode!=null">
+			AND watch_user_code = #{watchUser.userCode}
+			</if>
+		</if>
+		AND show_date  = CURRENT_DATE()
+		) countTable
+	
+	</select>
 	 
 </mapper>
 
