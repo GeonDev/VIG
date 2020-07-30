@@ -88,6 +88,13 @@ public class mainController {
 		List<Category> categoryList = categoryServices.getAllCategoryList();
 		List<Event> eventList = eventServices.getLastEventList();
 		
+		// 카테고리의 페이지수 - 한페이지당 6개로 고정
+		int categoryTotal = (int)Math.ceil((double)categoryList.size()/6.0);
+		
+		//
+		int categoryCount = categoryList.size();
+		
+		
 		
 		User user = (User)session.getAttribute("user");
 		
@@ -101,10 +108,10 @@ public class mainController {
 		model.addAttribute("eventList", eventList);		
 		model.addAttribute("categoryList", categoryList);		
 		
-		model.addAttribute("categoryCount", categoryList.size());
+		model.addAttribute("categoryCount", categoryCount);
 		
-		// 카테고리는 한페이지당 6개로 고정, 소수점을 얻기 위하여 캐스팅
-		model.addAttribute("categoryTotal", (int)Math.ceil((double)categoryList.size()/6.0) );
+		
+		model.addAttribute("categoryTotal", categoryTotal);
 		
 		return new ModelAndView("forward:/main/main.jsp");
 	}
