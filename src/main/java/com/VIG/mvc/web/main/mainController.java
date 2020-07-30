@@ -91,9 +91,15 @@ public class mainController {
 		// 카테고리의 페이지수 - 한페이지당 6개로 고정
 		int categoryTotal = (int)Math.ceil((double)categoryList.size()/6.0);
 		
-		//
-		int categoryCount = categoryList.size();
 		
+		if((categoryTotal*6) != categoryList.size()) {
+			int temp = (categoryTotal*6) - categoryList.size();
+			
+			for(int i = 0 ;i<temp ;i++) {
+				categoryList.add(categoryList.get(i));
+			}
+			
+		}
 		
 		
 		User user = (User)session.getAttribute("user");
@@ -107,9 +113,6 @@ public class mainController {
 		
 		model.addAttribute("eventList", eventList);		
 		model.addAttribute("categoryList", categoryList);		
-		
-		model.addAttribute("categoryCount", categoryCount);
-		
 		
 		model.addAttribute("categoryTotal", categoryTotal);
 		
