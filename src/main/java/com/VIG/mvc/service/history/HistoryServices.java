@@ -16,5 +16,7 @@ public interface HistoryServices {
 	public int getHistoryCount(Search search) throws Exception;
 	
 	public void deleteHistory(int historyId) throws Exception;
+	
+	public int getViewHistory(History history) throws Exception;
 
 }

@@ -158,8 +158,9 @@
 	
 	}
 	
-	#deleteComments{
+	#deleteCom{
 		float:right;
+		color:#2F4F4F;
 	}
 
 </style>
@@ -275,7 +276,9 @@ $(function(){
 							
 							alert("등록되었습니다.");
 							
-					    var displayValue = "<img src='/VIG/images/others/default-profile-picture1.jpg' class='rounded-circle' width='15px'><a href='/VIG/myfeed/getMyFeedList?userCode='"+JSONData.user.userCode+">"+JSONData.user.userName+"</a>"+JSONData.commentText
+					    var displayValue = 
+						"<div id="+JSONData.commentId+"><p><img src='/VIG/images/others/default-profile-picture1.jpg' class='rounded-circle' width='15px'><a href='/VIG/myfeed/getMyFeedList?userCode='"
+								+JSONData.user.userCode+">"+JSONData.user.userName+"</a>"+JSONData.commentText+"<button id= 'deleteCom' class='fas fa-trash' onclick="+"removeComment("+JSONData.commentId+")></button></p><hr></div>";
 							
 					    
 					    $('#textarea-char-counter').val("");
@@ -291,14 +294,9 @@ $(function(){
 	
 	
 	
-	//댓글 삭제
-	$("#deleteComments").on("click", function(){
-		
-		$('p').remove("{comment.commentId}");
-	
-	});
 	
 	
+	 
 	
 	
 	//신고 모달창
@@ -393,7 +391,34 @@ $(function(){
 	
 });
 
+//댓글 삭제
+function removeComment(commentId){
+	
+	
 
+	var val = $("div[id='"+commentId+"']").remove();
+	
+	
+	$.ajax(
+			
+			{ url: "/VIG/comment/json/deleteComment?userCode=${user.userCode}&feedId=${feed.feedId}&commentId="+commentId,
+				method : "GET",	
+				dataType: "json",
+				headers : {
+					
+					"Accept" : "applicion/json",
+					"Content-Type" : "application/json"
+				},
+				success : function(JSONData, status) {
+				
+				alert(status);	
+				
+				}
+				
+			
+			});
+	alert("댓글이 삭제되었습니다");
+}
 </script>
 
 
@@ -497,10 +522,14 @@ $(function(){
 			<c:forEach var="comments" items="${feed.comments}">
 			<c:set var="i" value="0"/>
 			<c:set var="i" value="${i+1 }"/>
-			<div>
-			<p id="{comments.commentId}">
+			<div id="${comments.commentId}" class="asdd">
+			<p>
 			<img src="/VIG/images/others/default-profile-picture1.jpg" class="rounded-circle" width="15px"><a href="/마이피드/${comments.user.userCode}">${ comments.user.userName}</a>
-			 ${comments.commentText}  <i class="fas fa-trash" id="deleteComments" ></i></p>
+			 ${comments.commentText}  
+			 <c:if test="${user.userCode == comments.user.userCode}">
+			 <button id= "deleteCom" class="fas fa-trash" onclick="removeComment('${comments.commentId}')"></button>
+			 </c:if>
+			 </p>
 			 <hr>
 			 </div>
 			 

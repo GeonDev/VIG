@@ -4,13 +4,16 @@
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns:tx="http://www.springframework.org/schema/tx"
 		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:security="http://www.springframework.org/schema/security"
 		xsi:schemaLocation=
 				"http://www.springframework.org/schema/beans 
 				 http://www.springframework.org/schema/beans/spring-beans.xsd
 				 http://www.springframework.org/schema/tx 
 				 http://www.springframework.org/schema/tx/spring-tx.xsd
 				 http://www.springframework.org/schema/aop 
-				 http://www.springframework.org/schema/aop/spring-aop.xsd">
+				 http://www.springframework.org/schema/aop/spring-aop.xsd
+				 http://www.springframework.org/schema/security
+   				 http://www.springframework.org/schema/security/spring-security.xsd">
 				 
 	<!-- PropertyPlaceholderConfigurer 로 로드된 resource 는 ${  } 로 접근 가능 -->
 	<bean	id="propertyConfigurer"
@@ -35,5 +38,9 @@
 				class="org.springframework.jdbc.datasource.DataSourceTransactionManager" >
 		<property name="dataSource" ref="dataSource"/>
 	</bean>	
+	
+	<!-- 스프링 시큐리티-Bcrypt -->
+	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	
 
 </beans>

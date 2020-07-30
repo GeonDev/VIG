@@ -97,10 +97,11 @@
 	 <update	id="updateUser"	parameterType="user" >
 	   	UPDATE users
 	   		SET 
+	   		self_introduce 	= #{profileImg} ,
 	   		user_code 	= #{userCode} ,
 	   		user_name 	= #{userName} ,
 			password	= #{password},
-			self_introduce 	= #{selfIntroduce} ,
+			profile_img 	= #{selfIntroduce} ,
 			account	=	#{account} 			
 	   	WHERE user_code = #{userCode}
 	 </update>
