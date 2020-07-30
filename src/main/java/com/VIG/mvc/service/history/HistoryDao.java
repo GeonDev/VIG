@@ -17,4 +17,6 @@ public interface HistoryDao {
 	
 	public void deleteHistory(int historyId) throws Exception;
 	
+	public int getViewHistory(History history) throws Exception;
+	
 }
