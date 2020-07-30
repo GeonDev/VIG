@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.VIG.mvc.service.domain.Comment;
+import com.VIG.mvc.service.domain.Search;
 
 public interface CommentServices {
 	
@@ -17,5 +18,5 @@ public interface CommentServices {
 		
 		public List<Comment> getCommentFromFeed(int feedId) throws Exception; //해당피드의 댓글리스트 가져오기
 		
-		public List<Comment> getCommentFromUser(String userCode)throws Exception; //해당 유저가 쓴 댓글리스트 가져오기
+		public List<Comment> getCommentFromUser(Search search)throws Exception; //해당 유저가 쓴 댓글리스트 가져오기
 }

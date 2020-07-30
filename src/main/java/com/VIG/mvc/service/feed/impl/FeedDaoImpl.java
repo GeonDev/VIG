@@ -134,6 +134,12 @@ public class FeedDaoImpl implements FeedDao {
 		sqlSession.update("FeedMapper.updateViewCount", feedId);
 		
 	}
+
+	@Override
+	public List<Feed> getLikedFeedList(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("FeedMapper.getLikedFeedList",search);
+	}
 	
 
 }

@@ -193,8 +193,7 @@
 		 SET prime_feed_view_count = #{primeFeedViewCount}
 		 WHERE feed_id = #{feedId} 		
 		</update>
-		
-		
+				
 		<!-- 가장 많이 조회한 피드 리스트를 불러온다. (방문유저 세팅용) -->
 		<select id="getHightViewFeedList" parameterType="search" resultMap="FeedSelectMap">
 			SELECT *  FROM
@@ -206,6 +205,20 @@
 			UPDATE feeds set feed_view_count=feed_view_count+1 
 			WHERE feed_id=#{value}
 		</update>
+		
+		
+		<!-- 내가 좋아요한 피드 리스트를 불러온다. -->
+		<select id="getLikedFeedList" parameterType="search" resultMap="FeedSelectMap">
+			SELECT * FROM
+			(SELECT ROW_NUMBER() OVER(ORDER BY joiner.joiner_id DESC) num, feeds.* FROM feeds, joiner
+			WHERE feeds.feed_id = joiner.feed_id
+			AND joiner.is_like = 1
+			AND joiner.user_code = #{keyword}			
+			) temp
+			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}		
+		</select>
+		
+		
 		
 	 
 </mapper>

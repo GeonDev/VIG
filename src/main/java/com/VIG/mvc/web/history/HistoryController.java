@@ -1,10 +1,8 @@
 package com.VIG.mvc.web.history;
 
-import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,16 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.VIG.mvc.service.color.ColorServices;
+import com.VIG.mvc.service.comment.CommentServices;
 import com.VIG.mvc.service.domain.History;
 import com.VIG.mvc.service.domain.Page;
 import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.feed.FeedServices;
 import com.VIG.mvc.service.history.HistoryServices;
-import com.VIG.mvc.service.image.ImageServices;
-import com.VIG.mvc.service.keyword.KeywordServices;
-import com.VIG.mvc.service.user.UserServices;
 
 
 @Controller
@@ -52,6 +47,11 @@ public class HistoryController {
 	@Autowired 
 	@Qualifier("feedServicesImpl")
 	private FeedServices feedServices;	
+	
+	@Autowired 
+	@Qualifier("commentServicesImpl")
+	private CommentServices commentServices;
+	
 	
 
 	public HistoryController() {
@@ -84,11 +84,8 @@ public class HistoryController {
 			search.setKeyword(user.getUserCode());
 		}else {			
 			return new ModelAndView("forward:/common/alertView.jsp", "message", "로그인 후 이용가능합니다.");
-		}			
-		
-		// 테스트를 위하여 임시로 user01 세팅
-		search.setKeyword("user01");
-		
+		}		
+
 		Page resultPage = new Page(search.getCurrentPage(), historyServices.getHistoryCount(search) , pageUnit, pageSize);
 		
 		
@@ -100,8 +97,16 @@ public class HistoryController {
 		// 유저의 숨김 리스트 출력
 		search.setSearchType(1);
 		modelAndView.addObject("hidelist", historyServices.getHistoryList(search));
+		modelAndView.addObject("commentlist", commentServices.getCommentFromUser(search));
+		modelAndView.addObject("likeFeedlist", feedServices.getLikedFeedList(search));
+		
 		modelAndView.addObject("resultPage", resultPage);
-		modelAndView.addObject("search", search);
+	
+		
+		
+		
+		
+		
 				
 		return modelAndView;
 	}
