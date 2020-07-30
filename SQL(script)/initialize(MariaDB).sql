@@ -183,14 +183,6 @@ CREATE TABLE event (
 	PRIMARY KEY(event_id)
 );
 
-CREATE TABLE ip_count(
-	feed_id INT(11)  NOT NULL REFERENCES feeds(feed_id),
-	ip INT(11) UNSIGNED,
-	user_code VARCHAR(20),
-	view_date DATE
-);
-
-
 ALTER TABLE categories AUTO_INCREMENT  	 = 10000;
 ALTER TABLE feeds AUTO_INCREMENT 		 = 20000;
 ALTER TABLE images AUTO_INCREMENT 		 = 30000;
