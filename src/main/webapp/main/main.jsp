@@ -41,12 +41,9 @@
 		var page = 0; 	
 		
 		//카테고리의 페이지 
-		var categoryPage = 0;
-		
-		//카테고리가 총 몆개인지 확인
-		var categoryCount = '${categoryCount}';
-		
-		//페이지수가 몆개인지 확인
+		var categoryPage = 0;		
+
+		//페이지수가 총 몆개인지 확인
 		var categorytotalpage = '${categoryTotal}';
 		
 		
@@ -57,8 +54,7 @@
 		var isLoadPage = false;	
 		
 		//선택된 카테고리를 세팅		
-		var selectCategory ='RECOMMEND';
-		
+		var selectCategory ='RECOMMEND';		
 		
 		
 		
@@ -154,9 +150,11 @@
 	    	isLoadPage = false;	   
 			selectCategory = categoryName;	
 			
-			
-			getFeedItemList(categoryName);
+			getFeedItemList(categoryName);				
 		}
+		
+		
+		
 		
 		//카테고리 +버튼을 누름
 		function CategoriesPlue() {
@@ -175,7 +173,7 @@
 		
 		//선택된 페이지 외 나머지 카테고리를 지워준다.
 		function hideCategory(categoryPage) {
-			for(i = 0; i<categoryCount; i++){
+			for(i = 0; i<(categorytotalpage*6); i++){
 				var id = '#category_';
 				id =  id.concat(i);
 				console.log(id);
@@ -223,16 +221,31 @@
 			hideCategory(0);
 			
 			//F1 버튼을 누르면 키워드 추출 설정 
-		         $(document).keydown(function(key) {
-		            if (key.keyCode == 113) {
-		        		var result = confirm("이미지 정보를 추출 하시겠습니까?");
-		        		if(result){
-		        			var link ='/VIG/main/setImage';		        		
-		        			$(location).attr("href", link); 
-		        		}
-		            	
-		            }
-		        });
+	         $(document).keydown(function(key) {
+	            if (key.keyCode == 113) {
+	        		var result = confirm("이미지 정보를 추출 하시겠습니까?");
+	        		if(result){
+	        			var link ='/VIG/main/setImage';		        		
+	        			$(location).attr("href", link); 
+	        		}
+	            	
+	            }
+	        });	
+			
+			
+			
+			
+			$(document).on("click",".img_categories",function(){
+				
+				$('div.mask').attr('class',"mask flex-center rgba-black-strong rounded-pill");
+				$(this).find('div.mask').attr('class',"mask flex-center rgba-indigo-strong rounded-pill");
+					
+				setCategories($(this).find('p').text());
+				
+			});
+
+		
+			
 			
 		});
 		
@@ -307,8 +320,8 @@
 							<div class="col-md-2" id="category_${i}" style="padding-left: 0px; padding-right: 0px;">
 								<div class="view img_categories">			    			
 					    			<img src="/VIG/images/others/${category.categoryImg}" alt="thumbnail" class="img-fluid rounded-pill img_categories" >
-					    		    <div class="mask flex-center rgba-black-strong rounded-pill">
-					    		   		<button class="btn btn-link" style="padding-left: 0px; padding-right: 0px;" type="button" onclick="setCategories('${category.categoryName}')"><p class="white-text" style="font-weight:bold ; font-size: large; padding: 0px;">${category.categoryName}</p></button>	        					      						
+					    		    <div class="mask flex-center rgba-black-strong rounded-pill">	
+					    		   		<p class="white-text" style="font-weight:bold ; font-size: large; padding: 0px;">${category.categoryName}</p>					    		    				    		         					      						
 			   						</div>    						
 					    		</div>	
 							</div>	
@@ -320,26 +333,7 @@
 					<div class="col-md-1" style="margin-top: 20px;">
 						<button class="btn btn btn-primary" type="button" onclick="CategoriesPlue()"> <i class="fas fa-angle-right"></i></button>		  					      				
 					</div>				
-				</div>					
-			
-<%-- 			
-			<div class="col-md-1">
-				<div class="dropdown">
-				  <button class="btn btn btn-light dropdown-toggle" type="button" id="dropdownCategories" data-toggle="dropdown"
-				    aria-haspopup="false" aria-expanded="false" data-offset="10,20" style="padding-left: 5px; padding-right: 5px; width: 80px; height: 80px;">				  
-				  <p>ALL</p>
-				  </button>
-				  <div class="dropdown-menu" aria-labelledby="dropdownCategories">
-					 
-				  	<c:forEach var="category" items="${categoryList}">					  		
-				  		<button class="dropdown-item" type="button" onclick="setCategories('${category.categoryName}')" >${category.categoryName}</button>					  					    
-				    </c:forEach>
-								
-				  </div>
-				</div>
-			</div> 
---%>
-		
+				</div>		
 		
 		</div>	
 
