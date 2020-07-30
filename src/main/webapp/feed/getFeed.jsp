@@ -457,11 +457,11 @@ function removeComment(commentId){
 		<div align="right">
 		<c:if test="${isLike == false }">
 		
-		<i id="like" class="far fa-heart" style="font-size: 25px">                         ${fn:length(likes)}</i>
+		<i id="like" class="fas fa-heart" style="font-size: 25px">                         ${fn:length(likes)}</i>
 		
 		</c:if>
 		<c:if test="${isLike == true }">
-		<i id="like" class="fas fa-heart" style="font-size: 25px">                         ${fn:length(likes)}</i>
+		<i id="like" class="far fa-heart" style="font-size: 25px">                         ${fn:length(likes)}</i>
 		</c:if>
 		
 		</div>
@@ -504,7 +504,7 @@ function removeComment(commentId){
 	    	<button type="button" id="follow" class="btn btn-outline-default btn-rounded" >Follow</button>
 	    	</c:if>
 	    	<c:if test="${ isFollow == 1}">
-	    	<button type="button" id="follow" class="btn btn-default btn-rounded" >Unfollow</button>
+	    	<button type="button" id="follow" class="btn btn-default btn-rounded" >follow</button>
 	    	</c:if>
 	    </div>
 	  </div>
