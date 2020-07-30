@@ -82,7 +82,7 @@ public class UserController {
 		boolean result=userServices.checkDuplication(userCode);
 		// Model 과 View 연결
 		model.addAttribute("result", new Boolean(result));
-		model.addAttribute("userId", userCode);
+		model.addAttribute("userCode", userCode);
 
 		return "forward:/user/checkDuplication.jsp";
 	}

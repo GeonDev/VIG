@@ -230,12 +230,13 @@
 		    <label for="account" class="col-sm-offset-5 col-md-5 control-label">계좌번호</label>
 		      <input type="text" class="form-control" id="account" name="account" value="${user.account }" >
 		  </div>
-	<!-- 비지니스 계정으로 전환 버튼 넣기-->	  
+	<!-- 비지니스 계정으로 전환 버튼 넣기-->	
+		<c:if test="${sessionScope.user.role=='user'}">  
 		  <div class="form-group">
 		    <label for="account" class="col-sm-offset-5 col-md-5 control-label">비지니스</label>
 		    <button type="button" class="upgrade_btn"  >비지니스전환</button>
 		  </div>
-		  
+		  </c:if>
 	<!-- sns 계정 링크 -->
 	
 			<div class="row" id="sns_nav">
