@@ -90,6 +90,12 @@ public class UserServicesImpl implements UserServices {
 		return userDao.getAutoUserName(name);
 	}
 
+	@Override
+	public List<User> getAllUserList() throws Exception {
+		// TODO Auto-generated method stub
+		return userDao.getAllUserList();
+	}
+
 
 	
 	//
