@@ -81,14 +81,14 @@
 			
 			$.ajax( 
 					{
-						url : "/VIG/searchController/json/getSearchResultList",
+						url : "/VIG/search/json/getSearchUserFeedResult",
 						method : "POST",
 						dataType : "Json",					
 						headers : {
 							"Accept" : "application/json",
 							"Content-Type" : "application/json"
 						},
-						data :  JSON.stringify({keyword : $("#Keyword").val(), mode : Mode, currentPage : page}),
+						data :  JSON.stringify({userCode : user01 , currentPage : page}),
 						success : function(JSONData , status) {
 							
 							//불러와야 되는 페이지보다 개수가 적은 경우 페이지가 끝났다
@@ -97,33 +97,18 @@
 							}
 	 						
 	 						//유저를 불러올 경우 유저리스트를 생성한 후 피드를 삽입한다 
-	 						if(Mode == 'Writer'){							
-	 							
-	 	 						$.each(JSONData.list, function(index, item) { 						
-	 								getUserlistFromAjax(item); 									
-	 													
+	 			
+	 	 						$.each(JSONData.list, function(index, item) { 								
+	 															
+	 									getfeedlistFromAjax(item);										
+	 												
 	 							});	
-	 	 						
-	 	 						$.each(JSONData.feeds, function(index, item) { 						
-	 	 							getUserFeedlistFromAjax(item);	 							
-	 													
-	 							});	 							
-	 							
-	 						}else{
-	 	 						$.each(JSONData.list, function(index, item) {						
-	 								
-	 								if(Mode == 'Feed'){								
-	 									getfeedlistFromAjax(item);
-	 										
-	 								}else if(Mode == 'Image'){			
-	 									getImagelistFromAjax(item); 									
-	 								}					
-	 							});	 							
+		 						
+		 						//로드가 완료되면 로딩이 되었다고 체크
+		 						isLoadPage = false;		
 	 						}
-	 						
-	 						//로드가 완료되면 로딩이 되었다고 체크
-	 						isLoadPage = false;						
-						}
+				
+						
 				});		
 		}
 	
@@ -232,10 +217,7 @@
 			
 		<!-- 피드 리스트 -->				
 			<div class="container-lg-fluid">
-			<div class="row align-items-center justify-content-md-center">
-			<div class="row justify-content-center" style = "margin: 5px;"></div>
-			
-			</div>
+			<div class="row align-items-center justify-content-md-center"></div>
 		</div>
 	</div>
 

@@ -2,7 +2,6 @@ package com.VIG.mvc.web.feed;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +10,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.javassist.compiler.ast.Keyword;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,11 +22,9 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.VIG.mvc.service.category.CategoryServices;
 import com.VIG.mvc.service.color.ColorServices;
 import com.VIG.mvc.service.comment.CommentServices;
 import com.VIG.mvc.service.domain.Category;
-import com.VIG.mvc.service.domain.Event;
 import com.VIG.mvc.service.domain.Feed;
 import com.VIG.mvc.service.domain.History;
 import com.VIG.mvc.service.domain.Image;
@@ -44,7 +40,6 @@ import com.VIG.mvc.service.keyword.KeywordServices;
 import com.VIG.mvc.service.like.LikeServices;
 import com.VIG.mvc.service.user.UserServices;
 import com.VIG.mvc.util.CommonUtil;
-import com.VIG.mvc.util.VisionInfo;
 
 
 @Controller

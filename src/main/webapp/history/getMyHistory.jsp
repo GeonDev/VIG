@@ -155,14 +155,45 @@
 			  
 			  </div>
 			  <div class="tab-pane fade" id="pills-comment" role="tabpanel" aria-labelledby="pills-comment-tab">
-				댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다.
-				댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다.
-				댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다. 댓글입니다.
+			  	
+				<c:forEach var="comments" items="${commentlist}">
+					<div class="row" style="margin: auto;">						
+						<div class="col-md-1">
+							<img src="/VIG/images/uploadFiles/${comments.user.profileImg}" class="rounded-circle" style="width: 50px;">
+						</div>
+						<div class="col-md-10 ">
+							<p style="font-size: 25px; font-weight: bold; margin-top: 7px;"> ${comments.commentText}</p>
+						</div>
+						<div class="col-md-1">
+							<button id= "deleteCom" class="btn btn-link" onclick="removeComment('${comments.commentId}')">
+								<i class="fas fa-trash"></i>
+							</button>						
+						</div>
+											
+					</div>		
+			 			<hr/>
+				</c:forEach>
+			  		
 			  </div>
 			  <div class="tab-pane fade" id="pills-like" role="tabpanel" aria-labelledby="pills-like-tab">
-		        좋아요한 글입니다. 좋아요한 글입니다. 좋아요한 글입니다. 좋아요한 글입니다. 좋아요한 글입니다.
-			    좋아요한 글입니다. 좋아요한 글입니다. 좋아요한 글입니다. 좋아요한 글입니다. 좋아요한 글입니다.
-			    좋아요한 글입니다. 좋아요한 글입니다. 좋아요한 글입니다. 좋아요한 글입니다. 좋아요한 글입니다.
+			  		<div class="row justify-content-start" style="margin-left: 10px; margin-right: 10px;">
+					  <c:forEach var="feed" items="${likeFeedlist}">				
+							<div class = "view overlay">
+									<div class = "img_feed">								
+										<c:forEach var="thumbnail" items="${feed.images}">
+											<c:if test="${thumbnail.isThumbnail == 1}">	
+											 	<a href="/VIG/feed/getFeed?feedId=${feed.feedId}">							
+													<img src="/VIG/images/uploadFiles/${thumbnail.imageFile}" alt="thumbnail" class="img-fluid rounded-sm" style="width: 300px; height: 225px;">																						
+												</a>	
+											</c:if>
+										</c:forEach>																			
+									</div>
+								<h5 class="txt_lineSize" style="font-weight: bold; margin: 5px 10px;">													
+									${feed.feedTitle}
+								</h5>	
+							</div>
+						</c:forEach>
+			  		</div>
 			  </div>
 			  <div class="tab-pane fade" id="pills-hide" role="tabpanel" aria-labelledby="pills-hide-tab">
 			  

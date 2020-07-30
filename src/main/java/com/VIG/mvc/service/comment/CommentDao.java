@@ -3,6 +3,7 @@ package com.VIG.mvc.service.comment;
 import java.util.List;
 
 import com.VIG.mvc.service.domain.Comment;
+import com.VIG.mvc.service.domain.Search;
 
 public interface CommentDao {
 	public void addComment(Comment comment) throws Exception ; //댓글 작성
@@ -15,5 +16,5 @@ public interface CommentDao {
 	
 	public List<Comment> getCommentFromFeed(int feedId) throws Exception; //해당피드의 댓글리스트 가져오기
 	
-	public List<Comment> getCommentFromUser(String userCode)throws Exception; //해당 유저가 쓴 댓글리스트 가져오기
+	public List<Comment> getCommentFromUser(Search search)throws Exception; //해당 유저가 쓴 댓글리스트 가져오기
 }
