@@ -46,6 +46,7 @@
 		
 		width: 960px;
 		margin: 0 auto;
+		align: center;
 		
 	}
 	
@@ -60,7 +61,13 @@
 	  margin: 1em 0;
 	  display: block;
 	  background: rgb(240, 240, 240);
-	  border: 1px solid rgb(0, 0, 0);
+	}
+	
+	.btn {
+		font-size: 13px; 
+		padding: 10px 10px;
+		
+	
 	}
 
 
@@ -83,6 +90,12 @@ $(function(){
 		
 	});
 	
+	$(".fa-bars").on("click", function(){
+		
+		self.location="/VIG/event/getEventList";
+		
+	});
+	
 	
 })
 
@@ -102,13 +115,16 @@ $(function(){
 	<dl class="row">
 	<dt class="col-sm-10"> <h1> 이벤트 상세보기 </h1> </dt>
 	<dt class="col-sm-2"> 
-	
-	<input type="button" value="수정" id="update"> 
-	<input type="button" value="삭제" id="delete"> 
-	
+	<c:if test="${user.role=='admin'}">
+		<input type="button" class="btn btn-dark" value="수정" id="update"> 
+		<input type="button" class="btn btn-outline-danger waves-effect" value="삭제" id="delete"> 
+	</c:if>
+	<i style="font-size:25px; align: right" class="fas fa-bars"></i>
 	</dt>
+	
 	</dl>
 	<hr/>
+	
 	<div id="main">
 	
 	<br/>
@@ -122,7 +138,7 @@ $(function(){
 	<h5> ${event.eventSub}</h5>
 	
 
-	
+	<!--  이벤트 본문 -->
 	<hr/>
 		<img id="evimg" src="/VIG/images/others/${event.eventImage}" style="width:960px" class="img-rounded"/>
 	<hr/>
@@ -130,10 +146,10 @@ $(function(){
 	
 
 		
-			
+			<!-- 이벤트 정보 -->
 			<dl class="row">
-			  <dt class="col-sm-2">태그</dt>
-			  <dd class="col-sm-10">${event.eventTags }</dd>
+				  <dt class="col-sm-2">태그</dt>
+				  <dd class="col-sm-10">${event.eventTags }</dd>
 			 </dl>
 			 <dl class="row">
 				  <dt class="col-sm-2">기간</dt>
@@ -147,7 +163,17 @@ $(function(){
 	<div id="inline">
 			<hr/>
 			<br/>
-			<h1> 참가 작품 모아보기 </h1>
+			<h3 align="center"> 참가 작품 모아보기 </h3>
+			<br>
+			<br>
+
+			<c:if test="${empty feedList }">
+			<div align="center">
+			아직 등록된 피드가 없습니다.
+			</div>
+			</c:if>
+			
+			
 	
 	</div>
 	</div>
