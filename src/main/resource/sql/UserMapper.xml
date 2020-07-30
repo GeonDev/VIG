@@ -59,6 +59,13 @@
 	 </select>
 	 
 	 
+	 <select id="getAllUserList"  resultMap="userSelectMap">
+	 	SELECT *
+	 	FROM users	 
+	 </select>
+	 
+	 
+	 
 	 <select id="getUserOne" parameterType = "String" resultMap="userSelectMap">
 	 	SELECT user_code, user_name, password, role, email, reg_date
 	 	FROM users
@@ -94,15 +101,14 @@
 	 </select>
 	 
 	 
-	 <update	id="updateUser"	parameterType="user" >
+	 <update id="updateUser"	parameterType="user" >
 	   	UPDATE users
 	   		SET 
-	   		self_introduce 	= #{profileImg} ,
-	   		user_code 	= #{userCode} ,
+	   		self_introduce 	= #{selfIntroduce:VARCHAR} ,	   	
 	   		user_name 	= #{userName} ,
 			password	= #{password},
-			profile_img 	= #{selfIntroduce} ,
-			account	=	#{account} 			
+			profile_img 	= #{profileImg:VARCHAR} ,
+			account	=	#{account:VARCHAR} 			
 	   	WHERE user_code = #{userCode}
 	 </update>
 	 
