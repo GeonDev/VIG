@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.VIG.mvc.service.comment.CommentDao;
 import com.VIG.mvc.service.domain.Comment;
+import com.VIG.mvc.service.domain.Search;
 
 @Repository("commentDaoImpl")
 public class CommentDaoImpl implements CommentDao{
@@ -47,10 +48,10 @@ public List<Comment> getCommentFromFeed(int feedId) throws Exception {
 }
 
 @Override
-public List<Comment> getCommentFromUser(String userCode) throws Exception {
+public List<Comment> getCommentFromUser(Search search) throws Exception {
 	// TODO Auto-generated method stub
 	
-	return sqlSession.selectList("CommentMapper.getCommentFromUser",userCode);
+	return sqlSession.selectList("CommentMapper.getCommentFromUser",search);
 }
 
 @Override

@@ -303,7 +303,7 @@
 				<div class="row justify-content-center">
 				
 					<div class="col-md-1" style="margin-top: 20px">
-						<button class="btn btn btn-primary" onclick="CategoriesMinus()" type="button" > <i class="fas fa-angle-left"></i></button>	        					      				
+						<button class="btn btn-link" onclick="CategoriesMinus()" type="button" > <i class="fas fa-angle-left"></i></button>	        					      				
 					</div>
 				
 				
@@ -332,7 +332,7 @@
 					</div>
 					
 					<div class="col-md-1" style="margin-top: 20px;">
-						<button class="btn btn btn-primary" type="button" onclick="CategoriesPlue()"> <i class="fas fa-angle-right"></i></button>		  					      				
+						<button class="btn btn-link" type="button" onclick="CategoriesPlue()"> <i class="fas fa-angle-right"></i></button>		  					      				
 					</div>				
 				</div>		
 		

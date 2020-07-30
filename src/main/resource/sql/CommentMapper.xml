@@ -31,9 +31,11 @@
 			WHERE comment_id = #{value}
 		</delete>
 		
-		<select id="getCommentFromUser" parameterType="int">
-			SELECT * FROM comments
-			WHERE user_code = #{user.userCode}
+		<select id="getCommentFromUser" parameterType="search" resultMap="commentSelectMap">
+			SELECT *  FROM
+			(SELECT  ROW_NUMBER() OVER(ORDER BY comment_id DESC) num, comments.* FROM comments
+			WHERE user_code = #{keyword})temp
+			WHERE num BETWEEN #{startRowNum} AND #{endRowNum} 
 		</select>
 		
 		<select id = "getCommentFromFeed" parameterType="int" resultMap="commentSelectMap">
@@ -48,7 +50,7 @@
 		<select id = "getComment" parameterType="int" resultMap="commentSelectMap">
 			SELECT * FROM comments
 			WHERE comment_id = #{value}
-		</select> 
+		</select> 		
 		
 				 
 </mapper>

@@ -17,37 +17,37 @@ public class LikeServicesImpl implements LikeServices {
 	@Qualifier("likeDaoImpl")
 	private LikeDao likeDao;
 	
-public LikeServicesImpl() {
-	
-}
-
-@Override
-public void addLike(JoinUser joinUser) throws Exception {
-	likeDao.addLike(joinUser);
-}
-
-@Override
-public void deleteLike(JoinUser joinUser) throws Exception {
-	// TODO Auto-generated method stub
-	likeDao.deleteLike(joinUser);
-}
-
-@Override
-public List<JoinUser> getLikeUser(int feedId) throws Exception {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-@Override
-public boolean getLikeState(JoinUser joinUser) {
-	
-	if(likeDao.getLikeState(joinUser) == null) {
-		return true;
+	public LikeServicesImpl() {
+		
 	}
-	else {
-		return false;
+	
+	@Override
+	public void addLike(JoinUser joinUser) throws Exception {
+		likeDao.addLike(joinUser);
 	}
-}
+	
+	@Override
+	public void deleteLike(JoinUser joinUser) throws Exception {
+		// TODO Auto-generated method stub
+		likeDao.deleteLike(joinUser);
+	}
+	
+	@Override
+	public List<JoinUser> getLikeUser(int feedId) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public boolean getLikeState(JoinUser joinUser) {
+		
+		if(likeDao.getLikeState(joinUser) == null) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 
 
 

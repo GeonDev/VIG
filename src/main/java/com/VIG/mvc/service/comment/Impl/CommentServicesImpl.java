@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.VIG.mvc.service.comment.CommentDao;
 import com.VIG.mvc.service.comment.CommentServices;
 import com.VIG.mvc.service.domain.Comment;
+import com.VIG.mvc.service.domain.Search;
 
 @Service("commentServicesImpl")
 public class CommentServicesImpl implements CommentServices{
@@ -41,9 +42,9 @@ public class CommentServicesImpl implements CommentServices{
 	}
 
 	@Override
-	public List<Comment> getCommentFromUser(String userCode) throws Exception {
+	public List<Comment> getCommentFromUser(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return commentDao.getCommentFromUser(userCode);
+		return commentDao.getCommentFromUser(search);
 	}
 
 	@Override
