@@ -16,7 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.VIG.mvc.service.domain.Event;
+import com.VIG.mvc.service.domain.Feed;
 import com.VIG.mvc.service.event.EventServices;
+import com.VIG.mvc.service.feed.FeedServices;
 import com.VIG.mvc.service.domain.Page;
 import com.VIG.mvc.service.domain.Search;
 
@@ -29,6 +31,10 @@ public class EventController {
 	@Autowired
 	@Qualifier("eventServicesImpl")
 	private EventServices eventServices;
+	
+	@Autowired
+	@Qualifier("feedServicesImpl")
+	private FeedServices feedServices;
 	
 	@Value("#{commonProperties['pageUnit'] ?: 5}")
 	int pageUnit;
@@ -118,9 +124,13 @@ public class EventController {
 		
 		System.out.println("getEvent의 event객체 :" +event);
 		
+		String[] tags = ((event.getEventTags()).split(","));
+		List<Feed> feedList = feedServices.getFeedListOnlyTag(tags[0]);
+		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("forward:/event/getEvent.jsp");
 		mav.addObject("event", event);
+		mav.addObject("feedList", feedList);
 		
 		return mav;
 		

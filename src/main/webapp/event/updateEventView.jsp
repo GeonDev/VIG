@@ -31,13 +31,18 @@
 
 	
 <style>
+	body {
+		
+		margin-top: 70px;
+		
+		}
 	
 	#main { 
 		width: 960px;
 		margin: 0 auto;
 	}
 	
-	img {
+	#preview {
 	  margin: 1em 0;
 	  display: block;
 	  background: rgb(240, 240, 240);
@@ -94,25 +99,15 @@ $(function(){
 </head>
 <body>
 
-
-<!--Navbar-->
-<nav class="navbar navbar-light purple lighten-4 mb-4">
-
-  <!-- Navbar brand -->
-  <a class="navbar-brand" href="#">Navbar</a>
-
-  <!-- Collapse button -->
-
-</nav>
-<!--/.Navbar-->
+	<!-- 툴바 include -->
+	<jsp:include page="../main/toolbar.jsp" />
 
 	
 	
 	<div id=main>
 	<form class="myform" enctype="multipart/form-data">
 	
-	<h1> 여긴 이벤트 페이지 수정 화면~ </h1>
-	<p> ${message} </p>
+	<h2 style="font-weight: bold;">  이벤트 수정 </h2>
 	
 	<div class="md-form form-lg">
 	  <input type="text" id="inputLGEx" class="form-control form-control-lg" name="eventTitle" value="${event.eventTitle}">
@@ -133,7 +128,7 @@ $(function(){
 
 	
 	<hr/>
-	<img id="preview" src="../images/${event.eventImage}" width="700" alt="로컬에 있는 이미지가 보여지는 영역">
+	<img id="preview" src="/VIG/images/others/${event.eventImage}" width="700" alt="로컬에 있는 이미지가 보여지는 영역">
 		
 		<input type="file" id="getfile" name="uploadFile" accept="image/*">
 	

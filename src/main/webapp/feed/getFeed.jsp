@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %> 
 
 <!DOCTYPE html>
 <html>
@@ -99,7 +100,7 @@
 	color: red;
 	
 	}
-	#feedbottom {
+	.feedbottom {
 	
 	border: 1px solid #DADADA;
 	padding: 10px 5px 10px 8px;
@@ -171,6 +172,12 @@
 <script type="text/javascript">
 
 $(function(){
+	
+	function funcSearchColor(hexcode){
+		
+		self.location="/VIG/search/getSearchList?keyword="+hexcode;
+		
+	}
 	
 	$("#writerInfo").on("click", function (){
 		self.location="/VIG/myfeed/getMyFeed/${feed.writer.userCode}";
@@ -284,8 +291,8 @@ $(function(){
 							
 					    
 					    $('#textarea-char-counter').val("");
-					    
-					    $('#feedbottom').append(displayValue);
+					    $("#emptyCom").remove();
+					    $('#commentbox').append(displayValue);
 						}
 						
 					
@@ -457,17 +464,17 @@ function removeComment(commentId){
 		<div align="right">
 		<c:if test="${isLike == false }">
 		
-		<i id="like" class="fas fa-heart" style="font-size: 25px">                         ${fn:length(likes)}</i>
+		<i id="like" class="fas fa-heart" style="font-size: 25px"> <fmt:formatNumber value="${fn:length(feed.likes)}" pattern="#,####"/></i>
 		
 		</c:if>
 		<c:if test="${isLike == true }">
-		<i id="like" class="far fa-heart" style="font-size: 25px">                         ${fn:length(likes)}</i>
+		<i id="like" class="far fa-heart" style="font-size: 25px"> <fmt:formatNumber value="${fn:length(feed.likes)}" pattern="#,####"/></i>
 		</c:if>
 		
 		</div>
 		<br>
 		<div align="right">
-		<i class="far fa-eye" style="font-size: 22px">                         ${feed.feedViewCount}</i>
+		<i class="far fa-eye" style="font-size: 22px">                         <fmt:formatNumber value="${feed.feedViewCount}" pattern="#,####"/></i>
 		</div>
 		
 	</div>
@@ -496,17 +503,21 @@ function removeComment(commentId){
 		 </span>
 		 </div>
 		 <!-- 팔로우와 후원 -->
-	    <div class="col-4 dofo" align="left">
-	    	<c:if test="${feed.writer.role == 'business' }">
-	    	<span id="donation"><i class="fas fa-dollar-sign"></i></span>
-			</c:if>
-			<c:if test="${ isFollow == 0}">
-	    	<button type="button" id="follow" class="btn btn-outline-default btn-rounded" >Follow</button>
-	    	</c:if>
-	    	<c:if test="${ isFollow == 1}">
-	    	<button type="button" id="follow" class="btn btn-default btn-rounded" >follow</button>
-	    	</c:if>
-	    </div>
+		 <c:if test="${!empty user.role }">
+		
+		    <div class="col-4 dofo" align="left">
+		    	<c:if test="${feed.writer.role == 'business' }">
+		    	<span id="donation"><i class="fas fa-dollar-sign"></i></span>
+				</c:if>
+				<c:if test="${ isFollow == 0}">
+		    	<button type="button" id="follow" class="btn btn-outline-default btn-rounded" >Follow</button>
+		    	</c:if>
+		    	<c:if test="${ isFollow == 1}">
+		    	<button type="button" id="follow" class="btn btn-default btn-rounded" >follow</button>
+		    	</c:if>
+		    </div>
+		    
+		  </c:if>
 	  </div>
 </div>
 	<hr/>
@@ -530,7 +541,7 @@ function removeComment(commentId){
 		</div>
 		</div>
 
-		<div id="feedbottom" class="text-monospace">
+		<div id="commentbox" class="feedbottom" class="text-monospace">
 		<c:choose>
 		
 		<c:when test="${!empty feed.comments }">
@@ -554,7 +565,7 @@ function removeComment(commentId){
 		<c:when test="${empty feed.comments}">
 			<br>
 			<br>
-			<h6 align="center"> Please leave your comments! </h6>
+			<h6 id="emptyCom" align="center"> Please leave your comments! </h6>
 			<br>
 			<br>
 		</c:when>
@@ -572,7 +583,7 @@ function removeComment(commentId){
 		
 		<div class="col-4" id="feedInfo">
 		
-			<div id="feedbottom">
+			<div class="feedbottom">
 			
 			<h6 style="font-weight: bold">카테고리    | <a style="display: inline-block; color: black;" href="카테고리서칭">${feed.feedCategory.categoryName }</a></h6>
 			
@@ -582,7 +593,7 @@ function removeComment(commentId){
 			
 		
 			<c:if test="${!empty feed.feedUseGears }">
-			<div id="feedbottom">
+			<div class="feedbottom">
 			<h6 style="font-weight: bold">사용장비</h6>
 			
 			${feed.feedUseGears}
@@ -595,13 +606,13 @@ function removeComment(commentId){
 			<c:forEach var="images" items="${feed.images}" begin="0" end="0">
 			<c:if test="${!empty images.color }">
 
-			<div id="feedbottom">
+			<div class="feedbottom">
 			<h6 style="font-weight: bold">색 상</h6>
 			
 			<c:forEach var="color" items="${images.color}">
 			<c:if test="${!empty color }">
 				
-				<div id="color" style="background-color: rgb( ${color.red} ,${color.green } ,${color.blue} );"> &nbsp;  </div>
+				<div id="color" style="background-color: ${color.haxcode};" onclick="funcSearchColor('${color.haxcode}')"> &nbsp;  </div>
 			
 			</c:if>
 			</c:forEach>
@@ -616,7 +627,7 @@ function removeComment(commentId){
 		
 			
 			<c:if test="${!empty feed.coworkers }">
-			<div id="feedbottom">	
+			<div class="feedbottom">	
 			<h6 style="font-weight: bold">협업자</h6>
 			
 			<c:forEach var="coworkers" items="${feed.coworkers}">
@@ -633,13 +644,13 @@ function removeComment(commentId){
 		
 			<c:forEach var="images" items="${feed.images}" begin="0" end="0">			
 				<c:if test="${images.keyword[0].isTag == '1' }">
-				<div id="feedbottom">
+				<div class="feedbottom">
 				<h6 style="font-weight: bold">태그</h6>
 				<div style="padding: 4px 4px 4px 4px;">
 				<c:forEach var="keyword" items="${images.keyword}">
 				
 				<div id="tag" style=" border: 1px solid #C2C3C2; margin: 3px 1px 3px 1px; padding: 1px 3px 1px 3px; display: inline-block; border-radius: 5px;">
-			    <a style="color: black; font-size: 13px;" href="/VIG/searchController/getSearchImages?imageId=${images.imageId}">${keyword.keywordOrigin != null ? keyword.keywordOrigin : keyword.keywordEn }</a>
+			    <a style="color: black; font-size: 13px;" href="/VIG/searchController/getSearchImages?keyword=${images.keyword}">${keyword.keywordOrigin != null ? keyword.keywordOrigin : keyword.keywordEn }</a>
 				</div>
 				
 				</c:forEach>
