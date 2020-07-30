@@ -140,7 +140,7 @@
 	
 	}
 	
-	#color {
+	.color {
 	
 	display:inline-block;
 	width: 35px;
@@ -165,6 +165,19 @@
 		float:right;
 		color:#2F4F4F;
 	}
+	
+	.top {
+	  position: fixed;
+	  right: 10%;
+	  bottom: 50px;
+	  display: none;
+	  font-size: 45px;
+	 
+	}
+	.fa-arrow-alt-circle-up{
+	  color: #FBA635;
+	
+	}
 
 </style>
 
@@ -173,11 +186,7 @@
 
 $(function(){
 	
-	function funcSearchColor(hexcode){
-		
-		self.location="/VIG/search/getSearchList?keyword="+hexcode;
-		
-	}
+	
 	
 	$("#writerInfo").on("click", function (){
 		self.location="/VIG/myfeed/getMyFeed/${feed.writer.userCode}";
@@ -389,16 +398,19 @@ $(function(){
 	});
 	
 	//색상클릭시 색상검색으로 넘어감
-	$("#color").on("click", function(){
-		
-		
-		
-		
-	});
+
 	
 	//이미지 클릭시 모달로 원본 이미지 띄우기
 	
 });
+
+
+//색상검색
+function funcSearchColor(hexcode){
+	var code = hexcode.substring(1,7);
+	self.location="/VIG/search/getSearchList?Mode=Image&keyword=%23"+code;
+	
+}
 
 //댓글 삭제
 function removeComment(commentId){
@@ -439,7 +451,11 @@ function removeComment(commentId){
 <jsp:include page="../main/toolbar.jsp" />
 	
 	<div id="outline">
-
+	
+	<div class="top">
+	<i class="fas fa-arrow-alt-circle-up"></i>
+	</div>
+	
 	<div id="main">
 	
 	<br/>
@@ -612,7 +628,7 @@ function removeComment(commentId){
 			<c:forEach var="color" items="${images.color}">
 			<c:if test="${!empty color }">
 				
-				<div id="color" style="background-color: ${color.haxcode};" onclick="funcSearchColor('${color.haxcode}')"> &nbsp;  </div>
+				<div class="color" style="background-color: ${color.haxcode};" onclick='funcSearchColor("${color.haxcode}")'> &nbsp;  </div>
 			
 			</c:if>
 			</c:forEach>
