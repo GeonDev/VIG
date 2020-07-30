@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.VIG.mvc.service.category.CategoryServices;
 import com.VIG.mvc.service.color.ColorServices;
+import com.VIG.mvc.service.comment.CommentServices;
 import com.VIG.mvc.service.domain.Category;
 import com.VIG.mvc.service.domain.Event;
 import com.VIG.mvc.service.domain.Feed;
@@ -74,6 +75,10 @@ public class FeedController {
 	@Autowired
 	@Qualifier("historyServicesImpl")
 	private HistoryServices historyServices;
+	
+	@Autowired
+	@Qualifier("commentServicesImpl")
+	private CommentServices commentServices;
 	
 	
 	
