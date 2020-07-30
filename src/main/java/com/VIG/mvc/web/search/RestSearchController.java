@@ -164,6 +164,8 @@ public class RestSearchController {
 				Search tempSearch = new Search();
 				tempSearch.setKeyword(user.getUserCode());
 				tempSearch.setSearchType(0);
+				//첫페이지 양만 가지고 옴
+				tempSearch.setCurrentPage(1);				
 				
 				//최근 본 피드정보를 가지고 온다.
 				List<History> historyList =	historyServices.getHistoryList(tempSearch);	
@@ -173,13 +175,7 @@ public class RestSearchController {
 				
 				//최근 본 피드의 썸네일 키워드 리스트를 가지고 온다.
 				for(History history : historyList) {					
-					for(Image tempImage : history.getShowFeed().getImages()) {
-						if(tempImage.getIsThumbnail() == 1) {
-							for(ImageKeyword key :tempImage.getKeyword()) {
-								keywordList.add(key);
-							}							
-						}
-					}
+					keywordList.addAll(history.getShowFeed().getKeywords());
 				}
 					
 					

@@ -90,21 +90,7 @@ public class mainController {
 	public ModelAndView getMain(Model model, HttpSession session) throws Exception {
 		
 		List<Category> categoryList = categoryServices.getAllCategoryList();
-		List<Event> eventList = eventServices.getLastEventList();
-		
-		// 카테고리의 페이지수 - 한페이지당 6개로 고정
-		int categoryTotal = (int)Math.ceil((double)categoryList.size()/6.0);
-		
-		
-		if((categoryTotal*6) != categoryList.size()) {
-			int temp = (categoryTotal*6) - categoryList.size();
-			
-			for(int i = 0 ;i<temp ;i++) {
-				categoryList.add(categoryList.get(i));
-			}
-			
-		}
-		
+		List<Event> eventList = eventServices.getLastEventList();			
 		
 		User user = (User)session.getAttribute("user");
 		
@@ -116,9 +102,7 @@ public class mainController {
 		model.addAttribute("user", user);	
 		
 		model.addAttribute("eventList", eventList);		
-		model.addAttribute("categoryList", categoryList);		
-		
-		model.addAttribute("categoryTotal", categoryTotal);
+		model.addAttribute("categoryList", categoryList);			
 		
 		return new ModelAndView("forward:/main/main.jsp");
 	}

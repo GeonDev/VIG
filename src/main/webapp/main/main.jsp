@@ -39,14 +39,7 @@
 		
 		//최초 페이지는 0으로 설정
 		var page = 0; 	
-		
-		//카테고리의 페이지 
-		var categoryPage = '${categoryTotal}';		
-
-		//페이지수가 총 몆개인지 확인
-		var categorytotalpage = '${categoryTotal}';
-		
-		
+			
 		//페이지의 끝인지 체크
 		var isPageEnd = false;
 		
@@ -54,9 +47,7 @@
 		var isLoadPage = false;	
 		
 		//선택된 카테고리를 세팅		
-		var selectCategory ='RECOMMEND';		
-		
-		
+		var selectCategory ='RECOMMEND';			
 		
 		//전달받은 피드 리스트를 화면에 그림
 		function getfeedlistFromAjax(item, user){
@@ -158,39 +149,13 @@
 		
 		//카테고리 +버튼을 누름
 		function CategoriesPlue() {
-			categoryPage =  (categoryPage+1)%categorytotalpage;		
-			hideCategory(categoryPage);
+
 		}
 		
 		//카테고리 -버튼을 누름
 		function CategoriesMinus() {
-			categoryPage -= 1;
-			if(categoryPage <0){
-				categoryPage=0;
-			}
-			hideCategory(categoryPage);			
+		
 		}		
-		
-		//선택된 페이지 외 나머지 카테고리를 지워준다.
-		function hideCategory(categoryPage) {
-			for(i = 0; i<(categorytotalpage*6); i++){
-				var id = '#category_';
-				id =  id.concat(i);
-				console.log(id);
-				$(id).attr('style','padding-left: 0px; padding-right: 0px; display:none;');
-			}
-			
-			var start = (categoryPage)*6;
-			var end = (categoryPage+1)*6;
-			
-			for(i = start; i<end; i++){
-				var id = '#category_';
-				id =  id.concat(i);
-				console.log(id);
-				$(id).attr('style','padding-left: 0px; padding-right: 0px;');
-			}			
-		}
-		
 		
 		//피드를 숨길지 물어본다.
 		function addhideFeed(feedId){	   	
@@ -215,7 +180,7 @@
    			    }
    			});	
 			
-			hideCategory(categoryPage-1);
+			/* hideCategory(categoryPage-1); */
 			
 			//F1 버튼을 누르면 키워드 추출 설정 
 	         $(document).keydown(function(key) {
@@ -233,8 +198,8 @@
 			
 			$(document).on("click",".img_categories",function(){
 				
-				$('div.mask').attr('class',"mask flex-center rgba-black-strong rounded-pill");
-				$(this).find('div.mask').attr('class',"mask flex-center rgba-indigo-strong rounded-pill");
+				$('div.mask').attr('class',"mask flex-center rgba-black-strong");
+				$(this).find('div.mask').attr('class',"mask flex-center rgba-indigo-strong");
 					
 				setCategories($(this).find('p').text());
 				
@@ -259,14 +224,13 @@
 	max-height: 300px;	
 	}
 	
-	.img_categories {	  
-	max-width: 180px;
+	.img_categories {	
 	max-height: 90px;
 	padding-left: 0px;
 	padding-right: 0px;
 	margin-left: 0px;
 	margin-right: 0px;
-	text-align: center; 	
+	text-align: center; 
 	}
 	    
    	.eBanner{
@@ -286,6 +250,14 @@
 	.view {	  
 	margin: 5px 10px;
 	}
+	
+	ul {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+	}
+	ul::-webkit-scrollbar {
+	    display: none;
+	}
     
    	</style>
     
@@ -298,28 +270,28 @@
 	
 	<div class="container-fluid">
      
-		<div id="categories" class="row d-flex justify-content-center" style="margin-left: 10px; margin-right: 10px;">
+		<div id="categories" class="row justify-content-between" style="margin-left: 10px; margin-right: 10px;">
 										
-				<div class="row justify-content-center">
+				<div class="row">
 				
 					<div class="col-md-1" style="margin-top: 20px">
 						<button class="btn btn-link" onclick="CategoriesMinus()" type="button" > <i class="fas fa-angle-left"></i></button>	        					      				
 					</div>
 				
 				
-					<div class="col-md-10" style="padding-left: 0px; padding-right: 0px;">
-						<div class="row">
-						<c:set var="i" value="0" />
+					<div class="col-md-10" >
+						<div class="row" style="max-height:100px; flex-wrap: nowrap; overflow: auto;">
+						<c:set var="i" value="0" />						
 						<c:forEach var="category" items="${categoryList}">				
 							<div class="col-md-2" id="category_${i}" style="padding-left: 0px; padding-right: 0px;">
-								<div class="view img_categories">			    			
-					    			<img src="/VIG/images/others/${category.categoryImg}" alt="thumbnail" class="img-fluid rounded-pill img_categories" >
+								<div class="view img_categories ">			    			
+					    			<img src="/VIG/images/others/${category.categoryImg}" alt="thumbnail" class="img-fluid overflow-hidden" >
 					    			
 					    			<c:if test="${category.categoryName == 'RECOMMEND'}">
-					    				<div class="mask flex-center rgba-indigo-strong rounded-pill">	
+					    				<div class="mask flex-center rgba-indigo-strong">	
 					    			</c:if>
 					    			<c:if test="${category.categoryName != 'RECOMMEND'}">
-					    				<div class="mask flex-center rgba-black-strong rounded-pill">	
+					    				<div class="mask flex-center rgba-black-strong">	
 					    			</c:if>		    			
 					    		  	
 					    		   		<p class="white-text" style="font-weight:bold ; font-size: large; padding: 0px;">${category.categoryName}</p>					    		    				    		         					      						
@@ -332,7 +304,7 @@
 					</div>
 					
 					<div class="col-md-1" style="margin-top: 20px;">
-						<button class="btn btn-link" type="button" onclick="CategoriesPlue()"> <i class="fas fa-angle-right"></i></button>		  					      				
+						<button class="btn btn-link" type="button" onclick="CategoriesPlue()" > <i class="fas fa-angle-right"></i></button>		  					      				
 					</div>				
 				</div>		
 		
@@ -383,13 +355,9 @@
 			  </a>
 			
 			</div>
-		</div>
-		
-		
-		
+		</div>		
 		
         <div id="main" class="row justify-content-center" style="margin-left: 10px; margin-right: 10px;"></div>
-
 
 	</div>
 	

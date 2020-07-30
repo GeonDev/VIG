@@ -20,6 +20,7 @@
 	
 	<select id="getAllCategoryList" resultMap="categorySelectMap">
 		SELECT * FROM categories
+		ORDER BY category_id DESC
 	</select>	
 	 
 </mapper>
