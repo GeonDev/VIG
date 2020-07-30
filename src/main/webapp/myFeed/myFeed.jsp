@@ -46,11 +46,14 @@
 		$('#my_frame').attr('src', url);
 	}
 	
+	
 //===페이지 로드시 바로 보여줄 화면
-	window.onload = function(){
-		
-	}
-
+	$(function(){
+		$(document).ready(function() { 
+			iframe.location.href="/VIG/myFeed/myFeedListTest.jsp";
+		});
+	});
+	
 	</script>
 	
 <!-- style part======================== -->	
@@ -142,7 +145,8 @@
  				</c:choose>
 				</div>
 		<!-- 왼쪽 네비 페이지 불러올 iframe-->
-					<iframe id='my_frame' class="col-md-10 " border="0"></iframe>	
+					<iframe id='my_frame' target="iframe" name="iframe" class="col-md-10 " border="0" ></iframe>
+						
 				</div>
 								
  		</body>
