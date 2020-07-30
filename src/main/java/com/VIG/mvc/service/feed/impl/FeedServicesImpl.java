@@ -122,5 +122,26 @@ public class FeedServicesImpl implements FeedServices {
 		return feedDao.getHightViewFeedList(search);
 	}
 
+	@Override
+	public void updateViewCount(int feedId) throws Exception {
+		// TODO Auto-generated method stub
+		
+		feedDao.updateViewCount(feedId);
+		
+	}
+
+	@Override
+	public int getViewHistory(int feedId, String ip, String userCode) throws Exception {
+		// TODO Auto-generated method stub
+		return feedDao.getViewHistory(feedId, ip, userCode);
+	}
+
+
+	@Override
+	public void addViewHistory(int feedId, String ip, String userCode) throws Exception {
+		// TODO Auto-generated method stub
+		feedDao.addViewHistory(feedId, ip, userCode);
+	}
+
 
 }
