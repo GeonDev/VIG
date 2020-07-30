@@ -28,15 +28,15 @@ import org.springframework.web.servlet.ModelAndView;
 import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.user.UserServices;
 
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCrypt;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Controller
 @RequestMapping("/user/*")
 public class UserController {
 	
-	@Autowired
-	BCryptPasswordEncoder passwordEncoder;
+//	@Autowired
+//	BCryptPasswordEncoder passwordEncoder;
 	
 	@Autowired 
 	@Qualifier("userServicesImpl")
@@ -55,7 +55,19 @@ public class UserController {
 		modelAndView.setViewName("redirect:/user/addUserView.jsp");	
 		return modelAndView;
 	}
-//	
+	@RequestMapping( value="addUser", method=RequestMethod.POST )
+	public String addUser(@ModelAttribute("user") User user, HttpSession session ) throws Exception {
+		
+		user.setBirth(user.getBirth().replaceAll("-", ""));
+		System.out.println("addUser(POST):회원가입");
+		userServices.addUser(user);		
+		//User userInfo = userServices.getUserOne(user.getUserCode());
+		session.setAttribute("userInfo", userServices.getUserOne(user.getUserCode()));
+		return "redirect:/main/VIG";
+	}
+	
+//// 비크립트 나중에 작업하기 
+	/*
 	@RequestMapping( value="addUser", method=RequestMethod.POST )
 	public String addUser(@ModelAttribute("user") User user, HttpSession session ) throws Exception {
 		
@@ -70,22 +82,9 @@ public class UserController {
 		System.out.println(pwdBycrypt);
 		return "redirect:/main/VIG";
 	}
-				
-	/*
-	@RequestMapping( value="addUser", method=RequestMethod.POST )
-	public String addUser(@ModelAttribute("user") User user, HttpSession session ) throws Exception {
-		
-		user.setBirth(user.getBirth().replaceAll("-", ""));
-		System.out.println("addUser(POST):회원가입");
-		userServices.addUser(user);		
-		//User userInfo = userServices.getUserOne(user.getUserCode());
-		session.setAttribute("userInfo", userServices.getUserOne(user.getUserCode()));
-		return "redirect:/main/VIG";
-	}
-	*/
+	*/			
 //====id 체크 =====
 	
-
 	@RequestMapping( value="checkDuplication", method=RequestMethod.POST )
 	public String checkDuplication( @RequestParam("userCode") String userCode , Model model ) throws Exception{
 		
@@ -100,8 +99,7 @@ public class UserController {
 	}
 
 //=======로그인===============================================================//
-	
-	
+		
 	@RequestMapping( value="login", method=RequestMethod.GET)
 	public ModelAndView login() throws Exception{		
 		System.out.println("login(GET):로그인 페이지로 이동");	
@@ -110,6 +108,19 @@ public class UserController {
 		return model;
 	}
 	
+	@RequestMapping( value="login", method=RequestMethod.POST )
+	public String login(@ModelAttribute("user") User user, HttpSession session) throws Exception{
+			
+		User dbUser = userServices.getUserOne(user.getUserCode());
+		System.out.println("로그인post");
+		if( user.getPassword().equals(dbUser.getPassword())){
+			session.setAttribute("user", dbUser);
+		}
+		return "redirect:/main/VIG";
+	}
+
+////비크립트 나중에 따로 작업 하기////
+	/*
 	@RequestMapping( value="login", method=RequestMethod.POST )
 	public String login(@ModelAttribute("user") User user, HttpSession session ) throws Exception{
 		
@@ -129,19 +140,8 @@ public class UserController {
 			return "redirect:/user/loginView.jsp";
 		}
 	}
-	
-	/*
-	@RequestMapping( value="login", method=RequestMethod.POST )
-	public String login(@ModelAttribute("user") User user, HttpSession session) throws Exception{
-			
-		User dbUser = userServices.getUserOne(user.getUserCode());
-		System.out.println("로그인post");
-		if( user.getPassword().equals(dbUser.getPassword())){
-			session.setAttribute("user", dbUser);
-		}
-			return "redirect:/main/VIG";
-	}
 	*/
+
 //=======로그아웃===============================================================//
 	@RequestMapping( value="logout", method=RequestMethod.GET)
 	public ModelAndView logout(HttpSession session) throws Exception{
@@ -155,7 +155,6 @@ public class UserController {
 		model.setViewName("redirect:/main/VIG");
 		return model;
 	}
-
 
 	
 //=======get user===========================================================//
