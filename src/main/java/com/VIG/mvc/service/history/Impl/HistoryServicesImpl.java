@@ -52,4 +52,10 @@ public class HistoryServicesImpl implements HistoryServices {
 		return historyDao.getAllHistoryList(search);
 	}
 
+	@Override
+	public int getViewHistory(History history) throws Exception {
+		// TODO Auto-generated method stub
+		return historyDao.getViewHistory(history);
+	}
+
 }

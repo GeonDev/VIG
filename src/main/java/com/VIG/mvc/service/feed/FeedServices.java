@@ -39,8 +39,4 @@ public interface FeedServices {
 	
 	public void updateViewCount(int feedId) throws Exception;
 	
-	public int getViewHistory(int feedId, String ip, String userCode) throws Exception;
-	
-	public void addViewHistory(int feedId, String ip, String userCode) throws Exception;
-
 }

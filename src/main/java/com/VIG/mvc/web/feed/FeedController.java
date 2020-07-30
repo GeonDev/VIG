@@ -194,61 +194,53 @@ public class FeedController {
 		mav.addObject("feed", feed);
 		
 		//ip로 조회수 counting 하는 부분
-		String ip = CommonUtil.getUserIp(request);
-		System.out.println(ip);
+		String ipAddress = CommonUtil.getUserIp(request);
+		System.out.println(ipAddress);
 		
 		User user = (User)session.getAttribute("user");
 		User writer = feed.getWriter();
 		System.out.println("User"+user);
 		System.out.println("Writer"+writer);
-		String userCode;
-		//비회원이면
-		if(user==null) {
-			userCode=null;
-			int history = feedServices.getViewHistory(feedId, ip, userCode);
-			System.out.println(history);
-			if(history == 0 ) {
-				
-				feedServices.addViewHistory(feedId, ip, userCode);
-				feedServices.updateViewCount(feedId);
-				
-			}
-			
-		} else if(user!= null) {			//회원이면
-			
-			if(user.getUserCode() == writer.getUserCode() ) { //작성자와 세션유저가 같으면...
-				
-			}else if(user.getUserCode() != writer.getUserCode()) {
-				userCode=user.getUserCode();
-				System.out.println(userCode);
-				int history = feedServices.getViewHistory(feedId, ip, userCode);
-				System.out.println(history);
-				if(history == 0 ) {
-					
-					feedServices.updateViewCount(feedId);
-					feedServices.addViewHistory(feedId, ip, userCode);
-				}
-				
-			}
-			
-			
-		}
+		
 		
 		// 로그인한 유저정보가 있는지 체크 - 히스토리를 남기는 부분입니다. 삭제 X(손건)
-		
+		History history = new History();		
+		history.setWatchUser(user);
+		history.setHistoryType(0);
+		history.setShowFeed(feed);
+		history.setIpAddress(ipAddress);
 		
 		if(user !=null) {
-			History history = new History();		
-			history.setWatchUser(user);
-			history.setHistoryType(0);
-			history.setShowFeed(feed);
-			historyServices.addHistory(history);
+			System.out.println("회원조회");
 			
-		}			
+			int count = historyServices.getViewHistory(history);
+			System.out.println(count);
+			if(count == 0 ) {
+			
+				feedServices.updateViewCount(feedId);
+				historyServices.addHistory(history);
+			}
+			//historyServices.addHistory(history);
+			
+		
+		}//비회원이면
+		else if(user==null) {
+				System.out.println("비회원 조회");
+					int count = historyServices.getViewHistory(history);
+					System.out.println(count);
+					if(count == 0 ) {
+						
+						historyServices.addHistory(history);
+						feedServices.updateViewCount(feedId);
+						
+					}
+			
+		}		
 		
 		return mav;
 		
-	}
+		}
+		
 	
 
 }
