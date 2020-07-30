@@ -8,7 +8,7 @@ USE VIG;
 CREATE TABLE users ( 
 	user_code  			 VARCHAR(20) 		NOT NULL,
 	user_name  			 VARCHAR(50) 		NOT NULL,
-	password  			 VARCHAR(10),
+	password  			 VARCHAR(200),
 	role  				 VARCHAR(10)  		DEFAULT 'user',	
 	profile_img 		 VARCHAR(50),
 	self_introduce  	 VARCHAR(1024),	
