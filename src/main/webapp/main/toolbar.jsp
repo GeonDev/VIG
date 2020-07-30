@@ -85,7 +85,7 @@ $(function() {
 					<h6 class="dropdown-header">${user.userCode }</h6>
 						 <div class="dropdown-divider"></div>
 						    <a class="dropdown-item" href="/VIG/myFeed/myFeed.jsp">My Feed</a>
-						    <a class="dropdown-item" href="#">Upload</a>
+						    <a class="dropdown-item" href="/VIG/feed/addFeed.jsp">Upload</a>
 				 </div>
 		       </c:if>
 		    <!-- 로그아웃 버튼 -->          
