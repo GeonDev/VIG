@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -453,7 +455,15 @@ function removeComment(commentId){
 	<br>
 		<!-- 좋아요 & 조회수 -->
 		<div align="right">
-		<i id="like" class="far fa-heart" style="font-size: 25px"></i>
+		<c:if test="${isLike == false }">
+		
+		<i id="like" class="far fa-heart" style="font-size: 25px">                         ${fn:length(likes)}</i>
+		
+		</c:if>
+		<c:if test="${isLike == true }">
+		<i id="like" class="fas fa-heart" style="font-size: 25px">                         ${fn:length(likes)}</i>
+		</c:if>
+		
 		</div>
 		<br>
 		<div align="right">
@@ -490,7 +500,12 @@ function removeComment(commentId){
 	    	<c:if test="${feed.writer.role == 'business' }">
 	    	<span id="donation"><i class="fas fa-dollar-sign"></i></span>
 			</c:if>
+			<c:if test="${ isFollow == 0}">
 	    	<button type="button" id="follow" class="btn btn-outline-default btn-rounded" >Follow</button>
+	    	</c:if>
+	    	<c:if test="${ isFollow == 1}">
+	    	<button type="button" id="follow" class="btn btn-default btn-rounded" >Unfollow</button>
+	    	</c:if>
 	    </div>
 	  </div>
 </div>
