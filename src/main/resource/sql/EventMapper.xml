@@ -42,7 +42,7 @@
 		SELECT *
 		FROM event
 		ORDER BY event_id DESC
-		LIMIT 5	
+		LIMIT 3	
 	</select>
 	
 	

@@ -221,13 +221,14 @@ public class SearchController {
 		Search search = new Search();
 		search.setPageSize(pageSize);
 		search.setCurrentPage(1);
-		search.setKeywords(image.getKeyword());
-		
-		//해당 이미지 제외를 위한 설정 -> keyword에 넣고 싶으나 타입이 맞지않아 searchType에 삽입
-		search.setSearchType(image.getImageId());		
+		search.setKeywords(image.getKeyword());		
+
 		
 		//키워드 연관 이미지 추출
 		List<Image> relatedImages = imageServices.getImageListFromImage(search);
+		
+		//선택한 이미지는 유사 리스트 에서 제거
+		relatedImages.remove(image);
 		
 		//추출된 이미지리스트에 있는 이미지가 선택된 이미지의 키워드와 얼마나 유사한 값을 가지고 있는지 체크
 		if(relatedImages.size() > 0) {						

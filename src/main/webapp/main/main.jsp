@@ -351,43 +351,33 @@
 			    <li data-target="#carousel-example-1z" data-slide-to="1"></li>
 			    <li data-target="#carousel-example-1z" data-slide-to="2"></li>
 			  </ol>
-			  <!--/.Indicators-->
-			  
-			  <!--Slides-->
+		
 			  <div class="carousel-inner" role="listbox">
-	
-				<!--First slide-->
-			    <div class="carousel-item active" style="text-align: center;">
-				    <a href="#">
-				      <img class="eBanner rounded mb-0" src="/VIG/images/others/noname.jpg"
-				        alt="First slide">
-				    </a>
-			    </div>
-			    <!--/First slide-->
-			    
-	
-				<!--Second slide-->
-			    <div class="carousel-item" style="text-align: center;">
-			    	 <a href="#">
-					      <img class="eBanner rounded mb-0" src="https://mdbootstrap.com/img/Photos/Slides/img%20(129).jpg"
-					        alt="Second slide">
-					 </a>
-			    </div>
-			    <!--/Second slide-->
-			    
-	
-				<!--Third slide-->
-			    <div class="carousel-item" style="text-align: center;">
-			    	 <a href="#">
-					      <img class="eBanner rounded mb-0" src="https://mdbootstrap.com/img/Photos/Slides/img%20(70).jpg"
-					        alt="Third slide">
-				     </a>
-			    </div>
-			    <!--/Third slide-->
+			  
+			  	<c:set var="i" value="1" />
+			  	
+			  	<c:forEach var="event" items="${eventList}">			  		
+			  	
+			  		<c:if test="${i == 1}">
+			  		 <div class="carousel-item active" style="text-align: center;">			  		
+			  		</c:if>			  		
+			  		<c:if test="${i != 1}">
+			  		 <div class="carousel-item " style="text-align: center;">			  		
+			  		</c:if>
+			  					  		
+				  		<a href="#">
+					      <img class="eBanner rounded mb-0" src="/VIG/images/others/${event.banner}" >
+					    </a>			  	
+			  		
+			  		</div>
+			  		
+			  		
+			  		<c:set var="i" value="${i+1}" />
+			  	</c:forEach>			
+			  
 			  </div>
-			  <!--/.Slides-->
-			  		  
-				<!--Controls-->
+	
+	
 			  <a class="carousel-control-prev" href="#carousel-example-1z" role="button" data-slide="prev" >
 			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 			    <span class="sr-only">Previous</span>
@@ -396,9 +386,13 @@
 			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
 			    <span class="sr-only">Next</span>
 			  </a>
-			  <!--/.Controls-->
+			
 			</div>
 		</div>
+		
+		
+		
+		
         <div id="main" class="row justify-content-center" style="margin-left: 10px; margin-right: 10px;"></div>
 
 
