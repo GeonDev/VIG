@@ -67,7 +67,7 @@
 			+ "<img src='/VIG/images/uploadFiles/" + item.imageFile + "' alt='thumbnail' class='img-fluid rounded-sm' style='width: auto; height: 300px;'>"
 				+"<div class='mask flex-center waves-effect waves-light rgba-black-strong'>"
 					+"<p class='white-text'>"
-					+"<a href='/VIG/searchController/getSearchImages?imageId="+ item.imageId +"'/>"
+					+"<a href='/VIG/search/getSearchImages?imageId="+ item.imageId +"'/>"
 					+ '이것은 이미지'
 					+"</p>"
 				+"</div>"									
@@ -91,7 +91,7 @@
 		
 		$.ajax( 
 				{
-					url : "/VIG/searchController/json/getSearchResultList",
+					url : "/VIG/search/json/getSearchResultList",
 					method : "POST",
 					dataType : "Json",					
 					headers : {
@@ -160,7 +160,7 @@
 					<img src="/VIG/images/uploadFiles/${image.imageFile}"  class="img-fluid rounded-sm" style="width: auto; height: 300px;">
 						<div class="mask flex-center waves-effect waves-light rgba-black-strong">
 							<p class="white-text">
-							<a href="/VIG/searchController/getSearchImages?imageId=${image.imageId}"/>
+							<a href="/VIG/search/getSearchImages?imageId=${image.imageId}"/>
 							유사 이미지 보기
 							</p>
 						</div>							
