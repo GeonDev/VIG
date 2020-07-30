@@ -82,6 +82,13 @@ public class UserDaoImpl implements UserDao {
 		return sqlSession.selectList("UserMapper.getAutoUserName", name);
 	}
 
+
+	@Override
+	public List<User> getAllUserList() throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("UserMapper.getAllUserList");
+	}
+
 		
 	
 //	@Override

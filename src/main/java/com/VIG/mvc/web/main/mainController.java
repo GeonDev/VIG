@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,6 +78,9 @@ public class mainController {
 	@Value("#{commonProperties['uploadPath']}")
 	String uploadPath;
 	
+	@Autowired
+	BCryptPasswordEncoder passwordEncoder;
+	
 
 	
 	public mainController(){
@@ -135,6 +139,20 @@ public class mainController {
 		
 		//비전 정보 + 쓰레드 동작을 위한 비전 배열
 		ArrayList<VisionInfo> visions = new ArrayList<VisionInfo>();
+			
+		
+		List<User>list = userServices.getAllUserList();
+		
+		System.out.println("[SERVER] : 회원정보 해쉬 적용 시작");
+		
+		for(User user: list) {			
+			String pwdBycrypt = passwordEncoder.encode(user.getPassword());
+			user.setPassword(pwdBycrypt);
+			userServices.updateUser(user);	
+		}	
+		
+		System.out.println("[SERVER] : 회원정보 해쉬 적용 완료");		
+		
 		
 		System.out.println("[SERVER] : 이미지 정보 추출 시작");
 		long Totalstart = System.currentTimeMillis();
