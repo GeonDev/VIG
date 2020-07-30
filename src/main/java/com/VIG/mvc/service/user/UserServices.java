@@ -28,6 +28,9 @@ public interface UserServices {
 	// delete 
 	//public void deleteUser(String userCode) throws Exception;
 
+	public List<User> getAllUserList() throws Exception;
+	
+	
 	// user list 
 	public Map<String , Object> getUserList( Search search) throws Exception;
 	

@@ -29,7 +29,8 @@ public interface UserDao {
 	//유저 검색 시 자동생성
 	public List<String> getAutoUserName(String name) throws Exception;
 
-	
+	//유저 전체를 받아옴 - 최초 해쉬 세팅용
+	public List<User> getAllUserList() throws Exception;
 	
 	
 	

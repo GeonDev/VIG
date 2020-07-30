@@ -1,5 +1,6 @@
 package com.VIG.mvc.web.user;
 
+import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 
@@ -180,10 +181,7 @@ public class UserController {
 	@RequestMapping( value="updateUser", method=RequestMethod.POST )
 	public String updateUser(@ModelAttribute("uesr") User user, Model model, HttpSession session )throws Exception{ 
 		System.out.println("/user/updateUser : POST");
-		
-		
-		
-		
+			
 		userServices.updateUser(user);	
 		
 		String sessionId=((User)session.getAttribute("user")).getUserCode();
