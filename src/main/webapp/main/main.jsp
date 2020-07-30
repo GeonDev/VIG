@@ -41,7 +41,7 @@
 		var page = 0; 	
 		
 		//카테고리의 페이지 
-		var categoryPage = 0;		
+		var categoryPage = '${categoryTotal}';		
 
 		//페이지수가 총 몆개인지 확인
 		var categorytotalpage = '${categoryTotal}';
@@ -202,10 +202,7 @@
 				link =  link.concat(feedId);
 				$(location).attr("href", link); 
 			}      	    			
-		}		
-		
-		
-	
+		}			
 		
 		$(function(){			
 			// 최초 진입시 첫번째 페이지 로딩
@@ -218,7 +215,7 @@
    			    }
    			});	
 			
-			hideCategory(0);
+			hideCategory(categoryPage-1);
 			
 			//F1 버튼을 누르면 키워드 추출 설정 
 	         $(document).keydown(function(key) {
@@ -232,8 +229,7 @@
 	            }
 	        });	
 			
-			
-			
+					
 			
 			$(document).on("click",".img_categories",function(){
 				
@@ -242,9 +238,7 @@
 					
 				setCategories($(this).find('p').text());
 				
-			});
-
-		
+			});	
 			
 			
 		});
@@ -320,7 +314,14 @@
 							<div class="col-md-2" id="category_${i}" style="padding-left: 0px; padding-right: 0px;">
 								<div class="view img_categories">			    			
 					    			<img src="/VIG/images/others/${category.categoryImg}" alt="thumbnail" class="img-fluid rounded-pill img_categories" >
-					    		    <div class="mask flex-center rgba-black-strong rounded-pill">	
+					    			
+					    			<c:if test="${category.categoryName == 'RECOMMEND'}">
+					    				<div class="mask flex-center rgba-indigo-strong rounded-pill">	
+					    			</c:if>
+					    			<c:if test="${category.categoryName != 'RECOMMEND'}">
+					    				<div class="mask flex-center rgba-black-strong rounded-pill">	
+					    			</c:if>		    			
+					    		  	
 					    		   		<p class="white-text" style="font-weight:bold ; font-size: large; padding: 0px;">${category.categoryName}</p>					    		    				    		         					      						
 			   						</div>    						
 					    		</div>	
@@ -359,7 +360,7 @@
 			  		 <div class="carousel-item " style="text-align: center;">			  		
 			  		</c:if>
 			  					  		
-				  		<a href="#">
+				  		<a href="/VIG/event/getEvent?eventId=${event.eventId}">
 					      <img class="eBanner rounded mb-0" src="/VIG/images/others/${event.banner}" >
 					    </a>			  	
 			  		

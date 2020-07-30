@@ -336,22 +336,6 @@ INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
 VALUES ('user20', 'night', '2020', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
 
-
-
-INSERT INTO 
-event(event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner) 
-values( event_id, '로고 디자인 의뢰 특별 이벤트', 'LOGO BRAND에서 로고디자인을 공모합니다.' , '2020-07-29', '2020-09-29', 'Event02_thumbnail.jpg', 'LOGO&BRAND, 디자인의뢰, 특별이벤트', 'Event02_1.jpg', 0, 'Event02_banner.jpg');
-
-INSERT INTO 
-event(event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner) 
-values( event_id, '더벤티 디자인 공모전', '더벤티에서 다양한 이야기가 담긴 디자인을 공모합니다.' , '2020-08-05', '2020-09-08', 'Event03_thumbnail.jpg', '더벤티공모전, 2020더벤티디자인, 2020더벤티공모전', 'Event03_1.jpg', 0, 'Event03_banner.jpg');
-
-INSERT INTO 
-event(event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner) 
-values( event_id, '중국대표브랜드 펜 디자인 공모전', '중국 5대볼펜 브랜드 vience에서 드로잉펜 디자인 공모전을 진행합니다.' , '2020-09-28', '2020-10-26', 'Event04_thumbnail.jpg', 'Vience공모전, 2020Vience공모전, 2020드로잉펜공모전', 'Event04_1.jpg', 0, 'Event04_banner.jpg');
-
-
-
 INSERT
 INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
 VALUES(20000, 'After Opportunity', 'After Opportunity centres on the curatorial concept of an exhibition on paper.', 'user01', NOW(), 1, 10003);
