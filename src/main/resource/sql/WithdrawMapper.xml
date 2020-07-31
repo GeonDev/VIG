@@ -67,7 +67,9 @@
 		WHERE withdraw_id=#{withdrawId}
 	</update>
 	
-	<select id="getWithdraw" parameterType="String" resultMap="WithdrawSelectMap">
+	<select id="getDonation" parameterType="search" resultMap="WithdrawSelectMap">
+		
+		SELECT * FROM withdraw
 		
 		
 	
@@ -77,6 +79,19 @@
 			
 			SELECT * FROM 
 		
+	
+	</select>
+	
+	<select id="getTotalCount" parameterType="String" resultType="int">
+		
+		SELECT COUNT(*)
+		FROM(	
+		SELECT *
+		FROM withdraw
+		<if test="userCode!='null'">
+			AND userCode=#{value}
+		</if>
+		ORDER BY withdraw_id) countTable
 	
 	</select>
 	 
