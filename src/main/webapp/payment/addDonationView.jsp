@@ -144,9 +144,7 @@ $(function(){
 		selectPrice = $('input[name="price"]:checked').val();
 		var commission = selectPrice*0.1;
 		var lastPrice = parseInt(selectPrice)+parseInt(commission);
-		if(!$('input[name="price"]:checked').val(){
-			$('input[name="price"]:checked').val(0)
-		}
+
 		$("#select").text(selectPrice);
 		$("input[name='selectPrice']").val(selectPrice);
 		$("#commission").text(commission);
@@ -155,9 +153,11 @@ $(function(){
 		
 		} 
 		else {
+		
+		
 			
 		$("#before").on("keyup", function(){
-			
+
 			var change = parseInt($("#before").val());
 			$("#after").val(change);
 			selectPrice = $("#after").val();
