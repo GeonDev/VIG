@@ -48,6 +48,13 @@ public class WithdrawController {
 		// TODO Auto-generated constructor stub
 	}
 	
+	@RequestMapping(value="getDonationList", method=RequestMethod.GET)
+	public void getDonationList(HttpSession session) throws Exception {
+		
+		
+		
+		
+	}
 
 	
 	
