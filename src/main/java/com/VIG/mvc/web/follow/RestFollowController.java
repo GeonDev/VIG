@@ -38,8 +38,31 @@ public class RestFollowController {
 	public RestFollowController(){
 	}
 	
+	@RequestMapping(value="json/addFollow", method=RequestMethod.GET)
+	public void addFollow(@RequestParam("userCode") String userCode, @RequestParam("followerCode") String followerCode) throws Exception {
+		
+		System.out.println(userCode+":"+followerCode);
+		System.out.println("follow함");
+		Map<String, Object> follow = new HashMap<String, Object>();
+		follow.put("userCode", userCode);
+		follow.put("followerCode", followerCode);
+		
+		followServices.addFollow(follow);
+		
+	}
 	
-	
+	@RequestMapping(value="json/deleteFollow", method=RequestMethod.GET)
+	public void deleteFollow(@RequestParam("userCode") String userCode, @RequestParam("followerCode") String followerCode) throws Exception {
+		
+		System.out.println(userCode+":"+followerCode);
+		System.out.println("unfollow함");
+		Map<String, Object> follow = new HashMap<String, Object>();
+		follow.put("userCode", userCode);
+		follow.put("followerCode", followerCode);
+		
+		followServices.deleteFollow(follow);
+
+	}
 
 	
 	
