@@ -7,7 +7,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class Feed implements Serializable{
+public class Feed implements Serializable , Comparable<Feed>{
 	
 	private int feedId;
 	private String feedTitle;
@@ -49,6 +49,18 @@ public class Feed implements Serializable{
 		user.setPassword("");
 		user.setGoogleId("");
 		return user;
+	}
+	
+	@Override
+	public int compareTo(Feed o) {
+		//내림차순 정렬		
+		if(this.currentKeywordSameCount > o.currentKeywordSameCount) {
+			return -1;
+		}else if(this.currentKeywordSameCount < o.currentKeywordSameCount) {
+			return 1;
+		}		
+		
+		return 0;
 	}
 
 }

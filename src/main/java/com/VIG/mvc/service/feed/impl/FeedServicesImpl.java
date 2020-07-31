@@ -136,5 +136,11 @@ public class FeedServicesImpl implements FeedServices {
 		// TODO Auto-generated method stub
 		return feedDao.getLikedFeedList(search);
 	}
+
+	@Override
+	public List<Feed> getRecommendFeedList(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return feedDao.getRecommendFeedList(search);
+	}
 	
 }
