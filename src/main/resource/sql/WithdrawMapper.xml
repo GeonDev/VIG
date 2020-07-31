@@ -6,8 +6,79 @@
 
 <mapper namespace="WithdrawMapper"> 	
  	
-
-
+	<resultMap id="WithdrawSelectMap" type="withdraw">
+		<result property="withdrawId" 				column="withdraw_id" 				jdbcType="NUMERIC"/>
+		<result property="userCode"			column="user_code" 			jdbcType="VARCHAR" />
+		<result property="holder" 		column="holder" 		jdbcType="VARCHAR" />
+		<result property="withdrawDate" 			column="withdraw_date" 			jdbcType="DATE" />
+		<result property="accNo" 		column="acc_no" 		jdbcType="VARCHAR" />
+		<result property="bankName" 		column="bank_name" 		jdbcType="VARCHAR" />
+		<result property="amount" 			column="amount" 			jdbcType="NUMERIC" />
+								
+		<collection property="possibleAmount" 	column="user_code"  	javaType="int" 	select="setPossiblePrice"/>	
+		<collection property="sponsors" 		column="user_code" 	javaType="list" 	ofType="payment" 		select="setPayments"/>
+			
+	</resultMap>		
+	
+	<select id="setPayments" parameterType="String" resultMap="PaymentMapper.PaymentSelectMap">
+		
+		SELECT * FROM payment
+		WHERE beneficiary = #{value}
+	
+	</select>
+	
+	<select id="setPossiblePrice" parameterType="String" resultType="int">
+		
+		SELECT SUM(select_Price) FROM payment
+		WHERE beneficiary = #{value}
+		AND is_cancel=0
+		AND is_withdraw=0
+		AND product_Type=2
+		GROUP BY beneficiary
+	
+	
+	</select>
+	
+	<insert id="addWithdraw" parameterType="withdraw" >
+	
+		INSERT INTO withdraw (withdraw_id, user_code, holder, withdraw_date, acc_no, bank_name, amount)
+		VALUES (withdrawId, #{userCode:VARCHAR}, #{holder:VARCHAR}, NOW(), #{accNo:VARCHAR}, #{bankName:VARCHAR}, #{amount:NUMERIC})
+	
+	
+	</insert>
+	
+	<update id="updateWithdraw" parameterType="withdraw">
+		
+		UPDATE TABLE withdraw
+		SET 
+			<if test="holder!=null and hoder.equals('')">
+			holder=#{holder:VARCHAR} 
+			</if>
+			<if test="accNo!=null and accNo.equals('')">
+			acc_no=#{accNo:VARCHAR}
+			</if>
+			<if test="bankName!=null and bankName.equals('')">
+			bank_name=#{bankName:VARCHAR}
+			</if>
+			<if test="amount!=null and amount.equals(0)">
+			amount=#{amount:NUMERIC}
+			</if>
+			withdraw_date=NOW()
+		WHERE withdraw_id=#{withdrawId}
+	</update>
+	
+	<select id="getWithdraw" parameterType="String" resultMap="WithdrawSelectMap">
+		
+		
+	
+	</select>
+	
+	<select id="getWithdrawList" parameterType="String" resultMap="WithdrawSelectMap">
+			
+			SELECT * FROM 
+		
+	
+	</select>
 	 
 </mapper>
 

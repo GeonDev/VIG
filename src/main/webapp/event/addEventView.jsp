@@ -42,6 +42,19 @@
 	  background: rgb(240, 240, 240);
 	  border: 1px solid rgb(0, 0, 0);
 	}
+	
+	
+	  .file-upload-wrapper
+    {
+        border:2px dotted #3292A2;
+        width:90%;
+        height:300px;
+        color:#92AAB0;
+        text-align:center;
+        font-size:24px;
+        padding-top:12px;
+        margin-top:10px;
+    }
 
 
 </style>
@@ -54,15 +67,15 @@ $(function(){
 
 	$(file).on('change', function() {
 	  var fileList = file.files;
-		console.log("1");
+
 	  // 읽기
 	  var reader = new FileReader();
 	  reader.readAsDataURL(fileList[0]);
-	  console.log("2");
+
 
 	  		//로드 한 후
 		  reader.onload = function() {
-			  console.log("3");
+
 		    //로컬 이미지를 보여주기
 		    document.querySelector('#preview').src = reader.result;
 		
@@ -72,7 +85,7 @@ $(function(){
 
   	};
 	});	
-});
+}); 
 
 $(function(){
 	
@@ -82,6 +95,7 @@ $(function(){
 		$(".myform").attr("method", "post").attr("action", "./addEvent").attr( "enctype","multipart/form-data").submit();
 			
 	});
+	
 	
 	
 });
@@ -126,6 +140,12 @@ $(function(){
 
 	
 	<hr/>
+	
+	<div class="file-upload-wrapper">
+	   <input type="file" id="input-file-now-custom-2" class="file-upload"
+	  data-height="500" />
+	</div>
+	
 	<img id="preview" src="" width="700" alt="로컬에 있는 이미지가 보여지는 영역">
 		
 		<input type="file" id="getfile" name="uploadFile" accept="image/*">

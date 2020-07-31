@@ -6,7 +6,7 @@
 
 <mapper namespace="PaymentMapper"> 	
  	
-	<resultMap id="paymentSelectMap" type="payment">
+	<resultMap id="PaymentSelectMap" type="payment">
 		<result property="paymentId" column="payment_id" jdbcType="VARCHAR"/>
 		<result property="buyer.userCode" column="buyer" jdbcType="VARCHAR"/>
 		<result property="beneficiary" column="beneficiary" jdbcType="VARCHAR"/>
@@ -31,7 +31,7 @@
 	
 	</insert>
 	
-	<select id="getPayment" parameterType="String" resultMap="paymentSelectMap">
+	<select id="getPayment" parameterType="String" resultMap="PaymentSelectMap">
 		
 		SELECT * FROM payment
 		WHERE payment_id = #{value}
@@ -39,7 +39,7 @@
 	</select>
 	
 	
-	<select id="getPaymentList" parameterType="search" resultMap="paymentSelectMap">
+	<select id="getPaymentList" parameterType="search" resultMap="PaymentSelectMap">
 		
 		SELECT * FROM
 		(SELECT ROW_NUMBER() OVER(ORDER BY payment.payment_date ASC) num, payment.* 
