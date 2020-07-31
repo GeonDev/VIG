@@ -155,15 +155,14 @@ public class RestSearchController {
 		
 		
 		//선택된 카테고리가 사용자 추천인지 체크
-		if(search.getKeyword().equals("RECOMMEND") ) {
+		if(search.getKeyword().equals("RECOMMEND") && jsonData.get("currentPage").equals("1") ) {
 			
 			//로그인 하지 않았다면 조회수가 가장 많은 피드를 추천
 			if(user == null) {
 				feedlist = feedServices.getHightViewFeedList(search);
 				
 			}else {
-			// 로그인 한 유저에게 피드를 추천한다.------------------------------------------------------//	
-				System.out.println("로그인한 추천");
+			// 로그인 한 유저에게 피드를 추천한다.------------------------------------------------------//					
 				
 				Search tempSearch = new Search();
 				tempSearch.setKeyword(user.getUserCode());
@@ -196,13 +195,9 @@ public class RestSearchController {
 					}
 					
 					//피드 리스트를 소팅한다.
-					Collections.sort(feedlist);
-					
-				}
-					
-					 				
-			}		
-			
+					Collections.sort(feedlist);					
+				}					 				
+			}			
 			
 		}else {
 			feedlist = feedServices.getFeedListFromCategory(search);
