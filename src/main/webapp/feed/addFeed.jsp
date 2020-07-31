@@ -30,6 +30,10 @@
  	<!--  drag and drop -->
  	<script src="/VIG/javascript/dropify.js"></script>
  	<link rel="stylesheet" href="/VIG/css/dropify.min.css">
+ 	
+ 	<link rel="stylesheet" href="/VIG/fonts/dropify.woff">
+ 	<link rel="stylesheet" href="/VIG/fonts/dropify.ttf">
+ 	
 	<!-- Bootstrap tooltips -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
 	<!-- Bootstrap core JavaScript -->
@@ -97,6 +101,8 @@ function fileCheck(el) {
 $(function (){
 	$('.dropify').dropify();
 	});
+	
+	
 </script>
 
 
@@ -136,13 +142,15 @@ $(function (){
 			
 		<div id="room_type">
 			<div class="form-group">
-					
-						<input type="file" id="title" name="uploadFile" class="form-control" accept="image/*" onchange='fileCheck(this)'></input>
-			</div>
-						<input type="button" value="삭제" onclick="remove_div(this)">
-		</div>
+					<input type="file" id="demo" class="dropify" name="uploadFile" accept="image/*" onchange='fileCheck(this)'>
+							<input type="button" value="삭제" onclick="remove_div(this)">
 							<div id="field"></div>
-							<input type="file" id="demo" class="dropify">
+						
+			</div>
+						
+		</div>
+							
+							
 							<div class="md-form md-bg">
 							<input name='keyword' value='' placeholder="Please enter your tags" class="form-control">
 							
