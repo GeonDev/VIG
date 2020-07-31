@@ -123,10 +123,8 @@ public class UserController {
 //=======로그아웃===============================================================//
 	@RequestMapping( value="logout", method=RequestMethod.GET)
 	public ModelAndView logout(HttpSession session) throws Exception{
-		
+			
 			System.out.println("logout");
-		
-			session.removeAttribute("login");
 			session.invalidate();
 			
 		ModelAndView model = new ModelAndView();
