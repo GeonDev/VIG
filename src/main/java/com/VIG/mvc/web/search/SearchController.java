@@ -153,8 +153,7 @@ public class SearchController {
 				for(History key : hidelist) {					
 					feedlist.remove(key.getShowFeed());
 				}				
-			}			
-			
+			}		
 			
 			model.addAttribute("feedlist", feedlist);			
 		}		
@@ -194,17 +193,13 @@ public class SearchController {
 			
 			//선택된 이미지의 순서를 랜덤으로 섞어준다. -> 같은 피드의 이미지가 연속으로 나오지 않게 한다.
 			Collections.shuffle(imageList);					
-			model.addAttribute("imageList", imageList);					
+			model.addAttribute("imageList", imageList);			
+		
 		}	
 		
-		model.addAttribute("mode", mode);		
-		
-		if(user !=null) {
-			//외부로 비밀번호와 구글 ID가 노출되지 않도록 한다.
-			user.setGoogleId("");
-			user.setPassword("");
-		}
+		model.addAttribute("mode", mode);	
 		model.addAttribute("user", user);
+		model.addAttribute("keyword", keyword);
 		
 		return new ModelAndView("forward:/search/getSearchResult.jsp");
 	}
