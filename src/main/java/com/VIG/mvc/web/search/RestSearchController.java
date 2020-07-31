@@ -160,9 +160,14 @@ public class RestSearchController {
 			//로그인 하지 않았다면 조회수가 가장 많은 피드를 추천
 			if(user == null) {
 				feedlist = feedServices.getHightViewFeedList(search);
+				
 			}else {
+			// 로그인 한 유저에게 피드를 추천한다.------------------------------------------------------//	
+				System.out.println("로그인한 추천");
+				
 				Search tempSearch = new Search();
 				tempSearch.setKeyword(user.getUserCode());
+				tempSearch.setPageSize(pageSize);
 				tempSearch.setSearchType(0);
 				//첫페이지 양만 가지고 옴
 				tempSearch.setCurrentPage(1);				
@@ -171,13 +176,29 @@ public class RestSearchController {
 				List<History> historyList =	historyServices.getHistoryList(tempSearch);	
 				
 				List<ImageKeyword> keywordList = new ArrayList<ImageKeyword>();
-				
-				
+								
 				//최근 본 피드의 썸네일 키워드 리스트를 가지고 온다.
-				for(History history : historyList) {					
+				for(History history : historyList) {						
 					keywordList.addAll(history.getShowFeed().getKeywords());
-				}
+				}		
+				tempSearch.setKeywords(keywordList);
+				
+				feedlist = feedServices.getRecommendFeedList(tempSearch);				
+				
+				if(feedlist.size() > 0) {					
 					
+					for(Feed feed : feedlist) {					
+						for(ImageKeyword keyword : keywordList) {
+							if(feed.getKeywords().contains(keyword)) {
+								feed.setCurrentKeywordSameCount(feed.getCurrentKeywordSameCount()+1);
+							}
+						}
+					}
+					
+					//피드 리스트를 소팅한다.
+					Collections.sort(feedlist);
+					
+				}
 					
 					 				
 			}		
@@ -366,6 +387,6 @@ public class RestSearchController {
 		}		
 
 		return map;		
-	}		
+	}
 
 }

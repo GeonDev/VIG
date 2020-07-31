@@ -86,7 +86,7 @@
 	<delete id="deleteTempHistory" >
 		DELETE 
 	 	FROM history 
-	 	WHERE NVL(watch_user_code,'') = ''	 	 
+	 	WHERE NVL(watch_user_code,'0') = '0'	 	 
 	</delete>
 	
 	 

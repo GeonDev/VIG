@@ -140,6 +140,12 @@ public class FeedDaoImpl implements FeedDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("FeedMapper.getLikedFeedList",search);
 	}
+
+	@Override
+	public List<Feed> getRecommendFeedList(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("FeedMapper.getRecommendFeedList",search);
+	}
 	
 
 }
