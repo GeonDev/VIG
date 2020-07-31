@@ -26,7 +26,12 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
-
+	
+	<script src="/VIG/javascript/jQuery.tagify.min.js"></script>
+ 	<link rel="stylesheet" href="/VIG/css/tagify.css">
+ 	<!--  drag and drop -->
+ 	<script src="/VIG/javascript/dropify.js"></script>
+ 	<link rel="stylesheet" href="/VIG/css/dropify.min.css">
 
 	
 <style>
@@ -98,7 +103,21 @@ $(function(){
 	
 	
 	
+	
+	
 });
+
+//태그
+$(function (){
+	var input = document.querySelector('input[name=eventTags]');
+	new Tagify(input);
+});
+
+//drag and drop
+$(function (){
+$('.dropify').dropify();
+});
+
 
 
 </script>
@@ -141,15 +160,12 @@ $(function(){
 	
 	<hr/>
 	
-	<div class="file-upload-wrapper">
-	   <input type="file" id="input-file-now-custom-2" class="file-upload"
-	  data-height="500" />
-	</div>
+	<div id="field"></div>
 	
-	<img id="preview" src="" width="700" alt="로컬에 있는 이미지가 보여지는 영역">
+	<input type="file" id="demo" class="dropify">
+
+						
 		
-		<input type="file" id="getfile" name="uploadFile" accept="image/*">
-	
 	<hr/>
 	<br/>
 	
@@ -159,7 +175,7 @@ $(function(){
 				태그  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			</td>
 			<td>
-				<input type="text" size="70" name="eventTags">
+				<input name='eventTags' value='' placeholder="Please enter your tags" class="form-control">
 			</td>
 		</tr>
 		<tr>
