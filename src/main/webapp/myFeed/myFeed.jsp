@@ -29,30 +29,31 @@
 	<script>
 
 //===iframe 각 메뉴 페이지로 navigation
-
 	function nav_myFeedList(url) {
 	$('#my_frame').attr('src', url);	
 	}	
 	function nav_history(url) {
 		$('#my_frame').attr('src', url);
 	}
-	function nav_payment(url) {
+	//====나중에 연결(결제 페이지+통계페이지)
+	//function nav_payment(url) {
+	//	$('#my_frame').attr('src', url);
+	//}
+	//function nav_analysis(url) {
+	//	$('#my_frame').attr('src', url);
+	//}
+	function nav_PaymentList(url) {
 		$('#my_frame').attr('src', url);
 	}
-	function nav_analysis(url) {
-		$('#my_frame').attr('src', url);
-	}
-	function nav_report(url) {
-		$('#my_frame').attr('src', url);
-	}
-	
-	
+		
 //===페이지 로드시 바로 보여줄 화면
 	$(function(){
 		$(document).ready(function() { 
 			iframe.location.href="/VIG/myFeed/myFeedList.jsp";
 		});
 	});
+//==========
+	
 	
 	</script>
 	
@@ -128,11 +129,11 @@
  					 <button type="button" class="btn btn-block" onclick='nav_history("/VIG/user/updateUser.jsp")'>
  						<a href="#">내 정보 수정</a></button>
  					 <br/>
- 					<button type="button" class="btn btn-block" onclick='nav_payment("follow.jsp")'>
+ 					<button type="button" class="btn btn-block" onclick='nav_payment("")'>
  						<a href="#">결 제</a></button>
  					<br/>
  				<!-- 수하님 테이블 업뎃받아야함 -->	
- 					<button type="button" class="btn btn-block" onclick='nav_report("/VIG/payment/getPaymentList")'>
+ 					<button type="button" class="btn btn-block" onclick='nav_PaymentList("/VIG/payment/getPaymentList")'>
  						<a href="#">내 결제 목록</a></button>	
  					<br/>
  		<!-- 비지니스 유저만 통계-->
