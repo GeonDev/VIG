@@ -1,5 +1,6 @@
 package com.VIG.mvc.service.user.Impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,8 +42,14 @@ public class UserServicesImpl implements UserServices {
 	
 	@Override
 	public Map<String , Object > getUserList(Search search) throws Exception{
+		List<User> list= userDao.getUserList(search);
+		int totalCount = userDao.getTotalCount(search);
 		
-		return null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list );
+		map.put("totalCount", new Integer(totalCount));
+		
+		return map;
 	}
 	
 	@Override
@@ -94,6 +101,12 @@ public class UserServicesImpl implements UserServices {
 	public List<User> getAllUserList() throws Exception {
 		// TODO Auto-generated method stub
 		return userDao.getAllUserList();
+	}
+
+	@Override
+	public List<User> getBanUserList() throws Exception {
+		// TODO Auto-generated method stub
+		return userDao.getBanUserList();
 	}
 
 

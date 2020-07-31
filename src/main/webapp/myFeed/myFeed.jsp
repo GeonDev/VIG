@@ -45,11 +45,22 @@
 	function nav_PaymentList(url) {
 		$('#my_frame').attr('src', url);
 	}
+	///////////////////
+	function nav_getUserList(url) {
+		$('#my_frame').attr('src', url);
+	}
+	function nav_getReportlist(url) {
+		$('#my_frame').attr('src', url);
+	}
+	function nav_getAllPaymentList(url) {
+		$('#my_frame').attr('src', url);
+	}
+	
 		
 //===페이지 로드시 바로 보여줄 화면
 	$(function(){
 		$(document).ready(function() { 
-			iframe.location.href="/VIG/myFeed/myFeedList.jsp";
+			iframe.location.href="/VIG/user/getUserList.jsp";
 		});
 	});
 //==========
@@ -119,7 +130,7 @@
  				</div>
  	<!-- 메뉴 네비게이션 -->
  			<c:choose>
-			<c:when test="${empty sessionScope.userCode}">
+			<c:when test="${sessionScope.user.role=='user' || sessionScope.user.role=='business'}">
  					<button type="button" class="btn btn-block" onclick='nav_myFeedList("/VIG/myFeed/myFeedList.jsp")'>
  						마이피드 목록</button>
  					<br/>
@@ -141,8 +152,20 @@
  					<button type="button" class="btn btn-block" onclick='nav_analysis(".jsp")'>
  						<a href="#">통 계</a></button>
  					<br/>	
- 				</c:if>				
+ 				</c:if>	
+ 										
  				</c:when>
+ 				<c:when test="${sessionScope.user.role=='admin'}">
+ 				<button type="button" class="btn btn-block" onclick='nav_getUserList("/VIG/user/getUserList.jsp")'>
+ 						회원 목록</button>
+ 					<br/>
+ 			<button type="button" class="btn btn-block" onclick='nav_getReportlist("/VIG/report/getReportlist.jsp")'>
+ 						신고 조회</button>
+ 					<br/>
+ 			<button type="button" class="btn btn-block" onclick='nav_getAllPaymentList("/VIG/payment/getAllPaymentList.jsp")'>
+ 						결제 조회</button>
+ 					<br/>
+ 				</c:when>	
  				</c:choose>
 				</div>
 		<!-- 왼쪽 네비 페이지 불러올 iframe-->

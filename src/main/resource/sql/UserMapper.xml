@@ -65,6 +65,14 @@
 	 </select>
 	 
 	 
+	 <!-- 1일정지, 또는 7일 정지인 유저만 가지고 온다. -->
+	 <select id="getBanUserList"  resultMap="userSelectMap">
+	 	SELECT *
+	 	FROM users	 
+	 	WHERE state IN (1,2)
+	 </select>
+	 
+	 
 	 
 	 <select id="getUserOne" parameterType = "String" resultMap="userSelectMap">
 	 	SELECT user_code, user_name, password, role, email, reg_date
@@ -101,14 +109,15 @@
 	 </select>
 	 
 	 
-	 <update id="updateUser"	parameterType="user" >
+	 <update id="updateUser" parameterType="user" >
 	   	UPDATE users
 	   		SET 
 	   		self_introduce 	= #{selfIntroduce:VARCHAR} ,	   	
-	   		user_name 	= #{userName} ,
-			password	= #{password},
-			profile_img 	= #{profileImg:VARCHAR} ,
-			account	=	#{account:VARCHAR} 			
+	   		user_name  	= #{userName} ,
+			password  = #{password},
+			profile_img  	= #{profileImg:VARCHAR} ,
+			account	=	 #{account:VARCHAR},
+			state =  #{state:NUMERIC} 			
 	   	WHERE user_code = #{userCode}
 	 </update>
 	 

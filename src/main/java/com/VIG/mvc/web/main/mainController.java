@@ -1,7 +1,9 @@
 package com.VIG.mvc.web.main;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -10,12 +12,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.VIG.mvc.service.category.CategoryServices;
@@ -27,7 +28,7 @@ import com.VIG.mvc.service.domain.ImageColor;
 import com.VIG.mvc.service.domain.ImageKeyword;
 import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.event.EventServices;
-import com.VIG.mvc.service.feed.FeedServices;
+import com.VIG.mvc.service.history.HistoryServices;
 import com.VIG.mvc.service.image.ImageServices;
 import com.VIG.mvc.service.keyword.KeywordServices;
 import com.VIG.mvc.service.user.UserServices;
@@ -48,9 +49,8 @@ public class mainController {
 	
 	@Autowired 
 	@Qualifier("eventServicesImpl")
-	private EventServices eventServices;
+	private EventServices eventServices;	
 	
-
 	@Autowired 
 	@Qualifier("imageServicesImpl")
 	private ImageServices imageServices;
@@ -62,6 +62,12 @@ public class mainController {
 	@Autowired 
 	@Qualifier("colorServicesImpl")
 	private ColorServices colorServices;
+	
+	@Autowired 
+	@Qualifier("historyServicesImpl")
+	private HistoryServices historyServices;
+	
+	
 	
 
 	@Autowired
@@ -169,6 +175,55 @@ public class mainController {
 		return new ModelAndView("forward:/common/alertView.jsp", "message", "세팅 완료");
 	}	
 	
+	
+	//30분에 한번씩 실행 (초, 분, 시, 일, 월, 요일)
+	// 일지정지 당한 유저를 확인하고 정지를 풀어준다.
+	@Scheduled(cron="0 */30 * * * *")
+	public void setScheduled()throws Exception {
+		
+		System.out.println("[SERVER] : START Scheduler");
+								
+		historyServices.deleteTempHistory();
+		System.out.println("[SERVER] : 방문자 히스토리를 삭제했습니다.");
+		
+		List<User> userList = userServices.getBanUserList();
+		
+		//일시정지 당한 유저가 있을 경우
+		if(userList.size() > 0) {
+			SimpleDateFormat format = new SimpleDateFormat ("yyyyMMdd");
+			Date date  = new Date();			
+			int tagetDate = Integer.parseInt(format.format(date));
+			
+			for(User user : userList) {
+				
+				if(user.getState() == 1) {					
+					int banDate = Integer.parseInt(user.getBanDate().toString().replaceAll("-","")) +3;	
+					
+					if(tagetDate > banDate) {
+						user.setState(0);
+						userServices.updateUser(user);
+						System.out.println("[SERVER] : "+ user.getUserName() + " 를 상태를 '정상'으로 변경했습니다.");
+					}
+					
+				}else if(user.getState() == 2) {
+					int banDate = Integer.parseInt(user.getBanDate().toString().replaceAll("-","")) +7;
+					
+					if(tagetDate > banDate) {
+						user.setState(0);
+						userServices.updateUser(user);	
+						System.out.println("[SERVER] : "+ user.getUserName() + " 를 상태를 '정상'으로 변경했습니다.");
+					}
+				}				
+			}
+			
+			
+			
+		}
+		
+		
+		
+		
+	}
 	
 	
 	

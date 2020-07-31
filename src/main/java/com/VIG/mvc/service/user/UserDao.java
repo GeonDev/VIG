@@ -32,13 +32,10 @@ public interface UserDao {
 	//유저 전체를 받아옴 - 최초 해쉬 세팅용
 	public List<User> getAllUserList() throws Exception;
 	
+	//일시 정지 유저를 받아옴
+	public List<User> getBanUserList() throws Exception;
 	
-	
-	//int loginCheck(String userCode) throws Exception;
-	
-		
-	//
-	//public boolean loginCheck(User user) throws Exception;
-
+	// 게시판 Page 처리를 위한 전체Row(totalCount)  return
+		public int getTotalCount(Search search) throws Exception ;
 	
 }

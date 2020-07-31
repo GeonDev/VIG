@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.user.UserServices;
 
@@ -168,7 +169,18 @@ public class UserController {
 		//return "redirect:/user/getUser?userCode="+user.getUserCode();
 	}
 	
-	//=================
+	//=================유저 리스트 가져오기
+	
+	//@RequestMapping( value="listUser" )
+	@RequestMapping( value="getUserList" )
+	public String listUser( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
+		
+		System.out.println("유저리스트 가져오기");
+		
+		
+		
+		return "forward:/user/getUserList.jsp";
+	}
 
 	
 	//=======이메일 보내기============================================================//
