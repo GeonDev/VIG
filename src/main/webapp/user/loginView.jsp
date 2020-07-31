@@ -65,10 +65,9 @@
 							password : pw
 						}),
 						success : function(JSONData , status) {
-
-							if(JSONData.userCode === id && JSONData.password === pw){
-	
-								alert("로그인 ");
+							
+							if(JSONData.userCode === id){	
+								alert($(user.userName)+"님 로그인 완료 ");
 								$(window.parent.document.location).attr("href","/VIG/main/VIG");
 								
 							}else{
