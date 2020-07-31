@@ -1,32 +1,26 @@
 package com.VIG.mvc.web.withdraw;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.omg.CORBA.Request;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.VIG.mvc.service.domain.Feed;
-import com.VIG.mvc.service.domain.Page;
-import com.VIG.mvc.service.domain.Payment;
+
+
 import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.domain.User;
-import com.VIG.mvc.service.feed.FeedServices;
+import com.VIG.mvc.service.domain.Withdraw;
 import com.VIG.mvc.service.payment.PaymentServices;
-import com.VIG.mvc.service.user.UserServices;
+import com.VIG.mvc.service.withdraw.WithdrawServices;
 
 @Controller
-@RequestMapping("/payment/*")
+@RequestMapping("/withdraw/*")
 public class WithdrawController {
 	
 	
@@ -35,8 +29,8 @@ public class WithdrawController {
 	private PaymentServices paymentServices;
 	
 	@Autowired
-	@Qualifier("feedServicesImpl")
-	private FeedServices feedServices;
+	@Qualifier("withdrawServicesImpl")
+	private WithdrawServices withdrawServices;
 
 	@Value("#{commonProperties['pageSize'] ?: 5}")
 	int pageSize;
@@ -49,11 +43,20 @@ public class WithdrawController {
 	}
 	
 	@RequestMapping(value="getDonationList", method=RequestMethod.GET)
-	public void getDonationList(HttpSession session) throws Exception {
+	public Withdraw getDonationList(HttpSession session) throws Exception {
 		
+		User user = (User)session.getAttribute("user");
+		Search search = new Search();
+		search.setKeyword(user.getUserCode());
 		
+		if(search.getCurrentPage() == 0 ){
+			search.setCurrentPage(1);
+		}
 		
+		search.setPageSize(pageSize);
 		
+		Withdraw withdraw = new Withdraw();
+		return withdraw;
 	}
 
 	
