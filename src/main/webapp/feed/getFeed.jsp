@@ -211,12 +211,13 @@ $(function(){
 	//follow 구현
 	$("#follow").on("click", function(){
 		var fm = $("#follow").text();
-		//self.location="../팔로우 add 팔로우";
+		
 		if(fm == "Follow"){
+				
 		
 		$.ajax(
 			
-				{ url: "/VIG/follow/addFollow?userCode=${user.userCode}&followerCode=${feed.writer.userCode}",
+				{ url: "/VIG/follow/json/addFollow?userCode=${user.userCode}&followerCode=${feed.writer.userCode}",
 					method : "GET",	
 					dataType: "json",
 					headers : {
@@ -224,16 +225,17 @@ $(function(){
 						"Accept" : "applicion/json",
 						"Content-Type" : "application/json"
 					},
+
 					success : function(JSONData, status) {
 						
 					alert(status);	
 					
 					}
 					
-				
+			
 				});
 		
-				$("#follow").text("following").attr("class", "btn btn-default btn-rounded");
+			$("#follow").text("following").attr("class", "btn btn-default btn-rounded");	
 			
 			
 		
@@ -243,7 +245,7 @@ $(function(){
 			//alert("Do you really want to unfollow?");
 			$.ajax(
 			
-				{ url: "/VIG/follow/deleteFollow?userCode=${user.userCode}&followerCode=${feed.writer.userCode}",
+				{ url: "/VIG/follow/json/deleteFollow?userCode=${user.userCode}&followerCode=${feed.writer.userCode}",
 					method : "GET",	
 					dataType: "json",
 					headers : {
@@ -251,6 +253,7 @@ $(function(){
 						"Accept" : "applicion/json",
 						"Content-Type" : "application/json"
 					},
+
 					success : function(JSONData, status) {
 						
 					alert(status);	
@@ -397,10 +400,6 @@ $(function(){
 		
 	});
 	
-	//색상클릭시 색상검색으로 넘어감
-
-	
-	//이미지 클릭시 모달로 원본 이미지 띄우기
 	
 });
 
@@ -408,7 +407,7 @@ $(function(){
 //색상검색
 function funcSearchColor(hexcode){
 	var code = hexcode.substring(1,7);
-	self.location="/VIG/search/getSearchList?Mode=Image&keyword=%23"+code;
+	self.location="/VIG/search/getSearchList?Mode=Feed&keyword=%23"+code;
 	
 }
 
@@ -439,6 +438,13 @@ function removeComment(commentId){
 			
 			});
 	alert("댓글이 삭제되었습니다");
+}
+
+function imageModal(imageId){
+	
+
+	$("#"+imageId).modal();
+	
 }
 </script>
 
@@ -486,6 +492,9 @@ function removeComment(commentId){
 		<c:if test="${isLike == true }">
 		<i id="like" class="far fa-heart" style="font-size: 25px"> <fmt:formatNumber value="${fn:length(feed.likes)}" pattern="#,####"/></i>
 		</c:if>
+		<c:if test="${empty isLike }">
+		<i id="like" class="far fa-heart" style="font-size: 25px"> <fmt:formatNumber value="${fn:length(feed.likes)}" pattern="#,####"/></i>
+		</c:if>
 		
 		</div>
 		<br>
@@ -503,8 +512,22 @@ function removeComment(commentId){
 		<c:set var="i" value="0"/>
 		<c:set var="i" value="${i+1 }"/>
 		<c:if test="${images.isThumbnail == '0'}">
-			<div id="image">
-			<img src="/VIG/images/uploadFiles/${images.imageFile}" style="width:960px" />
+			<div id="image" onclick='imageModal("${images.imageId}")'>
+			<img src="/VIG/images/uploadFiles/${images.imageFile}" style="width:960px"/>
+			
+									
+				<div class="modal fade bd-example-modal-xl" id="${images.imageId }" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
+				  aria-hidden="true">
+				  <div class="modal-dialog modal-xl">
+				    <div class="modal-content" style="align:center">
+				    <div style="text-align:center;">
+				      <img src="/VIG/images/uploadFiles/${images.imageFile}" style="height:100vh; align:center"/>
+				      
+				    </div>
+				    </div>
+				  </div>
+				</div>
+				
 			</div>
 		</c:if>
 	</c:forEach>
@@ -529,7 +552,7 @@ function removeComment(commentId){
 		    	<button type="button" id="follow" class="btn btn-outline-default btn-rounded" >Follow</button>
 		    	</c:if>
 		    	<c:if test="${ isFollow == 1}">
-		    	<button type="button" id="follow" class="btn btn-default btn-rounded" >follow</button>
+		    	<button type="button" id="follow" class="btn btn-default btn-rounded" >following</button>
 		    	</c:if>
 		    </div>
 		    
@@ -668,7 +691,7 @@ function removeComment(commentId){
 				<div id="tag" style=" border: 1px solid #C2C3C2; margin: 3px 1px 3px 1px; padding: 1px 3px 1px 3px; display: inline-block; border-radius: 5px;">
 			    <a style="color: black; font-size: 13px;" href="/VIG/searchController/getSearchImages?keyword=${images.keyword}">${keyword.keywordOrigin != null ? keyword.keywordOrigin : keyword.keywordEn }</a>
 				</div>
-				
+
 				</c:forEach>
 				</div>
 				</div>
