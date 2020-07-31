@@ -7,7 +7,6 @@
 <title>VIG</title>
 
 <script type="text/javascript">
-
 $(function() {
 //===로그인
 	$( "#login_btn:contains('Log in')" ).on("click" , function() {
@@ -74,7 +73,8 @@ $(function() {
 			  <a href="#" id="login_btn" >Log in</a>
 			</c:if> 
 <!-- //로그인 후 드롭다운 -->
-			<c:if test="${ !empty sessionScope.user }"> 
+		<!-- 유저 로그인시 -->
+			<c:if test="${ sessionScope.user.role == 'user' || sessionScope.user.role == 'business'}"> 
 				<li class="dropdown">
 		             <a href="#" class="dropdown-toggle" id="login_dropdown" data-toggle="dropdown"
 						 role="button" aria-haspopup="true" aria-expanded="false">
@@ -85,7 +85,21 @@ $(function() {
 					<h6 class="dropdown-header">${user.userCode }</h6>
 						 <div class="dropdown-divider"></div>
 						    <a class="dropdown-item" href="/VIG/myFeed/myFeed.jsp">My Feed</a>
-						    <a class="dropdown-item" href="/VIG/feed/addFeed.jsp">Upload</a>
+						    <a class="dropdown-item" href="#">Upload</a>
+				 </div>
+		       </c:if>
+		   <!-- 관리자 로그인시 -->
+		       <c:if test="${ sessionScope.user.role == 'admin'}"> 
+				<li class="dropdown">
+		             <a href="#" class="dropdown-toggle" id="login_dropdown" data-toggle="dropdown"
+						 role="button" aria-haspopup="true" aria-expanded="false">
+						<i class="fas fa-user"></i>
+						   <span class="caret"></span>
+					</a>
+		         <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="login_dropdown">
+					<h6 class="dropdown-header">${user.userCode }</h6>
+						 <div class="dropdown-divider"></div>
+						    <a class="dropdown-item" href="/VIG/myFeed/myFeed.jsp">관리자페이지</a>						   
 				 </div>
 		       </c:if>
 		    <!-- 로그아웃 버튼 -->          
