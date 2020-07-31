@@ -59,8 +59,12 @@
 		
 //===페이지 로드시 바로 보여줄 화면
 	$(function(){
-		$(document).ready(function() { 
-			iframe.location.href="/VIG/user/getUserList.jsp";
+		$(document).ready(function() { 		
+			if(${sessionScope.user.role =='admin'}){
+				iframe.location.href="/VIG/user/getUserList.jsp";
+			}else{
+				iframe.location.href="/VIG/myFeed/myFeedList.jsp";
+			}
 		});
 	});
 //==========
@@ -114,6 +118,7 @@
  				<img class="card-img-top" src="/VIG/images/uploadFiles/profile_img.jpg" id="pImg" alt="profile_img">
  	<!-- 프로필 내용 -->
  				<div class="card-body">
+ 				${sessionScope.user.role}
  					<h4 class="user_name" align="center"> ${user.userName} </h4>
  					<hr>
  					<p class="user_bio" align="center"> ${user.selfIntroduce} </p>
@@ -126,6 +131,8 @@
  					</div>
  					<br/>
  					<p class="sign_date" align="center"> Member Since :: ${user.regDate}</p>
+ 					
+ 				
  					<hr/><br/>
  				</div>
  	<!-- 메뉴 네비게이션 -->
