@@ -265,11 +265,11 @@
 				<div class="row">
 				
 					<div class="col-md-1" style="margin-top: 20px; text-align: center;">
-						<button class="btn btn-light" onclick="CategoriesMinus()" type="button" > <i class="fas fa-angle-left"></i></button>	        					      				
+						<button class="btn btn-link" onclick="CategoriesMinus()" type="button" > <i class="fas fa-angle-left"></i></button>	        					      				
 					</div>				
 				
 					<div class="col-md-10" >
-						<div id="categoryList" class="row" style="max-height:100px; flex-wrap: nowrap; overflow: auto;">
+						<div id="categoryList" class="row" style="max-height:120px; flex-wrap: nowrap; overflow: auto;">
 						<c:set var="i" value="0" />						
 						<c:forEach var="category" items="${categoryList}">				
 							<div class="col-md-2" id="category_${i}">
@@ -293,7 +293,7 @@
 					</div>
 					
 					<div class="col-md-1" style="margin-top: 20px; text-align: center;">
-						<button class="btn btn-light" type="button" onclick="CategoriesPlue()" > <i class="fas fa-angle-right"></i></button>		  					      				
+						<button class="btn btn-link" type="button" onclick="CategoriesPlue()" > <i class="fas fa-angle-right"></i></button>		  					      				
 					</div>				
 				</div>		
 		

@@ -100,13 +100,7 @@ public class HistoryController {
 		modelAndView.addObject("commentlist", commentServices.getCommentFromUser(search));
 		modelAndView.addObject("likeFeedlist", feedServices.getLikedFeedList(search));
 		
-		modelAndView.addObject("resultPage", resultPage);
-	
-		
-		
-		
-		
-		
+		modelAndView.addObject("resultPage", resultPage);		
 				
 		return modelAndView;
 	}

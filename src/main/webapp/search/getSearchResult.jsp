@@ -76,7 +76,7 @@
 	<script type="text/javascript">
 	
 	//최초 입장시 모드 지정
-	var Mode = 'Feed';	
+	var Mode = '${mode}';	
 
 	//최초 페이지는 1으로 설정
 	var page = 1; 	
@@ -303,15 +303,23 @@
 			$(location).attr("href", link); 
 		}      	    			
 	}	
+
 	
 	
 	$(function(){			
+		
+			console.log('${mode}');
+			
+			//최초 전달 받은 모드 세팅
+			$(".mode:contains('${mode}')").attr("class","btn btn-sm btn-indigo mode");	
 			
 			//색상 선택기 로드
 			 $('#picker').farbtastic('#color');
 		
 			//모드 버튼을 누르는 경우 페이지 초기화
-			$(".mode").on("click",function(){				
+			$(".mode").on("click",function(){			
+				
+				//모드 변경 버튼 활성화
 				Mode = $(this).text();
 				$( 'div' ).remove('.view');			
 				page = 0;
@@ -320,8 +328,8 @@
 				$("#Keyword").val("");
 				
 				$(".mode").attr("class","btn btn-sm btn-cyan mode");
-				$(this).attr("class","btn btn-sm btn-indigo mode");			
-			
+				$(this).attr("class","btn btn-sm btn-indigo mode");	
+	
 				//모드를 변경했음으로 페이지 다시 로드
 				getItemList();
 	
@@ -368,8 +376,8 @@
 		
 	<div class="container-lg-fluid">
 	
-		<div class="row">
-			<div class="col-md-10 pl-5">
+		<div class="row justify-content-center">
+			<div class="col-sm-10 pl-5">
 				<div class="input-group md-form form-sm form-1 my-0 ">
 				  <div class="input-group-prepend">
 				    <span class="input-group-text cyan lighten-2" >
@@ -380,8 +388,8 @@
 				</div>					
 			</div>
 			
-			<div class="col-md-2 pl-5">
-				<button type="button" class="btn btn-sm btn-indigo mode" style=" margin-right:0px; padding-left: 15px; padding-right: 15px;">Feed</button>
+			<div class="col-sm-2 ">
+				<button type="button" class="btn btn-sm btn-cyan mode" style=" margin-right:0px; padding-left: 15px; padding-right: 15px;">Feed</button>
 				<button type="button" class="btn btn-sm btn-cyan mode" style="margin-left: 0px; margin-right: 0px; padding-left: 10px; padding-right: 10px;">Image</button>
 				<button type="button" class="btn btn-sm btn-cyan mode" style="margin-left: 0px; padding-left: 8px; padding-right: 8px;">Writer</button>										
 			</div>							
@@ -413,8 +421,8 @@
 		<!-- 피드, 이미지가 출력되는 부분  -->
 		<div class="row justify-content-center" style="margin-left: 10px; margin-right: 10px;">	
 		
-		<c:choose>
-			<c:when test="${mode =='Feed'}">
+	
+			<c:if test="${mode eq 'Feed'}">
 				<c:forEach var="feed" items="${feedlist}">				
 					<div class = "view overlay">
 						<div class = "img_feed">
@@ -451,9 +459,9 @@
 					</div>
 				</c:forEach>				
 				
-			</c:when>
+			</c:if>
 			
-			<c:when test="${mode =='Image'}">
+			<c:if test="${mode eq 'Image'}">
 				<c:forEach var="image" items="${imagelist}">
 					<div class = "view overlay">
 						<div class = "img_image">
@@ -464,8 +472,8 @@
 						</div>												
 					</div>		
 				</c:forEach>			
-			</c:when>
-		</c:choose>	
+			</c:if>
+
 		
 		</div>
 		

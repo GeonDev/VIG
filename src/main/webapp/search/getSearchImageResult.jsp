@@ -46,11 +46,8 @@
 
     </style>
 	
-	<script type="text/javascript">
-	
-	//최초 입장시 모드 지정
-	var Mode = 'Feed';
-	
+	<script type="text/javascript">	
+
 	//최초 페이지는 0으로 설정
 	var page = 0; 	
 	
