@@ -61,4 +61,10 @@ public class HistoryDaoImpl implements HistoryDao {
 		return sqlSession.selectOne("HistoryMapper.getViewHistory", history);
 	}
 
+
+	@Override
+	public void deleteTempHistory() throws Exception {
+		sqlSession.delete("HistoryMapper.deleteTempHistory");		
+	}
+
 }

@@ -39,6 +39,8 @@ public interface FeedDao {
 	
 	public List<Feed> getLikedFeedList(Search search) throws Exception;	
 	
+	public List<Feed> getRecommendFeedList(Search search) throws Exception;	
+	
 	public void updatePrimeFeedViewCount(Feed feed) throws Exception;
 	
 	

@@ -58,4 +58,10 @@ public class HistoryServicesImpl implements HistoryServices {
 		return historyDao.getViewHistory(history);
 	}
 
+	@Override
+	public void deleteTempHistory() throws Exception {
+		historyDao.deleteTempHistory();
+		
+	}
+
 }

@@ -46,7 +46,7 @@ public interface UserServices {
 	//유저 검색 시 자동생성
 	public List<String> getAutoUserName(String name) throws Exception;
 
-
+	public List<User> getBanUserList() throws Exception;
 	
 	
 	//
