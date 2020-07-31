@@ -78,9 +78,17 @@
 			</if>
 		</if>
 		AND show_date  = CURRENT_DATE()
-		) countTable
-	
+		) countTable	
 	</select>
+	
+	
+	<!-- 방문자 기록을 담아둔 히스토리 기록을 삭제한다. 방문자는 유저코드가 없다. -->
+	<delete id="deleteTempHistory" >
+		DELETE 
+	 	FROM history 
+	 	WHERE NVL(watch_user_code,'0') == '0'	 	 
+	</delete>
+	
 	 
 </mapper>
 

@@ -96,6 +96,12 @@ public class UserServicesImpl implements UserServices {
 		return userDao.getAllUserList();
 	}
 
+	@Override
+	public List<User> getBanUserList() throws Exception {
+		// TODO Auto-generated method stub
+		return userDao.getBanUserList();
+	}
+
 
 	
 	//

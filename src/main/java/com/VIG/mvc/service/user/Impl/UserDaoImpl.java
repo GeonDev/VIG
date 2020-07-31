@@ -89,6 +89,13 @@ public class UserDaoImpl implements UserDao {
 		return sqlSession.selectList("UserMapper.getAllUserList");
 	}
 
+
+	@Override
+	public List<User> getBanUserList() throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("UserMapper.getBanUserList");
+	}
+
 		
 	
 //	@Override
