@@ -18,5 +18,7 @@ public interface HistoryServices {
 	public void deleteHistory(int historyId) throws Exception;
 	
 	public int getViewHistory(History history) throws Exception;
+	
+	public void deleteTempHistory() throws Exception;
 
 }

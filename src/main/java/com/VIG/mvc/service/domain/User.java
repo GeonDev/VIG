@@ -18,6 +18,7 @@ public class User implements Serializable{
 	private String selfIntroduce;
 	private String sex;
 	private String birth;
+	// 0 = 없음, 1= 3일 접속금지, 2= 7일 금지, 3 = 영구정지 , 4 =탈퇴 회원 
 	private int state;
 	private String googleId;
 	private String account;
