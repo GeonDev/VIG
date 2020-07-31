@@ -298,8 +298,8 @@ $(function(){
 							alert("등록되었습니다.");
 							
 					    var displayValue = 
-						"<div id="+JSONData.commentId+"><p><img src='/VIG/images/others/default-profile-picture1.jpg' class='rounded-circle' width='15px'><a href='/VIG/myfeed/getMyFeedList?userCode='"
-								+JSONData.user.userCode+">"+JSONData.user.userName+"</a>"+JSONData.commentText+"<button id= 'deleteCom' class='fas fa-trash' onclick="+"removeComment("+JSONData.commentId+")></button></p><hr></div>";
+						"<div id="+JSONData.commentId+"><img width='25px' style='margin-right:5px' src='/VIG/images/uploadFiles/"+JSONData.user.profileImg+"' class='rounded-circle'><a style='margin-right:9px' href='/VIG/myfeed/getMyFeedList?userCode='"
+								+JSONData.user.userCode+">"+JSONData.user.userName+"</a>"+JSONData.commentText+"<button id= 'deleteCom' class='fas fa-trash' onclick="+"removeComment("+JSONData.commentId+")></button><hr></div>";
 							
 					    
 					    $('#textarea-char-counter').val("");
@@ -521,7 +521,10 @@ function imageModal(imageId){
 				  <div class="modal-dialog modal-xl">
 				    <div class="modal-content" style="align:center">
 				    <div style="text-align:center;">
-				      <img src="/VIG/images/uploadFiles/${images.imageFile}" style="height:100vh; align:center"/>
+				    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+				      <img src="/VIG/images/uploadFiles/${images.imageFile}" style="width: 1200px; align:center"/>
 				      
 				    </div>
 				    </div>
@@ -580,36 +583,29 @@ function imageModal(imageId){
 		</div>
 		</div>
 
-		<div id="commentbox" class="feedbottom" class="text-monospace">
-		<c:choose>
+		<div id="commentbox" class="text-monospace">
 		
-		<c:when test="${!empty feed.comments }">
+		
+		<c:if test="${!empty feed.comments }">
 			<c:forEach var="comments" items="${feed.comments}">
 			<c:set var="i" value="0"/>
 			<c:set var="i" value="${i+1 }"/>
-			<div id="${comments.commentId}" class="asdd">
-			<p>
-			<img src="/VIG/images/others/default-profile-picture1.jpg" class="rounded-circle" width="15px"><a href="/마이피드/${comments.user.userCode}">${ comments.user.userName}</a>
+			<div id="${comments.commentId}">
+
+			<img width="25px"src="/VIG/images/uploadFiles/${comments.user.profileImg }" style="margin-right:5px" class="rounded-circle"><a href="/VIG/myfeed/getMyFeedList?userCode=${comments.user.userCode}">${ comments.user.userName}</a>
 			 ${comments.commentText}  
 			 <c:if test="${user.userCode == comments.user.userCode}">
 			 <button id= "deleteCom" class="fas fa-trash" onclick="removeComment('${comments.commentId}')"></button>
 			 </c:if>
-			 </p>
+
 			 <hr>
 			 </div>
 			 
 			</c:forEach>
 			
-		</c:when>
-		<c:when test="${empty feed.comments}">
-			<br>
-			<br>
-			<h6 id="emptyCom" align="center"> Please leave your comments! </h6>
-			<br>
-			<br>
-		</c:when>
+		</c:if>
+
 		
-		</c:choose>
 		</div>
 		
 		<div align="left">
