@@ -45,6 +45,17 @@ public class MyFeedController {
 		return mav; 
 	}
 	
+	@RequestMapping(value="myFeed")
+	public ModelAndView getMyFeed(@RequestParam("userCode") String userCode) throws Exception {
+		
+		System.out.println("myFeed");
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("forward:/myFeed/myFeed.jsp");
+		
+		return mav; 
+	}
+	
 	
 	
 	

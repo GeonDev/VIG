@@ -32,29 +32,24 @@
 			$( "button.btn.btn-primary" ).on("click" , function() {
 				fncUpdateUser();
 			});
-		});	
-		
-		
+		});		
 		//============= 탈퇴
 		$(function() {
 			$("btn.btn-outline-warning.waves-effect").on("click" , function() {
 				fncDelete;
 			});
 		});	
-		
-		//===========
+				//===========
 			
 			$(function(){
 				$("upgrade_btn").on("click",function(){
 					//버튼 누르면 결제창 open?
 				});
 			});
-		//======
-			
+		//======			
 			$("#deleteCheck").on('hidden.bs.modal', function(){
 			    alert("계정이 삭제되었습니다.");
-			});
-		
+			});		
 		//========
 
 			
@@ -64,17 +59,12 @@
 		}	
 			
 		function fncUpdateUser() {
-			var name=$("input[name='userName']").val();
 			
-			if(name == null || name.length <1){
-				alert("이름은  반드시 입력하셔야 합니다.");
-				return;
-			}
-			$("form").attr("method" , "POST").attr("action" , "/VIG/user/updateUser").submit();
+		$("form").attr("enctype", "multipart/form-data").attr("method" , "POST").attr("action", "updateUser").submit();
 		}
 		
 		//=========
-		$(function(){
+	/*	$(function(){
 			var file = document.querySelector('#getfile');
 
 			$(file).on('change', function() {
@@ -98,7 +88,7 @@
 		  	};
 			});	
 		});
-		
+		*/
 		
 		</script>
 		
@@ -118,33 +108,20 @@
 		   padding: auto;
 		}
 		.uuu, .row_n{
-		    margin:0;
-		    padding:0;
-		    margin-left:auto;
-			margin-right:auto;
-			position:relative;
+		    margin:0; padding:0; margin-left:auto; margin-right:auto; position:relative;
 	      }
 		   #imgUpdate{
-		    position: absolute;
-		    top:0;
-		    left:0;
-		    }
+		    position: absolute; top:0; left:0;
+		   }
 		    
 		    #update{
-		    position: absolute;
-		    top:0;
-		    left:0;
+		    position: absolute; top:0; left:0;
 		    }
 		  hr {
-			  height: 2px;
-			  background-color: gray;
+			  height: 2px; background-color: gray;
 			}
 			.infoList{					
-			margin: 70px auto;
-			width: auto; 
-			height: auto;
-			max-width: 300px;
-			max-height: 200px;
+			margin: 70px auto; width: auto;  height: auto; max-width: 300px; max-height: 200px;
 			}
 			#userInfo.1{
 			padding: auto;
@@ -154,15 +131,10 @@
 			}
 
 			.btn.btn-elegant{
-			display:block;
-			margin-left:auto;
-			margin-right:auto;
+			display:block; margin-left:auto; margin-right:auto;
 			}
 			 #sns_nav{
-		   display:flex;
-		   margin: 70px auto;
-			flex-direction: row;
-			justify-content: center;
+		   display:flex; margin: 70px auto; flex-direction: row; justify-content: center;
 		   }
 		</style>
 				
@@ -206,9 +178,10 @@
  			<div class="infoList">
  			<p class="sign_date" align="center"> Member Since :: ${user.regDate}</p>
  					<hr/><br/>
+ 					
 		<div class="form-group">
 		    <label for="userCode" class="col-sm-offset-5 col-md-5 control-label">아 이 디</label>
-		      <input type="text" class="form-control" id="userCode" name="userCode" value="${user.userCode }" readonly>
+		      <input type="text" class="form-control" id="userCode" name="userCode" value="${user.userCode }">
 		  </div>
 		  
 		  <div class="form-group">
@@ -216,37 +189,24 @@
 		      <input type="text" class="form-control" id="userName" name="userName" value="${user.userName }" >
 		  </div>
 		  
-		  <div class="form-group">
-		    <label for="password" class="col-sm-offset-5 col-md-5 control-label">비밀번호</label>
-		      <input type="text" class="form-control" id="password" name="password" value="${user.password }" >
-		  </div>
 		  
 		  <div class="form-group">
 		    <label for="selfIntroduce" class="col-sm-offset-5 col-md-5 control-label">자기소개</label>
-		      <input type="text" class="form-control" id="selfIntroduce" name="selfIntroduce" value="${user.selfIntroduce }" >
-		  </div>
-		  
+		    <textarea cols="40" rows="5" id="selfIntroduce" name="selfIntroduce" placeholder="Hello. my name is ${user.userName }">${user.selfIntroduce }</textarea>
+	
 		  <div class="form-group">
 		    <label for="account" class="col-sm-offset-5 col-md-5 control-label">계좌번호</label>
 		      <input type="text" class="form-control" id="account" name="account" value="${user.account }" >
 		  </div>
+	
 	<!-- 비지니스 계정으로 전환 버튼 넣기-->	
 		<c:if test="${sessionScope.user.role=='user'}">  
 		  <div class="form-group">
 		    <label for="account" class="col-sm-offset-5 col-md-5 control-label">비지니스</label>
-		    <button type="button" class="upgrade_btn"  >비지니스전환</button>
+		    <button type="button" class="upgrade_btn" >비지니스전환</button>
 		  </div>
 		  </c:if>
-	<!-- sns 계정 링크 -->
-	
-			<div class="row" id="sns_nav">
- 					<i class="fab fa-facebook-f fa-lg blue-text ml-3 mr-3 fa-1x"></i>
- 					<i class="fab fa-twitter fa-lg blue-text ml-3 mr-3  fa-1x"></i>
- 					<i class="fab fa-instagram fa-lg blue-text ml-3 mr-3 fa-1x"></i>
- 					</div>  
-		  
-		  
-			
+
 			<div class="form-group">		 
 		      <button type="button" class="button btn btn-primary"  >수 &nbsp;정</button>
 			  <a class="btn btn-primary btn" href="#" role="button" data-toggle="modal" data-target="#deleteCheck">탈 &nbsp;퇴</a>
