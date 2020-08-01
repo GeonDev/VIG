@@ -9,6 +9,8 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,6 +41,9 @@ import com.VIG.mvc.util.VisionInfo;
 @RequestMapping("/main/*")
 public class mainController {
 	
+	public static final Logger logger = LogManager.getLogger(mainController.class); 
+	
+	
 	@Autowired 
 	@Qualifier("userServicesImpl")
 	private UserServices userServices;
@@ -67,13 +72,8 @@ public class mainController {
 	@Qualifier("historyServicesImpl")
 	private HistoryServices historyServices;
 	
-	
-	
-
 	@Autowired
-	private ServletContext context;	
-	
-	
+	private ServletContext context;		
 	
 	@Value("#{commonProperties['pageUnit'] ?: 10}")
 	int pageUnit;
@@ -133,18 +133,18 @@ public class mainController {
 		
 		List<User>list = userServices.getAllUserList();
 		
-		System.out.println("[SERVER] : 회원정보 해쉬 적용 시작");
+		logger.debug("회원정보 해쉬 적용 시작");
+		
 		
 		for(User user: list) {			
 			String pwdBycrypt = passwordEncoder.encode(user.getPassword());
 			user.setPassword(pwdBycrypt);
 			userServices.updateUser(user);	
 		}	
+					
+		logger.debug("회원정보 해쉬 적용 완료");
 		
-		System.out.println("[SERVER] : 회원정보 해쉬 적용 완료");		
-		
-		
-		System.out.println("[SERVER] : 이미지 정보 추출 시작");
+		logger.debug("이미지 정보 추출 시작");		
 		long Totalstart = System.currentTimeMillis();
 				
 		for(Image image :imagelist) {					
@@ -169,9 +169,8 @@ public class mainController {
 			}			
 		}
 		
-		long Totalend = System.currentTimeMillis();
-		System.out.println("[SERVER] : 이미지 정보 추출 완료 / 총 추출 시간 : "+(Totalend - Totalstart)/1000.0);
-					
+		long Totalend = System.currentTimeMillis();		
+		logger.debug("이미지 정보 추출 완료 / 총 추출 시간 : " + getTotalWorkTime(Totalstart, Totalend));				
 		return new ModelAndView("forward:/common/alertView.jsp", "message", "세팅 완료");
 	}	
 	
@@ -180,12 +179,12 @@ public class mainController {
 	// 일지정지 당한 유저를 확인하고 정지를 풀어준다.
 	@Scheduled(cron="0 */30 * * * *")
 	public void setScheduled()throws Exception {
+	
+		logger.debug("START Scheduler");
 		
-		System.out.println("[SERVER] : START Scheduler");
-								
 		historyServices.deleteTempHistory();
-		System.out.println("[SERVER] : 방문자 히스토리를 삭제했습니다.");
-		
+	
+		logger.debug("방문자 히스토리를 삭제했습니다.");
 		List<User> userList = userServices.getBanUserList();
 		
 		//일시정지 당한 유저가 있을 경우
@@ -202,7 +201,8 @@ public class mainController {
 					if(tagetDate > banDate) {
 						user.setState(0);
 						userServices.updateUser(user);
-						System.out.println("[SERVER] : "+ user.getUserName() + " 를 상태를 '정상'으로 변경했습니다.");
+						
+						logger.debug(user.getUserName() + "를 상태를 '정상'으로 변경했습니다.");
 					}
 					
 				}else if(user.getState() == 2) {
@@ -210,22 +210,17 @@ public class mainController {
 					
 					if(tagetDate > banDate) {
 						user.setState(0);
-						userServices.updateUser(user);	
-						System.out.println("[SERVER] : "+ user.getUserName() + " 를 상태를 '정상'으로 변경했습니다.");
+						userServices.updateUser(user);											
+				
+						logger.debug(user.getUserName() + "를 상태를 '정상'으로 변경했습니다.");
 					}
 				}				
-			}
-			
-			
-			
-		}
-		
-		
-		
-		
+			}			
+		}		
 	}
 	
-	
-	
+	private int getTotalWorkTime(long start, long end) {		
+		return (int) ((end - start)/1000);
+	}	
 
 }
