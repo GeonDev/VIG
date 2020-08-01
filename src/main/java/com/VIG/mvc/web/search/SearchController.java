@@ -9,6 +9,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,11 +35,14 @@ import com.VIG.mvc.service.keyword.KeywordServices;
 import com.VIG.mvc.service.user.UserServices;
 import com.VIG.mvc.util.CommonUtil;
 import com.VIG.mvc.util.Translater;
+import com.VIG.mvc.web.main.mainController;
 
 
 @Controller
 @RequestMapping("/search/*")
 public class SearchController {	
+	
+	public static final Logger logger = LogManager.getLogger(SearchController.class); 
 	
 
 	@Autowired 
@@ -90,10 +95,9 @@ public class SearchController {
 		search.setPageSize(pageSize);
 		
 		//로그인한 유저 정보를 받아옴
-		User user = (User)session.getAttribute("user");
+		User user = (User)session.getAttribute("user");	
 		
-		System.out.println("전달된 모드 : "+ mode);
-		System.out.println("전달된 키워드 : "+ keyword);
+		logger.debug("전달된 모드 : "+ mode+ "/ 전달된 키워드 : "+ keyword);
 		
 		//피드 검색
 		if(mode.equals("Feed")) {
@@ -114,7 +118,9 @@ public class SearchController {
 					//첫글자가 #이라면 RGB로 바꾸어 본다.
 					search.setKeyword(keyword);
 					search = CommonUtil.getHaxtoRGB(search, colorRange);
-					System.out.println("색상변환 : "+search.getColor().getRed() +", "+search.getColor().getGreen()+", "+search.getColor().getBlue()) ;
+					
+					logger.debug("색상변환 : "+search.getColor().getRed() +", "+search.getColor().getGreen()+", "+search.getColor().getBlue());
+					
 					if(search !=null) {
 						//색상 기반으로 검색
 						feedlist = feedServices.getFeedListFromColor(search);
@@ -202,9 +208,7 @@ public class SearchController {
 		model.addAttribute("keyword", keyword);
 		
 		return new ModelAndView("forward:/search/getSearchResult.jsp");
-	}
-	
-	
+	}	
 
 	//이미지 자세히 보기 최소 세팅 시에만 처리 -> 이후부터는 REST로 페이지 갱신
 	@RequestMapping(value = "getSearchImages")
