@@ -9,6 +9,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,6 +33,7 @@ import com.VIG.mvc.service.keyword.KeywordServices;
 import com.VIG.mvc.service.user.UserServices;
 import com.VIG.mvc.util.CommonUtil;
 import com.VIG.mvc.util.Translater;
+import com.VIG.mvc.web.main.mainController;
 
 
 
@@ -38,6 +41,9 @@ import com.VIG.mvc.util.Translater;
 @RequestMapping("/search/*")
 public class RestSearchController {	
 
+	public static final Logger logger = LogManager.getLogger(RestSearchController.class); 
+	
+	
 	@Autowired 
 	@Qualifier("userServicesImpl")
 	private UserServices userServices;	
@@ -155,15 +161,14 @@ public class RestSearchController {
 		
 		
 		//선택된 카테고리가 사용자 추천인지 체크
-		if(search.getKeyword().equals("RECOMMEND") ) {
+		if(search.getKeyword().equals("RECOMMEND") && jsonData.get("currentPage").equals("1") ) {
 			
 			//로그인 하지 않았다면 조회수가 가장 많은 피드를 추천
 			if(user == null) {
 				feedlist = feedServices.getHightViewFeedList(search);
 				
 			}else {
-			// 로그인 한 유저에게 피드를 추천한다.------------------------------------------------------//	
-				System.out.println("로그인한 추천");
+			// 로그인 한 유저에게 피드를 추천한다.------------------------------------------------------//					
 				
 				Search tempSearch = new Search();
 				tempSearch.setKeyword(user.getUserCode());
@@ -196,13 +201,9 @@ public class RestSearchController {
 					}
 					
 					//피드 리스트를 소팅한다.
-					Collections.sort(feedlist);
-					
-				}
-					
-					 				
-			}		
-			
+					Collections.sort(feedlist);					
+				}					 				
+			}			
 			
 		}else {
 			feedlist = feedServices.getFeedListFromCategory(search);
@@ -247,7 +248,8 @@ public class RestSearchController {
 		//로그인한 유저 정보를 받아옴
 		User user = (User)session.getAttribute("user");
 		
-		System.out.println("전달된 키워드 : "+ jsonData.get("keyword"));
+		logger.debug("전달된 키워드 : "+ jsonData.get("keyword") );
+		
 		
 		//피드 검색
 		if(jsonData.get("mode").equals("Feed")) {
@@ -269,7 +271,8 @@ public class RestSearchController {
 					//첫글자가 #이라면 RGB로 바꾸어 본다.
 					search.setKeyword(jsonData.get("keyword"));
 					search = CommonUtil.getHaxtoRGB(search, colorRange);
-					System.out.println("색상변환 : "+search.getColor().getRed() +", "+search.getColor().getGreen()+", "+search.getColor().getBlue()) ;
+					
+					
 					if(search !=null) {
 						//색상 기반으로 검색
 						feedlist = feedServices.getFeedListFromColor(search);

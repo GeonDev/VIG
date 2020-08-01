@@ -32,7 +32,6 @@ public class RestUserController {
 private UserServices userServices;
 
 public RestUserController() {
-	System.out.println("REST CON");		
 	}
 
 
