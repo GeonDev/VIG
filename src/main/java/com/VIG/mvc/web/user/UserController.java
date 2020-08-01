@@ -1,16 +1,13 @@
 package com.VIG.mvc.web.user;
 
-import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +15,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,9 +28,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.user.UserServices;
-
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Controller
 @RequestMapping("/user/*")
@@ -45,7 +41,6 @@ public class UserController {
 	private UserServices userServices;
 	
 	public UserController() {
-		System.out.println(this.getClass());
 	}
 	
 //=========회원가입===========================================================//    코드 정리하기!
@@ -54,7 +49,7 @@ public class UserController {
 	public ModelAndView addUser() throws Exception{		
 		System.out.println("addUser(GET):회원가입 페이지로 이동");
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:/user/addUserView.jsp");	
+		modelAndView.setViewName("forward:/user/addUserView.jsp");	
 		return modelAndView;
 	}
 
@@ -94,28 +89,31 @@ public class UserController {
 	public ModelAndView login() throws Exception{		
 		System.out.println("login(GET):로그인 페이지로 이동");	
 		ModelAndView model = new ModelAndView();
-		model.setViewName("forward:../user/loginView.jsp");		
+		model.setViewName("forward:/user/loginView.jsp");		
 		return model;
 	}
 	
-
 	@RequestMapping( value="login", method=RequestMethod.POST )
-	public String login(@ModelAttribute("user") User user, HttpSession session ) throws Exception{
+	public ModelAndView login(@ModelAttribute("user") User user, HttpSession session) throws Exception{
 		
 			User dbUser = userServices.getUserOne(user.getUserCode());
-		
+			ModelAndView mv = new ModelAndView();
+					
 		if(dbUser == null) {
-			System.out.println("1");
-			return "redirect:/user/loginView.jsp";
+			mv.setViewName("forward:/user/loginView.jsp");
+			mv.addObject("msg", "fail");
+			return mv;
 			
 		} else if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())){	
 			dbUser.setPassword(null);
 			session.setAttribute("user", dbUser);
-			System.out.println("2");
-			return "redirect:/main/VIG";
+			mv.setViewName("forward:/main/VIG");
+			mv.addObject("msg", "suuccess");
+			return mv;
 		} else {
-			System.out.println("3");
-			return "redirect:/user/loginView.jsp";
+			mv.setViewName("forward:/user/loginView.jsp");
+			mv.addObject("msg", "fail");
+			return mv;
 		}
 	}
 
