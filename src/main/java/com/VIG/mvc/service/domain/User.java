@@ -31,5 +31,12 @@ public class User implements Serializable{
 	
 	//검색을 편하게 하기 위하여 최근 열람 정보를 별도 저장
 	private List<String> currintKeyword;
+	
+	//이메일 전송-제목,내용,받는사람
+	private String subject;
+    private String content;
+    private String receiver;
+
+
 
 }
