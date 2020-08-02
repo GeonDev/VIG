@@ -66,6 +66,7 @@ $(function() {
 <!-- 알람버튼 -->     
 	        <a class="nav-link waves-effect waves-light" id="alarm_btn" href="#">
 	          <i class="fas fa-bell" id="fas_ntn"></i>
+	          <span class="badge badge-pill badge-danger">1</span>
 	        </a>        
 <!-- 채팅버튼 -->      
 	        <a class="nav-link waves-effect waves-light" id=" chat_btn" href="#">

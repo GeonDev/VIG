@@ -311,7 +311,7 @@
 			console.log('${mode}');
 			
 			//최초 전달 받은 모드 세팅
-			$(".mode:contains('${mode}')").attr("class","btn btn-sm btn-indigo mode");	
+			$(".mode:contains('${mode}')").attr("class","btn btn-indigo mode");	
 			
 			//색상 선택기 로드
 			 $('#picker').farbtastic('#color');
@@ -327,8 +327,8 @@
 				isLoadPage = false;	
 				$("#Keyword").val("");
 				
-				$(".mode").attr("class","btn btn-sm btn-cyan mode");
-				$(this).attr("class","btn btn-sm btn-indigo mode");	
+				$(".mode").attr("class","btn btn-cyan mode");
+				$(this).attr("class","btn btn-indigo mode");	
 	
 				//모드를 변경했음으로 페이지 다시 로드
 				getItemList();
@@ -360,7 +360,8 @@
 			
 			//색상값 변경이 생기면 키워드로 세팅
 			$("#picker").on("click", function(){				
-				$("#Keyword").val($("#color").val());			
+				$("#Keyword").val($("#color").val());
+				$("#showColor").css('color',$("#color").val());
 			});					
 	});	
 	
@@ -377,40 +378,42 @@
 	<div class="container-lg-fluid">
 	
 		<div class="row justify-content-center">
-			<div class="col-sm-10 pl-5">
-				<div class="input-group md-form form-sm form-1 my-0 ">
-				  <div class="input-group-prepend">
-				    <span class="input-group-text cyan lighten-2" >
-				    	<i class="fas fa-search text-white" aria-hidden="true"></i>
-				    </span>
-				  </div>
-				  <input id="Keyword" class="form-control" type="text" placeholder="Search" aria-label="Search" value="${keyword}">
-				</div>					
+			<div class="col-sm-1">				
+				<i class="fas fa-search d-flex justify-content-end mt-3" aria-hidden="true" style="font-size: x-large;"></i>
+			</div>		
+		
+			<div class="col-sm-9">					
+				<div class="d-flex justify-content-center md-form mt-0 mb-0">					  
+					  <input id="Keyword" class="form-control w-100" type="text" placeholder="Search" aria-label="Search" value="${keyword}" style="font-size: x-large;">
+			</div>			
+							
 			</div>
 			
-			<div class="col-sm-2 ">
-				<button type="button" class="btn btn-sm btn-cyan mode" style=" margin-right:0px; padding-left: 15px; padding-right: 15px;">Feed</button>
-				<button type="button" class="btn btn-sm btn-cyan mode" style="margin-left: 0px; margin-right: 0px; padding-left: 10px; padding-right: 10px;">Image</button>
-				<button type="button" class="btn btn-sm btn-cyan mode" style="margin-left: 0px; padding-left: 8px; padding-right: 8px;">Writer</button>										
+			<div class="col-sm-2 form-inline mt-0">
+					<button type="button" class="btn btn-cyan mode" style=" padding-left: 15px; padding-right: 15px;">Feed</button>
+					<button type="button" class="btn btn-cyan mode" style="padding-left: 10px; padding-right: 10px;">Image</button>
+					<button type="button" class="btn btn-cyan mode" style="padding-left: 8px; padding-right: 8px;">Writer</button>									
 			</div>							
 		</div>
 		
 	
 		
-		<div class="row">			
-			<div class="col-sm-2 pl-5">		
-				<button id="colorSelecter" class="btn btn-info waves-effect dropdown-toggle btn-sm" type="button" data-toggle="dropdown" style="margin-left:50px; padding-left: 10px; padding-right: 10px;">Colors</button>
+		<div class="row justify-content-end mt-0 ">			
+			<div class="col-sm-10 d-flex justify-content-start">		
+				<button id="colorSelecter" class="btn btn-outline-light dropdown-toggle btn-sm form-inline" type="button" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;">
+					<i id="showColor" class="fas fa-circle" style="color: #0000FF;"></i> COLORS				 	
+				</button>
 				
 				<div class="dropdown-menu">
 					<div id="picker" ></div>	
 				</div>		
-			</div>	
+			</div>				
 			
-			
+			<!-- 실제 색상을 선택하고 반영하는 부분 -->
 			<div class="col-sm-1">					
 				<form action="" >
 					<div class="form-item">							
-				  		<input class="form-control form-control-sm" type="hidden" id="color" name="color" value="#123456"/>
+				  		<input class="form-control form-control-sm" type="hidden" id="color" name="color" value="#0000FF"/>
 				  	</div>						
 				</form>				
 			</div>	
