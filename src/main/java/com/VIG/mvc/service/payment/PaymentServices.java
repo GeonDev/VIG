@@ -19,4 +19,10 @@ public interface PaymentServices {
 	
 	public int getCountPayment(Search search) throws Exception;
 
+	public int getCountDonation(Search search) throws Exception;
+
+	public List<Payment> getDonationList(Search search) throws Exception;
+	
+	public int getPossiblePrice(String userCode) throws Exception;
+
 }

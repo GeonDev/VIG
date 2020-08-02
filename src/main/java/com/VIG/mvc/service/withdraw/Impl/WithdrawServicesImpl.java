@@ -11,6 +11,7 @@ import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.domain.Withdraw;
 import com.VIG.mvc.service.payment.PaymentDao;
 import com.VIG.mvc.service.payment.PaymentServices;
+import com.VIG.mvc.service.withdraw.WithdrawDao;
 import com.VIG.mvc.service.withdraw.WithdrawServices;
 
 
@@ -18,8 +19,8 @@ import com.VIG.mvc.service.withdraw.WithdrawServices;
 public class WithdrawServicesImpl implements WithdrawServices {
 	
 	@Autowired
-	@Qualifier("paymentDaoImpl")
-	private PaymentDao paymentDao;
+	@Qualifier("withdrawDaoImpl")
+	private WithdrawDao withdrawDao;
 	
 
 	public WithdrawServicesImpl() {
@@ -39,11 +40,6 @@ public class WithdrawServicesImpl implements WithdrawServices {
 		
 	}
 
-	@Override
-	public Withdraw getDonaion(Search search) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public List<Withdraw> getWithdrawList(Search search) throws Exception {

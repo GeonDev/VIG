@@ -72,6 +72,38 @@
 	
 	</update>
 	
+	<select id="getDonationList" parameterType="search" resultMap="PaymentSelectMap">
+		SELECT * FROM
+		(SELECT ROW_NUMBER() OVER(ORDER BY payment.payment_date ASC) num, payment.* 
+		FROM payment
+		WHERE beneficiary = #{keyword:VARCHAR}
+		) temp WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
+	
+	</select>
+	
+	<select id="getCountDonation" parameterType="search" resultType="int">
+		
+		
+		SELECT COUNT(temp.payment_id) FROM
+		(
+		SELECT * FROM payment
+		WHERE beneficiary = #{keyword}
+		) temp
+	
+	</select>
+	
+	<select id="getPossiblePrice" parameterType="String" resultType="int">
+		
+		SELECT SUM(select_Price) FROM payment
+		WHERE beneficiary = #{value}
+		AND is_cancel=0
+		AND is_withdraw=0
+		AND product_Type=2
+		GROUP BY beneficiary
+	
+	
+	</select>
+	
 
 	 
 </mapper>

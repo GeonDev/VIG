@@ -11,9 +11,6 @@ public interface WithdrawServices {
 	
 	public void updateWithdraw(Withdraw withdraw) throws Exception;
 	
-	//내 후원목록
-	public Withdraw getDonaion(Search search) throws Exception;
-	
 	public List<Withdraw> getWithdrawList(Search search) throws Exception;
 	
 }
