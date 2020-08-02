@@ -68,6 +68,23 @@ public class PaymentDaoImpl implements PaymentDao {
 		sqlSession.update("PaymentMapper.cancelPayment", paymentId);
 		
 	}
+
+	@Override
+	public List<Payment> getDonationList(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("PaymentMapper.getDonationList", search);
+	}
+
+	@Override
+	public int getCountDonation(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("PaymentMapper.getCountDonation", search);
+	}
+	
+	public int getPossiblePrice(String userCode) throws Exception {
+		
+		return sqlSession.selectOne("PaymentMapper.getPossiblePrice", userCode);
+	}
 	
 	
 

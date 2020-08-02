@@ -20,4 +20,11 @@ public interface PaymentDao {
 	
 	public int getCountPayment(Search search) throws Exception;
 
+	List<Payment> getDonationList(Search search) throws Exception;
+
+	public int getCountDonation(Search search) throws Exception;
+
+	public int getPossiblePrice(String userCode) throws Exception;
+
+
 }

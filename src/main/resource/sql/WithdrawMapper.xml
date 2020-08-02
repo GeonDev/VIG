@@ -14,30 +14,9 @@
 		<result property="accNo" 		column="acc_no" 		jdbcType="VARCHAR" />
 		<result property="bankName" 		column="bank_name" 		jdbcType="VARCHAR" />
 		<result property="amount" 			column="amount" 			jdbcType="NUMERIC" />
-								
-		<collection property="possibleAmount" 	column="user_code"  	javaType="int" 	select="setPossiblePrice"/>	
-		<collection property="sponsors" 		column="user_code" 	javaType="list" 	ofType="payment" 		select="setPayments"/>
 			
 	</resultMap>		
 	
-	<select id="setPayments" parameterType="String" resultMap="PaymentMapper.PaymentSelectMap">
-		
-		SELECT * FROM payment
-		WHERE beneficiary = #{value}
-	
-	</select>
-	
-	<select id="setPossiblePrice" parameterType="String" resultType="int">
-		
-		SELECT SUM(select_Price) FROM payment
-		WHERE beneficiary = #{value}
-		AND is_cancel=0
-		AND is_withdraw=0
-		AND product_Type=2
-		GROUP BY beneficiary
-	
-	
-	</select>
 	
 	<insert id="addWithdraw" parameterType="withdraw" >
 	
@@ -67,13 +46,6 @@
 		WHERE withdraw_id=#{withdrawId}
 	</update>
 	
-	<select id="getDonation" parameterType="search" resultMap="WithdrawSelectMap">
-		
-		SELECT * FROM withdraw
-		
-		
-	
-	</select>
 	
 	<select id="getWithdrawList" parameterType="String" resultMap="WithdrawSelectMap">
 			

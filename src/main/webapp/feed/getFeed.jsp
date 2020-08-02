@@ -186,6 +186,13 @@
 
 $(function(){
 	
+	var tag = $("#tag").length;
+	if(tag !== 0){
+		
+		$("#tags").removeAttr('style');
+		
+		
+	}
 	
 	
 	$("#writerInfo").on("click", function (){
@@ -439,13 +446,15 @@ function removeComment(commentId){
 			});
 	alert("댓글이 삭제되었습니다");
 }
-
+//이미지 크게보기
 function imageModal(imageId){
 	
 
 	$("#"+imageId).modal();
 	
 }
+
+
 </script>
 
 
@@ -674,28 +683,24 @@ function imageModal(imageId){
 			<br>
 			</c:if>
 
-		
-		
-		
-			<c:forEach var="images" items="${feed.images}" begin="0" end="0">			
-				<c:if test="${images.keyword[0].isTag == '1' }">
-				<div class="feedbottom">
-				<h6 style="font-weight: bold">태그</h6>
-				<div style="padding: 4px 4px 4px 4px;">
-				<c:forEach var="keyword" items="${images.keyword}">
+			
+			<div class="feedbottom" id="tags" style="display:none">
+			<h6 style="font-weight: bold">태그</h6>
+			
+			<c:forEach var="keyword" items="${feed.keywords}">			
+				<c:if test="${keyword.isTag == '1' }">
+
 				
 				<div id="tag" style=" border: 1px solid #C2C3C2; margin: 3px 1px 3px 1px; padding: 1px 3px 1px 3px; display: inline-block; border-radius: 5px;">
-			    <a style="color: black; font-size: 13px;" href="/VIG/searchController/getSearchImages?keyword=${images.keyword}">${keyword.keywordOrigin != null ? keyword.keywordOrigin : keyword.keywordEn }</a>
+			    <a style="color: black; font-size: 13px;" href="/VIG/search/getSearchList?Mode=Feed&keyword=${keywords.keywordOrigin != null ? keyword.keywordOrigin : keyword.keywordEn }">${keywords.keywordOrigin != null ? keyword.keywordOrigin : keyword.keywordEn }</a>
 				</div>
 
-				</c:forEach>
-				</div>
-				</div>
+				
 				</c:if>		
 				
 			</c:forEach>
+			</div>
 			
-		</div>	
 			
 			
 		</div>

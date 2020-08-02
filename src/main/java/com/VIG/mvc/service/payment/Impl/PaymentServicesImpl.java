@@ -66,6 +66,24 @@ public class PaymentServicesImpl implements PaymentServices {
 		paymentDao.cancelPayment(paymentId);
 		
 	}
+
+	@Override
+	public List<Payment> getDonationList(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		
+		return paymentDao.getDonationList(search);
+	}
+
+	@Override
+	public int getCountDonation(Search search) throws Exception {
+		// TODO Auto-generated method stub	
+		return paymentDao.getCountDonation(search);
+	}
+	
+	public int getPossiblePrice(String userCode) throws Exception {
+		
+		return paymentDao.getPossiblePrice(userCode);
+	}
 	
 	
 	

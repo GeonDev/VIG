@@ -36,11 +36,6 @@ public class WithdrawDaoImpl implements WithdrawDao{
 		
 	}
 
-	@Override
-	public Withdraw getDonaion(Search search) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public List<Withdraw> getWithdrawList(Search search) throws Exception {
