@@ -135,14 +135,16 @@ CREATE TABLE follow (
 );
 
 CREATE TABLE alarm ( 
-	alarm_id 		INT(11)  		NOT NULL AUTO_INCREMENT,	
-	user_code   	VARCHAR(20) 	NOT NULL REFERENCES users(user_code),
-	message 		VARCHAR(1024) 	NOT NULL,
-	is_watch 		TINYINT(1),	 
-	show_date 		DATE, 
+	alarm_id 			INT(11)  		NOT NULL AUTO_INCREMENT,	
+	send_user_code   	VARCHAR(20) 	NOT NULL REFERENCES users(user_code),
+	receive_user_code   VARCHAR(20) 	NOT NULL REFERENCES users(user_code),
+	like_feed_id   			INT(11)  		REFERENCES feeds(feed_id),
+	message 			VARCHAR(1024),
+	is_watch 			TINYINT(1),	
+	alarm_type 		TINYINT(1),	
+	show_date 			DATE, 
 	PRIMARY KEY(alarm_id)
 );
-
 
 CREATE TABLE payment(
 	payment_id VARCHAR(50) not NULL,
