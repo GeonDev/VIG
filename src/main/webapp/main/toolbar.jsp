@@ -39,6 +39,9 @@ $(function() {
 	#logout_btn{
 	margin-left:50px;
 	}
+	#logout_btn{
+	margin:0;
+	}
 	</style>	
 	
 </head>		 
@@ -85,8 +88,10 @@ $(function() {
 		         <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="login_dropdown">
 					<h6 class="dropdown-header">${user.userCode }</h6>
 						 <div class="dropdown-divider"></div>
-						    <a class="dropdown-item" href="/VIG/myFeed/myFeed.jsp">My Feed</a>
+						    <a class="dropdown-item" href="/VIG/myFeed/myFeed.jsp" >My Feed</a>
 						    <a class="dropdown-item" href="#">Upload</a>
+						  <div class="dropdown-divider"></div>
+						      <a class="dropdown-item" id="logout_btn" ><p>Log Out</p></a>
 				 </div>
 		       </c:if>
 		   <!-- 관리자 로그인시 -->
@@ -100,13 +105,15 @@ $(function() {
 		         <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="login_dropdown">
 					<h6 class="dropdown-header">${user.userCode }</h6>
 						 <div class="dropdown-divider"></div>
-						    <a class="dropdown-item" href="/VIG/myFeed/myFeed.jsp">관리자페이지</a>						   
+						    <a class="dropdown-item" href="/VIG/myFeed/myFeed.jsp">관리자페이지</a>	
+						    <div class="dropdown-divider"></div>
+						      <a class="dropdown-item"  id="logout_btn" ><p>Log Out</p></a>					   
 				 </div>
 		       </c:if>
 		    <!-- 로그아웃 버튼 -->          
-				<c:if test="${ !empty sessionScope.user }"> 
-			       <a href="#" id="logout_btn" >Log Out</a>
-				  </c:if>
+				
+			     
+				
 		
 	     	</div>
 	      </nav>

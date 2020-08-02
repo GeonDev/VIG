@@ -32,10 +32,9 @@
 
 <script type="text/javascript">
 	
-//=======function
-		//회원가입
+//=======회원가입
 		function fncAddUser() {	
-	
+			//유효성 체크
 			var id=$("input[name='userCode']").val();
 			var pw=$("input[name='password']").val();
 			var pw_confirm=$("input[name='password2']").val();	
@@ -73,22 +72,21 @@
 		function sendEmail(){
 			$("form").attr("method" , "post").attr("action" , "sendEmail").submit();
 		}	
-		
-//==========	
-		//회원가입	
+//=======================		
+		//회원가입	이벤트
 		$(function(){
 			$( "#signUp_btn" ).on("click" , function() {	
 				fncAddUser();
 			});
 		});
-		//이메일 인증
+		//이메일 인증 이벤트
 		$(function(){
 			$("").on("click",function(){
 				alert("인증메일보냄");
 				sendEmail();
 			});
 		});
-		//비밀번호 체크
+		//비밀번호 체크 이벤트
 		$(function(){
 			$("input[name=password2]").keyup( function(){				 				
 				var password = $("input[name=password]").val();
@@ -102,7 +100,7 @@
 				}				
 			});			
 		});					
-		//ID중복확인
+		//ID중복확인 이벤트 ==>모달이나 텍스트로 변경하기
 		 $(function() {
 			 $("#iDcheck").on("click" , function() {
 				popWin 
@@ -112,8 +110,13 @@
 											"scrollbars=no,scrolling=no,menubar=no,resizable=no");
 			});
 		});	
-		
-		//달력
+		//로그인 페이지로 이동 이벤트
+		 $( function() {
+				$("#login_nav").on("click" , function() {
+					location.href="login";
+				});
+			});		
+		//달력 setting
 		$( function() {
 			   $( "#datepicker" ).datepicker({
 			    showMonthAfterYear: true, 
@@ -198,7 +201,7 @@
 	<!-- 가입버튼 -->
 	    <button  class="btn btn-info btn-block my-4" id="signUp_btn" >Sign up</button>   
 			<p >Already a member? </p>
-	          <a href="/VIG/user/loginView.jsp" id="ty" class="blue-text ml-1"> login</a>
+	          <span id="login_nav" class="blue-text ml-1" href="#" > login</span>
 			</div>
 		</div>
 	</div>

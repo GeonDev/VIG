@@ -114,10 +114,7 @@
 	   		SET 
 	   		self_introduce 	= #{selfIntroduce:VARCHAR} ,	   	
 	   		user_name  	= #{userName} ,
-			password  = #{password},
-			profile_img  	= #{profileImg:VARCHAR} ,
-			account	=	 #{account:VARCHAR},
-			state =  #{state:NUMERIC} 			
+			account	=	 #{account}		
 	   	WHERE user_code = #{userCode}
 	 </update>
 	 

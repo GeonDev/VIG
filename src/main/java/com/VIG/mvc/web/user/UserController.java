@@ -49,7 +49,7 @@ public class UserController {
 	public ModelAndView addUser() throws Exception{		
 		System.out.println("addUser(GET):회원가입 페이지로 이동");
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:/user/addUserView.jsp");	
+		modelAndView.setViewName("forward:/user/addUserView.jsp");	
 		return modelAndView;
 	}
 
@@ -89,28 +89,31 @@ public class UserController {
 	public ModelAndView login() throws Exception{		
 		System.out.println("login(GET):로그인 페이지로 이동");	
 		ModelAndView model = new ModelAndView();
-		model.setViewName("forward:../user/loginView.jsp");		
+		model.setViewName("forward:/user/loginView.jsp");		
 		return model;
 	}
 	
-
 	@RequestMapping( value="login", method=RequestMethod.POST )
-	public String login(@ModelAttribute("user") User user, HttpSession session ) throws Exception{
+	public ModelAndView login(@ModelAttribute("user") User user, HttpSession session) throws Exception{
 		
 			User dbUser = userServices.getUserOne(user.getUserCode());
-		
+			ModelAndView mv = new ModelAndView();
+					
 		if(dbUser == null) {
-			System.out.println("1");
-			return "redirect:/user/loginView.jsp";
+			mv.setViewName("forward:/user/loginView.jsp");
+			mv.addObject("msg", "fail");
+			return mv;
 			
 		} else if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())){	
 			dbUser.setPassword(null);
 			session.setAttribute("user", dbUser);
-			System.out.println("2");
-			return "redirect:/main/VIG";
+			mv.setViewName("forward:/main/VIG");
+			mv.addObject("msg", "suuccess");
+			return mv;
 		} else {
-			System.out.println("3");
-			return "redirect:/user/loginView.jsp";
+			mv.setViewName("forward:/user/loginView.jsp");
+			mv.addObject("msg", "fail");
+			return mv;
 		}
 	}
 
