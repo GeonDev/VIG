@@ -29,7 +29,7 @@ public class VisionInfo extends Thread {
 	
 	private static final float targetScore = 0.01f;
 	
-	private static final int colorRange = 10;
+	private static final int colorRange = 30;
 	
 	private String imageFilePath;
 	private List<ImageKeyword> keywords;

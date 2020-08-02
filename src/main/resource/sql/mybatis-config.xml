@@ -23,6 +23,7 @@
 		<typeAlias alias="event" 		type="com.VIG.mvc.service.domain.Event"/>
 		<typeAlias alias="payment" 		type="com.VIG.mvc.service.domain.Payment"/>
 		<typeAlias alias="withdraw"		type="com.VIG.mvc.service.domain.Withdraw"/>
+		<typeAlias alias="alarm"		type="com.VIG.mvc.service.domain.Alarm"/>
 	</typeAliases>
 	
 	 <!-- SQL Definition :: file include -->
@@ -40,7 +41,8 @@
 		<mapper resource="sql/FollowMapper.xml"/>
 		<mapper resource="sql/HistoryMapper.xml"/>
 		<mapper resource="sql/PaymentMapper.xml"/>
-		<mapper resource="sql/WithdrawMapper.xml"/>		
+		<mapper resource="sql/WithdrawMapper.xml"/>
+		<mapper resource="sql/AlarmMapper.xml"/>			
 	</mappers>
 
 </configuration>
