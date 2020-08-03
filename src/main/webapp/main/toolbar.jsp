@@ -12,78 +12,159 @@
 
 <script type="text/javascript">
 
+	var chackUserLogin = '${sessionScope.user}';
 
-$(function() {
-//===로그인
-	//$( "#login_btn:contains('Log in')" ).on("click" , function() {
-	//	$(self.location).attr("href","/VIG/user/login");
-	//}); 
 	
-//loginView.jsp를 가지고 와서 모달로 띄움
-	$('#theModal').on('show.bs.modal', function(e) {
+	function setLikeAlarm(data) {
+		var data = (item).split(',');    
+	    
+		var addAlarms = 
+	    	"<li style='margin-left: 5px;'>"
+	   	 	+ "<a class='nav-link' href='/VIG/feed/getFeed?feedId='"+ data[0]+ ">"
+	   	 		+"<h6><img src='/VIG/images/uploadFiles/" + data[1]+ "' class='rounded-circle' style='width: 30px;'>"
+	   	 			+"<strong>" + data[2]+ "</strong>님이 좋아요를 누르셨습니다."
+	    			+"<img src='/VIG/images/uploadFiles/" + data[3] + "' style='width: 30px;'>"
+				+"</h6>" 
+			 +"</a>"
+	        +"</li>";  			    
+	    
+	    
+	    $("#addAlarm").append(addAlarms);
+	}
 	
-			var button = $(e.relatedTarget);
-			var modal = $(this);
-			
-			modal.find('.modal-body').load(button.data("remote"));
-		
-		});
 	
-//===로그아웃	
-	$(".dropdown-item:contains('Log Out')" ).on("click" , function() {
+	function setCommentAlarm(data) {
+		var data = (item).split(',');
 		
-			$(self.location).attr("href","/VIG/user/logout");
-			}); 
-		});	
+	    var addAlarms = 
+	    	"<li style='margin-left: 5px;'>"
+	   	 	+ "<a class='nav-link' href='/VIG/feed/getFeed?feedId='"+ data[0]+ ">"
+	   	 		+"<h6><img src='/VIG/images/uploadFiles/" + data[1]+ "' class='rounded-circle' style='width: 30px;'>"
+	   	 			+"<strong>" + data[2]+ "</strong>님이 댓글을 남겼습니다."
+	    			+"<img  src='/VIG/images/uploadFiles/" + data[3] + "' style='width: 30px;'>"
+				+"</h6>" 
+			 +"</a>"
+	        +"</li>";  			    
+	    
+	    
+	    $("#addAlarm").append(addAlarms);
+	}
+	
+	
+	//최초 알람 세팅용 - 읽지 않은 알람을 불러온다.
+	function getAlarmList() {		
 		
+		$.ajax( 
+				{
+					url : "/VIG/alarm/json/getAlarmList",
+					method : "POST",
+					dataType : "Json",					
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},					
+					success : function(JSONData , status) {
+						
+						if(JSONData !=null){
+							
+							//디폴트를 삭제한다.
+							$("#defaultAlarm").remove();
+							
+							$.each(JSONData, function(index, item) { 						
+								
+								var data = (item).split(',');
+								
+								if(data[4] == 0){
+							    	setLikeAlarm(data);
+							    }else if(data[4] == 1){
+							    	setCommentAlarm(data);
+							    }
+									
+							});	
+							
+						}
+						
+						
+
+ 						
+ 							
+					}
+			});		
+	}
+	
+	
+	$(function() {
 		
-			//웹 소켓을 생성한다.
-			var sock;
-			sock = new SockJS("<c:url value="/echo"/>");
+		//읽지 않은 알람을 세팅한다.
+		getAlarmList();
+		
+	//===로그인
+		//$( "#login_btn:contains('Log in')" ).on("click" , function() {
+		//	$(self.location).attr("href","/VIG/user/login");
+		//}); 
+		
+	//loginView.jsp를 가지고 와서 모달로 띄움
+		$('#theModal').on('show.bs.modal', function(e) {
+		
+				var button = $(e.relatedTarget);
+				var modal = $(this);
+				
+				modal.find('.modal-body').load(button.data("remote"));
 			
-			//자바스크립트 안에 function을 집어넣을 수 있음.
-			//데이터가 나한테 전달되었을때 자동으로 실행되는 function
-			sock.onmessage=onMessage;
+			});
+		
+	//===로그아웃	
+		$(".dropdown-item:contains('Log Out')" ).on("click" , function() {
 			
-			//데이터를 끊고싶을때 실행하는 메소드
-			sock.onclose = onClose;			
+				$(self.location).attr("href","/VIG/user/logout");
+				}); 
+			});	
 			
-			
-			//알람 받을 유저의 유저코드, 피드ID(없으면 0), 알람타입(0= 좋아요, 댓글, 팔로우) 
-			function sendMessage(userCode, feedID, alarmType){         	
-				sock.send(userCode+","+ feedID+","+ alarmType);
-			}
-			
-			
-			//evt 파라미터는 웹 소켓을 보내준 데이터다.(자동으로 들어옴)
-			function onMessage(evt){
-			    var data = (evt.data).split(',');
-			    
-			    var addAlarms = '';
-			    
-			    addAlarms = 
-			    	"<li style='margin-left: 5px;'>"
-			   	 	+ "<a class='nav-link' href='/VIG/feed/getFeed?feedId='"+ data[0]+ ">"
-			   	 		+"<h6><img src='/VIG/images/uploadFiles/" + data[1]+ "' class='rounded-circle' style='width: 30px;'>"
-			   	 			+"<strong>" + data[2]+ "</strong>님이 좋아요를 누르셨습니다."
-			    			+"<img  src='/VIG/images/uploadFiles/" + data[2] + "' style='width: 30px;'>"
-        				+"</h6>" 
-            		 +"</a>"
-                    +"</li>";  			    
-			    
-			    
-			    $("#addAlarm").append(addAlarms);
-			    //sock.close();
+			if(chackUserLogin !=null){
+				//웹 소켓을 생성한다.
+				var sock;
+				sock = new SockJS("<c:url value="/echo"/>");
+				
+				//자바스크립트 안에 function을 집어넣을 수 있음.
+				//데이터가 나한테 전달되었을때 자동으로 실행되는 function
+				sock.onmessage=onMessage;
+				
+				//데이터를 끊고싶을때 실행하는 메소드
+				sock.onclose = onClose;				
 			}
 
-			function onClose(evt){
-			    $("#data").append("연결 끊김");
-			}
+				
+				//알람 받을 유저의 유저코드, 피드ID(없으면 ''), 알람타입(0= 좋아요, 댓글, 팔로우) 
+				function sendMessage(userCode, feedID, alarmType){         	
+					sock.send(userCode+","+ feedID+","+ alarmType);
+				}
+				
+				
+				//evt 파라미터는 웹 소켓을 보내준 데이터다.(자동으로 들어옴)
+				function onMessage(evt){
+					
+					//디폴트가 있는지 확인하고 삭제한다.
+					if ($('#defaultAlarm').length) {						
+						$("#defaultAlarm").remove();
+					}
+					
+				    var data = (evt.data).split(',');				    
+				    
+				    if(data[4] == 0){
+				    	setLikeAlarm(data);
+				    }else if(data[4] == 1){
+				    	setCommentAlarm(data);
+				    }
+				    
+	
+				    //sock.close();
+				}
+	
+				function onClose(evt){
+				    $("#data").append("연결 끊김");
+				}
 			
 			
-			
-		
-		
 	</script>	
 	
 	<style>
@@ -141,7 +222,9 @@ $(function() {
                      <i class="fas fa-bell fas_ntn dropdown-toggle"  data-toggle="dropdown" aria-expanded="false" style="margin-right: 15px;"></i>                    
                      
                      <ul id="addAlarm" class="dropdown-menu dropdown-menu-right" style="width: 350px;">                                   
-         
+         				<li id="defaultAlarm" style="margin-left: 5px;">
+         					<h6>새로운 소식이 없습니다.</h6>
+         				</li>
                      </ul>
                  </li>
 		
@@ -167,7 +250,7 @@ $(function() {
 						   <span class="caret"></span>
 					</a>
 		         <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="login_dropdown">		         	
-					<h4 class="dropdown-header" style="text-align:center;  font-weight: bold; font-size: large; padding-left: 0px; margin-left: 5px; ">
+					<h4 class="dropdown-header" style="text-align:left;  font-weight: bold; font-size: large; padding-left: 0px; margin-left: 5px; ">
 						<img src="/VIG/images/uploadFiles/${user.profileImg}" class="rounded-circle" style="width: 50px;">
 						${user.userName}
 					</h4>

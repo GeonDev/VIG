@@ -132,6 +132,8 @@ public class mainController {
 	
 	@RequestMapping("setImage")
 	public ModelAndView setImageKeyword() throws Exception {		
+	
+		if(keywordServices.getKeywordAllCount() == 0) {	
 		
 		String path = context.getRealPath("/");        
 	    path = path.substring(0,path.indexOf("\\.metadata"));
@@ -186,6 +188,10 @@ public class mainController {
 		long Totalend = System.currentTimeMillis();		
 		logger.debug("이미지 정보 추출 완료 / 총 추출 시간 : " + getTotalWorkTime(Totalstart, Totalend));				
 		return new ModelAndView("forward:/common/alertView.jsp", "message", "세팅 완료");
+		
+		}else {
+			return new ModelAndView("forward:/common/alertView.jsp", "message", "데이터가 이미 있습니다.");
+		}
 	}	
 	
 	

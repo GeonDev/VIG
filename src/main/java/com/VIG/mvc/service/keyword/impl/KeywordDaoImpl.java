@@ -62,4 +62,10 @@ public class KeywordDaoImpl implements KeywordDao {
 		return sqlSession.selectList("KeywordMapper.getFeedTagList", feedId);
 	}
 
+	@Override
+	public int getKeywordAllCount() throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("KeywordMapper.getKeywordAllCount");
+	}
+
 }

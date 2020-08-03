@@ -8,7 +8,6 @@
  	
 	<resultMap id="AlarmSelectMap" 		type="alarm">
 		<result property="alarmId" 		column="alarm_id" 		jdbcType="NUMERIC"/>
-		<result property="message"		column="message" 		jdbcType="VARCHAR" />
 		<result property="isWatch"	 	column="is_watch" 		jdbcType="NUMERIC" />
 		<result property="alarmType" 	column="alarm_type"  	jdbcType="NUMERIC" />
 		<result property="addDate" 	    column="add_date" 	 	jdbcType="DATE" />
@@ -39,8 +38,8 @@
 		<!-- 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 -->
 		
 		<insert id="addAlarm" parameterType="alarm">
-			INSERT into alarm (alarm_id, send_user_code, receive_user_code, like_feed_id, message, is_watch, alarm_type, add_date)
-			VALUES(alarm_id, #{sendUser.userCode},#{reciveUser.userCode}, #{likefeed.feedId}, #{message:VARCHAR}, 0, #{alarmType}, NOW() )
+			INSERT into alarm (alarm_id, send_user_code, receive_user_code, like_feed_id, is_watch, alarm_type, add_date)
+			VALUES(alarm_id, #{sendUser.userCode},#{reciveUser.userCode}, #{likefeed.feedId}, 0, #{alarmType}, NOW() )
 		</insert>
 		
 		<select id="unWatchAlarmList" parameterType="string" resultMap="AlarmSelectMap">

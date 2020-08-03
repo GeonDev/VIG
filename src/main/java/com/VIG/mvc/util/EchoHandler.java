@@ -12,6 +12,8 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.VIG.mvc.service.alarm.AlarmServices;
+import com.VIG.mvc.service.domain.Alarm;
 import com.VIG.mvc.service.domain.Feed;
 import com.VIG.mvc.service.domain.Image;
 import com.VIG.mvc.service.domain.User;
@@ -29,11 +31,14 @@ public class EchoHandler extends TextWebSocketHandler{
 	@Qualifier("feedServicesImpl")
 	private FeedServices feedServices;
 	
+	@Autowired 
+	@Qualifier("alarmServicesImpl")
+	private AlarmServices alarmServices;
+	
 	
 	public static final Logger logger = LogManager.getLogger(mainController.class); 	
     
-    //세션을 모두 저장한다.
-    //방법 1 :  1:1 채팅
+    //세션을 모두 저장한다. -> 연결된 유저를 찾기 위하여  
 	private Map<String, WebSocketSession> sessions = new HashMap<String, WebSocketSession>();    
     
     
@@ -43,12 +48,13 @@ public class EchoHandler extends TextWebSocketHandler{
     	
     	User user = (User)session.getAttributes().get("user");
     	
+    	if(user !=null) {
         //맵을 쓸때 방법
     	sessions.put(user.getUserCode(), session);
     	
-        logger.debug("로그인 유저: " + user.getUserName());
+        logger.debug("연결된 유저: " + user.getUserName());
         
-      
+    	}
     }
     
     //클라이언트 메세지를 받고 보내기
@@ -57,8 +63,15 @@ public class EchoHandler extends TextWebSocketHandler{
     	
     	logger.debug(message);
     	String split[] = (message.getPayload()).split(",");
-    	String name =  ((User)wsession.getAttributes().get("user")).getUserName(); 
+    	String sendUserName =  ((User)wsession.getAttributes().get("user")).getUserName(); 
+    	String sendUserCode =  ((User)wsession.getAttributes().get("user")).getUserName(); 
     	String profile =  ((User)wsession.getAttributes().get("user")).getProfileImg();
+    	
+    	Alarm alarm = new Alarm();		
+		alarm.setAlarmType(Integer.parseInt(split[2]));
+		alarm.setSendUser((User)wsession.getAttributes().get("user"));
+		alarm.setReciveUser(userServices.getUserOne(split[0]));
+		alarm.setIsWatch(0);
     	
      	//메세지를 받을 유저를 찾음	
     	WebSocketSession reqSession = sessions.get(split[0]);
@@ -68,10 +81,11 @@ public class EchoHandler extends TextWebSocketHandler{
     	}
     		
     	
-    	//메세지(알람) 타입에 따라 내용 분류
-    	if(split[2].equals("0")) {
+    	//메세지(알람) 타입에 따라 내용 분류 (좋아요 또는 댓글)
+    	if(split[2].equals("0") || split[2].equals("1") ) {
     		
     		Feed feed = feedServices.getFeed(Integer.parseInt(split[1]));
+    		alarm.setLikefeed(feed);
     		
     		Image image = new Image();
     		
@@ -79,21 +93,18 @@ public class EchoHandler extends TextWebSocketHandler{
     			if(i.getIsThumbnail() == 1) {
     				image = i;
     			}
-    		}   		    		
-
+    		} 
     		
-    		logger.debug("전달값 : "+ split[1] + ","+ image.getImageFile()+","+name + ","+profile );
+    		alarmServices.addAlarm(alarm);
+    		reqSession.sendMessage(new TextMessage(split[1] + "," + profile+ "," + sendUserName + "," + image.getImageFile() + "," + split[2] + ","+ sendUserCode ));
+    	
+    	//팔로우 알림
+    	}else if(split[2].equals("2")) {
     		
-    		
-    		reqSession.sendMessage(new TextMessage(split[1] + ","+ image.getImageFile()+","+name + ","+profile));
-    		
-    	}else if(split[2].equals("1")) {
-    		
-    		reqSession.sendMessage(new TextMessage(name + " : " +split[1]));
-    	}else {
-    		
-    		reqSession.sendMessage(new TextMessage(name + " : " +split[1]));
-		}    	
+    		alarmServices.addAlarm(alarm);
+    		reqSession.sendMessage(new TextMessage(split[1] + "," + profile+ "," + sendUserName + "," + "" + "," + split[2] + ","+ sendUserCode ));
+        	
+    	}   	
    
     }
     
@@ -106,7 +117,7 @@ public class EchoHandler extends TextWebSocketHandler{
         //Map 삭제
         sessions.remove(session.getId());                      
  
-        logger.debug("로그아웃 유저: " + name);
+        logger.debug("연결 끊김: " + name);
     }
  
 }
