@@ -8,10 +8,10 @@
 <head>
 <meta charset="UTF-8">
 <title>VIG</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<!-- Font Awesome -->
+	<!-- Font Awesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 <!-- Google Fonts -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
@@ -28,21 +28,22 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
-				
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script type="text/javascript">
 
 	
 //=====회원가입으로 이동
 	$( function() {
 		$("#ty").on("click" , function() {
-			location.href="addUserView";
+			//location.href="addUserView";
+			self.location="/VIG/user/addUserView.jsp"
 		});
 	});
 //=======로그인 이벤트
 	$( function() {		
 		$("#userCode").focus();	
 		$("#login").on("click" , function() {
-			
 			var id=$("input:text").val();
 			var pw=$("input:password").val();
 			
@@ -56,7 +57,28 @@
 				$("#password").focus();
 				return;
 			}
-		});
+		////ajax 연결 안됨/ 로그인은 되는데 비번이나 아이디 다르면 모달이 다시 리로드 되어서 풀화면으로 나옴 
+			$.ajax({
+				url : "/json/login",
+				method : "POST" ,
+				data : JSON.stringify({
+					userCode : id,
+					password : pw
+				}),
+				dataType : "json",
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},
+				success : function(data , status) {
+					alert("ok");
+				},error:function(request,status,error){
+					alert("json 연결 fail");
+			        alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+					}
+				});
+			
+	});
 	});
 	
 	</script>
@@ -75,10 +97,10 @@
 
 </head>
 <body>
-<jsp:include page="../main/toolbar.jsp"></jsp:include>
 
-<form method="post">
-	<div class="container">
+<form action="/VIG/user/login" method="POST">
+	<div class="container-fluid">
+	
 		<div class="text-center border border-light p-5">
   			<div class="row">
     <p class="h4 mb-6">Login</p>

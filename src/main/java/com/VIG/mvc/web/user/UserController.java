@@ -1,5 +1,8 @@
 package com.VIG.mvc.web.user;
 
+
+import java.io.File;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
 
@@ -13,18 +16,26 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.VIG.mvc.service.domain.Page;
 import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.user.UserServices;
@@ -39,6 +50,15 @@ public class UserController {
 	@Autowired 
 	@Qualifier("userServicesImpl")
 	private UserServices userServices;
+	
+	@Value("#{commonProperties['uploadPath']}")
+	String uploadPath;
+	
+	@Value("#{commonProperties['pageSize'] ?: 5}")
+	int pageSize;
+	
+	@Value("#{commonProperties['pageUnit'] ?: 5}")
+	int pageUnit;
 	
 	public UserController() {
 	}
@@ -151,33 +171,70 @@ public class UserController {
 	}
 	
 	@RequestMapping( value="updateUser", method=RequestMethod.POST )
-	public String updateUser(@ModelAttribute("uesr") User user, Model model, HttpSession session )throws Exception{ 
-		System.out.println("/user/updateUser : POST");
-			
-		userServices.updateUser(user);	
+	public String updateUser(MultipartHttpServletRequest request,@ModelAttribute("uesr") User user, Model model, HttpSession session )throws Exception{ 
 		
+		System.out.println("/user/updateUser : POST");
+	
+		Map<String, MultipartFile> files = request.getFileMap();
+		CommonsMultipartFile cmf  = (CommonsMultipartFile) files.get("profileImg");		
+		if(cmf.getOriginalFilename()!="") {
+			
+			String path=uploadPath+cmf.getOriginalFilename();		
+			File f = new File(path);
+			
+			cmf.transferTo(f);			
+			user.setProfileImg(cmf.getOriginalFilename());			
+		}
+
+		userServices.updateUser(user);	
+		model.addAttribute("user", user);
+	
 		String sessionId=((User)session.getAttribute("user")).getUserCode();
 		System.out.println(sessionId);
 		if(sessionId.equals(user.getUserCode())){
 			session.setAttribute("user", user);
 		}
+		
 		return "redirect:/user/updateUser.jsp";
-		//return "redirect:/user/getUser?userCode="+user.getUserCode();
+		
 	}
 	
 	//=================유저 리스트 가져오기
 	
-	//@RequestMapping( value="listUser" )
+	
 	@RequestMapping( value="getUserList" )
-	public String listUser( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
+	public String getUserList( @ModelAttribute("search") Search search ,Model model) throws Exception{
 		
 		System.out.println("유저리스트 가져오기");
 		
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		if(search.getKeyword() == null) {
+			search.setKeyword("");
+		}
+
+		search.setPageSize(pageSize);
 		
+		// Business logic 수행
+		Map<String , Object> map=userServices.getUserList(search);
 		
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		System.out.println(resultPage);
+
+		// Model 과 View 연결
+				model.addAttribute("list", map.get("list"));
+				model.addAttribute("resultPage", resultPage);
+				model.addAttribute("search", search);
+				model.addAttribute("map", map);
+				
 		return "forward:/user/getUserList.jsp";
 	}
 
+	
+	
+	
+	
 	
 	//=======이메일 보내기============================================================//
 
@@ -219,22 +276,13 @@ public class UserController {
 			return test;
 		}
 
-	//=======인증코드생성===========================================================//
-		@RequestMapping(value="email")
-		public String getRandom() {
-			Random rnd = new Random();
-			int number = rnd.nextInt(999999);			
-			System.out.println("number="+number);
-			
-			return String.format("%06d", number);		
-		}
-		
 	
 	//======모달 계속 수정중==================================//
-		@RequestMapping("followModal")
-		public String followModal() {
+		@RequestMapping("testForm")
+		public String testForm( HttpServletRequest request,@ModelAttribute("user") User user, Model model) throws Exception {
+			
 			System.out.println("모달띄우기 나오나요");
-			return "VIG/myFeed/followTest.jsp";
+			return "/VIG/main/VIG";
 		}
 	//==
 

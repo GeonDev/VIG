@@ -38,14 +38,6 @@
 			$("btn.btn-outline-warning.waves-effect").on("click" , function() {
 				fncDelete;
 			});
-		});	
-				//===========
-			
-			$(function(){
-				$("upgrade_btn").on("click",function(){
-					//버튼 누르면 결제창 open?
-				});
-			});
 		//======			
 			$("#deleteCheck").on('hidden.bs.modal', function(){
 			    alert("계정이 삭제되었습니다.");
@@ -58,13 +50,12 @@
 			$(location).attr("action","VIG/user/deleteUser").submit();
 		}	
 			
-		function fncUpdateUser() {
-			
+		function fncUpdateUser() {		
 		$("form").attr("enctype", "multipart/form-data").attr("method" , "POST").attr("action", "updateUser").submit();
 		}
 		
 		//=========
-	/*	$(function(){
+		$(function(){
 			var file = document.querySelector('#getfile');
 
 			$(file).on('change', function() {
@@ -88,10 +79,10 @@
 		  	};
 			});	
 		});
-		*/
 		
+	
 		</script>
-		
+	<!-- 스타일 태그 정리하고 수정하기 -->	
 		<style type="text/css">
 		.col-md-12{
 			padding: 100px 70px 70px;
@@ -141,10 +132,10 @@
 </head>
 <body>
 
-	<form>
+	
 	
 	<div class="container">
-
+<form >
 	<div class="row">
 		<div class="col-md-12">
 		<div class="sangdan"><h1>내 정보 수정</h1></div>
@@ -158,19 +149,8 @@
  				<div class="profile">
 			<img id="preview" src="/VIG/images/uploadFiles/"+${user.profileImg } id="pImg"  alt="profile_img">
  				</div>
- 				<!-- test -->
- 					<div class="input-group">
-					  <div class="input-group-prepend">
-					    <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-					  </div>
-					  <div class="custom-file">
-					    <input type="file" class="custom-file-input" id="getfile"
-					      aria-describedby="inputGroupFileAddon01">
-					    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-					  </div>
-					</div>
 		<!--//////////////  -->
- 					<input type="file" id="getfile" name="uploadFile" accept="image/*">
+ 					<input type="file" id="getfile" name="profileImg" accept="image/*">
  				
  				<br/>
 	<div class="row" >
@@ -252,8 +232,10 @@
 	</div>
 	</div>
 	</div>
-	
 	</form>
+	</div>
+	
+	
 
 
 </body>

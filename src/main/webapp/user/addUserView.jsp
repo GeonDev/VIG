@@ -8,7 +8,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
+
 
 	<!-- Font Awesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
@@ -81,7 +81,7 @@
 		});
 		//이메일 인증 이벤트
 		$(function(){
-			$("").on("click",function(){
+			$("#send_email").on("click",function(){
 				alert("인증메일보냄");
 				sendEmail();
 			});
@@ -101,7 +101,35 @@
 			});			
 		});					
 		//ID중복확인 이벤트 ==>모달이나 텍스트로 변경하기
-		 $(function() {
+		
+		$("#iDcheck").on("click",function(){
+			alert("2");
+			var id = $("#userCode").val();
+			$.ajax({
+				url:'json/login',
+				type: 'post',
+				success: function(data){
+					console.log("00 "+ data);
+					if (data == 'true') {
+						// 1 : 아이디가 중복되는 문구
+						$("#id_check").text("사용중인 아이디입니다.");
+						$("#id_check").css("color", "red");
+						$("#reg_submit").attr("disabled", true);
+					}else{
+						$("#id_check").text("사용 가능합니다");
+						$("#id_check").css("color", "green");
+						$("#reg_submit").attr("disabled", true);
+					}
+				},error:function(request,status,error){
+					alert("fail");
+			        alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+					}
+			});
+		});
+		
+		
+		 /*
+		$(function() {
 			 $("#iDcheck").on("click" , function() {
 				popWin 
 				= window.open("/VIG/user/checkDuplication.jsp",
@@ -110,6 +138,7 @@
 											"scrollbars=no,scrolling=no,menubar=no,resizable=no");
 			});
 		});	
+		*/
 		//로그인 페이지로 이동 이벤트
 		 $( function() {
 				$("#login_nav").on("click" , function() {
@@ -147,9 +176,9 @@
 
     <p class="h4 mb-6">Sign up</p>
 	<!-- id -->  
-	<!-- 중복체크하고 아이디 왜 안들어오냐 -->
 		<label data-error="wrong" data-success="right" for="userCode"></label>
-		<input type="text" id="userCode" name="userCode" class="form-control mb-4" placeholder="userCode" readonly>   
+		<input type="text" id="userCode" name="userCode" class="form-control mb-4" placeholder="userCode" required>   
+		<div class="check_font" id="id_check"></div>
 		<button type="button" class="btn btn-primary btn-sm" id="iDcheck">IDcheck</button>
 		
 	<!-- name -->
@@ -173,8 +202,8 @@
 	<!-- 성별 -->
 	 	<div class="row">
 	 	<div class="form-control mb-4" id="genderBox">
-		  <input type="radio" id="sex" name="sex" value="female" ><label for="sex">female</label>
-		  <input type="radio" id="sex" name="sex" value="male"><label for="sex">male</label>
+		  <input type="radio" id="check_userSex" name="sex" value="female" ><label for="sex">female</label>
+		  <input type="radio" id="check_userSex" name="sex" value="male"><label for="sex">male</label>
 		</div>
 		</div>	
 	
@@ -193,7 +222,7 @@
 	<!-- 이메일 인증 폼만 구현중-->   
 	    <button type="button" class="btn btn-primary btn-sm" id="sendEmail">send email</button>  
 		<input type="hidden" id="variedCode" name="variedCode" value="0" class="form-control mb-4" placeholder="variedCode" width="50px">
-		<button type="button" class="btn btn-primary btn-sm" id="sendEmail">check</button>  
+		<button type="button" class="btn btn-primary btn-sm" id="send_email">check</button>  
 
 	<!-- role -->
 		<input type="hidden" id="role" name="role" class="form-control mb-4"  value="user">
