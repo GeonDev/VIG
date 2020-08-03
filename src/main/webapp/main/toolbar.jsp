@@ -9,10 +9,19 @@
 <script type="text/javascript">
 $(function() {
 //===로그인
-	$( "#login_btn:contains('Log in')" ).on("click" , function() {
-		$(self.location).attr("href","/VIG/user/login");
-		}); 
+	//$( "#login_btn:contains('Log in')" ).on("click" , function() {
+	//	$(self.location).attr("href","/VIG/user/login");
+	//}); 
 	
+//loginView.jsp를 가지고 와서 모달로 띄움
+	$('#theModal').on('show.bs.modal', function(e) {
+	
+			var button = $(e.relatedTarget);
+			var modal = $(this);
+			
+			modal.find('.modal-body').load(button.data("remote"));
+		
+		});
 	
 //===로그아웃	
 	$( "#logout_btn:contains('Log Out')" ).on("click" , function() {
@@ -41,6 +50,9 @@ $(function() {
 	}
 	#logout_btn{
 	margin:0;
+	}
+	span{
+	color: white;
 	}
 	</style>	
 	
@@ -72,9 +84,12 @@ $(function() {
 	          <i class="fas fa-comments" id="fas_ntn"></i></a>
    	
 <!-- //비로그인 상태 -->
+<!-- 로그인 클릭시 모달 -->
 			<c:if test="${empty sessionScope.user }"> 
-			  <a href="#" id="login_btn" >Log in</a>
+			  <a class="nav-link" data-remote="/VIG/user/loginView.jsp"
+				data-toggle="modal" data-target="#theModal" ><span>Log in</span></a>
 			</c:if> 
+	
 <!-- //로그인 후 드롭다운 -->
 		<!-- 유저 로그인시 -->
 			<c:if test="${ sessionScope.user.role == 'user' || sessionScope.user.role == 'business'}"> 
@@ -91,8 +106,8 @@ $(function() {
 						    <a class="dropdown-item" href="#">Upload</a>
 						  <div class="dropdown-divider"></div>
 						      <a class="dropdown-item" id="logout_btn" ><p>Log Out</p></a>
-				 </div>
-		       </c:if>
+						 </div>
+		      		 </c:if>
 		   <!-- 관리자 로그인시 -->
 		       <c:if test="${ sessionScope.user.role == 'admin'}"> 
 				<li class="dropdown">
@@ -100,23 +115,33 @@ $(function() {
 						 role="button" aria-haspopup="true" aria-expanded="false">
 						<i class="fas fa-user"></i>
 						   <span class="caret"></span>
-					</a>
+						</a>
 		         <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="login_dropdown">
 					<h6 class="dropdown-header">${user.userCode }</h6>
 						 <div class="dropdown-divider"></div>
 						    <a class="dropdown-item" href="/VIG/myFeed/myFeed.jsp">관리자페이지</a>	
 						    <div class="dropdown-divider"></div>
 						      <a class="dropdown-item"  id="logout_btn" ><p>Log Out</p></a>					   
-				 </div>
-		       </c:if>
-		    <!-- 로그아웃 버튼 -->          
-				
-			     
-				
+							 </div>
+					       </c:if>		
+				     	</div>
+				      </nav>
+					<br/>	
+			</body>
+
+<!-- 모달 메인 :툴바 고정해놓으면 바디태그안에서 모달 작동x -->
 		
-	     	</div>
-	      </nav>
-		<br/>
-	
-</body>
+			<div class="modal fade" id="theModal" role="dialog" >
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header"></div>
+							<form action="/VIG/user/login" method="POST">
+							<div class="modal-body"></div>
+								</form>
+							<div class="modal-footer">
+							</div>
+						</div>
+					</div>
+				</div>
+			
 </html>
