@@ -33,7 +33,7 @@ public RestUserController() {
 
 
 @RequestMapping(value="/json/login", method=RequestMethod.POST)
-@ResponseBody
+
 public User login( @RequestBody User user, HttpSession session) throws Exception{
 		System.out.println("json/login");
 	User dbUser = userServices.getUserOne(user.getUserCode());

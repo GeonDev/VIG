@@ -112,7 +112,7 @@ public class UserController {
 		model.setViewName("forward:/user/loginView.jsp");		
 		return model;
 	}
-	
+
 	@RequestMapping( value="login", method=RequestMethod.POST )
 	public ModelAndView login(@ModelAttribute("user") User user, HttpSession session) throws Exception{
 		
@@ -176,6 +176,7 @@ public class UserController {
 		System.out.println("/user/updateUser : POST");
 	
 		Map<String, MultipartFile> files = request.getFileMap();
+		System.out.println("2");
 		CommonsMultipartFile cmf  = (CommonsMultipartFile) files.get("profileImg");		
 		if(cmf.getOriginalFilename()!="") {
 			
@@ -185,7 +186,8 @@ public class UserController {
 			cmf.transferTo(f);			
 			user.setProfileImg(cmf.getOriginalFilename());			
 		}
-
+		String pwdBycrypt = passwordEncoder.encode(user.getPassword());
+	    user.setPassword(pwdBycrypt);
 		userServices.updateUser(user);	
 		model.addAttribute("user", user);
 	

@@ -116,7 +116,8 @@
 	   		profile_img =#{profileImg},
 	   		self_introduce 	= #{selfIntroduce:VARCHAR} ,	   	
 	   		user_name  	= #{userName} ,
-			account	=	 #{account}		
+			account	=	 #{account}	,
+			password = #{password}	
 	   	WHERE user_code = #{userCode}
 	 </update>
 	 
