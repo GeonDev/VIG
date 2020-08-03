@@ -1,25 +1,40 @@
 package com.VIG.mvc.util;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.VIG.mvc.service.domain.Feed;
+import com.VIG.mvc.service.domain.Image;
 import com.VIG.mvc.service.domain.User;
+import com.VIG.mvc.service.feed.FeedServices;
+import com.VIG.mvc.service.user.UserServices;
+import com.VIG.mvc.web.main.mainController;
 
 public class EchoHandler extends TextWebSocketHandler{
+	
+	@Autowired 
+	@Qualifier("userServicesImpl")
+	private UserServices userServices;
+	
+	@Autowired 
+	@Qualifier("feedServicesImpl")
+	private FeedServices feedServices;
+	
+	
+	public static final Logger logger = LogManager.getLogger(mainController.class); 	
     
     //세션을 모두 저장한다.
     //방법 1 :  1:1 채팅
-	private Map<String, WebSocketSession> sessions = new HashMap<String, WebSocketSession>();
-    
-    //방법 2 : 전체 채팅
-    private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
+	private Map<String, WebSocketSession> sessions = new HashMap<String, WebSocketSession>();    
     
     
     //클라이언트 연결후 진행
@@ -29,35 +44,56 @@ public class EchoHandler extends TextWebSocketHandler{
     	User user = (User)session.getAttributes().get("user");
     	
         //맵을 쓸때 방법
-    	sessions.put(user.getUserName(), session);
+    	sessions.put(user.getUserCode(), session);
     	
-    	//전체 세션 저장
-        sessionList.add(session);       
+        logger.debug("로그인 유저: " + user.getUserName());
         
-        
-        System.out.println("채팅방 입장자: " + user.getUserName());
+      
     }
     
     //클라이언트 메세지를 받고 보내기
     @Override
-    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-       
-    	String split[] = (message.getPayload()).split(",");
-    	String name =  ((User)session.getAttributes().get("user")).getUserName(); 
+    protected void handleTextMessage(WebSocketSession wsession, TextMessage message) throws Exception {
     	
-    	if(split[0].equals("")) {    	
-	        //연결된 모든 클라이언트에게 메시지 전송   
-	        for(WebSocketSession sess : sessionList){          	
-	        	       	    
-	        	
-	        	//메세지를 전송한다. message.getPayload() => 저장되어 있는 텍스트를 불러옴
-	        	sess.sendMessage(new TextMessage(name + " : " +split[1]));
-	        }        
-    	}else {    		
-    		WebSocketSession reqSession = sessions.get(split[0]);
+    	logger.debug(message);
+    	String split[] = (message.getPayload()).split(",");
+    	String name =  ((User)wsession.getAttributes().get("user")).getUserName(); 
+    	String profile =  ((User)wsession.getAttributes().get("user")).getProfileImg();
+    	
+     	//메세지를 받을 유저를 찾음	
+    	WebSocketSession reqSession = sessions.get(split[0]);
+    	
+    	if(reqSession == null) {
+    		return;
+    	}
+    		
+    	
+    	//메세지(알람) 타입에 따라 내용 분류
+    	if(split[2].equals("0")) {
+    		
+    		Feed feed = feedServices.getFeed(Integer.parseInt(split[1]));
+    		
+    		Image image = new Image();
+    		
+    		for(Image i :feed.getImages()) {
+    			if(i.getIsThumbnail() == 1) {
+    				image = i;
+    			}
+    		}   		    		
+
+    		
+    		logger.debug("전달값 : "+ split[1] + ","+ image.getImageFile()+","+name + ","+profile );
+    		
+    		
+    		reqSession.sendMessage(new TextMessage(split[1] + ","+ image.getImageFile()+","+name + ","+profile));
+    		
+    	}else if(split[2].equals("1")) {
     		
     		reqSession.sendMessage(new TextMessage(name + " : " +split[1]));
-    	}
+    	}else {
+    		
+    		reqSession.sendMessage(new TextMessage(name + " : " +split[1]));
+		}    	
    
     }
     
@@ -65,15 +101,12 @@ public class EchoHandler extends TextWebSocketHandler{
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
        
-    	String name =  ((User)session.getAttributes().get("user")).getUserName();
-    	
-    	//List 삭제
-        sessionList.remove(session);
-        
+    	String name =  ((User)session.getAttributes().get("user")).getUserName();    	
+   
         //Map 삭제
-        //sessions.remove(session.getId());              
-        
-        System.out.println("채팅방 퇴장자: " + name);
+        sessions.remove(session.getId());                      
+ 
+        logger.debug("로그아웃 유저: " + name);
     }
  
 }

@@ -10,7 +10,7 @@ CREATE TABLE users (
 	user_name  			 VARCHAR(50) 		NOT NULL,
 	password  			 VARCHAR(200),
 	role  				 VARCHAR(10)  		DEFAULT 'user',	
-	profile_img 		 VARCHAR(50),
+	profile_img 		 VARCHAR(50)	    DEFAULT 'profile_img.jpg',
 	self_introduce  	 VARCHAR(1024),	
 	sex  				 VARCHAR(10),
 	birth  				 INT(4),
@@ -138,11 +138,11 @@ CREATE TABLE alarm (
 	alarm_id 			INT(11)  		NOT NULL AUTO_INCREMENT,	
 	send_user_code   	VARCHAR(20) 	NOT NULL REFERENCES users(user_code),
 	receive_user_code   VARCHAR(20) 	NOT NULL REFERENCES users(user_code),
-	like_feed_id   			INT(11)  		REFERENCES feeds(feed_id),
+	like_feed_id    	INT(11)    		REFERENCES feeds(feed_id),
 	message 			VARCHAR(1024),
 	is_watch 			TINYINT(1),	
-	alarm_type 		TINYINT(1),	
-	show_date 			DATE, 
+	alarm_type  		TINYINT(1),	
+	add_date 			DATE, 
 	PRIMARY KEY(alarm_id)
 );
 
@@ -1979,14 +1979,19 @@ VALUES(history_id, 20169, 'user01', NOW(), 0);
 
 INSERT INTO 
 event(event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner) 
-values( event_id, '로고 디자인 의뢰 특별 이벤트', 'LOGO BRAND에서 로고디자인을 공모합니다.' , '2020-07-29', '2020-09-29', 'Event02_thumbnail.jpg', 'LOGO&BRAND, 디자인의뢰, 특별이벤트', 'Event02_1.jpg', 0, 'Event02_banner.jpg');
+VALUES( event_id, '로고 디자인 의뢰 특별 이벤트', 'LOGO BRAND에서 로고디자인을 공모합니다.' , '2020-07-29', '2020-09-29', 'Event02_thumbnail.jpg', 'LOGO&BRAND, 디자인의뢰, 특별이벤트', 'Event02_1.jpg', 0, 'Event02_banner.jpg');
 
 INSERT INTO 
 event(event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner) 
-values( event_id, '더벤티 디자인 공모전', '더벤티에서 다양한 이야기가 담긴 디자인을 공모합니다.' , '2020-08-05', '2020-09-08', 'Event03_thumbnail.jpg', '더벤티공모전, 2020더벤티디자인, 2020더벤티공모전', 'Event03_1.jpg', 0, 'Event03_banner.jpg');
+VALUES( event_id, '더벤티 디자인 공모전', '더벤티에서 다양한 이야기가 담긴 디자인을 공모합니다.' , '2020-08-05', '2020-09-08', 'Event03_thumbnail.jpg', '더벤티공모전, 2020더벤티디자인, 2020더벤티공모전', 'Event03_1.jpg', 0, 'Event03_banner.jpg');
 
 INSERT INTO 
 event(event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner) 
-values( event_id, '중국대표브랜드 펜 디자인 공모전', '중국 5대볼펜 브랜드 vience에서 드로잉펜 디자인 공모전을 진행합니다.' , '2020-09-28', '2020-10-26', 'Event04_thumbnail.jpg', 'Vience공모전, 2020Vience공모전, 2020드로잉펜공모전', 'Event04_1.jpg', 0, 'Event04_banner.jpg');
+VALUES( event_id, '중국대표브랜드 펜 디자인 공모전', '중국 5대볼펜 브랜드 vience에서 드로잉펜 디자인 공모전을 진행합니다.' , '2020-09-28', '2020-10-26', 'Event04_thumbnail.jpg', 'Vience공모전, 2020Vience공모전, 2020드로잉펜공모전', 'Event04_1.jpg', 0, 'Event04_banner.jpg');
+
+
+INSERT INTO 
+alarm(alarm_id, send_user_code, receive_user_code, message, is_watch, alarm_type, add_date)
+VALUES(alarm_id, 'user02', 'user01','임시', 0, 0,  DATE_FORMAT('2010-01-03', '%Y-%m-%d'));
 
 commit;
