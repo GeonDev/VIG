@@ -33,9 +33,21 @@
 		WHERE event_id=#{value};
 	</select>
 	
-	<select id="getEventList" resultMap="EventSelectMap">
-		SELECT *
-		FROM event	
+	<select id="getEventList" parameterType="search" resultMap="EventSelectMap">
+		SELECT * FROM
+		(SELECT ROW_NUMBER() OVER(ORDER BY event.event_end DESC) num, event.*
+		FROM event
+		
+		<if test="keyword == 0">
+		WHERE event_type=0 AND event_end &gt;= CURRENT_DATE()
+		</if>
+		<if test="keyword == 1">
+		WHERE event_type=1
+		</if>
+		<if test="keyword == 2">
+		WHERE event_end &lt;= CURRENT_DATE()
+		</if>
+		) temp WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
 	</select>
 	
 	<select id="getLastEventList" resultMap="EventSelectMap">
