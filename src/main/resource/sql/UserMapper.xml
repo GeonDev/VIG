@@ -32,6 +32,7 @@
 		VALUES (user_code, #{userName}, #{password:VARCHAR}, #{role:VARCHAR}, #{profileImg:VARCHAR}, #{selfIntroduce:VARCHAR}, #{sex:VARCHAR}, #{birth:NUMERIC}, #{state:NUMERIC}, #{googleId:VARCHAR}, #{account:VARCHAR}, #{primeCount:NUMERIC}, #{email:VARCHAR}, NOW())
 	 </insert>
 	 -->
+
 	 
 	 <!-- SQL : INSERT -->
 	<insert	id="addUser" parameterType="user"  >
@@ -108,15 +109,17 @@
 	    WHERE num BETWEEN 1 AND 5	 
 	 </select>
 	 
-	 
-	 <update id="updateUser" parameterType="user" >
-	   	UPDATE users
-	   		SET 
-	   		self_introduce 	= #{selfIntroduce:VARCHAR} ,	   	
-	   		user_name  	= #{userName} ,
-			account	=	 #{account}		
-	   	WHERE user_code = #{userCode}
-	 </update>
+	  <update id="updateUser" parameterType="user">
+	 	UPDATE users SET 
+	 		self_introduce = #{selfIntroduce:VARCHAR},
+	 		user_name = #{userName},
+	 		password = #{password},
+	 		profile_img = #{profileImg:VARCHAR},
+	 		account = #{account:VARCHAR},
+	 		state = #{state:NUMERIC},
+	 		google_id = #{googleId:NUMERIC}
+	 	WHERE user_code = #{userCode}
+	 </update>	
 	 
 	 
 	 <delete id="deleteUser" parameterType="String">
@@ -134,5 +137,35 @@
 	    WHERE user_code = #{userCode}
 	 </update>
 	-->
-	 
+	
+<!-- SQL : SELECT LIST -->
+	<select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT user_code , user_name , email
+											FROM users
+											<if test="searchCondition != null">
+												<where>
+													<if test="searchCondition == 0 and searchKeyword !='' ">
+										 				user_code = #{searchKeyword}
+													</if>
+													<if test="searchCondition == 1 and searchKeyword !='' ">
+										 				user_name = #{searchKeyword}
+													</if>
+												</where>
+											</if>
+											ORDER BY user_code ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>
+	 <!-- SQL : SELECT ROW Count -->	 
+	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(user_code)
+	  	FROM(	SELECT user_code 
+						FROM users
+						GROUP BY user_code
+						<if test="keyword !=''">
+						 		HAVING	user_code LIKE CONCAT('%',#{keyword},'%')
+						</if> ) countTable						
+	 </select>
 </mapper>

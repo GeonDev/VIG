@@ -23,7 +23,7 @@ public class Search {
 	private ImageColor color;
 	
 	
-	
+	private String searchCondition;
 
 	
 	public Search() {
