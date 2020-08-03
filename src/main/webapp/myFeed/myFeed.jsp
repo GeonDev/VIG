@@ -124,6 +124,7 @@
  					<p class="user_bio" align="center"> ${user.selfIntroduce} </p>
  					<br><br/>
  			<!-- 소셜 아이콘 이미지 변경하기 -->
+ 			<c:if test="${sessionScope.user.role=='user' || sessionScope.user.role=='business'}">
  					<div class="row" id="sns_nav">
  					<i class="fab fa-facebook-f fa-lg blue-text ml-3 mr-3 fa-1x"></i>
  					<i class="fab fa-twitter fa-lg blue-text ml-3 mr-3  fa-1x"></i>
@@ -131,7 +132,7 @@
  					</div>
  					<br/>
  					<p class="sign_date" align="center"> Member Since :: ${user.regDate}</p>
- 					
+ 			</c:if>		
  				
  					<hr/><br/>
  				</div>
@@ -150,7 +151,7 @@
  					<button type="button" class="btn btn-block" onclick='nav_payment("")'>
  						<a href="#">결 제</a></button>
  					<br/>
- 				<!-- 수하님 테이블 업뎃받아야함 -->	
+ 			
  					<button type="button" class="btn btn-block" onclick='nav_PaymentList("/VIG/payment/getPaymentList")'>
  						<a href="#">내 결제 목록</a></button>	
  					<br/>
