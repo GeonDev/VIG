@@ -166,8 +166,8 @@ CREATE TABLE withdraw (
 	user_code 		VARCHAR(20) 	NOT NULL REFERENCES users(user_code),
 	acc_no 	 		VARCHAR(20),
 	acc_holder 		VARCHAR(20),
-	bank_name 		VARCHAR(20),
-	whthdrow_date 	DATE,
+	bank_code 		TINYINT(1),
+	withdraw_date 	DATE,
 	PRIMARY KEY(withdraw_id)
 );
 
