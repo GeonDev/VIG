@@ -44,6 +44,12 @@ public class WithdrawDaoImpl implements WithdrawDao{
 		return sqlSession.selectList("WithdrawMapper.getWithdrawList", search);
 	}
 
+	@Override
+	public int getCountWithdraw(String userCode) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("WithdrawMapper.getCountWithdraw", userCode);
+	}
+
 
 	
 	
