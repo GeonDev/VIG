@@ -32,6 +32,8 @@ public class WithdrawServicesImpl implements WithdrawServices {
 	public void addWithdraw(Withdraw withdraw) throws Exception {
 		// TODO Auto-generated method stub
 		
+		withdrawDao.addWithdraw(withdraw);
+		
 	}
 
 	@Override
