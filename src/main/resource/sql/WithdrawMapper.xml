@@ -58,7 +58,7 @@
 	
 	</select>
 	
-	<select id="getTotalCount" parameterType="String" resultType="int">
+	<select id="getCountWithdraw" parameterType="String" resultType="int">
 		
 		SELECT COUNT(*)
 		FROM(	
