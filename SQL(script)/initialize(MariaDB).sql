@@ -139,7 +139,6 @@ CREATE TABLE alarm (
 	send_user_code   	VARCHAR(20) 	NOT NULL REFERENCES users(user_code),
 	receive_user_code   VARCHAR(20) 	NOT NULL REFERENCES users(user_code),
 	like_feed_id    	INT(11)    		REFERENCES feeds(feed_id),
-	message 			VARCHAR(1024),
 	is_watch 			TINYINT(1),	
 	alarm_type  		TINYINT(1),	
 	add_date 			DATE, 
@@ -1991,7 +1990,7 @@ VALUES( event_id, '중국대표브랜드 펜 디자인 공모전', '중국 5대�
 
 
 INSERT INTO 
-alarm(alarm_id, send_user_code, receive_user_code, message, is_watch, alarm_type, add_date)
-VALUES(alarm_id, 'user02', 'user01','임시', 0, 0,  DATE_FORMAT('2010-01-03', '%Y-%m-%d'));
+alarm(alarm_id, send_user_code, receive_user_code,  is_watch, alarm_type, add_date)
+VALUES(alarm_id, 'user02', 'user01', 0, 0,  DATE_FORMAT('2010-01-03', '%Y-%m-%d'));
 
 commit;
