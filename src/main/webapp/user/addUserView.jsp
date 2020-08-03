@@ -68,10 +68,7 @@
 			}
 			$("form").attr("method" , "post").attr("action" , "addUser").submit();
 		}
-		//이메일 인증		
-		function sendEmail(){
-			$("form").attr("method" , "post").attr("action" , "sendEmail").submit();
-		}	
+		
 //=======================		
 		//회원가입	이벤트
 		$(function(){
@@ -79,14 +76,8 @@
 				fncAddUser();
 			});
 		});
-		//이메일 인증 이벤트
-		$(function(){
-			$("#send_email").on("click",function(){
-				alert("인증메일보냄");
-				sendEmail();
-			});
-		});
-		//비밀번호 체크 이벤트
+		
+	//===비밀번호 체크 이벤트
 		$(function(){
 			$("input[name=password2]").keyup( function(){				 				
 				var password = $("input[name=password]").val();
@@ -99,19 +90,28 @@
 					$(".check").html(alert);					
 				}				
 			});			
-		});					
-		//ID중복확인 이벤트 ==>모달이나 텍스트로 변경하기
-		
-		$("#iDcheck").on("click",function(){
+		});	
+	
+	//ID중복확인 이벤트 ==>모달이나 텍스트로 변경하기
+		$(function(){
+		//$("#signUp_btn").on("click",function(){
+			$("#userCode").blur(function() {
 			alert("2");
 			var id = $("#userCode").val();
+			
 			$.ajax({
-				url:'json/login',
-				type: 'post',
+				url:'/user/json/checkDuplication',
+				type: 'POST',
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},
+				data : JSON.stringify({
+					userCode : id
+				}),
 				success: function(data){
 					console.log("00 "+ data);
-					if (data == 'true') {
-						// 1 : 아이디가 중복되는 문구
+					if (data.userCode == id) {
 						$("#id_check").text("사용중인 아이디입니다.");
 						$("#id_check").css("color", "red");
 						$("#reg_submit").attr("disabled", true);
@@ -126,16 +126,16 @@
 					}
 			});
 		});
-		
+		});
 		
 		 /*
 		$(function() {
 			 $("#iDcheck").on("click" , function() {
 				popWin 
 				= window.open("/VIG/user/checkDuplication.jsp",
-											"popWin", 
-											"left=300,top=200,width=530,height=150,marginwidth=0,marginheight=0,"+
-											"scrollbars=no,scrolling=no,menubar=no,resizable=no");
+					"popWin", 
+					"left=300,top=200,width=530,height=150,marginwidth=0,marginheight=0,"+
+					"scrollbars=no,scrolling=no,menubar=no,resizable=no");
 			});
 		});	
 		*/
@@ -156,13 +156,9 @@
 </script>
 <style type="text/css">
 	
-	.container{
-		padding-right: 300px; padding-left: 300px; padding-top: 100px;' margin-right: auto; margin-left: auto;
-	 }
-	 #variedCode{
-	 	margin:auto;
-	 }
-	
+	.container { padding-right: 300px; padding-left: 300px; padding-top: 100px;' margin-right: auto; margin-left: auto; }
+	 #variedCode { margin:auto; }
+	#top_title { margin : 30px;}
 </style>
 </head>
 <body>
@@ -171,69 +167,82 @@
 
 <form>
 <div class="container">
-<div class="text-center border border-light p-5">
-  <div class="row">
-
-    <p class="h4 mb-6">Sign up</p>
-	<!-- id -->  
-		<label data-error="wrong" data-success="right" for="userCode"></label>
-		<input type="text" id="userCode" name="userCode" class="form-control mb-4" placeholder="userCode" required>   
-		<div class="check_font" id="id_check"></div>
-		<button type="button" class="btn btn-primary btn-sm" id="iDcheck">IDcheck</button>
-		
-	<!-- name -->
-		<input type="text" id="userName" name="userName" class="form-control mb-4" placeholder="nickName" required>
-		<label data-error="wrong" data-success="right" for="nickName"></label>   
-	
-	<!-- 비밀번호 -->
-	    <input type="password" id="password" name="password" class="form-control mb-4" placeholder="8자리 이하 입력" maxlength="8" required>
-		<label data-error="wrong" data-success="right" for="password"></label>
-	
-	<!-- 비밀번호2 -->      
-		 <input type="password" id="password2" name="password2" class="form-control mb-4" placeholder="Password2" required>
-	     <label data-error="wrong" data-success="right" for="password2"></label>
-	     <span id="helpBlock" class="help-block">
-			<span class="check"></span>
-		</span>
-		
-	<!-- 플필 -->  
-	     <input type="hidden" id="profileImg" name="profileImg" class="form-control mb-4" value="profile_img.jpg">
-	
-	<!-- 성별 -->
-	 	<div class="row">
-	 	<div class="form-control mb-4" id="genderBox">
-		  <input type="radio" id="check_userSex" name="sex" value="female" ><label for="sex">female</label>
-		  <input type="radio" id="check_userSex" name="sex" value="male"><label for="sex">male</label>
+	<div class="text-center border border-light p-5">
+	  <div class="row" id="top_title">
+	    <p class="h4 mb-6">Sign up</p>
+	  </div>
+	  
+		<!-- id -->  
+		<div class="form-group" style="margin: 0 0 40px 0;">
+			<label data-error="wrong" data-success="right" for="userCode"></label>
+			<input type="text" id="userCode" name="userCode" class="form-control mb-4" placeholder="userCode" required>   
+			<div class="check_font" id="id_check"></div>
 		</div>
-		</div>	
-	
-	<!-- 생년월일-->
-		<hr/>
-		<p>Date: <input type="text" id="datepicker" name="birth"></p>
-		<label data-error="wrong" data-success="right" for="birth"></label>
-	<!--  -->
-	     <input type="hidden" id="state" name="state" class="form-control mb-4" value="0">
-	     <input type="hidden" id="primeCount" name="primeCount" class="form-control mb-4" value="0">
-	     
-	<!-- 이메일 -->	
-	   	<input type="email" id="email" name="email" class="form-control mb-4" placeholder="email">
-	    <label data-error="wrong" data-success="right" for="email"></label> 
-	 
-	<!-- 이메일 인증 폼만 구현중-->   
-	    <button type="button" class="btn btn-primary btn-sm" id="sendEmail">send email</button>  
-		<input type="hidden" id="variedCode" name="variedCode" value="0" class="form-control mb-4" placeholder="variedCode" width="50px">
-		<button type="button" class="btn btn-primary btn-sm" id="send_email">check</button>  
-
-	<!-- role -->
-		<input type="hidden" id="role" name="role" class="form-control mb-4"  value="user">
+			
+		<!-- name -->
+		<div class="form-group" style="height:70px; margin:0; ">
+			<input type="text" id="userName" name="userName" class="form-control mb-4" placeholder="nickName" required>
+			<label data-error="wrong" data-success="right" for="nickName"></label>   
+		</div>
 		
-	<!-- 가입버튼 -->
-	    <button  class="btn btn-info btn-block my-4" id="signUp_btn" >Sign up</button>   
-			<p >Already a member? </p>
-	          <span id="login_nav" class="blue-text ml-1" href="#" > login</span>
+		<!-- 비밀번호 -->
+		<div class="form-group" style="height:70px; margin:0; ">
+		    <input type="password" id="password" name="password" class="form-control mb-4" placeholder="8자리 이하 입력" maxlength="8" required>
+			<label data-error="wrong" data-success="right" for="password"></label>
+		</div>
+		
+		<!-- 비밀번호2 -->   
+		<div class="form-group" style="margin:  0;">  
+			 <input type="password" id="password2" name="password2" class="form-control mb-4" placeholder="Password2" required>
+		     <label data-error="wrong" data-success="right" for="password2"></label>
+		     <span id="helpBlock" class="help-block">
+				<span class="check"></span>
+			</span>
+		</div>
+			
+		<!-- 플필 -->  
+		     <input type="hidden" id="profileImg" name="profileImg" class="form-control mb-4" value="profile_img.jpg">
+		
+		<!-- 성별 -->
+		<div class="form-group" style="margin: 0 0 40px 0;">
+		 	<div class="row">
+		 	<div class="form-control mb-4" id="genderBox">
+			  <input type="radio" id="check_userSex" name="sex" value="female" ><label for="sex">female</label>
+			  <input type="radio" id="check_userSex" name="sex" value="male"><label for="sex">male</label>
+			</div>
+			</div>	
+		</div>
+		<!-- 생년월일-->
+		<div class="form-group" style="margin: 0 0 40px 0;">
+			<hr/>
+			<p>Date: <input type="text" id="datepicker" name="birth"></p>
+			<label data-error="wrong" data-success="right" for="birth"></label>
+		</div>	
+		<!--  -->
+		     <input type="hidden" id="state" name="state" class="form-control mb-4" value="0">
+		     <input type="hidden" id="primeCount" name="primeCount" class="form-control mb-4" value="0">
+		     
+		<!-- 이메일 -->
+		<div class="form-group" style="margin: 0 0 40px 0;">
+		   	<input type="email" id="email" name="email" class="form-control mb-4" placeholder="email">
+		    <label data-error="wrong" data-success="right" for="email"></label> 
+		 </div>
+		 
+		<!-- 이메일 인증 폼만 구현중-->   
+		    <button type="button" class="btn btn-primary btn-sm" id="sendEmail">send email</button>  
+			<input type="hidden" id="variedCode" name="variedCode" value="0" class="form-control mb-4" placeholder="variedCode" width="50px">
+			<button type="button" class="btn btn-primary btn-sm" id="send_email">check</button>  
+	
+		<!-- role -->
+			<input type="hidden" id="role" name="role" class="form-control mb-4"  value="user">
+			
+		<!-- 가입버튼 -->
+		    <button  class="btn btn-info btn-block my-4" id="signUp_btn" >Sign up</button>   
+				<p >Already a member? </p>
+		          <span id="login_nav" class="blue-text ml-1" href="#" > login</span>
+				</div>
 			</div>
 		</div>
-	</div>
 
 </form> 
 
