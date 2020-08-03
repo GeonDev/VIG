@@ -2,6 +2,7 @@ package com.VIG.mvc.web.user;
 
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
@@ -125,7 +126,7 @@ public class UserController {
 			return mv;
 			
 		} else if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())){	
-			dbUser.setPassword(null);
+			
 			session.setAttribute("user", dbUser);
 			System.out.println("로그인 성공");
 			mv.setViewName("forward:/main/VIG");
@@ -173,23 +174,26 @@ public class UserController {
 	}
 	
 	@RequestMapping( value="updateUser", method=RequestMethod.POST )
-	public String updateUser(MultipartHttpServletRequest request,@ModelAttribute("uesr") User user, Model model, HttpSession session )throws Exception{ 
+	public String updateUser(@RequestParam("uploadFile") List<MultipartFile> files,@ModelAttribute("uesr") User user, Model model, HttpSession session )throws Exception{ 
 		
-		System.out.println("/user/updateUser : POST");
+		System.out.println("유저 업데이");
 	
-		
-		Map<String, MultipartFile> files = request.getFileMap();
-		System.out.println("2");
-		CommonsMultipartFile cmf  = (CommonsMultipartFile) files.get("file");
-		if(cmf.getOriginalFilename()!="") {
+		if(files !=null) {
 			
-			String path=uploadPath+cmf.getOriginalFilename();		
-			File f = new File(path);
-			
-			cmf.transferTo(f);			
-			user.setProfileImg(cmf.getOriginalFilename());			
-		}
-		
+	        for (MultipartFile multipartFile : files) {
+	        	//파일 업로드시 시간을 이용하여 이름이 중복되지 않게 한다.
+	        	
+	        	String inDate   = new java.text.SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date());
+	    
+	    		File f =new File("C://workspace//"+inDate+multipartFile.getOriginalFilename());
+	    		//원하는 위치에 파일 저장
+	    		multipartFile.transferTo(f);
+	    			if(f!=null) {
+	    			user.setProfileImg(f.getName());	
+	    			}
+	    		}
+	        }
+				
 		String pwdBycrypt = passwordEncoder.encode(user.getPassword());
 	    user.setPassword(pwdBycrypt);
 		userServices.updateUser(user);	
@@ -199,8 +203,7 @@ public class UserController {
 		System.out.println(sessionId);
 		if(sessionId.equals(user.getUserCode())){
 			session.setAttribute("user", user);
-		}
-		
+		}	
 		return "redirect:/user/updateUser.jsp";
 		
 	}
