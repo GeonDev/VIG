@@ -76,8 +76,7 @@
 	 
 	 
 	 <select id="getUserOne" parameterType = "String" resultMap="userSelectMap">
-	 	SELECT user_code, user_name, password, role, email, reg_date
-	 	FROM users
+	 	SELECT * FROM users
 	 	WHERE user_code = #{value}	
 	 </select>
 	 

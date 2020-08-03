@@ -332,6 +332,9 @@ $(function(){
 	//좋아요 연결
 	$("#like").on("click", function(){
 		
+		//실시간 알람을 보내는 부분
+		sendMessage('${feed.writer.userCode}','${feed.feedId}','0');
+		
 		var likeClass = $("#like").attr("class");
 		console.log(likeClass);
 		if(likeClass =='far fa-heart'){

@@ -6,7 +6,13 @@
 <head>
 <title>VIG</title>
 
+<!-- SocketJS CDN -->
+<script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
+
+
 <script type="text/javascript">
+
+
 $(function() {
 //===로그인
 	//$( "#login_btn:contains('Log in')" ).on("click" , function() {
@@ -24,10 +30,60 @@ $(function() {
 		});
 	
 //===로그아웃	
-	$( "#logout_btn:contains('Log Out')" ).on("click" , function() {
+	$(".dropdown-item:contains('Log Out')" ).on("click" , function() {
+		
 			$(self.location).attr("href","/VIG/user/logout");
 			}); 
 		});	
+		
+		
+			//웹 소켓을 생성한다.
+			var sock;
+			sock = new SockJS("<c:url value="/echo"/>");
+			
+			//자바스크립트 안에 function을 집어넣을 수 있음.
+			//데이터가 나한테 전달되었을때 자동으로 실행되는 function
+			sock.onmessage=onMessage;
+			
+			//데이터를 끊고싶을때 실행하는 메소드
+			sock.onclose = onClose;			
+			
+			
+			//알람 받을 유저의 유저코드, 피드ID(없으면 0), 알람타입(0= 좋아요, 댓글, 팔로우) 
+			function sendMessage(userCode, feedID, alarmType){         	
+				sock.send(userCode+","+ feedID+","+ alarmType);
+			}
+			
+			
+			//evt 파라미터는 웹 소켓을 보내준 데이터다.(자동으로 들어옴)
+			function onMessage(evt){
+			    var data = (evt.data).split(',');
+			    
+			    var addAlarms = '';
+			    
+			    addAlarms = 
+			    	"<li style='margin-left: 5px;'>"
+			   	 	+ "<a class='nav-link' href='/VIG/feed/getFeed?feedId='"+ data[0]+ ">"
+			   	 		+"<h6><img src='/VIG/images/uploadFiles/" + data[1]+ "' class='rounded-circle' style='width: 30px;'>"
+			   	 			+"<strong>" + data[2]+ "</strong>님이 좋아요를 누르셨습니다."
+			    			+"<img  src='/VIG/images/uploadFiles/" + data[2] + "' style='width: 30px;'>"
+        				+"</h6>" 
+            		 +"</a>"
+                    +"</li>";  			    
+			    
+			    
+			    $("#addAlarm").append(addAlarms);
+			    //sock.close();
+			}
+
+			function onClose(evt){
+			    $("#data").append("연결 끊김");
+			}
+			
+			
+			
+		
+		
 	</script>	
 	
 	<style>
@@ -39,7 +95,8 @@ $(function() {
 	#login_btn , #logout_btn{
 	color: white;
 	}
-	#fas_ntn{
+	
+	.fas_ntn{
 	color: #ffb74d;
 	}
 	p{
@@ -53,6 +110,10 @@ $(function() {
 	}
 	span{
 	color: white;
+	}
+	
+	.dropdown-toggle::after {
+    display:none;
 	}
 	</style>	
 	
@@ -72,17 +133,22 @@ $(function() {
    					 <ul class="navbar-nav ml-auto">
 				 </ul>		
 <!-- 검색 버튼-->    	      
-	        <a class="nav-link waves-effect waves-light" id="" href="/VIG/search/getSearchList">
-	          <i class="fas fa-search" id="fas_ntn"></i>
+	        <a class="nav-link waves-effect waves-light"  href="/VIG/search/getSearchList">
+	          <i class="fas fa-search fas_ntn" ></i>
 	        </a>	   
-<!-- 알람버튼 -->     
-	        <a class="nav-link waves-effect waves-light" id="alarm_btn" href="#">
-	          <i class="fas fa-bell" id="fas_ntn"></i>
-	          <span class="badge badge-pill badge-danger">1</span>
-	        </a>        
+<!-- 알람버튼 -->
+                  <li class="dropdown ">                 
+                     <i class="fas fa-bell fas_ntn dropdown-toggle"  data-toggle="dropdown" aria-expanded="false" style="margin-right: 15px;"></i>                    
+                     
+                     <ul id="addAlarm" class="dropdown-menu dropdown-menu-right" style="width: 350px;">                                   
+         
+                     </ul>
+                 </li>
+		
+	              
 <!-- 채팅버튼 -->      
 	        <a class="nav-link waves-effect waves-light" id=" chat_btn" href="#">
-	          <i class="fas fa-comments" id="fas_ntn"></i></a>
+	          <i class="fas fa-comments fas_ntn" ></i></a>
    	
 <!-- //비로그인 상태 -->
 <!-- 로그인 클릭시 모달 -->
@@ -100,13 +166,16 @@ $(function() {
 						<i class="fas fa-user"></i>
 						   <span class="caret"></span>
 					</a>
-		         <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="login_dropdown">
-					<h6 class="dropdown-header">${user.userCode }</h6>
+		         <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="login_dropdown">		         	
+					<h4 class="dropdown-header" style="text-align:center;  font-weight: bold; font-size: large; padding-left: 0px; margin-left: 5px; ">
+						<img src="/VIG/images/uploadFiles/${user.profileImg}" class="rounded-circle" style="width: 50px;">
+						${user.userName}
+					</h4>
 						 <div class="dropdown-divider"></div>
 						    <a class="dropdown-item" href="/VIG/myFeed/myFeed.jsp" >My Feed</a>
 						    <a class="dropdown-item" href="#">Upload</a>
 						  <div class="dropdown-divider"></div>
-						      <a class="dropdown-item" id="logout_btn" ><p>Log Out</p></a>
+						      <a class="dropdown-item" >Log Out</a>
 						 </div>
 		      		 </c:if>
 		   <!-- 관리자 로그인시 -->

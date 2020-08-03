@@ -178,7 +178,7 @@
    			    }
    			});	
 			
-			/* hideCategory(categoryPage-1); */
+		
 			
 			//F1 버튼을 누르면 키워드 추출 설정 
 	         $(document).keydown(function(key) {
@@ -248,6 +248,8 @@
 	.view {	  
 	margin: 5px 10px;
 	}
+	
+
     
    	</style>
     

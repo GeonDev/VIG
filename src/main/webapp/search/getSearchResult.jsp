@@ -398,10 +398,10 @@
 		
 	
 		
-		<div class="row justify-content-end mt-0 ">			
+		<div class="row justify-content-end mt-0  ">			
 			<div class="col-sm-10 d-flex justify-content-start">		
-				<button id="colorSelecter" class="btn btn-outline-light dropdown-toggle btn-sm form-inline" type="button" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;">
-					<i id="showColor" class="fas fa-circle" style="color: #0000FF;"></i> COLORS				 	
+				<button id="colorSelecter" class="btn btn-outline-light dropdown-toggle btn-sm form-inline mb-0" type="button" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;">
+					<p style="padding: 0px; margin-bottom: 0px; text-align: top; font-size: large;"><i id="showColor" class="fas fa-circle" style="color: #0000FF; "></i>&nbsp;Color</p>				 	
 				</button>
 				
 				<div class="dropdown-menu">
