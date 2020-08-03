@@ -109,8 +109,17 @@
 	    WHERE num BETWEEN 1 AND 5	 
 	 </select>
 	 
-	 
-	
+	  <update id="updateUser" parameterType="user">
+	 	UPDATE users SET 
+	 		self_introduce = #{selfIntroduce:VARCHAR},
+	 		user_name = #{userName},
+	 		password = #{password},
+	 		profile_img = #{profileImg:VARCHAR},
+	 		account = #{account:VARCHAR},
+	 		state = #{state:NUMERIC},
+	 		google_id = #{googleId:NUMERIC}
+	 	WHERE user_code = #{userCode}
+	 </update>	
 	 
 	 
 	 <delete id="deleteUser" parameterType="String">
@@ -128,6 +137,7 @@
 	    WHERE user_code = #{userCode}
 	 </update>
 	-->
+	
 <!-- SQL : SELECT LIST -->
 	<select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
 	  	SELECT *
