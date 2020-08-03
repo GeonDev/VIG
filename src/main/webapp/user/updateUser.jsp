@@ -52,6 +52,7 @@
 		}
 		
 		//=========
+		/*	
 		$(function(){
 			var file = document.querySelector('#getfile');
 
@@ -76,10 +77,10 @@
 		  	}
 			});	
 		});
-		
+		*/
 	
 		</script>
-	<!-- 스타일 태그 정리하고 수정하기 -->	
+	<!-- 스타일 태그 정리하고 수정하기 -->	       <!-- 그리드 완전 엉망 정리하기 -->
 		<style type="text/css">
 		.col-md-12{
 			padding: 100px 70px 70px;
@@ -147,7 +148,7 @@
 			<img id="preview" src="/VIG/images/uploadFiles/profile_img.jpg" id="pImg"  alt="profile_img">
  				</div>
 		<!--//////////////  -->
- 					<input type="file" id="getfile" name="profileImg" accept="image/*">
+ 					<input type="file" id="getfile" name="file" accept="image/*">
  				
  				<br/>
 	<div class="row" >
@@ -158,7 +159,7 @@
  					
 		<div class="form-group">
 		    <label for="userCode" class="col-sm-offset-5 col-md-5 control-label">아 이 디</label>
-		      <input type="text" class="form-control" id="userCode" name="userCode" value="${user.userCode }">
+		      <input type="text" class="form-control" id="userCode" name="userCode" value="${user.userCode }" readonly>
 		  </div>
 		  
 		  <div class="form-group">
@@ -168,7 +169,7 @@
 		  
 		   <div class="form-group">
 		    <label for="password" class="col-sm-offset-5 col-md-5 control-label">비밀번호</label>
-		      <input type="text" class="form-control" id="user_password" name="password" value="${user.password }" >
+		      <input type="text" class="form-control" id="user_password" name="password"  >
 		  </div>
 		  
 		  
@@ -195,8 +196,7 @@
 				
 				
 		<!--회원탈퇴 모달 확인창-->
-						<div class="modal fade" id="deleteCheck" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-						  aria-hidden="true">
+						<div class="modal fade" id="deleteCheck"  role="dialog" >
 						  <div class="modal-dialog modal-notify modal-warning" role="document">
 						    <!--Content-->
 						    <div class="modal-content">				

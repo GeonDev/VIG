@@ -110,16 +110,7 @@
 	 </select>
 	 
 	 
-	 <update id="updateUser" parameterType="user" >
-	   	UPDATE users
-	   		SET 
-	   		profile_img =#{profileImg},
-	   		self_introduce 	= #{selfIntroduce:VARCHAR} ,	   	
-	   		user_name  	= #{userName} ,
-			account	=	 #{account}	,
-			password = #{password}	
-	   	WHERE user_code = #{userCode}
-	 </update>
+	
 	 
 	 
 	 <delete id="deleteUser" parameterType="String">

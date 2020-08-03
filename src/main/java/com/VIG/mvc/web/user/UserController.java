@@ -127,11 +127,13 @@ public class UserController {
 		} else if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())){	
 			dbUser.setPassword(null);
 			session.setAttribute("user", dbUser);
+			System.out.println("로그인 성공");
 			mv.setViewName("forward:/main/VIG");
 			mv.addObject("msg", "suuccess");
 			return mv;
 		} else {
 			mv.setViewName("forward:/user/loginView.jsp");
+			System.out.println("로그인 실패");
 			mv.addObject("msg", "fail");
 			return mv;
 		}
@@ -175,9 +177,10 @@ public class UserController {
 		
 		System.out.println("/user/updateUser : POST");
 	
+		
 		Map<String, MultipartFile> files = request.getFileMap();
 		System.out.println("2");
-		CommonsMultipartFile cmf  = (CommonsMultipartFile) files.get("profileImg");		
+		CommonsMultipartFile cmf  = (CommonsMultipartFile) files.get("file");
 		if(cmf.getOriginalFilename()!="") {
 			
 			String path=uploadPath+cmf.getOriginalFilename();		
@@ -186,6 +189,7 @@ public class UserController {
 			cmf.transferTo(f);			
 			user.setProfileImg(cmf.getOriginalFilename());			
 		}
+		
 		String pwdBycrypt = passwordEncoder.encode(user.getPassword());
 	    user.setPassword(pwdBycrypt);
 		userServices.updateUser(user);	
