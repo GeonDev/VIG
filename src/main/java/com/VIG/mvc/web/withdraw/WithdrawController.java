@@ -115,9 +115,29 @@ public class WithdrawController {
 				}
 		
 		
-		mav.setViewName("forward:/withdraw/getAllWithdrawList");
+		mav.setViewName("forward:/withdraw/getWithdrawList");
 		}
 		
+		return mav;
+	}
+	
+	@RequestMapping(value="getWithdrawList", method=RequestMethod.GET)
+	public ModelAndView getWithdrawList(HttpSession session, Search search) throws Exception {
+		
+		logger.debug("getWithdrawList");
+		ModelAndView mav = new ModelAndView();
+		if(search.getCurrentPage() == 0 ){
+			search.setCurrentPage(1);
+		}
+		
+		search.setPageSize(pageSize);
+
+		Page resultPage = new Page(search.getCurrentPage(), paymentServices.getCountDonation(search) , pageUnit, pageSize);
+		
+		List<Withdraw> list = withdrawServices.getWithdrawList(search);
+		
+		
+		mav.setViewName("forward:/withdraw/getWithdrawList.jsp");
 		return mav;
 	}
 

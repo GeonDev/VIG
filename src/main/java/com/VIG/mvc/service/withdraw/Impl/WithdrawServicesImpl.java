@@ -46,7 +46,7 @@ public class WithdrawServicesImpl implements WithdrawServices {
 	@Override
 	public List<Withdraw> getWithdrawList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return withdrawDao.getWithdrawList(search);
 	}
 	
 	
