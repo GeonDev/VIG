@@ -42,10 +42,7 @@
 			$("#deleteCheck").on('hidden.bs.modal', function(){
 			    alert("계정이 삭제되었습니다.");
 			});		
-		//========
-
-			
-		//=========	
+		});
 		function fncDelete(){
 			$(location).attr("action","VIG/user/deleteUser").submit();
 		}	
@@ -76,7 +73,7 @@
 				    var tempImage = new Image(); //drawImage 메서드에 넣기 위해 이미지 객체화
 				    tempImage.src = reader.result; //data-uri를 이미지 객체에 주입
 
-		  	};
+		  	}
 			});	
 		});
 		
@@ -147,7 +144,7 @@
  	<!-- 프로필 사진 -->	
  	<div class="uuu">					
  				<div class="profile">
-			<img id="preview" src="/VIG/images/uploadFiles/"+${user.profileImg } id="pImg"  alt="profile_img">
+			<img id="preview" src="/VIG/images/uploadFiles/profile_img.jpg" id="pImg"  alt="profile_img">
  				</div>
 		<!--//////////////  -->
  					<input type="file" id="getfile" name="profileImg" accept="image/*">
@@ -167,6 +164,11 @@
 		  <div class="form-group">
 		    <label for="userName" class="col-sm-offset-5 col-md-5 control-label">닉네임</label>
 		      <input type="text" class="form-control" id="userName" name="userName" value="${user.userName }" >
+		  </div>
+		  
+		   <div class="form-group">
+		    <label for="password" class="col-sm-offset-5 col-md-5 control-label">비밀번호</label>
+		      <input type="text" class="form-control" id="user_password" name="password" value="${user.password }" >
 		  </div>
 		  
 		  
