@@ -41,7 +41,7 @@ public class WithdrawDaoImpl implements WithdrawDao{
 	@Override
 	public List<Withdraw> getWithdrawList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectList("WithdrawMapper.getWithdrawList", search);
 	}
 
 
