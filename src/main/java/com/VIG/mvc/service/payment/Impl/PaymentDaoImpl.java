@@ -85,6 +85,14 @@ public class PaymentDaoImpl implements PaymentDao {
 		
 		return sqlSession.selectOne("PaymentMapper.getPossiblePrice", userCode);
 	}
+
+	@Override
+	public void updatePayment(Payment payment) throws Exception {
+		// TODO Auto-generated method stub
+		
+		sqlSession.update("PaymentMapper.updatePayment", payment);
+		
+	}
 	
 	
 

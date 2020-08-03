@@ -27,6 +27,7 @@ public class WithdrawDaoImpl implements WithdrawDao{
 	@Override
 	public void addWithdraw(Withdraw withdraw) throws Exception {
 		// TODO Auto-generated method stub
+		sqlSession.insert("WithdrawMapper.addWithdraw", withdraw);
 		
 	}
 

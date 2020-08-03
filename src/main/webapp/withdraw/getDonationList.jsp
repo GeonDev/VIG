@@ -90,6 +90,53 @@
 	 
  }
  
+ $(function(){
+	
+	 $("a:contains('출금신청')").on("click", function(){
+		 var amount = $("input[name='amount']").val();
+		 if(amount< 10000){
+			 alert("1만원 이상부터 출금신청 할 수 있습니다.");
+			 return false;
+		 }
+		 
+	 });
+	 
+	 $("button:contains('출금신청')").on("click", function(){
+		
+		
+		 var holder = $("input[name='holder']").val();
+		 var accNo = $("input[name='accNo']").val();
+		 var RRN = $("input[name='RRN']").val();
+		 var paymentId = $("input[name='paymentId']");
+		 var bankCode =  $("select[name='bankCode']").val();
+		 
+		 if(holder == null || holder == ''){
+			 
+			 alert("예금주 명을 입력해주세요");
+		 }
+		 if(accNo == null || accNo == '') {
+			 
+			 alert("계좌번호를 입력해주세요");
+		 }
+		 if(RRN == null || RRN ==''){
+			 alert("주민등록번호를 입력해주세요");
+		 }
+		 if(bankCode == "") {
+			 alert("은행을 선택해주세요");
+		 }
+		 if(holder != "" && accNo != "" && RRN != ""&& bankCode!=""){
+			 alert("");
+		$("form").attr("method", "post").attr("action", "/VIG/withdraw/addWithdraw").submit();
+		 }
+		 
+	 });
+	 
+	 
+	 
+ });
+ 
+ 
+ 
 
 
 
@@ -106,7 +153,7 @@
 	<hr>
 	
 	<div class="container">
-		
+		 <form name="withdrawForm">
 		<table class="table">
 		  <thead>
 		    <tr>
@@ -119,16 +166,21 @@
 		    </tr>
 		  </thead>
 		  <tbody>
+		  
+			<c:set var="i" value="0"/>
 			<c:if test="${list != null }">
 				<c:forEach var="payment" items="${list}">
-				<c:set var="i" value="0"/>
+				
 				<c:set var="i" value="${i+1}"/>
 				
 				
 					<tr>
-						<th scope="row"><div style="width: 120px">${i}</div></th>
+						<th scope="row">${i}</th>
 						<td>
 							${payment.buyer.userCode}
+							
+							<input type="hidden" name="paymentId" value="${payment.paymentId }"> <!-- sever side에서 상태 변경용 paymentId를 심는다 -->
+							
 						</td>
 						<td>
 							${payment.selectPrice}
@@ -153,15 +205,34 @@
 				
 				</c:forEach>
 			</c:if>
+
 		
 		</tbody>
+
+		
 		</table>
-		<hr>
-		<div style="text-align:right; font-size: 23px "><p style="display:inline-block; font-weight: bold; font-size:25px; color: #1B7619;">출금가능금액</p> TOTAL : <fmt:formatNumber value="${possibleAmount}" pattern="0,000"/> 원</div>
-		<input type="hidden" value="${possibleAmount}" name="possibleAmount">
+				<c:if test="${empty list}">
+				<p style="text-align:center; font-weight: bold; height: 30px">받은 후원이 없습니다.</p>
+				</c:if>
+		<hr>		
+			<div class="row justify-content-md-center">
+				<jsp:include page="../common/pageNavigator.jsp"/>
+			</div>
+		
+		<!--  출금 가능 금액 표시 / 0이면 pattern X 0이아니면 pattern이 적용됨 -->
+		<div style="text-align:right; font-size: 23px "><p style="display:inline-block; font-weight: bold; font-size:25px; color: #1B7619;">
+															출금가능금액</p> TOTAL : 
+															<c:if test="${possibleAmount != 0 }">
+															<fmt:formatNumber value="${possibleAmount}" pattern="0,000"/>
+															</c:if> 
+															<c:if test="${empty possibleAmount || possibleAmount == 0 }">
+															<fmt:formatNumber value="${possibleAmount}"/>
+															</c:if>
+															
+															원</div>
 	
 			<div style="text-align: center"><a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalRegisterForm">출금신청</a>
-			<a href='' onclick="history.go(-1);" class="btn btn btn-mdb-color btn-rounded mb-4">취소</a></div>
+			<a href='' onClick="history.go(-1); return false;" class="btn btn btn-mdb-color btn-rounded mb-4">취소</a></div>
 			
 				<div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 						  aria-hidden="true">
@@ -173,21 +244,23 @@
 						          <span aria-hidden="true">&times;</span>
 						        </button>
 						      </div>
+						     
 						      <div class="modal-body mx-3">
-						      	 <fmt:formatNumber value="${possibleAmount}" pattern="0,000"/>원 출금신청
+						      	 <p style="text-align: center;"><fmt:formatNumber value="${possibleAmount}" pattern="0,000"/>원 출금신청</p>
+						      	 <input type="hidden" name="amount" value="${possibleAmount }">
 						        <div class="md-form mb-5">
 						          <input type="text" id="orangeForm-name" name="holder" class="form-control validate">
-						          <label data-error="wrong" data-success="right" for="orangeForm-name">예금주 명</label>
+						          <label data-error="wrong" data-success="right" for="orangeForm">예금주 명</label>
 						        </div>
 						        <div class="md-form mb-5">
-						          <input type="email" id="orangeForm-email" name="accNo" class="form-control validate">
-						          <label data-error="wrong" data-success="right" for="orangeForm-email">계좌번호</label>
+						          <input type="number" id="orangeForm-number" name="accNo" class="form-control">
+						          <label data-error="wrong" data-success="right" for="orangeForm">계좌번호</label>
 						        </div>
 						
 						        <div class="md-form mb-4">
 						          <i class="fas fa-lock prefix grey-text"></i>
-						          <input type="password" id="orangeForm-pass" class="form-control validate">
-						          <label data-error="wrong" data-success="right" for="orangeForm-pass">주민등록번호(앞 7자리)</label>
+						          <input type="password" id="orangeForm-pass" class="form-control" name="RRN">
+						          <label data-error="wrong" data-success="right" for="orangeForm">주민등록번호(앞 7자리)</label>
 						        </div>
 								<select class="browser-default custom-select" name="bankCode">
 				                        <option value="">은행명을 선택하세요</option>
@@ -221,15 +294,19 @@
 							</select>
 							<button type="button" class="btn btn-info">계좌조회</button>
 						      </div>
+						      
 						      <div class="modal-footer d-flex justify-content-center">
 						        <button class="btn btn-deep-orange">출금신청</button>
 						      </div>
 						    </div>
 						  </div>
 						</div>
-
+		</form>
 
 	</div>
+	
+	
+		
 	
 	
 		

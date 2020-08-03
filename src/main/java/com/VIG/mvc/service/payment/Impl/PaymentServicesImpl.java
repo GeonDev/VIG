@@ -84,6 +84,14 @@ public class PaymentServicesImpl implements PaymentServices {
 		
 		return paymentDao.getPossiblePrice(userCode);
 	}
+
+	@Override
+	public void updatePayment(Payment payment) throws Exception {
+		// TODO Auto-generated method stub
+		
+		paymentDao.updatePayment(payment);
+		
+	}
 	
 	
 	

@@ -47,19 +47,27 @@
 	  background: rgb(240, 240, 240);
 	  border: 1px solid rgb(0, 0, 0);
 	}
+    
+    .dropify-wrapper {
 	
+	 min-height: 650px;
+     
+
+	}
 	
-	  .file-upload-wrapper
-    {
-        border:2px dotted #3292A2;
-        width:90%;
-        height:300px;
-        color:#92AAB0;
-        text-align:center;
-        font-size:24px;
-        padding-top:12px;
-        margin-top:10px;
-    }
+	.dropify-wrapper img {
+	
+		width: 100%;
+  	
+	
+	}
+	
+	.has-preview {
+	
+	overflow:hidden;
+		height:auto;
+	
+	}
 
 
 </style>

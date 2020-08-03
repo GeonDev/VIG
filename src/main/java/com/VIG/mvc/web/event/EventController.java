@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +21,7 @@ import com.VIG.mvc.service.domain.Event;
 import com.VIG.mvc.service.domain.Feed;
 import com.VIG.mvc.service.event.EventServices;
 import com.VIG.mvc.service.feed.FeedServices;
+import com.VIG.mvc.web.main.mainController;
 import com.VIG.mvc.service.domain.Page;
 import com.VIG.mvc.service.domain.Search;
 
@@ -27,6 +30,7 @@ import com.VIG.mvc.service.domain.Search;
 @RequestMapping("/event/*")
 public class EventController {
 	
+	public static final Logger logger = LogManager.getLogger(EventController.class); 
 	
 	@Autowired
 	@Qualifier("eventServicesImpl")
@@ -49,13 +53,11 @@ public class EventController {
 	@RequestMapping(value="addEvent", method=RequestMethod.GET)
 	public ModelAndView addEvent() throws Exception {
 		
-		String message = "이건 ModelAndView 테스트용 메세지";
 
 		ModelAndView modelAndView = new ModelAndView();
 		
 		modelAndView.setViewName("forward:/event/addEventView.jsp");
-		modelAndView.addObject("message", message);
-		
+
 		return modelAndView;
 		
 	}
@@ -64,7 +66,7 @@ public class EventController {
 	@RequestMapping(value="addEvent", method=RequestMethod.POST)
 	public ModelAndView addEvent(@ModelAttribute("event") Event event, @RequestParam("uploadFile") List<MultipartFile> files) throws Exception {
 		
-		System.out.println("addEvent : POST");
+		logger.debug("addEvent시작");
 		
 		System.out.println(event);
 		
@@ -119,10 +121,10 @@ public class EventController {
 	@RequestMapping(value="getEvent", method=RequestMethod.GET)
 	public ModelAndView getEvent(@RequestParam("eventId") int eventId) throws Exception {
 		
-		System.out.println("getEvent");
+		logger.debug("getEvent");
 		Event event = eventServices.getEvent(eventId);
 		
-		System.out.println("getEvent의 event객체 :" +event);
+		logger.debug(event);
 		
 		String[] tags = ((event.getEventTags()).split(","));
 		List<Feed> feedList = feedServices.getFeedListOnlyTag(tags[0]);
@@ -139,12 +141,15 @@ public class EventController {
 	@RequestMapping(value="getEventList", method=RequestMethod.GET)
 	public ModelAndView getEventList( @ModelAttribute("search") Search search) throws Exception {
 		
-		System.out.println("getEventList");
-		
-		String message = "이벤트 리스트 입니다.";
+		logger.debug("getEventList");
+		logger.debug(search);
 		
 		if(search.getCurrentPage() == 0 ){
 			search.setCurrentPage(1);
+		}
+		
+		if(search.getKeyword() == "" || search.getKeyword() == null) {
+			search.setKeyword("0");
 		}
 		
 		search.setPageSize(pageSize);
@@ -157,7 +162,6 @@ public class EventController {
 		mav.setViewName("forward:/event/getEventList.jsp");
 		mav.addObject("list", map.get("list"));
 		mav.addObject("resultPage", resultPage);
-		mav.addObject("message", message);
 		
 		return mav;
 		
