@@ -41,4 +41,16 @@ public class AlarmServicesImpl implements AlarmServices {
 		
 	}
 
+	@Override
+	public int getLastAlarmId() throws Exception {
+		// TODO Auto-generated method stub
+		return alarmDao.getLastAlarmId();
+	}
+
+	@Override
+	public void updateAlarmView(int id) throws Exception {
+		// TODO Auto-generated method stub
+		alarmDao.updateAlarmView(id);
+	}
+
 }

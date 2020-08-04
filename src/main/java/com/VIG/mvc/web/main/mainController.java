@@ -111,9 +111,7 @@ public class mainController {
 		if(user !=null) {
 			user.setGoogleId("");
 			user.setPassword("");
-			
-			//확인하지 않은 알람을 모두 받아온다.
-			alarmList = alarmServices.unWatchAlarmList(user.getUserCode());
+
 		}
 		
 		
@@ -121,8 +119,6 @@ public class mainController {
 		
 		model.addAttribute("eventList", eventList);		
 		model.addAttribute("categoryList", categoryList);
-		model.addAttribute("alarmList", alarmList);
-		model.addAttribute("alarmCount", alarmList.size());
 		
 		return new ModelAndView("forward:/main/main.jsp");
 	}
