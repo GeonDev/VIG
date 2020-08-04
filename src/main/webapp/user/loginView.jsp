@@ -58,25 +58,7 @@
 				return;
 			}
 		////ajax 연결 안됨/ 로그인은 되는데 비번이나 아이디 다르면 모달이 다시 리로드 되어서 풀화면으로 나옴 폼에 action때문인가..	
-		$.ajax({
-				url : "/json/login",
-				method : "POST" ,
-				data : JSON.stringify({
-					userCode : id,
-					password : pw
-				}),
-				dataType : "json",
-				headers : {
-					"Accept" : "application/json",
-					"Content-Type" : "application/json"
-				},
-				success : function(data , status) {
-					alert("ok");
-				},error:function(request,status,error){
-					alert("json 연결 fail");
-			        alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
-					}
-				});			
+			
 			});
 		});
 	
@@ -93,8 +75,9 @@
 <body>
 
 <form action="/VIG/user/login" method="POST">
-	
+	<div class="lodin_modal">
 	<div class="container-fluid">	
+	
 		<div class="text-center border border-light p-5">
   			<div class="row" id="top_title">
    			 <p class="h4 mb-6">Login</p>
@@ -122,7 +105,7 @@
 	    
 			</div>
 		</div>
-	</div>
+		</div>
 </form>
 
 
