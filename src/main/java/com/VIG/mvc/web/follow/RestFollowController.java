@@ -2,27 +2,34 @@ package com.VIG.mvc.web.follow;
 
 
 import java.util.HashMap;
-
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.VIG.mvc.service.follow.FollowServices;
+import com.VIG.mvc.web.event.EventController;
+import com.VIG.mvc.service.domain.Page;
+import com.VIG.mvc.service.domain.Search;
+import com.VIG.mvc.service.domain.User;
 
 
 @RestController
 @RequestMapping("/follow/*")
 public class RestFollowController {
 	
+	public static final Logger logger = LogManager.getLogger(RestFollowController.class); 
 	
 	@Autowired
 	@Qualifier("followServicesImpl")
@@ -62,6 +69,35 @@ public class RestFollowController {
 		
 		followServices.deleteFollow(follow);
 
+	}
+	
+	@RequestMapping(value="json/getFollowerList", method=RequestMethod.GET)
+	public List<String> getFollowList(HttpSession session) throws Exception {
+		
+		Search search = new Search();
+		
+		User user = (User)session.getAttribute("user");
+		
+		logger.debug(user);
+		
+		if(search.getCurrentPage()==0) {
+			
+			search.setCurrentPage(1);
+		}
+		search.setKeyword(user.getUserCode());
+		search.setPageSize(pageSize);
+		
+		logger.debug(search);
+		
+		
+		List<String> follower = followServices.getFollowerList(search); 
+		
+		logger.debug(follower);
+		
+		Page resultPage = new Page( search.getCurrentPage(), 5 , pageUnit, pageSize);
+		
+		
+		return follower;
 	}
 
 	

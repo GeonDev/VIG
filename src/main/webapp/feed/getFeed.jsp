@@ -277,6 +277,12 @@ $(function(){
 	
 	//댓글 구현
 	$("button:contains('등록')").on("click", function(){
+		
+		var user = ${empty sessionScope.user};
+		if(user) {
+			alert("로그인이 필요합니다.");
+			return false;
+		}
 			
 		
 		var obj = new Object();			
@@ -338,7 +344,12 @@ $(function(){
 	
 	//좋아요 연결
 	$("#like").on("click", function(){
-		
+		var user = ${empty sessionScope.user};
+		if(user) {
+			alert("로그인이 필요합니다.");
+			return false;
+			
+		}
 		var likeClass = $("#like").attr("class");
 		console.log(likeClass);
 		if(likeClass =='far fa-heart'){
@@ -406,6 +417,14 @@ $(function(){
 		}
 		
 	});
+	
+	var user = ${empty sessionScope.user};
+	if(user) {
+		
+		$("textarea").attr("readonly","readonly");
+		
+	}
+
 	
 	
 });

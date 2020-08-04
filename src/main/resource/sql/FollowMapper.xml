@@ -5,7 +5,7 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="FollowMapper"> 	
-	
+ 
 	
 	<insert id="addFollow" parameterType="hashMap">
 		INSERT INTO follow(user_code, follower_code)
@@ -23,7 +23,32 @@
 	<select id="getFollow" parameterType="hashMap" resultType="int">
 	
 		SELECT COUNT(*) FROM follow
-		WHERE user_code=#{userCode} and follower_code=#{followerCode};
+		WHERE user_code=#{userCode} and follower_code=#{followerCode}
+	
+	</select>
+	
+	<!-- 내가 팔로우 한 사람 -->
+	<select id="getFollowingList" parameterType="search" resultMap="UserMapper.userSelectMap">
+	
+		SELECT temp.* FROM 
+		( SELECT ROW_NUMBER() OVER(ORDER BY f.follower_id) num, u.*
+		FROM follow f, users u
+		WHERE f.user_code=#{keyword}
+		AND f.follower_code = u.user_code
+		) temp 
+		WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
+	
+	</select>
+	
+	<!-- 나를 팔로우 한 사람 -->
+	<select id="getFollowerList" parameterType="search" resultType="String">
+		
+		SELECT temp.user_code FROM 
+		( SELECT ROW_NUMBER() OVER(ORDER BY follower_id) num, user_code
+		FROM follow
+		WHERE follower_code=#{keyword}
+		) temp 
+		WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
 	
 	</select>
 

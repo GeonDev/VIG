@@ -65,7 +65,7 @@
 		SELECT *
 		FROM withdraw
 		<if test="userCode!='null'">
-			AND userCode=#{value}
+			WHERE user_code=#{value}
 		</if>
 		ORDER BY withdraw_id) countTable
 	
