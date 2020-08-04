@@ -119,7 +119,7 @@
 			WHERE feeds.feed_id = images.feed_id
 			AND images.image_id = keywords.image_id
 			AND feed_state = 0
-			AND keywords.keyword_origin = #{value}
+			AND FIND_IN_SET(keywords.keyword_origin, #{value})
 			GROUP BY feeds.feed_id			
 		</select>
 		

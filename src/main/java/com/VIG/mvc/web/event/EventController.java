@@ -32,6 +32,9 @@ public class EventController {
 	
 	public static final Logger logger = LogManager.getLogger(EventController.class); 
 	
+	@Value("#{commonProperties['uploadPath']}")
+	String uploadPath;
+	
 	@Autowired
 	@Qualifier("eventServicesImpl")
 	private EventServices eventServices;
@@ -77,7 +80,7 @@ public class EventController {
 	        	System.out.println("index: "+ i++);
 	        	String inDate   = new java.text.SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date());
 	    
-	    		File f =new File("C://uploadFiles//"+inDate+multipartFile.getOriginalFilename());
+	    		File f =new File(uploadPath+inDate+multipartFile.getOriginalFilename());
 	    		//원하는 위치에 파일 저장
 	    		multipartFile.transferTo(f);
 	    		if(i == 1) {
@@ -111,7 +114,7 @@ public class EventController {
 		ModelAndView modelAndView = new ModelAndView();
 		
 		String message = "getEventList다";
-		modelAndView.setViewName("forward:/event/getEventList.jsp");
+		modelAndView.setViewName("forward:/event/getEventList");
 		modelAndView.addObject("message", message);
 		
 		return modelAndView;
@@ -126,9 +129,13 @@ public class EventController {
 		
 		logger.debug(event);
 		
-		String[] tags = ((event.getEventTags()).split(","));
-		List<Feed> feedList = feedServices.getFeedListOnlyTag(tags[0]);
-		
+		//String[] tags = ((event.getEventTags()).split(","));
+		String tags = event.getEventTags();
+		tags = tags.replaceAll(" ", "");
+		tags = "Red,Design,Logo";
+		System.out.println(tags);
+		List<Feed> feedList = feedServices.getFeedListOnlyTag(tags);
+		System.out.println(feedList);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("forward:/event/getEvent.jsp");
 		mav.addObject("event", event);

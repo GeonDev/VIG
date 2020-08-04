@@ -141,10 +141,10 @@ $('.dropify').dropify();
 	
 	
 	<div id=main>
-	<form class="myform" enctype="multipart/form-data">
 	
-	<h1> 여긴 이벤트 페이지 등록 화면~ </h1>
-	<p> ${message} </p>
+	<h1 style="font-weight: bold"> 이벤트 작성 </h1>
+	
+	<form class="myform" enctype="multipart/form-data">
 	
 	<div class="md-form form-lg">
 	  <input type="text" id="inputLGEx" class="form-control form-control-lg" name="eventTitle">

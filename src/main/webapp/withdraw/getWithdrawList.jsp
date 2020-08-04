@@ -176,7 +176,73 @@
 							${withdraw.accNo}
 						</td>
 						<td>
-							${withdraw.bankCode}
+							<c:if test="${withdraw.bankCode == 35}">
+							경남은행
+							</c:if>
+							<c:if test="${withdraw.bankCode == 29}">
+							광주은행
+							</c:if>
+							<c:if test="${withdraw.bankCode == 7}">
+							국민은행
+							</c:if>
+							<c:if test="${withdraw.bankCode == 5}">
+							기업은행
+							</c:if>
+							<c:if test="${withdraw.bankCode == 15}">
+							농협중앙회
+							</c:if>
+							<c:if test="${withdraw.bankCode == 25}">
+							대구은행
+							</c:if>
+							<c:if test="${withdraw.bankCode == 27}">
+							부산은행
+							</c:if>
+							<c:if test="${withdraw.bankCode == 3}">
+							산업은행
+							</c:if>
+							<c:if test="${withdraw.bankCode == 37}">
+							새마을금고
+							</c:if>
+							<c:if test="${withdraw.bankCode == 11}">
+							수협중앙회
+							</c:if>
+							<c:if test="${withdraw.bankCode == 39}">
+							신협중앙회
+							</c:if>
+							<c:if test="${withdraw.bankCode == 60}">
+							신한은행
+							</c:if>
+							<c:if test="${withdraw.bankCode == 9}">
+							외환은행
+							</c:if>
+							<c:if test="${withdraw.bankCode == 19}">
+							우리은행
+							</c:if>
+							<c:if test="${withdraw.bankCode == 56}">
+							우체국
+							</c:if>
+							<c:if test="${withdraw.bankCode == 33}">
+							전북은행
+							</c:if>
+							<c:if test="${withdraw.bankCode == 31}">
+							제주은행
+							</c:if>
+							<c:if test="${withdraw.bankCode == 68}">
+							카카오뱅크
+							</c:if>
+							<c:if test="${withdraw.bankCode == 67}">
+							케이뱅크
+							</c:if>
+							<c:if test="${withdraw.bankCode == 59}">
+							하나은행
+							</c:if>
+							<c:if test="${withdraw.bankCode == 23}">
+							한국시티은행
+							</c:if>
+							<c:if test="${withdraw.bankCode == 21}">
+							SC제일은행
+							</c:if>
+
 						</td>
 						<td>
 							${withdraw.amount }

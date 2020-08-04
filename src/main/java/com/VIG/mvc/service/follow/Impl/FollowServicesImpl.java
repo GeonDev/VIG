@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.follow.FollowDao;
 import com.VIG.mvc.service.follow.FollowServices;
+
 
 @Service("followServicesImpl")
 public class FollowServicesImpl implements FollowServices {
@@ -39,15 +41,15 @@ public class FollowServicesImpl implements FollowServices {
 	}
 
 	@Override
-	public List<User> getFollowList(String userCode) throws Exception {
+	public List<String> getFollowerList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return followDao.getFollowerList(search);
 	}
 
 	@Override
-	public List<User> getFollowingList(String userCode) throws Exception {
+	public List<User> getFollowingList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return followDao.getFollowingList(search);
 	}
 	
 	public int getFollow(Map<String, Object> follow) throws Exception{
