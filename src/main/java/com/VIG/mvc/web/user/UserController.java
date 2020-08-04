@@ -199,11 +199,13 @@ public class UserController {
 		userServices.updateUser(user);	
 		model.addAttribute("user", user);
 	
+		/*
 		String sessionId=((User)session.getAttribute("user")).getUserCode();
 		System.out.println(sessionId);
 		if(sessionId.equals(user.getUserCode())){
 			session.setAttribute("user", user);
-		}	
+		}
+		*/	
 		return "redirect:/user/updateUser.jsp";
 		
 	}

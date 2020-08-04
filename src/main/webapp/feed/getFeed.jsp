@@ -344,12 +344,19 @@ $(function(){
 	
 	//좋아요 연결
 	$("#like").on("click", function(){
+<<<<<<< HEAD
 		var user = ${empty sessionScope.user};
 		if(user) {
 			alert("로그인이 필요합니다.");
 			return false;
 			
 		}
+=======
+		
+		//실시간 알람을 보내는 부분
+		sendMessage('${feed.writer.userCode}','${feed.feedId}','0');
+		
+>>>>>>> fatch
 		var likeClass = $("#like").attr("class");
 		console.log(likeClass);
 		if(likeClass =='far fa-heart'){
