@@ -37,6 +37,10 @@ public interface UserServices {
 	// send email
 	public boolean sendEmail(String email) throws Exception;
 	
+	// 비번 체크
+	public int chcekPw(String password) throws Exception;
+		
+	
 	// id check
 	public boolean checkDuplication(String userCode) throws Exception;
 	

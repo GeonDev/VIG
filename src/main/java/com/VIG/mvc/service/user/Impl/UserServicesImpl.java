@@ -58,6 +58,11 @@ public class UserServicesImpl implements UserServices {
 		return false;
 	}
 	
+	//@Override
+	//public int chcekPw(String password) throws Exception {
+	//	return userDao.chcekPw(password);
+	//}
+	
 	public boolean checkDuplication(String userCode) throws Exception {
 		boolean result=true;
 		User user=userDao.getUserOne(userCode);
@@ -106,6 +111,12 @@ public class UserServicesImpl implements UserServices {
 	public List<User> getBanUserList() throws Exception {
 		// TODO Auto-generated method stub
 		return userDao.getBanUserList();
+	}
+
+	@Override
+	public int chcekPw(String password) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 

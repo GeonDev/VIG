@@ -58,6 +58,12 @@ public class UserDaoImpl implements UserDao {
 		return sqlSession.selectOne("UserMapper.getUserOne", userCode);
 	}
 	
+	//@Override
+	//public int chcekPw(String password) throws Exception {
+		// TODO Auto-generated method stub
+	//	 return sqlSession.selectOne("UserMapper.chcekPw", password);
+	//}
+	
 	@Override
 	public List<User> getUserList(Search search) throws Exception {
 		// TODO Auto-generated method stub
