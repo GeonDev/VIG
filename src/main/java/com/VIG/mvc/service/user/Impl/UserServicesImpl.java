@@ -58,7 +58,6 @@ public class UserServicesImpl implements UserServices {
 		return false;
 	}
 	
-	@Override
 	public boolean checkDuplication(String userCode) throws Exception {
 		boolean result=true;
 		User user=userDao.getUserOne(userCode);

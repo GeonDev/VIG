@@ -55,8 +55,6 @@ public class EventServicesImpl implements EventServices {
 		List<Event> list = eventDao.getEventList(search);
 		int totalCount = eventDao.getEventCount();
 		
-		System.out.println(totalCount);
-		
 		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("list", list);
 		map.put("totalCount", totalCount);	

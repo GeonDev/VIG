@@ -50,14 +50,99 @@
 	  background: rgb(240, 240, 240);
 	  
 	}
+	.eventmenu {
+	
+		padding : 5px;
+		font-weight: bold;
+	
+	}
+	.eventmenu:hover{
+	
+		background-color: #D0F1F8;
+	
+	}
+	.eventmenu:click{
+	
+		background-color: #D0F1F8;
+	}
+	
+	.top {
+	  position: fixed;
+	  right: 10%;
+	  bottom: 50px;
+	  display: none;
+	  font-size: 45px;
+	 
+	}
+	.fa-arrow-alt-circle-up{
+	  color: #FBA635;
+	
+	}
+
 
 
 </style>
 
 
 <script type="text/javascript">
+$(function(){
+//scrollTop 부드럽게 이동하는 부분
+$( window ).scroll( function() {
+	if ( $( this ).scrollTop() > 200 ) {
+		$( '.top' ).fadeIn();
+	} else {
+		$( '.top' ).fadeOut();
+	}
+} );
+
+//스크롤탑 애니메이션
+$( '.top' ).click( function() {
+	$( 'html, body' ).animate( { scrollTop : 0 }, 400 );
+	return false;
+} );
+
+//진행중인 이벤트
+$('.ing').on("click", function(){
+		
+	self.location="/VIG/event/getEventList?keyword=0";
+
+});
+
+//당첨자 발표
+$('.announce').on("click", function(){
+	
+	self.location="/VIG/event/getEventList?keyword=1";
+	
+});
+//종료된 이벤트
+$(".fin").on("click", function(){
+	
+	self.location="/VIG/event/getEventList?keyword=2";
+	
+});
+
+//메뉴 클릭시 색상 유지
+var eventmenu = ${search.keyword};
+
+if(eventmenu == 0) {
+	
+	$(".ing").attr("style", "background-color: #D0F1F8");
+	
+} else if(eventmenu == 1){
+	
+	$(".announce").attr("style", "background-color: #D0F1F8");
+	
+} else if(eventmenu == 2) {
+	
+	$(".fin").attr("style", "background-color: #D0F1F8");
+}
+
+	
 
 
+
+
+});
 </script>
 
 
@@ -67,13 +152,26 @@
 	<!-- 툴바 include -->
 	<jsp:include page="../main/toolbar.jsp" />
 	
+	<div class="top">
+	<i class="fas fa-arrow-alt-circle-up"></i>
+	</div>
 	
+	<div class="container">
 	<div class="row">
+	
+	<div class="md-5" style=" height: 500px; border-right: 1px solid #D3DEE1; padding: 10px">
+	<div style="font-size: 30px; font-weight: bold"> EVENT </div>
+	<hr>
+	<div class="eventmenu ing"> 진행중인 이벤트 </div>
+	<div class="eventmenu announce"> 당첨자 발표 </div>
+	<div class="eventmenu fin"> 종료된 이벤트 </div>
+	
+	</div>
 	
 	
 	<div id="main" class="container-fluid">
-
-
+	
+	
 	
 	
 	<c:forEach var="event" items="${list}">
@@ -102,6 +200,11 @@
 		<br/>
     </div>
   	</c:forEach>
+		
+		  	<c:if test="${empty list }">
+		  		<div style="text-align: center; vertical-align: middle; margin-top: 120px"> 등록된 이벤트가 없습니다. </div>
+		  	</c:if>
+		
 	</div>
 		
 		
@@ -109,7 +212,8 @@
 	
 	
 	</div>
-	
+	</div>
+
 
 </body>
 </html>
