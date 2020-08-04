@@ -12,6 +12,8 @@ public interface AlarmDao {
 		
 	public void deleteOldAlarm(int date) throws Exception;
 	
-	public int getLastAlarmId() throws Exception;
+	public int getLastAlarmId() throws Exception;	
+	
+	public void updateAlarmView(int id) throws Exception;
 
 }

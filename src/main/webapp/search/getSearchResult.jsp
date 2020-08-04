@@ -31,7 +31,6 @@
 	<script type="text/javascript" src="/VIG/javascript/farbtastic.js"></script>
  	<link rel="stylesheet" href="/VIG/css/farbtastic.css" type="text/css" />
 
-	
 	<style>
 	body {
     padding-top : 50px;
@@ -43,9 +42,11 @@
 	max-height: 300px;	  
 	}
 		
-	.img_feed {	  
-	max-width: 400px;
-	max-height: 300px;	
+    .img_feed {	
+    width: auto; height: auto;  
+	max-width: 500px;
+	max-height: 375px;
+	overflow:hidden;	
 	}
 		
 	.img_feed_thumb {	  
@@ -87,7 +88,7 @@
 	//페이지 로드가 완료 되었는지 체크(ajax 중복 호출 방지용)
 	var isLoadPage = false;	
 	
-	//전달받은 피드 리스트를 화면에 그림
+	//전달받은 피드 리스트를 화면에 그린다.
 	function getfeedlistFromAjax(item, user){
 		var thumbnail = '';								
 		
@@ -104,23 +105,23 @@
 			"<div class = 'view overlay'>"
 				+"<div class = 'img_feed'>"
 				+ "<a href='/VIG/feed/getFeed?feedId="+ item.feedId +"' class='text-light'>"
-					+ "<img src='/VIG/images/uploadFiles/" + thumbnail + "' alt='thumbnail' class='img-fluid rounded-sm' style='width: 400px; height: 300px;'>"
+					+ "<img src='/VIG/images/uploadFiles/" + thumbnail + "' alt='thumbnail' class='img-fluid rounded-sm img_feed '>"
 					+ "<div class='mask waves-effect waves-light rgba-black-strong' style='text-align: right;'>";					
 						if(user != ''){
 							displayValue +="<button type='button' onclick='addhideFeed("+ item.feedId +")' class='btn btn-link' style='width: 50px; height:50px; padding-left: 0px; padding-right: 0px;'>"											
 								+ "<h4><i class='far fa-times-circle' style='color: white; text-align: center;'></i></h4>"
-							+"</button>";					
+							+"</button>"
+							+"<p class='txt_line' style='margin: 55% 10px; font-weight: bold; text-align: left; color : white; font-size : large; vertical-align: bottom'>";					
 						}else{
-							displayValue +="<br/>";
+							displayValue += "<p class='txt_line' style='margin: 65% 10px; font-weight: bold; text-align: left; color : white; font-size : large; vertical-align: bottom'>";								
 						}					
-						displayValue +="<br/><br/><br/><br/><br/><br/><br/><br/><br/>"
-						+ "<h5 class='txt_line' style='font-weight: bold; margin: 5px 10px; text-align: left;'>";
+					
 						
 						if(item.feedIsPrime == 1){
 							displayValue += "<span class='badge badge-primary'>Prime</span>&nbsp;";
 						}						
 						
-						displayValue += item.feedTitle + "</h5>"					
+						displayValue += item.feedTitle + "</p>"					
 					+ "</div>"
 				+ "</a>"
 				+"</div>"
@@ -139,7 +140,7 @@
 			"<div class = 'view overlay'>"
 				+ "<div class = 'img_image'>"
 					+ "<a href='/VIG/search/getSearchImages?imageId="+ item.imageId +"' class='text-light'>"
-					+ "<img src='/VIG/images/uploadFiles/" + item.imageFile + "' alt='thumbnail' class='img-fluid rounded-sm' style='width: auto; height: 300px;'>"
+					+ "<img src='/VIG/images/uploadFiles/" + item.imageFile + "' alt='thumbnail' class='img-fluid rounded-sm ' style='width: auto; height: 300px;'>"
 						+"<div class='mask flex-center waves-effect waves-light rgba-black-strong'>"						
 						+"</div>"
 					+ "</a>"
@@ -174,7 +175,7 @@
 			"<div class = 'view'>"
 				+"<div class = 'row'>"
 					+"<a class = 'col-md-1' href='/VIG/myfeed/getMyFeedList?userCode="+ item.userCode + "'>"
-					+ "<img src='/VIG/images/uploadFiles/" + item.profileImg + "' alt='thumbnail' class='img-fluid rounded-circle' style=' width: 100%; padding-left: 0px; padding-right: 0px; margin-left : 15px;'>"
+					+ "<img src='/VIG/images/uploadFiles/" + item.profileImg + "' alt='thumbnail' class='img-fluid rounded-circle ' style=' width: 100%; padding-left: 0px; padding-right: 0px; margin-left : 15px;'>"
 					+"</a>"
 					+"<div class='userInfo col-md-4 '>"
 						+"<h2 style='margin-bottom : 1px;'><b>" + item.userName +"</b></h2>"
@@ -207,7 +208,7 @@
 		"<div class = 'view_small'>"
 			+"<div class = 'img_feed_thumb'>"
 			+"<a href='/VIG/feed/getFeed?feedId="+ item.feedId +"'>"
-			+ "<img src='/VIG/images/uploadFiles/" + thumbnail 	+ "' alt='thumbnail' class='img-fluid rounded-sm' style='width: 125px; height: 100px;'>" 	 							
+			+ "<img src='/VIG/images/uploadFiles/" + thumbnail 	+ "' alt='thumbnail' class='img-fluid rounded-sm ' style='width: 125px; height: 100px;'>" 	 							
 			+"</a>"
 			+"</div>"
 		+"</div>";		
@@ -242,7 +243,7 @@
 					success : function(JSONData , status) {
 						
 						//검색 결과가 있는지 체크
-						if (JSONData.list.length){					
+						if (JSONData.list.length >0){					
 						
 							//불러와야 되는 페이지보다 개수가 적은 경우 페이지가 끝났다
 							if (JSONData.list.length < 10){
@@ -298,13 +299,13 @@
 			data :  JSON.stringify({keyword : $("#Keyword").val(), mode : Mode }),						
 			success : function(JSONData, status) {
 				//검색 결과가 있으면 처리			
-				if(JSONData.length){
-				var arraylist = JSONData;
-					console.log( JSONData );
-				
-				 	$("#Keyword").autocomplete({			 		
-				        source: JSONData
-				    });		
+				if(JSONData.length > 0){
+					var arraylist = JSONData;
+						console.log( JSONData );
+					
+					 	$("#Keyword").autocomplete({			 		
+					        source: JSONData
+					    });		
 				}
 			}							
 		});
@@ -330,9 +331,7 @@
 			link =  link.concat(feedId);
 			$(location).attr("href", link); 
 		}      	    			
-	}	
-
-	
+	}
 	
 	$(function(){			
 		
@@ -361,11 +360,11 @@
 				//모드를 변경했음으로 페이지 다시 로드
 				getItemList();
 	
-			});					
+			});		
 			
    			
 			$(window).scroll(function() {
-   			    if ($(window).scrollTop() + 300 >= $(document).height() - $(window).height()) {     			     
+   			    if ($(window).scrollTop() + 400 >= $(document).height() - $(window).height()) {     			     
 	   				getItemList();   			    	
    			    }
    			});		
@@ -468,7 +467,7 @@
 							<a href="/VIG/feed/getFeed?feedId=${feed.feedId}" class="text-light">
 								<c:forEach var="thumbnail" items="${feed.images}">
 									<c:if test="${thumbnail.isThumbnail == 1}">									
-										<img src="/VIG/images/uploadFiles/${thumbnail.imageFile}" alt="thumbnail" class="img-fluid rounded-sm" style="width: 400px; height: 300px;">										
+										<img src="/VIG/images/uploadFiles/${thumbnail.imageFile}" alt="thumbnail" class="img-fluid rounded-sm img_feed" >										
 									</c:if>
 								</c:forEach>						
 								<div class="mask waves-effect waves-light rgba-black-strong" style="text-align: right;">							
@@ -478,20 +477,18 @@
 											<button type="button" onclick="addhideFeed(${feed.feedId})" class="btn btn-link" style="width: 50px; height:50px; padding-left: 0px; padding-right: 0px;">											
 												<h4><i class="far fa-times-circle" style="color: white; text-align: center;"></i></h4>
 											</button>
+											<p class="txt_line" style="margin: 55% 10px; font-weight: bold; text-align: left; color : white; font-size : large; vertical-align: bottom">			
 										
 										</c:when>
 										<c:when test="${user == null }">										
-											<br/>
+											<p class="txt_line" style="margin: 65% 10px; font-weight: bold; text-align: left; color : white; font-size : large; vertical-align: bottom">									
 										</c:when>									
-									</c:choose>					
+									</c:choose>	
 									
-									<br/><br/><br/><br/><br/><br/><br/><br/><br/>
-									<h5 class="txt_line" style="font-weight: bold; margin: 5px 10px; text-align: left;">								
-										<c:if test="${feed.feedIsPrime  == 1}">
-											<span class="badge badge-primary">Prime</span>&nbsp;
-										</c:if>	
-										${feed.feedTitle}
-									 </h5>					
+									<c:if test="${feed.feedIsPrime == 1}">
+										<span class="badge badge-primary">Prime</span>&nbsp;
+									</c:if>
+									${feed.feedTitle}</p>																						
 								</div>
 							</a>
 						</div>

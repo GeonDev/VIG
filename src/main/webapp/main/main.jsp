@@ -49,7 +49,7 @@
 		//선택된 카테고리를 세팅		
 		var selectCategory ='RECOMMEND';			
 		
-		//전달받은 피드 리스트를 화면에 그림
+		//전달받은 피드 리스트를 화면에 그린다.
 		function getfeedlistFromAjax(item, user){
 			var thumbnail = '';								
 			
@@ -66,23 +66,23 @@
 				"<div class = 'view overlay'>"
 					+"<div class = 'img_feed'>"
 					+ "<a href='/VIG/feed/getFeed?feedId="+ item.feedId +"' class='text-light'>"
-						+ "<img src='/VIG/images/uploadFiles/" + thumbnail + "' alt='thumbnail' class='img-fluid rounded-sm' style='width: 400px; height: 300px;'>"
+						+ "<img src='/VIG/images/uploadFiles/" + thumbnail + "' alt='thumbnail' class='img-fluid rounded-sm img_feed'>"
 						+ "<div class='mask waves-effect waves-light rgba-black-strong' style='text-align: right;'>";					
 							if(user != ''){
 								displayValue +="<button type='button' onclick='addhideFeed("+ item.feedId +")' class='btn btn-link' style='width: 50px; height:50px; padding-left: 0px; padding-right: 0px;'>"											
 									+ "<h4><i class='far fa-times-circle' style='color: white; text-align: center;'></i></h4>"
-								+"</button>";					
+								+"</button>"
+								+"<p class='txt_line' style='margin: 55% 10px; font-weight: bold; text-align: left; color : white; font-size : large; vertical-align: bottom'>";					
 							}else{
-								displayValue +="<br/>";
+								displayValue += "<p class='txt_line' style='margin: 65% 10px; font-weight: bold; text-align: left; color : white; font-size : large; vertical-align: bottom'>";								
 							}					
-							displayValue +="<br/><br/><br/><br/><br/><br/><br/><br/><br/>"
-							+ "<h5 class='txt_line' style='font-weight: bold; margin: 5px 10px; text-align: left;'>";
+						
 							
 							if(item.feedIsPrime == 1){
 								displayValue += "<span class='badge badge-primary'>Prime</span>&nbsp;";
 							}						
 							
-							displayValue += item.feedTitle + "</h5>"					
+							displayValue += item.feedTitle + "</p>"					
 						+ "</div>"
 					+ "</a>"
 					+"</div>"
@@ -115,6 +115,8 @@
 						data :  JSON.stringify({category : categoryName, currentPage : page}),
 						success : function(JSONData , status) {
 							
+							if(JSONData.list.length > 0){
+							
 							//불러와야 되는 페이지보다 개수가 적은 경우 페이지가 끝났다
 							if (JSONData.list.length < 10){
 								isPageEnd = true;
@@ -127,6 +129,9 @@
 	 						
 	 						//로드가 완료되면 로딩이 되었다고 체크
 	 						isLoadPage = false;						
+							}else{
+								isPageEnd = true;
+							}
 						}
 				});	
 		}
@@ -210,16 +215,20 @@
 		
 	<style type="text/css">	
 	
-
+	h5{
+	display:table-cell;
+	}
 
 		
 	body {
     padding-top : 50px;
     } 
     
-    .img_feed {	  
-	max-width: 400px;
-	max-height: 300px;	
+    .img_feed {	
+    width: auto; height: auto;  
+	max-width: 500px;
+	max-height: 375px;
+	overflow:hidden;	
 	}
 	
 	.img_categories {	
