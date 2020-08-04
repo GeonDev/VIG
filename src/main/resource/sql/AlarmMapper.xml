@@ -45,7 +45,20 @@
 		<select id="unWatchAlarmList" parameterType="string" resultMap="AlarmSelectMap">
 			SELECT * FROM alarm
 			WHERE receive_user_code = #{value}
-			AND is_watch = 0			
+			AND is_watch = 0
+			ORDER BY alarm_id		
+		</select>
+		
+		<update id="updateAlarmView" parameterType="int">
+			UPDATE alarm SET
+			is_watch = 1
+			WHERE alarm_id = #{value}	
+		</update>
+		
+		
+		
+		<select id="getLastAlarmId" resultType="int">
+			SELECT MAX(alarm_id) FROM alarm			
 		</select>
 		
 		

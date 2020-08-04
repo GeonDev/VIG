@@ -12,42 +12,50 @@
 
 <script type="text/javascript">
 
+	//유저가 로그인했는지 체크를 위한 변수
 	var chackUserLogin = '${sessionScope.user}';
 
+	// 소켓을 담기위한 변수
+	var sock;
 	
-	function setLikeAlarm(data) {
+	
+	function setLikeAlarm(item) {
 		var data = (item).split(',');    
 	    
 		var addAlarms = 
-	    	"<li style='margin-left: 5px;'>"
-	   	 	+ "<a class='nav-link' href='/VIG/feed/getFeed?feedId='"+ data[0]+ ">"
-	   	 		+"<h6><img src='/VIG/images/uploadFiles/" + data[1]+ "' class='rounded-circle' style='width: 30px;'>"
-	   	 			+"<strong>" + data[2]+ "</strong>님이 좋아요를 누르셨습니다."
-	    			+"<img src='/VIG/images/uploadFiles/" + data[3] + "' style='width: 30px;'>"
-				+"</h6>" 
-			 +"</a>"
-	        +"</li>";  			    
+			"<li id='alarm_" + data[6] + "' class='alarms'>"		    
+	   	 	+"<img src='/VIG/images/uploadFiles/" + data[1]+ "' class='rounded-circle' style='width: 45px; float:left; margin-top: 7px;'>"
+	   	 	+ "<a class='nav-link' href='/VIG/feed/getFeed?feedId="+ data[0]+ "'>"
+	   	 		+"<h6  style='width: 200px; margin-right:5px; margin-left:5px; float:left;'>"
+	   	 			+"<strong>" + data[2]+ "</strong>님이 좋아요를 누르셨습니다."	    			
+				+"</h6>"
+				+"<img src='/VIG/images/uploadFiles/" + data[3] + "' style='width: 50px;'>"
+			 +"</a>"		
+	        +"</li>"
+	        +"<div class='dropdown-divider'></div>";  			    
 	    
 	    
-	    $("#addAlarm").append(addAlarms);
+	    $("#addAlarm").prepend(addAlarms);
 	}
 	
 	
-	function setCommentAlarm(data) {
+	function setCommentAlarm(item) {
 		var data = (item).split(',');
 		
-	    var addAlarms = 
-	    	"<li style='margin-left: 5px;'>"
-	   	 	+ "<a class='nav-link' href='/VIG/feed/getFeed?feedId='"+ data[0]+ ">"
-	   	 		+"<h6><img src='/VIG/images/uploadFiles/" + data[1]+ "' class='rounded-circle' style='width: 30px;'>"
-	   	 			+"<strong>" + data[2]+ "</strong>님이 댓글을 남겼습니다."
-	    			+"<img  src='/VIG/images/uploadFiles/" + data[3] + "' style='width: 30px;'>"
-				+"</h6>" 
-			 +"</a>"
-	        +"</li>";  			    
+		var addAlarms = 
+	    	"<li id='alarm_" + data[6] + "' class='alarms'>"	    
+	   	 	+"<img src='/VIG/images/uploadFiles/" + data[1]+ "' class='rounded-circle' style='width: 45px; float:left;'>"
+	   	 	+ "<a class='nav-link' href='/VIG/feed/getFeed?feedId="+ data[0]+ "'>"
+	   	 		+"<h6  style='width: 200px; margin-right:5px; margin-left:5px; float:left;'>"
+	   	 			+"<strong>" + data[2]+ "</strong>님이 댓글을 남겼습니다."	    			
+				+"</h6>"
+				+"<img src='/VIG/images/uploadFiles/" + data[3] + "' style='width: 45px;'>"
+			 +"</a>"		
+	        +"</li>"
+	        +"<div class='dropdown-divider'></div>";   			    
 	    
 	    
-	    $("#addAlarm").append(addAlarms);
+	    $("#addAlarm").prepend(addAlarms);
 	}
 	
 	
@@ -57,7 +65,7 @@
 		$.ajax( 
 				{
 					url : "/VIG/alarm/json/getAlarmList",
-					method : "POST",
+					method : "GET",
 					dataType : "Json",					
 					headers : {
 						"Accept" : "application/json",
@@ -70,59 +78,120 @@
 							//디폴트를 삭제한다.
 							$("#defaultAlarm").remove();
 							
-							$.each(JSONData, function(index, item) { 						
+							$.each(JSONData, function(index, item) { 
+								
+								console.log(item);
 								
 								var data = (item).split(',');
 								
 								if(data[4] == 0){
-							    	setLikeAlarm(data);
+							    	setLikeAlarm(item);
 							    }else if(data[4] == 1){
-							    	setCommentAlarm(data);
+							    	setCommentAlarm(item);
 							    }
 									
 							});	
 							
-						}
-						
-						
-
- 						
+						}					
  							
 					}
 			});		
 	}
 	
 	
+	//읽은 알람 확인 용 함수
+	function getCheckAlarms(id) {		
+		$.ajax( 
+				{
+					url : "/VIG/alarm/json/getCheckAlarms/"+id,
+					method : "GET",
+					dataType : "Json",					
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},					
+					success : function(JSONData , status) {							
+ 							
+					}
+			});		
+	}
+	
+	
+	
+	
+	
+	//알람 받을 유저의 유저코드, 피드ID(없으면 ''), 알람타입(0= 좋아요, 댓글, 팔로우) 
+	function sendMessage(userCode, feedID, alarmType){         	
+		sock.send(userCode+","+ feedID+","+ alarmType);
+	}
+	
+	
+	//evt 파라미터는 웹 소켓을 보내준 데이터다.(자동으로 들어옴)
+	function onMessage(evt){					
+
+		//노티 표시
+		$("#AlarmNoti").css('display','inline');
+		
+		//디폴트가 있는지 확인하고 삭제한다.
+		if ($('#defaultAlarm').length) {						
+			$("#defaultAlarm").remove();
+		}
+		
+	    var data = (evt.data).split(',');				    
+	    
+	    //좋아요를 눌렀을 경우
+	    if(data[4] == 0){
+	    	setLikeAlarm((evt.data));
+	    	
+	    //댓글을 남겼을 경우	
+	    }else if(data[4] == 1){
+	    	setCommentAlarm((evt.data));
+	    	
+	    //팔로우를 했을 경우	
+	    }else{
+	    	
+	    	
+	    }
+	    //sock.close();
+	}
+
+	function onClose(evt){
+	    $("#data").append("연결 끊김");
+	}
+	
+	
+	
+	
+	
+	//제이쿼리 실행 부분
 	$(function() {
 		
-		//읽지 않은 알람을 세팅한다.
-		getAlarmList();
-		
-	//===로그인
-		//$( "#login_btn:contains('Log in')" ).on("click" , function() {
-		//	$(self.location).attr("href","/VIG/user/login");
-		//}); 
-		
-	//loginView.jsp를 가지고 와서 모달로 띄움
-		$('#theModal').on('show.bs.modal', function(e) {
-		
-				var button = $(e.relatedTarget);
-				var modal = $(this);
+			//읽지 않은 알람을 세팅한다.
+			getAlarmList();
+			
+			//===로그인
+			//$( "#login_btn:contains('Log in')" ).on("click" , function() {
+			//	$(self.location).attr("href","/VIG/user/login");
+			//}); 
+			
+			//loginView.jsp를 가지고 와서 모달로 띄움
+			$('#theModal').on('show.bs.modal', function(e) {		
+					var button = $(e.relatedTarget);
+					var modal = $(this);
+					
+					modal.find('.modal-body').load(button.data("remote"));
 				
-				modal.find('.modal-body').load(button.data("remote"));
-			
 			});
-		
-	//===로그아웃	
-		$(".dropdown-item:contains('Log Out')" ).on("click" , function() {
 			
-				$(self.location).attr("href","/VIG/user/logout");
-				}); 
-			});	
+			//===로그아웃	
+			$(".dropdown-item:contains('Log Out')" ).on("click" , function() {			
+					$(self.location).attr("href","/VIG/user/logout");
+			}); 
+			
 			
 			if(chackUserLogin !=null){
 				//웹 소켓을 생성한다.
-				var sock;
+				
 				sock = new SockJS("<c:url value="/echo"/>");
 				
 				//자바스크립트 안에 function을 집어넣을 수 있음.
@@ -132,37 +201,23 @@
 				//데이터를 끊고싶을때 실행하는 메소드
 				sock.onclose = onClose;				
 			}
-
+			
+			
+			//알람 버튼을 클릭하면 레드닷 숨김
+			$("#Alarmbell").on("click", function(){									
+				$("#AlarmNoti").css('display','none');
+			});
+			
+			
+			$(document).on('click','li.alarms',function(){			
 				
-				//알람 받을 유저의 유저코드, 피드ID(없으면 ''), 알람타입(0= 좋아요, 댓글, 팔로우) 
-				function sendMessage(userCode, feedID, alarmType){         	
-					sock.send(userCode+","+ feedID+","+ alarmType);
-				}
-				
-				
-				//evt 파라미터는 웹 소켓을 보내준 데이터다.(자동으로 들어옴)
-				function onMessage(evt){
-					
-					//디폴트가 있는지 확인하고 삭제한다.
-					if ($('#defaultAlarm').length) {						
-						$("#defaultAlarm").remove();
-					}
-					
-				    var data = (evt.data).split(',');				    
-				    
-				    if(data[4] == 0){
-				    	setLikeAlarm(data);
-				    }else if(data[4] == 1){
-				    	setCommentAlarm(data);
-				    }
-				    
+				var id = ($(this).attr('id')).split('_'); 				 				 
+				getCheckAlarms(id[1]);
+			})
+			
+			
 	
-				    //sock.close();
-				}
-	
-				function onClose(evt){
-				    $("#data").append("연결 끊김");
-				}
+		});				
 			
 			
 	</script>	
@@ -180,15 +235,23 @@
 	.fas_ntn{
 	color: #ffb74d;
 	}
+	
+	.alarms{
+		margin-left: 10px;
+	}	
+	
 	p{
 	color: black;
 	}
+	
 	#logout_btn{
 	margin-left:50px;
 	}
+	
 	#logout_btn{
 	margin:0;
 	}
+	
 	span{
 	color: white;
 	}
@@ -219,13 +282,19 @@
 	        </a>	   
 <!-- 알람버튼 -->
                   <li class="dropdown ">                 
-                     <i class="fas fa-bell fas_ntn dropdown-toggle"  data-toggle="dropdown" aria-expanded="false" style="margin-right: 15px;"></i>                    
+                     <i id="Alarmbell" class="fas fa-bell fas_ntn dropdown-toggle"  data-toggle="dropdown" aria-expanded="false" style="margin-right: 15px;">
+                     	<i id="AlarmNoti" class="fas fa-circle" style="color: red; font-size: xx-small; float: right; display: none;"></i>
+                     </i>                    
                      
-                     <ul id="addAlarm" class="dropdown-menu dropdown-menu-right" style="width: 350px;">                                   
+                     <ul class="dropdown-menu dropdown-menu-right" style="width: 330px;">  
+                     	<h5 style="font-weight: bold; margin-left: 10px;">내 활동</h5>
+                     	<div class="dropdown-divider"></div>                          
          				<li id="defaultAlarm" style="margin-left: 5px;">
          					<h6>새로운 소식이 없습니다.</h6>
          				</li>
+         				<div id="addAlarm"></div>
                      </ul>
+                     
                  </li>
 		
 	              

@@ -96,13 +96,14 @@ public class EchoHandler extends TextWebSocketHandler{
     		} 
     		
     		alarmServices.addAlarm(alarm);
-    		reqSession.sendMessage(new TextMessage(split[1] + "," + profile+ "," + sendUserName + "," + image.getImageFile() + "," + split[2] + ","+ sendUserCode ));
+    		
+    		reqSession.sendMessage(new TextMessage(split[1] + "," + profile+ "," + sendUserName + "," + image.getImageFile() + "," + split[2] + ","+ sendUserCode + ","+alarmServices.getLastAlarmId()));
     	
     	//팔로우 알림
     	}else if(split[2].equals("2")) {
     		
     		alarmServices.addAlarm(alarm);
-    		reqSession.sendMessage(new TextMessage(split[1] + "," + profile+ "," + sendUserName + "," + "" + "," + split[2] + ","+ sendUserCode ));
+    		reqSession.sendMessage(new TextMessage(split[1] + "," + profile+ "," + sendUserName + "," + "" + "," + split[2] + ","+ sendUserCode + ","+alarmServices.getLastAlarmId()));
         	
     	}   	
    

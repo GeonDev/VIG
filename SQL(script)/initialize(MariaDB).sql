@@ -1991,6 +1991,11 @@ VALUES( event_id, '중국대표브랜드 펜 디자인 공모전', '중국 5대�
 
 INSERT INTO 
 alarm(alarm_id, send_user_code, receive_user_code,  is_watch, alarm_type, add_date)
-VALUES(alarm_id, 'user02', 'user01', 0, 0,  DATE_FORMAT('2010-01-03', '%Y-%m-%d'));
+VALUES(alarm_id, 'user02', 'user01', 0,  2, DATE_FORMAT('2010-01-03', '%Y-%m-%d'));
+
+INSERT INTO 
+alarm(alarm_id, send_user_code, receive_user_code, is_watch, like_feed_id, alarm_type, add_date)
+VALUES(alarm_id, 'user02', 'user01', 0, 20000, 0, DATE_FORMAT('2010-01-03', '%Y-%m-%d'));
+
 
 commit;
