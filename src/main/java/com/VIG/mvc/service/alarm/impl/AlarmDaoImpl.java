@@ -54,4 +54,10 @@ public class AlarmDaoImpl implements AlarmDao {
 		return sqlSession.selectOne("AlarmMapper.getLastAlarmId");
 	}
 
+	@Override
+	public void updateAlarmView(int id) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.update("AlarmMapper.updateAlarmView",id);
+	}
+
 }

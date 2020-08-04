@@ -23,7 +23,7 @@
 		var data = (item).split(',');    
 	    
 		var addAlarms = 
-	    	"<li style='margin-left: 10px;'>"	    
+			"<li id='alarm_" + data[6] + "' class='alarms'>"		    
 	   	 	+"<img src='/VIG/images/uploadFiles/" + data[1]+ "' class='rounded-circle' style='width: 45px; float:left; margin-top: 7px;'>"
 	   	 	+ "<a class='nav-link' href='/VIG/feed/getFeed?feedId="+ data[0]+ "'>"
 	   	 		+"<h6  style='width: 200px; margin-right:5px; margin-left:5px; float:left;'>"
@@ -43,7 +43,7 @@
 		var data = (item).split(',');
 		
 		var addAlarms = 
-	    	"<li style='margin-left: 10px;'>"	    
+	    	"<li id='alarm_" + data[6] + "' class='alarms'>"	    
 	   	 	+"<img src='/VIG/images/uploadFiles/" + data[1]+ "' class='rounded-circle' style='width: 45px; float:left;'>"
 	   	 	+ "<a class='nav-link' href='/VIG/feed/getFeed?feedId="+ data[0]+ "'>"
 	   	 		+"<h6  style='width: 200px; margin-right:5px; margin-left:5px; float:left;'>"
@@ -99,6 +99,27 @@
 	}
 	
 	
+	//읽은 알람 확인 용 함수
+	function getCheckAlarms(id) {		
+		$.ajax( 
+				{
+					url : "/VIG/alarm/json/getCheckAlarms/"+id,
+					method : "GET",
+					dataType : "Json",					
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},					
+					success : function(JSONData , status) {							
+ 							
+					}
+			});		
+	}
+	
+	
+	
+	
+	
 	//알람 받을 유저의 유저코드, 피드ID(없으면 ''), 알람타입(0= 좋아요, 댓글, 팔로우) 
 	function sendMessage(userCode, feedID, alarmType){         	
 		sock.send(userCode+","+ feedID+","+ alarmType);
@@ -139,6 +160,10 @@
 	}
 	
 	
+	
+	
+	
+	//제이쿼리 실행 부분
 	$(function() {
 		
 			//읽지 않은 알람을 세팅한다.
@@ -181,7 +206,14 @@
 			//알람 버튼을 클릭하면 레드닷 숨김
 			$("#Alarmbell").on("click", function(){									
 				$("#AlarmNoti").css('display','none');
-			});	
+			});
+			
+			
+			$(document).on('click','li.alarms',function(){			
+				
+				var id = ($(this).attr('id')).split('_'); 				 				 
+				getCheckAlarms(id[1]);
+			})
 			
 			
 	
@@ -203,15 +235,23 @@
 	.fas_ntn{
 	color: #ffb74d;
 	}
+	
+	.alarms{
+		margin-left: 10px;
+	}	
+	
 	p{
 	color: black;
 	}
+	
 	#logout_btn{
 	margin-left:50px;
 	}
+	
 	#logout_btn{
 	margin:0;
 	}
+	
 	span{
 	color: white;
 	}

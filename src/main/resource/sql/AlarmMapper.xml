@@ -49,6 +49,13 @@
 			ORDER BY alarm_id		
 		</select>
 		
+		<update id="updateAlarmView" parameterType="int">
+			UPDATE alarm SET
+			is_watch = 1
+			WHERE alarm_id = #{value}	
+		</update>
+		
+		
 		
 		<select id="getLastAlarmId" resultType="int">
 			SELECT MAX(alarm_id) FROM alarm			
