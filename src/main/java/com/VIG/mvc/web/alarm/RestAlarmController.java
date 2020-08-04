@@ -57,16 +57,22 @@ public class RestAlarmController {
 					temp += alarm.getSendUser().getUserName();
 					temp += ",";
 					
-					for(Image tempImage : alarm.getLikefeed().getImages()) {
-						if(tempImage.getIsThumbnail()==1) {
-							temp += tempImage.getImageFile();
-							temp += ",";
-						}					
+					if(alarm.getLikefeed() != null) {
+						for(Image tempImage : alarm.getLikefeed().getImages()) {
+							if(tempImage.getIsThumbnail()==1) {
+								temp += tempImage.getImageFile();
+								temp += ",";
+							}					
+						}
+					}else {
+						temp += ",";
 					}
 					
 					temp += alarm.getAlarmType();
 					temp += ",";
-					temp += alarm.getSendUser().getUserCode();				
+					temp += alarm.getSendUser().getUserCode();
+					temp += ",";
+					temp += alarm.getAlarmId();
 					
 					alarmData.add(temp);				
 				}		
