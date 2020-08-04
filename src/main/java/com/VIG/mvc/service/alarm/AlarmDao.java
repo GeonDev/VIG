@@ -11,5 +11,7 @@ public interface AlarmDao {
 	public List<Alarm> unWatchAlarmList(String userCode) throws Exception; 
 		
 	public void deleteOldAlarm(int date) throws Exception;
+	
+	public int getLastAlarmId() throws Exception;
 
 }

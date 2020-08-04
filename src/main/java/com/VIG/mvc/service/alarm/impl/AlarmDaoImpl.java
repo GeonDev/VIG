@@ -48,4 +48,10 @@ public class AlarmDaoImpl implements AlarmDao {
 		sqlSession.delete("AlarmMapper.deleteOldHistory");
 	}
 
+	@Override
+	public int getLastAlarmId() throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("AlarmMapper.getLastAlarmId");
+	}
+
 }

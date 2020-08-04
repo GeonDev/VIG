@@ -372,7 +372,7 @@
 		
 		
 			$("#Keyword").on("keyup", function(){				
-				if($("#Keyword").val().length >= 2){
+				if($("#Keyword").val().length >= 1){
 					getkeywords();
 				}					
 			});				
@@ -383,7 +383,15 @@
 	            if (key.keyCode == 13) {
 	            	startKeywordSearch();
 	            }
-	        });				
+	        });	
+			
+			
+			//검색 아이콘을 클릭하면 검색 수행
+			$("#startedSearchIcon").on("click", function(){				
+				if($("#Keyword").val().length >= 1){
+					startKeywordSearch();
+				}	
+			});				
 			
 			
 			//색상값 변경이 생기면 키워드로 세팅
@@ -407,7 +415,7 @@
 	
 		<div class="row justify-content-center">
 			<div class="col-sm-1">				
-				<i class="fas fa-search d-flex justify-content-end mt-3" aria-hidden="true" style="font-size: x-large;"></i>
+				<i id="startedSearchIcon" class="fas fa-search d-flex justify-content-end mt-3" aria-hidden="true" style="font-size: x-large;"></i>
 			</div>		
 		
 			<div class="col-sm-9">					

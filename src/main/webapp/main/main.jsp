@@ -249,6 +249,14 @@
 	margin: 5px 10px;
 	}
 	
+	#categoryList {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    
+	}
+	#categoryList::-webkit-scrollbar {
+	    display: none; /* Chrome, Safari, Opera*/
+	}
 
     
    	</style>
