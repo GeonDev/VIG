@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="com.VIG.mvc.service.domain.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>VIG</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 <!-- Google Fonts -->
@@ -25,63 +27,51 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 				
 	<script type="text/javascript">
+
+	
 	
 	</script>
+	<style>
+	  body {
+            padding-top : 50px;
+        }
+    </style>
 </head>
+
 <body>
 
-<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container">
+<div class="container-fluid">		
 	
-		<div class="page-header text-info">
+	
+		<div class="col-md-8">		
+			<br/>
+			
+			<div class="page-header text-info">
 	       <h3>회원목록조회</h3>
 	    </div>
-	    
-	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
-	    <div class="row">
-	    
-		    <div class="col-md-6 text-left">
-		    	<p class="text-primary">
-		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
-		    	</p>
-		    </div>
-		    
-		    <div class="col-md-6 text-right">
-			    <form class="form-inline" name="detailForm">
-			    
-				  <div class="form-group">
-				    <select class="form-control" name="searchCondition" >
-						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>회원ID</option>
-						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>회원명</option>
-					</select>
-				  </div>
-				  
-				  <div class="form-group">
-				    <label class="sr-only" for="searchKeyword">검색어</label>
-				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
-				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
-				  </div>
-				  
-				  <button type="button" class="btn btn-default btn-search">검색</button>
-				  
-				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
-				  
-				</form>
-	    	</div>
-	    	
-		</div>
+	   
+<form method="post"  > 
+	
+
+	    <div class="row justify-content-end">							
+					<div class="input-group md-form form-sm form-1 pl-0 col-3">
+					  <div class="input-group-prepend">
+					    <span class="input-group-text cyan lighten-2" id="basic-text1"><i id="searchIcon" class="fas fa-search text-white" aria-hidden="true"></i></span>
+					  </div>
+					  <input id="inputKeyword" class="form-control my-0 py-1" type="text" name="keyword" value="${search.keyword}" placeholder="유저코드 입력" aria-label="Search">
+					</div>					
+				</div>
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
 		
-		
+		<div class="row">	
       <!--  table Start /////////////////////////////////////-->
       <table class="table table-hover table-striped" >
       
         <thead>
           <tr>
             <th align="center">No</th>
-            <th align="left" >회원 ID</th>
-            <th align="left">회원명</th>
+            <th align="left" >유저코드</th>
+            <th align="left">유저네임</th>
             <th align="left">이메일</th>
             <th align="left">간략정보</th>
           </tr>
@@ -94,13 +84,11 @@
 			<c:set var="i" value="${ i+1 }" />
 			<tr>
 			  <td align="center">${ i }</td>
-			  <td align="left"  title="Click : 회원정보 확인">${user.userCode}</td>
+			  <td align="left">${user.userCode}</td>
 			  <td align="left">${user.userName}</td>
 			  <td align="left">${user.email}</td>
-			  <td align="left">
-			  	<i class="glyphicon glyphicon-ok" id= "${user.userCode}"></i>
-			  	<input type="hidden" value="${user.userCode}">
-			  </td>
+			  <td align="left">${user.regDate}</td>
+			  	
 			</tr>
           </c:forEach>
         
@@ -108,9 +96,17 @@
       
       </table>
 	  <!--  table End /////////////////////////////////////-->
-	  
+	  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
+						<input type="hidden" id="currentPage" name="currentPage" value=""/>	
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
-
+ 	</form>
+ 	<div class="row justify-content-md-center">
+				<jsp:include page="../common/pageNavigator.jsp"/>
+			</div>
+				
+			</div>
+			</div>
+			
 </body>
 </html>

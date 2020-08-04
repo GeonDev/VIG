@@ -149,6 +149,23 @@
 			$(".row:last").append(displayValue);		
 	}
 	
+	
+	//검색결과가 없을 때
+	function getNoSearchResult(){
+		
+		console.log('들어옴');
+		//변수  초기화
+		var displayValue ='';
+		displayValue =
+			"<div class = 'view overlay'>"								
+			+ "<img src='/VIG/images/others/noResults.jpg'>"				
+			+ "</div>";
+			
+			$(".row:last").append(displayValue);		
+	}
+	
+	
+	
 	//전달받은 유저 리스트를 화면에 그림
 	function getUserlistFromAjax(item) {
 		//변수  초기화
@@ -224,38 +241,46 @@
 					data :  JSON.stringify({keyword : $("#Keyword").val(), mode : Mode, currentPage : page}),
 					success : function(JSONData , status) {
 						
-						//불러와야 되는 페이지보다 개수가 적은 경우 페이지가 끝났다
-						if (JSONData.list.length < 10){
+						//검색 결과가 있는지 체크
+						if (JSONData.list.length){					
+						
+							//불러와야 되는 페이지보다 개수가 적은 경우 페이지가 끝났다
+							if (JSONData.list.length < 10){
+								isPageEnd = true;
+							}
+	 						
+	 						//유저를 불러올 경우 유저리스트를 생성한 후 피드를 삽입한다 
+	 						if(Mode == 'Writer'){							
+	 							
+	 	 						$.each(JSONData.list, function(index, item) { 						
+	 								getUserlistFromAjax(item); 									
+	 													
+	 							});	
+	 	 						
+	 	 						$.each(JSONData.feeds, function(index, item) { 						
+	 	 							getUserFeedlistFromAjax(item);	 							
+	 													
+	 							});	 							
+	 							
+	 						}else{
+	 	 						$.each(JSONData.list, function(index, item) {						
+	 								
+	 								if(Mode == 'Feed'){						 								
+	 									getfeedlistFromAjax(item, '${user}');
+	 										
+	 								}else if(Mode == 'Image'){			
+	 									getImagelistFromAjax(item); 									
+	 								}					
+	 							});	 							
+	 						}	 						
+	 						//로드가 완료되면 로딩이 되었다고 체크
+	 						isLoadPage = false;
+	 					
+	 					//검색결과가 없는 경우	
+						}else{
 							isPageEnd = true;
+							getNoSearchResult();
 						}
- 						
- 						//유저를 불러올 경우 유저리스트를 생성한 후 피드를 삽입한다 
- 						if(Mode == 'Writer'){							
- 							
- 	 						$.each(JSONData.list, function(index, item) { 						
- 								getUserlistFromAjax(item); 									
- 													
- 							});	
- 	 						
- 	 						$.each(JSONData.feeds, function(index, item) { 						
- 	 							getUserFeedlistFromAjax(item);	 							
- 													
- 							});	 							
- 							
- 						}else{
- 	 						$.each(JSONData.list, function(index, item) {						
- 								
- 								if(Mode == 'Feed'){						 								
- 									getfeedlistFromAjax(item, '${user}');
- 										
- 								}else if(Mode == 'Image'){			
- 									getImagelistFromAjax(item); 									
- 								}					
- 							});	 							
- 						}
- 						
- 						//로드가 완료되면 로딩이 되었다고 체크
- 						isLoadPage = false;						
 					}
 			});		
 	}
@@ -272,12 +297,15 @@
 			},
 			data :  JSON.stringify({keyword : $("#Keyword").val(), mode : Mode }),						
 			success : function(JSONData, status) {
-			var arraylist = JSONData;
-				console.log( JSONData );
-			
-			 	$("#Keyword").autocomplete({			 		
-			        source: JSONData
-			    });		
+				//검색 결과가 있으면 처리			
+				if(JSONData.length){
+				var arraylist = JSONData;
+					console.log( JSONData );
+				
+				 	$("#Keyword").autocomplete({			 		
+				        source: JSONData
+				    });		
+				}
 			}							
 		});
 	}
@@ -398,10 +426,10 @@
 		
 	
 		
-		<div class="row justify-content-end mt-0 ">			
+		<div class="row justify-content-end mt-0  ">			
 			<div class="col-sm-10 d-flex justify-content-start">		
-				<button id="colorSelecter" class="btn btn-outline-light dropdown-toggle btn-sm form-inline" type="button" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;">
-					<i id="showColor" class="fas fa-circle" style="color: #0000FF;"></i> COLORS				 	
+				<button id="colorSelecter" class="btn btn-outline-light dropdown-toggle btn-sm form-inline mb-0" type="button" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;">
+					<p style="padding: 0px; margin-bottom: 0px; text-align: top; font-size: large;"><i id="showColor" class="fas fa-circle" style="color: #0000FF; "></i>&nbsp;Color</p>				 	
 				</button>
 				
 				<div class="dropdown-menu">

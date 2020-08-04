@@ -31,6 +31,13 @@
 	
 	</insert>
 	
+	<update id="updatePayment" parameterType="payment">
+		UPDATE payment
+		SET is_withdraw = 1
+		WHERE payment_id = #{paymentId:VARCHAR}
+	
+	</update>
+	
 	<select id="getPayment" parameterType="String" resultMap="PaymentSelectMap">
 		
 		SELECT * FROM payment
@@ -71,6 +78,37 @@
 		WHERE payment_id = #{value}	
 	
 	</update>
+	
+	<select id="getDonationList" parameterType="search" resultMap="PaymentSelectMap">
+		SELECT * FROM
+		(SELECT ROW_NUMBER() OVER(ORDER BY payment.payment_date DESC) num, payment.* 
+		FROM payment
+		WHERE beneficiary = #{keyword:VARCHAR}
+		) temp WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
+	
+	</select>
+	
+	<select id="getCountDonation" parameterType="search" resultType="int">
+		
+		
+		SELECT COUNT(temp.payment_id) FROM
+		(
+		SELECT * FROM payment
+		WHERE beneficiary = #{keyword}
+		) temp
+	
+	</select>
+	
+	<select id="getPossiblePrice" parameterType="String" resultType="int">
+		
+		SELECT IFNULL (SUM(select_Price), 0) FROM payment
+		WHERE beneficiary = #{value}
+		AND is_cancel=0
+		AND is_withdraw=0
+		AND product_Type=2
+	
+	
+	</select>
 	
 
 	 

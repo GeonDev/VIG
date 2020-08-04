@@ -40,6 +40,11 @@
 		WHERE image_id = #{value}		
 	</select>
 	
+	<!-- 키워드 최초 추출 시 이전 데이터가 있는지 확인하기 위한 쿼리 -->
+	<select id ="getKeywordAllCount"  resultType="int">
+		SELECT COUNT(keyword_id) FROM keywords				
+	</select>	
+	
 	<update id = "updateSaveTag" parameterType="int">
 		UPDATE keywords SET user_code = NULL
 		WHERE keyword_id= #{value}
