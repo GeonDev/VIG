@@ -21,8 +21,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.VIG.mvc.service.alarm.AlarmServices;
 import com.VIG.mvc.service.category.CategoryServices;
 import com.VIG.mvc.service.color.ColorServices;
+import com.VIG.mvc.service.domain.Alarm;
 import com.VIG.mvc.service.domain.Category;
 import com.VIG.mvc.service.domain.Event;
 import com.VIG.mvc.service.domain.Image;
@@ -69,8 +71,13 @@ public class mainController {
 	private ColorServices colorServices;
 	
 	@Autowired 
+	@Qualifier("alarmServicesImpl")
+	private AlarmServices alarmServices;
+	
+	@Autowired 
 	@Qualifier("historyServicesImpl")
 	private HistoryServices historyServices;
+	
 	
 	@Autowired
 	private ServletContext context;		
@@ -97,18 +104,21 @@ public class mainController {
 		
 		List<Category> categoryList = categoryServices.getAllCategoryList();
 		List<Event> eventList = eventServices.getLastEventList();			
+		List<Alarm> alarmList = new ArrayList<Alarm>();
 		
 		User user = (User)session.getAttribute("user");
 		
 		if(user !=null) {
 			user.setGoogleId("");
 			user.setPassword("");
+
 		}
+		
 		
 		model.addAttribute("user", user);	
 		
 		model.addAttribute("eventList", eventList);		
-		model.addAttribute("categoryList", categoryList);			
+		model.addAttribute("categoryList", categoryList);
 		
 		return new ModelAndView("forward:/main/main.jsp");
 	}
@@ -118,6 +128,8 @@ public class mainController {
 	
 	@RequestMapping("setImage")
 	public ModelAndView setImageKeyword() throws Exception {		
+	
+		if(keywordServices.getKeywordAllCount() == 0) {	
 		
 		String path = context.getRealPath("/");        
 	    path = path.substring(0,path.indexOf("\\.metadata"));
@@ -172,6 +184,10 @@ public class mainController {
 		long Totalend = System.currentTimeMillis();		
 		logger.debug("이미지 정보 추출 완료 / 총 추출 시간 : " + getTotalWorkTime(Totalstart, Totalend));				
 		return new ModelAndView("forward:/common/alertView.jsp", "message", "세팅 완료");
+		
+		}else {
+			return new ModelAndView("forward:/common/alertView.jsp", "message", "데이터가 이미 있습니다.");
+		}
 	}	
 	
 	
@@ -184,7 +200,7 @@ public class mainController {
 		
 		historyServices.deleteTempHistory();
 	
-		logger.debug("방문자 히스토리를 삭제했습니다.");
+		logger.debug("방문자 히스토리를 삭제를 진행합니다.");
 		List<User> userList = userServices.getBanUserList();
 		
 		//일시정지 당한 유저가 있을 경우
@@ -217,6 +233,11 @@ public class mainController {
 				}				
 			}			
 		}		
+		
+		// 생성된지 14일이 지난 알람은 삭제 한다.
+		logger.debug("오래된 알람 삭제를 진행합니다.");
+		alarmServices.deleteOldAlarm(14);
+		
 	}
 	
 	private int getTotalWorkTime(long start, long end) {		

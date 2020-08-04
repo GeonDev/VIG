@@ -57,4 +57,10 @@ public class KeywordServicesImpl implements KeywordServices {
 		return keywordDao.getFeedKeywordList(feedId);
 	}
 
+	@Override
+	public int getKeywordAllCount() throws Exception {
+		// TODO Auto-generated method stub
+		return keywordDao.getKeywordAllCount();
+	}
+
 }
