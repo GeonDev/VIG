@@ -1,5 +1,6 @@
 package com.VIG.mvc.service.like.Impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -51,12 +52,15 @@ public class LikeServicesImpl implements LikeServices {
 	}
 
 	@Override
-	public int[] getLikeMouthCount(HashMap<String, String> keys) throws Exception {
+	public List<String> getLikeMouthCount(HashMap<String, String> keys) throws Exception {
 		// TODO Auto-generated method stub
-		
-		int [] mouthCout = new int[31];
+
+		List<String> mouthCout = new ArrayList<String>();
 		
 		for(int i = 0; i<31; i++) {
+			HashMap<String,String> key = new HashMap<String,String>();
+			keys.put("userCode", keys.get("userCode"));
+		
 			String date = keys.get("date");
 			
 			//maria DB Data_form에 맞추어 날짜 세팅
@@ -65,9 +69,12 @@ public class LikeServicesImpl implements LikeServices {
 			}else {
 				date += String.valueOf(i+1);
 			}						
-			keys.replace("date", date);				
+			key.put("date", date);	
+		
+			System.out.println(key.get("date") );
 			
-			mouthCout[i] = likeDao.getLikeDateCount(keys);			
+			mouthCout.add(  String.valueOf(likeDao.getLikeDateCount(key)) );
+					
 		}	
 		
 		
