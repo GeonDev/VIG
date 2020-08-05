@@ -178,7 +178,7 @@ public class PaymentController {
 		Page resultPage = new Page(search.getCurrentPage(), paymentServices.getCountPayment(search) , pageUnit, pageSize);
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/payment/getPaymentList.jsp");
+		mav.setViewName("forward:/payment/getPaymentList.jsp");
 		mav.addObject("list", list);
 		mav.addObject("resultPage", resultPage);
 		
@@ -200,8 +200,17 @@ public class PaymentController {
 		
 		
 		ModelAndView mav = new ModelAndView();
-		User sessionUser = (User) session.getAttribute("user");
-		if((sessionUser.getRole()).contains("admin")) {
+		
+		if((User) session.getAttribute("user")==null || ((User) session.getAttribute("user") ).getRole() !="admin" ) {
+
+		System.out.println("잘못된접근");
+		String message = "관리자만 접근할 수 있습니다.";
+		mav.setViewName("forward:/common/alertView.jsp");
+		mav.addObject("message", message);
+		
+	}else
+		
+		if((((User) session.getAttribute("user") ).getRole()).contains("admin")) {
 		
 			Search search = new Search();
 			if (search.getCurrentPage() == 0) {
@@ -219,12 +228,6 @@ public class PaymentController {
 		mav.addObject("list", list);
 		mav.addObject("resultPage", resultPage);
 		
-		}else {
-			
-			System.out.println("잘못된접근");
-			String message = "관리자만 접근할 수 있습니다.";
-			mav.setViewName("forward:/common/alertView.jsp");
-			mav.addObject("message", message);
 		}
 		
 		return mav;
