@@ -1,5 +1,6 @@
 package com.VIG.mvc.service.history.Impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -65,6 +66,20 @@ public class HistoryDaoImpl implements HistoryDao {
 	@Override
 	public void deleteTempHistory() throws Exception {
 		sqlSession.delete("HistoryMapper.deleteTempHistory");		
+	}
+
+
+	@Override
+	public int getfeedHistoryDateCount(HashMap<String, String> keys) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("HistoryMapper.getfeedHistoryDateCount", keys);
+	}
+
+
+	@Override
+	public int getfeedHistoryPrimeDateCount(HashMap<String, String> keys) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("HistoryMapper.getfeedHistoryPrimeDateCount", keys);
 	}
 
 }

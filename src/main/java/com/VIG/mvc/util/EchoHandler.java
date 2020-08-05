@@ -76,10 +76,6 @@ public class EchoHandler extends TextWebSocketHandler{
      	//메세지를 받을 유저를 찾음	
     	WebSocketSession reqSession = sessions.get(split[0]);
     	
-    	if(reqSession == null) {
-    		return;
-    	}
-    		
     	
     	//메세지(알람) 타입에 따라 내용 분류 (좋아요 또는 댓글)
     	if(split[2].equals("0") || split[2].equals("1") ) {
@@ -96,14 +92,20 @@ public class EchoHandler extends TextWebSocketHandler{
     		} 
     		
     		alarmServices.addAlarm(alarm);
-    		reqSession.sendMessage(new TextMessage(split[1] + "," + profile+ "," + sendUserName + "," + image.getImageFile() + "," + split[2] + ","+ sendUserCode ));
+    		
+        	if(reqSession != null) {
+          		reqSession.sendMessage(new TextMessage(split[1] + "," + profile+ "," + sendUserName + "," + image.getImageFile() + "," + split[2] + ","+ sendUserCode + ","+alarmServices.getLastAlarmId()));
+          	  	
+        	}
     	
     	//팔로우 알림
     	}else if(split[2].equals("2")) {
     		
     		alarmServices.addAlarm(alarm);
-    		reqSession.sendMessage(new TextMessage(split[1] + "," + profile+ "," + sendUserName + "," + "" + "," + split[2] + ","+ sendUserCode ));
-        	
+    		
+    		if(reqSession != null) {
+    			reqSession.sendMessage(new TextMessage(split[1] + "," + profile+ "," + sendUserName + "," + "" + "," + split[2] + ","+ sendUserCode + ","+alarmServices.getLastAlarmId()));
+    		}
     	}   	
    
     }

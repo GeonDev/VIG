@@ -26,29 +26,8 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 		
 		<script type="text/javascript">
-			
-//============= 수정
-		 $(function() {
-			$( "button.btn.btn-primary" ).on("click" , function() {
-				fncUpdateUser();
-			});
-		});		
-		$(function(){
-			$("#business_btn").on("click",function(){
-				alert("결제창?");
-			});
-		});
-//============= 탈퇴
-		$(function() {
-			$("btn.btn-outline-warning.waves-effect").on("click" , function() {
-				fncDelete;
-			});		
-			$("#deleteCheck").on('hidden.bs.modal', function(){
-			    alert("계정이 삭제되었습니다.");
-			});		
-		});
 		
-//============		
+		
 		function fncDelete(){
 			$(location).attr("action","VIG/user/deleteUser").submit();
 		}	
@@ -56,9 +35,63 @@
 		function fncUpdateUser() {		
 		$("form").attr("enctype", "multipart/form-data").attr("method" , "POST").attr("action", "./updateUser").submit();
 		}
-		
+			
+//============= 업데이트 
+			
+		$(function(){
+			$("#business_btn").on("click",function(){
+				alert("결제창?");
+			});
+		});
+
+//===비밀번호 체크 이벤트   ================================================test 정리중 
+
+	$(function(){
+		$("#deleteCheck").on("click",function(){	
+			var pw = $("input[id=deleteU_password]").val();
+			if(pw == null || pw.length <1) {
+				alert('패스워드를 입력하지 않으셨습니다.');
+				$("#password").focus();
+				return;
+			}
+		$("#deleteU_password").blur(function(){
+			var pw = $("input[id=deleteU_password]").val();
+			alert("1");
+			//===========================ㅁajax
+			$.ajax({
+				url : "/json/chcekPw",
+				method : "POST" ,
+				data : {
+					password : 'pw'
+				},
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},
+				success : function(data , status) {
+					alert(data);
+					alert("ok");
+					
+					if($(data==0)){					
+						var correct = "<p style='color:green;'>비밀번호가 확인되었습니다.</p>";
+						$(".check").html(correct);					
+					}else{										
+						var alert = "<p style='color:red;'>비밀번호가 다릅니다.</p>";
+						$(".check").html(alert);
+					}
+				},error:function(request,status,error){
+					alert("json 연결 fail");
+			        alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+					}
+				});	
+			//====ajax
+			});
+		});
+			
+				
 		//=========
 		
+			/*
 		$(function(){
 			var file = document.querySelector('#getfile');
 
@@ -77,23 +110,21 @@
 				
 				    //썸네일 이미지 생성
 				    var tempImage = new Image(); //drawImage 메서드에 넣기 위해 이미지 객체화
-				    tempImage.src = reader.result; //data-uri를 이미지 객체에 주입
-					
-		  	};
+				    tempImage.src = reader.result; //data-uri를 이미지 객체에 주입					
+		 	 	};
 			});	
-		});
-		
+		});	
+		*/
 	
 		</script>
 	
 <style type="text/css">
 	
-	.col-md-12_top {	width: 100%; height: 100%; position: relative; margin:50px; 	}		
+	.col-md-12_top {	width: 100%; height: 100%; position: relative; margin:50px; }		
 	.profile {	width: 100%; height: 100%; position: relative; margin:50px; }
 	.col-md-12_List { padding:50; margin: auto;}
-	.profile {	margin:50px;	}
+	.profile {	margin:50px;}
 	
-
 	#pImg {	display:block; margin-left:auto; margin-right:auto; width: auto; height: auto; max-width: 150px; max-height: 150px; border-radius:50%; }	
 	#getfile { display:block; margin-left:auto; margin-right:auto; width: auto; height: auto; }	
 	#form-group { display:block; margin-left:auto; margin-right:auto; }	
@@ -120,13 +151,13 @@
  				<input type="file" id="getfile" name="uploadFile" accept="image/*"><br/>
  			</div>
  		</div>
- 		
  	<!-- 정보 리스트 -->
 		<div class="row" >
  			<div class="col-md-12_List" >
  	
  			<div class="form-group">
- 				<p class="sign_date" align="center"> Member Since :: ${user.regDate}</p><hr/><br/>
+ 				<p class="sign_date" align="center"> Member Since :: ${sessionScope.user.regDate}</p><hr/><br/>
+ 				
  			</div>
  					
 			<div class="form-group">
@@ -146,7 +177,7 @@
 			   
 			<div class="form-group">
 			    <label for="selfIntroduce" class="col-sm-offset-5 col-md-5 control-label">자기소개</label>
-			    <textarea cols="40" rows="5" id="selfIntroduce" name="selfIntroduce" >${user.selfIntroduce }</textarea>
+			    <textarea cols="40" rows="5" id="selfIntroduce" name="selfIntroduce" placeholder="${user.selfIntroduce }"></textarea>
 			</div>
 		
 			<div class="form-group">
@@ -160,16 +191,23 @@
 			    <button type="button" class="button btn btn-primary" id="business_btn">비지니스전환</button>
 			</div>
 		</c:if>
-
+	
 	
 	<!-- 수정 및 탈퇴 버튼 -->
-			<div class="form-group">		 
-			     <button type="button" class="button btn btn-primary"  >수 &nbsp;정</button>
-				 <a class="btn btn-primary btn" href="#" role="button" data-toggle="modal" data-target="#deleteCheck">탈 &nbsp;퇴</a>
+			<div class="form-group">
+				<button type="button" class="button btn btn-primary" id="updateUser_btn">수 &nbsp;정</button>		 
+			     <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#deleteCheckModal">탈 &nbsp;퇴</button>
+				<!--  <a class="btn btn-primary btn" href="#" role="button" data-toggle="modal" data-target="#deleteCheckModal">탈 &nbsp;퇴</a> -->
 			</div>
-				
+					
+				  
+				  </div>
+			</div>
+		</form>
+		
+			
 	<!--회원탈퇴 모달 확인창-->
-			<div class="modal fade" id="deleteCheck"  role="dialog" >
+			<div class="modal fade" id="deleteCheckModal"  role="dialog" >
 				<div class="modal-dialog modal-notify modal-warning" role="document">
 					<div class="modal-content">				
 						<div class="modal-header text-center">
@@ -180,21 +218,24 @@
 						</div>
 					 <div class="modal-body text-center mb-1">
 						<div class="md-form ml-0 mr-0">
-						  <input type="password" type="text" id="form29" class="form-control form-control-sm validate ml-0">
+			<form method="post" action="/user/json/chcekPw" >
+						  <input type="password" id="deleteU_password" name="password" class="form-control form-control-sm ">
 						  <label data-error="wrong" data-success="right" for="form29" class="ml-0">Enter password</label>
+						   <span id="helpBlock" class="help-block">
+								<span class="check"></span>
+							</span>
+			</form>
 						</div>
-						<div class="modal-footer justify-content-center">
-	        				 <a type="button" class="btn btn-outline-warning waves-effect">탈퇴 <i class="fas fa-paper-plane-o ml-1"></i></a>
-	        				 <a type="button" class="btn btn-outline-warning waves-effect">취소 <i class="fas fa-paper-plane-o ml-1"></i></a>
+						<div class="modal-footer justify-content-center" style="border:0;">
+	        				 <a type="button" class="btn btn-outline-warning waves-effect" id="deleteCheck">탈퇴 <i class="fas fa-paper-plane-o ml-1"></i></a>
+	        				 <a type="button" class="btn btn-outline-warning waves-effect" data-dismiss="modal">취소 <i class="fas fa-paper-plane-o ml-1"></i></a>
 	     			 	 </div>
 					  </div>
 				    </div>
 				 </div>
 			 </div>
-				  
-				  </div>
-			</div>
-		</form>
+				
+		
 	 </div>
 
 
