@@ -1,5 +1,6 @@
 package com.VIG.mvc.service.history;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.VIG.mvc.service.domain.History;
@@ -20,5 +21,11 @@ public interface HistoryServices {
 	public int getViewHistory(History history) throws Exception;
 	
 	public void deleteTempHistory() throws Exception;
+	
+	// 특정유저가 작성한 피드들의 조회수를 카운트 한다. - > 통계 조회용
+	public int[] getfeedHistoryMouthCount(HashMap<String, String> keys)throws Exception;
+	
+	//특정유저가 작성한 피드들의 프라임피드 노출 수를 카운트 한다  - > 통계 조회용
+	public int[] getfeedHistoryPrimeDateCount(HashMap<String, String> keys)throws Exception;
 
 }
