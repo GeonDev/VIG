@@ -95,20 +95,20 @@
 		</select>
 		
 		
-		<!-- 우선 노출시 출력한 프라임 피드를 불러온다. (노출이 가장 작은 프라임피드 -->
-		
-		<select id ="getPrimeFeedOne" parameterType="search" resultMap="FeedSelectMap">
+		<!-- 우선 노출시 출력한 프라임 피드를 불러온다. (노출이 가장 작은 프라임피드 -->		
+		<select id ="getPrimeFeed" parameterType="search" resultMap="FeedSelectMap">
 			SELECT feeds.* FROM feeds, images, keywords
-			WHERE feed_is_prime = 1 AND feed_state = 0
-			AND feeds.feed_id = images.feed_id
-			AND images.is_thumbnail = 1
+			WHERE feeds.feed_id = images.feed_id				
 			AND images.image_id = keywords.image_id
+			AND images.is_thumbnail = 1
+			AND feeds.feed_is_prime = 1 
+			AND feeds.feed_state = 0
 			<if test="keyword !=''">
 			AND keywords.keyword_en LIKE CONCAT('%',#{keyword},'%')				
 			</if>
 			GROUP BY feeds.feed_id
 			ORDER BY feeds.prime_feed_view_count
-			limit 1 	
+			limit 2 	
 		</select>
 		
 		
@@ -154,6 +154,7 @@
 			AND images.image_id = keywords.image_id
 			AND images.is_thumbnail = 1
 			AND feeds.feed_state = 0
+			AND feeds.feed_is_prime = 0
 			<if test="keyword !=''">
 			AND keywords.keyword_en LIKE CONCAT('%',#{keyword},'%')				
 			</if>			
@@ -166,6 +167,7 @@
 			SELECT *  FROM
 			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feeds.* FROM feeds
 			WHERE feeds.feed_state = 0
+			AND feeds.feed_is_prime = 0
 			<if test="keyword !=''">
 			AND feeds.feed_title LIKE CONCAT('%',#{keyword},'%')				
 			</if>			
@@ -206,7 +208,9 @@
 		<!-- 가장 많이 조회한 피드 리스트를 불러온다. (방문유저 세팅용) -->
 		<select id="getHightViewFeedList" parameterType="search" resultMap="FeedSelectMap">
 			SELECT *  FROM
-			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_view_count DESC, feeds.feed_id DESC) num, feeds.* FROM feeds) temp
+			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_view_count DESC, feeds.feed_id DESC) num, feeds.* FROM feeds
+			WHERE feeds.feed_state = 0 
+			) temp
 			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}			
 		</select>
 		

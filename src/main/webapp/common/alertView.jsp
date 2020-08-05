@@ -8,15 +8,18 @@
 
 </head>
 <body>
-	<script>
-	
-		var message ="<c:out value="${message}"/>"; 		
-	
+	<script>	
+		var message ="<c:out value="${message}"/>"; 			
 		alert(message);					
 	
-		 //history.go(-1);
+		//이전페이지 정보가 있는지 체크
+		if(document.referrer){
+			self.location = document.referrer;
+		}else{
+			//페이지 정보가 없으면 메인으로 이동
+			location.href = '/VIG/main/VIG';
+		}		
 		
-		self.location = document.referrer;
 	 </script>
 
 </body>

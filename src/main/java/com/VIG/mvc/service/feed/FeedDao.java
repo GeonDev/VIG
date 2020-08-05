@@ -33,7 +33,7 @@ public interface FeedDao {
 	
 	public List<String> getfeedTitleList(String key) throws Exception;	
 	
-	public Feed getPrimeFeedOne(Search search) throws Exception;
+	public List<Feed> getPrimeFeed(Search search) throws Exception;
 	
 	public List<Feed> getHightViewFeedList(Search search) throws Exception;	
 	
