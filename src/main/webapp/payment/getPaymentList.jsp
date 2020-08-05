@@ -98,7 +98,25 @@
 </head>
 <body>
 	
-	
+	<!-- 상단 툴바 자리 --> 												
+      <div class="container-fluid">  
+      	 <div class="row">
+      		<div class="col-md-12">
+      			<jsp:include page="/main/toolbar.jsp" />
+     		</div>
+		</div>
+		
+		<div class="col-md-12">
+			<div class="row">
+	<!-- 사이드바 자리 -->		
+			<div class="col-md-2">		
+		      1 of 3 아 그리드 뭔데...ㅠㅠ
+		    <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
+		    </div>  
+		    
+		    
+	<!--  본문 자리 -->	      	    
+		    <div class="col-md-10" id="myFeedMain">
 <div id=main>
 	
 	<h2> 내 결제 목록 </h2>

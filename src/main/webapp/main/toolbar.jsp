@@ -240,7 +240,7 @@
 		margin-left: 10px;
 	}	
 	
-	p{
+	#black_wr{
 	color: black;
 	}
 	
@@ -252,13 +252,14 @@
 	margin:0;
 	}
 	
-	span{
+	#white_wr{
 	color: white;
 	}
 	
 	.dropdown-toggle::after {
     display:none;
 	}
+	
 	</style>	
 	
 </head>		 
@@ -306,7 +307,7 @@
 <!-- 로그인 클릭시 모달 -->
 			<c:if test="${empty sessionScope.user }"> 
 			  <a class="nav-link" data-remote="/VIG/user/loginView.jsp"
-				data-toggle="modal" data-target="#theModal" ><span>Log in</span></a>
+				data-toggle="modal" data-target="#theModal" ><span id="white_wr">Log in</span></a>
 			</c:if> 
 	
 <!-- //로그인 후 드롭다운 -->
@@ -324,8 +325,8 @@
 						${user.userName}
 					</h4>
 						 <div class="dropdown-divider"></div>
-						    <a class="dropdown-item" href="/VIG/myFeed/myFeed.jsp" >My Feed</a>
-						    <a class="dropdown-item" href="#">Upload</a>
+						    <a class="dropdown-item" href="/VIG/myFeed/getMyFeedList.jsp" >My Feed</a>
+						    <a class="dropdown-item" href="/VIG/feed/addFeed.jsp">Upload</a>
 						  <div class="dropdown-divider"></div>
 						      <a class="dropdown-item" >Log Out</a>
 						 </div>
@@ -341,9 +342,9 @@
 		         <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="login_dropdown">
 					<h6 class="dropdown-header">${user.userCode }</h6>
 						 <div class="dropdown-divider"></div>
-						    <a class="dropdown-item" href="/VIG/myFeed/myFeed.jsp">관리자페이지</a>	
+						    <a class="dropdown-item" href="/VIG/user/getUserList.jsp">관리자페이지</a>	
 						    <div class="dropdown-divider"></div>
-						      <a class="dropdown-item"  id="logout_btn" ><p>Log Out</p></a>					   
+						      <a class="dropdown-item"  id="logout_btn" ><p id="black_wr">Log Out</p></a>					   
 							 </div>
 					       </c:if>		
 				     	</div>

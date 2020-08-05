@@ -39,6 +39,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.VIG.mvc.service.domain.Page;
 import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.domain.User;
+import com.VIG.mvc.service.report.ReportServices;
 import com.VIG.mvc.service.user.UserServices;
 
 @Controller
@@ -51,6 +52,10 @@ public class UserController {
 	@Autowired 
 	@Qualifier("userServicesImpl")
 	private UserServices userServices;
+	
+	@Autowired
+	@Qualifier("reportServicesImpl")
+	private ReportServices reportService;
 	
 	@Value("#{commonProperties['uploadPath']}")
 	String uploadPath;
@@ -117,16 +122,18 @@ public class UserController {
 	@RequestMapping( value="login", method=RequestMethod.POST )
 	public ModelAndView login(@ModelAttribute("user") User user, HttpSession session) throws Exception{
 		
+		
 			User dbUser = userServices.getUserOne(user.getUserCode());
 			ModelAndView mv = new ModelAndView();
-					
+			System.out.println(user.getUserCode());
+		
+			
 		if(dbUser == null) {
 			mv.setViewName("forward:/user/loginView.jsp");
 			mv.addObject("msg", "fail");
 			return mv;
 			
 		} else if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())){	
-			
 			session.setAttribute("user", dbUser);
 			System.out.println("로그인 성공");
 			mv.setViewName("forward:/main/VIG");
@@ -154,19 +161,11 @@ public class UserController {
 	}
 
 	
-//=======get user===========================================================//
-	@RequestMapping( value="getUser", method=RequestMethod.GET )
-	public String getUser(@RequestParam("userCode") String userCode, Model model)throws Exception{
-		System.out.println("get user");
-		User user = userServices.getUserOne(userCode);
-		model.addAttribute("user", user);
-		return "forward:../main/main.jsp";
-	}
 	
 
 	//=============업데이트 유저
 	@RequestMapping( value="updateUser", method=RequestMethod.GET )
-	public String updateUser(@RequestParam("uesrCode") String userCode, Model model)throws Exception{ 
+	public String updateUser(@RequestParam(value="uesrCode", required=false) String userCode, Model model)throws Exception{ 
 		System.out.println("/user/updateUser : GEt");
 		User user = userServices.getUserOne(userCode);
 		model.addAttribute("user",user);
@@ -211,6 +210,11 @@ public class UserController {
 	}
 	
 	//=================유저 리스트 가져오기
+	
+	
+	
+	
+	
 	
 	
 	@RequestMapping( value="getUserList" )
