@@ -161,7 +161,7 @@
 			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}		
 		</select>	
 		
-		
+		<!-- 피드 타이틀에 입력한 키워드를 포함하는지 확인 (OR 연산 속도가 느려서 따로 계산) -->
 		<select id="getfeedListFromTitle" parameterType="search" resultMap="FeedSelectMap">
 			SELECT *  FROM
 			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feeds.* FROM feeds

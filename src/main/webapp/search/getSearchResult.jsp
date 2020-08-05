@@ -79,8 +79,8 @@
 	//최초 입장시 모드 지정
 	var Mode = '${mode}';	
 
-	//최초 페이지는 1으로 설정
-	var page = 1; 	
+	//최초 페이지 설정
+	var page = 0; 	
 	
 	//페이지의 끝인지 체크
 	var isPageEnd = false;
@@ -334,14 +334,16 @@
 	}
 	
 	$(function(){			
-		
-			console.log('${mode}');
+			
 			
 			//최초 전달 받은 모드 세팅
 			$(".mode:contains('${mode}')").attr("class","btn btn-indigo mode");	
 			
 			//색상 선택기 로드
 			 $('#picker').farbtastic('#color');
+			
+			//최초 페이지 요청
+			 getItemList();
 		
 			//모드 버튼을 누르는 경우 페이지 초기화
 			$(".mode").on("click",function(){			
@@ -459,7 +461,7 @@
 		<!-- 피드, 이미지가 출력되는 부분  -->
 		<div class="row justify-content-center" style="margin-left: 10px; margin-right: 10px;">	
 		
-	
+	<%-- 
 			<c:if test="${mode eq 'Feed'}">
 				<c:forEach var="feed" items="${feedlist}">				
 					<div class = "view overlay">
@@ -508,7 +510,8 @@
 						</div>												
 					</div>		
 				</c:forEach>			
-			</c:if>
+			</c:if> 
+	--%>
 
 		
 		</div>
