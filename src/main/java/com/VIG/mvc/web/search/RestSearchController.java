@@ -140,8 +140,7 @@ public class RestSearchController {
 		return map;	
 		
 	}
-	
-	
+		
 	
 	//선택된 카테고리에 해당하는 피드를 리턴한다.
 	@RequestMapping(value = "json/getSearchCategoryResult")
@@ -230,11 +229,10 @@ public class RestSearchController {
 		return map;	
 		
 	}
+		
 	
 	
-	
-	
-	
+	//피드 검색 결과를 반환
 	@RequestMapping(value = "json/getSearchResultList")
 	public Map<String, Object> getSearchResult(@RequestBody Map<String, String> jsonData, HttpSession session) throws Exception {	
 		
@@ -283,24 +281,18 @@ public class RestSearchController {
 					feedlist = feedServices.getFeedListFromKeyword(search);
 				}				
 				
-			}
-			
+			}			
 			
 			//프라임피드를 추가하고 조회수를 늘려준다.
 			Feed primeFeed = feedServices.getPrimeFeedOne(search);
 			
 			if(primeFeed != null) {
 				primeFeed.setPrimeFeedViewCount(primeFeed.getPrimeFeedViewCount()+1);
-				feedServices.updatePrimeFeedViewCount(primeFeed);
-				feedlist.add(primeFeed);				
-			}
-			
-			//피드 중복을 제거하기 위하여 Set에 넣었다 뺀다.
-			HashSet<Feed> temp = new HashSet<Feed>(feedlist);
-			feedlist.clear();
-			feedlist = new ArrayList<Feed>(temp);
-			
-			
+				feedServices.updatePrimeFeedViewCount(primeFeed);								
+				
+				//추천한 프라임피드가 이미리스트에 있다면 삭제하고 최상위로 배치	
+				feedlist = setFeedOrder(feedlist, primeFeed, 0);
+			}	
 			
 			//숨김피드는 빼준다.
 			if(user !=null) {
@@ -313,9 +305,28 @@ public class RestSearchController {
 				for(History key : hidelist) {					
 					feedlist.remove(key.getShowFeed());
 				}				
-			}
+			}			
 			
-			map.put("list", feedlist);
+			//결과물 중 이전 검색기록과 중복이 있는지 체크
+			if(search.getCurrentPage() > 1 ) {	
+				//이전 검색기록을 갖고온다.
+				List<Feed> beforefeedList = (ArrayList) session.getAttribute("beforefeedList");
+				
+				List<Feed> result = CheckFeedList(beforefeedList,feedlist);
+				//지금까지 찾은 피드리스트를 저장 -> 중복 방지용
+				beforefeedList.addAll(result);	
+				
+				session.setAttribute("beforefeedList", beforefeedList);			
+				
+				//결과를 반환
+				map.put("list", result);
+				
+			}else {
+				//현재 검색결과를 세션에 세팅
+				session.setAttribute("beforefeedList", feedlist);
+				map.put("list", feedlist);
+			}	
+			
 		}		
 		
 		//이미지 검색
@@ -391,5 +402,51 @@ public class RestSearchController {
 
 		return map;		
 	}
+	
+	
+	// base 리스트와 중복되지 않는 target만을 반환한다.
+	private List<Feed> CheckFeedList(List<Feed> base, List<Feed> target){
+		List<Feed> result = new ArrayList<Feed>();
+		
+			for(Feed f : target ) {
+				boolean isSame = false;
+				
+				for(Feed bf : base) {
+					if(bf.getFeedId() == f.getFeedId()) {
+						isSame = true;
+						break;
+					}					
+				}
+				
+				if(!isSame) {
+					result.add(f);
+				}
+				
+			}	
+		
+		return result;
+	}
+	
+	
+	//특정 피드를 원하는 위치로 이동
+	private List<Feed> setFeedOrder(List<Feed> base, Feed prime, int index){			
+		
+		int deleteIndex = 0;	
+		
+		for(int i = 0; i<base.size(); i++ ) {
+			if(base.get(i).getFeedId() == prime.getFeedId()) {
+				deleteIndex = i;
+				break;
+			}			
+		}		
+		base.remove(deleteIndex);
+		
+		//원하는 위치에 삽입
+		base.add(index, prime);
+		
+		return base;
+	}
+	
+
 
 }

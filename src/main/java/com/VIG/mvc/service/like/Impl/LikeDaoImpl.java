@@ -1,5 +1,6 @@
 package com.VIG.mvc.service.like.Impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -47,6 +48,12 @@ public class LikeDaoImpl implements LikeDao{
 	public JoinUser getLikeState(JoinUser joinUser) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("JoinerMapper.getLikeState",joinUser);
+	}
+
+	@Override
+	public int getLikeDateCount(HashMap<String, String> keys) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("",keys);
 	}
 
 

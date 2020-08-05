@@ -87,10 +87,9 @@
 	 	WHERE user_code = #{value}
 	 </select>
 	 
-	 <!--  -->
-		<select 	id="getCode"	parameterType="String"	resultMap="userSelectMap">
-		SELECT
-		user_code	
+	 <!-- 비번 확인용 -->
+		<select 	id="chcekPw"	parameterType="String"	resultType="int">
+		SELECT count(*)	
 		FROM users 
 		WHERE user_code = #{value}
 	 </select> 	 

@@ -10,6 +10,7 @@ import com.VIG.mvc.service.domain.Image;
 import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.image.ImageDao;
 import com.VIG.mvc.service.image.ImageServices;
+import com.VIG.mvc.util.CommonUtil;
 
 @Service("imageServicesImpl")
 public class ImageServicesImpl implements ImageServices {
@@ -51,32 +52,33 @@ public class ImageServicesImpl implements ImageServices {
 
 	@Override
 	public List<Image> getALLImageList() throws Exception {
-		// TODO Auto-generated method stub
-		return imageDao.getALLImageList();
+		// TODO Auto-generated method stub	 
+		
+		return  CommonUtil.checkEqualImage(imageDao.getALLImageList());
 	}
 
 	@Override
 	public List<Image> getImageListFromKeyword(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return imageDao.getImageListFromKeyword(search);
+		return CommonUtil.checkEqualImage( imageDao.getImageListFromKeyword(search));
 	}
 
 	@Override
 	public List<Image> getImageListFromColor(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return imageDao.getImageListFromColor(search);
+		return  CommonUtil.checkEqualImage( imageDao.getImageListFromColor(search));
 	}
 
 	@Override
 	public List<Image> getImageListFromCategoroy(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return imageDao.getImageListFromCategoroy(search);
+		return CommonUtil.checkEqualImage( imageDao.getImageListFromCategoroy(search));
 	}
 
 	@Override
 	public List<Image> getImageListFromImage(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return imageDao.getImageListFromImage(search);
+		return CommonUtil.checkEqualImage( imageDao.getImageListFromImage(search));
 	}
 
 	@Override
