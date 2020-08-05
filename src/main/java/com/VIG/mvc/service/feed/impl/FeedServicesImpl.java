@@ -13,6 +13,7 @@ import com.VIG.mvc.service.domain.ImageKeyword;
 import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.feed.FeedDao;
 import com.VIG.mvc.service.feed.FeedServices;
+import com.VIG.mvc.util.CommonUtil;
 
 @Service("feedServicesImpl")
 public class FeedServicesImpl implements FeedServices {
@@ -45,7 +46,9 @@ public class FeedServicesImpl implements FeedServices {
 	@Override
 	public List<Feed> getFeedList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return feedDao.getFeedList(search);
+		
+		//중복체크이후 반환
+		return CommonUtil.checkEqualFeed(feedDao.getFeedList(search));
 	}
 
 	@Override
@@ -64,32 +67,29 @@ public class FeedServicesImpl implements FeedServices {
 	@Override
 	public List<Feed> getFeedListOnlyTag(String tag) throws Exception {
 		// TODO Auto-generated method stub
-		return feedDao.getFeedListOnlyTag(tag);
+		
+		return CommonUtil.checkEqualFeed(feedDao.getFeedListOnlyTag(tag));
 	}
 
 	@Override
 	public List<Feed> getFeedListFromCategory(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return feedDao.getFeedListFromCategory(search);
+		return  CommonUtil.checkEqualFeed(feedDao.getFeedListFromCategory(search));
 	}
 
 	@Override
-	public List<Feed> getFeedListFromKeyword(Search search) throws Exception {
+	public List<Feed> getFeedListFromKeyword(Search search) throws Exception {	
 		
-		List<Feed> list = feedDao.getFeedListFromKeyword(search);		
-		list.addAll(feedDao.getFeedListFromTitle(search));
-				
-		//중복값 제거 용 HashSET
-		HashSet<Feed> tempSet = new HashSet<Feed>(list);		
-		list = new ArrayList<Feed>(tempSet);
+		List<Feed> feedlist = feedDao.getFeedListFromKeyword(search);		
+		feedlist.addAll(feedDao.getFeedListFromTitle(search));			
 		
-		return list;
+		return CommonUtil.checkEqualFeed(feedlist);
 	}
 
 	@Override
 	public List<Feed> getFeedListFromColor(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return feedDao.getFeedListFromColor(search);
+		return CommonUtil.checkEqualFeed( feedDao.getFeedListFromColor(search));
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class FeedServicesImpl implements FeedServices {
 	@Override
 	public List<Feed> getMyFeedList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return feedDao.getMyFeedList(search);
+		return CommonUtil.checkEqualFeed( feedDao.getMyFeedList(search));
 	}
 
 	@Override
@@ -120,7 +120,7 @@ public class FeedServicesImpl implements FeedServices {
 	@Override
 	public List<Feed> getHightViewFeedList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return feedDao.getHightViewFeedList(search);
+		return  CommonUtil.checkEqualFeed(feedDao.getHightViewFeedList(search));
 	}
 
 	@Override
@@ -134,13 +134,13 @@ public class FeedServicesImpl implements FeedServices {
 	@Override
 	public List<Feed> getLikedFeedList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return feedDao.getLikedFeedList(search);
+		return CommonUtil.checkEqualFeed( feedDao.getLikedFeedList(search));
 	}
 
 	@Override
 	public List<Feed> getRecommendFeedList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return feedDao.getRecommendFeedList(search);
+		return  CommonUtil.checkEqualFeed(feedDao.getRecommendFeedList(search));
 	}
 	
 }

@@ -12,6 +12,8 @@ import java.net.URL;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.ServletException;
@@ -20,6 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.VIG.mvc.service.domain.Feed;
+import com.VIG.mvc.service.domain.Image;
 import com.VIG.mvc.service.domain.ImageColor;
 import com.VIG.mvc.service.domain.Search;
 
@@ -338,6 +342,40 @@ public class CommonUtil {
 	        }
 	        System.out.println();
 	    }
+		
+		public static List<Feed> checkEqualFeed(List<Feed> checked){
+			List<Feed> result = new ArrayList<Feed>();
+			
+			for(Feed f : checked) {
+				Boolean isSame= false;
+				
+				for(Feed rf : result) {
+					if(rf.getFeedId() == f.getFeedId()) {
+						isSame = true;
+						break;
+					}					
+				}
+				
+				if(!isSame) {
+					result.add(f);
+				}
+			
+			}			
+			
+			return result;
+		}
+		
+		public static List<Image> checkEqualImage(List<Image> checked){
+			List<Image> result = new ArrayList<Image>();
+			
+			for(Image f : checked) {
+				if(!result.contains(f)) {			
+					result.add(f);				
+				}			
+			}			
+			
+			return result;
+		}
 
 	
 }
