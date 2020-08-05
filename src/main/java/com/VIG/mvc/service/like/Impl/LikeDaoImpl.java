@@ -53,7 +53,7 @@ public class LikeDaoImpl implements LikeDao{
 	@Override
 	public int getLikeDateCount(HashMap<String, String> keys) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("",keys);
+		return sqlSession.selectOne("JoinerMapper.getLikeMounthCount",keys);
 	}
 
 

@@ -47,21 +47,25 @@
 	</update>
 	
 	
-	<select id="getWithdrawList" parameterType="String" resultMap="WithdrawSelectMap">
-			
-			SELECT * FROM withdraw
-			
+	<select id="getWithdrawList" parameterType="search" resultMap="WithdrawSelectMap">
+			SELECT * FROM
+			(SELECT ROW_NUMBER() OVER(ORDER BY withdraw.withdraw_date DESC) num, withdraw.*  
+			FROM withdraw
+			<if test="keyword != null">
+			WHERE user_code = #{keyword}
+			</if>
+			) temp WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
 	
 	</select>
 	
-	<select id="getTotalCount" parameterType="String" resultType="int">
+	<select id="getCountWithdraw" parameterType="String" resultType="int">
 		
 		SELECT COUNT(*)
 		FROM(	
 		SELECT *
 		FROM withdraw
 		<if test="userCode!='null'">
-			AND userCode=#{value}
+			WHERE user_code=#{value}
 		</if>
 		ORDER BY withdraw_id) countTable
 	

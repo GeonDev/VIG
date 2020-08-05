@@ -46,7 +46,14 @@ public class WithdrawServicesImpl implements WithdrawServices {
 	@Override
 	public List<Withdraw> getWithdrawList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return withdrawDao.getWithdrawList(search);
+	}
+
+
+	@Override
+	public int getCountWithdraw(String userCode) throws Exception {
+		// TODO Auto-generated method stub
+		return withdrawDao.getCountWithdraw(userCode);
 	}
 	
 	

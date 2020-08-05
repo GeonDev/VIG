@@ -115,8 +115,53 @@ public class WithdrawController {
 				}
 		
 		
-		mav.setViewName("forward:/withdraw/getAllWithdrawList");
+		mav.setViewName("forward:/withdraw/getWithdrawList");
 		}
+		
+		return mav;
+	}
+	
+	@RequestMapping(value="getWithdrawList", method=RequestMethod.GET)
+	public ModelAndView getWithdrawList(HttpSession session, Search search) throws Exception {
+		
+		logger.debug("getWithdrawList");
+		ModelAndView mav = new ModelAndView();
+		List<Withdraw> list = null;
+		Page resultPage = null;
+		
+		if(search.getCurrentPage() == 0 ){
+			search.setCurrentPage(1);
+		}
+		
+		User user = (User)session.getAttribute("user");
+		
+		if(user == null) {
+			mav.addObject("message", "잘못된 접근입니다.");
+			mav.setViewName("forward:../common/alertView.jsp");
+			
+		}else { 
+			
+			if (user.getRole() != "admin") {
+				
+			}else {
+				
+				search.setKeyword(user.getUserCode());
+				
+				
+			}
+				
+				search.setPageSize(pageSize);
+				
+				resultPage = new Page(search.getCurrentPage(), withdrawServices.getCountWithdraw(user.getUserCode()) , pageUnit, pageSize);
+				
+				list = withdrawServices.getWithdrawList(search);
+				mav.addObject("resultPage", resultPage);
+				mav.addObject("search", search);
+				mav.addObject("list", list);
+				mav.setViewName("forward:/withdraw/getWithdrawList.jsp");
+		}
+		
+		
 		
 		return mav;
 	}

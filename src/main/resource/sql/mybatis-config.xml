@@ -24,6 +24,7 @@
 		<typeAlias alias="payment" 		type="com.VIG.mvc.service.domain.Payment"/>
 		<typeAlias alias="withdraw"		type="com.VIG.mvc.service.domain.Withdraw"/>
 		<typeAlias alias="alarm"		type="com.VIG.mvc.service.domain.Alarm"/>
+		<typeAlias alias="follow"		type="com.VIG.mvc.service.domain.Follow"/>
 	</typeAliases>
 	
 	 <!-- SQL Definition :: file include -->

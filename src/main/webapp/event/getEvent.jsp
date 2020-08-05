@@ -52,8 +52,9 @@
 	
 	#inline {
 		
-		width: 1150px;
+		width: 1500px;
 		margin: 0 auto;
+
 	
 	}
 	
@@ -69,6 +70,31 @@
 		
 	
 	}
+	
+
+	.feedout> img{
+	
+	max-width: 100%;
+	max-height: 100%;
+	width: 400px;
+	height: 300px;
+	overflow: hidden;
+	
+	
+	}
+	
+	.feedout {
+	
+	width: 400px;
+	height: 300px;
+	margin: 0px;
+	padding: 5px 5px 5px 5px;
+	display: inline-block;
+	
+	}
+
+	
+
 
 
 </style>
@@ -97,7 +123,17 @@ $(function(){
 	});
 	
 	
+	
+	
 })
+
+	function fncgetFeed(feedId){
+		
+		
+		self.location = '/VIG/feed/getFeed?feedId='+feedId;
+		
+		
+	}
 
 
 </script>
@@ -113,13 +149,13 @@ $(function(){
 	<br>
 	<br>
 	<dl class="row">
-	<dt class="col-sm-10"> <h1> 이벤트 상세보기 </h1> </dt>
-	<dt class="col-sm-2"> 
+	<dt class="col-sm-10"> <h1 style="font-weight: bold"> 이벤트 상세보기 </h1> </dt>
+	<dt class="col-sm-2" style="text-align: center;"> 
 	<c:if test="${user.role=='admin'}">
 		<input type="button" class="btn btn-dark" value="수정" id="update"> 
 		<input type="button" class="btn btn-outline-danger waves-effect" value="삭제" id="delete"> 
 	</c:if>
-	<i style="font-size:25px; align: right" class="fas fa-bars"></i>
+	<i style="font-size:30px; align: right" class="fas fa-bars"></i>
 	</dt>
 	
 	</dl>
@@ -132,10 +168,10 @@ $(function(){
 	
 	
 	
-	<h2>  ${event.eventTitle}</h2>
+	<h2 style="font-weight: bold;">  ${event.eventTitle}</h2>
 	<br>
 	<!-- Medium input -->
-	<h5> ${event.eventSub}</h5>
+	<h5 style="font-weight: bolder;"> ${event.eventSub}</h5>
 	
 
 	<!--  이벤트 본문 -->
@@ -148,11 +184,11 @@ $(function(){
 		
 			<!-- 이벤트 정보 -->
 			<dl class="row">
-				  <dt class="col-sm-2">태그</dt>
+				  <dt class="col-sm-2"><p style="text-align: center ; font-size: 18px">태그</p></dt>
 				  <dd class="col-sm-10">${event.eventTags }</dd>
 			 </dl>
 			 <dl class="row">
-				  <dt class="col-sm-2">기간</dt>
+				  <dt class="col-sm-2"><p style="text-align: center; font-size: 18px">기간</p></dt>
 				  <dd class="col-sm-10">${event.eventStart}&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;${event.eventEnd }</dd>
 			 </dl>
 
@@ -160,11 +196,13 @@ $(function(){
 	<br/>
 	
 	</div>
+	</div>
+	
 	<div id="inline">
 			<hr/>
 			<br/>
 			<div style="align:center;">
-			<h3 align="center"> 참가 작품 모아보기 </h3>
+			<h2 align="center" style="font-weight: bold;"> 참가 작품 모아보기 </h2>
 			<br>
 			<br>
 			</div>
@@ -174,14 +212,30 @@ $(function(){
 			</div>
 			</c:if>
 			<c:if test="${!empty feedList }">
-			<c:forEach var="feeds" items="${feedList}">
-				
-			
-			</c:forEach>
+			<div class="container">
+			<div class="row">
+
+					
+						<c:forEach var="feeds" items="${feedList}">
+							<div class="col-sm-4 feedout view overlay" onClick='fncgetFeed("${feeds.feedId}")'>
+						
+									<c:forEach var="images" items="${feeds.images}">
+										<c:if test="${images.isThumbnail == '1' }">
+											<img src="/VIG/images/uploadFiles/${images.imageFile}" class="img-fluid" >
+											  <a>
+											    <div class="mask waves-effect waves-light rgba-white-slight" ></div>
+											  </a>
+										</c:if>
+									</c:forEach>
+							
+							</div>
+						</c:forEach>
+					
+			</div>
+			</div>
 			</c:if>
 			
 	
-	</div>
 	</div>
 
 </body>

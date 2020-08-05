@@ -13,4 +13,6 @@ public interface WithdrawServices {
 	
 	public List<Withdraw> getWithdrawList(Search search) throws Exception;
 	
+	public int getCountWithdraw(String userCode) throws Exception;
+	
 }

@@ -166,7 +166,7 @@
 		color:#2F4F4F;
 	}
 	
-	.top {
+	#top {
 	  position: fixed;
 	  right: 10%;
 	  bottom: 50px;
@@ -203,14 +203,14 @@ $(function(){
 	//scrollTop 부드럽게 이동하는 부분
 	$( window ).scroll( function() {
 		if ( $( this ).scrollTop() > 200 ) {
-			$( '.top' ).fadeIn();
+			$( '#top' ).fadeIn();
 		} else {
-			$( '.top' ).fadeOut();
+			$( '#top' ).fadeOut();
 		}
 	} );
 	
 	//스크롤탑 애니메이션
-	$( '.top' ).click( function() {
+	$( '#top' ).click( function() {
 		$( 'html, body' ).animate( { scrollTop : 0 }, 400 );
 		return false;
 	} );
@@ -277,6 +277,12 @@ $(function(){
 	
 	//댓글 구현
 	$("button:contains('등록')").on("click", function(){
+		
+		var user = ${empty sessionScope.user};
+		if(user) {
+			alert("로그인이 필요합니다.");
+			return false;
+		}
 			
 		
 		var obj = new Object();			
@@ -338,10 +344,19 @@ $(function(){
 	
 	//좋아요 연결
 	$("#like").on("click", function(){
+
+		var user = ${empty sessionScope.user};
+		if(user) {
+			alert("로그인이 필요합니다.");
+			return false;
+			
+		}
+
 		
 		//실시간 알람을 보내는 부분
 		sendMessage('${feed.writer.userCode}','${feed.feedId}','0');
 		
+
 		var likeClass = $("#like").attr("class");
 		console.log(likeClass);
 		if(likeClass =='far fa-heart'){
@@ -410,6 +425,14 @@ $(function(){
 		
 	});
 	
+	var user = ${empty sessionScope.user};
+	if(user) {
+		
+		$("textarea").attr("readonly","readonly");
+		
+	}
+
+	
 	
 });
 
@@ -470,7 +493,7 @@ function imageModal(imageId){
 	
 	<div id="outline">
 	
-	<div class="top">
+	<div id="top">
 	<i class="fas fa-arrow-alt-circle-up"></i>
 	</div>
 	
@@ -520,9 +543,9 @@ function imageModal(imageId){
 	
 	<hr/>
 	<!-- 피드의 이미지 -->
+
 	<c:forEach var="images" items="${feed.images}">
-		<c:set var="i" value="0"/>
-		<c:set var="i" value="${i+1 }"/>
+
 		<c:if test="${images.isThumbnail == '0'}">
 			<div id="image" onclick='imageModal("${images.imageId}")'>
 			<img src="/VIG/images/uploadFiles/${images.imageFile}" style="width:960px"/>
@@ -715,7 +738,7 @@ function imageModal(imageId){
 	</div>
 	
 
-	
+	</div>
 	
 
 </body>
