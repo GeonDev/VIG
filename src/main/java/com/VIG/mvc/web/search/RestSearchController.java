@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
@@ -172,38 +173,48 @@ public class RestSearchController {
 				Search tempSearch = new Search();
 				tempSearch.setKeyword(user.getUserCode());
 				tempSearch.setPageSize(pageSize);
+				
 				tempSearch.setSearchType(0);
 				//첫페이지 양만 가지고 옴
 				tempSearch.setCurrentPage(1);				
 				
 				//최근 본 피드정보를 가지고 온다.
-				List<History> historyList =	historyServices.getHistoryList(tempSearch);	
+				List<History> historyList =	historyServices.getHistoryList(tempSearch);					
 				
-				List<ImageKeyword> keywordList = new ArrayList<ImageKeyword>();
-								
-				//최근 본 피드의 썸네일 키워드 리스트를 가지고 온다.
-				for(History history : historyList) {						
-					keywordList.addAll(history.getShowFeed().getKeywords());
-				}		
-				tempSearch.setKeywords(keywordList);
-				
-				feedlist = feedServices.getRecommendFeedList(tempSearch);				
-				
-				if(feedlist.size() > 0) {					
+				if(historyList.size() > 0) {					
+					List<ImageKeyword> keywordList = new ArrayList<ImageKeyword>();
 					
-					for(Feed feed : feedlist) {					
-						for(ImageKeyword keyword : keywordList) {
-							if(feed.getKeywords().contains(keyword)) {
-								feed.setCurrentKeywordSameCount(feed.getCurrentKeywordSameCount()+1);
+					//최근 본 피드의 썸네일 키워드 리스트를 가지고 온다.
+					for(History history : historyList) {						
+						keywordList.addAll(history.getShowFeed().getKeywords());
+					}		
+					tempSearch.setKeywords(keywordList);
+					
+					feedlist = feedServices.getRecommendFeedList(tempSearch);				
+					
+					if(feedlist.size() > 0) {					
+						
+						for(Feed feed : feedlist) {					
+							for(ImageKeyword keyword : keywordList) {
+								if(feed.getKeywords().contains(keyword)) {
+									feed.setCurrentKeywordSameCount(feed.getCurrentKeywordSameCount()+1);
+								}
 							}
 						}
+						
+						//피드 리스트를 소팅한다.
+						Collections.sort(feedlist);					
 					}
 					
-					//피드 리스트를 소팅한다.
-					Collections.sort(feedlist);					
-				}					 				
-			}			
+				//다른 피드를 본 기록이 없는 유저	
+				}else {
+					// 조회수가 가장 많은 피드를 추천
+					feedlist = feedServices.getHightViewFeedList(search);
+				}					
+			}
+				
 			
+		//추천 카테고리를 선택하지 않은 경우 - 카테고리에 해당하는 이미지를 출력	
 		}else {
 			feedlist = feedServices.getFeedListFromCategory(search);
 		}		
@@ -218,9 +229,12 @@ public class RestSearchController {
 			//숨김처리한 모든 피드리스트를 가지고 온다.
 			List<History> hidelist = historyServices.getAllHistoryList(tempSearch);				
 			
-			for(History key : hidelist) {					
-				feedlist.remove(key.getShowFeed());
-			}				
+			if(hidelist.size() > 0) {
+				for(History key : hidelist) {					
+					feedlist.remove(key.getShowFeed());
+				}				
+			}
+				
 		}
 		
 		
@@ -234,7 +248,7 @@ public class RestSearchController {
 	
 	//피드 검색 결과를 반환
 	@RequestMapping(value = "json/getSearchResultList")
-	public Map<String, Object> getSearchResult(@RequestBody Map<String, String> jsonData, HttpSession session) throws Exception {	
+	public Map<String, Object> getSearchResult(@RequestBody Map<String, String> jsonData, HttpSession session, HttpServletRequest request) throws Exception {	
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
@@ -286,11 +300,21 @@ public class RestSearchController {
 			//프라임피드를 추가하고 조회수를 늘려준다.
 			Feed primeFeed = feedServices.getPrimeFeedOne(search);
 			
+			History primeHistory = new History();
+			
+			//히스토리 타입 - 프라임 피드 노출
+			primeHistory.setHistoryType(2);
+			primeHistory.setShowFeed(primeFeed);
+			primeHistory.setWatchUser(user);
+			primeHistory.setIpAddress(CommonUtil.getUserIp(request));
+			
+			historyServices. addHistory(primeHistory);
+			
 			if(primeFeed != null) {
 				primeFeed.setPrimeFeedViewCount(primeFeed.getPrimeFeedViewCount()+1);
 				feedServices.updatePrimeFeedViewCount(primeFeed);								
 				
-				//추천한 프라임피드가 이미리스트에 있다면 삭제하고 최상위로 배치	
+				//추천한 프라임피드가 이미 리스트에 있다면 삭제하고 최상위로 배치	
 				feedlist = setFeedOrder(feedlist, primeFeed, 0);
 			}	
 			
