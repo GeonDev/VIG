@@ -17,8 +17,8 @@
 		<result property="eventImage" 	column="event_Image" 	jdbcType="VARCHAR" />
 		<result property="eventRegDate" 	column="event_RegDate" 	jdbcType="DATE" />
 		<result property="banner" 	column="banner" 	jdbcType="VARCHAR" />	
-		<result property="eventType" 	column="event_type" 	jdbcType="NUMERIC" />							
-	</resultMap>	
+		<result property="eventType" 	column="event_type" 	jdbcType="NUMERIC" />				
+	</resultMap>
 	
 	<insert id="addEvent" parameterType="event">
 		INSERT INTO event(event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner) 

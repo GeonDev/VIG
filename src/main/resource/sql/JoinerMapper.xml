@@ -53,7 +53,7 @@
 			SELECT COUNT(joiner_id) FROM joiner, feeds
 			WHERE joiner.feed_id = feeds.feed_id
 			AND date_format(add_date, '%Y%m%d') = #{date}
-			AND feeds.user_code = #{useCode}			
+			AND feeds.user_code = #{userCode}			
 		</select>
 		
 		
