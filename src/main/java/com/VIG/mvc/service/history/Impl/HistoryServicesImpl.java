@@ -1,5 +1,6 @@
 package com.VIG.mvc.service.history.Impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -66,9 +67,9 @@ public class HistoryServicesImpl implements HistoryServices {
 	}
 
 	@Override
-	public int[] getfeedHistoryMouthCount(HashMap<String, String> keys) throws Exception {
+	public List<String> getfeedHistoryMouthCount(HashMap<String, String> keys) throws Exception {
 
-		int [] mouthCout = new int[31];
+		List<String> mouthCout = new ArrayList<String>();
 		
 		for(int i = 0; i<31; i++) {
 			String date = keys.get("date");
@@ -81,7 +82,8 @@ public class HistoryServicesImpl implements HistoryServices {
 			}						
 			keys.replace("date", date);				
 			
-			mouthCout[i] = historyDao.getfeedHistoryDateCount(keys);		
+			
+			mouthCout.add(  String.valueOf(historyDao.getfeedHistoryDateCount(keys)) );
 		}	
 		
 		
@@ -89,9 +91,9 @@ public class HistoryServicesImpl implements HistoryServices {
 	}
 
 	@Override
-	public int[] getfeedHistoryPrimeDateCount(HashMap<String, String> keys) throws Exception {
+	public List<String> getfeedHistoryPrimeDateCount(HashMap<String, String> keys) throws Exception {
 		
-		int [] mouthCout = new int[31];
+		List<String> mouthCout = new ArrayList<String>();
 		
 		for(int i = 0; i<31; i++) {
 			String date = keys.get("date");
@@ -102,9 +104,9 @@ public class HistoryServicesImpl implements HistoryServices {
 			}else {
 				date += String.valueOf(i+1);
 			}						
-			keys.replace("date", date);				
+			keys.put("date", date);				
 			
-			mouthCout[i] = historyDao.getfeedHistoryPrimeDateCount(keys);		
+			mouthCout.add(  String.valueOf(historyDao.getfeedHistoryPrimeDateCount(keys)) );	
 		}	
 		
 		
