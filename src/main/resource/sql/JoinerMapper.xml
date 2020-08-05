@@ -45,7 +45,19 @@
 		<select id="getLikeState" parameterType="joiner" resultMap="joinerSelectMap">
 			SELECT * FROM joiner 
 			WHERE feed_id = #{feedId} AND is_like=1 AND user_code = #{user.userCode}
-			</select>
+		</select>
+		
+		
+		<!-- 특정 일에 특정 유저가 작성한 피드에 좋아요를 누른 수 -->
+		<select id ="getLikeMounthCount" parameterType="hashMap" resultType="int">
+			SELECT COUNT(joiner_id) FROM joiner, feeds
+			WHERE joiner.feed_id = feeds.feed_id
+			AND date_format(add_date, '%Y%m%d') = #{date}
+			AND feeds.user_code = #{useCode}			
+		</select>
+		
+		
+		
 </mapper>
 
 
