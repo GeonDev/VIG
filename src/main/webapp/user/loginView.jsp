@@ -33,6 +33,8 @@
 	<script type="text/javascript">
 
 	
+		
+	
 //=====회원가입으로 이동         //====로그인 모달에서 회원가입 누르면 풀페이지로 뜸...ajax이용?
 	$( function() {
 		$("#ty").on("click" , function() {
@@ -65,7 +67,7 @@
 </script>
 	<style type="text/css">
 	
-	 .container { padding-right: 300px; padding-left: 300px; padding-top: 100px; margin-right: auto; margin-left: auto; }
+	 
 	 .fail_text { margin:10px; }
 	 #top_title{ margin: 20px; }
 	 
@@ -76,7 +78,7 @@
 
 <form action="/VIG/user/login" method="POST">
 	<div class="lodin_modal">
-	<div class="container-fluid">	
+	<div class="container-fluid" id="login_container">	
 	
 		<div class="text-center border border-light p-5">
   			<div class="row" id="top_title">

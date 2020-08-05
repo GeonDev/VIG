@@ -44,7 +44,7 @@
 			});
 		});
 
-//===비밀번호 체크 이벤트   ================================================test 정리중 
+//===비밀번호 체크 이벤트   ================================================test 정리중   코드 정리하기
 
 	$(function(){
 		$("#deleteCheck").on("click",function(){	
@@ -128,13 +128,31 @@
 	#pImg {	display:block; margin-left:auto; margin-right:auto; width: auto; height: auto; max-width: 150px; max-height: 150px; border-radius:50%; }	
 	#getfile { display:block; margin-left:auto; margin-right:auto; width: auto; height: auto; }	
 	#form-group { display:block; margin-left:auto; margin-right:auto; }	
-		
+		#myFeedMain { padding: 70px;}
 </style>		
 	
 </head>
 <body>
 	
-<div class="container">
+	
+	
+	<!-- 상단 툴바 자리 -->
+      <div class="container-fluid">  
+      	 <div class="row">
+      		<div class="col-md-12">
+      			<jsp:include page="/main/toolbar.jsp" />
+     		</div>
+		</div>
+		
+		<div class="col-md-12">
+			<div class="row">
+	<!-- 사이드바 자리 -->		
+			<div class="col-md-2">		
+		      1 of 3 아 그리드 뭔데...ㅠㅠ
+		    <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
+		    </div>  
+	
+ <div class="col-md-10" id="myFeedMain">
 	<!-- 상단 타이틀 -->
 		<div class="row">
 			<div class="col-md-12_top">

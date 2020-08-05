@@ -63,9 +63,13 @@
 	margin: 5px 10px;
 		} 
 </style>
+<script>
+
+</script>
 </head>
 <body>
 <div class="container-fluid">	
+
 <div class="page-header text-info">
 			<h3>통계페이지</h3>	
 			<hr>
@@ -74,9 +78,8 @@
 				<div id="selectBox">
 							<select class="browser-default custom-select">
  							 <option selected>년도를 선택해주세요</option>
- 							 <option value="1">One</option>
- 							 <option value="2">Two</option>
-						     <option value="3">Three</option>
+ 							 <option value="202008">Test</option>
+ 							 
 							</select>								
 			    </div>
 			    <div id="selectBox2">
@@ -118,71 +121,21 @@
 <strong>조회수가 가장 많은 피드 3개</strong> 
 <div class="row">
 <div class="col-md-12">
-	<div class="row justify-content-center" style="margin-left: 10px; margin-right: 10px;">	
-		
 	
-			<c:if test="${mode eq 'Feed'}">
-				<c:forEach var="feed" items="${feedlist}">				
-					<div class = "view overlay">
-						<div class = "img_feed">
-							<a href="/VIG/feed/getFeed?feedId=${feed.feedId}" class="text-light">
-								<c:forEach var="thumbnail" items="${feed.images}">
-									<c:if test="${thumbnail.isThumbnail == 1}">									
-										<img src="/VIG/images/uploadFiles/${thumbnail.imageFile}" alt="thumbnail" class="img-fluid rounded-sm" style="width: 400px; height: 300px;">										
-									</c:if>
-								</c:forEach>						
-								<div class="mask waves-effect waves-light rgba-black-strong" style="text-align: right;">							
-								
-									<c:choose>
-										<c:when test="${user != null }">
-											<button type="button" onclick="addhideFeed(${feed.feedId})" class="btn btn-link" style="width: 50px; height:50px; padding-left: 0px; padding-right: 0px;">											
-												<h4><i class="far fa-times-circle" style="color: white; text-align: center;"></i></h4>
-											</button>
-										
-										</c:when>
-										<c:when test="${user == null }">										
-											<br/>
-										</c:when>									
-									</c:choose>					
-									
-									<br/><br/><br/><br/><br/><br/><br/><br/><br/>
-									<h5 class="txt_line" style="font-weight: bold; margin: 5px 10px; text-align: left;">								
-										<c:if test="${feed.feedIsPrime  == 1}">
-											<span class="badge badge-primary">Prime</span>&nbsp;
-										</c:if>	
-										${feed.feedTitle}
-									 </h5>					
-								</div>
-							</a>
-						</div>
-					</div>
-				</c:forEach>				
-				
-			</c:if>
-			
-			<c:if test="${mode eq 'Image'}">
-				<c:forEach var="image" items="${imagelist}">
-					<div class = "view overlay">
-						<div class = "img_image">
-							<a href="/VIG/search/getSearchImages?imageId=${image.imageId}" class="text-light">
-								<img src="/VIG/images/uploadFiles/${image.imageFile}" class="img-fluid rounded-sm" style="width: auto; height: 300px;"/>
-								<div class="mask flex-center waves-effect waves-light rgba-black-strong"></div>						
-							</a>
-						</div>												
-					</div>		
-				</c:forEach>			
-			</c:if>
-
 		
-		</div>
-		
-		
+		<button type="button" onclick="location.href='/VIG/chart/getChart?date=202008' ">Test</button>
 		
 </div>
 	</div>
 	</div>
 
 <script>
+
+	
+	
+var likeCount =${likeCount};
+var viewCount =${viewCount};
+var primeCount =${primeCount};
 
 
 var ctx = $("#line-chart");
@@ -195,7 +148,7 @@ var lineChart = new Chart(ctx,{
 		datasets:[
 			{
 				label:'Like',
-				data:[10,6,5,3,7,4,5,3,4,5,4,8,10,6,5,3,7,4,5,3,4,5,4,8,10,6,5,3,7,4,5],
+				data:likeCount,
 				backgroundColor: 'rgba(75, 192, 192, 1)',
 				borderColor: 'rgba(75, 192, 192, 1)',
 				borderWidth:3,
@@ -205,7 +158,7 @@ var lineChart = new Chart(ctx,{
 			},
 			{
 				label:'View',
-				data:[1,3,3,4,4,6,7,2,9,10,16,12,10,6,5,3,7,4,5,3,4,5,4,8,10,6,5,3,7,4],
+				data:viewCount,
 				backgroundColor: 'rgba(255, 99, 132, 1)',
 				borderColor: 'rgba(255, 99, 132, 1)',
 				borderWidth:3,
@@ -215,7 +168,7 @@ var lineChart = new Chart(ctx,{
 			},
 			{
 				label:'primefeed',
-				data:[4,10,1,8,2,6,7,2,9,3,11,14,2,10,6,5,3,7,4,5,3,4,5,4,2,10,6,5,3,7,4,5],
+				data:primeCount,
 				backgroundColor: 'rgba(015, 99, 132, 1)',
 				borderColor: 'rgba(015, 99, 132, 1)',
 				borderWidth:3,
@@ -232,6 +185,34 @@ var lineChart = new Chart(ctx,{
 	
 	
 });
+
+
+$("#year").on("change", function(){
+	$.ajax(
+   			{
+   				url : "/VIG/chart/json/getChart",
+				method : "GET" ,
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},
+				data : {
+					month : $("#month").val()
+					
+				},
+				success : function(JSONData , status) {
+					if(JSONData != ''){
+						lineChart.data.datasets[0].data = JSONData.like;
+						lineChart.data.datasets[1].data = JSONData.view;
+						lineChart.data.datasets[2].data = JSONData.prime;
+							
+						myChart.update();									
+					}else{
+						alert('카운트 없음');
+					}
+				}
+			})
+     });
 
 
 
