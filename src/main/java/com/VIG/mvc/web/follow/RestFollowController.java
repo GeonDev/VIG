@@ -73,38 +73,30 @@ public class RestFollowController {
 		
 		System.out.println(userCode+":"+followerCode);
 		System.out.println("unfollow함");
-		Map<String, Object> follow = new HashMap<String, Object>();
-		follow.put("userCode", userCode);
-		follow.put("followerCode", followerCode);
+		Follow follow = new Follow();
+		User followingUser = userServices.getUserOne(userCode);
+		follow.setFollowingUser(followingUser);
+		
+		User followedUser = userServices.getUserOne(followerCode);
+		follow.setFollowedUser(followedUser);
 		
 		followServices.deleteFollow(follow);
 
 	}
 	
 	@RequestMapping(value="json/getFollowerList", method=RequestMethod.GET)
-	public List<String> getFollowList(HttpSession session) throws Exception {
+	public List<User> getFollowList(HttpSession session) throws Exception {
 		
-		Search search = new Search();
 		
 		User user = (User)session.getAttribute("user");
 		
 		logger.debug(user);
 		
-		if(search.getCurrentPage()==0) {
-			
-			search.setCurrentPage(1);
-		}
-		search.setKeyword(user.getUserCode());
-		search.setPageSize(pageSize);
 		
-		logger.debug(search);
-		
-		
-		List<String> follower = followServices.getFollowerList(search); 
+		List<User> follower = followServices.getFollowerList(user.getUserCode()); 
 		
 		logger.debug(follower);
 		
-		Page resultPage = new Page( search.getCurrentPage(), 5 , pageUnit, pageSize);
 		
 		
 		return follower;
