@@ -102,7 +102,14 @@ public class FeedController {
 	
 	@RequestMapping(value = "addFeed", method = RequestMethod.POST)
 	public ModelAndView addFeed(@RequestParam("keyword") String keyword,@ModelAttribute("feed") Feed feed, @ModelAttribute("category") Category category,@RequestParam("uploadFile") List<MultipartFile> files, @SessionAttribute("user") User user) throws Exception {
-				
+		//System.out.println(keyword);	
+		
+	//	System.out.println(category);
+		
+		
+		
+		
+		
 		feed.setWriter(user);									
 		feed.setFeedCategory(category);			
 		feedServices.addFeed(feed);
@@ -132,9 +139,9 @@ public class FeedController {
 	    		multipartFile.transferTo(f);		    		
 	    		
 	    		Image image = new Image();
-	    		if(k==0) {
-	    			image.setIsThumbnail(1);					//이미지 순서가 0번째면 썸네일 
-	    		}
+	    	//	if(k==0) {
+	    		//	image.setIsThumbnail(1);					//이미지 순서가 0번째면 썸네일 
+	    	//	}
 	    		String imageFile=inDate+multipartFile.getOriginalFilename();
 	    	    System.out.println("imageFile:"+imageFile);
 	    	    
@@ -151,16 +158,16 @@ public class FeedController {
 	    		
 				String[] originKeyword = keyword.split(","); //스트링으로 받은 키워드를 파싱후 string[]에 담는다
 	    									
-	    					for(int i =0; i < originKeyword.length;  i++) {			    			
-	    					
+   				for(int i =0; i < originKeyword.length;  i++) {			    			
+   					
 	    					ImageKeyword imageKeyword = new ImageKeyword();          
-	    			     	imageKeyword.setKeywordOrigin(originKeyword[i]);                //이미지키워드에 오리진키워드 set
+	    					imageKeyword.setKeywordOrigin(originKeyword[i]);                //이미지키워드에 오리진키워드 set
 	    					imageKeyword.setIsTag(1);
 	    					imageKeyword.setImageId(imageId);
 	    					keywordServices.addKeyword(imageKeyword);                		  
 	    					System.out.println(imageKeyword);	
 	    					}
-	    		System.out.println(image);
+    		System.out.println(image);
 	    		
 	    		//keys = VisionInfo.getKeywordForVision(path+inDate+multipartFile.getOriginalFilename());	    			
 	    		//colors = VisionInfo.getColorForVision(path+inDate+multipartFile.getOriginalFilename());
