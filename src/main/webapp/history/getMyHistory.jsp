@@ -100,11 +100,25 @@
 
 <body>
 
-	<div class="container-fluid">						
-			
-			<div class="page-header text-info">
-				<h3>내 활동정보 보기</h3>
-			</div>			
+<!-- 상단 툴바 자리 --> 														
+      <div class="container-fluid">  
+      	 <div class="row">
+      		<div class="col-md-12">
+      			<jsp:include page="/main/toolbar.jsp" />
+     		</div>
+		</div>
+		
+		<div class="col-md-12">
+			<div class="row">
+	<!-- 사이드바 자리 -->		
+			<div class="col-md-2">		
+		    <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
+		    </div>  
+		    
+		    
+	<!--  본문 자리 -->	      	    
+		    <div class="col-md-10" id="myFeedMain">
+				<h3>내 활동정보 보기</h3>			
 			<hr/>		
 				
 			
