@@ -39,9 +39,9 @@
 	//function nav_payment(url) {
 	//	$('#my_frame').attr('src', url);
 	//}
-	//function nav_analysis(url) {
-	//	$('#my_frame').attr('src', url);
-	//}
+//	function nav_chart(url) {
+//		$('#my_frame').attr('src', url);
+//	}
 	function nav_PaymentList(url) {
 		$('#my_frame').attr('src', url);
 	}
@@ -157,7 +157,7 @@
  					<br/>
  		<!-- 비지니스 유저만 통계-->
  				<c:if test="${sessionScope.user.role=='business'}">
- 					<button type="button" class="btn btn-block" onclick='nav_analysis(".jsp")'>
+ 					<button type="button" class="btn btn-block" onclick='nav_chart("/VIG/chart/chart.jsp")'>
  						<a href="#">통 계</a></button>
  					<br/>	
  				</c:if>	
