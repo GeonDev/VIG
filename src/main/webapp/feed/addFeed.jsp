@@ -32,20 +32,12 @@
  	<link rel="stylesheet" href="/VIG/css/dropify.min.css">
  	<link rel="stylesheet" href="/VIG/fonts/dropify.woff">
  	<link rel="stylesheet" href="/VIG/fonts/dropify.ttf">
- 	<!-- crop -->
- 	<script src="/VIG/javascript/pixelarity-face.js"></script>
- 	
- 	<link rel="stylesheet" href="/VIG/css/pixelarity.css">
- 	
- 	
- 	
- 	<script src="/VIG/javascript/rcrop.min.js"></script>
- 	<link rel="stylesheet" href="/VIG/css/rcrop.min.css">
- 	
+ 	<!-- crop -->	
  	<script src="/VIG/javascript/jquery.Jcrop.js"></script>
  	<link rel="stylesheet" href="/VIG/css/jquery.Jcrop.css"  type="text/css" />
  	<link rel="stylesheet" href="/VIG/css/jquery.Jcrop.min.css"  type="text/css" />
- 	<!-- check Box -->
+ 	
+ 	<!-- select -->
  	<script src="/VIG/javascript/justselect.min.js"></script>
  	<link rel="stylesheet" href="/VIG/css/justselect.css" >
 	<!-- Bootstrap tooltips -->
@@ -61,7 +53,12 @@
 	
 	
 	body{
-	    
+	   
+	}
+	
+	#feedend{
+		 position:absolute;
+		 bottom : -400px;	
 	}
 	
 	#main { 
@@ -70,13 +67,11 @@
 	}
 	
 	#side{
+		position:relative;
 		margin: 110px ;
 			
 	}
-	#categoryList{
-		float:right;
-		
-	}
+	
 	#thumbnail{
 		background-color: #333333 !important;
 	}
@@ -109,19 +104,15 @@
 	
 </style>
 <script type="text/javascript">
+//업로드 
+$(function() {
+	$( "#feedend" ).on("click" , function() {
+		document.myform.action='addFeed';
+		document.myform.submit();
+	});
+});
 
-//업로드 동적생성
-function add_div(){
-    var div = document.createElement('div');
-    div.innerHTML = document.getElementById('room_type').innerHTML;
-    document.getElementById('field').appendChild(div);
-}
-//업로드 동적제거(This)
-function remove_div(obj){
 
-document.getElementById('field').removeChild(obj.parentNode);
-
-}
 //이미지 파일 유효성검사
 function fileCheck(el) { 
     if(!/\.(jpeg|jpg|png|gif|bmp)$/i.test(el.value)){ 
@@ -136,20 +127,6 @@ function fileCheck(el) {
 		var input = document.querySelector('input[name=keyword]');
 		new Tagify(input)
 	});
-
-//drag and drop
-$(function (){
-	$('.dropify').dropify();
-	});
-
-
-
-
-
-
-
-
-
 
 </script>
 
@@ -243,7 +220,41 @@ $(function(){
 
 </script>
 
+<script>
+//DIV 동적추가 제거
+var arrInput = new Array(0);
+  var arrInputValue = new Array(0);
+ 
+function addInput() {
+  arrInput.push(arrInput.length);
+  arrInputValue.push("");
+  display();
+}
+ 
+function display() {
+  document.getElementById('parah').innerHTML="";
+  for (intI=0;intI<arrInput.length;intI++) {
+    document.getElementById('parah').innerHTML+=createInput(arrInput[intI], arrInputValue[intI]);
+  }
+}
 
+function createInput(id) {
+	$(function (){
+		$('.dropify').dropify();
+		
+		});
+	return  "<input type='file' id='demo"+id+"' class='dropify' name='uploadFile' accept='image/*' onchange='fileCheck(this)' data-height='400'><hr>";
+	
+	}
+	
+function deleteInput() {
+	  if (arrInput.length > 0) { 
+	     arrInput.pop(); 
+	     arrInputValue.pop();
+	  }
+	  display(); 
+	}
+</script>
 
 
 </head>
@@ -255,17 +266,18 @@ $(function(){
 	<!--  툴바 -->
 	
 	
-	<form class="myform" enctype="multipart/form-data">
+	<form class="myform" enctype="multipart/form-data" name="myform" method="post">
 	<div class="container-fluid">
 	
 	
 		<div class="row">
 			
-				<div class ="col-md-8" id="main">
+				<div class ="col-md-8" >
+				<div id="main">
 				<h1><strong> Feed Creation </strong></h1>
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" id="thumbnail">Create Thumbnail</button>
 	
-				<i class="fas fa-align-justify" id='categoryList'></i>
+				
 	
 	<div class="md-form form-lg">
 		   <input type="text" id="inputLGEx" class="form-control form-control-lg" name="feedTitle">
@@ -278,15 +290,16 @@ $(function(){
 			
 		
 			<div class="form-group">
-					<input type="file" id="demo" class="dropify" name="uploadFile" accept="image/*" onchange='fileCheck(this)'>
+					
 							
 							
 						
 			
 						
 		</div>
-							
-							
+							<div id="parah"></div>
+							<input type="button" value="추가" onclick="addInput();" />
+<input type="button" value="삭제" onclick="deleteInput();"/>
 							<div class="md-form md-bg">
 							<input name='keyword' value='' placeholder="Please enter your tags" class="form-control">
 							
@@ -299,30 +312,97 @@ $(function(){
  									  
  									
 										</div>
-									<select class="justselect">
-  <option selected="selected" value="jquery">카테고리</option>
-  <option name="category" value="css">CSS3</option>
-  <option name="category" value="html">HTML5</option>
-</select>
+									
 											
- 									 </div>		
- 										<div id= "side" >
- 											
- 										</div>		
+ 									 </div>	
+ 									 </div>
+ 									 	<div class="col-md-4">
+ 									 	<div id="side">
+ 									 	<div>
+									<select class="justselect" name="categoryId">
+  									<option  selected="selected" value="">Category</option>
+  									<option  value="10000">일러스트레이션</option>
+  									<option  value="10001">그래픽디자인</option>
+  									<option  value="10002">건축</option>
+  									<option  value="10003">제품디자인</option>
+  									<option  value="10004">패션</option>
+  									<option  value="10005">광고</option>
+  									<option  value="10006">포토그래피</option>
+  									<option  value="10007">미술</option>
+  									<option  value="10008">게임디자인</option>
+  									<option  value="10009">공예</option>
+  									<option  value="10010">타이포그래피</option>
+  									<option  value="10011">UI/UX</option>
+  									<option  value="10012">RECOMMEND</option>
+									</select>
+									
+									</div>
+									<br>
+									<!-- Default inline 1-->
+									<strong>commentRange</strong>
+					<div>
+							<div class="custom-control custom-radio custom-control-inline">
+  							<input type="radio" class="custom-control-input" id="defaultInline1" name="commentRange" checked="checked" value="0">
+  							<label class="custom-control-label" for="defaultInline1">All</label>
 							</div>
+				<br>
+									<!-- Default inline 2-->
+							<div class="custom-control custom-radio custom-control-inline">
+ 							 <input type="radio" class="custom-control-input" id="defaultInline2" name="commentRange" value="1">
+ 							 <label class="custom-control-label" for="defaultInline2">Follower</label>
+							</div>
+				<br>
+
+									<!-- Default inline 3-->
+							<div class="custom-control custom-radio custom-control-inline">
+  							<input type="radio" class="custom-control-input" id="defaultInline3" name="commentRange" value="2">
+ 							 <label class="custom-control-label" for="defaultInline3">Disabled</label>
+							</div>
+
+				</div>
+<hr>
+<hr>
+							<strong>isPrimeFeed</strong>
+		<div>
+		
+		<div class="custom-control custom-radio custom-control-inline">
+  							<input type="radio" class="custom-control-input" id="defaultInline4" name="feedIsPrime" checked="checked" value="0">
+  							<label class="custom-control-label" for="defaultInline4">Feed</label>
+							</div>
+							
+		<div class="custom-control custom-radio custom-control-inline">
+  							<input type="radio" class="custom-control-input" id="defaultInline5" name="feedIsPrime" value="1">
+  							<label class="custom-control-label" for="defaultInline5">PrimeFeed</label>
+							</div>
+		</div>
+		<hr>
+		<hr>
+		<strong>UseGears</strong>
+		<div>
+		
+		</div>
+		
+		
+		<button type="button" class="btn btn-info" id="feedend">UpLoad</button>
+ 										</div>
+ 										
+ 									 </div>
+ 											</div>
+ 										</div>
+							
 						
 				
 				<div class="row">
 				
-				<div class="col-md-4" >
+ 												
 				
 							
-		</div>
+		
 	
 
 	</div>
 	
-	</div>
+	
 	
 
 	
@@ -334,14 +414,14 @@ $(function(){
 	<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="thumbnailModal">
  	 <div class="modal-dialog modal-lg">
     		<div class="modal-content">
-    					<div>
+    											<div>
 													 <img id="target" src="" width="700" alt="로컬에 있는 이미지가 보여지는 영역">
 													<input type="file" id="getfile" accept="image/*">
 													
 													</div>
 													<div id="preview-pane">
    												 <div class="preview-container">
-    									  <img src="" class="jcrop-preview" alt="Preview" />
+    									  <img src="/VIG/images/uploadFiles/feed01_1.jpg" class="jcrop-preview" alt="Preview" />
     										</div>
  												 </div>
  									
@@ -352,5 +432,8 @@ $(function(){
     		</div>
  	 </div>
 </div>
+
+	
 	</form>
+	
 	<!--  모달끝 -->
