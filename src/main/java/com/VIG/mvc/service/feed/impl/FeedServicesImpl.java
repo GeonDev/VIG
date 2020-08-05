@@ -44,8 +44,8 @@ public class FeedServicesImpl implements FeedServices {
 	public List<Feed> getFeedList(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		
-		//중복체크이후 반환
-		return CommonUtil.checkEqualFeed(feedDao.getFeedList(search));
+		
+		return feedDao.getFeedList(search);
 	}
 
 	@Override
@@ -65,13 +65,13 @@ public class FeedServicesImpl implements FeedServices {
 	public List<Feed> getFeedListOnlyTag(String tag) throws Exception {
 		// TODO Auto-generated method stub
 		
-		return CommonUtil.checkEqualFeed(feedDao.getFeedListOnlyTag(tag));
+		return feedDao.getFeedListOnlyTag(tag);
 	}
 
 	@Override
 	public List<Feed> getFeedListFromCategory(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return  CommonUtil.checkEqualFeed(feedDao.getFeedListFromCategory(search));
+		return  feedDao.getFeedListFromCategory(search);
 	}
 
 	@Override
@@ -80,13 +80,14 @@ public class FeedServicesImpl implements FeedServices {
 		List<Feed> feedlist = feedDao.getFeedListFromKeyword(search);		
 		feedlist.addAll(feedDao.getFeedListFromTitle(search));			
 		
+		//피드 중복체크 이후 반환
 		return CommonUtil.checkEqualFeed(feedlist);
 	}
 
 	@Override
 	public List<Feed> getFeedListFromColor(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return CommonUtil.checkEqualFeed( feedDao.getFeedListFromColor(search));
+		return feedDao.getFeedListFromColor(search);
 	}
 
 	@Override
@@ -98,13 +99,13 @@ public class FeedServicesImpl implements FeedServices {
 	@Override
 	public List<Feed> getMyFeedList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return CommonUtil.checkEqualFeed( feedDao.getMyFeedList(search));
+		return  feedDao.getMyFeedList(search);
 	}
 
 	@Override
-	public Feed getPrimeFeedOne(Search search) throws Exception {
+	public List<Feed> getPrimeFeed(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return feedDao.getPrimeFeedOne(search);
+		return feedDao.getPrimeFeed(search);
 	}
 
 	@Override
@@ -117,7 +118,7 @@ public class FeedServicesImpl implements FeedServices {
 	@Override
 	public List<Feed> getHightViewFeedList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return  CommonUtil.checkEqualFeed(feedDao.getHightViewFeedList(search));
+		return  feedDao.getHightViewFeedList(search);
 	}
 
 	@Override
@@ -131,13 +132,13 @@ public class FeedServicesImpl implements FeedServices {
 	@Override
 	public List<Feed> getLikedFeedList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return CommonUtil.checkEqualFeed( feedDao.getLikedFeedList(search));
+		return  feedDao.getLikedFeedList(search);
 	}
 
 	@Override
 	public List<Feed> getRecommendFeedList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return  CommonUtil.checkEqualFeed(feedDao.getRecommendFeedList(search));
+		return  feedDao.getRecommendFeedList(search);
 	}
 	
 }

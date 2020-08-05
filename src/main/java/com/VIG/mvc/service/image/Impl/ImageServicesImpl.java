@@ -54,31 +54,31 @@ public class ImageServicesImpl implements ImageServices {
 	public List<Image> getALLImageList() throws Exception {
 		// TODO Auto-generated method stub	 
 		
-		return  CommonUtil.checkEqualImage(imageDao.getALLImageList());
+		return  imageDao.getALLImageList();
 	}
 
 	@Override
 	public List<Image> getImageListFromKeyword(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return CommonUtil.checkEqualImage( imageDao.getImageListFromKeyword(search));
+		return imageDao.getImageListFromKeyword(search);
 	}
 
 	@Override
 	public List<Image> getImageListFromColor(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return  CommonUtil.checkEqualImage( imageDao.getImageListFromColor(search));
+		return   imageDao.getImageListFromColor(search);
 	}
 
 	@Override
 	public List<Image> getImageListFromCategoroy(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return CommonUtil.checkEqualImage( imageDao.getImageListFromCategoroy(search));
+		return  imageDao.getImageListFromCategoroy(search);
 	}
 
 	@Override
 	public List<Image> getImageListFromImage(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return CommonUtil.checkEqualImage( imageDao.getImageListFromImage(search));
+		return  imageDao.getImageListFromImage(search);
 	}
 
 	@Override
