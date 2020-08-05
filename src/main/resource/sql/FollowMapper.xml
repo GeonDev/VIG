@@ -5,51 +5,74 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="FollowMapper"> 	
- 
+
+	<resultMap type="follow" id="FollowSelectMap">
+		<result property="followId" 	column="event_id" 		jdbcType="NUMERIC"/>
+		<result property="followDate" 		column="follow_date" 	jdbcType="DATE"/>
+		
+		<association property="followingUser"         column="user_code"    javaType="user"      select="setUser"/>		
+		<association property="followedUser" 		  column="user_code" 	javaType="user"	     select="setFollower"/>
+		
+		<collection property="followers" 		column="user_code" 	javaType="list" 	ofType="user" 		select="getFollowerList"/>
+		<collection property="follwings"	 	column="user_code"  javaType="list"	  	ofType="user"		select="getFollowingList"/>
+		
+	</resultMap>
+ 	
+ 	<select id="setUser" parameterType="String" resultMap="UserMapper.userSelectMap">
+ 		Select * FROM users
+ 		WHERE user_code=#{value}
+ 	</select>
+ 	<select id="setFollower" parameterType="String" resultMap="UserMapper.userSelectMap">
+ 	
+ 		SELECT * FROM users
+ 		WHERE user_code=#{value}
+ 	
+ 	</select>
 	
-	<insert id="addFollow" parameterType="hashMap">
+	<insert id="addFollow" parameterType="follow">
 		INSERT INTO follow(user_code, follower_code)
-		VALUES (#{userCode}, #{followerCode})
+		VALUES (#{followingUser.userCode}, #{followedUser.userCode})
 
 	</insert>
-	
-	
 
-	<delete id="deleteFollow" parameterType="hashMap">
+	<delete id="deleteFollow" parameterType="follow">
 		DELETE FROM follow
-      	WHERE user_code=#{userCode} and follower_code=#{followerCode}
+      	WHERE user_code=#{followingUser.userCode} and follower_code=#{followedUser.userCode}
 	</delete>
 	
-	<select id="getFollow" parameterType="hashMap" resultType="int">
+	<select id="getFollow" parameterType="follow" resultType="int">
 	
 		SELECT COUNT(*) FROM follow
-		WHERE user_code=#{userCode} and follower_code=#{followerCode}
+		WHERE user_code=#{followingUser.userCode} and follower_code=#{followedUser.userCode}
+	
+	</select>
+	
+	<select id="getFollowAll" parameterType="String" resultMap="FollowSelectMap">
+			
+			SELECT * FROM follow
+			WHERE user_code=#{value}
 	
 	</select>
 	
 	<!-- 내가 팔로우 한 사람 -->
-	<select id="getFollowingList" parameterType="search" resultMap="UserMapper.userSelectMap">
+	<select id="getFollowingList" parameterType="string" resultMap="UserMapper.userSelectMap">
 	
-		SELECT temp.* FROM 
-		( SELECT ROW_NUMBER() OVER(ORDER BY f.follower_id) num, u.*
+
+		SELECT  u.*
 		FROM follow f, users u
 		WHERE f.user_code=#{keyword}
 		AND f.follower_code = u.user_code
-		) temp 
-		WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
 	
 	</select>
 	
 	<!-- 나를 팔로우 한 사람 -->
-	<select id="getFollowerList" parameterType="search" resultType="String">
+	<select id="getFollowerList" parameterType="string" resultType="UserMapper.userSelectMap">
 		
-		SELECT temp.user_code FROM 
-		( SELECT ROW_NUMBER() OVER(ORDER BY follower_id) num, user_code
-		FROM follow
-		WHERE follower_code=#{keyword}
-		) temp 
-		WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
-	
+		SELECT u.*
+		FROM follow f, users u
+		WHERE follower_code=#{value}
+		AND f.user_code = u.user_code
+		
 	</select>
 
 

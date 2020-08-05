@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.VIG.mvc.service.follow.FollowServices;
+import com.VIG.mvc.service.user.UserServices;
 import com.VIG.mvc.web.event.EventController;
+import com.VIG.mvc.service.domain.Follow;
 import com.VIG.mvc.service.domain.Page;
 import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.domain.User;
@@ -34,6 +36,10 @@ public class RestFollowController {
 	@Autowired
 	@Qualifier("followServicesImpl")
 	private FollowServices followServices;
+	
+	@Autowired
+	@Qualifier("userServicesImpl")
+	private UserServices userServices;
 	
 	@Value("#{commonProperties['pageUnit'] ?: 5}")
 	int pageUnit;
@@ -50,11 +56,15 @@ public class RestFollowController {
 		
 		System.out.println(userCode+":"+followerCode);
 		System.out.println("follow함");
-		Map<String, Object> follow = new HashMap<String, Object>();
-		follow.put("userCode", userCode);
-		follow.put("followerCode", followerCode);
+		Follow follow = new Follow();
+		User followingUser = userServices.getUserOne(userCode);
+		follow.setFollowingUser(followingUser);
 		
-		followServices.addFollow(follow);
+		User followedUser = userServices.getUserOne(followerCode);
+		follow.setFollowedUser(followedUser);
+		
+		
+		//followServices.addFollow(follow);
 		
 	}
 	
