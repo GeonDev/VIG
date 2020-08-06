@@ -27,22 +27,156 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 	
 	<script type="text/javascript">
+		
+	
+	//최초 페이지 설정
+	var page = 0; 	
+	
+	//페이지의 끝인지 체크
+	var isPageEnd = false;
+	
+	//페이지 로드가 완료 되었는지 체크(ajax 중복 호출 방지용)
+	var isLoadPage = false;
+	
+	
+	//전달받은 피드 리스트를 화면에 그린다.
+	function getfeedlistFromAjax(item){
+		var thumbnail = '';								
+		
+		$.each(item.images, function(index, item){
+			if(item.isThumbnail == 1){
+				thumbnail = item.imageFile
+			}									
+		});
+		
+		//변수  초기화
+		var displayValue ='';
+		
+		displayValue = 
+			"<div class = 'view overlay'>"
+				+"<div class = 'img_feed'>"
+				+ "<a href='/VIG/feed/getFeed?feedId="+ item.feedId +"' class='text-light'>"
+					+ "<img src='/VIG/images/uploadFiles/" + thumbnail + "' alt='thumbnail' class='img-fluid rounded-sm img_feed '>"
+					+ "<div class='mask waves-effect waves-light rgba-black-strong' style='text-align: right;'>"	
+					+ "<p class='txt_line' style='margin: 65% 10px; font-weight: bold; text-align: left; color : white; font-size : large; vertical-align: bottom'>";								
+											
+						if(item.feedIsPrime == 1){
+							displayValue += "<span class='badge badge-primary'>Prime</span>&nbsp;";
+						}						
+						
+						displayValue += item.feedTitle + "</p>"					
+					+ "</div>"
+				+ "</a>"
+				+"</div>"
+			+"</div>";
+									
+			$("#showFeedList").append(displayValue);		
+	}
+	
+	
+	
+	//키워드 검색을 통하여 불러온 이미지를 출력한다.
+	function getMyfeedList() {
+		
+		if(isPageEnd == true || isLoadPage == true){
+			//페이지의 끝, 또는 페이지 로드중 이라면 실행안함
+			return;
+		}		
+		isLoadPage = true;
+		page += 1;
+		console.log(page);		
+		
+		
+		$.ajax( 
+				{
+					url : "/VIG/search/json/getSearchUserFeedResult",
+					method : "POST",
+					dataType : "Json",					
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					data :  JSON.stringify({userCode : '${writer.userCode}', currentPage : page}),
+					success : function(JSONData , status) {
+						
+						//검색 결과가 있는지 체크
+						if (JSONData.list.length != 0){					
+						
+							//불러와야 되는 페이지보다 개수가 적은 경우 페이지가 끝났다
+							if (JSONData.list.length < 10){
+								isPageEnd = true;
+							}	 						
+	 		
+	 	 					$.each(JSONData.list, function(index, item) {	 													 								
+	 							getfeedlistFromAjax(item);	 												
+	 						});	 							
+	 							 						
+ 						//로드가 완료되면 로딩이 되었다고 체크
+ 						isLoadPage = false;
+	 					
+	 					//검색결과가 없는 경우	
+						}else{
+							
+							//첫번째 페이지를 로드 했을 경우에만 발생
+							if(page == 1){
+								isPageEnd = true;
+								getNoSearchResult();
+							}
+						}
+					}
+			});		
+	}
 
 
 
+	$(function(){			
+		// 최초 진입시 첫번째 페이지 로딩
+		getMyfeedList();
+			
+		$(window).scroll(function() {
+		    if ($(window).scrollTop() + 500 >= $(document).height() - $(window).height()) {     			     
+		    	getMyfeedList();  			    	
+		    }
+		});		    			
+		
+	});	
+	
+	
+	
+	
 
 	</script>
 	
 	<style>
 	
-	#myFeedMain { padding: 70px;}
+	body {
+	padding-top : 70px;
+	}
+	
+	.img_feed {	
+    width: auto; height: 290px; 	
+	overflow:hidden;	
+	}
+	
+	.view {	  
+	margin: 5px 10px;
+	}
+	
+	.txt_line {
+	 width:380px; 
+	 padding:0 5px; 
+	 overflow:hidden; 
+	 text-overflow:ellipsis; 
+	 white-space:nowrap; 
+	 }
 	
 	</style>
 
 </head>
+
+
 <body>
 
-<!-- 상단 툴바 자리 --> 															  <!-- 코드 정리하기 -->
       <div class="container-fluid">  
       	 <div class="row">
       		<div class="col-md-12">
@@ -52,37 +186,42 @@
 		
 		<div class="col-md-12">
 			<div class="row">
-	<!-- 사이드바 자리 -->		
-			<div class="col-md-2">		
-		      1 of 3 아 그리드 뭔데...ㅠㅠ
-		    <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
-		    </div>  
-		    
-		    
-	<!--  본문 자리 -->	      	    
-		    <div class="col-md-10" id="myFeedMain">
-		      2 of 3
-				<div class="title_h1"><h1>${user.userName} 님의 마이피드</h1></div><hr/>
-	 				<div class="row">
-			 		<div id="btn_group">
-			 			<div class="text-center">
-			 			 <button class="btn btn-light ml-5 mr-5" data-toggle="modal" data-target="#theModal">
-							   팔로워</button>
-						<button class="btn btn-light ml-5 mr-5" data-toggle="modal" data-target="#theModal2">
-							   팔로잉</button>
-						<a type="button" class="btn btn-light ml-5 mr-5" href="#">
-							   채 팅</a>
-						</div>	 			
-				 		</div>
-		    		</div>
-		     
-		    
-		    
-			</div>
-			
-			</div>
-	</div>
+				<!-- 사이드바 자리 -->		
+				<div class="col-md-2">		
+			    	<jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
+			    </div>  
+			    
+			    
+				<!--  본문 자리 -->	      	    
+			    <div class="col-md-10" >					
 
+					<h1>
+						<strong>${writer.userName}</strong> 님의 마이피드
+					</h1>
+					
+					<hr/>
+		 				<div class="row justify-content-center">
+					 		<div id="btn_group">
+					 			<div class="text-center">
+					 			 <button class="btn btn-default ml-5 mr-5" data-toggle="modal" data-target="#theModal">
+									   팔로워</button>
+								<button class="btn btn-default ml-5 mr-5" data-toggle="modal" data-target="#theModal2">
+									   팔로잉</button>
+								<a type="button" class="btn btn-default ml-5 mr-5" href="#">
+									   채 팅</a>
+								</div>	 			
+						 	</div>
+			    		</div>
+			    		
+			    	<br/>			    		
+			    		<!-- 피드리스트를 그려줄 부분 -->		
+					<div id="showFeedList" class="row justify-content-center" style="margin-left: 10px; margin-right: 10px;">	</div>
+			    				    
+				</div>
+							
+			</div>
+		</div>
+	</div>
 
 
 </body>
