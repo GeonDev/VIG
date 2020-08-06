@@ -125,8 +125,7 @@ public class UserController {
 		
 			User dbUser = userServices.getUserOne(user.getUserCode());
 			ModelAndView mv = new ModelAndView();
-			System.out.println(user.getUserCode());
-		
+			System.out.println("로그인:"+user.getUserCode());
 			
 		if(dbUser == null) {
 			mv.setViewName("forward:/user/loginView.jsp");
@@ -148,7 +147,8 @@ public class UserController {
 	}
 
 
-//=======로그아웃===============================================================//
+//=======로그아웃
+	
 	@RequestMapping( value="logout", method=RequestMethod.GET)
 	public ModelAndView logout(HttpSession session) throws Exception{
 			
@@ -163,7 +163,8 @@ public class UserController {
 	
 	
 
-	//=============업데이트 유저
+	//====업데이트 유저 nav
+	
 	@RequestMapping( value="updateUser", method=RequestMethod.GET )
 	public String updateUser(@RequestParam(value="uesrCode", required=false) String userCode, Model model)throws Exception{ 
 		System.out.println("/user/updateUser : GEt");
@@ -209,9 +210,36 @@ public class UserController {
 		
 	}
 	
-	//=================유저 리스트 가져오기
-	
-	
+	//=====유저 리스트 nav
+	/*
+	@RequestMapping("getUserList")
+	public ModelAndView getUserList(@ModelAttribute("search") Search search) throws Exception{
+		// 현재 페이지값이 없으면 첫번째 페이지로 설정
+				if (search.getCurrentPage() == 0) {
+					search.setCurrentPage(1);
+				}
+				
+				//키워드 데이터가 NULL이라면
+				if(search.getKeyword() == null) {
+					search.setKeyword("");
+				}
+				
+				search.setPageSize(pageSize);
+				
+				Page resultPage = new Page(search.getCurrentPage(), userServices.getTotalCount(search) , pageUnit, pageSize);
+			
+				ModelAndView modelAndView = new ModelAndView();
+
+				// Model 과 View 연결
+				modelAndView.setViewName("forward:/user/getUserlist.jsp");
+				modelAndView.addObject("list", userServices.getUserList(search));
+				modelAndView.addObject("resultPage", resultPage);
+				modelAndView.addObject("search", search);
+
+				return modelAndView;
+		
+	}
+	*/
 	
 	
 	
