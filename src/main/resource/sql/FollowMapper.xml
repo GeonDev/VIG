@@ -29,7 +29,7 @@
 	
 	<insert id="addFollow" parameterType="follow">
 		INSERT INTO follow(user_code, follower_code)
-		VALUES (#{followingUser.userCode}, #{followedUser.userCode})
+		VALUES (#{followingUser.userCode:VARCHAR}, #{followedUser.userCode:VARCHAR})
 
 	</insert>
 
