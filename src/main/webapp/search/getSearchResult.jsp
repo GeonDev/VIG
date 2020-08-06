@@ -438,8 +438,8 @@
 		<div class="row justify-content-end mt-0  ">			
 			<div class="col-sm-10 d-flex justify-content-start">		
 				<button id="colorSelecter" class="btn btn-outline-light dropdown-toggle btn-sm form-inline mb-0" type="button" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;">
-					<i id="showColor" class="fas fa-circle" style="color: #0000FF; font-size: large;"></i>
-					<p style="padding: 0px; margin-bottom: 0px; text-align: top; float: right; color: black;">&nbsp;Color</p>				 	
+					<i id="showColor" class="fas fa-circle" style="color: #0000FF; font-size: large; margin-left: -2px;"></i>
+					<p style="padding: 0px; margin-bottom: 0px; margin-top : 2px; margin-left : 4px; text-align: top; float: right; color: black;">Color</p>				 	
 				</button>
 				
 				<div class="dropdown-menu">
