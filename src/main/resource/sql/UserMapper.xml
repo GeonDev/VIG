@@ -80,6 +80,12 @@
 	 	WHERE user_code = #{value}	
 	 </select>
 	 
+	  <select id="getGoogleLogin" parameterType="string" resultMap="userSelectMap">
+	 	SELECT * from users
+	 	WHERE  google_id = #{value}	 
+	 </select>
+	 
+	 
 	 <!--  -->
 	 <select id="loginCheck" parameterType="String" resultType = "int" >
 		SELECT count(*)
@@ -94,7 +100,7 @@
 		WHERE user_code = #{value}
 	 </select> 	 
 	 	 
-	  <select id="getLastUserNum" parameterType = "int" resultType="int">
+	  <select id="getLastUserNum" resultType="int">
 	 	SELECT COUNT(user_code) FROM users	 	
 	 </select>
 	 
