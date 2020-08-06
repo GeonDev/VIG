@@ -31,41 +31,38 @@
 
 
 
-		</script>
+	</script>
 	
 	<style>
-		.lightbox{
-			 width:350px; height:250px;
-		}		
-		.container-fulid{
-			padding-right:50px; padding-left:50px;
-		}
-		.row.1{
-			margin: 50px;
-		}
-		.col-md-10{
-			margin: auto;
-		}
-	    .title_h1{
-			padding:30px;
-		}
-		#btn_group{
-			margin: auto; text-align: center;
-		}
-		.lightbox{
-			padding:50; width:300px; height:200px;
-		}
+	
+	#myFeedMain { padding: 70px;}
+	
 	</style>
 
 </head>
 <body>
-	 	
-		<!-- 페이지 타이틀 ========================================== -->
-			<div class="col-md-10">
-						<div class="row 1">
-							<div class="title_h1"><h1>${user.userName} 님의 마이피드</h1></div>	
-	 					</div>
-	 					<hr/>
+
+<!-- 상단 툴바 자리 --> 															  <!-- 코드 정리하기 -->
+      <div class="container-fluid">  
+      	 <div class="row">
+      		<div class="col-md-12">
+      			<jsp:include page="/main/toolbar.jsp" />
+     		</div>
+		</div>
+		
+		<div class="col-md-12">
+			<div class="row">
+	<!-- 사이드바 자리 -->		
+			<div class="col-md-2">		
+		      1 of 3 아 그리드 뭔데...ㅠㅠ
+		    <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
+		    </div>  
+		    
+		    
+	<!--  본문 자리 -->	      	    
+		    <div class="col-md-10" id="myFeedMain">
+		      2 of 3
+				<div class="title_h1"><h1>${user.userName} 님의 마이피드</h1></div><hr/>
 	 				<div class="row">
 			 		<div id="btn_group">
 			 			<div class="text-center">
@@ -77,34 +74,15 @@
 							   채 팅</a>
 						</div>	 			
 				 		</div>
-					</div>
-
-		<!-- 모달창 -->		
-						
-				<div class="modal fade" id="theModal" role="dialog" >
-				  <div class="modal-dialog">
-				    <div class="modal-content">
-				      <div class="modal-header text-center">
-				        <h4 class="modal-title w-100 font-weight-bold">follower</h4>		
-				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				          <span aria-hidden="true">&times;</span>
-				        </button>
-				      </div>
-				      <div class="modal-body"> 
-				     ㅁㅁㅁㅁㅁㅁㅁ
-				      
-				       </div>
-				      <div class="modal-footer d-flex justify-content-center">
-				        <button type="button" class="btn btn-deep-orange" data-dismiss="modal" aria-label="Close">확인</button>
-				      </div>
-				    </div>
-				  </div>
-				</div>
-				
-		
-		<!-- 피드 리스트 -->				
+		    		</div>
+		     
+		    
+		    
+			</div>
 			
+			</div>
 	</div>
+
 
 
 </body>

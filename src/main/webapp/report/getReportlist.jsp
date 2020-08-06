@@ -83,15 +83,25 @@
 
 <body>
 
-	<div class="container-fluid">		
-	
-	
-		<div class="col-md-8">		
-			<br/>
+<!-- 상단 툴바 자리 --> 					
+      <div class="container-fluid">  
+      	 <div class="row">
+      		<div class="col-md-12">
+      			<jsp:include page="/main/toolbar.jsp" />
+     		</div>
+		</div>
 		
-			<div class="page-header text-info">
-				<h3>신고목록조회</h3>
-			</div>			
+		<div class="col-md-12">
+			<div class="row">
+	<!-- 사이드바 자리 -->		
+			<div class="col-md-2">		
+		    <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
+		    </div>  
+		    
+		    
+	<!--  본문 자리 -->	      	    
+		    <div class="col-md-10" id="myFeedMain">
+				<h3>신고목록조회</h3>				
 			<hr/>		
 		
 			<form method="post" >
@@ -164,9 +174,9 @@
 			<div class="row justify-content-md-center">
 				<jsp:include page="../common/pageNavigator.jsp"/>
 			</div>			
-			
+			</div>
 		</div>		
 	</div>
-	
+	</div>
 </body>
 </html>

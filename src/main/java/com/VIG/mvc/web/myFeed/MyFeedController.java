@@ -34,13 +34,13 @@ public class MyFeedController {
 	}
 	
 	@RequestMapping(value="getMyFeedList", method=RequestMethod.GET)
-	public ModelAndView getMyFeedList(@RequestParam("userCode") String userCode) throws Exception {
+	public ModelAndView getMyFeedList(@RequestParam(value="userCode") String userCode) throws Exception {
 		
 		System.out.println("getMyFeedList");
 		
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("forward:/myFeed/myFeed.jsp");
+		mav.setViewName("forward:/myFeed/getMyFeedList.jsp");
 		
 		return mav; 
 	}

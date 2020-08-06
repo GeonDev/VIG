@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -92,26 +93,20 @@
 			});			
 		});	
 	
-	//ID중복확인 이벤트 ==>모달이나 텍스트로 변경하기
+	//ID중복확인 이벤트 
 		$(function(){
-		//$("#signUp_btn").on("click",function(){
 			$("#userCode").blur(function() {
-			alert("2");
 			var id = $("#userCode").val();
-			
+			var form = {
+		            userCode: id
+		            }
 			$.ajax({
-				url:'/user/json/checkDuplication',
-				type: 'POST',
-				headers : {
-					"Accept" : "application/json",
-					"Content-Type" : "application/json"
-				},
-				data : JSON.stringify({
-					userCode : id
-				}),
+				url:"json/checkDuplication",
+				type: "POST",
+				data : form,
 				success: function(data){
 					console.log("00 "+ data);
-					if (data.userCode == id) {
+					if (data== false) {
 						$("#id_check").text("사용중인 아이디입니다.");
 						$("#id_check").css("color", "red");
 						$("#reg_submit").attr("disabled", true);
@@ -124,21 +119,13 @@
 					alert("fail");
 			        alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
 					}
+				
 			});
+			
 		});
+			
 		});
-		
-		 /*
-		$(function() {
-			 $("#iDcheck").on("click" , function() {
-				popWin 
-				= window.open("/VIG/user/checkDuplication.jsp",
-					"popWin", 
-					"left=300,top=200,width=530,height=150,marginwidth=0,marginheight=0,"+
-					"scrollbars=no,scrolling=no,menubar=no,resizable=no");
-			});
-		});	
-		*/
+
 		//로그인 페이지로 이동 이벤트
 		 $( function() {
 				$("#login_nav").on("click" , function() {

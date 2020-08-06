@@ -40,17 +40,29 @@
 
 <body>
 
-<div class="container-fluid">		
+      <div class="container-fluid">  
+      	 <div class="row">
+      		<div class="col-md-12">
+      			<jsp:include page="/main/toolbar.jsp" />
+     		</div>
+		</div>
+		
+		<div class="col-md-12">
+			<div class="row">
+	<!-- 사이드바 자리 -->		
+			<div class="col-md-2">		
+		    <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
+		    </div> 	
 	
 	
-		<div class="col-md-8">		
+		<div class="col-md-10" id="myFeedMain">	
 			<br/>
 			
 			<div class="page-header text-info">
 	       <h3>회원목록조회</h3>
 	    </div>
 	   
-<form method="post"  > 
+<form > 
 	
 
 	    <div class="row justify-content-end">							
