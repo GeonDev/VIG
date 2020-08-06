@@ -16,6 +16,7 @@ public interface UserDao {
 	// UPDATE 
 	public void updateUser(User user) throws Exception;	
 	
+	////
 	public List<User> getUserList(Search search) throws Exception;
 	
 	// delete 

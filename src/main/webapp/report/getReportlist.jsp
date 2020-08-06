@@ -43,10 +43,11 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
+	
 	<style>
-	  body {
-            padding-top : 50px;
-        }
+	 	body { font-family: "Nanum Gothic", sans-serif;}
+        #myFeedMain { padding: 70px;}
+        .col-md-12_top {	width: 100%; height: 100%; position: relative; margin:50px; }	
     </style>
     
 	<script type="text/javascript">
@@ -101,7 +102,8 @@
 		    
 	<!--  본문 자리 -->	      	    
 		    <div class="col-md-10" id="myFeedMain">
-				<h3>신고목록조회</h3>				
+		   <div class="col-md-12_top">
+				<h2>신고목록조회</h2>				
 			<hr/>		
 		
 			<form method="post" >
@@ -115,8 +117,9 @@
 				</div>
 			
 				<div class="row">	
+				
 					<table class="table table-hover table-striped" >
-						<thead>
+						<thead class="grey lighten-2">
 				          <tr>
 				          	<th align="left">no</th>				          					            
 				            <th align="left">유저 코드</th>				           
@@ -175,7 +178,8 @@
 				<jsp:include page="../common/pageNavigator.jsp"/>
 			</div>			
 			</div>
-		</div>		
+		</div>	
+		</div>	
 	</div>
 	</div>
 </body>

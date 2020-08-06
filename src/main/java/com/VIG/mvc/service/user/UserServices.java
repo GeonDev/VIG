@@ -22,14 +22,10 @@ public interface UserServices {
 	
 	// delete 
 	public void deleteUser(User user) throws Exception;
-	
-	// delete 
-	//public void deleteUser(String userCode) throws Exception;
 
 	public List<User> getAllUserList() throws Exception;
 	
-	
-	// user list 
+	// user list //
 	public Map<String , Object> getUserList( Search search) throws Exception;
 	
 	// send email
@@ -51,6 +47,7 @@ public interface UserServices {
 	public List<String> getAutoUserName(String name) throws Exception;
 
 	public List<User> getBanUserList() throws Exception;
+	
 	
 
 }
