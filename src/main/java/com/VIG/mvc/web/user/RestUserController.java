@@ -1,13 +1,15 @@
 package com.VIG.mvc.web.user;
 
 
+
 import java.util.List;
+
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.ui.Model;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
+
 
 import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.domain.User;
@@ -33,7 +35,7 @@ public RestUserController() {
 	}
 
 
-
+/*
 @RequestMapping(value="/json/login", method=RequestMethod.POST)
 
 public User login( @RequestBody User user, HttpSession session) throws Exception{
@@ -45,6 +47,8 @@ public User login( @RequestBody User user, HttpSession session) throws Exception
 	}
 	return dbUser;	
 }
+*/
+
 
 
 @RequestMapping( value="json/checkDuplication", method=RequestMethod.POST)
@@ -54,34 +58,61 @@ public boolean checkDuplication( @RequestParam ("userCode") String userCode ) th
 	return userServices.checkDuplication(userCode);	
 }
 
-//탈퇴시 비번 확인
-@RequestMapping( value="json/chcekPw", method=RequestMethod.POST)
+
+
+
+//================================================================탈퇴시 비번 확인 //    ajax 테스트 중 ㅠㅠ
+/*
+@RequestMapping( value="json/checkPw", method=RequestMethod.POST)
 @ResponseBody
-public String chcekPw(User user, HttpSession session  ) throws Exception{			
-
-	//int dbUser = userServices.chcekPw(user.getPassword());
-	//if(dbUser==0){
-	System.out.println(session.getAttribute(user.getUserCode()));
-	System.out.println("비번체크 오케이");	
-	//int result=userServices.chcekPw(password);
-	//}	
-	 
-	return user.getUserCode();
+public boolean checkPw( @RequestParam ("password") String password ) throws Exception{			
+	
+	return userServices.checkDuplication(password);	
 }
+*/
 
-///////아이디 체크 제이슨 테스트
+
+/*
+@RequestMapping( value="/json/login", method=RequestMethod.POST )
+@ResponseBody
+public String login(@ModelAttribute("user") User user, HttpSession session) throws Exception{
+	
+		User dbUser = userServices.getUserOne(user.getUserCode());
+				
+		if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())){	
+		session.setAttribute("user", dbUser);
+		System.out.println("dbUser:"+dbUser);
+		System.out.println(session.getAttribute("user"));
+		return "id,pw=ok";
+		}else {
+			return "check your ID or password";
+		}
+}
+*/
+
+@RequestMapping(value="/json/login", method=RequestMethod.POST)
+@ResponseBody
+public User loginCheck( @RequestBody User user, HttpSession session) throws Exception{
+		System.out.println("json/login");
+	User dbUser = userServices.getUserOne(user.getUserCode());
+		System.out.println("json/dbUser:"+dbUser);
+		if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())) {
+		session.setAttribute("user", dbUser);
+	}
+	return dbUser;	
+}
+			
 
 
-///// json TEst
-
-@RequestMapping(value="json/jsonTest", method=RequestMethod.POST)
+///// json TEst용//*
+/*@RequestMapping(value="json/jsonTest", method=RequestMethod.POST)
 @ResponseBody
 public String simpleWithObject(User user) {
     //필요한 로직 처리
     return user.getUserCode();
 }
-
-//////
+*/
+//////=============================================================================
 
 
 
@@ -106,7 +137,4 @@ public List<User> getUserListFromName(@PathVariable("userName") String name) thr
 
 //===================
 
-//=======이메일 보내기============================================================//
-
 }
-
