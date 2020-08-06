@@ -16,8 +16,6 @@ public interface UserServices {
 
 	// SELECT ONE
 	public User getUserOne(String userCode) throws Exception;	
-	
-	public User getCode(String userCode) throws Exception;
 
 	// UPDATE 
 	public void updateUser(User user) throws Exception;
@@ -39,7 +37,9 @@ public interface UserServices {
 	
 	// 비번 체크
 	public int chcekPw(String password) throws Exception;
-		
+	
+	//
+	public int getTotalCount (Search search) throws Exception;
 	
 	// id check
 	public boolean checkDuplication(String userCode) throws Exception;
@@ -52,7 +52,5 @@ public interface UserServices {
 
 	public List<User> getBanUserList() throws Exception;
 	
-	
-	//
-//	public void loginCheck(String userCode, HttpServletResponse response) throws Exception;
+
 }

@@ -18,17 +18,16 @@ public class UserDaoImpl implements UserDao {
 	@Autowired
 	@Qualifier("sqlSessionTemplate")
 	private SqlSession sqlSession;
-	
-	
+		
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
 	
-
 	public UserDaoImpl() {
 		// TODO Auto-generated constructor stub
 	}
 
+	
 	@Override
 	public void addUser(User user) throws Exception {
 		sqlSession.insert("UserMapper.addUser", user);
@@ -44,7 +43,6 @@ public class UserDaoImpl implements UserDao {
 		sqlSession.delete("UserMapper.deleteUser", user);
 	}
 
-
 	@Override
 	public User getUserOne(String userCode) throws Exception {
 		// TODO Auto-generated method stub
@@ -52,17 +50,10 @@ public class UserDaoImpl implements UserDao {
 		return user;
 	}
 
-	@Override
-	public User getCode(String userCode) throws Exception {
+	public int getCountUserList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("UserMapper.getUserOne", userCode);
+		return sqlSession.selectOne("UserMapper.getUserList", search);
 	}
-	
-	//@Override
-	//public int chcekPw(String password) throws Exception {
-		// TODO Auto-generated method stub
-	//	 return sqlSession.selectOne("UserMapper.chcekPw", password);
-	//}
 	
 	@Override
 	public List<User> getUserList(Search search) throws Exception {
@@ -70,16 +61,13 @@ public class UserDaoImpl implements UserDao {
 		return sqlSession.selectList("UserMapper.getUserList",search);
 		
 	}
-	// 게시판 Page 처리를 위한 전체 Row(totalCount)  return
-		@Override
-		public int getTotalCount(Search search) throws Exception {
-			return sqlSession.selectOne("UserMapper.getTotalCount", search);
+	
+	public int getTotalCount(Search search) throws Exception {
+		return sqlSession.selectOne("UserMapper.getUserList", search);
 		}
 	
 	
 	
-	
-
 	@Override
 	public List<User> getUserListFromName(Search search) throws Exception {
 		// TODO Auto-generated method stub
@@ -107,12 +95,5 @@ public class UserDaoImpl implements UserDao {
 		return sqlSession.selectList("UserMapper.getBanUserList");
 	}
 
-		
 	
-//	@Override
-	//public int loginCheck(String userCode) throws Exception {
-		// TODO Auto-generated method stub
-//		return sqlSession.selectOne("UserMapper.loginCheck", userCode);
-//	}
-
-}
+	}
