@@ -7,22 +7,20 @@
 <mapper namespace="FollowMapper"> 	
 
 	<resultMap type="follow" id="FollowSelectMap">
-		<result property="followId" 	column="event_id" 		jdbcType="NUMERIC"/>
-		<result property="followDate" 		column="follow_date" 	jdbcType="DATE"/>
-		
+
 		<association property="followingUser"         column="user_code"    javaType="user"      select="setUser"/>		
 		<association property="followedUser" 		  column="user_code" 	javaType="user"	     select="setFollower"/>
 		
-		<collection property="followers" 		column="user_code" 	javaType="list" 	ofType="user" 		select="getFollowerList"/>
-		<collection property="follwings"	 	column="user_code"  javaType="list"	  	ofType="user"		select="getFollowingList"/>
+		<collection property="followers" 		column="user_code" 	javaType="list" 	ofType="user" 		/>
+		<collection property="follwings"	 	column="user_code"  javaType="list"	  	ofType="user"		/>
 		
 	</resultMap>
  	
- 	<select id="setUser" parameterType="String" resultMap="UserMapper.userSelectMap">
+ 	<select id="setUser" parameterType="String">
  		Select * FROM users
  		WHERE user_code=#{value}
  	</select>
- 	<select id="setFollower" parameterType="String" resultMap="UserMapper.userSelectMap">
+ 	<select id="setFollower" parameterType="String" >
  	
  		SELECT * FROM users
  		WHERE user_code=#{value}
@@ -55,23 +53,23 @@
 	</select>
 	
 	<!-- 내가 팔로우 한 사람 -->
-	<select id="getFollowingList" parameterType="string" resultMap="UserMapper.userSelectMap">
+	<select id="getFollowingList" parameterType="string">
 	
 
-		SELECT  u.*
-		FROM follow f, users u
-		WHERE f.user_code=#{keyword}
-		AND f.follower_code = u.user_code
+		SELECT  users.*
+		FROM follow, users
+		WHERE follow.user_code=#{keyword}
+		AND follow.follower_code = users.user_code
 	
 	</select>
 	
 	<!-- 나를 팔로우 한 사람 -->
-	<select id="getFollowerList" parameterType="string" resultType="UserMapper.userSelectMap">
+	<select id="getFollowerList" parameterType="string" resultMap="UserMapper.userSelectMap">
 		
-		SELECT u.*
-		FROM follow f, users u
-		WHERE follower_code=#{value}
-		AND f.user_code = u.user_code
+		SELECT  users.*
+		FROM follow, users
+		WHERE follow.follower_code=#{value}
+		AND follow.user_code = users.user_code
 		
 	</select>
 
