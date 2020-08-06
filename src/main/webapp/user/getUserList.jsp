@@ -28,18 +28,24 @@
 				
 	<script type="text/javascript">
 
+	function funcGetList(currentPage) {
+		$("#currentPage").val(currentPage);
+		$("form").attr("action", "./getUserList");
+		$("form").submit();
+	}
 	
 	
 	</script>
 	<style>
-	  body {
-            padding-top : 50px;
-        }
+	  body { font-family: "Nanum Gothic", sans-serif;}
+        #myFeedMain { padding: 70px;}
+       .col-md-12_top {	width: 100%; height: 100%; position: relative; margin:50px; }	 
     </style>
 </head>
 
 <body>
 
+ <!-- 상단 툴바 자리 --> 					
       <div class="container-fluid">  
       	 <div class="row">
       		<div class="col-md-12">
@@ -52,17 +58,18 @@
 	<!-- 사이드바 자리 -->		
 			<div class="col-md-2">		
 		    <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
-		    </div> 	
-	
-	
-		<div class="col-md-10" id="myFeedMain">	
-			<br/>
-			
-			<div class="page-header text-info">
-	       <h3>회원목록조회</h3>
-	    </div>
+		    </div>  
+		    
+		    
+	<!--  본문 자리 -->	      	    
+		    <div class="col-md-10" id="myFeedMain">
+		   <div class="col-md-12_top">
+				<h2>회원목록조회</h2>				
+			<hr/>		
 	   
 <form > 
+	
+	
 	
 
 	    <div class="row justify-content-end">							
@@ -76,30 +83,33 @@
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
 		
 		<div class="row">	
+     
       <!--  table Start /////////////////////////////////////-->
-      <table class="table table-hover table-striped" >
-      
-        <thead>
+    
+      <table class="table" >
+
+        <thead class="grey lighten-2">
           <tr>
-            <th align="center">No</th>
-            <th align="left" >유저코드</th>
-            <th align="left">유저네임</th>
-            <th align="left">이메일</th>
-            <th align="left">간략정보</th>
+            <th scope="col">No</th>
+            <th scope="col" >유저코드</th>
+            <th scope="col">유저네임</th>
+            <th scope="col">role</th>
+            <th scope="col">이메일</th>
+            <th scope="col">가입일자</th>
           </tr>
-        </thead>
-       
+        </thead> 
 		<tbody>
 		
 		  <c:set var="i" value="0" />
 		  <c:forEach var="user" items="${list}">
 			<c:set var="i" value="${ i+1 }" />
 			<tr>
-			  <td align="center">${ i }</td>
-			  <td align="left">${user.userCode}</td>
-			  <td align="left">${user.userName}</td>
-			  <td align="left">${user.email}</td>
-			  <td align="left">${user.regDate}</td>
+			  <td scope="col">${ i }</td>
+			  <td scope="col">${user.userCode}</td>
+			  <td scope="col">${user.userName}</td>
+			   <td scope="col">${user.role}</td>
+			  <td scope="col">${user.email}</td>
+			  <td scope="col">${user.regDate}</td>
 			  	
 			</tr>
           </c:forEach>
@@ -119,6 +129,12 @@
 				
 			</div>
 			</div>
+		</div>
+	</div>
+	</div>
+	
+			
+			
 			
 </body>
 </html>

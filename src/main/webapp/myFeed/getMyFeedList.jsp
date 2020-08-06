@@ -35,14 +35,15 @@
 	
 	<style>
 	
-	#myFeedMain { padding: 70px;}
-	
+	body { font-family: "Nanum Gothic", sans-serif;}
+       #myFeedMain { padding: 70px;}
+	.col-md-12_top {	width: 100%; height: 100%; position: relative; margin:50px; }	
 	</style>
 
 </head>
 <body>
 
-<!-- 상단 툴바 자리 --> 															  <!-- 코드 정리하기 -->
+<!-- 상단 툴바 자리 --> 						
       <div class="container-fluid">  
       	 <div class="row">
       		<div class="col-md-12">
@@ -54,14 +55,13 @@
 			<div class="row">
 	<!-- 사이드바 자리 -->		
 			<div class="col-md-2">		
-		      1 of 3 아 그리드 뭔데...ㅠㅠ
 		    <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
 		    </div>  
 		    
 		    
 	<!--  본문 자리 -->	      	    
 		    <div class="col-md-10" id="myFeedMain">
-		      2 of 3
+		    <div class="col-md-12_top">
 				<div class="title_h1"><h1>${user.userName} 님의 마이피드</h1></div><hr/>
 	 				<div class="row">
 			 		<div id="btn_group">

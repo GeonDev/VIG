@@ -37,7 +37,8 @@
 	
 	
 <style>
-	
+	  #myFeedMain { padding: 70px;} 
+	.col-md-12_top {	width: 100%; height: 100%; position: relative; margin:50px; }	
 	body {
 		
 		font-family: "Nanum Gothic", sans-serif;
@@ -45,12 +46,7 @@
 	
 	}
 	
-	#main { 
-		width: 960px;
-		margin-top: 70px;
-		margin-left: 30px;
-		align:  center;
-	}
+	
 	
 
 	
@@ -72,7 +68,7 @@
 	text-align: center;
 	
 	}
-	
+	#myFeedMain { padding: 70px;}
 
 
 
@@ -118,22 +114,29 @@
 			<div class="row">
 	<!-- 사이드바 자리 -->		
 			<div class="col-md-2">		
-		      1 of 3 아 그리드 뭔데...ㅠㅠ
 		    <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
 		    </div>  
 		    
 		    
 	<!--  본문 자리 -->	      	    
 		    <div class="col-md-10" id="myFeedMain">
-<div id=main>
+			<div class="col-md-12_top">
 	
 	<h2> 전체 결제 목록 </h2>
 	<hr>
 	
-	<div class="container">
-		
-		<table class="table">
-		  <thead>
+					<div class="row justify-content-end">							
+					<div class="input-group md-form form-sm form-1 pl-0 col-3">
+					  <div class="input-group-prepend">
+					    <span class="input-group-text cyan lighten-2" id="basic-text1"><i id="searchIcon" class="fas fa-search text-white" aria-hidden="true"></i></span>
+					  </div>
+					</div>					
+				</div>
+	
+		<div class="row">
+		<table class="table" >
+
+        <thead class="grey lighten-2">
 		    <tr>
 		      <th scope="col">결제번호</th>
 		      <th scope="col">결제자</th>
@@ -212,6 +215,19 @@
 		
 		</tbody>
 		</table>
+		
+					<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
+						<input type="hidden" id="currentPage" name="currentPage" value=""/>	
+				</div>
+			
+				
+			<div class="row justify-content-md-center">
+				<jsp:include page="../common/pageNavigator.jsp"/>
+			</div>
+			
+	</div>
+	</div>
+	</div>
 	</div>
 	
 	
