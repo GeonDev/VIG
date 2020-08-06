@@ -23,17 +23,17 @@
 		var data = (item).split(',');    
 	    
 		var addAlarms = 
-			"<li id='alarm_" + data[6] + "' class='alarms'>"		    
-	   	 	+"<img src='/VIG/images/uploadFiles/" + data[1]+ "' class='rounded-circle' style='width: 45px; float:left; margin-top: 7px;'>"
-	   	 	+ "<a class='nav-link' href='/VIG/feed/getFeed?feedId="+ data[0]+ "'>"
-	   	 		+"<h6  style='width: 200px; margin-right:5px; margin-left:5px; float:left;'>"
+			"<li id='alarm_" + data[6] + "' class='alarms'>"
+			+ "<a href='/VIG/myfeed/getMyFeedList?userCode="+ data[5]+ "' style='padding:0px;'>"
+	   	 		+"<img src='/VIG/images/uploadFiles/" + data[1]+ "' class='rounded-circle' style='width: 45px; float:left; '>"
+	   	 	+"</a>"
+	   	 	+ "<a  href='/VIG/feed/getFeed?feedId="+ data[0]+ "' style='padding:0px;'>"
+	   	 		+"<h6  style='width: 270px; margin-right:5px; margin-left:10px; margin-top: 7px; float:left;'>"
 	   	 			+"<strong>" + data[2]+ "</strong>님이 좋아요를 누르셨습니다."	    			
 				+"</h6>"
-				+"<img src='/VIG/images/uploadFiles/" + data[3] + "' style='width: 50px;'>"
+				+"<img src='/VIG/images/uploadFiles/" + data[3] + "' style='width: 50px; '>"
 			 +"</a>"		
-	        +"</li>"
-	        +"<div class='dropdown-divider'></div>";  			    
-	    
+	        +"</li><hr/>";  
 	    
 	    $("#addAlarm").prepend(addAlarms);
 	}
@@ -43,10 +43,12 @@
 		var data = (item).split(',');
 		
 		var addAlarms = 
-	    	"<li id='alarm_" + data[6] + "' class='alarms'>"	    
-	   	 	+"<img src='/VIG/images/uploadFiles/" + data[1]+ "' class='rounded-circle' style='width: 45px; float:left;'>"
+	    	"<li id='alarm_" + data[6] + "' class='alarms'>"
+	    	+ "<a href='/VIG/myfeed/getMyFeedList?userCode="+ data[5]+ "'>"
+	   	 		+"<img src='/VIG/images/uploadFiles/" + data[1]+ "' class='rounded-circle' style='width: 45px; float:left;'>"
+	   	 	+"</a>"
 	   	 	+ "<a class='nav-link' href='/VIG/feed/getFeed?feedId="+ data[0]+ "'>"
-	   	 		+"<h6  style='width: 200px; margin-right:5px; margin-left:5px; float:left;'>"
+	   	 		+"<h6  style='width: 270px; margin-right:5px; margin-left:5px; float:left;'>"
 	   	 			+"<strong>" + data[2]+ "</strong>님이 댓글을 남겼습니다."	    			
 				+"</h6>"
 				+"<img src='/VIG/images/uploadFiles/" + data[3] + "' style='width: 45px;'>"
@@ -287,8 +289,8 @@
                      	<i id="AlarmNoti" class="fas fa-circle" style="color: red; font-size: xx-small; float: right; display: none;"></i>
                      </i>                    
                      
-                     <ul class="dropdown-menu dropdown-menu-right" style="width: 330px;">  
-                     	<h5 style="font-weight: bold; margin-left: 10px;">내 활동</h5>
+                     <ul class="dropdown-menu dropdown-menu-right" style="width: 400px;">  
+                     	<h5 style="font-weight: bold;">&ensp;내 활동</h5>
                      	<div class="dropdown-divider"></div>                          
          				<li id="defaultAlarm" style="margin-left: 5px;">
          					<h6>새로운 소식이 없습니다.</h6>
@@ -325,7 +327,7 @@
 						${user.userName}
 					</h4>
 						 <div class="dropdown-divider"></div>
-						    <a class="dropdown-item" href="/VIG/myFeed/getMyFeedList.jsp" >My Feed</a>
+						    <a class="dropdown-item" href="/VIG/myfeed/getMyFeedList?userCode=${user.userCode}" >My Feed</a>
 						    <a class="dropdown-item" href="/VIG/feed/addFeed.jsp">Upload</a>
 						  <div class="dropdown-divider"></div>
 						      <a class="dropdown-item" >Log Out</a>

@@ -439,6 +439,20 @@ public class RestSearchController {
 		for(Feed f : primeFeed ) {
 			History primeHistory = new History();
 			
+			//해당 피드의 작성자를 불러옴
+			User writer = userServices.getUserOne(f.getWriter().getUserCode());
+			
+			//프라임 피드 카운트를 깎음
+			if((writer.getPrimeCount()-1) < 0) {
+				writer.setPrimeCount(0);
+			}else {
+				writer.setPrimeCount(writer.getPrimeCount()-1);
+			} 	
+			
+			//작성자 정보 업데이트 
+			userServices.updateUser(writer);
+			
+			
 			//히스토리 타입 - 프라임 피드 노출
 			primeHistory.setHistoryType(2);
 			primeHistory.setShowFeed(f);			

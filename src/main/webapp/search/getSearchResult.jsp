@@ -43,9 +43,7 @@
 	}
 		
     .img_feed {	
-    width: auto; height: auto;  
-	max-width: 500px;
-	max-height: 375px;
+    width: auto; height: 375px; 	
 	overflow:hidden;	
 	}
 		
@@ -104,7 +102,7 @@
 		displayValue = 
 			"<div class = 'view overlay'>"
 				+"<div class = 'img_feed'>"
-				+ "<a href='/VIG/feed/getFeed?feedId="+ item.feedId +"' class='text-light'>"
+				+ "<a href='/VIG/myfeed/getMyFeedList?userCode="+ item.feedId +"' class='text-light'>"
 					+ "<img src='/VIG/images/uploadFiles/" + thumbnail + "' alt='thumbnail' class='img-fluid rounded-sm img_feed '>"
 					+ "<div class='mask waves-effect waves-light rgba-black-strong' style='text-align: right;'>";					
 						if(user != ''){
@@ -243,7 +241,7 @@
 					success : function(JSONData , status) {
 						
 						//검색 결과가 있는지 체크
-						if (JSONData.list.length >0){					
+						if (JSONData.list.length != 0){					
 						
 							//불러와야 되는 페이지보다 개수가 적은 경우 페이지가 끝났다
 							if (JSONData.list.length < 10){
@@ -279,8 +277,12 @@
 	 					
 	 					//검색결과가 없는 경우	
 						}else{
-							isPageEnd = true;
-							getNoSearchResult();
+							
+							//첫번째 페이지를 로드 했을 경우에만 발생
+							if(page == 1){
+								isPageEnd = true;
+								getNoSearchResult();
+							}
 						}
 					}
 			});		
@@ -299,7 +301,7 @@
 			data :  JSON.stringify({keyword : $("#Keyword").val(), mode : Mode }),						
 			success : function(JSONData, status) {
 				//검색 결과가 있으면 처리			
-				if(JSONData.length > 0){
+				if(JSONData.length != 0){
 					var arraylist = JSONData;
 						console.log( JSONData );
 					
@@ -366,7 +368,7 @@
 			
    			
 			$(window).scroll(function() {
-   			    if ($(window).scrollTop() + 400 >= $(document).height() - $(window).height()) {     			     
+   			    if ($(window).scrollTop() + 500 >= $(document).height() - $(window).height()) {     			     
 	   				getItemList();   			    	
    			    }
    			});		

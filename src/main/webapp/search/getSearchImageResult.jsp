@@ -128,11 +128,11 @@
 			//getImageItemList();
 				
    			
-			$(window).scroll(function() {
-   			    if ($(window).scrollTop() == $(document).height() - $(window).height()) {     			     
-   			    	getImageItemList();   			    	
-   			    }
-   			});	    			
+		$(window).scroll(function() {
+			    if ($(window).scrollTop() + 500 >= $(document).height() - $(window).height()) {     			     
+   				  			    	
+			    }
+			});		    			
 			
 	});	
 	

@@ -115,7 +115,8 @@
 	 		profile_img = #{profileImg:VARCHAR},
 	 		account = #{account:VARCHAR},
 	 		state = #{state:NUMERIC},
-	 		google_id = #{googleId:NUMERIC}
+	 		google_id = #{googleId:NUMERIC},
+	 		prime_count = #{primeCount:NUMERIC}
 	 	WHERE user_code = #{userCode}
 	 </update>	
 	 
@@ -156,6 +157,9 @@
 						WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
 	 </select>
+	 
+	 
+	 
 	 <!-- SQL : SELECT ROW Count -->	 
 	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(user_code)
