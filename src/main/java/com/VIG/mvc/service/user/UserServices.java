@@ -52,5 +52,11 @@ public interface UserServices {
 
 	public List<User> getBanUserList() throws Exception;
 	
+	// 구글 로그인으로 체크
+	public User getGoogleID(String googleId) throws Exception;
+	
+	//소셜로그인 시 userCode 자동 생성을 위한 번호 갖고오기
+	public int getLastUserNum() throws Exception;
+	
 
 }
