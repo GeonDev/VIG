@@ -67,10 +67,10 @@ public class HistoryServicesImpl implements HistoryServices {
 	}
 
 	@Override
-	public List<String> getfeedHistoryMouthCount(HashMap<String, String> keys) throws Exception {
+	public HashMap<String,Object> getfeedHistoryMouthCount(HashMap<String, String> keys) throws Exception {
 
 		List<String> mouthCout = new ArrayList<String>();
-		
+		int totalCount = 0;
 		for(int i = 0; i<31; i++) {
 			HashMap<String, String> dateKey = new HashMap<String, String>();
 			dateKey.put("userCode", keys.get("userCode"));
@@ -85,18 +85,21 @@ public class HistoryServicesImpl implements HistoryServices {
 			}						
 			dateKey.put("date", date);		
 			
-			
+			totalCount +=  historyDao.getfeedHistoryDateCount(dateKey);
 			mouthCout.add(String.valueOf(historyDao.getfeedHistoryDateCount(dateKey)) );
 		}	
+		HashMap<String,Object> lastKey = new HashMap<String,Object>();
+		 lastKey.put("totalCount",totalCount);
+		 lastKey.put("mouthCout",mouthCout);
 		
-		
-		return mouthCout;
+		return lastKey;
 	}
 
 	@Override
-	public List<String> getfeedHistoryPrimeDateCount(HashMap<String, String> keys) throws Exception {
+	public HashMap<String,Object> getfeedHistoryPrimeDateCount(HashMap<String, String> keys) throws Exception {
 		
 		List<String> mouthCout = new ArrayList<String>();
+		int totalCount = 0;
 		
 		for(int i = 0; i<31; i++) {
 			HashMap<String, String> dateKey = new HashMap<String, String>();
@@ -113,12 +116,14 @@ public class HistoryServicesImpl implements HistoryServices {
 			}
 			
 			dateKey.put("date", date);				
-			
+			totalCount +=  historyDao.getfeedHistoryPrimeDateCount(dateKey);
 			mouthCout.add( String.valueOf(historyDao.getfeedHistoryPrimeDateCount(dateKey)) );	
 		}	
+		HashMap<String,Object> lastKey = new HashMap<String,Object>();
+		 lastKey.put("totalCount",totalCount);
+		 lastKey.put("mouthCout",mouthCout);
 		
-		
-		return mouthCout;
+		return lastKey;
 	}
 
 }

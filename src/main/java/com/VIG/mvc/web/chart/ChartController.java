@@ -40,30 +40,42 @@ public ChartController() {
 
 
 	@RequestMapping(value = "getChart",method = RequestMethod.GET)
-	public ModelAndView getChart(HttpSession session,@RequestParam("date") String date)throws Exception{
+	public ModelAndView getChart(HttpSession session)throws Exception{
 				
 		User user = (User)session.getAttribute("user");	
-		System.out.println(date);
-		System.out.println(user.getUserCode());
+	
+		
+		
 		HashMap<String,String> keys = new HashMap<String,String>();
 		// Ex)date : '202008' 형식 
-		
+		String date ="202008"; 
 		keys.put("userCode", user.getUserCode());
 		keys.put("date", date);
-				
 		
-	    List<String> likeCount = likeServices.getLikeMouthCount(keys);
-	    System.out.println(likeCount);
-	    List<String> viewCount = historyServices.getfeedHistoryMouthCount(keys);
-	    System.out.println(viewCount);
-	    List<String> primeCount = historyServices.getfeedHistoryPrimeDateCount(keys);
-	    System.out.println(primeCount);
+		
+		
+		
+		HashMap<String,Object> likeCount = likeServices.getLikeMouthCount(keys);
+	    
+	    HashMap<String,Object> viewCount = historyServices.getfeedHistoryMouthCount(keys);
+	    
+	    HashMap<String,Object> primeCount = historyServices.getfeedHistoryPrimeDateCount(keys);
+	    
+	    
+	    
+	
 	    
 	    ModelAndView mav = new ModelAndView();
-	    mav.setViewName("forward:/chart/chart.jsp");
-	    mav.addObject("likeCount", likeCount);
-	    mav.addObject("viewCount",viewCount);
-	    mav.addObject("primeCount", primeCount);
+	    mav.setViewName("forward:/chart/getChart.jsp");
+	    mav.addObject("likeCount", likeCount.get("mouthCout"));			//리스트
+	    mav.addObject("likeCount2",likeCount.get("totalCount"));			//총합
+	    //좋아요
+	    mav.addObject("viewCount",viewCount.get("mouthCout"));
+	    mav.addObject("viewCount2",viewCount.get("totalCount"));
+	    //뷰카운트
+	    mav.addObject("primeCount", primeCount.get("mouthCout"));
+	    mav.addObject("primeCount2", primeCount.get("totalCount"));
+	    //프라임카운트
 	    
 	    return mav;
 	}
