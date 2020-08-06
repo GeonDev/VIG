@@ -12,8 +12,6 @@ public interface UserDao {
 
 	// SELECT ONE
 	public User getUserOne(String userCode) throws Exception;	
-	
-	public User getCode(String userCode) throws Exception;
 
 	// UPDATE 
 	public void updateUser(User user) throws Exception;	
@@ -36,10 +34,7 @@ public interface UserDao {
 	public List<User> getBanUserList() throws Exception;
 	
 	// 게시판 Page 처리를 위한 전체Row(totalCount)  return
-		public int getTotalCount(Search search) throws Exception ;
+	public int getTotalCount(Search search) throws Exception ;
 
 	
-	
-		// 비번 체크
-		//public int chcekPw(String password) throws Exception;
 }

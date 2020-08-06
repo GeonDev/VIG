@@ -16,7 +16,6 @@ import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.user.UserDao;
 import com.VIG.mvc.service.user.UserServices;
 
-
 @Service("userServicesImpl")
 public class UserServicesImpl implements UserServices {	
 	
@@ -28,11 +27,17 @@ public class UserServicesImpl implements UserServices {
 		// TODO Auto-generated constructor stub
 	}
 
+	
 	@Override
 	public void addUser(User user) throws Exception {
 		userDao.addUser(user);
 	}
 
+	@Override
+	public int getTotalCount(Search search) throws Exception {
+		
+		return userDao.getTotalCount(search);
+	}
 
 	@Override
 	public void updateUser(User user) throws Exception {
@@ -57,12 +62,7 @@ public class UserServicesImpl implements UserServices {
 		
 		return false;
 	}
-	
-	//@Override
-	//public int chcekPw(String password) throws Exception {
-	//	return userDao.chcekPw(password);
-	//}
-	
+		
 	public boolean checkDuplication(String userCode) throws Exception {
 		boolean result=true;
 		User user=userDao.getUserOne(userCode);
@@ -83,12 +83,6 @@ public class UserServicesImpl implements UserServices {
 		return userDao.getUserOne(userCode);
 	}
 	
-	@Override
-	public User getCode(String userCode) throws Exception {
-		// TODO Auto-generated method stub
-		return userDao.getCode(userCode);
-	}
-
 	@Override
 	public List<User> getUserListFromName(Search search) throws Exception {
 		// TODO Auto-generated method stub
@@ -120,13 +114,5 @@ public class UserServicesImpl implements UserServices {
 	}
 
 
-	
-	//
-	//@Override
-	//public void loginCheck(String userCode, HttpServletResponse response) throws Exception {
-	//}
-	
-	
-	
 
 }
