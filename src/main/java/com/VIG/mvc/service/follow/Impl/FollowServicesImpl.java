@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.VIG.mvc.service.domain.Follow;
 import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.follow.FollowDao;
@@ -25,7 +26,7 @@ public class FollowServicesImpl implements FollowServices {
 	}
 
 	@Override
-	public void addFollow(Map<String, Object> follow) throws Exception {
+	public void addFollow(Follow follow) throws Exception {
 		// TODO Auto-generated method stub
 		
 		followDao.addFollow(follow);
@@ -33,7 +34,7 @@ public class FollowServicesImpl implements FollowServices {
 	}
 
 	@Override
-	public void deleteFollow(Map<String, Object> follow) throws Exception {
+	public void deleteFollow(Follow follow) throws Exception {
 		// TODO Auto-generated method stub
 		
 		followDao.deleteFollow(follow);
@@ -41,18 +42,18 @@ public class FollowServicesImpl implements FollowServices {
 	}
 
 	@Override
-	public List<String> getFollowerList(Search search) throws Exception {
+	public List<User> getFollowerList(String userCode) throws Exception {
 		// TODO Auto-generated method stub
-		return followDao.getFollowerList(search);
+		return followDao.getFollowerList(userCode);
 	}
 
 	@Override
-	public List<User> getFollowingList(Search search) throws Exception {
+	public List<User> getFollowingList(String userCode) throws Exception {
 		// TODO Auto-generated method stub
-		return followDao.getFollowingList(search);
+		return followDao.getFollowingList(userCode);
 	}
 	
-	public int getFollow(Map<String, Object> follow) throws Exception{
+	public int getFollow(Follow follow) throws Exception{
 		
 		return followDao.getFollow(follow);
 		

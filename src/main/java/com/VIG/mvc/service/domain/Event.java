@@ -1,7 +1,6 @@
 package com.VIG.mvc.service.domain;
 
 import java.io.Serializable;
-import java.util.List;
 
 import lombok.Data;
 

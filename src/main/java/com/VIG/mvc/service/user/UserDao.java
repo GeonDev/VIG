@@ -35,7 +35,14 @@ public interface UserDao {
 	public List<User> getBanUserList() throws Exception;
 	
 	// 게시판 Page 처리를 위한 전체Row(totalCount)  return
-	public int getTotalCount(Search search) throws Exception ;
+	public int getTotalCount(Search search) throws Exception;
+	
+	//구글 로그인 체크
+	public User getGoogleID(String googleId) throws Exception ;
+	
+	//소셜로그인 시 userCode 자동 생성을 위한 번호 갖고오기
+	public int getLastUserNum() throws Exception;
+	
 
 	
 }

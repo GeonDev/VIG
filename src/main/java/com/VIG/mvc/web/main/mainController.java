@@ -169,6 +169,7 @@ public class mainController {
 		for (VisionInfo vision : visions) {			
 			vision.join();
 		}		
+		logger.debug("쓰레드 실행 완료 / DB 저장 시작");	
 		
 		//쓰래드 실행이 완료 된 이후 DB에 데이터 삽입
 		for (VisionInfo vision : visions) {			
