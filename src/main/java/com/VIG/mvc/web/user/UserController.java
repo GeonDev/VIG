@@ -104,15 +104,7 @@ public class UserController {
 		return "forward:/user/addUserView.jsp";
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 //=========회원가입===========================================================//    코드 정리하기!
 	
 	@RequestMapping(value="addUserView", method=RequestMethod.GET)
