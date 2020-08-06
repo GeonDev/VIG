@@ -35,7 +35,7 @@
 	
 		
 	
-//=====회원가입으로 이동         //====로그인 모달에서 회원가입 누르면 풀페이지로 뜸...ajax이용?
+//=====회원가입 nav         //====로그인 모달에서 회원가입 누르면 풀페이지로 뜸...ajax이용?
 	$( function() {
 		$("#ty").on("click" , function() {
 			//location.href="addUserView";
@@ -64,6 +64,7 @@
 			});
 		});
 	
+   
 </script>
 	<style type="text/css">
 	
