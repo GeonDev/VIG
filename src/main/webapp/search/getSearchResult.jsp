@@ -438,7 +438,8 @@
 		<div class="row justify-content-end mt-0  ">			
 			<div class="col-sm-10 d-flex justify-content-start">		
 				<button id="colorSelecter" class="btn btn-outline-light dropdown-toggle btn-sm form-inline mb-0" type="button" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;">
-					<p style="padding: 0px; margin-bottom: 0px; text-align: top; font-size: large;"><i id="showColor" class="fas fa-circle" style="color: #0000FF; "></i>&nbsp;Color</p>				 	
+					<i id="showColor" class="fas fa-circle" style="color: #0000FF; font-size: large;"></i>
+					<p style="padding: 0px; margin-bottom: 0px; text-align: top; float: right; color: black;">&nbsp;Color</p>				 	
 				</button>
 				
 				<div class="dropdown-menu">
@@ -459,62 +460,7 @@
 		<hr/>
 		
 		<!-- 피드, 이미지가 출력되는 부분  -->
-		<div class="row justify-content-center" style="margin-left: 10px; margin-right: 10px;">	
-		
-	<%-- 
-			<c:if test="${mode eq 'Feed'}">
-				<c:forEach var="feed" items="${feedlist}">				
-					<div class = "view overlay">
-						<div class = "img_feed">
-							<a href="/VIG/feed/getFeed?feedId=${feed.feedId}" class="text-light">
-								<c:forEach var="thumbnail" items="${feed.images}">
-									<c:if test="${thumbnail.isThumbnail == 1}">									
-										<img src="/VIG/images/uploadFiles/${thumbnail.imageFile}" alt="thumbnail" class="img-fluid rounded-sm img_feed" >										
-									</c:if>
-								</c:forEach>						
-								<div class="mask waves-effect waves-light rgba-black-strong" style="text-align: right;">							
-								
-									<c:choose>
-										<c:when test="${user != null }">
-											<button type="button" onclick="addhideFeed(${feed.feedId})" class="btn btn-link" style="width: 50px; height:50px; padding-left: 0px; padding-right: 0px;">											
-												<h4><i class="far fa-times-circle" style="color: white; text-align: center;"></i></h4>
-											</button>
-											<p class="txt_line" style="margin: 55% 10px; font-weight: bold; text-align: left; color : white; font-size : large; vertical-align: bottom">			
-										
-										</c:when>
-										<c:when test="${user == null }">										
-											<p class="txt_line" style="margin: 65% 10px; font-weight: bold; text-align: left; color : white; font-size : large; vertical-align: bottom">									
-										</c:when>									
-									</c:choose>	
-									
-									<c:if test="${feed.feedIsPrime == 1}">
-										<span class="badge badge-primary">Prime</span>&nbsp;
-									</c:if>
-									${feed.feedTitle}</p>																						
-								</div>
-							</a>
-						</div>
-					</div>
-				</c:forEach>				
-				
-			</c:if>
-			
-			<c:if test="${mode eq 'Image'}">
-				<c:forEach var="image" items="${imagelist}">
-					<div class = "view overlay">
-						<div class = "img_image">
-							<a href="/VIG/search/getSearchImages?imageId=${image.imageId}" class="text-light">
-								<img src="/VIG/images/uploadFiles/${image.imageFile}" class="img-fluid rounded-sm" style="width: auto; height: 300px;"/>
-								<div class="mask flex-center waves-effect waves-light rgba-black-strong"></div>						
-							</a>
-						</div>												
-					</div>		
-				</c:forEach>			
-			</c:if> 
-	--%>
-
-		
-		</div>
+		<div class="row justify-content-center" style="margin-left: 10px; margin-right: 10px;">	</div>
 		
 		<!-- 유저 정보를 넣을 부분  -->
 		<div class="userlist " id="users" ></div>
