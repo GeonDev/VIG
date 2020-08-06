@@ -18,7 +18,7 @@ public interface LikeServices {
 	boolean getLikeState(JoinUser joinUser);  //해당피드에 좋아요 눌렀는지 cheak
 	
 	//특정 월(date : '202008')에 특정 유저(userCode : 'user01')가 작성한 피드에 좋아요를 누른 수 - 손건
-	public List<String> getLikeMouthCount(HashMap<String, String> keys)throws Exception;
+	public HashMap<String,Object> getLikeMouthCount(HashMap<String, String> keys)throws Exception;
 	
 
 }
