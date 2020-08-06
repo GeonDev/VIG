@@ -4,11 +4,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.VIG.mvc.service.domain.Search;
@@ -22,6 +26,7 @@ public class UserServicesImpl implements UserServices {
 	@Autowired	  
 	@Qualifier("userDaoImpl")
 	private UserDao userDao;	
+	
 
 	public UserServicesImpl() {
 		// TODO Auto-generated constructor stub
@@ -47,9 +52,9 @@ public class UserServicesImpl implements UserServices {
 	
 	@Override
 	public Map<String , Object > getUserList(Search search) throws Exception{
+		
 		List<User> list= userDao.getUserList(search);
 		int totalCount = userDao.getTotalCount(search);
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list );
 		map.put("totalCount", new Integer(totalCount));

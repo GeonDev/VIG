@@ -58,12 +58,12 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public List<User> getUserList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("UserMapper.getUserList",search);
+		return sqlSession.selectList("UserMapper.getUserListFromName",search);
 		
 	}
 	
 	public int getTotalCount(Search search) throws Exception {
-		return sqlSession.selectOne("UserMapper.getUserList", search);
+		return sqlSession.selectOne("UserMapper.getTotalCount", search);
 		}
 	
 	

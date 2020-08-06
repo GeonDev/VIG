@@ -344,7 +344,7 @@
 		         <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="login_dropdown">
 					<h6 class="dropdown-header">${user.userCode }</h6>
 						 <div class="dropdown-divider"></div>
-						    <a class="dropdown-item" href="/VIG/user/getUserList.jsp">관리자페이지</a>	
+						    <a class="dropdown-item" href="/VIG/user/getUserList">관리자페이지</a>	
 						    <div class="dropdown-divider"></div>
 						      <a class="dropdown-item"  id="logout_btn" ><p id="black_wr">Log Out</p></a>					   
 							 </div>
