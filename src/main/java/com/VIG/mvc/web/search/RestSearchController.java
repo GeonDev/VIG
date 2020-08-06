@@ -235,8 +235,7 @@ public class RestSearchController {
 				}				
 			}
 				
-		}
-		
+		}		
 		
 		map.put("list",feedlist);
 		
@@ -268,41 +267,49 @@ public class RestSearchController {
 			
 			//리턴시킬 피드 리스트를 초기화
 			List<Feed> feedlist = new ArrayList<Feed>();
+			List<Feed> primeFeed = new ArrayList<Feed>();
 			
 			
-			//검색어를 영어로 변역
+			//검색어가 비어있는 경우
 			if(CommonUtil.null2str(jsonData.get("keyword")).equals("")) {
 				search.setKeyword("");
+				//일반 피드 부르기				
 				feedlist = feedServices.getFeedListFromKeyword(search);
+				//프라임 피드 부르기
+				primeFeed = feedServices.getPrimeFeed(search);
+				
 			}else {
-				if(CommonUtil.checkNumber(jsonData.get("keyword"))){
-					//단순 숫자라면 번역 하지 않고 바로 적용
+				//단순 숫자라면 번역 하지 않고 바로 적용
+				if(CommonUtil.checkNumber(jsonData.get("keyword"))){					
 					search.setKeyword(jsonData.get("keyword"));
 					feedlist = feedServices.getFeedListFromKeyword(search);
+					primeFeed = feedServices.getPrimeFeed(search);
+					
+				//첫글자가 #이라면 RGB로 바꾸어 본다.	
 				}else if( jsonData.get("keyword").charAt(0) == '#' ) {
-					//첫글자가 #이라면 RGB로 바꾸어 본다.
+					
 					search.setKeyword(jsonData.get("keyword"));
-					search = CommonUtil.getHaxtoRGB(search, colorRange);
+					search = CommonUtil.getHaxtoRGB(search, colorRange);					
 					
-					
+					//해쉬코드형식으로 정확하게 도착했다면
 					if(search !=null) {
 						//색상 기반으로 검색
 						feedlist = feedServices.getFeedListFromColor(search);
 					}
-				
+					
+				//검색어를 영어로 변역
 				}else {
 					search.setKeyword(Translater.autoDetectTranslate(jsonData.get("keyword"),"en"));
 					feedlist = feedServices.getFeedListFromKeyword(search);
+					primeFeed = feedServices.getPrimeFeed(search);
 				}				
 				
 			}			
 			
-			//프라임피드를 추가하고 조회수를 늘려준다.
-			List<Feed> primeFeed = feedServices.getPrimeFeed(search);
+
 			
 			//프라임 피드는 2개 출력한다.
-			if(primeFeed.size() > 1 ) {	
-				
+			if(feedlist.size() > 1  && primeFeed.size() > 1 ) {					
 				//선택된 프라임 피드를 히스토리에 저장
 				setPrimeHistory(primeFeed, user, CommonUtil.getUserIp(request));					
 				
@@ -327,7 +334,8 @@ public class RestSearchController {
 				}				
 			}					
 	
-			map.put("list", feedlist);
+			//피드 중복체크 후 반환
+			map.put("list", CommonUtil.checkEqualFeed(feedlist));
 			
 		}		
 		
@@ -425,15 +433,21 @@ public class RestSearchController {
 		return base;
 	}
 	
+	
+	//프라임피드 히스토리 기록
 	private void setPrimeHistory(List<Feed> primeFeed, User user, String IP) throws Exception {		
 		for(Feed f : primeFeed ) {
 			History primeHistory = new History();
 			
 			//히스토리 타입 - 프라임 피드 노출
 			primeHistory.setHistoryType(2);
-			primeHistory.setShowFeed(f);
-			primeHistory.setWatchUser(user);
+			primeHistory.setShowFeed(f);			
 			primeHistory.setIpAddress(IP);
+			
+			//유저가 로그인 한 경우 저장
+			if(user !=null) {
+				primeHistory.setWatchUser(user);
+			}
 			
 			historyServices. addHistory(primeHistory);			
 		

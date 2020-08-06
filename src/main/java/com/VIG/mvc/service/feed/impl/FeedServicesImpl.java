@@ -105,7 +105,16 @@ public class FeedServicesImpl implements FeedServices {
 	@Override
 	public List<Feed> getPrimeFeed(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return feedDao.getPrimeFeed(search);
+		
+		List<Feed> feedList = feedDao.getPrimeFeed(search);
+		
+		//출력할 프라임 피드의 개수가 부족할 때 
+		if(feedList.size() < 2) {
+			feedList.addAll(feedDao.getPrimeFeedTitle(search));
+		}		
+		
+		//피드 중복체크 이후 반환
+		return CommonUtil.checkEqualFeed(feedList);
 	}
 
 	@Override
