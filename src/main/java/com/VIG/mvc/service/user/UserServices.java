@@ -22,10 +22,14 @@ public interface UserServices {
 	
 	// delete 
 	public void deleteUser(User user) throws Exception;
+	
+	// delete 
+	//public void deleteUser(String userCode) throws Exception;
 
 	public List<User> getAllUserList() throws Exception;
 	
-	// user list //
+	
+	// user list 
 	public Map<String , Object> getUserList( Search search) throws Exception;
 	
 	// send email
@@ -48,6 +52,11 @@ public interface UserServices {
 
 	public List<User> getBanUserList() throws Exception;
 	
+	// 구글 로그인으로 체크
+	public User getGoogleID(String googleId) throws Exception;
+	
+	//소셜로그인 시 userCode 자동 생성을 위한 번호 갖고오기
+	public int getLastUserNum() throws Exception;
 	
 
 }

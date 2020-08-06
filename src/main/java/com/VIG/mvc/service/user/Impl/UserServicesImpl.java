@@ -119,5 +119,19 @@ public class UserServicesImpl implements UserServices {
 	}
 
 
+	@Override
+	public User getGoogleID(String googleId) throws Exception {
+		// TODO Auto-generated method stub
+		return userDao.getGoogleID(googleId);
+	}
+
+
+	@Override
+	public int getLastUserNum() throws Exception {		
+		//최대값 보다 1큰 값을 전달
+		return (userDao.getLastUserNum()+1);
+	}
+
+
 
 }

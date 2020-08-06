@@ -940,6 +940,60 @@ INSERT
 INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(image_id, 20020, 3, 0,'feed21_04.jpg');
 
+
+INSERT
+INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
+VALUES(20021, '36 Days of Type 2017/18', 'I ve created some letters and numbers for a new round of awesome 36 Days of Type project, not a whole alphabet unfortunately :) ', 'user01', NOW(), 0, 10011);
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20021, 0, 1,'feed22_thumbnail.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20021, 0, 0,'feed22_01.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20021, 1, 0,'feed22_02.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20021, 2, 0,'feed22_03.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20021, 3, 0,'feed22_04.jpg');
+
+INSERT
+INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
+VALUES(20022, 'The Atlantic – The Possibility Report', 'A series of illustrations I did for The Atlantic’s Possibility report titled ‘Build’.', 'user01', NOW(), 0, 10000);
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20022, 0, 1,'feed23_thumbnail.png');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20022, 0, 0,'feed23_01.png');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20022, 1, 0,'feed23_02.png');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20022, 2, 0,'feed23_03.png');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20022, 3, 0,'feed23_04.png');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20022, 4, 0,'feed23_05.png');
+
+
 INSERT
 INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
 VALUES(20050, 'Flowers Decoration', 'Do not be silly in front of those flowers', 'user06', NOW(), 1, 10009);

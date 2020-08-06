@@ -73,6 +73,14 @@
 			
 			$(".row:last").append(displayValue);		
 	}	
+	
+	
+	function getSearchImagekeyword(keyword) {
+		var link ='/VIG/search/getSearchList?Mode=Image&keyword=';
+		link =  link.concat(keyword);
+		$(location).attr("href", link); 
+	}
+	
 
 	
 	
@@ -117,14 +125,14 @@
 	
 	$(function(){			
 			// 최초 진입시 첫번째 페이지 로딩
-			getImageItemList();
+			//getImageItemList();
 				
    			
-			$(window).scroll(function() {
-   			    if ($(window).scrollTop() == $(document).height() - $(window).height()) {     			     
-   			    	getImageItemList();   			    	
-   			    }
-   			});	    			
+		$(window).scroll(function() {
+			    if ($(window).scrollTop() + 500 >= $(document).height() - $(window).height()) {     			     
+   				  			    	
+			    }
+			});		    			
 			
 	});	
 	
@@ -135,15 +143,28 @@
 </head>
 <body>
 
+	<!-- ToolBar Start /////////////////////////////////////-->
+	<jsp:include page="../main/toolbar.jsp" />
+
+
 	<div class="container-lg-fluid">		
 	
-		<div class="row justify-content-center">
-		
-			<img class="col-lg-10" alt="" src="/VIG/images/uploadFiles/${baseImage.imageFile}" style="max-width: 960px;">		
-		
+		<div class="row justify-content-center">		
+			<img class="col-md-10" alt="" src="/VIG/images/uploadFiles/${baseImage.imageFile}" style="max-width: 960px;">	
 		</div>
 		<hr/>
 		
+		<div class="row justify-content-center" style = "margin: 20px;">
+			
+				<c:forEach var="keyword" items="${baseImage.keyword}">
+					<button type="button" class="btn btn-info" onclick="getSearchImagekeyword('${keyword.keywordEn}')">${keyword.keywordEn}</button>				
+				</c:forEach>
+			
+		</div>
+		
+
+		
+		<hr/>
 		<div class="row justify-content-center">
 			<h4 style="font-weight: bold;">유사한 이미지 더보기</h4>
 		</div>

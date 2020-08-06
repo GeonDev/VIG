@@ -74,7 +74,7 @@
  				<br/>				
  <!-- 비지니스 유저만 통계-->
  		<c:if test="${sessionScope.user.role=='business'}">
- 			<a type="button" class="btn btn-block" href="#">통 계</a>
+ 			<a type="button" class="btn btn-block" href="/VIG/chart/getChart">통 계</a>
  				<br/>	
 	 		</c:if>							
 	 		</c:when>

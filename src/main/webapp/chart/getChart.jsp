@@ -48,7 +48,16 @@
 	 #selectBox{
 	 width:200px;
 	 }
+	 #momo{
+	 	max-width:300px;
+	 	left:100px;
+	 }
 	 
+	 #main{
+	 padding-top:0px;
+	 padding-left:200px;
+	  left:250px;
+	 }
 	 body {
     	padding-top : 50px;
         }
@@ -70,25 +79,44 @@
 <body>
 <div class="container-fluid">	
 
+
+<jsp:include page="/main/toolbar.jsp" />
+
+<div id="main">
 <div class="page-header text-info">
+
 			<h3>통계페이지</h3>	
 			<hr>
 			</div>
+			<div class="col-md-12">
+			
 			<div class="row">
-				<div id="selectBox">
-							<select class="browser-default custom-select">
+			
+				<div>
+							<select class="browser-default custom-select" id="year">
  							 <option selected>년도를 선택해주세요</option>
- 							 <option value="202008">Test</option>
+ 							 <option value="2020">2020</option>
  							 
 							</select>								
 			    </div>
-			    <div id="selectBox2">
-							<select class="browser-default custom-select">
+			    <div >
+							<select class="browser-default custom-select" id="month">
  							 <option selected>월을 선택해주세요</option>
- 							 <option value="1">One</option>
- 							 <option value="2">Two</option>
-						     <option value="3">Three</option>
+ 							 <option value="01">1월</option>
+ 							 <option value="02">2월</option>
+						     <option value="03">3월</option>
+						     <option value="04">4월</option>
+						     <option value="05">5월</option>
+						     <option value="06">6월</option>
+						     <option value="07">7월</option>
+						     <option value="08">8월</option>
+						     <option value="09">9월</option>
+						     <option value="10">10월</option>
+						     <option value="11">11월</option>
+						     <option value="12">12월</option>
+						     
 							</select>								
+			    </div>
 			    </div>
 			    </div>
 	<div class="row">
@@ -106,32 +134,39 @@
 
 			</div>
 			</div>
-			<div class="col-md-4">
-
-					<Strong>년 월의 총 Like수</Strong>
+			<div class="col-md-4" id="momo">
+					<div id="countLike">
+					<Strong>년 월의 총 Like수 ${likeCount2}</Strong> 
+					</div>
 					<hr>
-					<Strong>년 월의 총 View수</Strong>
+					<div id="countView">
+					<Strong>년 월의 총 View수 ${viewCount2}</Strong>
+					</div>
 					<hr>
-					<Strong>년 월의 총 primefeed노출수</Strong>
+					<div id="countPrime">
+					<Strong>년 월의 총 primefeed노출수 ${primeCount2}</Strong>
+					</div>
 					<hr>
 					  </div>
 </div>
 
 <br>
-<strong>조회수가 가장 많은 피드 3개</strong> 
+ 
 <div class="row">
 <div class="col-md-12">
 	
 		
-		<button type="button" onclick="location.href='/VIG/chart/getChart?date=202008' ">Test</button>
+		
 		
 </div>
+	</div>
 	</div>
 	</div>
 
 <script>
 
-	
+	//처음 그리는 통계 onLoad시 >> 컨트롤러에서 만든 오늘날짜를 기준으로 그린다. 
+
 	
 var likeCount =${likeCount};
 var viewCount =${viewCount};
@@ -175,19 +210,29 @@ var lineChart = new Chart(ctx,{
 				fill: false
 			//	lineTension:0
 				
-			}
+			},
+			
 			
 		]
 	},
 	options:{
 		maintainAspectRatio:false // 크기변동
+		
 	}
 	
 	
 });
 
-
-$("#year").on("change", function(){
+// 년 월에따른 업데이트된 차트 
+$("#year, #month").on("change", function(){
+	
+	var year = $("#year").val();
+	var month = $("#month").val();
+	//셀렉한 년,월 뷰로 바로 전송
+	$("#yyear").text(year);
+	$("#mmonth").text(month);
+	
+	//차트 업데이트
 	$.ajax(
    			{
    				url : "/VIG/chart/json/getChart",
@@ -197,21 +242,34 @@ $("#year").on("change", function(){
 					"Content-Type" : "application/json"
 				},
 				data : {
-					month : $("#month").val()
+					month : $("#month").val(),
+					year : $("#year").val()
 					
 				},
 				success : function(JSONData , status) {
-					if(JSONData != ''){
-						lineChart.data.datasets[0].data = JSONData.like;
-						lineChart.data.datasets[1].data = JSONData.view;
-						lineChart.data.datasets[2].data = JSONData.prime;
+					
+					
+					
+					
+						lineChart.data.datasets[0].data = JSONData.likeCount;
+						lineChart.data.datasets[1].data = JSONData.viewCount;
+						lineChart.data.datasets[2].data = JSONData.primeCount;
 							
-						myChart.update();									
-					}else{
-						alert('카운트 없음');
-					}
+						lineChart.update();									
+						
+					//	var displayValue =
+					//	"<div id='countLike'><Strong>년 월의 총 Like수"+JSONData.likeCount2+"</Strong></div><hr><div><Strong>년 월의 총 Like수"+JSONData.viewCount2+"</Strong></div><hr><div><Strong>년 월의 총 Like수"+JSONData.primeCount2+"</Strong></div><hr>";
+						
+						
+						
+						$('#countLike').text("2020년 "+month+"월의 총 Like 수 "+JSONData.likeCount2);
+						$('#countView').text("2020년 "+month+"월의 총 View 수 "+JSONData.viewCount2);
+						$('#countPrime').text("2020년 "+month+"월의 총 primefeed 노출수 "+JSONData.primeCount2);
 				}
 			})
+			//합계 Ajax 시작 
+			
+			
      });
 
 

@@ -237,9 +237,9 @@ public class FeedController {
 			Map<String, Object> follow = new HashMap<String, Object>();
 			follow.put("userCode", user.getUserCode());
 			follow.put("followerCode", writer.getUserCode());
-			int isFollow = followServices.getFollow(follow);
+			//int isFollow = followServices.getFollow(follow);
 			
-			mav.addObject("isFollow", isFollow);
+			//mav.addObject("isFollow", isFollow);
 			mav.addObject("isLike", isLike);
 			
 			System.out.println("회원조회");

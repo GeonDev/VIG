@@ -95,5 +95,17 @@ public class UserDaoImpl implements UserDao {
 		return sqlSession.selectList("UserMapper.getBanUserList");
 	}
 
+	@Override
+	public User getGoogleID(String googleId) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("UserMapper.getGoogleLogin", googleId);
+	}
+
+	@Override
+	public int getLastUserNum() throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("UserMapper.getLastUserNum");
+	}
+
 	
 	}

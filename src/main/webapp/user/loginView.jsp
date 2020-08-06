@@ -64,6 +64,18 @@
 			
 			});
 		});
+		
+		
+	$( function() {
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		$("#googlelogin").on("click" , function() {
+			location.href="https://accounts.google.com/o/oauth2/auth?client_id="+
+			"82747934090-ljsrvma8goa9dskv7hchor1mt2atl1ao.apps.googleusercontent.com"+
+			"&redirect_uri="+
+			"http://localhost:8080/VIG/user/googleLogin" +
+			"&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email&approval_prompt=force&access_type=offline";				
+		});
+	});
 	
    
 </script>
@@ -101,6 +113,12 @@
 
     <!-- Sign in button -->
     	<button  class="btn btn-info btn-block my-4" id="login" >Sign in</button>
+    	
+    <!-- Sign in Google button -->
+    	<button  class="btn btn-primary btn-block my-4" id="googlelogin" >
+    		<i class="fab fa-google" style="font-size: large; margin-left: 0px; text-align: top;"></i>&emsp; Sign in With Google
+    	</button>
+   	
    
     <!-- Register -->
 	    <p>Not a member?

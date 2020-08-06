@@ -52,14 +52,16 @@ public class LikeServicesImpl implements LikeServices {
 	}
 
 	@Override
-	public List<String> getLikeMouthCount(HashMap<String, String> keys) throws Exception {
-		// TODO Auto-generated method stub
+	public HashMap<String,Object> getLikeMouthCount(HashMap<String, String> keys) throws Exception {
 
 		List<String> mouthCout = new ArrayList<String>();
+		int totalCount = 0;
 		
 		for(int i = 0; i<31; i++) {
-			HashMap<String,String> key = new HashMap<String,String>();
-			keys.put("userCode", keys.get("userCode"));
+			HashMap<String,String> dateKey = new HashMap<String,String>();
+			
+			//유저 코드를 추가
+			dateKey.put("userCode", keys.get("userCode"));
 		
 			String date = keys.get("date");
 			
@@ -68,17 +70,19 @@ public class LikeServicesImpl implements LikeServices {
 				date += "0"+ String.valueOf(i+1);
 			}else {
 				date += String.valueOf(i+1);
-			}						
-			key.put("date", date);	
-		
-			System.out.println(key.get("date") );
+			}
 			
-			mouthCout.add(  String.valueOf(likeDao.getLikeDateCount(key)) );
-					
-		}	
+			//연산된 날짜 추가
+			dateKey.put("date", date);	
+			totalCount +=  likeDao.getLikeDateCount(dateKey);			
+			mouthCout.add( String.valueOf(likeDao.getLikeDateCount(dateKey)) );						
+		}
 		
-		
-		return mouthCout;
+		 HashMap<String,Object> lastKey = new HashMap<String,Object>();
+		 lastKey.put("totalCount",totalCount);
+		 lastKey.put("mouthCout",mouthCout);
+		 
+		return lastKey;
 	}
 
 

@@ -105,9 +105,9 @@ public class FeedDaoImpl implements FeedDao {
 	}
 
 	@Override
-	public Feed getPrimeFeedOne(Search search) throws Exception {
+	public List<Feed> getPrimeFeed(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("FeedMapper.getPrimeFeedOne",search);
+		return sqlSession.selectList("FeedMapper.getPrimeFeed",search);
 	}
 
 	@Override
@@ -145,6 +145,12 @@ public class FeedDaoImpl implements FeedDao {
 	public List<Feed> getRecommendFeedList(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("FeedMapper.getRecommendFeedList",search);
+	}
+
+	@Override
+	public List<Feed> getPrimeFeedTitle(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("FeedMapper.getPrimeFeedTitle",search);
 	}
 	
 
