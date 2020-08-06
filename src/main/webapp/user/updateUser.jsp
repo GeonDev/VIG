@@ -7,6 +7,7 @@
 <meta charset="EUC-KR">
 <title>Insert title here</title>
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 		<!-- Google Fonts -->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
@@ -25,73 +26,39 @@
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 		
+	<script src="/VIG/javascript/jQuery.tagify.min.js"></script>
+ 	<link rel="stylesheet" href="/VIG/css/tagify.css">
+ 	<!--  drag and drop -->
+ 	<script src="/VIG/javascript/dropify.js"></script>
+ 	<link rel="stylesheet" href="/VIG/css/dropify.min.css">
 		<script type="text/javascript">
-		
-		
-		function fncDelete(){
-			$(location).attr("action","VIG/user/deleteUser").submit();
-		}	
-			
-		function fncUpdateUser() {		
-		$("form").attr("enctype", "multipart/form-data").attr("method" , "POST").attr("action", "./updateUser").submit();
-		}
-			
-//============= 업데이트 
-			
-		$(function(){
-			$("#business_btn").on("click",function(){
-				alert("결제창?");
+					
+		$(function() {
+			$( "button.btn.btn-primary" ).on("click" , function() {
+				alert("1");
+				 $("form").attr("method", "POST").attr("enctype","multipart/form-data").attr("action", "updateUser").submit();
 			});
-		});
+		});	
+		
+			
 
+		$(function(){
+			$("input[name=password2]").keyup( function(){				 				
+				var password = $("input[name=password]").val();
+				var password2 = $("input[name=password2]").val();				
+				if(password==password2){					
+					var correct = "<p style='color:green;'>비밀번호가 확인되었습니다.</p>";
+					$(".check").html(correct);					
+				}else{										
+					var alert = "<p style='color:red;'>비밀번호가 다릅니다.</p>";
+					$(".check").html(alert);					
+				}				
+			});			
+		});
+		
 //===비밀번호 체크 이벤트   ================================================test 정리중   코드 정리하기
 
-	$(function(){
-		$("#deleteCheck").on("click",function(){	
-			var pw = $("input[id=deleteU_password]").val();
-			if(pw == null || pw.length <1) {
-				alert('패스워드를 입력하지 않으셨습니다.');
-				$("#password").focus();
-				return;
-			}
-		$("#deleteU_password").blur(function(){
-			var pw = $("input[id=deleteU_password]").val();
-			alert("1");
-			//===========================ㅁajax
-			$.ajax({
-				url : "/json/chcekPw",
-				method : "POST" ,
-				data : {
-					password : 'pw'
-				},
-				headers : {
-					"Accept" : "application/json",
-					"Content-Type" : "application/json"
-				},
-				success : function(data , status) {
-					alert(data);
-					alert("ok");
-					
-					if($(data==0)){					
-						var correct = "<p style='color:green;'>비밀번호가 확인되었습니다.</p>";
-						$(".check").html(correct);					
-					}else{										
-						var alert = "<p style='color:red;'>비밀번호가 다릅니다.</p>";
-						$(".check").html(alert);
-					}
-				},error:function(request,status,error){
-					alert("json 연결 fail");
-			        alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
-					}
-				});	
-			//====ajax
-			});
-		});
-			
-				
-		//=========
 		
-			/*
 		$(function(){
 			var file = document.querySelector('#getfile');
 
@@ -114,11 +81,15 @@
 		 	 	};
 			});	
 		});	
-		*/
+	});
 	
 		</script>
 	
 <style type="text/css">
+		
+		body { font-family: "Nanum Gothic", sans-serif;}
+        #myFeedMain { padding: 70px;} 
+	
 	
 	.col-md-12_top {	width: 100%; height: 100%; position: relative; margin:50px; }		
 	.profile {	width: 100%; height: 100%; position: relative; margin:50px; }
@@ -129,6 +100,8 @@
 	#getfile { display:block; margin-left:auto; margin-right:auto; width: auto; height: auto; }	
 	#form-group { display:block; margin-left:auto; margin-right:auto; }	
 		#myFeedMain { padding: 70px;}
+		
+		
 </style>		
 	
 </head>
@@ -148,7 +121,6 @@
 			<div class="row">
 	<!-- 사이드바 자리 -->		
 			<div class="col-md-2">		
-		      1 of 3 아 그리드 뭔데...ㅠㅠ
 		    <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
 		    </div>  
 	
@@ -156,15 +128,15 @@
 	<!-- 상단 타이틀 -->
 		<div class="row">
 			<div class="col-md-12_top">
-			<h1>내 정보 수정</h1><hr/>
+			<h2>내 정보 수정</h2><hr/>
 			</div>
 		</div>
-		<form>
+		<form method="POST">
 	<!-- 프로필 이미지 -->
 		<div class="row">
 	 		<div class="profile">
-	 			<img class="card-img-top" src="/VIG/images/uploadFiles/${user.profileImg }" id="pImg" alt="profile_img">
-				<!-- <img src="/VIG/images/uploadFiles/${user.profileImg}" id="pImg"  alt="profile_img"> -->
+	 			<img src="/VIG/images/uploadFiles/${user.profileImg}" id="pImg" alt="profile_img">
+		
 	<!-- 업로드 파일 -->
  				<input type="file" id="getfile" name="uploadFile" accept="image/*"><br/>
  			</div>
@@ -188,10 +160,19 @@
 			    <input type="text" class="form-control" id="userName" name="userName" value="${user.userName }" >
 			</div>
 			  
-			<div class="form-group">
-			    <label for="password" class="col-sm-offset-5 col-md-5 control-label">비밀번호</label>
-			    <input type="text" class="form-control" id="user_password" name="password"  >
-			</div>
+			<div class="form-group" style="height:70px; margin:0; ">
+		    <input type="password" id="password" name="password" class="form-control mb-4" placeholder="8자리 이하 입력" maxlength="8" required>
+			<label data-error="wrong" data-success="right" for="password"></label>
+		</div>
+		
+		<!-- 비밀번호2 -->   
+		<div class="form-group" style="margin:  0;">  
+			 <input type="password" id="password2" name="password2" class="form-control mb-4" placeholder="Password2" required>
+		     <label data-error="wrong" data-success="right" for="password2"></label>
+		     <span id="helpBlock" class="help-block">
+				<span class="check"></span>
+			</span>
+		</div>
 			   
 			<div class="form-group">
 			    <label for="selfIntroduce" class="col-sm-offset-5 col-md-5 control-label">자기소개</label>
@@ -202,29 +183,31 @@
 			    <label for="account" class="col-sm-offset-5 col-md-5 control-label">계좌번호</label>
 			    <input type="text" class="form-control" id="account" name="account" value="${user.account }" >
 			</div>
-	
-	<!-- 비지니스 계정으로 전환 버튼 넣기-->	
+	</form>
+	<!-- 비지니스 계정으로 전환 버튼 넣기
 		<c:if test="${sessionScope.user.role=='user'}">  
 			<div class="form-group">
 			    <button type="button" class="button btn btn-primary" id="business_btn">비지니스전환</button>
 			</div>
 		</c:if>
-	
+	-->
 	
 	<!-- 수정 및 탈퇴 버튼 -->
 			<div class="form-group">
-				<button type="button" class="button btn btn-primary" id="updateUser_btn">수 &nbsp;정</button>		 
-			     <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#deleteCheckModal">탈 &nbsp;퇴</button>
-				<!--  <a class="btn btn-primary btn" href="#" role="button" data-toggle="modal" data-target="#deleteCheckModal">탈 &nbsp;퇴</a> -->
+			 	<button type="button" class="button btn btn-primary" id="updateUser_btn">수 &nbsp;정</button>		 
+			    <!--  <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#deleteCheckModal">탈 &nbsp;퇴</button> -->
+			
 			</div>
-					
+					</div>
+					</div>
+				
 				  
 				  </div>
 			</div>
 		</form>
 		
 			
-	<!--회원탈퇴 모달 확인창-->
+	<!--회원탈퇴 모달 확인창
 			<div class="modal fade" id="deleteCheckModal"  role="dialog" >
 				<div class="modal-dialog modal-notify modal-warning" role="document">
 					<div class="modal-content">				
@@ -236,7 +219,7 @@
 						</div>
 					 <div class="modal-body text-center mb-1">
 						<div class="md-form ml-0 mr-0">
-			<form method="post" action="/user/json/chcekPw" >
+			<form class="deleteCheckForm" method="post" action="/user/json/chcekPw" >
 						  <input type="password" id="deleteU_password" name="password" class="form-control form-control-sm ">
 						  <label data-error="wrong" data-success="right" for="form29" class="ml-0">Enter password</label>
 						   <span id="helpBlock" class="help-block">
@@ -252,7 +235,10 @@
 				    </div>
 				 </div>
 			 </div>
-				
+			</div>
+		</div>
+		</div>
+		-->	
 		
 	 </div>
 

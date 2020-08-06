@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.VIG.mvc.service.domain.Follow;
 import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.follow.FollowDao;
@@ -30,7 +31,7 @@ public class FollowDaoImpl implements FollowDao {
 	}
 
 	@Override
-	public void addFollow(Map<String, Object> follow) throws Exception {
+	public void addFollow(Follow follow) throws Exception {
 		// TODO Auto-generated method stub
 		
 		sqlSession.insert("FollowMapper.addFollow", follow);
@@ -38,7 +39,7 @@ public class FollowDaoImpl implements FollowDao {
 	}
 
 	@Override
-	public void deleteFollow(Map<String, Object> follow) throws Exception {
+	public void deleteFollow(Follow follow) throws Exception {
 		// TODO Auto-generated method stub
 		
 		sqlSession.delete("FollowMapper.deleteFollow", follow);
@@ -46,18 +47,18 @@ public class FollowDaoImpl implements FollowDao {
 	}
 
 	@Override
-	public List<String> getFollowerList(Search search) throws Exception {
+	public List<User> getFollowerList(String userCode) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("FollowMapper.getFollowerList", search);
+		return sqlSession.selectList("FollowMapper.getFollowerList", userCode);
 	}
 
 	@Override
-	public List<User> getFollowingList(Search search) throws Exception {
+	public List<User> getFollowingList(String userCode) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("FollowerMapeer.getFollowingList", search);
+		return sqlSession.selectList("FollowerMapeer.getFollowingList", userCode);
 	}
 	
-	public int getFollow(Map<String, Object> follow) throws Exception{
+	public int getFollow(Follow follow) throws Exception{
 
 		return sqlSession.selectOne("FollowMapper.getFollow", follow);
 		

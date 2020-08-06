@@ -39,10 +39,9 @@
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 	
-	body {
-    	padding-top : 50px;
-        }       
-        
+	body { font-family: "Nanum Gothic", sans-serif;}
+        #myFeedMain { padding: 70px;}      
+      .col-md-12_top {	width: 100%; height: 100%; position: relative; margin:50px; }	  
         
       .txt_lineSize {
 	 width:280px; 
@@ -100,7 +99,7 @@
 
 <body>
 
-<!-- 상단 툴바 자리 --> 														
+<!-- 상단 툴바 자리 --> 						
       <div class="container-fluid">  
       	 <div class="row">
       		<div class="col-md-12">
@@ -118,7 +117,8 @@
 		    
 	<!--  본문 자리 -->	      	    
 		    <div class="col-md-10" id="myFeedMain">
-				<h3>내 활동정보 보기</h3>			
+		    <div class="col-md-12_top">
+				<h2>내 활동정보 보기</h2>			
 			<hr/>		
 				
 			

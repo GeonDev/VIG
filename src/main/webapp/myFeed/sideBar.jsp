@@ -74,7 +74,7 @@
  				<br/>				
  <!-- 비지니스 유저만 통계-->
  		<c:if test="${sessionScope.user.role=='business'}">
- 			<a type="button" class="btn btn-block" href="#">통 계</a>
+ 			<a type="button" class="btn btn-block" href="/VIG/chart/getChart">통 계</a>
  				<br/>	
 	 		</c:if>							
 	 		</c:when>
@@ -82,7 +82,7 @@
 	 		
 <!-- 관리자 로그인시 --> 		
  		<c:if test="${sessionScope.user.role=='admin'}">
- 			<a type="button" class="btn btn-block" href="/VIG/user/getUserList.jsp">회원 목록</a>
+ 			<a type="button" class="btn btn-block" href="/VIG/user/getUserList">회원 목록</a>
  				<br/>
  			<a type="button" class="btn btn-block"href="/VIG/report/getReportlist.jsp">신고 조회</a>
  				<br/>
