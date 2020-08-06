@@ -102,7 +102,7 @@
 		displayValue = 
 			"<div class = 'view overlay'>"
 				+"<div class = 'img_feed'>"
-				+ "<a href='/VIG/myfeed/getMyFeedList?userCode="+ item.feedId +"' class='text-light'>"
+				+ "<a href='/VIG/feed/getFeed?feedId="+ item.feedId +"' class='text-light'>"
 					+ "<img src='/VIG/images/uploadFiles/" + thumbnail + "' alt='thumbnail' class='img-fluid rounded-sm img_feed '>"
 					+ "<div class='mask waves-effect waves-light rgba-black-strong' style='text-align: right;'>";					
 						if(user != ''){
