@@ -43,9 +43,7 @@
 	}
 		
     .img_feed {	
-    width: auto; height: auto;  
-	max-width: 500px;
-	max-height: 375px;
+    width: auto; height: 375px; 	
 	overflow:hidden;	
 	}
 		
@@ -243,7 +241,7 @@
 					success : function(JSONData , status) {
 						
 						//검색 결과가 있는지 체크
-						if (JSONData.list.length >0){					
+						if (JSONData.list.length != 0){					
 						
 							//불러와야 되는 페이지보다 개수가 적은 경우 페이지가 끝났다
 							if (JSONData.list.length < 10){
@@ -279,8 +277,12 @@
 	 					
 	 					//검색결과가 없는 경우	
 						}else{
-							isPageEnd = true;
-							getNoSearchResult();
+							
+							//첫번째 페이지를 로드 했을 경우에만 발생
+							if(page == 1){
+								isPageEnd = true;
+								getNoSearchResult();
+							}
 						}
 					}
 			});		
@@ -299,7 +301,7 @@
 			data :  JSON.stringify({keyword : $("#Keyword").val(), mode : Mode }),						
 			success : function(JSONData, status) {
 				//검색 결과가 있으면 처리			
-				if(JSONData.length > 0){
+				if(JSONData.length != 0){
 					var arraylist = JSONData;
 						console.log( JSONData );
 					
@@ -366,7 +368,7 @@
 			
    			
 			$(window).scroll(function() {
-   			    if ($(window).scrollTop() + 400 >= $(document).height() - $(window).height()) {     			     
+   			    if ($(window).scrollTop() + 500 >= $(document).height() - $(window).height()) {     			     
 	   				getItemList();   			    	
    			    }
    			});		
@@ -438,8 +440,8 @@
 		<div class="row justify-content-end mt-0  ">			
 			<div class="col-sm-10 d-flex justify-content-start">		
 				<button id="colorSelecter" class="btn btn-outline-light dropdown-toggle btn-sm form-inline mb-0" type="button" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;">
-					<i id="showColor" class="fas fa-circle" style="color: #0000FF; font-size: large;"></i>
-					<p style="padding: 0px; margin-bottom: 0px; text-align: top; float: right; color: black;">&nbsp;Color</p>				 	
+					<i id="showColor" class="fas fa-circle" style="color: #0000FF; font-size: large; margin-left: -2px;"></i>
+					<p style="padding: 0px; margin-bottom: 0px; margin-top : 2px; margin-left : 4px; text-align: top; float: right; color: black;">Color</p>				 	
 				</button>
 				
 				<div class="dropdown-menu">

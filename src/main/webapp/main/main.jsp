@@ -201,8 +201,8 @@
 			
 			$(document).on("click",".img_categories",function(){
 				
-				$('div.mask').attr('class',"mask flex-center rgba-black-strong");
-				$(this).find('div.mask').attr('class',"mask flex-center rgba-indigo-strong");
+				$('div.mask').attr('class',"mask flex-center rgba-black-strong rounded-sm");
+				$(this).find('div.mask').attr('class',"mask flex-center rgba-indigo-strong rounded-sm");
 					
 				setCategories($(this).find('p').text());
 				
@@ -232,7 +232,7 @@
 	}
 	
 	.img_categories {	
-	max-height: 90px;
+	max-height: 80px;
 	padding-left: 0px;
 	padding-right: 0px;
 	margin-left: 0px;
@@ -242,8 +242,7 @@
 	    
    	.eBanner{
 	width: auto; height: auto;
-    max-width: 100%;
-    max-height: 200px;
+    max-height: 180px;
     }
        
      .txt_line {
@@ -258,6 +257,7 @@
 	margin: 5px 10px;
 	}
 	
+	<!-- 스크롤 제거 부분 -->
 	#categoryList {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
@@ -288,18 +288,18 @@
 					</div>				
 				
 					<div class="col-md-10" >
-						<div id="categoryList" class="row" style="max-height:120px; flex-wrap: nowrap; overflow: auto;">
+						<div id="categoryList" class="row" style="max-height:100px; flex-wrap: nowrap; overflow: auto;">
 						<c:set var="i" value="0" />						
 						<c:forEach var="category" items="${categoryList}">				
-							<div class="col-md-2" id="category_${i}">
+							<div class="col-md-2" id="category_${i}" style="padding-left: 0px; padding-right: 0px">
 								<div class="view img_categories ">			    			
-					    			<img src="/VIG/images/others/${category.categoryImg}" alt="thumbnail" class="img-fluid overflow-hidden" >
+					    			<img src="/VIG/images/others/${category.categoryImg}" alt="thumbnail" class="img-fluid overflow-hidden rounded-sm" >
 					    			
 					    			<c:if test="${category.categoryName == 'RECOMMEND'}">
-					    				<div class="mask flex-center rgba-indigo-strong">	
+					    				<div class="mask flex-center rgba-indigo-strong rounded-sm">	
 					    			</c:if>
 					    			<c:if test="${category.categoryName != 'RECOMMEND'}">
-					    				<div class="mask flex-center rgba-black-strong">	
+					    				<div class="mask flex-center rgba-black-strong rounded-sm">	
 					    			</c:if>		    			
 					    		  	
 					    		   		<p class="white-text" style="font-weight:bold ; font-size: large; padding: 0px;">${category.categoryName}</p>					    		    				    		         					      						
@@ -319,12 +319,12 @@
 		</div>	
 
         <div id="banner" class="row" style="margin-left: 10px; margin-right: 10px; margin-bottom: 20px; margin-top: 20px;">
-	  		<div id="carousel-example-1z" class="carousel slide carousel-fade col-md-12" data-ride="carousel">
+	  		<div id="carousel-eBanner" class="carousel slide carousel-fade col-md-12" data-ride="carousel">
 			  <!--Indicators-->
 			  <ol class="carousel-indicators">
-			    <li data-target="#carousel-example-1z" data-slide-to="0" class="active"></li>
-			    <li data-target="#carousel-example-1z" data-slide-to="1"></li>
-			    <li data-target="#carousel-example-1z" data-slide-to="2"></li>
+			    <li data-target="#carousel-eBanner" data-slide-to="0" class="active"></li>
+			    <li data-target="#carousel-eBanner" data-slide-to="1"></li>
+			    <li data-target="#carousel-eBanner" data-slide-to="2"></li>
 			  </ol>
 		
 			  <div class="carousel-inner" role="listbox">
@@ -353,11 +353,11 @@
 			  </div>
 	
 	
-			  <a class="carousel-control-prev" href="#carousel-example-1z" role="button" data-slide="prev" >
+			  <a class="carousel-control-prev" href="#carousel-eBanner" role="button" data-slide="prev" >
 			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 			    <span class="sr-only">Previous</span>
 			  </a>
-			  <a class="carousel-control-next" href="#carousel-example-1z" role="button" data-slide="next">
+			  <a class="carousel-control-next" href="#carousel-eBanner" role="button" data-slide="next">
 			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
 			    <span class="sr-only">Next</span>
 			  </a>

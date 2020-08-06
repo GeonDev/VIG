@@ -2,7 +2,6 @@ package com.VIG.mvc.web.chart;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -42,19 +41,16 @@ public ChartController() {
 
 	@RequestMapping(value = "getChart",method = RequestMethod.GET)
 	public ModelAndView getChart(HttpSession session,@RequestParam("date") String date)throws Exception{
-		
-		
-		User user = (User)session.getAttribute("user");
-		String userCode = user.getUserCode();
+				
+		User user = (User)session.getAttribute("user");	
 		System.out.println(date);
-		System.out.println(userCode);
+		System.out.println(user.getUserCode());
 		HashMap<String,String> keys = new HashMap<String,String>();
 		// Ex)date : '202008' 형식 
 		
-		keys.put("userCode", userCode);
+		keys.put("userCode", user.getUserCode());
 		keys.put("date", date);
-		
-		
+				
 		
 	    List<String> likeCount = likeServices.getLikeMouthCount(keys);
 	    System.out.println(likeCount);

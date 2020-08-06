@@ -162,7 +162,7 @@
 		<!-- id -->  
 		<div class="form-group" style="margin: 0 0 40px 0;">
 			<label data-error="wrong" data-success="right" for="userCode"></label>
-			<input type="text" id="userCode" name="userCode" class="form-control mb-4" placeholder="userCode" required>   
+			<input type="text" id="userCode" name="userCode" class="form-control mb-4" placeholder="userCode" value="${user.userCode}" required>   
 			<div class="check_font" id="id_check"></div>
 		</div>
 			
@@ -211,7 +211,7 @@
 		     
 		<!-- 이메일 -->
 		<div class="form-group" style="margin: 0 0 40px 0;">
-		   	<input type="email" id="email" name="email" class="form-control mb-4" placeholder="email">
+		   	<input type="email" id="email" name="email" class="form-control mb-4" placeholder="email" value="${user.email}">
 		    <label data-error="wrong" data-success="right" for="email"></label> 
 		 </div>
 		 
@@ -222,6 +222,9 @@
 	
 		<!-- role -->
 			<input type="hidden" id="role" name="role" class="form-control mb-4"  value="user">
+			
+		<!-- google -->	
+			<input type="hidden" id="googleId" name="googleId" class="form-control mb-4"  value="${user.googleId}">
 			
 		<!-- 가입버튼 -->
 		    <button  class="btn btn-info btn-block my-4" id="signUp_btn" >Sign up</button>   

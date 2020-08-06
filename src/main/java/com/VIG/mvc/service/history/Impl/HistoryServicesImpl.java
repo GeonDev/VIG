@@ -72,6 +72,9 @@ public class HistoryServicesImpl implements HistoryServices {
 		List<String> mouthCout = new ArrayList<String>();
 		
 		for(int i = 0; i<31; i++) {
+			HashMap<String, String> dateKey = new HashMap<String, String>();
+			dateKey.put("userCode", keys.get("userCode"));
+			
 			String date = keys.get("date");
 			
 			//maria DB Data_form에 맞추어 날짜 세팅
@@ -80,10 +83,10 @@ public class HistoryServicesImpl implements HistoryServices {
 			}else {
 				date += String.valueOf(i+1);
 			}						
-			keys.replace("date", date);				
+			dateKey.put("date", date);		
 			
 			
-			mouthCout.add(  String.valueOf(historyDao.getfeedHistoryDateCount(keys)) );
+			mouthCout.add(String.valueOf(historyDao.getfeedHistoryDateCount(dateKey)) );
 		}	
 		
 		
@@ -96,6 +99,10 @@ public class HistoryServicesImpl implements HistoryServices {
 		List<String> mouthCout = new ArrayList<String>();
 		
 		for(int i = 0; i<31; i++) {
+			HashMap<String, String> dateKey = new HashMap<String, String>();
+			
+			dateKey.put("userCode", keys.get("userCode"));
+			
 			String date = keys.get("date");
 			
 			//maria DB Data_form에 맞추어 날짜 세팅
@@ -103,10 +110,11 @@ public class HistoryServicesImpl implements HistoryServices {
 				date += "0"+ String.valueOf(i+1);
 			}else {
 				date += String.valueOf(i+1);
-			}						
-			keys.put("date", date);				
+			}
 			
-			mouthCout.add(  String.valueOf(historyDao.getfeedHistoryPrimeDateCount(keys)) );	
+			dateKey.put("date", date);				
+			
+			mouthCout.add( String.valueOf(historyDao.getfeedHistoryPrimeDateCount(dateKey)) );	
 		}	
 		
 		

@@ -94,7 +94,7 @@
 		SELECT COUNT(history.history_id) FROM history, feeds
 		WHERE  history.feed_id = feeds.feed_id	
 		AND history.history_type = 0
-		AND feeds.user_code = #{useCode}
+		AND feeds.user_code = #{userCode}
 		AND date_format(history.show_date, '%Y%m%d') = #{date}				
 	</select>
 	
@@ -103,7 +103,7 @@
 		SELECT COUNT(history.history_id) FROM history, feeds
 		WHERE  history.feed_id = feeds.feed_id	
 		AND history.history_type = 2
-		AND feeds.user_code = #{useCode}
+		AND feeds.user_code = #{userCode}
 		AND date_format(history.show_date, '%Y%m%d') = #{date}				
 	</select>		
 	
