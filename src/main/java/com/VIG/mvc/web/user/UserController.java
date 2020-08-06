@@ -5,7 +5,6 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Random;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -17,30 +16,29 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.VIG.mvc.service.domain.GoogleProfile;
 import com.VIG.mvc.service.domain.Page;
 import com.VIG.mvc.service.domain.Search;
+import com.VIG.mvc.service.domain.Token;
 import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.report.ReportServices;
 import com.VIG.mvc.service.user.UserServices;
+import com.VIG.mvc.util.CommonUtil;
+import com.google.gson.Gson;
 
 @Controller
 @RequestMapping("/user/*")
@@ -67,7 +65,53 @@ public class UserController {
 	int pageUnit;
 	
 	public UserController() {
+	}	
+	
+	
+	//구글 로그인 수행	
+	@RequestMapping(value="googleLogin")
+	public String googleLogin( @RequestParam("code") String code, Model model, HttpSession session) throws Exception{
+		String query = "code=" + code;
+		query += "&client_id=" + "82747934090-ljsrvma8goa9dskv7hchor1mt2atl1ao.apps.googleusercontent.com";
+		query += "&client_secret=" + "bTfZRbsjifaPhndVAiFtbFYP";
+		query += "&redirect_uri=" + "http://localhost:8080/VIG/user/googleLogin";
+		query += "&grant_type=authorization_code";
+
+		String tokenJson = CommonUtil.getHttpConnection("https://accounts.google.com/o/oauth2/token", query);	
+		
+		Gson gson = new Gson();
+		Token token = gson.fromJson(tokenJson, Token.class);
+		String ret = CommonUtil.getHttpConnection("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + token.getAccess_token());	
+		
+		GoogleProfile profile = gson.fromJson(ret, GoogleProfile.class);
+		
+		//구글에 연결된 정보가 있다면 정보를 불러옴
+		if(userServices.getGoogleID(profile.getId()) != null ) {
+			session.setAttribute("user", userServices.getGoogleID(profile.getId()));
+			return "redirect:/index.jsp";
+		}
+		
+		//구글 연동이 안되어 있으면 가입 화면으로 이동
+		User user = new User();
+		user.setUserCode("user"+userServices.getLastUserNum());
+		user.setEmail(profile.getEmail());
+		user.setGoogleId(profile.getId());		
+	
+		model.addAttribute("user", user);
+		
+	
+		
+		return "forward:/user/addUserView.jsp";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 //=========회원가입===========================================================//    코드 정리하기!
 	
@@ -328,5 +372,8 @@ public class UserController {
 			return "/VIG/main/VIG";
 		}
 	//==
+		
+		
+		
 
 }

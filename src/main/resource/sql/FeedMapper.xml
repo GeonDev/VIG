@@ -97,9 +97,11 @@
 		
 		<!-- 우선 노출시 출력한 프라임 피드를 불러온다. (노출이 가장 작은 프라임피드) -->		
 		<select id ="getPrimeFeed" parameterType="search" resultMap="FeedSelectMap">
-			SELECT feeds.* FROM feeds, images, keywords
+			SELECT feeds.* FROM feeds, images, keywords, users
 			WHERE feeds.feed_id = images.feed_id				
 			AND images.image_id = keywords.image_id
+			AND feeds.user_code = users.user_code
+			AND users.prime_count > 0
 			AND images.is_thumbnail = 1
 			AND feeds.feed_is_prime = 1 
 			AND feeds.feed_state = 0
@@ -114,9 +116,11 @@
 		
 		<!-- 타이틀을 기준으로 우선 노출시 출력한 프라임 피드를 불러온다. (노출이 가장 작은 프라임피드) -->
 		<select id ="getPrimeFeedTitle" parameterType="search" resultMap="FeedSelectMap">
-			SELECT feeds.* FROM feeds
-			WHERE feeds.feed_is_prime = 1 
+			SELECT feeds.* FROM feeds, users
+			WHERE feeds.user_code = users.user_code
+			AND feeds.feed_is_prime = 1 
 			AND feeds.feed_state = 0
+			AND users.prime_count > 0
 			<if test="keyword !=''">
 			AND feeds.feed_title LIKE CONCAT('%',#{keyword},'%')				
 			</if>		
