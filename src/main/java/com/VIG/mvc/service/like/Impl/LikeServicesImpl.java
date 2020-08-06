@@ -58,8 +58,10 @@ public class LikeServicesImpl implements LikeServices {
 		List<String> mouthCout = new ArrayList<String>();
 		
 		for(int i = 0; i<31; i++) {
-			HashMap<String,String> key = new HashMap<String,String>();
-			keys.put("userCode", keys.get("userCode"));
+			HashMap<String,String> dateKey = new HashMap<String,String>();
+			
+			//유저 코드를 추가
+			dateKey.put("userCode", keys.get("userCode"));
 		
 			String date = keys.get("date");
 			
@@ -68,13 +70,12 @@ public class LikeServicesImpl implements LikeServices {
 				date += "0"+ String.valueOf(i+1);
 			}else {
 				date += String.valueOf(i+1);
-			}						
-			key.put("date", date);	
-		
-			System.out.println(key.get("date") );
+			}
 			
-			mouthCout.add(  String.valueOf(likeDao.getLikeDateCount(key)) );
-					
+			//연산된 날짜 추가
+			dateKey.put("date", date);	
+			 
+			mouthCout.add( String.valueOf(likeDao.getLikeDateCount(dateKey)) );					
 		}	
 		
 		
