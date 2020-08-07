@@ -21,7 +21,7 @@
 	.row_toolbar_top_ { padding: 70px;}
 	#pImg { display:block; margin-left:auto; margin-right:auto; width: auto; height: auto; max-width: 150px; max-height: 150px; border-radius:50%; padding:0;}
 	#sns_nav { display:flex; margin-left:auto; margin-right:auto; flex-direction: row; justify-content: center;}
-	#sideBar { padding: auto; margin:auto;}
+	#sideBar { padding: auto; margin:auto; display: block;}
 
 	</style>
 	
@@ -30,11 +30,11 @@
 
 
 
-    <div class="container">  
+    <div class="container-fluid">  
       	
 <!-- 사이드바  시작-->    
 		<div class="row" id="sideBar">
-			<div class="col-md-2">
+		
 		
 			<!-- 다른 유저의 마이 피드 방문시 해당 유저의 정보만 노출 -->
 				<c:choose>
@@ -52,19 +52,19 @@
 			 	</c:choose>
 		 			
 
-			 <!-- 마이페이지 접속시 메뉴 -->    
+			<!-- 마이페이지 접속시 메뉴   //// 아니 조건문 어떻게 줘?ㅠ.ㅠ-->    
 			 	<c:choose>
-					<c:when test="${user.userCode ==  writer.userCode}">
+					<c:when test="${user.userCode == writer.userCode}">
 					
 						<img class="card-img-top" src="/VIG/images/uploadFiles/profile_img.jpg" id="pImg" alt="profile_img">
 				 			<div class="card-body">
-				 					<h4 class="user_name" align="center"> ${writer.userName} </h4>
+				 					<h4 class="user_name" align="center"> ${user.userName} </h4>
 				 					<hr>
-				 					<p class="user_bio" align="center"> ${writer.selfIntroduce} </p>
+				 					<p class="user_bio" align="center"> ${user.selfIntroduce} </p>
 				 					<br><br/>
 				 				<p class="sign_date" align="center"> Member Since :: ${user.regDate}</p>	
 				 			</div>
-				 			<hr/><br/>		
+				 			<hr/><br/>			
 				 	
 						
 						<c:choose>
