@@ -3,8 +3,10 @@ package com.VIG.mvc.web.user;
 
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
+import java.util.Date;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -158,23 +160,49 @@ public class UserController {
 	}
 
 	@RequestMapping( value="login", method=RequestMethod.POST )
-	public ModelAndView login(@ModelAttribute("user") User user, HttpSession session ) throws Exception{
+	public ModelAndView login(@ModelAttribute("user") User user, HttpSession session) throws Exception{
+				
+		User dbUser = userServices.getUserOne(user.getUserCode());
+		ModelAndView mv = new ModelAndView();
+		System.out.println("로그인 시도 :"+user.getUserCode());
+		System.out.println(dbUser);
+			
+		SimpleDateFormat format = new SimpleDateFormat ("yyyyMMdd");
+		Date date  = new Date();			
+		int toDay = Integer.parseInt(format.format(date));
 		
 		
-			User dbUser = userServices.getUserOne(user.getUserCode());
-			ModelAndView mv = new ModelAndView();
-			System.out.println("로그인:"+user.getUserCode());
-			System.out.println(dbUser);
 		if(dbUser == null) {
 			mv.setViewName("forward:/user/loginView.jsp");
 			mv.addObject("msg", "fail");
 			return mv;
 			
-		} else if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())){	
-			session.setAttribute("user", dbUser);
-			System.out.println("로그인 성공");
-			mv.setViewName("redirect:/");
-			return mv;
+		} else if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())){				
+			
+			if(dbUser.getState() == 0) {
+				session.setAttribute("user", dbUser);
+				System.out.println("로그인 성공");
+				mv.setViewName("redirect:/main/VIG");
+				return mv;					
+			}else {				
+				
+				int banDate = Integer.parseInt(dbUser.getBanDate().toString().replaceAll("-",""));	
+				
+				if(dbUser.getState() == 1) {
+					banDate = banDate + 3;
+				}else if(dbUser.getState() == 2) {
+					banDate = banDate+ 7;
+				}  
+				
+				
+				int remainDate = banDate-toDay;
+				
+				String msg = "접속 금지 상태 입니다.\\n 남은 기간 : " + remainDate +"일";				
+				return new ModelAndView("forward:/common/alertView.jsp", "message", msg);
+				
+			}			
+			
+
 		} else {
 			mv.setViewName("forward:/user/loginView.jsp");
 			System.out.println("로그인 실패");
