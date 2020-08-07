@@ -1,3 +1,4 @@
+
 package com.VIG.mvc.web.user;
 
 
@@ -120,12 +121,13 @@ public String simpleWithObject(User user) {
 
 
 
-@RequestMapping( value = "json/getUser{userCode}" , method=RequestMethod.POST)
-public User getUser(@PathVariable String userCode) throws Exception{
+@RequestMapping( value = "json/getUser/{userCode}" , method=RequestMethod.GET)
+public User getUser(@PathVariable("userCode") String userCode) throws Exception{
 	System.out.println("json get");
 	return userServices.getUserOne(userCode);
 }
 
+/*
 @RequestMapping( value = "json/getUser/{userName}" , method=RequestMethod.GET)
 public List<User> getUserListFromName(@PathVariable("userName") String name) throws Exception{
 	
@@ -134,7 +136,7 @@ public List<User> getUserListFromName(@PathVariable("userName") String name) thr
 	System.out.println("jsondata!! : "+name);
 	return userServices.getUserListFromName(search);
 }
-
+*/
 //===================
 
 }
