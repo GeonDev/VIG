@@ -71,7 +71,7 @@ public class UserController {
 	
 	//구글 로그인 수행	
 	@RequestMapping(value="googleLogin")
-	public String googleLogin( @RequestParam("code") String code, Model model, HttpSession session) throws Exception{
+	public ModelAndView googleLogin( @RequestParam("code") String code, Model model, HttpSession session) throws Exception{
 		String query = "code=" + code;
 		query += "&client_id=" + "82747934090-ljsrvma8goa9dskv7hchor1mt2atl1ao.apps.googleusercontent.com";
 		query += "&client_secret=" + "bTfZRbsjifaPhndVAiFtbFYP";
@@ -86,23 +86,47 @@ public class UserController {
 		
 		GoogleProfile profile = gson.fromJson(ret, GoogleProfile.class);
 		
-		//구글에 연결된 정보가 있다면 정보를 불러옴
-		if(userServices.getGoogleID(profile.getId()) != null ) {
-			session.setAttribute("user", userServices.getGoogleID(profile.getId()));
-			return "redirect:/index.jsp";
+		//로그인된 상테인지 체크		
+		String userCode = ((User)session.getAttribute("user")).getUserCode();
+		
+		if(!CommonUtil.null2str(userCode).equals("")) {		
+			
+			//이미 같은 정보로 로그인한 기록이 있을 경우
+			if(userServices.getGoogleID(profile.getId()) != null) {				
+				
+				return new ModelAndView("forward:/common/alertView.jsp", "message", "이미 연동된 계정이 있습니다.");
+			} 
+			
+			//로그인된 유저라면 구글 정보를 업데이트 
+			User temp = userServices.getUserOne(userCode);
+			temp.setGoogleId(profile.getId());
+			
+			userServices.updateUser(temp);
+			
+			//세션에 저장된 정보를 업데이트
+			session.setAttribute("user", temp);
+			
+			return new ModelAndView("forward:/main/main.jsp");
+			
+		}else {
+			
+			//구글에 연결된 정보가 있다면 정보를 불러옴
+			if(userServices.getGoogleID(profile.getId()) != null ) {
+				session.setAttribute("user", userServices.getGoogleID(profile.getId()));
+				return new ModelAndView("forward:/main/main.jsp");
+			}
+			
+			//구글 연동이 안되어 있으면 가입 화면으로 이동
+			User user = new User();
+			user.setUserCode("user"+userServices.getLastUserNum());
+			user.setEmail(profile.getEmail());
+			user.setGoogleId(profile.getId());				
+			
+			model.addAttribute("user", user);
 		}
 		
-		//구글 연동이 안되어 있으면 가입 화면으로 이동
-		User user = new User();
-		user.setUserCode("user"+userServices.getLastUserNum());
-		user.setEmail(profile.getEmail());
-		user.setGoogleId(profile.getId());		
+		return new ModelAndView("forward:/user/addUserView.jsp");		
 	
-		model.addAttribute("user", user);
-		
-	
-		
-		return "forward:/user/addUserView.jsp";
 	}
 	
 
