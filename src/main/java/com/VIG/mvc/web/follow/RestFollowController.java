@@ -64,7 +64,7 @@ public class RestFollowController {
 		follow.setFollowedUser(followedUser);
 		
 		
-		//followServices.addFollow(follow);
+		followServices.addFollow(follow);
 		
 	}
 	

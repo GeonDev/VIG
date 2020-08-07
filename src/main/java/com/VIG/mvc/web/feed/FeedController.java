@@ -26,6 +26,7 @@ import com.VIG.mvc.service.color.ColorServices;
 import com.VIG.mvc.service.comment.CommentServices;
 import com.VIG.mvc.service.domain.Category;
 import com.VIG.mvc.service.domain.Feed;
+import com.VIG.mvc.service.domain.Follow;
 import com.VIG.mvc.service.domain.History;
 import com.VIG.mvc.service.domain.Image;
 import com.VIG.mvc.service.domain.ImageColor;
@@ -234,12 +235,12 @@ public class FeedController {
 			joinUser.setIsLike(1);
 			boolean isLike = likeServices.getLikeState(joinUser);
 			
-			Map<String, Object> follow = new HashMap<String, Object>();
-			follow.put("userCode", user.getUserCode());
-			follow.put("followerCode", writer.getUserCode());
-			//int isFollow = followServices.getFollow(follow);
+			Follow follow = new Follow();
+			follow.setFollowingUser(user);
+			follow.setFollowedUser(writer);
+			int isFollow = followServices.getFollow(follow);
 			
-			//mav.addObject("isFollow", isFollow);
+			mav.addObject("isFollow", isFollow);
 			mav.addObject("isLike", isLike);
 			
 			System.out.println("회원조회");
