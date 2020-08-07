@@ -186,12 +186,18 @@ public class PaymentController {
 	}
 	
 	@RequestMapping(value="cancelPayment", method=RequestMethod.GET)
-	public ModelAndView cancelPayment(@RequestParam("paymentId") String paymentId) throws Exception {
+	public ModelAndView cancelPayment(@RequestParam("paymentId") String paymentId, HttpSession session) throws Exception {
 		
 		paymentServices.cancelPayment(paymentId);
 		
 		ModelAndView mav = new ModelAndView();
+		User user = (User)session.getAttribute("user");
+		if(user.getRole().contains("admin")) {
+		mav.setViewName("redirect:/payment/getAllPaymentList");	
+			
+		}else {
 		mav.setViewName("redirect:/payment/getPaymentList");
+		}
 		return mav;
 	}
 	
@@ -201,16 +207,16 @@ public class PaymentController {
 		
 		ModelAndView mav = new ModelAndView();
 		
-		if((User) session.getAttribute("user")==null || ((User) session.getAttribute("user") ).getRole() !="admin" ) {
+		User user = (User)session.getAttribute("user");
+		
+		if(user==null) {
 
 		System.out.println("잘못된접근");
 		String message = "관리자만 접근할 수 있습니다.";
 		mav.setViewName("forward:/common/alertView.jsp");
 		mav.addObject("message", message);
 		
-	}else
-		
-		if((((User) session.getAttribute("user") ).getRole()).contains("admin")) {
+		}else {
 		
 			Search search = new Search();
 			if (search.getCurrentPage() == 0) {

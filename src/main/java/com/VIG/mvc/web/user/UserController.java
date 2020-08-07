@@ -172,8 +172,7 @@ public class UserController {
 		} else if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())){	
 			session.setAttribute("user", dbUser);
 			System.out.println("로그인 성공");
-			mv.setViewName("forward:/index.jsp");
-			mv.addObject("msg", "suuccess");
+			mv.setViewName("redirect:/");
 			return mv;
 		} else {
 			mv.setViewName("forward:/user/loginView.jsp");

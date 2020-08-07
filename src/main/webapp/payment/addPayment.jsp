@@ -91,10 +91,10 @@ $(function (){
 	
 	
 	
-	$("button:contains('확인')").on("click", function(){
-		
+	$("#confirmbutton").on("click", function(){
+		alert("");
 
-		self.location="/VIG";
+		self.location="/VIG/payment/getPaymentList";
 		
 	
 	});
@@ -212,7 +212,7 @@ $(function (){
 		<!-- 하단 버튼 -->
 		<hr>
 		<div align="center">
-		<button type="button" class="btn btn-primary">확인</button>
+		<button type="button" id="confirmbutton" class="btn btn-primary">확인</button>
 		</div>
 	
 
