@@ -34,8 +34,8 @@
 		
 	
 	<insert id="addReport" parameterType="report">
-		INSERT INTO report(report_id, repoter_code, violator_code, report_Type, report_feed_id, report_message, report_date)
-		VALUES(report_id, #{repoter.userCode}, #{violator.userCode} ,#{reportType}, #{reportFeedId}, #{reportMessage:VARCHAR},NOW())	
+		INSERT INTO report(report_id, reporter_code, violator_code, report_Type, report_feed_id, report_message, report_date)
+		VALUES(report_id, #{reporter.userCode}, #{violator.userCode} ,#{reportType}, #{reportFeedId}, #{reportMessage:VARCHAR},NOW())	
 	</insert>
 	
 	<select id="getReportList" parameterType="search" resultMap="ReportSelectMap">
