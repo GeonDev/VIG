@@ -49,7 +49,7 @@ public class WithdrawController {
 		// TODO Auto-generated constructor stub
 	}
 	
-	@RequestMapping(value="getDonationList", method=RequestMethod.GET)
+	@RequestMapping(value="getDonationList")
 	public ModelAndView getDonationList(HttpSession session) throws Exception {
 		
 		logger.debug("getDonationList");
@@ -115,7 +115,7 @@ public class WithdrawController {
 				}
 		
 		
-		mav.setViewName("forward:/withdraw/getWithdrawList");
+		mav.setViewName("forward:/withdraw/getDonationList");
 		}
 		
 		return mav;
