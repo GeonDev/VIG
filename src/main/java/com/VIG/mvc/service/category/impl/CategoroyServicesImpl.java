@@ -34,4 +34,15 @@ public class CategoroyServicesImpl implements CategoryServices{
 		return categoryDao.getAllCategoryList();
 	}
 
+	@Override
+	public List<Category> getSearchCategoryList() throws Exception {
+		
+		List<Category> categoryList =  categoryDao.getAllCategoryList();
+		
+		//첫 카테고리 = 추천
+		categoryList.remove(0);
+		
+		return categoryList;
+	}
+
 }

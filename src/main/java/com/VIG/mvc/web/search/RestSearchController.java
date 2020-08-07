@@ -254,7 +254,7 @@ public class RestSearchController {
 		Search search = new Search();		
 		
 		search.setCurrentPage(Integer.valueOf(jsonData.get("currentPage")));
-		search.setPageSize(pageSize);
+		search.setPageSize(pageSize);		
 		
 		//로그인한 유저 정보를 받아옴
 		User user = (User)session.getAttribute("user");
@@ -264,6 +264,11 @@ public class RestSearchController {
 		
 		//피드 검색
 		if(jsonData.get("mode").equals("Feed")) {
+			
+			logger.debug("전달된 카테고리 : "+ jsonData.get("category"));
+			
+			//선택된 카테고리 정보를 세팅
+			search.setSearchType(Integer.valueOf(jsonData.get("category")));
 			
 			//리턴시킬 피드 리스트를 초기화
 			List<Feed> feedlist = new ArrayList<Feed>();
