@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.VIG.mvc.service.category.CategoryServices;
 import com.VIG.mvc.service.color.ColorServices;
+import com.VIG.mvc.service.domain.Category;
 import com.VIG.mvc.service.domain.Image;
 import com.VIG.mvc.service.domain.ImageKeyword;
 import com.VIG.mvc.service.domain.Search;
@@ -55,6 +57,12 @@ public class SearchController {
 	@Qualifier("feedServicesImpl")
 	private FeedServices feedServices;
 		
+	
+	@Autowired 
+	@Qualifier("categoroyServicesImpl")
+	private CategoryServices categoryServices;
+	
+	
 	@Autowired 
 	@Qualifier("historyServicesImpl")
 	private HistoryServices historyServices;
@@ -76,17 +84,29 @@ public class SearchController {
 	
 	
 	@RequestMapping(value = "getSearchList")
-	public ModelAndView getSearchList(@RequestParam(value =  "Mode", defaultValue = "Feed") String mode, @RequestParam(value =  "keyword", defaultValue = "") String keyword, Model model, HttpSession session) throws Exception{
+	public ModelAndView getSearchList(@RequestParam(value =  "Mode", defaultValue = "Feed") String mode, @RequestParam(value =  "keyword", defaultValue = "") String keyword, @RequestParam(value =  "category", defaultValue = "0") int categoryId, Model model, HttpSession session) throws Exception{
 			
 		//로그인한 유저 정보를 받아옴
 		User user = (User)session.getAttribute("user");	
 		
+		List<Category> categorylist = categoryServices.getSearchCategoryList();
+		
+		Category delfault = new Category();
+		delfault.setCategoryId(0);
+		delfault.setCategoryName("All");
+		categorylist.add(0, delfault);
+		
 		model.addAttribute("mode", mode);	
 		model.addAttribute("user", user);
 		model.addAttribute("keyword", keyword);
+		model.addAttribute("categoryId", categoryId);
+		model.addAttribute("categorylist", categorylist);
+		
 		
 		return new ModelAndView("forward:/search/getSearchResult.jsp");
 	}	
+	
+	
 
 	//이미지 자세히 보기 최소 세팅 시에만 처리 -> 이후부터는 REST로 페이지 갱신
 	@RequestMapping(value = "getSearchImages")

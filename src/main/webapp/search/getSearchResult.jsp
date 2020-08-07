@@ -237,7 +237,7 @@
 						"Accept" : "application/json",
 						"Content-Type" : "application/json"
 					},
-					data :  JSON.stringify({keyword : $("#Keyword").val(), mode : Mode, currentPage : page}),
+					data :  JSON.stringify({keyword : $("#Keyword").val(), mode : Mode, currentPage : page, category: $("#categorySelecter").val()}),
 					success : function(JSONData , status) {
 						
 						//검색 결과가 있는지 체크
@@ -335,14 +335,18 @@
 		}      	    			
 	}
 	
-	$(function(){			
+	$(function(){				
 			
 			
 			//최초 전달 받은 모드 세팅
 			$(".mode:contains('${mode}')").attr("class","btn btn-indigo mode");	
 			
 			//색상 선택기 로드
-			 $('#picker').farbtastic('#color');
+			 $("#picker").farbtastic('#color');
+			
+			//전달 받은 카테고리 세팅
+			 $("#categorySelecter").val('${categoryId}')
+			
 			
 			//최초 페이지 요청
 			 getItemList();
@@ -437,18 +441,41 @@
 		
 	
 		
-		<div class="row justify-content-end mt-0  ">			
-			<div class="col-sm-10 d-flex justify-content-start">		
-				<button id="colorSelecter" class="btn btn-outline-light dropdown-toggle btn-sm form-inline mb-0" type="button" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;">
-					<i id="showColor" class="fas fa-circle" style="color: #0000FF; font-size: large; margin-left: -2px;"></i>
-					<p style="padding: 0px; margin-bottom: 0px; margin-top : 2px; margin-left : 4px; text-align: top; float: right; color: black;">Color</p>				 	
-				</button>
-				
-				<div class="dropdown-menu">
-					<div id="picker" ></div>	
-				</div>		
-			</div>				
+		<div class="row justify-content-start mt-0">
+		
+		<div class="col-sm-3">
+			<div class ="row">
 			
+				<div  class="col-sm-4"></div>
+				<div class="col-sm-4 mb-0" style="padding-right: 0px;  text-align: right;">				
+
+					<select id="categorySelecter" class="custom-select">
+						<c:forEach var ="category" items="${categorylist}">
+						
+							 <option value="${category.categoryId}">${category.categoryName}&nbsp;</option>
+						
+						</c:forEach>					
+
+					</select>		
+				</div>			
+			
+			
+				<div class="col-sm-4" style="padding-left: 0px; text-align: left;">		
+					<button id="colorSelecter" class="btn btn-outline-light dropdown-toggle btn-sm form-inline mb-0 mt-0" type="button" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;">
+						<i id="showColor" class="fas fa-circle" style="color: #0000FF; font-size: large; margin-left: -2px;"></i>
+						<p style="padding: 0px; margin-bottom: 0px; margin-top : 2px; margin-left : 4px; text-align: top; float: right; color: black;">Color</p>				 	
+					</button>
+					
+					<div class="dropdown-menu">
+						<div id="picker" ></div>	
+					</div>					
+				</div>		
+				
+
+			</div>	
+		</div>					
+
+
 			<!-- 실제 색상을 선택하고 반영하는 부분 -->
 			<div class="col-sm-1">					
 				<form action="" >
@@ -456,7 +483,11 @@
 				  		<input class="form-control form-control-sm" type="hidden" id="color" name="color" value="#0000FF"/>
 				  	</div>						
 				</form>				
-			</div>	
+			</div>
+			
+			
+			
+			
 		</div>		
 			
 		<hr/>
