@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="com.VIG.mvc.service.domain.*"%>
@@ -25,14 +26,51 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+
 				
 	<script type="text/javascript">
 
 	function funcGetList(currentPage) {
 		$("#currentPage").val(currentPage);
-		$("form").attr("action", "./getUserList");
+		$("form").attr("action", "getUserList");
 		$("form").submit();
 	}
+	
+	
+
+	
+	$(function() {
+		$(  "td:nth-child(5) > i" ).on("click" , function() {
+				var userCode = $(this).next().val();
+			
+				$.ajax( 
+						{
+							url : "json/getUser/"+userCode ,
+							method : "GET" ,
+							dataType : "json" ,
+							headers : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							},
+							success : function(JSONData , status) {
+								var displayValue = "<h6 id='info'>"
+															+"유저코드 : "+JSONData.userCode+"<br/>"
+															+"유저네임 : "+JSONData.userName+"<br/>"
+															+"성별 : "+JSONData.sex+"<br/>"
+															+"생년월일 : "+JSONData.birth+"<br/>"
+															+"이메일 : "+JSONData.email+"<br/>"
+															+"ROLE   : "+ JSONData.role+"<br/>"
+															+"</h6>";
+								$("h6").remove();
+								$( "#"+userCode+"" ).append(displayValue);
+							}
+						});
+				$( ".ct_list_pop td:nth-child(3)" ).css("color" , "red");
+				$("h7").css("color" , "red");
+				
+				$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");
+					});			
+				});	
 	
 	
 	</script>
@@ -86,7 +124,7 @@
      
       <!--  table Start /////////////////////////////////////-->
     
-      <table class="table" >
+      <table class="table table-hover table-striped" >
 
         <thead class="grey lighten-2">
           <tr>
@@ -94,8 +132,7 @@
             <th scope="col" >유저코드</th>
             <th scope="col">유저네임</th>
             <th scope="col">role</th>
-            <th scope="col">이메일</th>
-            <th scope="col">가입일자</th>
+            <th scope="col">간략정보</th>
           </tr>
         </thead> 
 		<tbody>
@@ -105,11 +142,14 @@
 			<c:set var="i" value="${ i+1 }" />
 			<tr>
 			  <td scope="col">${ i }</td>
-			  <td scope="col">${user.userCode}</td>
+			  <td scope="col" title="Click : 회원정보 확인">${user.userCode}</td>
 			  <td scope="col">${user.userName}</td>
 			   <td scope="col">${user.role}</td>
-			  <td scope="col">${user.email}</td>
-			  <td scope="col">${user.regDate}</td>
+			  <td scope="col">
+			  	<i class="fas fa-check"></i>
+			  	<input type="hidden" value="${user.userCode}">
+			  	<span id="${user.userCode}" > </span>
+			  </td>
 			  	
 			</tr>
           </c:forEach>
