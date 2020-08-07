@@ -1,5 +1,6 @@
 package com.VIG.mvc.web.search;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -7,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -347,10 +349,13 @@ public class RestSearchController {
 		//이미지 검색
 		if(jsonData.get("mode").equals("Image")) {
 			
+			//한 피드의 이미지만 나오지 않도록 최대 개수인 10개를 넘게 세팅
+			search.setPageSize(pageSize+5);
+			
 			//결과를 리턴할 이미지 객체
 			List<Image> imageList = new ArrayList<Image>();
 			
-			//검색어를 영어로 변역
+			
 			if(CommonUtil.null2str(jsonData.get("keyword")).equals("")) {
 				search.setKeyword("");
 				imageList = imageServices.getImageListFromKeyword(search);
@@ -371,6 +376,7 @@ public class RestSearchController {
 					}
 					
 				}else {
+					//검색어를 영어로 변역
 					search.setKeyword(Translater.autoDetectTranslate(jsonData.get("keyword"),"en"));
 					imageList = imageServices.getImageListFromKeyword(search);
 				}			
@@ -473,6 +479,29 @@ public class RestSearchController {
 			f.setPrimeFeedViewCount(f.getPrimeFeedViewCount()+1);
 			feedServices.updatePrimeFeedViewCount(f);
 		}		
+	}
+	
+	private List<String> getKeywordFromCookies(String addkey,  Cookie[] cookies) {
+		
+		List<String> keywordList = new ArrayList<String>();
+		
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if ((cookie.getName()).equals("keyword")  ) {
+
+				}
+			}
+		}else {
+			Cookie cookie = new Cookie("keyword", addkey);
+			cookie.setPath("/");
+			
+		}
+
+	
+		
+		
+		
+		return keywordList;
 	}
 	
 
