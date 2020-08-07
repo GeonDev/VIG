@@ -301,13 +301,10 @@
 			data :  JSON.stringify({keyword : $("#Keyword").val(), mode : Mode }),						
 			success : function(JSONData, status) {
 				//검색 결과가 있으면 처리			
-				if(JSONData.length != 0){
-					var arraylist = JSONData;
-						console.log( JSONData );
-					
-					 	$("#Keyword").autocomplete({			 		
-					        source: JSONData
-					    });		
+				if(JSONData.length != 0){								
+				 	$("#Keyword").autocomplete({			 		
+				        source: JSONData
+				    });		
 				}
 			}							
 		});
