@@ -129,7 +129,7 @@
 		//로그인 페이지로 이동 이벤트
 		 $( function() {
 				$("#login_nav").on("click" , function() {
-					location.href="login";
+					location.href="/VIG/user/loginView.jsp";
 				});
 			});		
 		//달력 setting
