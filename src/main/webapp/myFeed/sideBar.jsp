@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -86,7 +87,7 @@
  				<br/>
  			<a type="button" class="btn btn-block"href="/VIG/report/getReportlist.jsp">신고 조회</a>
  				<br/>
- 			<a type="button" class="btn btn-block" href="/VIG/payment/getAllPaymentList.jsp">결제 조회</a>
+ 			<a type="button" class="btn btn-block" href="/VIG/payment/getAllPaymentList">결제 조회</a>
  				<br/>
  		</c:if>	
 	</div>
