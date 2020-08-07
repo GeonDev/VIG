@@ -15,7 +15,7 @@ CREATE TABLE users (
 	sex  				 VARCHAR(10),
 	birth  				 INT(4),
 	state  				 TINYINT(1),
-	google_id  			 VARCHAR(50),
+	google_id  			 VARCHAR(100),
 	account  			 VARCHAR(50),
 	prime_count  		 INT(11),
 	email 				 VARCHAR(50),
