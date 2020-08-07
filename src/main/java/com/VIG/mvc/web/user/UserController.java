@@ -1,3 +1,4 @@
+
 package com.VIG.mvc.web.user;
 
 
@@ -162,7 +163,7 @@ public class UserController {
 			User dbUser = userServices.getUserOne(user.getUserCode());
 			ModelAndView mv = new ModelAndView();
 			System.out.println("로그인:"+user.getUserCode());
-			
+			System.out.println(dbUser);
 		if(dbUser == null) {
 			mv.setViewName("forward:/user/loginView.jsp");
 			mv.addObject("msg", "fail");
@@ -171,7 +172,7 @@ public class UserController {
 		} else if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())){	
 			session.setAttribute("user", dbUser);
 			System.out.println("로그인 성공");
-			mv.setViewName("forward:/main/VIG");
+			mv.setViewName("forward:/index.jsp");
 			mv.addObject("msg", "suuccess");
 			return mv;
 		} else {
