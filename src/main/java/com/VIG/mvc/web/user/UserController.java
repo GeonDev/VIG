@@ -146,18 +146,19 @@ public class UserController {
 		return "forward:/user/checkDuplication.jsp";
 	}
 
-//=======로그인===============================================================//
+//=======로그인=====
 		
 	@RequestMapping( value="login", method=RequestMethod.GET)
 	public ModelAndView login() throws Exception{		
 		System.out.println("login(GET):로그인 페이지로 이동");	
+
 		ModelAndView model = new ModelAndView();
-		model.setViewName("forward:/user/loginView.jsp");		
+		model.setViewName("login");		
 		return model;
 	}
 
 	@RequestMapping( value="login", method=RequestMethod.POST )
-	public ModelAndView login(@ModelAttribute("user") User user, HttpSession session) throws Exception{
+	public ModelAndView login(@ModelAttribute("user") User user, HttpSession session ) throws Exception{
 		
 		
 			User dbUser = userServices.getUserOne(user.getUserCode());
@@ -172,8 +173,7 @@ public class UserController {
 		} else if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())){	
 			session.setAttribute("user", dbUser);
 			System.out.println("로그인 성공");
-			mv.setViewName("forward:/index.jsp");
-			mv.addObject("msg", "suuccess");
+			mv.setViewName("redirect:/");
 			return mv;
 		} else {
 			mv.setViewName("forward:/user/loginView.jsp");
@@ -190,6 +190,7 @@ public class UserController {
 	public ModelAndView logout(HttpSession session) throws Exception{
 			
 			System.out.println("logout");
+			session.removeAttribute("login");
 			session.invalidate();
 			
 		ModelAndView model = new ModelAndView();

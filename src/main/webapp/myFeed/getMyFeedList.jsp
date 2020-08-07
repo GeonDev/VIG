@@ -169,6 +169,8 @@
 	 text-overflow:ellipsis; 
 	 white-space:nowrap; 
 	 }
+	 .col-md-2.sideBarPlace{ padding:0;}
+	
 	
 	</style>
 
@@ -184,16 +186,16 @@
      		</div>
 		</div>
 		
-		<div class="col-md-12">
-			<div class="row">
+		<div class="col-md-12" >
+			<div class="row" >
 				<!-- 사이드바 자리 -->		
-				<div class="col-md-2">		
-			    	<jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
-			    </div>  
+				<div class="col-md-2 sideBarPlace">
+			 <jsp:include page="/myFeed/sideBar.jsp" />
+			    </div>
 			    
-			    
-				<!--  본문 자리 -->	      	    
-			    <div class="col-md-10" >					
+				<!--  본문 자리 -->	  
+	    
+			    <div class="col-md-10" id="mainMyFeedPaga" >					
 
 					<h1>
 						<strong>${writer.userName}</strong> 님의 마이피드
@@ -222,7 +224,6 @@
 			</div>
 		</div>
 	</div>
-
 
 </body>
 </html>
