@@ -81,7 +81,19 @@
 		 	 	};
 			});	
 		});	
-	});
+		
+		//구글 로그인
+		$( function() {
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			$("#googlelogin").on("click" , function() {
+				location.href="https://accounts.google.com/o/oauth2/auth?client_id="+
+				"82747934090-ljsrvma8goa9dskv7hchor1mt2atl1ao.apps.googleusercontent.com"+
+				"&redirect_uri="+
+				"http://localhost:8080/VIG/user/googleLogin" +
+				"&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email&approval_prompt=force&access_type=offline";				
+			});
+		});
+	
 	
 		</script>
 	
@@ -179,18 +191,22 @@
 			    <textarea cols="40" rows="5" id="selfIntroduce" name="selfIntroduce" placeholder="${user.selfIntroduce }"></textarea>
 			</div>
 		
-			<div class="form-group">
-			    <label for="account" class="col-sm-offset-5 col-md-5 control-label">계좌번호</label>
-			    <input type="text" class="form-control" id="account" name="account" value="${user.account }" >
-			</div>
-	</form>
-	<!-- 비지니스 계정으로 전환 버튼 넣기
-		<c:if test="${sessionScope.user.role=='user'}">  
+	<!--  비지니스 계정으로 전환 버튼 넣기 -->
+		<c:if test="${user.role=='user'}">  
 			<div class="form-group">
 			    <button type="button" class="button btn btn-primary" id="business_btn">비지니스전환</button>
 			</div>
 		</c:if>
-	-->
+		
+	<!-- 구글 로그인  -->
+		<c:if test="${empty user.googleId}">  
+		<label for="googlelogin" class="col-sm-offset-5 col-md-5 control-label">구글 로그인 연동</label>
+    	<button  class="btn btn-primary btn-block my-4" id="googlelogin" >
+    		<i class="fab fa-google" style="font-size: large; margin-left: 0px; text-align: top;"></i>&emsp; Google
+    	</button>
+		</c:if>
+		
+	</form>
 	
 	<!-- 수정 및 탈퇴 버튼 -->
 			<div class="form-group">
