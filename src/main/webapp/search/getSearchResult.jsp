@@ -360,7 +360,21 @@
 				$("#Keyword").val("");
 				
 				$(".mode").attr("class","btn btn-cyan mode");
-				$(this).attr("class","btn btn-indigo mode");	
+				$(this).attr("class","btn btn-indigo mode");
+				
+				if(Mode == 'Feed'){					
+					$("#categorySelecter").prop("disabled", false);
+					$("#colorSelecter").prop("disabled", false);
+				}else if(Mode == 'Image'){
+					$("#categorySelecter").prop("disabled", true);
+					$("#categorySelecter").val(0);
+					$("#colorSelecter").prop("disabled", false);
+				}else{
+					$("#categorySelecter").prop("disabled", true);
+					$("#categorySelecter").val(0);
+					$("#colorSelecter").prop("disabled", true);
+				}		
+				
 	
 				//모드를 변경했음으로 페이지 다시 로드
 				getItemList();
