@@ -32,8 +32,8 @@ public class EventController {
 	
 	public static final Logger logger = LogManager.getLogger(EventController.class); 
 	
-	@Value("#{commonProperties['uploadPath']}")
-	String uploadPath;
+	@Value("#{commonProperties['otherPath']}")
+	String otherPath;
 	
 	@Autowired
 	@Qualifier("eventServicesImpl")
@@ -80,7 +80,7 @@ public class EventController {
 	        	System.out.println("index: "+ i++);
 	        	String inDate   = new java.text.SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date());
 	    
-	    		File f =new File(uploadPath+inDate+multipartFile.getOriginalFilename());
+	    		File f =new File(otherPath+inDate+multipartFile.getOriginalFilename());
 	    		//원하는 위치에 파일 저장
 	    		multipartFile.transferTo(f);
 	    		if(i == 1) {
@@ -113,9 +113,7 @@ public class EventController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		
-		String message = "getEventList다";
 		modelAndView.setViewName("forward:/event/getEventList");
-		modelAndView.addObject("message", message);
 		
 		return modelAndView;
 		
@@ -208,7 +206,6 @@ public class EventController {
 		System.out.println("updateEvent : POST");
 		
 		System.out.println(event);
-	
 		
 		if(files !=null) {
 			int i = 0;
@@ -217,7 +214,7 @@ public class EventController {
 	        	System.out.println("index: "+ i++);
 	        	String inDate   = new java.text.SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date());
 	    
-	    		File f =new File("C://uploadFiles//"+inDate+multipartFile.getOriginalFilename());
+	    		File f =new File(otherPath+inDate+multipartFile.getOriginalFilename());
 	    		//원하는 위치에 파일 저장
 	    		multipartFile.transferTo(f);
 	    		if(i == 1) {
@@ -243,15 +240,14 @@ public class EventController {
 			} 			
 		}	
 		
+		
 		System.out.println(event);
 		
 		eventServices.updateEvent(event);
 		
 		ModelAndView modelAndView = new ModelAndView();
 		
-		String message = "getEventList다";
-		modelAndView.setViewName("forward:/event/getEventList.jsp");
-		modelAndView.addObject("message", message);
+		modelAndView.setViewName("forward:/event/getEventList");
 		
 		return modelAndView;
 		

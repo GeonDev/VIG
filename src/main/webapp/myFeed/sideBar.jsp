@@ -68,7 +68,7 @@
  			<a type="button" class="btn btn-block" href="/VIG/user/updateUser">내 정보 수정</a>
  				<br/>
  				
- 			<a type="button" class="btn btn-block" href="#">결 제</a>
+ 			<a type="button" class="btn btn-block" href="/VIG/withdraw/getDonationList">받은 후원 목록</a>
  				<br/>	
  					
  			<a type="button" class="btn btn-block" href="/VIG/payment/getPaymentList"> 내 결제 목록</a>

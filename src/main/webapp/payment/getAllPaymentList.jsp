@@ -82,12 +82,16 @@
  function fncdeletepay(paymentId){
 	 
 
-	 alert("취소합니다.");
-	 alert(paymentId);
+	 var result = confirm("취소할까요?");
+	 if(result){
+		 
+		 self.location="/VIG/payment/cancelPayment?paymentId="+paymentId;
+		 
+	 }
 	 
 	 //아임포트 ajax 환불하는 곳
 	 
-	 self.location="/VIG/payment/cancelPayment?paymentId="+paymentId;
+	 
 	 
  }
  
