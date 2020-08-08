@@ -39,30 +39,24 @@
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 	
-	body { font-family: "Nanum Gothic", sans-serif;}
-        #myFeedMain { padding: 70px;}      
-      .col-md-12_top {	width: 100%; height: 100%; position: relative; margin:50px; }	  
-        
-      .txt_lineSize {
-	 width:280px; 
-	 padding:0 5px; 
-	 overflow:hidden; 
-	 text-overflow:ellipsis; 
-	 white-space:nowrap; 
-	 }	
-            
-		
-	.img_feed {	  
-	    max-width: 300px;
-	    max-height: 225px;	
-		}
-				
-	.view {	  
-	margin: 5px 10px;
-		}
-		
+	body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}
+    h1 { margin-left: 120px;}  	       
+    
+    .txt_lineSize { width:280px; padding:0 5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }	           		
+	.img_feed { max-width: 300px; max-height: 225px;}				
+	.view {	 margin: 5px 10px;}	
+	.nav.nav-pills.mb-3 { margin: 55px 0px 10px 0px;}
+	.nav-item { margin: 0px 30px;}
+	.row.justify-content-start { padding-left:10%}
+	.tab-pane.fade { margin : 20px;}
 	
-
+	#pills-tabContent { margin-top: 50px; }
+	#pills-show { margin-top: 20px;}
+	
+	/*사이드바,본문 배치css*/
+	 .col-md-2.sideBarPlace { padding:0;  display: inline-block;float:left;}
+	 #mainMyFeedPage { margin-left: 0px;  display: inline-block; float:right;}
+	
     </style>
     
 	<script type="text/javascript">
@@ -89,7 +83,6 @@
 	
 	$(function(){	
 		
-
 	
 	});
 	
@@ -99,48 +92,47 @@
 
 <body>
 
-<!-- 상단 툴바 자리 --> 						
-      <div class="container-fluid">  
-      	 <div class="row">
-      		<div class="col-md-12">
-      			<jsp:include page="/main/toolbar.jsp" />
-     		</div>
-		</div>
+<!-- 툴바 -->
+		      <div class="container-fluid">  
+		      	 <div class="row">
+		      		<div class="col-md-12">
+		      			<jsp:include page="/main/toolbar.jsp"></jsp:include>
+		     		</div>
+				</div>
 		
-		<div class="col-md-12">
-			<div class="row">
-	<!-- 사이드바 자리 -->		
-			<div class="col-md-2">		
-		    <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
-		    </div>  
+		
+			<!-- 사이드바  -->		
+				<div class="col-md-2 sideBarPlace">		
+			!=레이아웃 완료후 지우기 /사이드바 자리  get my feed list=!
+				 <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
 		    
 		    
-	<!--  본문 자리 -->	      	    
-		    <div class="col-md-10" id="myFeedMain">
-		    <div class="col-md-12_top">
-				<h2>내 활동정보 보기</h2>			
-			<hr/>		
-				
-			
-			<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-			  <li class="nav-item">
-			    <a class="nav-link active" id="pills-show-tab" data-toggle="pill" href="#pills-show" role="tab"
-			      aria-controls="pills-home" aria-selected="true">최근열람피드</a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" id="pills-comment-tab" data-toggle="pill" href="#pills-comment" role="tab"
-			      aria-controls="pills-profile" aria-selected="false">댓글 보기</a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" id="pills-like-tab" data-toggle="pill" href="#pills-like" role="tab"
-			      aria-controls="pills-contact" aria-selected="false">좋아요 한 피드</a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" id="pills-hide-tab" data-toggle="pill" href="#pills-hide" role="tab"
-			      aria-controls="pills-contact" aria-selected="false">숨긴 피드</a>
-			  </li>
-			</ul>			
-			
+			<!-- 타이틀 -->
+			    <div class="col-md-10" id="mainMyFeedPage" >					
+					<h1>내 활동정보 보기</h1>			
+				<hr/>		
+					
+			<!-- 본문 -->
+			<div class="row justify-content-center">
+				<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+				  <li class="nav-item">
+				    <a class="nav-link active" id="pills-show-tab" data-toggle="pill" href="#pills-show" role="tab"
+				      aria-controls="pills-home" aria-selected="true">최근열람피드</a>
+				  </li>
+				  <li class="nav-item">
+				    <a class="nav-link" id="pills-comment-tab" data-toggle="pill" href="#pills-comment" role="tab"
+				      aria-controls="pills-profile" aria-selected="false">댓글 보기</a>
+				  </li>
+				  <li class="nav-item">
+				    <a class="nav-link" id="pills-like-tab" data-toggle="pill" href="#pills-like" role="tab"
+				      aria-controls="pills-contact" aria-selected="false">좋아요 한 피드</a>
+				  </li>
+				  <li class="nav-item">
+				    <a class="nav-link" id="pills-hide-tab" data-toggle="pill" href="#pills-hide" role="tab"
+				      aria-controls="pills-contact" aria-selected="false">숨긴 피드</a>
+				  </li>
+				</ul>			
+			</div>
 			
 			<div class="tab-content pt-2 pl-1" id="pills-tabContent">
 			  <div class="tab-pane fade show active" id="pills-show" role="tabpanel" aria-labelledby="pills-show-tab">
@@ -234,19 +226,13 @@
 							</div>
 						</c:forEach>			  
 				  </div>	
-	
 			  </div>
 			</div>
 			
-			
-			
-			
 			<div class="row justify-content-md-center">
 				<jsp:include page="../common/pageNavigator.jsp"/>
-			</div>
-			
-			
-	</div>
+			</div>		
+		</div>
 	
 </body>
 </html>
