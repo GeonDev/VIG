@@ -1,3 +1,6 @@
+<%@page import="com.VIG.mvc.service.domain.*"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -26,6 +29,9 @@
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 	
+	 <!-- jQuery UI toolTip 사용 CSS-->
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script type="text/javascript">
 		
 	
@@ -149,27 +155,18 @@
 	
 	<style>
 	
-	body {
-	padding-top : 70px;
-	}
+	body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}	
+	h1 { margin-left: 100px;}
 	
-	.img_feed {	
-    width: auto; height: 290px; 	
-	overflow:hidden;	
-	}
+	.img_feed {	width: auto; height: 290px; overflow:hidden;}	
+	.view {	 margin: 5px 10px;}	
+	.txt_line { width:380px;  padding:0 5px; overflow:hidden; text-overflow:ellipsis;  white-space:nowrap; }	
+	.row.justify-content-center { margin: 50px 0px 10px 0px;}
 	
-	.view {	  
-	margin: 5px 10px;
-	}
+	/*사이드바,본문 배치css*/
+	 .col-md-2.sideBarPlace { padding:0;  display: inline-block;float:left;}
+	 #mainMyFeedPage { margin-left: 0px;  display: inline-block; float:right;}
 	
-	.txt_line {
-	 width:380px; 
-	 padding:0 5px; 
-	 overflow:hidden; 
-	 text-overflow:ellipsis; 
-	 white-space:nowrap; 
-	 }
-	 .col-md-2.sideBarPlace{ padding:0;}
 	
 	
 	</style>
@@ -178,52 +175,44 @@
 
 
 <body>
-
-      <div class="container-fluid">  
-      	 <div class="row">
-      		<div class="col-md-12">
-      			<jsp:include page="/main/toolbar.jsp" />
-     		</div>
-		</div>
+			<!-- 툴바 -->
+		      <div class="container-fluid">  
+		      	 <div class="row">
+		      		<div class="col-md-12">
+		      			<jsp:include page="/main/toolbar.jsp"></jsp:include>
+		     		</div>
+				</div>
 		
-		<div class="col-md-12" >
-			<div class="row" >
-				<!-- 사이드바 자리 -->		
-				<div class="col-md-2 sideBarPlace">
-			 <jsp:include page="/myFeed/sideBar.jsp" />
-			    </div>
-			    
-				<!--  본문 자리 -->	  
-	    
-			    <div class="col-md-10" id="mainMyFeedPaga" >					
-
+		
+			<!-- 사이드바  -->		
+				<div class="col-md-2 sideBarPlace">		
+			!=레이아웃 완료후 지우기 /사이드바 자리  get my feed list=!
+				 <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
+				 
+  			<!-- 타이틀 -->
+			    <div class="col-md-10" id="mainMyFeedPage" >					
 					<h1>
 						<strong>${writer.userName}</strong> 님의 마이피드
-					</h1>
-					
+					</h1>	
 					<hr/>
-		 				<div class="row justify-content-center">
-					 		<div id="btn_group">
-					 			<div class="text-center">
-					 			 <button class="btn btn-default ml-5 mr-5" data-toggle="modal" data-target="#theModal">
-									   팔로워</button>
-								<button class="btn btn-default ml-5 mr-5" data-toggle="modal" data-target="#theModal2">
-									   팔로잉</button>
-								<a type="button" class="btn btn-default ml-5 mr-5" href="#">
-									   채 팅</a>
-								</div>	 			
-						 	</div>
-			    		</div>
-			    		
+					
+			<!-- 본문 -->
+		 		<div class="row justify-content-center">
+					 <div class="text-center">
+					 	<button class="btn btn-default ml-5 mr-5" data-toggle="modal" data-target="#theModal">팔로워</button>
+						<button class="btn btn-default ml-5 mr-5" data-toggle="modal" data-target="#theModal2">팔로잉</button>
+						<a type="button" class="btn btn-default ml-5 mr-5" href="#">채 팅</a>
+					</div>	 			
+				</div>   		
 			    	<br/>			    		
-			    		<!-- 피드리스트를 그려줄 부분 -->		
-					<div id="showFeedList" class="row justify-content-center" style="margin-left: 10px; margin-right: 10px;">	</div>
+			    		
+			<!-- 피드리스트를 그려줄 부분 -->		
+				<div id="showFeedList" class="row justify-content-center" style="margin-left: 10px; margin-right: 10px;"></div>
 			    				    
-				</div>
-							
+				</div>					
 			</div>
 		</div>
-	</div>
+	
 
 </body>
 </html>
