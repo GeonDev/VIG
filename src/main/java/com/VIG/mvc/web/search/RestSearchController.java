@@ -1,15 +1,16 @@
 package com.VIG.mvc.web.search;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
@@ -17,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +27,6 @@ import com.VIG.mvc.service.color.ColorServices;
 import com.VIG.mvc.service.domain.Feed;
 import com.VIG.mvc.service.domain.History;
 import com.VIG.mvc.service.domain.Image;
-import com.VIG.mvc.service.domain.ImageColor;
 import com.VIG.mvc.service.domain.ImageKeyword;
 import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.domain.User;
@@ -36,7 +37,6 @@ import com.VIG.mvc.service.keyword.KeywordServices;
 import com.VIG.mvc.service.user.UserServices;
 import com.VIG.mvc.util.CommonUtil;
 import com.VIG.mvc.util.Translater;
-import com.VIG.mvc.web.main.mainController;
 
 
 
@@ -249,7 +249,7 @@ public class RestSearchController {
 	
 	//피드 검색 결과를 반환
 	@RequestMapping(value = "json/getSearchResultList")
-	public Map<String, Object> getSearchResult(@RequestBody Map<String, String> jsonData, HttpSession session, HttpServletRequest request) throws Exception {	
+	public Map<String, Object> getSearchResult(@RequestBody Map<String, String> jsonData, HttpSession session, HttpServletRequest request, HttpServletResponse response ) throws Exception {	
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
@@ -302,11 +302,15 @@ public class RestSearchController {
 					if(search !=null) {
 						//색상 기반으로 검색
 						feedlist = feedServices.getFeedListFromColor(search);
-					}
-					
-				//검색어를 영어로 변역
+					}				
+				
 				}else {
-					search.setKeyword(Translater.autoDetectTranslate(jsonData.get("keyword"),"en"));
+					//검색어를 영어로 변역
+					String keyword = Translater.autoDetectTranslate(jsonData.get("keyword"),"en");
+					search.setKeyword(keyword);
+					
+					//검색어를 쿠키에 추가
+					addSearchKeyCookie(keyword, request, response);					
 					feedlist = feedServices.getFeedListFromKeyword(search);
 					primeFeed = feedServices.getPrimeFeed(search);
 				}				
@@ -377,7 +381,11 @@ public class RestSearchController {
 					
 				}else {
 					//검색어를 영어로 변역
-					search.setKeyword(Translater.autoDetectTranslate(jsonData.get("keyword"),"en"));
+					String keyword = Translater.autoDetectTranslate(jsonData.get("keyword"),"en");
+					search.setKeyword(keyword);
+					
+					//검색어를 쿠키에 추가
+					addSearchKeyCookie(keyword, request, response);
 					imageList = imageServices.getImageListFromKeyword(search);
 				}			
 			}			
@@ -481,29 +489,30 @@ public class RestSearchController {
 		}		
 	}
 	
-	private List<String> getKeywordFromCookies(String addkey,  Cookie[] cookies) {
-		
-		List<String> keywordList = new ArrayList<String>();
-		
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				if ((cookie.getName()).equals("keyword")  ) {
-
-				}
-			}
-		}else {
-			Cookie cookie = new Cookie("keyword", addkey);
-			cookie.setPath("/");
-			
-		}
-
 	
+	// 쿠키가 있다면 검색어를 쿠키에 추가
+	private void addSearchKeyCookie(String keyword, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		
+		Cookie[] cookies = request.getCookies();		
 		
+		if(cookies != null) {
+			for(Cookie cookie :cookies) {
+				if((cookie.getName()).equals("searchKeys")) {		
+					//두번 인코딩 방지를 위하여 추가되는 부분만 인코딩한다.
+					keyword = URLEncoder.encode(keyword +",", "UTF-8") + cookie.getValue();					
+					break;
+				} 				
+			}			
+		}		
 		
-		return keywordList;
+		logger.debug("저장된 쿠키 값  : " +keyword);		
+		Cookie cookie = new Cookie("searchKeys", keyword );
+		//1시간 유지
+		cookie.setMaxAge(60*60);
+		cookie.setPath("/VIG/");
+		response.addCookie(cookie);		
+		
 	}
-	
 
 
 }
