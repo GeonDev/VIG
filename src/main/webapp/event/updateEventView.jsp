@@ -28,6 +28,16 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+	
+
+ 	<!--  drag and drop -->
+ 	<script src="/VIG/javascript/dropify.js"></script>
+ 	<link rel="stylesheet" href="/VIG/css/dropify.min.css">
+ 	
+ 	 	<!--  태그 사용 -->
+ 	<script src="/VIG/javascript/jquery.tagsinput-revisited.js"></script>
+	
+	<link rel="stylesheet" href="/VIG/css/jquery.tagsinput-revisited.css">
 
 	
 <style>
@@ -38,15 +48,29 @@
 		}
 	
 	#main { 
-		width: 960px;
-		margin: 0 auto;
+		width: 1300px;
+		margin: 70px auto;
+		padding: 20px auto;
 	}
 	
-	#preview {
-	  margin: 1em 0;
-	  display: block;
-	  background: rgb(240, 240, 240);
-	  border: 1px solid rgb(0, 0, 0);
+    .dropify-wrapper {
+	
+	 min-height: 600px;
+     
+
+	}
+	
+	.info {
+	
+	margin: 10px auto;
+		
+	}
+	
+	.info> .dropify-wrapper {
+	
+	min-width: 100px;
+	min-height: 50px;
+	
 	}
 
 
@@ -55,41 +79,45 @@
 
 <script type="text/javascript">
 
-$(function(){
-	var file = document.querySelector('#getfile');
-
-	$(file).on('change', function() {
-	  var fileList = file.files;
-		console.log("1");
-	  // 읽기
-	  var reader = new FileReader();
-	  reader.readAsDataURL(fileList[0]);
-	  console.log("2");
-
-	  		//로드 한 후
-		  reader.onload = function() {
-			  console.log("3");
-		    //로컬 이미지를 보여주기
-		    document.querySelector('#preview').src = reader.result;
-		
-		    //썸네일 이미지 생성
-		    var tempImage = new Image(); //drawImage 메서드에 넣기 위해 이미지 객체화
-		    tempImage.src = reader.result; //data-uri를 이미지 객체에 주입
-
-  	};
-	});	
-});
 
 $(function(){
 	
-	$("#update").on('click', function(){
-		alert("11");
+	$("button:contains('수정')").on('click', function(){
 		
-		$(".myform").attr("method", "post").attr("action", "./updateEvent").attr( "enctype","multipart/form-data").submit();
+		$(".myform").attr("method", "post").attr("action", "/VIG/event/updateEvent").attr( "enctype","multipart/form-data").submit();
 			
 	});
 	
 	
+});
+
+//태그
+$(function (){
+
+	
+	$('#example').tagsInput({
+		'onAddTag': function(input, value) {
+			console.log('tag added', input, value);
+		},
+		'onRemoveTag': function(input, value) {
+			console.log('tag removed', input, value);
+		},
+		'onChange': function(input, value) {
+			console.log('change triggered', input, value);
+		}
+	});
+	
+
+});
+
+//drag and drop
+$(function (){
+	
+
+$('.dropify').dropify();
+
+
+
 });
 
 
@@ -103,86 +131,87 @@ $(function(){
 	<jsp:include page="../main/toolbar.jsp" />
 
 	
-	
-	<div id=main>
 	<form class="myform" enctype="multipart/form-data">
-	
-	<h2 style="font-weight: bold;">  이벤트 수정 </h2>
-	
-	<div class="md-form form-lg">
-	  <input type="text" id="inputLGEx" class="form-control form-control-lg" name="eventTitle" value="${event.eventTitle}">
-	</div>
-	
-	<!-- Medium input -->
-	<div class="md-form">
-	  <input type="text" id="inputMDEx" class="form-control" name="eventSub" value="${event.eventSub}">
-	</div>
-	
-	<div class="form-check">
-	  <input type="radio" class="form-check-input" id="materialChecked2" name="eventType" value="0" ${fn:contains(event.eventType, 'false')? "checked" : "" }>
-	  <label class="form-check-label" for="materialChecked2">이벤트</label>
-	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	   <input type="radio" class="form-check-input" id="materialChecked2" name="eventType" value="1" ${fn:contains(event.eventType, 'true')? "checked" : "" }>
-	  <label class="form-check-label" for="materialChecked2">당첨자 발표</label>
-	</div>
+	<div id="outline">
+		<div id=main>
+		
+			<div class="row" >
+					<div class="col-8" style="padding-right: 20px;">
+						<h2 style="font-weight: bold;">  이벤트 수정 </h2>
+						
+						<div class="md-form form-lg">
+						  <input type="text" id="inputLGEx" class="form-control form-control-lg" name="eventTitle" value="${event.eventTitle}">
+						  <input type="hidden" name="eventId" value="${event.eventId }">
+						</div>
+						
+						<!-- Medium input -->
+						<div class="md-form">
+						  <input type="text" id="inputMDEx" class="form-control" name="eventSub" value="${event.eventSub}">
+						</div>
+						
+						<div class="form-check">
+						  <input type="radio" class="form-check-input" id="materialChecked2" name="eventType" value="0" ${fn:contains(event.eventType, 'false')? "checked" : "" }>
+						  <label class="form-check-label" for="materialChecked2">이벤트</label>
+						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						   <input type="radio" class="form-check-input" id="materialChecked2" name="eventType" value="1" ${fn:contains(event.eventType, 'true')? "checked" : "" }>
+						  <label class="form-check-label" for="materialChecked2">당첨자 발표</label>
+						</div>
 
 	
+	
+
+	
+	
 	<hr/>
-	<img id="preview" src="/VIG/images/others/${event.eventImage}" width="700" alt="로컬에 있는 이미지가 보여지는 영역">
-		
-		<input type="file" id="getfile" name="uploadFile" accept="image/*">
+		<input type="file" id="demo" name="uploadFile" class="dropify"  data-default-file="/VIG/images/others/${event.eventImage }">
 	
 	<hr/>
 	<br/>
 	
-	<table>
-		<tr>
-			<td>
-				태그  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			</td>
-			<td>
-				<input type="text" name="eventTags" size="70" value="${event.eventTags }">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				기간  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			</td>
-			<td>
-				<input type="date" name="eventStart" value="${event.eventStart }">	
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="date" name="eventEnd" value="${event.eventEnd }">	
-			</td>
-		</tr>
-	</table>
+		</div>
+	
+				<div class="col-4" style="margin-top: 30px; padding-left: 20px; border-left: 1px solid #E6E8EF ">
+								<div class="info">
+									<h5>태그</h5>
+									<br>
+									<input id="example" name="eventTags" type="text" value="${event.eventTags }">
+								</div>
+								<br>
+								<div class="info">
+									<h5>기간</h5>
+									<br>		
+									<input type="date" name="eventStart" value="${event.eventStart }">	
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<input type="date" name="eventEnd" value="${event.eventEnd }">	
+									</div>
+								
+								<br>
 	
 	
-	<table>
-		<tr>
-			<td>
-				썸네일  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			</td>
-			<td>
-				<input type="file" name="uploadFile" accept="image/*">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				배너  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			</td>
-			<td>
-				<input type="file" name="uploadFile" accept="image/*">	
-			</td>
-		</tr>
-	</table>
-		
-
-
-	</form>
-	<input id="update" type="button" value="수정">
-	
+								<div class="info">
+									<h5>썸네일</h5>
+									<br>
+									<input type="file" id="demo" name="uploadFile" class="dropify"  data-default-file="/VIG/images/others/${event.eventThumb }">
+								</div>
+								
+							<br>
+				
+								<div class="info">
+									<h5>배너</h5>
+									<br>
+									<input type="file" id="demo" name="uploadFile" class="dropify"  data-default-file="/VIG/images/others/${event.banner }">
+								</div>
+								<div >
+									<button type="button" class="btn btn-dark" style="align: center;">수정</button>
+								</div>
+								
+							<div >
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-	
+</form>
 
 </body>
 </html>
