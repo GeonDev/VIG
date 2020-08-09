@@ -83,8 +83,8 @@
 		 			
 
 			<!-- 마이페이지 접속시 메뉴   //// 아니 조건문 어떻게 줘?ㅠ.ㅠ-->    
-			 	<c:choose>
-					<c:when test="${user.userCode == writer.userCode}">
+<%-- 			 	<c:choose>
+					<c:when test="${user.userCode == writer.userCode}"> --%>
 					
 						<img class="card-img-top" src="/VIG/images/uploadFiles/profile_img.jpg" id="pImg" alt="profile_img">
 				 			<div class="card-body">
@@ -113,7 +113,7 @@
  						내 정보 수정</a>
  					 <br/>
 
-<<<<<<< HEAD
+
  <!-- 메뉴 네비게이션 -->                                													 <!-- 코드 정리하기 -->
  		<c:choose>
 		<c:when test="${sessionScope.user.role=='user' || sessionScope.user.role=='business'}">
@@ -129,8 +129,7 @@
  				
  			<a type="button" class="btn btn-block" href="/VIG/withdraw/getDonationList">받은 후원 목록</a>
  				<br/>	
-=======
->>>>>>> fatch
+
  					
  					 <!-- 비지니스 유저만 통계-->
 			 		<c:if test="${sessionScope.user.role=='business'}">

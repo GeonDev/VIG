@@ -275,10 +275,12 @@ $(function(){
 		}
 	});
 	
+	var user;
+	
 	//댓글 구현
 	$("button:contains('등록')").on("click", function(){
 		
-		var user = ${empty sessionScope.user};
+		user = ${empty sessionScope.user};
 		if(user) {
 			alert("로그인이 필요합니다.");
 			return false;
@@ -345,7 +347,7 @@ $(function(){
 	//좋아요 연결
 	$("#like").on("click", function(){
 
-		var user = ${empty sessionScope.user};
+		user = ${empty sessionScope.user};
 		if(user) {
 			alert("로그인이 필요합니다.");
 			return false;
@@ -655,7 +657,7 @@ function imageModal(imageId){
 		
 			<div class="feedbottom">
 			
-			<h6 style="font-weight: bold">카테고리    | <a style="display: inline-block; color: black;" href="카테고리서칭">${feed.feedCategory.categoryName }</a></h6>
+			<h6 style="font-weight: bold">카테고리    | <a style="display: inline-block; color: black;" href="/VIG/search/getSearchList?Mode=Feed&keyword=${feed.feedCategory.categoryName }">${feed.feedCategory.categoryName }</a></h6>
 			
 			</div>
 			<br>
