@@ -26,6 +26,7 @@
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 	<script src="//code.jquery.com/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script>
 
 //===iframe 각 메뉴 페이지로 navigation
@@ -102,6 +103,130 @@
 		    flex-direction: row; justify-content: center;		
 		}		
 		
+		/* 버튼 CSS */
+		.box_body {
+
+  box-sizing: border-box;
+  font-family: "Futura PT", "Futura", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Buttons at the center */
+.wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -259px;
+  margin-left: -89px;
+  text-align: center;
+}
+
+/* General styling for the links */
+#btn_ch {
+  padding: 15px 50px;
+  text-decoration: none;
+  font-size: 18px;
+  display: block;
+  margin: 20px 20px;
+}
+
+
+.btn:hover, .btn:link:hover, .btn:visited:hover {
+  box-shadow: 0 4em 0 0 #2c3e50 inset, 0em 0em 0 0 #bbb;
+  -webkit-transform: translate(0.3em, 0.2em);
+          transform: translate(0.3em, 0.2em);
+  color: #fff;
+}
+
+
+.btn3, .btn3:link, .btn3:visited {
+  color: #333;
+  font-size: .8em;
+  text-transform: uppercase;
+  min-width: 100px;
+  max-width: 60%;
+  position: relative;
+  margin: 0 auto;
+  border: 2px solid transparent;
+  -webkit-transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+.btn3:after, .btn3:before, .btn3:link:after, .btn3:link:before, .btn3:visited:after, .btn3:visited:before {
+  content: "";
+  position: absolute;
+  letter-spacing: .1em;
+  left: -1em;
+  top: -2px;
+  height: 3em;
+  width: 0;
+  border: 1px solid #c75842;
+  -webkit-transition: inherit;
+  transition: inherit;
+}
+.btn3:after, .btn3:link:after, .btn3:visited:after {
+  left: auto;
+  right: -1em;
+}
+.btn3:hover, .btn3:link:hover, .btn3:visited:hover {
+  border-color: #c75842;
+  -webkit-transition: border-color 0.2s 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  transition: border-color 0.2s 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+.btn3:hover:after, .btn3:hover:before, .btn3:link:hover:after, .btn3:link:hover:before, .btn3:visited:hover:after, .btn3:visited:hover:before {
+  right: -2px;
+  -webkit-transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+.btn3:hover:before, .btn3:link:hover:before, .btn3:visited:hover:before {
+  left: -2px;
+  right: auto;
+}
+
+@-webkit-keyframes gelatine {
+  from,to {
+    -webkit-transform: scale(1, 1);
+  }
+  25% {
+    -webkit-transform: scale(0.9, 1.1);
+  }
+  50% {
+    -webkit-transform: scale(1.1, 0.9);
+  }
+  75% {
+    -webkit-transform: scale(0.95, 1.05);
+  }
+  from,to {
+    -webkit-transform: scale(1, 1);
+  }
+  25% {
+    -webkit-transform: scale(0.9, 1.1);
+  }
+  50% {
+    -webkit-transform: scale(1.1, 0.9);
+  }
+  75% {
+    -webkit-transform: scale(0.95, 1.05);
+  }
+}
+@keyframes gelatine {
+  from,to {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+  25% {
+    -webkit-transform: scale(0.9, 1.1);
+    transform: scale(0.9, 1.1);
+  }
+  50% {
+    -webkit-transform: scale(1.1, 0.9);
+    transform: scale(1.1, 0.9);
+  }
+  75% {
+    -webkit-transform: scale(0.95, 1.05);
+    t}
+	/* 버튼 CSS */
+	
+		
 	</style>
 </head>
 
@@ -139,22 +264,26 @@
  	<!-- 메뉴 네비게이션 -->
  			<c:choose>
 			<c:when test="${sessionScope.user.role=='user' || sessionScope.user.role=='business'}">
- 					<button type="button" class="btn btn-block" onclick='nav_myFeedList("/VIG/myFeed/myFeedList.jsp")'>
- 						마이피드 목록</button>
+ 					<div class="box_body">
+		<div class="wrap">
+ 					<a id="btn_ch" class="btn3" onclick='nav_myFeedList("/VIG/myFeed/myFeedList.jsp")'>
+ 						마이피드 목록</a>
  					<br/>
- 					<button type="button" class="btn btn-block" onclick='nav_history("/VIG/history/getMyHistoryList")'>
- 						<a href="#">내 활동 보기</a></button>
+ 					<a id="btn_ch" class="btn3" onclick='nav_history("/VIG/history/getMyHistoryList")'>
+ 						내 활동 보기</a>
  					 <br/>
- 					 <button type="button" class="btn btn-block" onclick='nav_history("/VIG/user/updateUser.jsp")'>
- 						<a href="#">내 정보 수정</a></button>
+ 					 <a id="btn_ch" class="btn3" onclick='nav_history("/VIG/user/updateUser.jsp")'>
+ 						내 정보 수정</a>
  					 <br/>
- 					<button type="button" class="btn btn-block" onclick='nav_payment("")'>
- 						<a href="#">결 제</a></button>
+ 					<a id="btn_ch" class="btn3" onclick='nav_payment("")'>
+ 						결 제</a>
  					<br/>
  			
- 					<button type="button" class="btn btn-block" onclick='nav_PaymentList("/VIG/payment/getPaymentList")'>
- 						<a href="#">내 결제 목록</a></button>	
+ 					<a id="btn_ch" class="btn3" onclick='nav_PaymentList("/VIG/payment/getPaymentList")'>
+ 						내 결제 목록</a>
  					<br/>
+ 					</div>
+ 					</div>
  		<!-- 비지니스 유저만 통계-->
  				<c:if test="${sessionScope.user.role=='business'}">
  					<button type="button" class="btn btn-block" onclick='nav_chart("/VIG/chart/chart.jsp")'>

@@ -156,7 +156,7 @@ public class RestSearchController {
 	
 	//선택된 카테고리에 해당하는 피드를 리턴한다.
 	@RequestMapping(value = "json/getSearchCategoryResult")
-	public Map<String, Object> getSearchCategoryResult(@RequestBody Map<String, String> jsonData, HttpSession session) throws Exception {
+	public Map<String, Object> getSearchCategoryResult(@RequestBody Map<String, String> jsonData, HttpSession session, @CookieValue(value = "searchKeys", defaultValue = "", required = false) String searchKeys) throws Exception {
 				
 		Map<String, Object> map = new HashMap<String, Object>();
 		
@@ -198,10 +198,33 @@ public class RestSearchController {
 					//최근 본 피드의 썸네일 키워드 리스트를 가지고 온다.
 					for(History history : historyList) {						
 						keywordList.addAll(history.getShowFeed().getKeywords());
-					}		
-					tempSearch.setKeywords(keywordList);
+					}
 					
-					feedlist = feedServices.getRecommendFeedList(tempSearch);				
+					
+					//쿠키에 저장된 검색어 기록을 가져온다.
+					if(!searchKeys.equals("") ) {			
+						
+						//쿠키에서 가져오면서 변경된 공백을 원래 상태로 돌림
+						searchKeys = searchKeys.replaceAll("\\+", " ");						
+						//콤마 (,)를 기준으로 나눔
+						String[] keys = searchKeys.split(",");
+						
+						for(String keyword : keys ) {
+							
+							if(!keyword.equals("")) {
+								logger.debug("불러온 쿠키 값 : " + keyword);
+								ImageKeyword temp = new ImageKeyword();								
+								temp.setKeywordEn(keyword);	
+								
+								keywordList.add(temp);
+							}
+						}						
+					}				
+					
+					
+					tempSearch.setKeywords(CommonUtil.checkEqualKeyword(keywordList));
+					
+					feedlist = CommonUtil.checkEqualFeed(feedServices.getRecommendFeedList(tempSearch));				
 					
 					if(feedlist.size() > 0) {					
 						
@@ -600,7 +623,7 @@ public class RestSearchController {
 	}
 	
 	
-	// 쿠키가 있다면 검색어를 쿠키에 추가
+	//현재 검색한 단어를 쿠키에 추가 
 	private void addSearchKeyCookie(String keyword, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		
 		Cookie[] cookies = request.getCookies();		
