@@ -263,15 +263,14 @@
 		<select id="getRecommendFeedList" parameterType="search" resultMap="FeedSelectMap">
 			SELECT feeds.* FROM feeds, images, keywords
 			WHERE feeds.feed_id = images.feed_id
-			AND images.image_id = keywords.image_id
-			AND images.is_thumbnail = 1
+			AND images.image_id = keywords.image_id	
 			AND feeds.feed_state = 0
 			AND keywords.keyword_en IN
 			<foreach collection="keywords" item="item" open="(" close=")" separator=",">
 			 #{item.keywordEn}
 			</foreach>
 			GROUP BY feeds.feed_id
-		
+			ORDER BY feed_view_count DESC
 		</select>
 		
 		

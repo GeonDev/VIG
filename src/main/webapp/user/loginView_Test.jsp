@@ -2,223 +2,192 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
 <html>
 <head>
 <title>VIG</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-<!-- Google Fonts -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-<!-- Bootstrap core CSS -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
-<!-- Material Design Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
-				
-<!-- JQuery -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!-- Bootstrap tooltips -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
-<!-- Bootstrap core JavaScript -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
-<!-- MDB core JavaScript -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 <script type="text/javascript">
-$(function() {
-//===모달창 띄우기
-	//$( "#login_btn:contains('Log in')" ).on("click" , function() {
-	//	$(self.location).attr("href","/VIG/user/login");
-	//	}); 
-	$( "#login_btn:contains('Log in')" ).click( function() {
-		$('div.modal').modal({
-		});
-	});
 
-	
-//===로그아웃	
-	$( "#logout_btn:contains('Log Out')" ).on("click" , function() {
-			$(self.location).attr("href","/VIG/user/logout");
-			}); 
-		});	
-		
-		//로그인
-		$(".btn.btn-info").on("click",function(){
-			$("#userCode").focus();	
-			$("#login").on("click" , function() {
-				
-				var id=$("input:text").val();
-				var pw=$("input:password").val();
-				
-				if(id == null || id.length <1) {
-					alert('ID 를 입력하지 않으셨습니다.');
-					$("#userCode").focus();
-					return;
-				}
-				if(pw == null || pw.length <1) {
-					alert('패스워드를 입력하지 않으셨습니다.');
-					$("#password").focus();
-					return;
-				}
-				$.ajax({
-					url:"json/login",
-					method:"POST",
-					data:({userCode : id, password : pw}),
-					success:function(){
-						
-					}
-				})
-				
-			});
-
-		});
 	</script>	
 	
 	<style>
 	
-	#logoTop{
-	 width: 90px;
-	 height: 40px;
-	}
-	#login_btn , #logout_btn{
-	color: white;
-	}
-	#fas_ntn{
-	color: #ffb74d;
-	}
-	p{
-	color: black;
-	}
-	#logout_btn{
-	margin-left:50px;
-	}
-	#logout_btn{
-	margin:0;
-	}
+	@import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);
+
+
+
+.navbar {
+	padding: 30px;
+  background: -webkit-radial-gradient(bottom left, circle, #f4d894, #ff6666);
+  background: radial-gradient(circle at bottom left, #f4d894, #ff6666);
+  }
+  body{
+  background:gray;
+  color: #fff;
+  font-family: Lato, sans-serif;
+  font-size: 24px;
+  font-weight: 300;
+  letter-spacing: 0.025em;
+}
+
+strong {
+  font-weight: bold;
+}
+
+em {
+  color: #959595;
+  font-style: italic;
+}
+
+.tooltip-example {
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  width: 100%;
+}
+
+.tooltip {
+  display: inline;
+  -webkit-perspective: 500px;
+  -moz-perspective: 500px;
+  perspective: 500px;
+}
+.tooltip:hover {
+  cursor: pointer;
+}
+.tooltip:hover .tooltip__content {
+  -webkit-transform: translate3d(-50%, -10%, 0);
+  -moz-transform: translate3d(-50%, -10%, 0);
+  -ms-transform: translate3d(-50%, -10%, 0);
+  -o-transform: translate3d(-50%, -10%, 0);
+  transform: translate3d(-50%, -10%, 0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.tooltip__content {
+  -webkit-transition: all 200ms ease;
+  -moz-transition: all 200ms ease;
+  transition: all 200ms ease;
+  -webkit-transform: translate3d(-50%, 0%, 0);
+  -moz-transform: translate3d(-50%, 0%, 0);
+  -ms-transform: translate3d(-50%, 0%, 0);
+  -o-transform: translate3d(-50%, 0%, 0);
+  transform: translate3d(-50%, 0%, 0);
+  -webkit-transform-origin: 0 10px;
+  -moz-transform-origin: 0 10px;
+  -ms-transform-origin: 0 10px;
+  -o-transform-origin: 0 10px;
+  transform-origin: 0 10px;
+  background-color: #fff;
+  border-radius: 4px;
+  color: #2f2f2f;
+  display: block;
+  font-size: 14px;
+  font-weight: normal;
+  left: 50%;
+  opacity: 0;
+  padding: 10px 20px;
+  pointer-events: none;
+  position: absolute;
+  text-align: left;
+  bottom: 100%;
+}
+.tooltip__content:before {
+  border-color: transparent;
+  border-top-color: #fff;
+  border-style: solid;
+  border-width: 10px;
+  content: ' ';
+  display: block;
+  height: 0;
+  left: 50%;
+  margin-left: -10px;
+  position: absolute;
+  bottom: -20px;
+  width: 0;
+}
+.tooltip__content:after {
+  content: ' ';
+  display: block;
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  width: 100%;
+  height: 20px;
+}
+.tooltip__content:hover {
+  -webkit-transform: rotateX(0deg) translate3d(-50%, -10%, 0);
+  -moz-transform: rotateX(0deg) translate3d(-50%, -10%, 0);
+  -ms-transform: rotateX(0deg) translate3d(-50%, -10%, 0);
+  -o-transform: rotateX(0deg) translate3d(-50%, -10%, 0);
+  transform: rotateX(0deg) translate3d(-50%, -10%, 0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+
+.fas.fa-user{ color:white;}
 	
 	</style>	
 	
 </head>		 
 <body>
 	
-
-<!--Navbar start-->	
-			<nav class="mb-1 navbar fixed-top navbar-expand-xl navbar-dark bg-dark py-2" id="toolbar">			
-<!-- 로고 -->		
-			  <a href="/VIG/main/VIG"><img src='/VIG/images/others/VIG_logo.png' id="logoTop" alt="VIG" ></a>
-			      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="toolbar_logo"
-				    aria-controls="toolbar_logo" aria-expanded="false" aria-label="Toggle navigation">
-				    <span class="navbar-toggler-icon"></span>
-				  </button>
-				   <div class="collapse navbar-collapse" id="toolbar_logo">
-   					 <ul class="navbar-nav ml-auto">
-				 </ul>		
-<!-- 검색 버튼-->    	      
-	        <a class="nav-link waves-effect waves-light" id="" href="/VIG/search/getSearchList">
-	          <i class="fas fa-search" id="fas_ntn"></i>
-	        </a>	   
-<!-- 알람버튼 -->     
-	        <a class="nav-link waves-effect waves-light" id="alarm_btn" href="#">
-	          <i class="fas fa-bell" id="fas_ntn"></i>
-	        </a>        
-<!-- 채팅버튼 -->      
-	        <a class="nav-link waves-effect waves-light" id=" chat_btn" href="#">
-	          <i class="fas fa-comments" id="fas_ntn"></i></a>
-   	
-<!-- //비로그인 상태 -->
-			<c:if test="${empty sessionScope.user }"> 
-			  <a id="login_btn" data-toggle="modal" data-target="#testModal" data-id="1"><span>Log in</span></a>
-			  
-			</c:if> 
-<!-- //로그인 후 드롭다운 -->
-		<!-- 유저 로그인시 -->
-			<c:if test="${ sessionScope.user.role == 'user' || sessionScope.user.role == 'business'}"> 
-				<li class="dropdown">
-		             <a href="#" class="dropdown-toggle" id="login_dropdown" data-toggle="dropdown"
-						 role="button" aria-haspopup="true" aria-expanded="false">
-						<i class="fas fa-user"></i>
-						   <span class="caret"></span>
-					</a>
-		         <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="login_dropdown">
-					<h6 class="dropdown-header">${user.userCode }</h6>
-						 <div class="dropdown-divider"></div>
-						    <a class="dropdown-item" href="/VIG/myFeed/myFeed.jsp" >My Feed</a>
-						    <a class="dropdown-item" href="#">Upload</a>
-						  <div class="dropdown-divider"></div>
-						      <a class="dropdown-item" id="logout_btn" ><p>Log Out</p></a>
-				 </div>
-		       </c:if>
-		   <!-- 관리자 로그인시 -->
-		       <c:if test="${ sessionScope.user.role == 'admin'}"> 
-				<li class="dropdown">
-		             <a href="#" class="dropdown-toggle" id="login_dropdown" data-toggle="dropdown"
-						 role="button" aria-haspopup="true" aria-expanded="false">
-						<i class="fas fa-user"></i>
-						   <span class="caret"></span>
-					</a>
-		         <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="login_dropdown">
-					<h6 class="dropdown-header">${user.userCode }</h6>
-						 <div class="dropdown-divider"></div>
-						    <a class="dropdown-item" href="/VIG/myFeed/myFeed.jsp">관리자페이지</a>	
-						    <div class="dropdown-divider"></div>
-						      <a class="dropdown-item"  id="logout_btn" ><p>Log Out</p></a>					   
-				 </div>
-		       </c:if>
-		    <!-- 로그아웃 버튼 -->          
-				
-			     
-				
-		
-	     	</div>
-	      </nav>
-		<br/>
-	
-	<form name="modalLogin" method ="POST" action="login" >
-<div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-	<div class="container">
-		<div class="text-center border border-light p-5">
-  			<div class="row">
-    <p class="h4 mb-6">Login</p>
-			
-			
-    <!-- id -->
-	    <input type="text" id="userCode" name="userCode" class="form-control mb-5" placeholder="id" required>
-	    <span class="glyphicon glyphicon-ok form-control-feedback"></span>
-
-    <!-- Password -->
-   		<input type="password" id="password" name="password" class="form-control mb-2" placeholder="Password" required>
-		<c:if test="${msg == 'fail' }">
-    		<div class="fail_text" style="color:red">
-    		아이디 또는 비밀번호를 확인해주세요.
-    		</div>
-    		</c:if>
-
-
-    <!-- Sign in button -->
-    	<button  class="btn btn-info btn-block my-4" id="login" >Sign in</button>
-    
-    <!-- Register -->
-  
-	    <p>Not a member?
-	        <!-- <a href="../user/addUser">Register</a> -->
-	        <span id="ty" class="blue-text ml-1"  >Register</span>
-	    </p>
-	    
-	</div>
-	</div>
-	</div>
-
-      </div>
-    </div>
-  </div>
+<!-- 
+<div class="tooltip-example">
+    I love a 
+    <span class="tooltip">      
+        <strong>sexy</strong>
+        <span class="tooltip__content">
+            <p>[sex·y] /'seksē/</p>
+            <p><em>informal</em></p>
+            <p>exciting; appealing. <a href="www.google.com" target="_blank">link</a></p>
+        </span>
+    </span>
+    tooltip!
 </div>
-</form>
-	
+ -->
+
+
+
+<nav class="navbar">
+ 
+  
+ 
+  
+  
+</nav>
+
+<br>
+
+		
+
+ <div class="tooltip-example">
+		           oooooooooooooo
+						<span class="tooltip">     
+						<strong><i class="fas fa-user" style="margin-right:30px; color: #black;"></i></strong>
+					 <span class="tooltip__content">
+					 <img src="/VIG/images/uploadFiles/${user.profileImg}" class="rounded-circle" style="width: 50px;">
+						${user.userName}
+						 <div class="dropdown-divider"></div>
+						    <a class="dropdown-item" href="/VIG/myfeed/getMyFeedList?userCode=${user.userCode}" style="display: flex;justify-content: center;" >My Feed</a>
+						    <a class="dropdown-item" href="/VIG/feed/addFeed.jsp" style="display: flex;justify-content: center;">Upload</a>
+						  <div class="dropdown-divider"></div>
+						      <a class="dropdown-item" style="display: flex;justify-content: center;">Log Out</a>
+						 </span>
+						 </span>
+						 ooooooooo
+						 </div>
+
 </body>
 
 

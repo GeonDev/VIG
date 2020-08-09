@@ -228,7 +228,7 @@
 	
 	#logoTop{
 	 width: 90px;
-	 height: 40px;
+	 height: 45px;
 	}
 	#login_btn , #logout_btn{
 	color: white;
@@ -271,12 +271,12 @@
 <!--Navbar start-->	
 			<nav class="mb-1 navbar fixed-top navbar-expand-xl navbar-dark bg-dark py-2" id="toolbar">			
 <!-- 로고 -->		
-			  <a href="/VIG/main/VIG"><img src='/VIG/images/others/VIG_logo.png' id="logoTop" alt="VIG" ></a>
+			  <a href="/VIG/main/VIG"><img src='/VIG/images/others/VIG_logo.png' id="logoTop" alt="VIG" style="margin-left: 30px;" ></a>
 			      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="toolbar_logo"
 				    aria-controls="toolbar_logo" aria-expanded="false" aria-label="Toggle navigation">
 				    <span class="navbar-toggler-icon"></span>
 				  </button>
-				   <div class="collapse navbar-collapse" id="toolbar_logo">
+				   <div class="collapse navbar-collapse" id="toolbar_logo" >
    					 <ul class="navbar-nav ml-auto">
 				 </ul>		
 <!-- 검색 버튼-->    	      
@@ -289,8 +289,8 @@
                      	<i id="AlarmNoti" class="fas fa-circle" style="color: red; font-size: xx-small; float: right; display: none;"></i>
                      </i>                    
                      
-                     <ul class="dropdown-menu dropdown-menu-right" style="width: 400px;">  
-                     	<h5 style="font-weight: bold;">&ensp;내 활동</h5>
+                     <ul class="dropdown-menu dropdown-menu-right" style="width: 400px; margin-top: 20px;">  
+                     	<h5 style="font-weight: bold; font-weight: bold;justify-content: center; display: flex; height: 35px; padding-top:10px; color:#6c757d;">&ensp;내 활동</h5>
                      	<div class="dropdown-divider"></div>                          
          				<li id="defaultAlarm" style="margin-left: 5px;">
          					<h6>새로운 소식이 없습니다.</h6>
@@ -309,7 +309,7 @@
 <!-- 로그인 클릭시 모달 -->
 			<c:if test="${empty sessionScope.user }"> 
 			  <a class="nav-link" data-remote="/VIG/user/loginView.jsp"
-				data-toggle="modal" data-target="#theModal" ><span id="white_wr">Log in</span></a>
+				data-toggle="modal" data-target="#theModal" ><span id="white_wr" style="margin-right: 30px;">Log in</span></a>
 			</c:if> 
 	
 <!-- //로그인 후 드롭다운 -->
@@ -318,19 +318,19 @@
 				<li class="dropdown">
 		             <a href="#" class="dropdown-toggle" id="login_dropdown" data-toggle="dropdown"
 						 role="button" aria-haspopup="true" aria-expanded="false">
-						<i class="fas fa-user"></i>
+						<i class="fas fa-user" style="margin-right:30px; color: #fb3;"></i>
 						   <span class="caret"></span>
 					</a>
-		         <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="login_dropdown">		         	
-					<h4 class="dropdown-header" style="text-align:left;  font-weight: bold; font-size: large; padding-left: 0px; margin-left: 5px; ">
+		         <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="login_dropdown" style="margin-top: 20px;">		         	
+					<h4 class="dropdown-header" style="text-align:left;  font-weight: bold; font-size: large; ">
 						<img src="/VIG/images/uploadFiles/${user.profileImg}" class="rounded-circle" style="width: 50px;">
 						${user.userName}
 					</h4>
 						 <div class="dropdown-divider"></div>
-						    <a class="dropdown-item" href="/VIG/myfeed/getMyFeedList?userCode=${user.userCode}" >My Feed</a>
-						    <a class="dropdown-item" href="/VIG/feed/addFeed.jsp">Upload</a>
+						    <a class="dropdown-item" href="/VIG/myfeed/getMyFeedList?userCode=${user.userCode}" style="display: flex;justify-content: center;" >My Feed</a>
+						    <a class="dropdown-item" href="/VIG/feed/addFeed.jsp" style="display: flex;justify-content: center;">Upload</a>
 						  <div class="dropdown-divider"></div>
-						      <a class="dropdown-item" >Log Out</a>
+						      <a class="dropdown-item" style="display: flex;justify-content: center;">Log Out</a>
 						 </div>
 		      		 </c:if>
 		   <!-- 관리자 로그인시 -->
@@ -342,11 +342,11 @@
 						   <span class="caret"></span>
 						</a>
 		         <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="login_dropdown">
-					<h6 class="dropdown-header">${user.userCode }</h6>
+					<h6 class="dropdown-header" style="text-align:left;  font-weight: bold; font-size: large; ">${user.userCode }</h6>
 						 <div class="dropdown-divider"></div>
-						    <a class="dropdown-item" href="/VIG/user/getUserList">관리자페이지</a>	
+						    <a class="dropdown-item" href="/VIG/user/getUserList" style="display: flex;justify-content: center;">관리자페이지</a>	
 						    <div class="dropdown-divider"></div>
-						      <a class="dropdown-item"  id="logout_btn" ><p id="black_wr">Log Out</p></a>					   
+						      <a class="dropdown-item"  id="logout_btn" ><p id="black_wr" style="display: flex;justify-content: center;">Log Out</p></a>					   
 							 </div>
 					       </c:if>		
 				     	</div>

@@ -63,7 +63,7 @@
 			var displayValue ='';
 			
 			displayValue = 
-				"<div class = 'view overlay'>"
+				"<div class = 'view overlay' >"
 					+"<div class = 'img_feed'>"
 					+ "<a href='/VIG/feed/getFeed?feedId="+ item.feedId +"' class='text-light'>"
 						+ "<img src='/VIG/images/uploadFiles/" + thumbnail + "' alt='thumbnail' class='img-fluid rounded-sm img_feed'>"
@@ -149,6 +149,7 @@
 			getFeedItemList(categoryName);				
 		}		
 		
+		/*
 		//카테고리 +버튼을 누름
 		function CategoriesPlue() {			 
 			$('#categoryList').scrollLeft($('#categoryList').scrollLeft() + 200);
@@ -158,7 +159,18 @@
 		//카테고리 -버튼을 누름
 		function CategoriesMinus() {			
 			$('#categoryList').scrollLeft($('#categoryList').scrollLeft() - 200);
-		}		
+		}
+		*/
+		
+		
+		//카테고리 +버튼을 누름
+		function CategoriesPlue() {			 
+			$('#categoryList').animate( { scrollLeft: '+200'});
+		}
+		//카테고리 -버튼을 누름
+		function CategoriesMinus() {			
+			$('#categoryList').animate( { scrollLeft: '-200'});
+		}
 		
 		//피드를 숨길지 물어본다.
 		function addhideFeed(feedId){	   	
@@ -228,7 +240,9 @@
     width: auto; height: auto;  
 	max-width: 500px;
 	max-height: 375px;
-	overflow:hidden;	
+	overflow:hidden;
+	margin:10px 0px;
+	border-radius: 10px;
 	}
 	
 	.img_categories {	
@@ -256,6 +270,8 @@
 	.view {	  
 	margin: 5px 10px;
 	}
+	.view.overlay{border-radius: 10px;}
+	
 	
 	<!-- 스크롤 제거 부분 -->
 	#categoryList {
@@ -279,9 +295,9 @@
 	
 	<div class="container-lg-fluid">
      
-		<div id="categories" class="row">
+		<div id="categories" class="row" >
 										
-				<div class="row">
+				<div class="row" style="margin: 10px -15px 30px 20px;">
 				
 					<div class="col-md-1" style="margin-top: 20px; text-align: center;">
 						<button class="btn btn-link" onclick="CategoriesMinus()" type="button" > <i class="fas fa-angle-left"></i></button>	        					      				
@@ -318,7 +334,7 @@
 		
 		</div>	
 
-        <div id="banner" class="row" style="margin-left: 10px; margin-right: 10px; margin-bottom: 20px; margin-top: 20px;">
+        <div id="banner" class="row" style="margin-left: 10px; margin-right: 10px; margin-bottom: 100px; margin-top: 20px;">
 	  		<div id="carousel-eBanner" class="carousel slide carousel-fade col-md-12" data-ride="carousel">
 			  <!--Indicators-->
 			  <ol class="carousel-indicators">

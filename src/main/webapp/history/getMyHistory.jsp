@@ -42,6 +42,7 @@
 	body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}
     h1 { margin-left: 120px;}  	       
     
+    .col-md-12{ margin-bottom: 50px;}
     .txt_lineSize { width:280px; padding:0 5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }	           		
 	.img_feed { max-width: 300px; max-height: 225px;}				
 	.view {	 margin: 5px 10px;}	
@@ -103,7 +104,6 @@
 		
 			<!-- 사이드바  -->		
 				<div class="col-md-2 sideBarPlace">		
-			!=레이아웃 완료후 지우기 /사이드바 자리  get my feed list=!
 				 <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
 		    
 		    
@@ -227,12 +227,13 @@
 						</c:forEach>			  
 				  </div>	
 			  </div>
-			</div>
-			
-			<div class="row justify-content-md-center">
-				<jsp:include page="../common/pageNavigator.jsp"/>
-			</div>		
+			</div>	
 		</div>
+		</div>
+			
+			
+		</div>
+		
 	
 </body>
 </html>
