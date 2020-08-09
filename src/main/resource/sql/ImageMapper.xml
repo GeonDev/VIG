@@ -112,6 +112,20 @@
 	</select>
 	
 	
+	<!-- 연관이미지 검색시에 사용, 주어진 키를 모두 만족하는 경우에만 불러온다. -->
+	<select id="getImageListFromImageALLKeys" parameterType="search" resultMap="ImageSelectMap">			
+		SELECT  images.* FROM images, keywords, feeds 
+		WHERE images.image_id = keywords.image_id
+		AND feeds.feed_id = images.feed_id
+		AND images.is_thumbnail = 0
+		AND feeds.feed_state = 0		 
+		<foreach collection="keywords" item="item" >
+		 AND keywords.keyword_en =  #{item.keywordEn}
+		</foreach>	
+		GROUP BY images.image_id		
+	</select>
+	
+	
 	<select id="getAutoImageKeywordList" parameterType="String" resultType="String">
 		SELECT temp.keyword_en  FROM		
 		(SELECT ROW_NUMBER() OVER(ORDER BY keywords.keyword_en) num, keywords.keyword_en FROM images, keywords, feeds 
