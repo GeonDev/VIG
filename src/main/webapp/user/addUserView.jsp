@@ -87,7 +87,7 @@
 					var correct = "<p style='color:green;'>비밀번호가 확인되었습니다.</p>";
 					$(".check").html(correct);					
 				}else{										
-					var alert = "<p style='color:red;'>비밀번호가 다릅니다.</p>";
+					var alert = "<p style='color:red; margin-bottom:0;'>비밀번호가 다릅니다.</p>";
 					$(".check").html(alert);					
 				}				
 			});			
@@ -129,7 +129,7 @@
 		//로그인 페이지로 이동 이벤트
 		 $( function() {
 				$("#login_nav").on("click" , function() {
-					location.href="login";
+					location.href="/VIG/user/loginView.jsp";
 				});
 			});		
 		//달력 setting
@@ -154,85 +154,79 @@
 
 <form>
 <div class="container">
-	<div class="text-center border border-light p-5">
+	<div class="text-center border border-light p-4">
 	  <div class="row" id="top_title">
-	    <p class="h4 mb-6">Sign up</p>
+	    <p class="h4 mb-6" style="margin:30px;">Sign up</p>
 	  </div>
 	  
 		<!-- id -->  
-		<div class="form-group" style="margin: 0 0 40px 0;">
-			<label data-error="wrong" data-success="right" for="userCode"></label>
-			<input type="text" id="userCode" name="userCode" class="form-control mb-4" placeholder="userCode" value="${user.userCode}" required>   
-			<div class="check_font" id="id_check"></div>
+		<div class="form-group"  style="height:70px; margin:0; ">
+			<input type="text" id="userCode" name="userCode" class="form-control " placeholder="userCode" value="${user.userCode}" required>   
+			<div class="check_font" id="id_check" style="margin:7px;"></div>
 		</div>
 			
-		<!-- name -->
+		<!-- 비밀번호 -->
 		<div class="form-group" style="height:70px; margin:0; ">
-			<input type="text" id="userName" name="userName" class="form-control mb-4" placeholder="nickName" required>
-			<label data-error="wrong" data-success="right" for="nickName"></label>   
+		    <input type="text" id="userName" name="userName" class="form-control" placeholder="userName" maxlength="8" required>
 		</div>
 		
 		<!-- 비밀번호 -->
 		<div class="form-group" style="height:70px; margin:0; ">
-		    <input type="password" id="password" name="password" class="form-control mb-4" placeholder="8자리 이하 입력" maxlength="8" required>
-			<label data-error="wrong" data-success="right" for="password"></label>
+		    <input type="password" id="password" name="password" class="form-control" placeholder="password" maxlength="8" required>
 		</div>
 		
 		<!-- 비밀번호2 -->   
-		<div class="form-group" style="margin:  0;">  
-			 <input type="password" id="password2" name="password2" class="form-control mb-4" placeholder="Password2" required>
+		<div class="form-group" style="height: 70px;">  
+			 <input type="password" id="password2" name="password2" class="form-control " placeholder="Password2" " required>
 		     <label data-error="wrong" data-success="right" for="password2"></label>
-		     <span id="helpBlock" class="help-block">
-				<span class="check"></span>
+		     <span id="helpBlock" class="help-block" >
+				<span class="check" style="margin-bottom:0px;"></span>
 			</span>
 		</div>
 			
 		<!-- 플필 -->  
-		     <input type="hidden" id="profileImg" name="profileImg" class="form-control mb-4" value="profile_img.jpg">
+		     <input type="hidden" id="profileImg" name="profileImg" class="form-control " value="profile_img.jpg">
 		
 		<!-- 성별 -->
-		<div class="form-group" style="margin: 0 0 40px 0;">
-		 	<div class="row">
-		 	<div class="form-control mb-4" id="genderBox">
+		<div class="form-group" style="height: 40px; margin-bottom:0;">
 			  <input type="radio" id="check_userSex" name="sex" value="female" ><label for="sex">female</label>
 			  <input type="radio" id="check_userSex" name="sex" value="male"><label for="sex">male</label>
 			</div>
-			</div>	
-		</div>
+
 		<!-- 생년월일-->
-		<div class="form-group" style="margin: 0 0 40px 0;">
+		<div class="form-group" style="height: 50px;">
 			<hr/>
-			<p>Date: <input type="text" id="datepicker" name="birth"></p>
+			<p>Birth: <input type="text" id="datepicker" name="birth" placeholder="click"></p>
 			<label data-error="wrong" data-success="right" for="birth"></label>
 		</div>	
 		<!--  -->
-		     <input type="hidden" id="state" name="state" class="form-control mb-4" value="0">
+		     <input type="hidden" id="state" name="state" class="form-control " value="0">
 		     <input type="hidden" id="primeCount" name="primeCount" class="form-control mb-4" value="0">
 		     
 		<!-- 이메일 -->
-		<div class="form-group" style="margin: 0 0 40px 0;">
-		   	<input type="email" id="email" name="email" class="form-control mb-4" placeholder="email" value="${user.email}">
+		<div class="form-group" style="margin-bottom:0px;">
+		   	<input type="email" id="email" name="email" class="form-control " placeholder="email" value="${user.email}">
 		    <label data-error="wrong" data-success="right" for="email"></label> 
 		 </div>
 		 
 		<!-- 이메일 인증 폼만 구현중-->   
 		    <button type="button" class="btn btn-primary btn-sm" id="sendEmail">send email</button>  
-			<input type="hidden" id="variedCode" name="variedCode" value="0" class="form-control mb-4" placeholder="variedCode" width="50px">
+			<input type="hidden" id="variedCode" name="variedCode" value="0" class="form-control" placeholder="variedCode" width="50px">
 			<button type="button" class="btn btn-primary btn-sm" id="send_email">check</button>  
 	
 		<!-- role -->
 			<input type="hidden" id="role" name="role" class="form-control mb-4"  value="user">
 			
 		<!-- google -->	
-			<input type="hidden" id="googleId" name="googleId" class="form-control mb-4"  value="${user.googleId}">
+			<input type="hidden" id="googleId" name="googleId" class="form-control "  value="${user.googleId}">
 			
 		<!-- 가입버튼 -->
-		    <button  class="btn btn-info btn-block my-4" id="signUp_btn" >Sign up</button>   
+		    <button  class="btn btn-block my-4" id="signUp_btn" style="background-color: #212121; color: white;" >Sign up</button>   
 				<p >Already a member? </p>
 		          <span id="login_nav" class="blue-text ml-1" href="#" > login</span>
 				</div>
 			</div>
-		</div>
+		
 
 </form> 
 

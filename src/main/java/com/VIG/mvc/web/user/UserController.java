@@ -3,8 +3,10 @@ package com.VIG.mvc.web.user;
 
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
+import java.util.Date;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -71,7 +73,7 @@ public class UserController {
 	
 	//구글 로그인 수행	
 	@RequestMapping(value="googleLogin")
-	public String googleLogin( @RequestParam("code") String code, Model model, HttpSession session) throws Exception{
+	public ModelAndView googleLogin( @RequestParam("code") String code, Model model, HttpSession session) throws Exception{
 		String query = "code=" + code;
 		query += "&client_id=" + "82747934090-ljsrvma8goa9dskv7hchor1mt2atl1ao.apps.googleusercontent.com";
 		query += "&client_secret=" + "bTfZRbsjifaPhndVAiFtbFYP";
@@ -86,23 +88,47 @@ public class UserController {
 		
 		GoogleProfile profile = gson.fromJson(ret, GoogleProfile.class);
 		
-		//구글에 연결된 정보가 있다면 정보를 불러옴
-		if(userServices.getGoogleID(profile.getId()) != null ) {
-			session.setAttribute("user", userServices.getGoogleID(profile.getId()));
-			return "redirect:/index.jsp";
+		//로그인된 상테인지 체크		
+		String userCode = ((User)session.getAttribute("user")).getUserCode();
+		
+		if(!CommonUtil.null2str(userCode).equals("")) {		
+			
+			//이미 같은 정보로 로그인한 기록이 있을 경우
+			if(userServices.getGoogleID(profile.getId()) != null) {				
+				
+				return new ModelAndView("forward:/common/alertView.jsp", "message", "이미 연동된 계정이 있습니다.");
+			} 
+			
+			//로그인된 유저라면 구글 정보를 업데이트 
+			User temp = userServices.getUserOne(userCode);
+			temp.setGoogleId(profile.getId());
+			
+			userServices.updateUser(temp);
+			
+			//세션에 저장된 정보를 업데이트
+			session.setAttribute("user", temp);
+			
+			return new ModelAndView("forward:/main/main.jsp");
+			
+		}else {
+			
+			//구글에 연결된 정보가 있다면 정보를 불러옴
+			if(userServices.getGoogleID(profile.getId()) != null ) {
+				session.setAttribute("user", userServices.getGoogleID(profile.getId()));
+				return new ModelAndView("forward:/main/main.jsp");
+			}
+			
+			//구글 연동이 안되어 있으면 가입 화면으로 이동
+			User user = new User();
+			user.setUserCode("user"+userServices.getLastUserNum());
+			user.setEmail(profile.getEmail());
+			user.setGoogleId(profile.getId());				
+			
+			model.addAttribute("user", user);
 		}
 		
-		//구글 연동이 안되어 있으면 가입 화면으로 이동
-		User user = new User();
-		user.setUserCode("user"+userServices.getLastUserNum());
-		user.setEmail(profile.getEmail());
-		user.setGoogleId(profile.getId());		
+		return new ModelAndView("forward:/user/addUserView.jsp");		
 	
-		model.addAttribute("user", user);
-		
-	
-		
-		return "forward:/user/addUserView.jsp";
 	}
 	
 
@@ -146,34 +172,69 @@ public class UserController {
 		return "forward:/user/checkDuplication.jsp";
 	}
 
-//=======로그인===============================================================//
+//=======로그인=====
 		
 	@RequestMapping( value="login", method=RequestMethod.GET)
 	public ModelAndView login() throws Exception{		
 		System.out.println("login(GET):로그인 페이지로 이동");	
+
 		ModelAndView model = new ModelAndView();
-		model.setViewName("forward:/user/loginView.jsp");		
+		model.setViewName("login");		
 		return model;
 	}
 
 	@RequestMapping( value="login", method=RequestMethod.POST )
 	public ModelAndView login(@ModelAttribute("user") User user, HttpSession session) throws Exception{
+				
+		User dbUser = userServices.getUserOne(user.getUserCode());
+		ModelAndView mv = new ModelAndView();
+		System.out.println("로그인 시도 :"+user.getUserCode());
+		System.out.println(dbUser);
+			
+		SimpleDateFormat format = new SimpleDateFormat ("yyyyMMdd");
+		Date date  = new Date();			
+		int toDay = Integer.parseInt(format.format(date));
 		
 		
-			User dbUser = userServices.getUserOne(user.getUserCode());
-			ModelAndView mv = new ModelAndView();
-			System.out.println("로그인:"+user.getUserCode());
-			System.out.println(dbUser);
 		if(dbUser == null) {
 			mv.setViewName("forward:/user/loginView.jsp");
 			mv.addObject("msg", "fail");
 			return mv;
 			
+<<<<<<< HEAD
 		} else if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())){	
 			session.setAttribute("user", dbUser);
 			System.out.println("로그인 성공");
 			mv.setViewName("redirect:/");
 			return mv;
+=======
+		} else if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())){				
+			
+			if(dbUser.getState() == 0) {
+				session.setAttribute("user", dbUser);
+				System.out.println("로그인 성공");
+				mv.setViewName("redirect:/main/VIG");
+				return mv;					
+			}else {				
+				
+				int banDate = Integer.parseInt(dbUser.getBanDate().toString().replaceAll("-",""));	
+				
+				if(dbUser.getState() == 1) {
+					banDate = banDate + 3;
+				}else if(dbUser.getState() == 2) {
+					banDate = banDate+ 7;
+				}  
+				
+				
+				int remainDate = banDate-toDay;
+				
+				String msg = "접속 금지 상태 입니다.\n \n 남은 기간 : " + remainDate +"일";				
+				return new ModelAndView("forward:/common/alertView.jsp", "message", msg);
+				
+			}			
+			
+
+>>>>>>> fatch
 		} else {
 			mv.setViewName("forward:/user/loginView.jsp");
 			System.out.println("로그인 실패");
@@ -189,6 +250,7 @@ public class UserController {
 	public ModelAndView logout(HttpSession session) throws Exception{
 			
 			System.out.println("logout");
+			session.removeAttribute("login");
 			session.invalidate();
 			
 		ModelAndView model = new ModelAndView();

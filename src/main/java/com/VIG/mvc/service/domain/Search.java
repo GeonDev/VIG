@@ -22,7 +22,7 @@ public class Search {
 	//색상값 입력시 매핑
 	private ImageColor color;
 	
-	
+	//검색 옵션 지정시 필요 - ex) 카테고리
 	private String searchCondition;
 
 	

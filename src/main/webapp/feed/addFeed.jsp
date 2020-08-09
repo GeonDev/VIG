@@ -19,6 +19,7 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
 	
 	
+	
  
  	
 		<!-- JQuery -->
@@ -27,11 +28,13 @@
 	<!-- Tag  -->
 	<script src="/VIG/javascript/jQuery.tagify.min.js"></script>
  	<link rel="stylesheet" href="/VIG/css/tagify.css">
+ 	
  	<!--  drag and drop -->
  	<script src="/VIG/javascript/dropify.js"></script>
  	<link rel="stylesheet" href="/VIG/css/dropify.min.css">
  	<link rel="stylesheet" href="/VIG/fonts/dropify.woff">
  	<link rel="stylesheet" href="/VIG/fonts/dropify.ttf">
+ 	
  	<!-- crop -->	
  	<script src="/VIG/javascript/jquery.Jcrop.js"></script>
  	<link rel="stylesheet" href="/VIG/css/jquery.Jcrop.css"  type="text/css" />
@@ -40,12 +43,16 @@
  	<!-- select -->
  	<script src="/VIG/javascript/justselect.min.js"></script>
  	<link rel="stylesheet" href="/VIG/css/justselect.css" >
+ 	
 	<!-- Bootstrap tooltips -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
 	<!-- Bootstrap core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+	<!-- jQuery UI toolTip 사용 CSS-->
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>	
 
 
 	
@@ -162,7 +169,6 @@ $(function(){
 		        ysize = $pcnt.height();
 			   
 			   
-
 				$('#target').Jcrop({
 					
 		            bgColor:     'black',
@@ -254,6 +260,50 @@ function deleteInput() {
 	  }
 	  display(); 
 	}
+	
+	
+	
+	//닉네임검색 자동검색 !!
+	function getkeywords() {
+		
+		
+		$.ajax("/VIG/search/json/getSearchKeyword",
+		  {
+			method : "POST",
+			dataType : "Json",							
+			headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+			},
+			data :  JSON.stringify({keyword : $("#test123").val(), mode : "Writer" }),						
+			success : function(JSONData, status) {
+				//검색 결과가 있으면 처리			
+				if(JSONData.length != 0){
+					
+						console.log( JSONData );
+					
+					 	$("#test123").autocomplete({			 		
+					        source: JSONData
+					    });		
+				}
+			}							
+		});
+	}
+	
+	//자동검색
+	$(function(){	
+	$("#test123").on("keyup", function(){				
+				if($("#test123").val().length >= 1){
+					getkeywords();
+					console.log("dd");
+				}					
+			});			
+	
+});
+	
+	
+	
+	
 </script>
 
 
@@ -307,7 +357,7 @@ function deleteInput() {
 							
 							<div class="md-form md-bg input-with-pre-icon">
   											<i class="fas fa-user input-prefix"></i>
-  														<input type="text" id="prefixInside4" class="form-control" placeholder="Please enter a collaborator">
+  														<input type="text" id="test123" class="form-control" placeholder="Please enter a collaborator" name="test123">
  									 <label for="prefixInside4"> </label>
  									  
  									
@@ -333,7 +383,7 @@ function deleteInput() {
   									<option  value="10009">공예</option>
   									<option  value="10010">타이포그래피</option>
   									<option  value="10011">UI/UX</option>
-  									<option  value="10012">RECOMMEND</option>
+  									
 									</select>
 									
 									</div>
@@ -360,8 +410,17 @@ function deleteInput() {
 							</div>
 
 				</div>
+				<hr>
+				<hr>
+				<strong>UseGears</strong>
+		<div class="form-group">
+  <label for="exampleFormControlTextarea2"></label>
+  <textarea class="form-control rounded-0" id="feedUseGears" rows="3" name="feedUseGears"></textarea>
+</div>
+		
 <hr>
 <hr>
+					<c:if test="${sessionScope.user.role=='business'}">
 							<strong>isPrimeFeed</strong>
 		<div>
 		
@@ -375,12 +434,8 @@ function deleteInput() {
   							<label class="custom-control-label" for="defaultInline5">PrimeFeed</label>
 							</div>
 		</div>
-		<hr>
-		<hr>
-		<strong>UseGears</strong>
-		<div>
+		</c:if>
 		
-		</div>
 		
 		
 		<button type="button" class="btn btn-info" id="feedend">UpLoad</button>

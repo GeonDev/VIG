@@ -112,8 +112,7 @@ public class mainController {
 			user.setGoogleId("");
 			user.setPassword("");
 
-		}
-		
+		}		
 		
 		model.addAttribute("user", user);	
 		

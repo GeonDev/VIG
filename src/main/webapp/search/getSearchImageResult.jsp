@@ -156,14 +156,12 @@
 		
 		<div class="row justify-content-center" style = "margin: 20px;">
 			
-				<c:forEach var="keyword" items="${baseImage.keyword}">
-					<button type="button" class="btn btn-info" onclick="getSearchImagekeyword('${keyword.keywordEn}')">${keyword.keywordEn}</button>				
+				<c:forEach var="keywords" items="${baseImage.keyword}">
+					<button type="button" class="btn btn-info" onclick="getSearchImagekeyword('${keywords.keywordEn}')">${keywords.keywordEn}</button>				
 				</c:forEach>
 			
 		</div>
-		
-
-		
+				
 		<hr/>
 		<div class="row justify-content-center">
 			<h4 style="font-weight: bold;">유사한 이미지 더보기</h4>

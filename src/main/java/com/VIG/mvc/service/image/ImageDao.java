@@ -26,6 +26,9 @@ public interface ImageDao {
 	
 	//이미지(키워드)를 검색 조건으로 입력
 	public List<Image> getImageListFromImage(Search search) throws Exception;	
+	
+	//주어진 키워드를 모두 일치하는 이미지를 검색
+	public List<Image> getImageListFromImageALLKeys(Search search) throws Exception;	
 		
 	public void deleteImage(int image) throws Exception;
 	

@@ -1,5 +1,6 @@
 package com.VIG.mvc.web.search;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,11 +13,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.VIG.mvc.service.category.CategoryServices;
 import com.VIG.mvc.service.color.ColorServices;
+import com.VIG.mvc.service.domain.Category;
 import com.VIG.mvc.service.domain.Image;
 import com.VIG.mvc.service.domain.ImageKeyword;
 import com.VIG.mvc.service.domain.Search;
@@ -26,6 +30,7 @@ import com.VIG.mvc.service.history.HistoryServices;
 import com.VIG.mvc.service.image.ImageServices;
 import com.VIG.mvc.service.keyword.KeywordServices;
 import com.VIG.mvc.service.user.UserServices;
+import com.VIG.mvc.util.CommonUtil;
 
 
 @Controller
@@ -55,6 +60,12 @@ public class SearchController {
 	@Qualifier("feedServicesImpl")
 	private FeedServices feedServices;
 		
+	
+	@Autowired 
+	@Qualifier("categoroyServicesImpl")
+	private CategoryServices categoryServices;
+	
+	
 	@Autowired 
 	@Qualifier("historyServicesImpl")
 	private HistoryServices historyServices;
@@ -76,30 +87,70 @@ public class SearchController {
 	
 	
 	@RequestMapping(value = "getSearchList")
-	public ModelAndView getSearchList(@RequestParam(value =  "Mode", defaultValue = "Feed") String mode, @RequestParam(value =  "keyword", defaultValue = "") String keyword, Model model, HttpSession session) throws Exception{
+	public ModelAndView getSearchList(@RequestParam(value =  "Mode", defaultValue = "Feed") String mode, @RequestParam(value =  "keyword", defaultValue = "") String keyword, @RequestParam(value =  "category", defaultValue = "0") int categoryId, Model model, HttpSession session) throws Exception{
 			
 		//로그인한 유저 정보를 받아옴
 		User user = (User)session.getAttribute("user");	
 		
+		List<Category> categorylist = categoryServices.getSearchCategoryList();
+		
+		Category delfault = new Category();
+		delfault.setCategoryId(0);
+		delfault.setCategoryName("All");
+		categorylist.add(0, delfault);
+		
 		model.addAttribute("mode", mode);	
 		model.addAttribute("user", user);
 		model.addAttribute("keyword", keyword);
+		model.addAttribute("categoryId", categoryId);
+		model.addAttribute("categorylist", categorylist);
+		
 		
 		return new ModelAndView("forward:/search/getSearchResult.jsp");
 	}	
+	
+	
 
 	//이미지 자세히 보기 최소 세팅 시에만 처리 -> 이후부터는 REST로 페이지 갱신
 	@RequestMapping(value = "getSearchImages")
-	public ModelAndView getSearchImageList(@RequestParam("imageId") int imageId, HttpSession session, Model model) throws Exception {		
+	public ModelAndView getSearchImageList(@RequestParam("imageId") int imageId, HttpSession session, Model model, @CookieValue(value = "searchKeys", defaultValue = "", required = false) String searchKeys ) throws Exception {		
 		
 		//기준 이미지 선택
 		Image image = imageServices.getImageOne(imageId);				
 		
 		Search search = new Search();
 		search.setPageSize(pageSize);
-		search.setCurrentPage(1);
-		search.setKeywords(image.getKeyword());		
+		search.setCurrentPage(1);		
+		
+		List<ImageKeyword> keylist = new ArrayList<ImageKeyword>();
+		keylist.addAll(image.getKeyword());				
 
+		//쿠키에 저장된 검색어 기록을 가져온다.
+		if(!searchKeys.equals("") ) {			
+			
+			//쿠키에서 가져오면서 변경된 공백을 원래 상태로 돌림
+			searchKeys = searchKeys.replaceAll("\\+", " ");						
+			//콤마 (,)를 기준으로 나눔
+			String[] keys = searchKeys.split(",");
+			
+			for(String keyword : keys ) {
+				
+				if(!keyword.equals("")) {
+					logger.debug("불러온 쿠키 값 : " + keyword);
+					ImageKeyword temp = new ImageKeyword();
+					temp.setImageId(image.getImageId());
+					temp.setKeywordEn(keyword);	
+					
+					keylist.add(temp);
+				}
+			}
+			
+		}
+		
+		//중복 키워드가 있는지 확인후 검색기준에 추가
+		keylist = CommonUtil.checkEqualKeyword(keylist);
+		search.setKeywords(keylist);			
+		
 		
 		//키워드 연관 이미지 추출
 		List<Image> relatedImages = imageServices.getImageListFromImage(search);
@@ -107,10 +158,10 @@ public class SearchController {
 		//선택한 이미지는 유사 리스트 에서 제거
 		relatedImages.remove(image);
 		
-		//추출된 이미지리스트에 있는 이미지가 선택된 이미지의 키워드와 얼마나 유사한 값을 가지고 있는지 체크
+		//추출된 이미지리스트에 있는 이미지가 선택된 이미지의 키워드와 같은 값을 몇개 가지고 있는지 체크
 		if(relatedImages.size() > 0) {						
 			for(Image target : relatedImages) {
-				for(ImageKeyword key : image.getKeyword()) {
+				for(ImageKeyword key : keylist) {
 					if(target.getKeyword().contains(key)) {
 						target.setCurrentKeywordSameCount(target.getCurrentKeywordSameCount()+1);
 					}					
@@ -125,6 +176,8 @@ public class SearchController {
 		model.addAttribute("baseImage", image);
 		model.addAttribute("list", relatedImages);
 		return new ModelAndView("forward:/search/getSearchImageResult.jsp");
-	}	
+	}
+	
+	
 
 }

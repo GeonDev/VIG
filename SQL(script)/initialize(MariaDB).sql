@@ -334,8 +334,17 @@ INTO users (user_code, user_name, password, role, profile_img, self_introduce, s
 VALUES ('user19', 'lion', '1919', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
 
 INSERT
-INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
-VALUES ('user20', 'night', '2020', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date, ban_date)
+VALUES ('user20', 'night', '2020', 'user', 'profile_img.jpg', 'Hellow. my name is night!', 2, 0, NOW(), NOW());
+
+
+
+
+
+
+
+
+
 
 INSERT
 INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
@@ -2991,6 +3000,8 @@ VALUES(report_id, 'user14', 'user02', 2, 20003, NOW());
 INSERT
 INTO report (report_id, reporter_code, violator_code, report_Type, report_feed_id, report_date)
 VALUES(report_id, 'user15', 'user03', 2, 20004, NOW());
+
+
 
 
 
