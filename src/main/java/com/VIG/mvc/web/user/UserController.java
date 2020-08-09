@@ -221,7 +221,7 @@ public class UserController {
 				
 				int remainDate = banDate-toDay;
 				
-				String msg = "접속 금지 상태 입니다.\\n 남은 기간 : " + remainDate +"일";				
+				String msg = "접속 금지 상태 입니다.\n \n 남은 기간 : " + remainDate +"일";				
 				return new ModelAndView("forward:/common/alertView.jsp", "message", msg);
 				
 			}			

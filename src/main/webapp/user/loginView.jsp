@@ -60,8 +60,7 @@
 				$("#password").focus();
 				return;
 			}
-		////ajax 연결 안됨/ 로그인은 되는데 비번이나 아이디 다르면 모달이 다시 리로드 되어서 풀화면으로 나옴 폼에 action때문인가..	
-			
+	
 			});
 		});
 		
@@ -112,7 +111,7 @@
     	</c:if>
 
     <!-- Sign in button -->
-    	<button  class="btn btn-info btn-block my-4" id="login" >Sign in</button>
+    	<button  class="btn btn-block my-4" id="login" style="background-color: #212121; color: white;">Sign in</button>
     	
     <!-- Sign in Google button -->
     	<button  class="btn btn-primary btn-block my-4" id="googlelogin" >

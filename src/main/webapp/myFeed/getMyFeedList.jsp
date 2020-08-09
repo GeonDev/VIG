@@ -158,6 +158,7 @@
 	body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}	
 	h1 { margin-left: 100px;}
 	
+	.col-md-12{ margin-bottom: 50px;}
 	.img_feed {	width: auto; height: 290px; overflow:hidden;}	
 	.view {	 margin: 5px 10px;}	
 	.txt_line { width:380px;  padding:0 5px; overflow:hidden; text-overflow:ellipsis;  white-space:nowrap; }	
@@ -167,6 +168,34 @@
 	 .col-md-2.sideBarPlace { padding:0;  display: inline-block;float:left;}
 	 #mainMyFeedPage { margin-left: 0px;  display: inline-block; float:right;}
 	
+	/* 버튼 CSS */
+		.box_body_m {box-sizing: border-box; font-family: "Futura PT", "Futura", sans-serif; -webkit-font-smoothing: antialiased;}
+		.wrap_m {text-align: center;}
+		#btn_ch_m { padding: 12px 50px;text-decoration: none;font-size: 12px; ;margin: 3px 20px; display:flex; float:left;}
+		.btn:hover, .btn:link:hover, .btn:visited:hover {box-shadow: 0 4em 0 0 #2c3e50 inset, 0em 0em 0 0 #bbb;-webkit-transform: translate(0.3em, 0.2em);transform: translate(0.3em, 0.2em); color: #fff;}
+		.btn3, .btn3:link, .btn3:visited {color: #333;font-size: .8em;text-transform: uppercase;min-width: 100px;position: relative;
+		  	margin: 0 auto;border: 2px solid transparent;-webkit-transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);}
+		.btn3:after, .btn3:before, .btn3:link:after, .btn3:link:before, .btn3:visited:after, .btn3:visited:before { content: "";position: absolute;letter-spacing: .1em;left: -1em;top: -2px; height: 3em; width: 0;
+			border: 1px solid #c75842;-webkit-transition: inherit;transition: inherit;}
+		.btn3:after, .btn3:link:after, .btn3:visited:after {left: auto;right: -1em;}
+		.btn3:hover, .btn3:link:hover, .btn3:visited:hover {border-color: #c75842;-webkit-transition: border-color 0.2s 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);transition: border-color 0.2s 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);}
+		.btn3:hover:after, .btn3:hover:before, .btn3:link:hover:after, .btn3:link:hover:before, .btn3:visited:hover:after, .btn3:visited:hover:before {
+		  right: -2px;-webkit-transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);}
+		.btn3:hover:before, .btn3:link:hover:before, .btn3:visited:hover:before {left: -2px;right: auto;}
+		@-webkit-keyframes gelatine {
+		  from,to {-webkit-transform: scale(1, 1);}
+		  25% {-webkit-transform: scale(0.9, 1.1);}
+		  50% {-webkit-transform: scale(1.1, 0.9);}
+		  75% {-webkit-transform: scale(0.95, 1.05);}
+		  from,to {-webkit-transform: scale(1, 1);}
+		  25% {-webkit-transform: scale(0.9, 1.1);}
+		  50% {-webkit-transform: scale(1.1, 0.9);}
+		  75% {-webkit-transform: scale(0.95, 1.05);}}
+		@keyframes gelatine {from,to {-webkit-transform: scale(1, 1); transform: scale(1, 1);}
+		  25% {-webkit-transform: scale(0.9, 1.1); transform: scale(0.9, 1.1);}
+		  50% {-webkit-transform: scale(1.1, 0.9);transform: scale(1.1, 0.9);}
+		  75% {-webkit-transform: scale(0.95, 1.05);t}
+			/* 버튼 CSS */
 	
 	
 	</style>
@@ -186,7 +215,6 @@
 		
 			<!-- 사이드바  -->		
 				<div class="col-md-2 sideBarPlace">		
-			!=레이아웃 완료후 지우기 /사이드바 자리  get my feed list=!
 				 <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
 				 
   			<!-- 타이틀 -->
@@ -198,10 +226,11 @@
 					
 			<!-- 본문 -->
 		 		<div class="row justify-content-center">
-					 <div class="text-center">
-					 	<button class="btn btn-default ml-5 mr-5" data-toggle="modal" data-target="#theModal">팔로워</button>
-						<button class="btn btn-default ml-5 mr-5" data-toggle="modal" data-target="#theModal2">팔로잉</button>
-						<a type="button" class="btn btn-default ml-5 mr-5" href="#">채 팅</a>
+					 <div class="box_body_m">
+					 <div class="wrap_m">
+					 	<a id="btn_ch_m" class="btn3" data-toggle="modal" data-target="#theModal">팔로워</a>
+						<a id="btn_ch_m" class="btn3" data-toggle="modal" data-target="#theModal2">팔로잉</a>
+						<a id="btn_ch_m" class="btn3" href="#">채 팅</a>
 					</div>	 			
 				</div>   		
 			    	<br/>			    		

@@ -38,19 +38,14 @@
 	
 <style>
 	
-	body { font-family: "Nanum Gothic", sans-serif;}
-        #myFeedMain { padding: 70px;} 
-	.col-md-12_top {	width: 100%; height: 100%; position: relative; margin:50px; }
-	/*
-	#main { 
-		width: 960px;
-		margin-top: 70px;
-		margin-left: 30px;
-		align:  center;
-	}
-	*/
-
-	
+	body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}
+    h1 { margin-left: 100px;}  
+    
+    /*사이드바,본문 배치css*/
+	 .col-md-2.sideBarPlace { padding:0;  display: inline-block;float:left;}
+	 #mainMyFeedPage { margin-left: 0px;  display: inline-block; float:right;}
+	.col-md-12{ margin-bottom: 50px;} 
+      
 	#priceRadio {
 	
 		margin: 3px auto;
@@ -65,6 +60,35 @@
 	}
 	
 
+
+/* 버튼 CSS */
+		.box_body_m {box-sizing: border-box; font-family: "Futura PT", "Futura", sans-serif; -webkit-font-smoothing: antialiased;}
+		.wrap_m {text-align: center;}
+		#btn_ch_m { padding: 12px 50px;text-decoration: none;font-size: 12px; ;margin: 3px 20px; display:flex; float:left;}
+		.btn:hover, .btn:link:hover, .btn:visited:hover {box-shadow: 0 4em 0 0 #2c3e50 inset, 0em 0em 0 0 #bbb;-webkit-transform: translate(0.3em, 0.2em);transform: translate(0.3em, 0.2em); color: #fff;}
+		.btn3, .btn3:link, .btn3:visited {color: #333;font-size: .8em;text-transform: uppercase;min-width: 100px;position: relative;
+		  	margin: 0 auto;border: 2px solid transparent;-webkit-transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);}
+		.btn3:after, .btn3:before, .btn3:link:after, .btn3:link:before, .btn3:visited:after, .btn3:visited:before { content: "";position: absolute;letter-spacing: .1em;left: -1em;top: -2px; height: 3em; width: 0;
+			border: 1px solid #c75842;-webkit-transition: inherit;transition: inherit;}
+		.btn3:after, .btn3:link:after, .btn3:visited:after {left: auto;right: -1em;}
+		.btn3:hover, .btn3:link:hover, .btn3:visited:hover {border-color: #c75842;-webkit-transition: border-color 0.2s 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);transition: border-color 0.2s 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);}
+		.btn3:hover:after, .btn3:hover:before, .btn3:link:hover:after, .btn3:link:hover:before, .btn3:visited:hover:after, .btn3:visited:hover:before {
+		  right: -2px;-webkit-transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);}
+		.btn3:hover:before, .btn3:link:hover:before, .btn3:visited:hover:before {left: -2px;right: auto;}
+		@-webkit-keyframes gelatine {
+		  from,to {-webkit-transform: scale(1, 1);}
+		  25% {-webkit-transform: scale(0.9, 1.1);}
+		  50% {-webkit-transform: scale(1.1, 0.9);}
+		  75% {-webkit-transform: scale(0.95, 1.05);}
+		  from,to {-webkit-transform: scale(1, 1);}
+		  25% {-webkit-transform: scale(0.9, 1.1);}
+		  50% {-webkit-transform: scale(1.1, 0.9);}
+		  75% {-webkit-transform: scale(0.95, 1.05);}}
+		@keyframes gelatine {from,to {-webkit-transform: scale(1, 1); transform: scale(1, 1);}
+		  25% {-webkit-transform: scale(0.9, 1.1); transform: scale(0.9, 1.1);}
+		  50% {-webkit-transform: scale(1.1, 0.9);transform: scale(1.1, 0.9);}
+		  75% {-webkit-transform: scale(0.95, 1.05);t}
+			/* 버튼 CSS */
 
 
 </style>
@@ -96,40 +120,50 @@
 <body>
 	
 
-	<!-- 상단 툴바 자리 --> 									
-      <div class="container-fluid">  
-      	 <div class="row">
-      		<div class="col-md-12">
-      			<jsp:include page="/main/toolbar.jsp" />
-     		</div>
-		</div>
+	<!-- 툴바 -->
+		      <div class="container-fluid">  
+		      	 <div class="row">
+		      		<div class="col-md-12">
+		      			<jsp:include page="/main/toolbar.jsp"></jsp:include>
+		     		</div>
+				</div>
 		
-		<div class="col-md-12">
-			<div class="row">
-	<!-- 사이드바 자리 -->		
-			<div class="col-md-2">		
-		    <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
-		    </div>  
-		    
-		    
-	<!--  본문 자리 -->	      	    
-		    <div class="col-md-10" id="myFeedMain">
-			<div class="col-md-12_top">
+		
+			<!-- 사이드바  -->		
+				<div class="col-md-2 sideBarPlace">		
+				 <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
+				 
+  			<!-- 타이틀 -->
+			    <div class="col-md-10" id="mainMyFeedPage" >
 	
-	<h2> 내 결제 목록 </h2>
-	<hr>
+				<h1> 내 결제 목록 </h1>
+				<hr>
+				
 	
-	<div class="row justify-content-end">							
+	<div class="row justify-content-end" style="margin: 45px 10px 27px 10px;">		
+		<!-- <div class="box_body_m" style="margin-right: 200px;">
+					 <div class="wrap_m">
+						<a id="btn_ch_m" class="btn3" data-toggle="modal" data-target="#theModal">팔로워</a>
+						<a id="btn_ch_m" class="btn3" data-toggle="modal" data-target="#theModal2">팔로잉</a>
+						<a id="btn_ch_m" class="btn3" href="#">채 팅</a>
+					</div>	 			
+				</div>   	
+		 -->
+						
 					<div class="input-group md-form form-sm form-1 pl-0 col-3">
 					  <div class="input-group-prepend">
-					    <span class="input-group-text cyan lighten-2" id="basic-text1"><i id="searchIcon" class="fas fa-search text-white" aria-hidden="true"></i></span>
+					   <i class="fas fa-search" class="fas fa-search text-white" aria-hidden="true"></i>
+					  <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" aria-label="Search">
 					  </div>
-					</div>					
+					</div>	
+					
+					
 				</div>
 	
-	<div class="row">
+	
+	<div class="row" style="flex-wrap: wrap;margin-right: 40px;margin-left: 50px;">
 		
-		<table class="table" >
+		<table class="table table-hover table-striped" >
 
         <thead class="grey lighten-2">
 		    <tr>
@@ -199,6 +233,7 @@
 		
 		</tbody>
 		</table>
+			
 	</div>
 	
 	
