@@ -1,13 +1,16 @@
 package com.VIG.mvc.web.search;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
@@ -15,15 +18,18 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.VIG.mvc.service.color.ColorServices;
 import com.VIG.mvc.service.domain.Feed;
 import com.VIG.mvc.service.domain.History;
 import com.VIG.mvc.service.domain.Image;
-import com.VIG.mvc.service.domain.ImageColor;
 import com.VIG.mvc.service.domain.ImageKeyword;
 import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.domain.User;
@@ -34,7 +40,6 @@ import com.VIG.mvc.service.keyword.KeywordServices;
 import com.VIG.mvc.service.user.UserServices;
 import com.VIG.mvc.util.CommonUtil;
 import com.VIG.mvc.util.Translater;
-import com.VIG.mvc.web.main.mainController;
 
 
 
@@ -79,6 +84,12 @@ public class RestSearchController {
 	
 	@Value("#{commonProperties['colorRange'] ?: 5}")
 	int colorRange;
+
+	@Value("#{commonProperties['tagetPercent'] ?: 70}")
+	int tagetPercent;
+	
+	@Value("#{commonProperties['decreasePercent'] ?: 20}")
+	int decreasePercent;
 
 
 	
@@ -145,7 +156,7 @@ public class RestSearchController {
 	
 	//선택된 카테고리에 해당하는 피드를 리턴한다.
 	@RequestMapping(value = "json/getSearchCategoryResult")
-	public Map<String, Object> getSearchCategoryResult(@RequestBody Map<String, String> jsonData, HttpSession session) throws Exception {
+	public Map<String, Object> getSearchCategoryResult(@RequestBody Map<String, String> jsonData, HttpSession session, @CookieValue(value = "searchKeys", defaultValue = "", required = false) String searchKeys) throws Exception {
 				
 		Map<String, Object> map = new HashMap<String, Object>();
 		
@@ -187,10 +198,33 @@ public class RestSearchController {
 					//최근 본 피드의 썸네일 키워드 리스트를 가지고 온다.
 					for(History history : historyList) {						
 						keywordList.addAll(history.getShowFeed().getKeywords());
-					}		
-					tempSearch.setKeywords(keywordList);
+					}
 					
-					feedlist = feedServices.getRecommendFeedList(tempSearch);				
+					
+					//쿠키에 저장된 검색어 기록을 가져온다.
+					if(!searchKeys.equals("") ) {			
+						
+						//쿠키에서 가져오면서 변경된 공백을 원래 상태로 돌림
+						searchKeys = searchKeys.replaceAll("\\+", " ");						
+						//콤마 (,)를 기준으로 나눔
+						String[] keys = searchKeys.split(",");
+						
+						for(String keyword : keys ) {
+							
+							if(!keyword.equals("")) {
+								logger.debug("불러온 쿠키 값 : " + keyword);
+								ImageKeyword temp = new ImageKeyword();								
+								temp.setKeywordEn(keyword);	
+								
+								keywordList.add(temp);
+							}
+						}						
+					}				
+					
+					
+					tempSearch.setKeywords(CommonUtil.checkEqualKeyword(keywordList));
+					
+					feedlist = CommonUtil.checkEqualFeed(feedServices.getRecommendFeedList(tempSearch));				
 					
 					if(feedlist.size() > 0) {					
 						
@@ -247,14 +281,14 @@ public class RestSearchController {
 	
 	//피드 검색 결과를 반환
 	@RequestMapping(value = "json/getSearchResultList")
-	public Map<String, Object> getSearchResult(@RequestBody Map<String, String> jsonData, HttpSession session, HttpServletRequest request) throws Exception {	
+	public Map<String, Object> getSearchResult(@RequestBody Map<String, String> jsonData, HttpSession session, HttpServletRequest request, HttpServletResponse response ) throws Exception {	
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		Search search = new Search();		
 		
 		search.setCurrentPage(Integer.valueOf(jsonData.get("currentPage")));
-		search.setPageSize(pageSize);
+		search.setPageSize(pageSize);		
 		
 		//로그인한 유저 정보를 받아옴
 		User user = (User)session.getAttribute("user");
@@ -264,6 +298,11 @@ public class RestSearchController {
 		
 		//피드 검색
 		if(jsonData.get("mode").equals("Feed")) {
+			
+			logger.debug("전달된 카테고리 : "+ jsonData.get("category"));
+			
+			//선택된 카테고리 정보를 세팅
+			search.setSearchType(Integer.valueOf(jsonData.get("category")));
 			
 			//리턴시킬 피드 리스트를 초기화
 			List<Feed> feedlist = new ArrayList<Feed>();
@@ -295,11 +334,15 @@ public class RestSearchController {
 					if(search !=null) {
 						//색상 기반으로 검색
 						feedlist = feedServices.getFeedListFromColor(search);
-					}
-					
-				//검색어를 영어로 변역
+					}				
+				
 				}else {
-					search.setKeyword(Translater.autoDetectTranslate(jsonData.get("keyword"),"en"));
+					//검색어를 영어로 변역
+					String keyword = Translater.autoDetectTranslate(jsonData.get("keyword"),"en");
+					search.setKeyword(keyword);
+					
+					//검색어를 쿠키에 추가
+					addSearchKeyCookie(keyword, request, response);					
 					feedlist = feedServices.getFeedListFromKeyword(search);
 					primeFeed = feedServices.getPrimeFeed(search);
 				}				
@@ -342,10 +385,13 @@ public class RestSearchController {
 		//이미지 검색
 		if(jsonData.get("mode").equals("Image")) {
 			
+			//한 피드의 이미지만 나오지 않도록 최대 개수인 10개를 넘게 세팅
+			search.setPageSize(pageSize+5);
+			
 			//결과를 리턴할 이미지 객체
 			List<Image> imageList = new ArrayList<Image>();
 			
-			//검색어를 영어로 변역
+			
 			if(CommonUtil.null2str(jsonData.get("keyword")).equals("")) {
 				search.setKeyword("");
 				imageList = imageServices.getImageListFromKeyword(search);
@@ -366,7 +412,12 @@ public class RestSearchController {
 					}
 					
 				}else {
-					search.setKeyword(Translater.autoDetectTranslate(jsonData.get("keyword"),"en"));
+					//검색어를 영어로 변역
+					String keyword = Translater.autoDetectTranslate(jsonData.get("keyword"),"en");
+					search.setKeyword(keyword);
+					
+					//검색어를 쿠키에 추가
+					addSearchKeyCookie(keyword, request, response);
 					imageList = imageServices.getImageListFromKeyword(search);
 				}			
 			}			
@@ -412,6 +463,107 @@ public class RestSearchController {
 
 		return map;		
 	}
+	
+	
+	
+	
+	//이미지 자세히 보기 
+	@RequestMapping(value = "json/getSearchImages")
+	public Map<String, Object> getSearchImageList(@RequestBody Map<String, String> jsonData, HttpSession session, @CookieValue(value = "searchKeys", defaultValue = "", required = false) String searchKeys ) throws Exception {		
+		
+		//연산 결과를 저장할 맵 생성
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		//기준 이미지 선택
+		Image image = imageServices.getImageOne(Integer.parseInt(jsonData.get("ImageId")));				
+		
+		//키워드 연관 이미지 추출하고 담을 객체
+		List<Image> relatedImages = new ArrayList<Image>();
+				
+		//검색 기준 저장
+		Search search = new Search();
+		search.setPageSize(pageSize);				
+	
+		search.setCurrentPage(Integer.valueOf(jsonData.get("currentPage")));		
+		
+		
+		//선택된 이미지의 키워드 + 최근검색어를 저장할 리스트
+		List<ImageKeyword> keylist = new ArrayList<ImageKeyword>();
+		keylist.addAll(image.getKeyword());				
+
+		//쿠키에 저장된 검색어 기록을 가져온다.
+		if(!searchKeys.equals("") ) {			
+			
+			//쿠키에서 가져오면서 변경된 공백을 원래 상태로 돌림
+			searchKeys = searchKeys.replaceAll("\\+", " ");						
+			//콤마 (,)를 기준으로 나눔
+			String[] keys = searchKeys.split(",");
+			
+			for(String keyword : keys ) {
+				
+				if(!keyword.equals("")) {
+					logger.debug("불러온 쿠키 값 : " + keyword);
+					ImageKeyword temp = new ImageKeyword();
+					temp.setImageId(image.getImageId());
+					temp.setKeywordEn(keyword);	
+					
+					keylist.add(temp);
+				}
+			}
+			
+		}
+		
+		//중복 키워드가 있는지 확인후 검색기준에 추가
+		keylist = CommonUtil.checkEqualKeyword(keylist);
+		
+		//조합 결과를 담을 리스트
+		List<String> resultkeys = new ArrayList<String>();
+		
+		//조합 연산을 위한 배열
+		boolean[] visited = new boolean[keylist.size()];
+		
+		int r = keylist.size() * ((tagetPercent - (decreasePercent*(Integer.valueOf(jsonData.get("currentPage"))-1)))/100);
+		
+		//주어진 퍼센트에 맞는 키워드 조합을 생성
+		CommonUtil.comb(keylist, visited, 0, r, resultkeys);
+		
+		for(String combKey: resultkeys) {
+			
+			String[] key = combKey.split(",");
+			List<ImageKeyword> combkeywords = new ArrayList<ImageKeyword>();
+			
+			for(String tempkey : key ) {
+				ImageKeyword temp = new ImageKeyword();
+				temp.setImageId(image.getImageId());	
+				temp.setKeywordEn(tempkey);
+			}
+			
+			//조합으로 생성한 키 리스트를 검색 기준으로 넣어  줌
+			search.setKeywords(combkeywords);
+			relatedImages.addAll(imageServices.getImageListFromImageALLKeys(search));
+		}
+		
+		
+				
+		//중복체크후 반환
+		map.put("list", CommonUtil.checkEqualImage(relatedImages));
+		return map;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	//특정 피드를 원하는 위치로 이동
@@ -470,6 +622,30 @@ public class RestSearchController {
 		}		
 	}
 	
+	
+	//현재 검색한 단어를 쿠키에 추가 
+	private void addSearchKeyCookie(String keyword, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+		
+		Cookie[] cookies = request.getCookies();		
+		
+		if(cookies != null) {
+			for(Cookie cookie :cookies) {
+				if((cookie.getName()).equals("searchKeys")) {		
+					//두번 인코딩 방지를 위하여 추가되는 부분만 인코딩한다.
+					keyword = URLEncoder.encode(keyword +",", "UTF-8") + cookie.getValue();					
+					break;
+				} 				
+			}			
+		}		
+		
+		logger.debug("저장된 쿠키 값  : " +keyword);		
+		Cookie cookie = new Cookie("searchKeys", keyword );
+		//1시간 유지
+		cookie.setMaxAge(60*60);
+		cookie.setPath("/VIG/");
+		response.addCookie(cookie);		
+		
+	}
 
 
 }

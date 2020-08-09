@@ -19,12 +19,12 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.VIG.mvc.service.domain.Feed;
 import com.VIG.mvc.service.domain.Image;
 import com.VIG.mvc.service.domain.ImageColor;
+import com.VIG.mvc.service.domain.ImageKeyword;
 import com.VIG.mvc.service.domain.Search;
 
 
@@ -232,12 +232,11 @@ public class CommonUtil {
 		}
 		
 		
-		//헥사코드를 RGB로 변환
+		
 		public static Search getHaxtoRGB(Search search, int colorRange ) {
 			
-			ImageColor rgb = new ImageColor();
-			
-			//핵사코드의 길이가 맞지 않다면 리턴해버림
+			ImageColor rgb = new ImageColor();			
+		
 			if(search.getKeyword().length() !=7) {
 				return null;
 			} 
@@ -256,7 +255,7 @@ public class CommonUtil {
 		
 		public static int getColorNumber(String Code) {
 			
-			//두자리가 아닌 값이 들어오면
+			
 			if(Code.length() !=2) {
 				return -1;
 			}		
@@ -280,12 +279,11 @@ public class CommonUtil {
 		}
 		
 		
-		//사용자의 IP를 리턴하는 코드
+	
 		public static String getUserIp(HttpServletRequest request) throws Exception {
 			
 	        String ip = null;
-	     //   HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
-
+	
 	        ip = request.getHeader("X-Forwarded-For");
 	        
 	        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
@@ -315,33 +313,7 @@ public class CommonUtil {
 			
 			return ip;
 		}
-		
-		public static void comb(int[] arr, boolean[] visited, int depth, int n, int r) {
-	        if (r == 0) {
-	            print(arr, visited, n);
-	            return;
-	        }
-	        
-	        if (depth == n) {
-	            return;
-	        }
 
-	        visited[depth] = true;
-	        comb(arr, visited, depth + 1, n, r - 1);
-
-	        visited[depth] = false;
-	        comb(arr, visited, depth + 1, n, r);
-	    }
-
-	    // 배열 출력
-		public static void print(int[] arr, boolean[] visited, int n) {
-	        for (int i = 0; i < n; i++) {
-	            if (visited[i]) {
-	                System.out.print(arr[i] + " ");
-	            }
-	        }
-	        System.out.println();
-	    }
 		
 		public static List<Feed> checkEqualFeed(List<Feed> checked){
 			List<Feed> result = new ArrayList<Feed>();
@@ -376,6 +348,59 @@ public class CommonUtil {
 			
 			return result;
 		}
+		
+		
+		
+		public static List<ImageKeyword> checkEqualKeyword(List<ImageKeyword> checked){
+			List<ImageKeyword> result = new ArrayList<ImageKeyword>();
+			
+			for(ImageKeyword k : checked) {
+				boolean isSame = false;
+				
+				for(ImageKeyword rk : result) {
+					if((rk.getKeywordEn()).equals(k.getKeywordEn())) {
+						isSame = true;
+						break;
+					}					
+				}
+				
+				if(!isSame) {
+					result.add(k);
+				}				
+			}			
+			
+			return result;
+		}
+		
+		
+		public static void comb(List<ImageKeyword> target, boolean[] visited, int depth, int r, List<String> result) {
+	        if (r == 0) {
+	        	result.add(addComb(target, visited));
+	            return;
+	        }
+	        
+	        if (depth == target.size()) {
+	            return;
+	        }
+
+	        visited[depth] = true;
+	        comb(target, visited, depth + 1, r - 1, result);
+
+	        visited[depth] = false;
+	        comb(target, visited, depth + 1, r, result);
+	    }
+		
+		
+	    private static String addComb(List<ImageKeyword> target, boolean[] visited) {
+	    	String result = "";
+	    	
+	        for (int i = 0; i < target.size(); i++) {
+	            if (visited[i]) {            	
+	            	result += target.get(i).getKeywordEn() +",";                
+	            }
+	        }
+	        return result.substring(0, result.length()-1);
+	    }
 
 	
 }

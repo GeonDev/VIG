@@ -129,9 +129,6 @@
 		</select>
 		
 		
-		
-		
-		
 		<!-- 이벤트 참여 피드 조회용 -->
 		<select id ="getFeedListOnlyTag" parameterType="string" resultMap="FeedSelectMap">
 			SELECT feeds.* FROM feeds, images, keywords
@@ -176,6 +173,9 @@
 			AND feeds.feed_is_prime = 0
 			<if test="keyword !=''">
 			AND keywords.keyword_en LIKE CONCAT('%',#{keyword},'%')				
+			</if>
+			<if test="searchType != 0">
+			AND	feeds.category_id = #{searchType}	
 			</if>			
 			GROUP BY feeds.feed_id) temp
 			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}		
@@ -189,6 +189,9 @@
 			AND feeds.feed_is_prime = 0
 			<if test="keyword !=''">
 			AND feeds.feed_title LIKE CONCAT('%',#{keyword},'%')				
+			</if>
+			<if test="searchType != 0">
+			AND	feeds.category_id = #{searchType}	
 			</if>			
 			) temp
 			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}		
@@ -205,6 +208,9 @@
 			AND colors.color_r BETWEEN #{startRed} AND #{endRed} 
 			AND colors.color_g BETWEEN #{startGreen} AND #{endGreen} 
 			AND colors.color_b BETWEEN #{startBlue} AND #{endBlue}
+			<if test="searchType != 0">
+			AND	feeds.category_id = #{searchType}	
+			</if>
 			GROUP BY feeds.feed_id) temp
 			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}		
 		</select>	
@@ -214,14 +220,15 @@
 		<select id ="getfeedTitleList" parameterType="String" resultType="String">
 			SELECT temp.feed_title FROM
 			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feed_title FROM feeds
-			WHERE feed_title LIKE CONCAT('%',#{value},'%'))temp
+			WHERE feed_title LIKE CONCAT('%',#{value},'%')
+			)temp
 			WHERE num BETWEEN 1 AND 5
 		</select>
 		
 		<update id ="updatePrimeFeedViewCount" parameterType="feed">
-		 UPDATE feeds
-		 SET prime_feed_view_count = #{primeFeedViewCount}
-		 WHERE feed_id = #{feedId} 		
+		 	UPDATE feeds
+			 SET prime_feed_view_count = #{primeFeedViewCount}
+			 WHERE feed_id = #{feedId} 		
 		</update>
 				
 		<!-- 가장 많이 조회한 피드 리스트를 불러온다. (방문유저 세팅용) -->
@@ -256,15 +263,14 @@
 		<select id="getRecommendFeedList" parameterType="search" resultMap="FeedSelectMap">
 			SELECT feeds.* FROM feeds, images, keywords
 			WHERE feeds.feed_id = images.feed_id
-			AND images.image_id = keywords.image_id
-			AND images.is_thumbnail = 1
+			AND images.image_id = keywords.image_id	
 			AND feeds.feed_state = 0
 			AND keywords.keyword_en IN
 			<foreach collection="keywords" item="item" open="(" close=")" separator=",">
 			 #{item.keywordEn}
 			</foreach>
 			GROUP BY feeds.feed_id
-		
+			ORDER BY feed_view_count DESC
 		</select>
 		
 		
