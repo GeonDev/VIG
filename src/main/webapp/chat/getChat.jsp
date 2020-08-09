@@ -26,7 +26,7 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
-	<script src="//192.168.0.13:3000/socket.io/socket.io.js"></script>
+	<script src="//127.0.0.1:3000/socket.io/socket.io.js"></script>
 	
 	<style type="text/css">
 	 body {
@@ -69,7 +69,7 @@
 	
 	$(function(){	
 				
-				socket = io.connect('http://192.168.0.13:3000');
+				socket = io.connect('http://127.0.0.1:3000');
 				var username = $("input[name='userCode']").val();
 				var selectUser = $("input[name='selectUser']").val();
 				var roomId;
@@ -93,7 +93,7 @@
 					$('.chat-body').append(message);
 				});
 
-				socket.on('remove user', function(username){
+				socket.on('remove', function(username){
 					$('#user_list p#'+username).remove();
 				});
 				
@@ -102,10 +102,12 @@
 				
 				//유저 선택하고, 메세지 보내기를 누르면  join
 				$("#sendMessages").on("click", function(){
-				
+					
+
 					socket.emit('createChat', username, selectUser);
 					
 					$(".user_list").append(user);
+					
 					
 				});
 				
@@ -114,12 +116,15 @@
 
 				$('#submit_btn').on("click",function(e){
 					
-					console.log($('#message_input').val());
+				
+					roomId = $('input[name="roomId"]').val();
 					var message = $('#message_input').val();
+					console.log(message);
 					var attached = $('#attached_input').val();
-					console.log(selectuser);
+					selectUser = $("input[name='selectUser']").val();
+					console.log("메세지를 보낼 유저"+selectUser);
 					if(message != ''){
-						socket.emit('send message', message, selecteUser);
+						socket.emit('send message', message, selectUser);
 						$('#message_input').val('');
 					} else if (attached != '') {
 						$("#status").empty().text("File is uploading...");
@@ -141,7 +146,7 @@
 				//page로딩시 ajax로 userlist를 가져온다.
 				$.ajax({
 					
-					url: 'http://192.168.0.13:3000/chat/getChatList/'+username,
+					url: 'http://127.0.0.1:3000/chat/getChatList/'+username,
 					method: 'get',
 					dataType: 'json',
 					headers : {
@@ -156,8 +161,13 @@
 						console.log("json크기"+data.length);
 						for(var i = 0; i < data.length; i++){
 							var userCode = data[i].userCodes[1];
+							roomId = data[i]._id;
 							console.log(userCode);
 							console.log(username);
+							console.log(roomId);
+							if(i==0){
+								$('input[name="roomId"]').val(roomId);
+							}
 							if(username != userCode){
 								
 							var user = '<div class="chatUser" onClick="getChat(\''+data[i]._id+','+userCode+'\')">'+
@@ -198,7 +208,7 @@
 		}
 		
 		$.ajax({
-			url: 'http://192.168.0.13:3000/chat/getChat/'+list[0],
+			url: 'http://127.0.01:3000/chat/getChat/'+list[0],
 			method: 'get',
 			dataType: 'json',
 			headers : {
@@ -216,7 +226,30 @@
 				"<img id='profileImage' src='/VIG/images/uploadFiles/${user.profileImg }'>"+
 				"<p id='selectChat' style='display: inline-block; margin: 3px auto;'>"+list[1]+"</p></div><hr>"
 				
+				for(var i = 0; i<data.length; i++){
+					var userCode = data[i].userCodes[1];
+					roomId = data[i]._id;
+					console.log(userCode);
+					console.log(username);
+					console.log(_roomId);
+					if(i==0){
+						$('input[name="roomId"]').val(roomId);
+					}
+					if(username != userCode){
+						
+
+					} else if(username == userCode) {
+						
+
+						
+					}
+					$(".user_list").append(user);
+					
+					
+				}
+				
 				$("#selectUser").append(user);
+				$("input[name='selectUser']").val(list[1]);
 				
 				
 			}
@@ -241,10 +274,13 @@
 	<jsp:include page="../main/toolbar.jsp" />
 
 	<div class="container">
+	<div class="row">
 	<h1 style="text-align:left">Message</h1>
+	</div>
 	<hr><br>
 		<div class="row">
 			<div class="col-3">
+				<button style="display: inline-block;" type="button" id="sendMessages" class="btn btn-outline-default waves-effect">Default</button>
 				<div class="user_list">
 
 					
@@ -265,14 +301,14 @@
 					<div class="row">
 						<div class="col-9">
 							<input type="hidden" name="roomId">
-							<input type="hidden" name="selectUser" value="user07">
+							<input type="hidden" name="selectUser">
 							<input type="hidden" name="userCode" value="${user.userCode }">
 							<input style="width:600px; vertical-align: middle" type="text" id="message_input" class="form-control" placeholder="Example input">
 						</div>
 						<div class="col-3">
 							<button style="display: inline-block;" type="button" id="submit_btn" class="btn btn-outline-default waves-effect">Default</button>
 						</div>
-						<button style="display: inline-block;" type="button" id="sendMessages" class="btn btn-outline-default waves-effect">Default</button>
+						
 					</div>
 				</form>
 		

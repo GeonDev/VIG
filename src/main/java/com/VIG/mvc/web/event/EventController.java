@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,6 @@ import com.VIG.mvc.service.domain.Event;
 import com.VIG.mvc.service.domain.Feed;
 import com.VIG.mvc.service.event.EventServices;
 import com.VIG.mvc.service.feed.FeedServices;
-import com.VIG.mvc.web.main.mainController;
 import com.VIG.mvc.service.domain.Page;
 import com.VIG.mvc.service.domain.Search;
 
@@ -49,6 +50,9 @@ public class EventController {
 	@Value("#{commonProperties['pageSize'] ?: 5}")
 	int pageSize;
 	
+	@Autowired
+	private ServletContext context;	
+	
 	
 	public EventController(){
 	}
@@ -73,38 +77,59 @@ public class EventController {
 		
 		System.out.println(event);
 		
+        String path = context.getRealPath("/");        
+        path = path.substring(0,path.indexOf("\\.metadata"));         
+        path = path +  otherPath;  
+        System.out.println(files);
+		
 		if(files !=null) {
 			int i = 0;
 	        for (MultipartFile multipartFile : files) {
 	        	//파일 업로드시 시간을 이용하여 이름이 중복되지 않게 한다.
-	        	System.out.println("index: "+ i++);
+	        	i++;
+	        	System.out.println("index: "+i);
 	        	String inDate   = new java.text.SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date());
 	    
-	    		File f =new File(otherPath+inDate+multipartFile.getOriginalFilename());
-	    		//원하는 위치에 파일 저장
-	    		multipartFile.transferTo(f);
-	    		if(i == 1) {
-	    			if(f!=null) {
-	    			event.setEventImage(f.getName());	
-	    			}
-	    		}
 	    		
-	    		if(i == 2) {
-	    			if(f!=null) {
-	    			event.setEventThumb(f.getName());
-	    			}
-	    		}
 	    		
-	    		if(i == 3) {
-	    			if(f!=null) {
-	    			event.setBanner(f.getName());
-	    			}
-	    		}
-	    		
-	    		System.out.println(i+"    "+f.getName());
-	    		
-			} 			
-		}	
+	    		if(multipartFile.getOriginalFilename()!="") { //multipartFile이 있는지 확인
+	    			
+	    			File f = null;
+		    		//원하는 위치에 파일 저장
+	    			
+	    			
+		    		
+		    		if(i == 1) { //본문 이미지면
+		    			
+		    			f=new File(path+inDate+multipartFile.getOriginalFilename());
+		    			multipartFile.transferTo(f);
+		    			event.setEventImage(f.getName());	
+		    			
+		    		}
+		    		
+		    		if(i == 2) { //썸네일이면
+		    			
+		    			f=new File(path+inDate+multipartFile.getOriginalFilename());
+		    			multipartFile.transferTo(f);
+			    		event.setEventThumb(f.getName());
+		    			
+		    		}
+		    		
+		    		if(i == 3) { //배너면
+		    			
+		    			f=new File(path+inDate+multipartFile.getOriginalFilename());
+		    			multipartFile.transferTo(f);
+			    			event.setBanner(f.getName());
+		    			
+		    		}
+		    		
+		    		System.out.println(i+"    "+f.getName());
+		    		
+				} 	
+	        }
+		}
+		
+		
 		
 		
 		System.out.println(event);
@@ -113,7 +138,7 @@ public class EventController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		
-		modelAndView.setViewName("forward:/event/getEventList");
+		modelAndView.setViewName("redirect:/event/getEventList");
 		
 		return modelAndView;
 		
@@ -129,8 +154,6 @@ public class EventController {
 		
 		//String[] tags = ((event.getEventTags()).split(","));
 		String tags = event.getEventTags();
-		tags = tags.replaceAll(" ", "");
-		tags = "Red,Design,Logo";
 		System.out.println(tags);
 		List<Feed> feedList = feedServices.getFeedListOnlyTag(tags);
 		System.out.println(feedList);
@@ -143,7 +166,7 @@ public class EventController {
 		
 	}
 	
-	@RequestMapping(value="getEventList", method=RequestMethod.GET)
+	@RequestMapping(value="getEventList")
 	public ModelAndView getEventList( @ModelAttribute("search") Search search) throws Exception {
 		
 		logger.debug("getEventList");
@@ -207,38 +230,58 @@ public class EventController {
 		
 		System.out.println(event);
 		
+        String path = context.getRealPath("/");        
+        path = path.substring(0,path.indexOf("\\.metadata"));         
+        path = path +  otherPath;  
+        
+        System.out.println(files);
+		
 		if(files !=null) {
 			int i = 0;
 	        for (MultipartFile multipartFile : files) {
 	        	//파일 업로드시 시간을 이용하여 이름이 중복되지 않게 한다.
-	        	System.out.println("index: "+ i++);
+	        	i++;
+	        	System.out.println("index: "+i);
 	        	String inDate   = new java.text.SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date());
 	    
-	    		File f =new File(otherPath+inDate+multipartFile.getOriginalFilename());
-	    		//원하는 위치에 파일 저장
-	    		multipartFile.transferTo(f);
-	    		if(i == 1) {
-	    			if(f!=null) {
-	    			event.setEventImage(f.getName());	
-	    			}
-	    		}
 	    		
-	    		if(i == 2) {
-	    			if(f!=null) {
-	    			event.setEventThumb(f.getName());
-	    			}
-	    		}
 	    		
-	    		if(i == 3) {
-	    			if(f!=null) {
-	    			event.setBanner(f.getName());
-	    			}
-	    		}
-	    		
-	    		System.out.println(i+"    "+f.getName());
-	    		
-			} 			
-		}	
+	    		if(multipartFile.getOriginalFilename()!="") { //multipartFile이 있는지 확인
+	    			
+	    			File f = null;
+		    		//원하는 위치에 파일 저장
+	    			
+	    			
+		    		
+		    		if(i == 1) { //본문 이미지면
+		    			
+		    			f=new File(path+inDate+multipartFile.getOriginalFilename());
+		    			multipartFile.transferTo(f);
+		    			event.setEventImage(f.getName());	
+		    			
+		    		}
+		    		
+		    		if(i == 2) { //썸네일이면
+		    			
+		    			f=new File(path+inDate+multipartFile.getOriginalFilename());
+		    			multipartFile.transferTo(f);
+			    			event.setEventThumb(f.getName());
+		    			
+		    		}
+		    		
+		    		if(i == 3) { //배너면
+		    			
+		    			f=new File(path+inDate+multipartFile.getOriginalFilename());
+		    			multipartFile.transferTo(f);
+			    			event.setBanner(f.getName());
+		    			
+		    		}
+		    		
+		    		System.out.println(i+"    "+f.getName());
+		    		
+				} 	
+	        }
+		}
 		
 		
 		System.out.println(event);
@@ -247,7 +290,7 @@ public class EventController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		
-		modelAndView.setViewName("forward:/event/getEventList");
+		modelAndView.setViewName("redirect:/event/getEventList");
 		
 		return modelAndView;
 		

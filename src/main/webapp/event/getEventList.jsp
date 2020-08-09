@@ -28,6 +28,9 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+	
+
+	
 
 	
 <style>
@@ -137,7 +140,13 @@ if(eventmenu == 0) {
 	$(".fin").attr("style", "background-color: #D0F1F8");
 }
 
+//이벤트 등록으로 ㄱㄱ
+
+$("#addEvent").on("click", function(){
 	
+	self.location="/VIG/event/addEvent";
+	
+});
 
 
 
@@ -165,7 +174,9 @@ if(eventmenu == 0) {
 	<div class="eventmenu ing"> 진행중인 이벤트 </div>
 	<div class="eventmenu announce"> 당첨자 발표 </div>
 	<div class="eventmenu fin"> 종료된 이벤트 </div>
-	
+	<c:if test="${user.role=='admin'}">
+	<button class="btn btn-elegant btn-sm" id="addEvent" style="font-size: 12px">등록하기<i class="fas fa-plus pl-1"></i></button>
+	</c:if>
 	</div>
 	
 	
