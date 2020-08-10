@@ -56,6 +56,7 @@ public class RestFollowController {
 		
 		System.out.println(userCode+":"+followerCode);
 		System.out.println("follow함");
+		if(userCode != followerCode) {
 		Follow follow = new Follow();
 		User followingUser = userServices.getUserOne(userCode);
 		follow.setFollowingUser(followingUser);
@@ -65,6 +66,7 @@ public class RestFollowController {
 		
 		
 		followServices.addFollow(follow);
+		}
 		
 	}
 	
@@ -84,6 +86,7 @@ public class RestFollowController {
 
 	}
 	
+	//나를 팔로우 하는 사람들
 	@RequestMapping(value="json/getFollowerList", method=RequestMethod.GET)
 	public List<User> getFollowList(HttpSession session) throws Exception {
 		
@@ -101,7 +104,25 @@ public class RestFollowController {
 		
 		return follower;
 	}
-
+	
+	//내가 팔로우 하는 사람들
+	@RequestMapping(value="json/getFollowingList", method=RequestMethod.GET)
+	public List<User> getFollowingList(HttpSession session) throws Exception {
+		
+		
+		User user = (User)session.getAttribute("user");
+		
+		logger.debug(user);
+		
+		
+		List<User> following = followServices.getFollowingList(user.getUserCode()); 
+		
+		logger.debug(following);
+		
+		
+		
+		return following;
+	}
 	
 	
 

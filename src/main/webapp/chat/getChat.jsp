@@ -72,7 +72,6 @@
 	<script type="text/javascript">
 	
 	var socket;
-
 	
 	$(function(){	
 		
@@ -129,56 +128,6 @@
 					$('#user_list p#'+username).remove();
 				});
 				
-			 	
-				
-
-					
-				
-				//유저 선택하고, 메세지 보내기를 누르면  join
-				$("#sendMessages").on("click", function(){
-					
-
-					socket.emit('createChat', username, selectUser);
-					
-					
-					
-				});
-				
-				
-				
-
-				$('#submit_btn').on("click",function(e){
-					
-				
-					roomId = $('input[name="roomId"]').val();
-					var message = $('#message_input').val();
-					console.log(message);
-					var attached = $('#attached_input').val();
-					selectUser = $("input[name='selectUser']").val();
-					console.log("메세지를 보낼 유저"+selectUser);
-					if(message != ''){
-						socket.emit('send message', message, selectUser);
-						$('#message_input').val('');
-					} else if (attached != '') {
-						$("#status").empty().text("File is uploading...");
-					    $(this).ajaxSubmit({
-					        error: function(xhr) {
-							    status('Error: ' + xhr.status);
-					        },
-					        success: function(response) {
-							    $("#status").empty().text(response);
-					        }
-					    });
-						$('#attached_input').val('');
-						chatScrollfix();
-					}
-					return false;
-					
-				});
-				
-
-				
-				
 				//page로딩시 ajax로 userlist를 가져온다.
 				$.ajax({
 					
@@ -224,6 +173,51 @@
 					}
 					});
 				
+
+					
+				
+				//유저 선택하고, 메세지 보내기를 누르면  join
+				$("#sendMessages").on("click", function(){
+					
+					selectUser = $("#userselect").val();
+					socket.emit('createChat', username, selectUser);
+					
+					
+				});
+				
+				
+				
+
+				$('#submit_btn').on("click",function(e){
+					
+				
+					roomId = $('input[name="roomId"]').val();
+					var message = $('#message_input').val();
+					console.log(message);
+					var attached = $('#attached_input').val();
+					selectUser = $("input[name='selectUser']").val();
+					console.log("메세지를 보낼 유저"+selectUser);
+					if(message != ''){
+						socket.emit('send message', message, selectUser);
+						$('#message_input').val('');
+					} else if (attached != '') {
+						$("#status").empty().text("File is uploading...");
+					    $(this).ajaxSubmit({
+					        error: function(xhr) {
+							    status('Error: ' + xhr.status);
+					        },
+					        success: function(response) {
+							    $("#status").empty().text(response);
+					        }
+					    });
+						$('#attached_input').val('');
+						chatScrollfix();
+					}
+					return false;
+					
+				});
+				
+
 
 				
 			});
@@ -293,11 +287,12 @@
 							}
 
 					
-					$("#chatPlace").attr("style", "visibility:visible");
+					
 					
 				}
+				$("#chatPlace").attr("style", "visibility:visible");
 				chatScrollfix();
-				$("#roomId").val(data[1].roomId);
+				roomId=data[1].roomId;
 				$("#selectUser").append(user);
 				//$("#selectUser").append(user);
 				//$("input[name='selectUser']").val(list[1]);
@@ -332,10 +327,10 @@
 	<hr><br>
 		<div class="row">
 			<div class="col-3">
-				<button style="display: inline-block;" type="button" id="sendMessages" class="btn btn-outline-default waves-effect">Default</button>
+				<input type="text" id="userselect">
+				<button class=" -roundedbtn btn-floating btn-indigo btn-sm" id="sendMessages"><i class="fas fa-envelope"></i></button>
 				<div class="user_list">
 
-					
 				</div>
 			
 			</div>

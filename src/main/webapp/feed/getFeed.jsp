@@ -186,6 +186,7 @@
 
 $(function(){
 	
+	//태그가 없으면 태그 div를 숨긴다.
 	var tag = $("#tag").length;
 	if(tag !== 0){
 		
@@ -194,7 +195,7 @@ $(function(){
 		
 	}
 	
-	
+	//writer의 myFeed로 이동
 	$("#writerInfo").on("click", function (){
 		self.location="/VIG/myfeed/getMyFeed/${feed.writer.userCode}";
 		
@@ -221,7 +222,8 @@ $(function(){
 		
 		if(fm == "Follow"){
 				
-		
+		//실시간 알람을 보내는 부분
+		sendMessage('${feed.writer.userCode}','${feed.feedId}','2');
 		$.ajax(
 			
 				{ url: "/VIG/follow/json/addFollow?userCode=${user.userCode}&followerCode=${feed.writer.userCode}",
@@ -275,13 +277,18 @@ $(function(){
 		}
 	});
 	
-	var user;
+	var user = '${sessionScope.user}';
+	if(user==null) {
+		
+		$("textarea").attr("readonly","readonly");
+		
+	}
 	
 	//댓글 구현
 	$("button:contains('등록')").on("click", function(){
 		
-		user = ${empty sessionScope.user};
-		if(user) {
+		user = '${sessionScope.user}';
+		if(user==null) {
 			alert("로그인이 필요합니다.");
 			return false;
 		}
@@ -347,8 +354,8 @@ $(function(){
 	//좋아요 연결
 	$("#like").on("click", function(){
 
-		user = ${empty sessionScope.user};
-		if(user) {
+		user = '${sessionScope.user}';
+		if(user==null) {
 			alert("로그인이 필요합니다.");
 			return false;
 			
@@ -427,12 +434,7 @@ $(function(){
 		
 	});
 	
-	var user = ${empty sessionScope.user};
-	if(user) {
-		
-		$("textarea").attr("readonly","readonly");
-		
-	}
+
 
 	
 	
@@ -558,9 +560,6 @@ function imageModal(imageId){
 				  <div class="modal-dialog modal-xl">
 				    <div class="modal-content" style="align:center">
 				    <div style="text-align:center;">
-				    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
 				      <img src="/VIG/images/uploadFiles/${images.imageFile}" style="width: 1200px; align:center"/>
 				      
 				    </div>
@@ -585,14 +584,18 @@ function imageModal(imageId){
 		 <c:if test="${!empty user.role }">
 		
 		    <div class="col-4 dofo" align="left">
+		    	<c:if test="${feed.writer.userCode != user.userCode }">
 		    	<c:if test="${feed.writer.role == 'business' }">
+		    	
 		    	<span id="donation"><i class="fas fa-dollar-sign"></i></span>
 				</c:if>
+				
 				<c:if test="${ isFollow == 0}">
 		    	<button type="button" id="follow" class="btn btn-outline-default btn-rounded" >Follow</button>
 		    	</c:if>
 		    	<c:if test="${ isFollow == 1}">
 		    	<button type="button" id="follow" class="btn btn-default btn-rounded" >following</button>
+		    	</c:if>
 		    	</c:if>
 		    </div>
 		    
