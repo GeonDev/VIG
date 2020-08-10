@@ -241,7 +241,7 @@
 	max-width: 500px;
 	max-height: 375px;
 	overflow:hidden;
-	margin:10px 0px;
+	
 	border-radius: 10px;
 	}
 	

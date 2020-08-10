@@ -116,8 +116,8 @@
 	  <update id="updateUser" parameterType="user">
 	 	UPDATE users SET 
 	 		self_introduce = #{selfIntroduce:VARCHAR},
-	 		user_name = #{userName},
-	 		password = #{password},
+	 		user_name = #{userName:VARCHAR},
+	 		password = #{password:VARCHAR},
 	 		profile_img = #{profileImg:VARCHAR},
 	 		account = #{account:VARCHAR},
 	 		state = #{state:NUMERIC},

@@ -216,7 +216,7 @@
 			<!-- 사이드바  -->		
 				<div class="col-md-2 sideBarPlace">		
 				 <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
-				 
+				 </div>
   			<!-- 타이틀 -->
 			    <div class="col-md-10" id="mainMyFeedPage" >					
 					<h1>
@@ -236,7 +236,7 @@
 			    	<br/>			    		
 			    		
 			<!-- 피드리스트를 그려줄 부분 -->		
-				<div id="showFeedList" class="row justify-content-center" style="margin-left: 10px; margin-right: 10px;"></div>
+				<div id="showFeedList" class="row justify-content-center" style="margin: 50px 30px 10px 30px;"></div>
 			    				    
 				</div>					
 			</div>

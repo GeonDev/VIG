@@ -16,6 +16,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -50,6 +51,9 @@ public class UserController {
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
 	
+	@Autowired
+	private ServletContext context;	
+	
 	@Autowired 
 	@Qualifier("userServicesImpl")
 	private UserServices userServices;
@@ -60,6 +64,9 @@ public class UserController {
 	
 	@Value("#{commonProperties['uploadPath']}")
 	String uploadPath;
+	
+	@Value("#{commonProperties['currentDate'] ?: 30}")
+	int currentDate;
 	
 	@Value("#{commonProperties['pageSize'] ?: 5}")
 	int pageSize;
@@ -268,14 +275,20 @@ public class UserController {
 		
 		System.out.println("유저 업데이");
 	
+		String path = context.getRealPath("/");        
+        path = path.substring(0,path.indexOf("\\.metadata"));         
+        path = path +  uploadPath;  
+		
+		
+		
 		if(files !=null) {
 			
 	        for (MultipartFile multipartFile : files) {
 	        	//파일 업로드시 시간을 이용하여 이름이 중복되지 않게 한다.
 	        	
-	        	String inDate   = new java.text.SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date());
+	        	//String inDate   = new java.text.SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date());
 	    
-	    		File f =new File("C://workspace//"+inDate+multipartFile.getOriginalFilename());
+	    		File f =new File(path+multipartFile.getOriginalFilename());
 	    		//원하는 위치에 파일 저장
 	    		multipartFile.transferTo(f);
 	    			if(f!=null) {
@@ -283,19 +296,21 @@ public class UserController {
 	    			}
 	    		}
 	        }
-				
+			
+		
 		String pwdBycrypt = passwordEncoder.encode(user.getPassword());
-	    user.setPassword(pwdBycrypt);
+	   user.setPassword(pwdBycrypt);
+		
 		userServices.updateUser(user);	
 		model.addAttribute("user", user);
 	
-		/*
+		
 		String sessionId=((User)session.getAttribute("user")).getUserCode();
 		System.out.println(sessionId);
 		if(sessionId.equals(user.getUserCode())){
 			session.setAttribute("user", user);
 		}
-		*/	
+			
 		return "redirect:/user/updateUser.jsp";
 		
 	}
@@ -346,7 +361,7 @@ public class UserController {
 		if(search.getKeyword() == null) {
 			search.setKeyword("");
 		}
-
+		search.setCurrentDate(currentDate);
 		search.setPageSize(pageSize);
 		
 		// Business logic 수행
@@ -360,6 +375,7 @@ public class UserController {
 				model.addAttribute("resultPage", resultPage);
 				model.addAttribute("search", search);
 				model.addAttribute("map", map);
+			
 				
 		return "forward:/user/getUserList.jsp";
 	}
