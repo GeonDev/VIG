@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +27,7 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
-	<script src="//127.0.0.1:3000/socket.io/socket.io.js"></script>
+	<script src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
 	
 	<style type="text/css">
 	 body {
@@ -35,34 +36,59 @@
 	 
 	 }
 	 .user_list {
-	 
-	 	border-right: 1px solid black;
+	 	
+	 	margin-top: 30px;
+	 	border-right: 1px solid #B7B6B4;
 	 	min-height: 500px;
 	 	
 	 
 	 }
-	 #profileImage{
+	 .profileImage{
 	 
 	 width: 30px;
 	 border-radius: 15px;
-	 margin-left: 8px;
+	 margin-right: 10px;
 	 
 	 }
 	 .chat-body {
 	 
 	  width: 700x;
-	  height: 450px;
+	  height: 400px;
 	  border: 1px solid gray;
 	  overflow:auto; 
 	  margin-bottom: 10px;
+
 	  
 	 
 	 }
-	 
+
 	 .selectChat {
 	 
 	 margin: 3px auto;
 	 
+	 }
+	 
+	 .chatUser{
+	 
+	 margin: 20px auto;
+	 padding: 6px auto;
+
+	 
+	 }
+	 
+	 div .media-body {
+	 
+	  max-width: 250px;
+	  max-height: 50px;	 
+	  border-radius: 8px auto;
+
+	 
+	 }
+	 
+	 span.msg-body {
+		 
+		 font-size: 15px;
+		 
 	 }
 	 
 	
@@ -71,42 +97,51 @@
 	
 	<script type="text/javascript">
 	
+	var username = '${user.userCode}';
+	
+	if(username==null|| username==''){
+		alert("로그인 해주세요");
+		self.location="/VIG/main/VIG";
+	}
+	
 	var socket;
 	
 	$(function(){	
 		
-		//첫 로딩시에는 chat영역 안보임
-		$("#chatPlace").attr("style", "visibility:hidden");
+		
+		
+				//첫 로딩시에는 chat영역 안보임
+				$("#chatPlace").attr("style", "visibility:hidden");
 				
 				socket = io.connect('http://127.0.0.1:3000');
-				var username = $("input[name='userCode']").val();
+				
 				var selectUser = $("input[name='selectUser']").val();
 				var roomId;
 				var data;
 				var diplayValue;
+				var user;
+				
+
 				
 				//socket으로 서버에 username = socketId로 전달할 수 있도록 함
 				socket.emit('setSocketId', username);
-				
+
 				
 				socket.on('connect', function(username){
-					
-					while(username == ''){
-						username = alert("로그인 해주세요");
-						hitory.go(-1);
-						return false;
-					}
+	
 					$('input[name=username]').val(username);
 	
 				});
 				
+				
+				//메세지 보내기
 				socket.on('send message', function(data){
 					data = JSON.stringify(data);
 					data = JSON.parse(data);
 					 if(data.sender == username){
 							
-							displayValue ="<div class='media' style='text-align:right'><div class='media-right'><span class='author' style='font-weight: bold; color: black; text-align:right;'>"+
-							"</div><div class='media-body'>" + data.contents + "<span class='msg-body'>("+data.createdAt+")</span></div></div>";
+							displayValue ="<div class='media' style='align: right ;text-align:right'>"+
+							"<div class='media-body'>" + data.contents + "<br><span class='msg-body'>("+data.createdAt+")</span></div></div>";
 							
 							console.log(displayValue);
 							
@@ -114,8 +149,8 @@
 								
 							} else {
 								
-							displayValue ="<div class='media' style='text-align:left'><div class='media-left'><span class='author' style='font-weight: bold; color: black; text-align:right;'>"
-								+ data.sender + "</span></div><div class='media-body'><span class='msg-body'>" + data.contents + "</span>("+data.createdAt+")</div></div>";
+							displayValue ="<div class='media' style='align: left ;text-align:left'><div class='media-left'><span class='author' style='font-weight: bold; color: black; text-align:right;'>"
+								+ data.sender + "</span></div><div class='media-body'>" + data.contents + "<br><span class='msg-body'>("+data.createdAt+")</span></div></div>";
 								
 							console.log(displayValue);
 							
@@ -146,7 +181,6 @@
 						console.log("json크기"+data.length);
 						for(var i = 0; i < data.length; i++){
 							var userCode = data[i].userCodes[1];
-							roomId = data[i]._id;
 							console.log(userCode);
 							console.log(username);
 							console.log(roomId);
@@ -155,14 +189,14 @@
 							}
 							if(username != userCode){
 								
-							var user = '<div class="chatUser" onClick="getChat(\''+data[i]._id+','+userCode+'\')">'+
-											"<img id='profileImage' src='/VIG/images/uploadFiles/${user.profileImg }'>"+
-											"<p style='display: inline-block; margin: 3px auto;'>"+userCode+"</p></div>"
+							user = '<div class="chatUser" onClick="getChat(\''+data[i]._id+','+userCode+'\')">'+
+											"<img class='profileImage' src='/VIG/images/uploadFiles/${user.profileImg }'>"+
+											"<p style='display: inline-block; margin: 3px auto; font-weight: bold'>"+userCode+"</p></div>"
 							} else if(username == userCode) {
 								
 								userCode = data[i].userCodes[0];
-								var user = '<div class="chatUser" onClick="getChat(\''+data[i]._id+','+userCode+'\')">'+
-								"<img id='profileImage' src='/VIG/images/uploadFiles/${user.profileImg }'>"+
+								user = '<div class="chatUser" onClick="getChat(\''+data[i]._id+','+userCode+'\')">'+
+								"<img class='profileImage' src='/VIG/images/uploadFiles/${user.profileImg }'>"+
 								"<p style='display: inline-block; margin: 3px auto;'>"+userCode+"</p></div>"
 								
 							}
@@ -176,12 +210,19 @@
 
 					
 				
-				//유저 선택하고, 메세지 보내기를 누르면  join
+				//유저 선택하고, 메세지 보내기를 누르면  roomCreate
 				$("#sendMessages").on("click", function(){
 					
 					selectUser = $("#userselect").val();
 					socket.emit('createChat', username, selectUser);
+					socket.to('add user', result);
 					
+					console.log(result);
+					
+					var user = '<div class="selectChat" style="vertical-align: middle">'+
+					"<img class='profileImage' src='/VIG/images/uploadFiles/${user.profileImg }'>"+
+					"<p id='selectChat' style='display: inline-block; margin: 3px auto;'>"+selectUser+"</p><hr></div>"
+					$("#selectUser").append(user);
 					
 				});
 				
@@ -233,6 +274,8 @@
 	
 	function getChat(data){
 		
+		$("#selectUser div").remove();
+		$(".chat-body div").remove();
 		var list = data.split(",");
 		username = $("input[name='userCode']").val();
 		$('input[name="selectUser"]').val(list[1]);
@@ -240,12 +283,8 @@
 		
 		var select = $("#selectChat").text();
 		//선택한 유저가 이미 선택되었는지 확인,
-		if(select == list[1]){
-			
-			return false;
-			
-		}
 		
+	
 		$.ajax({
 			url: 'http://127.0.01:3000/chat/getChat/'+list[0],
 			method: 'get',
@@ -262,16 +301,16 @@
 				console.log(data);
 				var inputSelect = document.getElementsByName("selectUser");
 				var user = '<div class="selectChat" style="vertical-align: middle">'+
-				"<img id='profileImage' src='/VIG/images/uploadFiles/${user.profileImg }'>"+
-				"<p id='selectChat' style='display: inline-block; margin: 3px auto;'>"+list[1]+"</p></div><hr>"
+				"<img class='profileImage' src='/VIG/images/uploadFiles/${user.profileImg }'>"+
+				"<p id='selectChat' style='display: inline-block; margin: 3px auto; font-weight: bold;'>"+list[1]+"</p><hr></div>"
 				
 				 for(var i = 0; i<data.length; i++){
 					 
 					 
 					 if(data[i].sender == username){
 							
-							displayValue ="<div class='media' style='text-align:right'><div class='media-right'><span class='author' style='font-weight: bold; color: black; text-align:right;'>"+
-							"</div><div class='media-body'>" + data[i].contents + "<span class='msg-body'>("+data[i].createdAt+")</span></div></div>";
+							displayValue ="<div class='media' style='align: right; text-align:right'>"+
+							"<div class='media-body' style='align: right'>" + data[i].contents + "<br><span class='msg-body'>("+data[i].createdAt+")</span></div></div>";
 							
 							console.log(displayValue);
 							$('.chat-body').append(displayValue);
@@ -279,8 +318,8 @@
 								
 							} else {
 								
-							displayValue ="<div class='media' style='text-align:left'><div class='media-left'><span class='author' style='font-weight: bold; color: black; text-align:right;'>"
-								+ data[i].sender + "</span></div><div class='media-body'><span class='msg-body'>" + data[i].contents + "</span>("+data[i].createdAt+")</div></div>";
+							displayValue ="<div class='media' style='align: left; text-align:left'><div class='media-left'><span class='author' style='font-weight: bold; color: black; text-align:right;'>"
+								+ data[i].sender + "</span></div><div class='media-body' style='align: left'>" + data[i].contents + "<br><span class='msg-body'>("+data[i].createdAt+")</span></div></div>";
 								
 								$('.chat-body').append(displayValue);
 								
@@ -292,7 +331,7 @@
 				}
 				$("#chatPlace").attr("style", "visibility:visible");
 				chatScrollfix();
-				roomId=data[1].roomId;
+				$("input[name='roomId'").val(list[i]);
 				$("#selectUser").append(user);
 				//$("#selectUser").append(user);
 				//$("input[name='selectUser']").val(list[1]);
@@ -321,14 +360,22 @@
 	<jsp:include page="../main/toolbar.jsp" />
 
 	<div class="container">
-	<div class="row">
-	<h1 style="text-align:left">Message</h1>
-	</div>
+		<div class="row">
+			<div class="col-8">
+				<h1 style="text-align:left">Message</h1>
+			</div>
+			<div class="col-4"  >
+				<div style="text-align: right; vertical-align:text-bottom;" >
+					<input type="text" id="userselect">
+					<button class=" -roundedbtn btn-floating btn-indigo btn-sm" id="sendMessages"><i class="fas fa-envelope"></i></button>
+				</div>
+			</div>
+		
+		</div>
 	<hr><br>
 		<div class="row">
 			<div class="col-3">
-				<input type="text" id="userselect">
-				<button class=" -roundedbtn btn-floating btn-indigo btn-sm" id="sendMessages"><i class="fas fa-envelope"></i></button>
+				
 				<div class="user_list">
 
 				</div>
