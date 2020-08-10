@@ -40,7 +40,8 @@ public class UserDaoImpl implements UserDao {
 	
 	@Override
 	public void deleteUser(User user) throws Exception{
-		sqlSession.delete("UserMapper.deleteUser", user);
+		System.out.println("delete?");
+		sqlSession.update("UserMapper.deleteUser", user);
 	}
 
 	@Override

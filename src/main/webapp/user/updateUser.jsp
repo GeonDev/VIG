@@ -33,53 +33,51 @@
  	<link rel="stylesheet" href="/VIG/css/dropify.min.css">
 		<script type="text/javascript">
 					
+		
+		//탈퇴 페이지로 이동 
 		$(function() {
-			$( "button.btn.btn-primary" ).on("click" , function() {
-				alert("1");
-				 $("form").attr("method", "POST").attr("enctype","multipart/form-data").attr("action", "./updateUser").submit();
+			$( "#deleteUser_nav" ).on("click" , function() {
+				alert("회원 탈퇴 계정으로 이동");
+				location.href="/VIG/user/deleteUser.jsp";
 			});
 		});	
 		
-			
-
-		$(function(){
-			$("input[name=password2]").keyup( function(){				 				
-				var password = $("input[name=password]").val();
-				var password2 = $("input[name=password2]").val();				
-				if(password==password2){					
-					var correct = "<p style='color:green;'>비밀번호가 확인되었습니다.</p>";
-					$(".check").html(correct);					
-				}else{										
-					var alert = "<p style='color:red;'>비밀번호가 다릅니다.</p>";
-					$(".check").html(alert);					
-				}				
-			});			
+		
+		//업데이트 이벤트 
+		$(function() {
+		$("#updateUser_btn").on("click", function(){	
+			alert("업뎃되나요");		
+				$("form").attr("method","POST").attr("enctype","multipart/form-data").attr("action","updateUser").submit();			
+			});
 		});
+
 		
-$(function(){
-	var file = document.querySelector('#getfile');
-
-	$(file).on('change', function() {
-	  var fileList = file.files;
-		console.log("1");
-	  // 읽기
-	  var reader = new FileReader();
-	  reader.readAsDataURL(fileList[0]);
-	  console.log("2");
-
-	  		//로드 한 후
-		  reader.onload = function() {
-			  console.log("3");
-		    //로컬 이미지를 보여주기
-		    document.querySelector('#preview').src = reader.result;
 		
-		    //썸네일 이미지 생성
-		    var tempImage = new Image(); //drawImage 메서드에 넣기 위해 이미지 객체화
-		    tempImage.src = reader.result; //data-uri를 이미지 객체에 주입
-
-  	};
-	});	
-});
+		//프로필 이미지 수정?
+		$(function(){
+			var file = document.querySelector('#getfile');
+		
+			$(file).on('change', function() {
+			  var fileList = file.files;
+				console.log("1");
+			  // 읽기
+			  var reader = new FileReader();
+			  reader.readAsDataURL(fileList[0]);
+			  console.log("2");
+		
+			  		//로드 한 후
+				  reader.onload = function() {
+					  console.log("3");
+				    //로컬 이미지를 보여주기
+				    document.querySelector('#preview').src = reader.result;
+				
+				    //썸네일 이미지 생성
+				    var tempImage = new Image(); //drawImage 메서드에 넣기 위해 이미지 객체화
+				    tempImage.src = reader.result; //data-uri를 이미지 객체에 주입
+		
+		  	};
+			});	
+		});
 		
 		//구글 로그인
 		$( function() {
@@ -135,7 +133,6 @@ $(function(){
 <body>
 	
 	
-	
 		<!-- 툴바 -->
 		      <div class="container-fluid">  
 		      	 <div class="row">
@@ -154,8 +151,9 @@ $(function(){
 			<h1>내 정보 수정</h1><hr/>
 			
 			
+			
 		
-		<form method="POST">
+		<form action="updateUser" method="POST" enctype="multipart/form-data">
 		
 	<!-- 프로필 이미지 -->
 		<div class="row_img" style="display: flex;-ms-flex-wrap: wrap; margin-left: -15px;">
@@ -181,6 +179,7 @@ $(function(){
 			<div class="form-group">
 			    <label for="userName" class="col-sm-offset-5 col-md-5 control-label">닉네임</label>
 			    <input type="text" class="form-control" id="userName" name="userName" value="${user.userName }" >
+			    ${user.userName }
 			</div>
 			 
 			<div class="form-group" >
@@ -227,7 +226,7 @@ $(function(){
 			
 			<div class="btn_group2" style="display: flex;justify-content: center;margin-bottom: 30px;">
 				 	<button type="button" class="button btn btn-primary" id="updateUser_btn">수 &nbsp;정</button>		 
-				     <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#deleteCheckModal">탈 &nbsp;퇴</button> 
+				     <button type="button" class="btn btn-primary btn-lg" id="deleteUser_nav">탈 &nbsp;퇴</button> 
 				</div>
 		
 		
@@ -240,46 +239,7 @@ $(function(){
 					</div>
 					</div>
 				
-				  
-				  </div>
-			</div>
-		</form>
 		
-			
-	<!--회원탈퇴 모달 확인창
-			<div class="modal fade" id="deleteCheckModal"  role="dialog" >
-				<div class="modal-dialog modal-notify modal-warning" role="document">
-					<div class="modal-content">				
-						<div class="modal-header text-center">
-							<h4 class="modal-title white-text w-100 font-weight-bold py-2">탈퇴</h4>
-							 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						     <span aria-hidden="true" class="white-text">&times;</span>
-						     </button>
-						</div>
-					 <div class="modal-body text-center mb-1">
-						<div class="md-form ml-0 mr-0">
-			<form class="deleteCheckForm" method="post" action="/user/json/chcekPw" >
-						  <input type="password" id="deleteU_password" name="password" class="form-control form-control-sm ">
-						  <label data-error="wrong" data-success="right" for="form29" class="ml-0">Enter password</label>
-						   <span id="helpBlock" class="help-block">
-								<span class="check"></span>
-							</span>
-			</form>
-						</div>
-						<div class="modal-footer justify-content-center" style="border:0;">
-	        				 <a type="button" class="btn btn-outline-warning waves-effect" id="deleteCheck">탈퇴 <i class="fas fa-paper-plane-o ml-1"></i></a>
-	        				 <a type="button" class="btn btn-outline-warning waves-effect" data-dismiss="modal">취소 <i class="fas fa-paper-plane-o ml-1"></i></a>
-	     			 	 </div>
-					  </div>
-				    </div>
-				 </div>
-			 </div>
-			</div>
-		</div>
-		</div>
-		-->	
-		
-	 </div>
 
 
 

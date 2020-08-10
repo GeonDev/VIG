@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.VIG.mvc.service.domain.GoogleProfile;
 import com.VIG.mvc.service.domain.Page;
@@ -203,26 +204,17 @@ public class UserController {
 		int toDay = Integer.parseInt(format.format(date));
 		
 		
-		if(dbUser == null) {
-			mv.setViewName("forward:/user/loginView.jsp");
-			mv.addObject("msg", "fail");
-			return mv;
-			
-
-		} else if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())){	
-			session.setAttribute("user", dbUser);
-			System.out.println("로그인 성공");
-			mv.setViewName("redirect:/");
-			return mv;
-
-		} else if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())){				
+		if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())){				
 			
 			if(dbUser.getState() == 0) {
 				session.setAttribute("user", dbUser);
 				System.out.println("로그인 성공");
 				mv.setViewName("redirect:/main/VIG");
 				return mv;					
-			}else {				
+			}else if(dbUser.getState() == 3 || dbUser.getState() == 4){		
+				String msg = "사용할 수 없는 아이디입니다";				
+				return new ModelAndView("forward:/common/alertView.jsp", "message", msg);
+			}
 				
 				int banDate = Integer.parseInt(dbUser.getBanDate().toString().replaceAll("-",""));	
 				
@@ -238,10 +230,6 @@ public class UserController {
 				String msg = "접속 금지 상태 입니다.\n \n 남은 기간 : " + remainDate +"일";				
 				return new ModelAndView("forward:/common/alertView.jsp", "message", msg);
 				
-			}			
-			
-
-
 		} else {
 			mv.setViewName("forward:/user/loginView.jsp");
 			System.out.println("로그인 실패");
@@ -271,30 +259,33 @@ public class UserController {
 	//====업데이트 유저 nav
 	
 	@RequestMapping( value="updateUser", method=RequestMethod.GET )
-	public String updateUser(@RequestParam(value="uesrCode", required=false) String userCode, Model model)throws Exception{ 
+	public ModelAndView updateUser(@RequestParam(value="uesrCode", required=false) String userCode)throws Exception{ 
+		
 		System.out.println("/user/updateUser : GEt");
 		User user = userServices.getUserOne(userCode);
-		model.addAttribute("user",user);
-		return "forward:/user/updateUser.jsp";
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("forward:/user/updateUser.jsp");
+		mv.addObject("user", user);
+		return mv;
 	}
 	
 	@RequestMapping( value="updateUser", method=RequestMethod.POST )
-	public String updateUser(@RequestParam("uploadFile") List<MultipartFile> files,@ModelAttribute("uesr") User user, Model model, HttpSession session )throws Exception{ 
+	public ModelAndView updateUser(@RequestParam("uploadFile") List<MultipartFile> files,@ModelAttribute("uesr") User user, HttpSession session )throws Exception{ 
 		
 		System.out.println("유저 업데이");
 	
+		/*
 		String path = context.getRealPath("/");        
         path = path.substring(0,path.indexOf("\\.metadata"));         
         path = path +  uploadPath;  
-		
-		
-		
+			
 		if(files !=null) {
 			
 	        for (MultipartFile multipartFile : files) {
 	        	//파일 업로드시 시간을 이용하여 이름이 중복되지 않게 한다.
 	        	
-	        	//String inDate   = new java.text.SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date());
+	        	String inDate   = new java.text.SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date());
 	    
 	    		File f =new File(path+multipartFile.getOriginalFilename());
 	    		//원하는 위치에 파일 저장
@@ -302,25 +293,46 @@ public class UserController {
 	    			if(f!=null) {
 	    			user.setProfileImg(f.getName());	
 	    			}
+	    			String imageFile=inDate+multipartFile.getOriginalFilename();
+		    	    System.out.println("imageFile:"+imageFile);
 	    		}
 	        }
-			
+		*/	
 		
+		if(user.getPassword() != null) {
 		String pwdBycrypt = passwordEncoder.encode(user.getPassword());
 	   user.setPassword(pwdBycrypt);
-		
+	   //String hashedPw = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+		//user.setPassword(hashedPw);
+		}
 		userServices.updateUser(user);	
-		model.addAttribute("user", user);
-	
+		
+		ModelAndView mv = new ModelAndView();
+		System.out.println("user.getUserName():"+user.getUserName());
 		
 		String sessionId=((User)session.getAttribute("user")).getUserCode();
-		System.out.println(sessionId);
+		System.out.println("sessionId:"+sessionId);
 		if(sessionId.equals(user.getUserCode())){
 			session.setAttribute("user", user);
 		}
-			
-		return "redirect:/user/updateUser.jsp";
 		
+		mv.addObject("user",user);
+		mv.setViewName("redirect:/user/updateUser.jsp");
+		
+		return mv;
+		
+	}
+	
+	
+	//
+	
+	@RequestMapping( value="getUser", method=RequestMethod.GET )
+	public String getUser( @RequestParam("userCode") String userCode , Model model ) throws Exception {
+		
+		System.out.println("getUser GET");	
+		User user = userServices.getUserOne(userCode);
+		model.addAttribute("user", user);		
+		return "forward:/user/getUser.jsp";
 	}
 	
 	//=====유저 리스트 nav
@@ -336,28 +348,23 @@ public class UserController {
 				if(search.getKeyword() == null) {
 					search.setKeyword("");
 				}
-				
+				search.setCurrentDate(currentDate);
 				search.setPageSize(pageSize);
 				
-				Page resultPage = new Page(search.getCurrentPage(), userServices.getTotalCount(search) , pageUnit, pageSize);
+				Page resultPage = new Page(search.getCurrentPage(), userServices.getTotalCount(search), pageUnit, pageSize);
 			
 				ModelAndView modelAndView = new ModelAndView();
 
 				// Model 과 View 연결
-				modelAndView.setViewName("forward:/user/getUserlist.jsp");
+				modelAndView.setViewName("forward:/user/getUserList.jsp");
 				modelAndView.addObject("list", userServices.getUserList(search));
 				modelAndView.addObject("resultPage", resultPage);
 				modelAndView.addObject("search", search);
 
-				return modelAndView;
-		
-	}
-	*/
-	
-	
-	
-	
-	
+				return modelAndView;	
+			}
+			*/
+
 	@RequestMapping( value="getUserList" )
 	public String getUserList( @ModelAttribute("search") Search search ,Model model) throws Exception{
 		
@@ -387,20 +394,22 @@ public class UserController {
 				
 		return "forward:/user/getUserList.jsp";
 	}
-
+	
+	
 	
 	
 	
 	
 	
 	//=======이메일 보내기============================================================//
-
-		public boolean sendEmail(User user) {
+		
+	@RequestMapping (value="sendEmail",method = {RequestMethod.GET, RequestMethod.POST} )
+		public boolean sendEmail(User user)throws Exception {
 			boolean test=false;
 			
 			String toEmail = user.getEmail(); //받을 이메일 주소
-			String fromEmail = "win98@gmail.com"; //보내는 메일 주소
-			String ePassword = "win98";
+			String fromEmail = "0o0neneng0o0@gmail.com"; //보내는 메일 주소
+			String ePassword = "pw";
 			
 			try {
 				Properties pr = new Properties();
@@ -434,14 +443,35 @@ public class UserController {
 		}
 
 	
-	//======모달 계속 수정중==================================//
-		@RequestMapping("testForm")
-		public String testForm( HttpServletRequest request,@ModelAttribute("user") User user, Model model) throws Exception {
+	//======탈퇴==================================//
+		
+		@RequestMapping(value = "deleteUser", method = RequestMethod.GET)
+		public ModelAndView deleteUser(HttpSession session) throws Exception {
 			
-			System.out.println("모달띄우기 나오나요");
-			return "/VIG/main/VIG";
+			User user = userServices.getUserOne(((User)session.getAttribute("user")).getUserCode());
+			
+			ModelAndView mv = new ModelAndView();
+			System.out.println("탈퇴페이지로 이동");
+			mv.addObject("user", user);
+			mv.setViewName("forward:/user/deleteUser.jsp");
+			
+			return mv;
 		}
-	//==
+		
+	
+		@RequestMapping (value="deleteUser", method = {RequestMethod.GET, RequestMethod.POST})
+		public ModelAndView deleteUser(User user,HttpSession session) throws Exception{
+			
+			
+		System.out.println("모르겟숴....");
+			ModelAndView mv = new ModelAndView();
+			userServices.deleteUser(user);
+			session.invalidate();
+			mv.setViewName("redirect:/");
+			return mv;
+		}
+			
+	
 		
 		
 		
