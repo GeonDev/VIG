@@ -719,14 +719,15 @@ function imageModal(imageId){
 			<h6 style="font-weight: bold">태그</h6>
 			
 			<c:forEach var="keyword" items="${feed.keywords}">			
-				<c:if test="${keyword.isTag == '1' }">
-
-				
-				<div id="tag" style=" border: 1px solid #C2C3C2; margin: 3px 1px 3px 1px; padding: 1px 3px 1px 3px; display: inline-block; border-radius: 5px;">
-			    <a style="color: black; font-size: 13px;" href="/VIG/search/getSearchList?Mode=Feed&keyword=${keywords.keywordOrigin != null ? keyword.keywordOrigin : keyword.keywordEn }">${keywords.keywordOrigin != null ? keyword.keywordOrigin : keyword.keywordEn }</a>
-				</div>
-
-				
+				<c:if test="${!empty keyword.keywordOrigin}">
+					<c:if test="${keyword.isTag == 1 }">
+	
+					
+						<div id="tag" style=" border: 1px solid #C2C3C2; margin: 3px 1px 3px 1px; padding: 1px 3px 1px 3px; display: inline-block; border-radius: 5px;">
+					    <a style="color: black; font-size: 13px;" href="/VIG/search/getSearchList?Mode=Feed&keyword=${keywords.keywordOrigin}">${keywords.keywordOrigin }</a>
+						</div>
+	
+					</c:if>
 				</c:if>		
 				
 			</c:forEach>
