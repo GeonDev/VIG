@@ -31,8 +31,8 @@
 	
 	<style type="text/css">
 	 body {
-	 
-	 	margin-top: 70px;
+	 	
+	 	margin-top: 50px;
 	 
 	 }
 	 .user_list {
@@ -40,6 +40,7 @@
 	 	margin-top: 30px;
 	 	border-right: 1px solid #B7B6B4;
 	 	min-height: 500px;
+	 	overflow: auto; 
 	 	
 	 
 	 }
@@ -51,11 +52,10 @@
 	 
 	 }
 	 .chat-body {
-	 
-	  width: 700x;
+	  
 	  height: 400px;
-	  border: 1px solid gray;
-	  overflow:auto; 
+	  width: 100%;
+	  overflow: auto; 
 	  margin-bottom: 10px;
 
 	  
@@ -77,18 +77,35 @@
 	 }
 	 
 	 div .media-body {
-	 
-	  max-width: 250px;
-	  max-height: 50px;	 
+	  
+	  
+	  padding: 5px auto;
 	  border-radius: 8px auto;
 
 	 
 	 }
 	 
 	 span.msg-body {
+		 width: 150px;
+		 font-size: 10px;
 		 
-		 font-size: 15px;
-		 
+	 }
+	 .innermedia {
+	 
+
+	 
+	 
+	 }
+	 #chatPlace{
+	 
+	 border: 3px solid #C0C8C4;
+	 background-color: #DAD9F2;
+	 border-radius: 10px;
+	 margin: 5px auto;
+	 padding-top: 8px;
+	 padding-left: 8px;
+	 padding-right: 12px;
+	 
 	 }
 	 
 	
@@ -134,14 +151,14 @@
 				});
 				
 				
-				//메세지 보내기
+				//보낸 메세지 받기
 				socket.on('send message', function(data){
 					data = JSON.stringify(data);
 					data = JSON.parse(data);
 					 if(data.sender == username){
 							
 							displayValue ="<div class='media' style='align: right ;text-align:right'>"+
-							"<div class='media-body'>" + data.contents + "<br><span class='msg-body'>("+data.createdAt+")</span></div></div>";
+							"<div class='media-body'><div class='innermedia'>" + data.contents + "<br><span class='msg-body'>("+data.createdAt+")</span></div></div></div>";
 							
 							console.log(displayValue);
 							
@@ -150,7 +167,7 @@
 							} else {
 								
 							displayValue ="<div class='media' style='align: left ;text-align:left'><div class='media-left'><span class='author' style='font-weight: bold; color: black; text-align:right;'>"
-								+ data.sender + "</span></div><div class='media-body'>" + data.contents + "<br><span class='msg-body'>("+data.createdAt+")</span></div></div>";
+								+ data.sender + "</span></div><div class='innermedia'><div class='media-body'>" + data.contents + "<br><span class='msg-body'>("+data.createdAt+")</span></div></div></div>";
 								
 							console.log(displayValue);
 							
@@ -228,7 +245,7 @@
 				
 				
 				
-
+				//메세지 보내기
 				$('#submit_btn').on("click",function(e){
 					
 				
@@ -310,7 +327,7 @@
 					 if(data[i].sender == username){
 							
 							displayValue ="<div class='media' style='align: right; text-align:right'>"+
-							"<div class='media-body' style='align: right'>" + data[i].contents + "<br><span class='msg-body'>("+data[i].createdAt+")</span></div></div>";
+							"<div class='media-body' style='align: right'><div class='innermedia'>" + data[i].contents + "<br><span class='msg-body'>("+data[i].createdAt+")</span></div></div></div>";
 							
 							console.log(displayValue);
 							$('.chat-body').append(displayValue);
@@ -319,7 +336,7 @@
 							} else {
 								
 							displayValue ="<div class='media' style='align: left; text-align:left'><div class='media-left'><span class='author' style='font-weight: bold; color: black; text-align:right;'>"
-								+ data[i].sender + "</span></div><div class='media-body' style='align: left'>" + data[i].contents + "<br><span class='msg-body'>("+data[i].createdAt+")</span></div></div>";
+								+ data[i].sender + "</span></div><div class='innermedia'><div class='media-body' style='align: left'>" + data[i].contents + "<br><span class='msg-body'>("+data[i].createdAt+")</span></div></div></div>";
 								
 								$('.chat-body').append(displayValue);
 								
@@ -372,46 +389,49 @@
 			</div>
 		
 		</div>
-	<hr><br>
+	<hr>
 		<div class="row">
 			<div class="col-3">
-				
+				<h4><strong>친구 목록</strong></h4>
 				<div class="user_list">
 
 				</div>
 			
 			</div>
-			<div class="col-9" id="chatPlace">
-				
+			<div class="col-9" >
+				<div id="chatPlace">
 				
 				<div id="selectUser" ></div>
 				
-				<div  class="chat-body">
+				<div  class="chat-body" style="  padding: 20px auto;">
 			
 				
 				</div>
 
 			
-				
+				<hr>
 				<form id="chat_form" method="post" enctype="multipart/form-data">
-					<div class="row">
-						<div class="col-9">
-							<input type="hidden" name="roomId">
-							<input type="hidden" name="selectUser">
-							<input type="hidden" name="userCode" value="${user.userCode }">
-							<input style="width:600px; vertical-align: middle" type="text" id="message_input" class="form-control" placeholder="메세지를 입력해주세요">
-						</div>
-						<div class="col-3">
-							<button style="display: inline-block;" type="button" id="submit_btn" class="btn btn-outline-default waves-effect">전송</button>
-						</div>
 						
+					<input type="hidden" name="roomId">
+					<input type="hidden" name="selectUser">
+					<input type="hidden" name="userCode" value="${user.userCode }">
+					<div class="md-form input-group mb-3">
+						<input style="width:600px; vertical-align: middle;background-color: white;" type="text" id="message_input" class="form-control" placeholder="메세지를 입력해주세요"
+						placeholder="Recipient's username" aria-label="Recipient's username"
+	  						aria-describedby="submit_btn">
+	  					<div class="input-group-append">
+							<button style="display: inline-block;" type="button" id="submit_btn" class="btn btn-md btn-secondary m-0 px-3">전송</button>
+						</div>
 					</div>
+						
+					
 				</form>
 		
+				</div>
 			</div>
 		</div>
 	</div>
-
+	
 
 
 
