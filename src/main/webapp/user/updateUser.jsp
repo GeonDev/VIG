@@ -36,7 +36,7 @@
 		$(function() {
 			$( "button.btn.btn-primary" ).on("click" , function() {
 				alert("1");
-				 $("form").attr("method", "POST").attr("enctype","multipart/form-data").attr("action", "updateUser").submit();
+				 $("form").attr("method", "POST").attr("enctype","multipart/form-data").attr("action", "./updateUser").submit();
 			});
 		});	
 		
@@ -56,33 +56,30 @@
 			});			
 		});
 		
-//===비밀번호 체크 이벤트   ================================================test 정리중   코드 정리하기
-		$(function () {
-		  $('[data-toggle="tooltip"]').tooltip()
-		});
+$(function(){
+	var file = document.querySelector('#getfile');
+
+	$(file).on('change', function() {
+	  var fileList = file.files;
+		console.log("1");
+	  // 읽기
+	  var reader = new FileReader();
+	  reader.readAsDataURL(fileList[0]);
+	  console.log("2");
+
+	  		//로드 한 후
+		  reader.onload = function() {
+			  console.log("3");
+		    //로컬 이미지를 보여주기
+		    document.querySelector('#preview').src = reader.result;
 		
-		$(function(){
-			var file = document.querySelector('#getfile');
+		    //썸네일 이미지 생성
+		    var tempImage = new Image(); //drawImage 메서드에 넣기 위해 이미지 객체화
+		    tempImage.src = reader.result; //data-uri를 이미지 객체에 주입
 
-			$(file).on('change', function() {
-			  var fileList = file.files;
-				
-			  // 읽기
-			  var reader = new FileReader();
-			  reader.readAsDataURL(fileList[0]);
-
-			  		//로드 한 후
-				  reader.onload = function() {
-			  			
-				    //로컬 이미지를 보여주기
-				    document.querySelector('#preview').src = reader.result;
-				
-				    //썸네일 이미지 생성
-				    var tempImage = new Image(); //drawImage 메서드에 넣기 위해 이미지 객체화
-				    tempImage.src = reader.result; //data-uri를 이미지 객체에 주입					
-		 	 	};
-			});	
-		});	
+  	};
+	});	
+});
 		
 		//구글 로그인
 		$( function() {
@@ -123,7 +120,7 @@
 	
 
 	
-	#pImg {	display:block; margin-left:auto; margin-right:auto; width: auto; height: auto; max-width: 150px; max-height: 150px; border-radius:50%; }	
+	#preview {	display:block; margin-left:auto; margin-right:auto; width: auto; height: auto; max-width: 150px; max-height: 150px; border-radius:50%; }	
 	#getfile { display:block; margin-left:auto; margin-right:auto; width: auto; height: auto; }	
 	#form-group { display:block; margin-left:auto; margin-right:auto; }	
 		#myFeedMain { padding: 70px;}
@@ -151,7 +148,7 @@
 			<!-- 사이드바  -->		
 				<div class="col-md-2 sideBarPlace">		
 				 <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
-				 
+				 </div>
   			<!-- 타이틀 -->
 			    <div class="col-md-10" id="mainMyFeedPage" >	
 			<h1>내 정보 수정</h1><hr/>
@@ -163,8 +160,7 @@
 	<!-- 프로필 이미지 -->
 		<div class="row_img" style="display: flex;-ms-flex-wrap: wrap; margin-left: -15px;">
 	 		<div class="profile">
-	 			<img src="/VIG/images/uploadFiles/${user.profileImg}" id="pImg" alt="profile_img">
-		
+				<img id="preview" src="/VIG/images/uploadFiles/${user.profileImg}" alt="profile_img"> 
 	<!-- 업로드 파일 -->
  				<input type="file" id="getfile" name="uploadFile" accept="image/*"><br/>
 

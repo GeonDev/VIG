@@ -70,6 +70,11 @@
 	}
 	#myFeedMain { padding: 70px;}
 
+		body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}	
+		h1 { margin-left: 100px;}
+		/*사이드바,본문 배치css*/
+	 .col-md-2.sideBarPlace { padding:0;  display: inline-block;float:left;}
+	 #mainMyFeedPage { margin-left: 0px;  display: inline-block; float:right;}
 
 
 </style>
@@ -101,31 +106,26 @@
 <body>
 	
 
-	
-	<!-- 상단 툴바 자리 --> 									
-      <div class="container-fluid">  
-      	 <div class="row">
-      		<div class="col-md-12">
-      			<jsp:include page="/main/toolbar.jsp" />
-     		</div>
-		</div>
+<!-- 툴바 -->
+		      <div class="container-fluid">  
+		      	 <div class="row">
+		      		<div class="col-md-12">
+		      			<jsp:include page="/main/toolbar.jsp"></jsp:include>
+		     		</div>
+				</div>
 		
-		<div class="col-md-12">
-			<div class="row">
-	<!-- 사이드바 자리 -->		
-			<div class="col-md-2">		
-		    <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
-		    </div>  
-		    
-		    
-	<!--  본문 자리 -->	      	    
-		    <div class="col-md-10" id="myFeedMain">
-			<div class="col-md-12_top">
+		
+			<!-- 사이드바  -->		
+				<div class="col-md-2 sideBarPlace">		
+				 <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
+				 </div>
+  			<!-- 타이틀 -->
+			    <div class="col-md-10" id="mainMyFeedPage" >	
 	
-	<h2> 전체 결제 목록 </h2>
+	<h1> 전체 결제 목록 </h1>
 	<hr>
 	
-					<div class="row justify-content-end">							
+					<div class="row justify-content-end"  style="margin: 45px 10px 27px 10px;">							
 					<div class="input-group md-form form-sm form-1 pl-0 col-3">
 					  <div class="input-group-prepend">
 					    <span class="input-group-text cyan lighten-2" id="basic-text1"><i id="searchIcon" class="fas fa-search text-white" aria-hidden="true"></i></span>

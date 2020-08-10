@@ -338,7 +338,7 @@
 				<li class="dropdown">
 		             <a href="#" class="dropdown-toggle" id="login_dropdown" data-toggle="dropdown"
 						 role="button" aria-haspopup="true" aria-expanded="false">
-						<i class="fas fa-user"></i>
+						<i class="fas fa-user" style="margin-right:30px; color: #fb3;"></i>
 						   <span class="caret"></span>
 						</a>
 		         <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="login_dropdown">

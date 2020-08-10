@@ -84,8 +84,7 @@
 
 			<!-- 마이페이지 접속시 메뉴   //// 아니 조건문 어떻게 줘?ㅠ.ㅠ-->    
 			 	<c:choose>
-					<c:when test="${user.userCode == writer.userCode}">
-					
+					<c:when test="${user.userCode == writer.userCode}">	
 						<img class="card-img-top" src="/VIG/images/uploadFiles/profile_img.jpg" id="pImg" alt="profile_img">
 				 			<div class="card-body">
 				 					<h4 class="user_name" align="center"> ${user.userName} </h4>
@@ -103,10 +102,10 @@
 			 			
 			 <div class="box_body">
 				<div class="wrap">
- 					<a id="btn_ch" class="btn3" href="/VIG/myFeed/getMyFeedList.jsp">
+ 					<a id="btn_ch" class="btn3" href="/VIG/myfeed/getMyFeedList?userCode=${user.userCode}">
  						마이피드 목록</a>
  					<br/>
- 					<a id="btn_ch" class="btn3" href="/VIG/history/getMyHistoryList">
+ 					<a id="btn_ch" class="btn3" href="/VIG/history/getMyHistoryList?userCode=${user.userCode}">
  						내 활동 보기</a>
  					 <br/>
  					 <a id="btn_ch" class="btn3" href="/VIG/user/updateUser">
@@ -119,12 +118,10 @@
 			 			<a id="btn_ch" class="btn3" href="/VIG/chart/getChart">통 계</a>
 			 				<br/>	
 				 		</c:if>							
-				 		</c:when>
-				 		</c:choose>
+				 		
  					
  					
- 					
- 					<a id="btn_ch" class="btn3" data-toggle="dropdown"aria-haspopup="true" aria-expanded="false">
+ 					<a id="btn_ch" class="btn3" data-toggle="dropdown"aria-haspopup="true" aria-expanded="false" href="#">
  						결제 </a>
  						<div class="dropdown-menu" style="position: absolute;will-change: transform;top: 0px;left: 10px;transform: translate3d(20px, 347px, 0px);">
 					  <a class="dropdown-item" href="/VIG/payment/getPaymentList">내 결제 목록</a>
@@ -136,12 +133,11 @@
 					  </c:if>
 				    </div>
  					<br/>
- 						
-			
-				 		
-				 		
-				 		
-				 		
+ 					</div>
+ 					</div>
+		 		</c:when>
+			 		</c:choose>
+			 		
 			<!-- 관리자 로그인시 --> 		
 			 		<c:if test="${sessionScope.user.role=='admin'}">
 			 			<a type="button" class="btn btn-block" href="/VIG/user/getUserList">회원 목록</a>
@@ -151,15 +147,13 @@
 			 			<a type="button" class="btn btn-block" href="/VIG/payment/getAllPaymentList">결제 조회</a>
 			 				<br/>
 			 		</c:if>	
-			 		
+			 	</c:when>
+			 	</c:choose>	
 			 		</div>
  					</div>		
-			 		</c:when>
-			 		</c:choose>
+			 	
 			 		
-			</div>
-		</div>	
-	</div>
+	
 
 </body>
 </html>

@@ -75,7 +75,13 @@
 	
 	</script>
 	<style>
-	  body { font-family: "Nanum Gothic", sans-serif;}
+	  body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}	
+		h1 { margin-left: 100px;}
+		/*사이드바,본문 배치css*/
+	 .col-md-2.sideBarPlace { padding:0;  display: inline-block;float:left;}
+	 #mainMyFeedPage { margin-left: 0px;  display: inline-block; float:right;}
+	 
+	 
         #myFeedMain { padding: 70px;}
        .col-md-12_top {	width: 100%; height: 100%; position: relative; margin:50px; }	 
     </style>
@@ -83,44 +89,39 @@
 
 <body>
 
- <!-- 상단 툴바 자리 --> 					
-      <div class="container-fluid">  
-      	 <div class="row">
-      		<div class="col-md-12">
-      			<jsp:include page="/main/toolbar.jsp" />
-     		</div>
-		</div>
+ <!-- 툴바 -->
+		      <div class="container-fluid">  
+		      	 <div class="row">
+		      		<div class="col-md-12">
+		      			<jsp:include page="/main/toolbar.jsp"></jsp:include>
+		     		</div>
+				</div>
 		
-		<div class="col-md-12">
-			<div class="row">
-	<!-- 사이드바 자리 -->		
-			<div class="col-md-2">		
-		    <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
-		    </div>  
-		    
-		    
-	<!--  본문 자리 -->	      	    
-		    <div class="col-md-10" id="myFeedMain">
-		   <div class="col-md-12_top">
-				<h2>회원목록조회</h2>				
-			<hr/>		
+		
+			<!-- 사이드바  -->		
+				<div class="col-md-2 sideBarPlace">		
+				 <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
+				 </div>
+  			<!-- 타이틀 -->
+			    <div class="col-md-10" id="mainMyFeedPage" >	
+			    				
+					<h1>회원목록조회</h1>				
+					<hr/>		
 	   
-<form > 
-	
-	
-	
 
-	    <div class="row justify-content-end">							
+
+	    <div class="row justify-content-end" style="margin: 45px 10px 27px 10px;">							
+					
 					<div class="input-group md-form form-sm form-1 pl-0 col-3">
 					  <div class="input-group-prepend">
-					    <span class="input-group-text cyan lighten-2" id="basic-text1"><i id="searchIcon" class="fas fa-search text-white" aria-hidden="true"></i></span>
-					  </div>
-					  <input id="inputKeyword" class="form-control my-0 py-1" type="text" name="keyword" value="${search.keyword}" placeholder="유저코드 입력" aria-label="Search">
-					</div>					
+					   <span class="input-group-text " id="basic-text1"><i class="fas fa-search" class="fas fa-search text-white" aria-hidden="true"></i></span>
+					  <input id="inputKeyword" class="form-control form-control-sm ml-3 w-75" type="text" name="keyword" value="${search.keyword}" placeholder="Search" aria-label="Search">
+					  </div>				
+				</div>
 				</div>
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
 		
-		<div class="row">	
+		<div class="row" style="flex-wrap: wrap;margin-right: 40px;margin-left: 50px;">
      
       <!--  table Start /////////////////////////////////////-->
     
@@ -157,20 +158,17 @@
         </tbody>
       
       </table>
-	  <!--  table End /////////////////////////////////////-->
-	  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
+
 						<input type="hidden" id="currentPage" name="currentPage" value=""/>	
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
- 	</form>
- 	<div class="row justify-content-md-center">
+ 	
+ 	<div class="row justify-content-md-center" >
 				<jsp:include page="../common/pageNavigator.jsp"/>
 			</div>
 				
 			</div>
-			</div>
-		</div>
-	</div>
+	
 	</div>
 	
 			

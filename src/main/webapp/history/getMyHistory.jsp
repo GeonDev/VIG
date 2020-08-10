@@ -105,7 +105,7 @@
 			<!-- 사이드바  -->		
 				<div class="col-md-2 sideBarPlace">		
 				 <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
-		    
+		    	</div>
 		    
 			<!-- 타이틀 -->
 			    <div class="col-md-10" id="mainMyFeedPage" >					
