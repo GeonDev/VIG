@@ -55,7 +55,7 @@ public class FollowDaoImpl implements FollowDao {
 	@Override
 	public List<User> getFollowingList(String userCode) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("FollowerMapeer.getFollowingList", userCode);
+		return sqlSession.selectList("FollowMapper.getFollowingList", userCode);
 	}
 	
 	public int getFollow(Follow follow) throws Exception{
