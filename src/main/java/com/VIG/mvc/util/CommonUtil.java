@@ -371,6 +371,36 @@ public class CommonUtil {
 			
 			return result;
 		}
+		
+		
+		public static void comb(List<ImageKeyword> target, boolean[] visited, int depth, int r, List<String> result) {
+	        if (r == 0) {
+	        	result.add(addComb(target, visited));
+	            return;
+	        }
+	        
+	        if (depth == target.size()) {
+	            return;
+	        }
+
+	        visited[depth] = true;
+	        comb(target, visited, depth + 1, r - 1, result);
+
+	        visited[depth] = false;
+	        comb(target, visited, depth + 1, r, result);
+	    }
+		
+		
+	    private static String addComb(List<ImageKeyword> target, boolean[] visited) {
+	    	String result = "";
+	    	
+	        for (int i = 0; i < target.size(); i++) {
+	            if (visited[i]) {            	
+	            	result += target.get(i).getKeywordEn() +",";                
+	            }
+	        }
+	        return result.substring(0, result.length()-1);
+	    }
 
 	
 }

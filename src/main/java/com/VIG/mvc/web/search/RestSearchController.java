@@ -18,10 +18,13 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.VIG.mvc.service.color.ColorServices;
 import com.VIG.mvc.service.domain.Feed;
@@ -81,6 +84,12 @@ public class RestSearchController {
 	
 	@Value("#{commonProperties['colorRange'] ?: 5}")
 	int colorRange;
+
+	@Value("#{commonProperties['tagetPercent'] ?: 70}")
+	int tagetPercent;
+	
+	@Value("#{commonProperties['decreasePercent'] ?: 20}")
+	int decreasePercent;
 
 
 	
@@ -147,7 +156,7 @@ public class RestSearchController {
 	
 	//선택된 카테고리에 해당하는 피드를 리턴한다.
 	@RequestMapping(value = "json/getSearchCategoryResult")
-	public Map<String, Object> getSearchCategoryResult(@RequestBody Map<String, String> jsonData, HttpSession session) throws Exception {
+	public Map<String, Object> getSearchCategoryResult(@RequestBody Map<String, String> jsonData, HttpSession session, @CookieValue(value = "searchKeys", defaultValue = "", required = false) String searchKeys) throws Exception {
 				
 		Map<String, Object> map = new HashMap<String, Object>();
 		
@@ -189,10 +198,33 @@ public class RestSearchController {
 					//최근 본 피드의 썸네일 키워드 리스트를 가지고 온다.
 					for(History history : historyList) {						
 						keywordList.addAll(history.getShowFeed().getKeywords());
-					}		
-					tempSearch.setKeywords(keywordList);
+					}
 					
-					feedlist = feedServices.getRecommendFeedList(tempSearch);				
+					
+					//쿠키에 저장된 검색어 기록을 가져온다.
+					if(!searchKeys.equals("") ) {			
+						
+						//쿠키에서 가져오면서 변경된 공백을 원래 상태로 돌림
+						searchKeys = searchKeys.replaceAll("\\+", " ");						
+						//콤마 (,)를 기준으로 나눔
+						String[] keys = searchKeys.split(",");
+						
+						for(String keyword : keys ) {
+							
+							if(!keyword.equals("")) {
+								logger.debug("불러온 쿠키 값 : " + keyword);
+								ImageKeyword temp = new ImageKeyword();								
+								temp.setKeywordEn(keyword);	
+								
+								keywordList.add(temp);
+							}
+						}						
+					}				
+					
+					
+					tempSearch.setKeywords(CommonUtil.checkEqualKeyword(keywordList));
+					
+					feedlist = CommonUtil.checkEqualFeed(feedServices.getRecommendFeedList(tempSearch));				
 					
 					if(feedlist.size() > 0) {					
 						
@@ -433,6 +465,107 @@ public class RestSearchController {
 	}
 	
 	
+	
+	
+	//이미지 자세히 보기 
+	@RequestMapping(value = "json/getSearchImages")
+	public Map<String, Object> getSearchImageList(@RequestBody Map<String, String> jsonData, HttpSession session, @CookieValue(value = "searchKeys", defaultValue = "", required = false) String searchKeys ) throws Exception {		
+		
+		//연산 결과를 저장할 맵 생성
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		//기준 이미지 선택
+		Image image = imageServices.getImageOne(Integer.parseInt(jsonData.get("ImageId")));				
+		
+		//키워드 연관 이미지 추출하고 담을 객체
+		List<Image> relatedImages = new ArrayList<Image>();
+				
+		//검색 기준 저장
+		Search search = new Search();
+		search.setPageSize(pageSize);				
+	
+		search.setCurrentPage(Integer.valueOf(jsonData.get("currentPage")));		
+		
+		
+		//선택된 이미지의 키워드 + 최근검색어를 저장할 리스트
+		List<ImageKeyword> keylist = new ArrayList<ImageKeyword>();
+		keylist.addAll(image.getKeyword());				
+
+		//쿠키에 저장된 검색어 기록을 가져온다.
+		if(!searchKeys.equals("") ) {			
+			
+			//쿠키에서 가져오면서 변경된 공백을 원래 상태로 돌림
+			searchKeys = searchKeys.replaceAll("\\+", " ");						
+			//콤마 (,)를 기준으로 나눔
+			String[] keys = searchKeys.split(",");
+			
+			for(String keyword : keys ) {
+				
+				if(!keyword.equals("")) {
+					logger.debug("불러온 쿠키 값 : " + keyword);
+					ImageKeyword temp = new ImageKeyword();
+					temp.setImageId(image.getImageId());
+					temp.setKeywordEn(keyword);	
+					
+					keylist.add(temp);
+				}
+			}
+			
+		}
+		
+		//중복 키워드가 있는지 확인후 검색기준에 추가
+		keylist = CommonUtil.checkEqualKeyword(keylist);
+		
+		//조합 결과를 담을 리스트
+		List<String> resultkeys = new ArrayList<String>();
+		
+		//조합 연산을 위한 배열
+		boolean[] visited = new boolean[keylist.size()];
+		
+		int r = keylist.size() * ((tagetPercent - (decreasePercent*(Integer.valueOf(jsonData.get("currentPage"))-1)))/100);
+		
+		//주어진 퍼센트에 맞는 키워드 조합을 생성
+		CommonUtil.comb(keylist, visited, 0, r, resultkeys);
+		
+		for(String combKey: resultkeys) {
+			
+			String[] key = combKey.split(",");
+			List<ImageKeyword> combkeywords = new ArrayList<ImageKeyword>();
+			
+			for(String tempkey : key ) {
+				ImageKeyword temp = new ImageKeyword();
+				temp.setImageId(image.getImageId());	
+				temp.setKeywordEn(tempkey);
+			}
+			
+			//조합으로 생성한 키 리스트를 검색 기준으로 넣어  줌
+			search.setKeywords(combkeywords);
+			relatedImages.addAll(imageServices.getImageListFromImageALLKeys(search));
+		}
+		
+		
+				
+		//중복체크후 반환
+		map.put("list", CommonUtil.checkEqualImage(relatedImages));
+		return map;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	//특정 피드를 원하는 위치로 이동
 	private List<Feed> setFeedOrder(List<Feed> base, Feed prime, int index){			
 		
@@ -490,7 +623,7 @@ public class RestSearchController {
 	}
 	
 	
-	// 쿠키가 있다면 검색어를 쿠키에 추가
+	//현재 검색한 단어를 쿠키에 추가 
 	private void addSearchKeyCookie(String keyword, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		
 		Cookie[] cookies = request.getCookies();		

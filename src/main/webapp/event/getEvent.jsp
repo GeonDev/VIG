@@ -106,8 +106,11 @@ $(function(){
 	
 	$("#delete").on("click", function(){
 		
-		self.location="/VIG/event/deleteEvent?eventId=${event.eventId}";
+		var result = confirm("삭제하시겠습니까?");
 		
+		if(result){
+		self.location="/VIG/event/deleteEvent?eventId=${event.eventId}";
+		}
 	});
 	
 	$("#update").on("click", function(){
@@ -116,7 +119,7 @@ $(function(){
 		
 	});
 	
-	$(".fa-bars").on("click", function(){
+	$("#list").on("click", function(){
 		
 		self.location="/VIG/event/getEventList";
 		
@@ -150,12 +153,23 @@ $(function(){
 	<br>
 	<dl class="row">
 	<dt class="col-sm-10"> <h1 style="font-weight: bold"> 이벤트 상세보기 </h1> </dt>
-	<dt class="col-sm-2" style="text-align: center;"> 
-	<c:if test="${user.role=='admin'}">
-		<input type="button" class="btn btn-dark" value="수정" id="update"> 
-		<input type="button" class="btn btn-outline-danger waves-effect" value="삭제" id="delete"> 
-	</c:if>
-	<i style="font-size:30px; align: right" class="fas fa-bars"></i>
+	<dt class="col-sm-2" style="text-align: right;"> 
+	
+	
+		<div class="btn-group" style="width: 100px">
+
+		    <i style="font-size:30px; align: right" class="fas fa-bars" data-toggle="dropdown" aria-haspopup="true"
+		    aria-expanded="false"></i>
+	
+		  <div class="dropdown-menu">
+			  <c:if test="${user.role=='admin'}">
+			    <a class="dropdown-item" id="update" >수정</a>
+			    <a class="dropdown-item" id="delete" >삭제</a>
+			   </c:if>
+		  	  <a class="dropdown-item" id="list" >목록보기</a>
+		   </div>
+		</div>
+	
 	</dt>
 	
 	</dl>

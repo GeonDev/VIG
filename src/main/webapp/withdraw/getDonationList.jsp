@@ -163,7 +163,7 @@
 	   <div class="col-md-10" >		
 			<div id=main>
 				
-				<h2> 받은 후원 목록 </h2>
+				<h2> 받은 후원 목록 </h2> <a href="/VIG/withdraw/getWithdrawList">출금목록보기</a>
 				<hr>
 				
 				<div class="container">
