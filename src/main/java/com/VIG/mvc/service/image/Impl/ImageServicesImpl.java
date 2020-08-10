@@ -87,4 +87,10 @@ public class ImageServicesImpl implements ImageServices {
 		return imageDao.getAutoImageKeywordList(key);
 	}
 
+	@Override
+	public List<Image> getImageListFromImageALLKeys(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return imageDao.getImageListFromImageALLKeys(search);
+	}
+
 }

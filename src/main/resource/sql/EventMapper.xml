@@ -61,10 +61,10 @@
 	<update id="updateEvent" parameterType="event">
 		UPDATE event
 		SET 
-		event_title=#{eventTitle:VARCHAR}, event_sub=#{eventSub:VARCHAR}, event_start={eventStart:DATE}, event_end=#{eventEnd:DATE}, 
-		event_thumbnail=#{eventThumb:VARCHAR}, event_tag=#{eventTags:VARCHAR}, event_image=#{eventImage:VARCHAR}, event_type={eventType:NUMERIC}, 
-		banner=#{banner:VARCHAR}
-		WHERE event_id={eventId:NUMERIC}	
+		event_title=#{eventTitle:VARCHAR}, event_sub=#{eventSub:VARCHAR}, event_start=#{eventStart:DATE}, event_end=#{eventEnd:DATE}, 
+		event_thumbnail=IFNULL(#{eventThumb:VARCHAR}, event_thumbnail), event_tag=#{eventTags:VARCHAR}, event_image=IFNULL(#{eventImage:VARCHAR}, event_image), 
+		event_type=#{eventType:NUMERIC}, banner=IFNULL(#{banner:VARCHAR}, banner)
+		WHERE event_id=#{eventId:NUMERIC}	
 	</update>
 	
 	<delete id="deleteEvent" parameterType="int">

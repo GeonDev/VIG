@@ -100,4 +100,11 @@ public class ImageDaoImpl implements ImageDao {
 		return sqlSession.selectList("ImageMapper.getAutoImageKeywordList", key);
 	}
 
+
+	@Override
+	public List<Image> getImageListFromImageALLKeys(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("ImageMapper.getImageListFromImageALLKeys", search);
+	}
+
 }

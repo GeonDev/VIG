@@ -208,6 +208,13 @@ public class UserController {
 			mv.addObject("msg", "fail");
 			return mv;
 			
+
+		} else if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())){	
+			session.setAttribute("user", dbUser);
+			System.out.println("로그인 성공");
+			mv.setViewName("redirect:/");
+			return mv;
+
 		} else if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())){				
 			
 			if(dbUser.getState() == 0) {
@@ -233,6 +240,7 @@ public class UserController {
 				
 			}			
 			
+
 
 		} else {
 			mv.setViewName("forward:/user/loginView.jsp");
