@@ -11,8 +11,6 @@
 		<association property="followingUser"         column="user_code"    javaType="user"      select="setUser"/>		
 		<association property="followedUser" 		  column="user_code" 	javaType="user"	     select="setFollower"/>
 		
-		<collection property="followers" 		column="user_code" 	javaType="list" 	ofType="user" 		/>
-		<collection property="follwings"	 	column="user_code"  javaType="list"	  	ofType="user"		/>
 		
 	</resultMap>
  	
@@ -53,12 +51,12 @@
 	</select>
 	
 	<!-- 내가 팔로우 한 사람 -->
-	<select id="getFollowingList" parameterType="string">
+	<select id="getFollowingList" parameterType="string" resultMap="UserMapper.userSelectMap">
 	
 
 		SELECT  users.*
 		FROM follow, users
-		WHERE follow.user_code=#{keyword}
+		WHERE follow.user_code=#{value}
 		AND follow.follower_code = users.user_code
 	
 	</select>
