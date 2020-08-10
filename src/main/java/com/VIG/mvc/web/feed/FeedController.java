@@ -197,7 +197,7 @@ public class FeedController {
 		
 		
 		return new ModelAndView("forward:/history/getMyHistoryList?userCode="+user.getUserCode());
-	}		
+	}			
 	
 	@RequestMapping(value="getFeed", method=RequestMethod.GET)
 	public ModelAndView getFeed(@RequestParam("feedId") int feedId, HttpSession session, HttpServletRequest request) throws Exception {
