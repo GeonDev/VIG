@@ -103,10 +103,9 @@
 		WHERE images.image_id = keywords.image_id
 		AND feeds.feed_id = images.feed_id
 		AND images.is_thumbnail = 0
-		AND feeds.feed_state = 0
-		AND keywords.keyword_en IN
-		<foreach collection="keywords" item="item" open="(" close=")" separator=",">
-		 #{item.keywordEn}
+		AND feeds.feed_state = 0	
+		<foreach collection="keywords" item="item" open="" close="" separator="">
+			AND keywords.keyword_en = #{item.keywordEn}
 		</foreach>	
 		GROUP BY images.image_id		
 	</select>
@@ -119,9 +118,9 @@
 		AND feeds.feed_id = images.feed_id
 		AND images.is_thumbnail = 0
 		AND feeds.feed_state = 0		 
-		<foreach collection="keywords" item="item" >
-		 AND keywords.keyword_en =  #{item.keywordEn}
-		</foreach>	
+		<foreach collection="keywords" item="item" open="(" close=")" separator=",">
+		 #{item.keywordEn}
+		</foreach>
 		GROUP BY images.image_id		
 	</select>
 	

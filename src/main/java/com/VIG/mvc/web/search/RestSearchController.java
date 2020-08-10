@@ -84,9 +84,6 @@ public class RestSearchController {
 	
 	@Value("#{commonProperties['colorRange'] ?: 5}")
 	int colorRange;
-
-	@Value("#{commonProperties['tagetPercent'] ?: 70}")
-	int tagetPercent;
 	
 	@Value("#{commonProperties['decreasePercent'] ?: 20}")
 	int decreasePercent;
@@ -463,29 +460,22 @@ public class RestSearchController {
 
 		return map;		
 	}
+		
 	
 	
-	
-	
-	//이미지 자세히 보기 
-	@RequestMapping(value = "json/getSearchImages")
-	public Map<String, Object> getSearchImageList(@RequestBody Map<String, String> jsonData, HttpSession session, @CookieValue(value = "searchKeys", defaultValue = "", required = false) String searchKeys ) throws Exception {		
+	//이미지 자세히 보기 -> 연관이미지
+	@RequestMapping(value = "json/getSearchRelationImages")
+	public Map<String, Object> getSearchRelationImageList(@RequestBody Map<String, String> jsonData, HttpSession session, @CookieValue(value = "searchKeys", defaultValue = "", required = false) String searchKeys ) throws Exception {		
 		
 		//연산 결과를 저장할 맵 생성
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		//기준 이미지 선택
-		Image image = imageServices.getImageOne(Integer.parseInt(jsonData.get("ImageId")));				
+		Image image = imageServices.getImageOne(Integer.parseInt(jsonData.get("imageId")));				
 		
 		//키워드 연관 이미지 추출하고 담을 객체
-		List<Image> relatedImages = new ArrayList<Image>();
-				
-		//검색 기준 저장
-		Search search = new Search();
-		search.setPageSize(pageSize);				
+		List<Image> relatedImages = new ArrayList<Image>();				
 	
-		search.setCurrentPage(Integer.valueOf(jsonData.get("currentPage")));		
-		
 		
 		//선택된 이미지의 키워드 + 최근검색어를 저장할 리스트
 		List<ImageKeyword> keylist = new ArrayList<ImageKeyword>();
@@ -514,57 +504,26 @@ public class RestSearchController {
 		}
 		
 		//중복 키워드가 있는지 확인후 검색기준에 추가
-		keylist = CommonUtil.checkEqualKeyword(keylist);
+		keylist = CommonUtil.checkEqualKeyword(keylist);		
 		
-		//조합 결과를 담을 리스트
-		List<String> resultkeys = new ArrayList<String>();
+		//전달 받은 최소 페이지 세팅
+		int page = Integer.valueOf(jsonData.get("currentPage"));
 		
-		//조합 연산을 위한 배열
-		boolean[] visited = new boolean[keylist.size()];
+		//최초 퍼센트 설정
+		int tagetPersent = 50;		
+	
+		relatedImages.addAll(selectRelationImageList(image, keylist, page, tagetPersent));
 		
-		int r = keylist.size() * ((tagetPercent - (decreasePercent*(Integer.valueOf(jsonData.get("currentPage"))-1)))/100);
-		
-		//주어진 퍼센트에 맞는 키워드 조합을 생성
-		CommonUtil.comb(keylist, visited, 0, r, resultkeys);
-		
-		for(String combKey: resultkeys) {
-			
-			String[] key = combKey.split(",");
-			List<ImageKeyword> combkeywords = new ArrayList<ImageKeyword>();
-			
-			for(String tempkey : key ) {
-				ImageKeyword temp = new ImageKeyword();
-				temp.setImageId(image.getImageId());	
-				temp.setKeywordEn(tempkey);
-			}
-			
-			//조합으로 생성한 키 리스트를 검색 기준으로 넣어  줌
-			search.setKeywords(combkeywords);
-			relatedImages.addAll(imageServices.getImageListFromImageALLKeys(search));
-		}
-		
-		
-				
+		relatedImages = CommonUtil.checkEqualImage(relatedImages);
 		//중복체크후 반환
-		map.put("list", CommonUtil.checkEqualImage(relatedImages));
+		
+		logger.debug("이미지 개수 : " + relatedImages.size() );
+		
+		map.put("list", relatedImages);
 		return map;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 	
 	//특정 피드를 원하는 위치로 이동
 	private List<Feed> setFeedOrder(List<Feed> base, Feed prime, int index){			
@@ -645,6 +604,59 @@ public class RestSearchController {
 		cookie.setPath("/VIG/");
 		response.addCookie(cookie);		
 		
+	}
+	
+	
+	private List<Image> selectRelationImageList(Image tagetImage, List<ImageKeyword>keylist, int page, int tagetPercent ) throws Exception {		
+		
+		//검색 기준 저장
+		Search search = new Search();
+		search.setPageSize(pageSize);				
+	
+		search.setCurrentPage(page);	 
+		
+		List<Image> returnImage = new ArrayList<Image>();		
+		
+		
+		//조합 결과를 담을 리스트
+		List<String> resultkeys = new ArrayList<String>();
+		
+		//조합 연산을 위한 배열
+		boolean[] visited = new boolean[keylist.size()];		
+	
+		
+		int r = (int)Math.ceil(keylist.size() * ((tagetPercent - (decreasePercent*(page-1)))/100.0));
+		
+		logger.debug("실제값 : " + r );
+		
+		//최소 2개는 일치하게 만듬
+		if(r < 2 ) {
+			r = 2;
+		} 	
+		
+		logger.debug("타겟 퍼센트 : " + tagetPercent );
+		logger.debug("일치해야되는 키워드 수 : " + r );
+		
+		//주어진 퍼센트에 맞는 키워드 조합을 생성
+		CommonUtil.comb(keylist, visited, 0, r, resultkeys);
+		
+		for(String combKey: resultkeys) {
+			
+			String[] key = combKey.split(",");
+			List<ImageKeyword> combkeywords = new ArrayList<ImageKeyword>();
+			
+			for(String tempkey : key ) {
+				ImageKeyword temp = new ImageKeyword();
+				temp.setImageId(tagetImage.getImageId());	
+				temp.setKeywordEn(tempkey);
+			}
+			
+			//조합으로 생성한 키 리스트를 검색 기준으로 넣어 줌
+			search.setKeywords(combkeywords);
+			returnImage.addAll(imageServices.getImageListFromImageALLKeys(search)); 
+		}		
+		
+		return returnImage;
 	}
 
 

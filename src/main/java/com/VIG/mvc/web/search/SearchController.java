@@ -116,65 +116,10 @@ public class SearchController {
 	public ModelAndView getSearchImageList(@RequestParam("imageId") int imageId, HttpSession session, Model model, @CookieValue(value = "searchKeys", defaultValue = "", required = false) String searchKeys ) throws Exception {		
 		
 		//기준 이미지 선택
-		Image image = imageServices.getImageOne(imageId);				
-		
-		Search search = new Search();
-		search.setPageSize(pageSize);
-		search.setCurrentPage(1);		
-		
-		List<ImageKeyword> keylist = new ArrayList<ImageKeyword>();
-		keylist.addAll(image.getKeyword());				
-
-		//쿠키에 저장된 검색어 기록을 가져온다.
-		if(!searchKeys.equals("") ) {			
-			
-			//쿠키에서 가져오면서 변경된 공백을 원래 상태로 돌림
-			searchKeys = searchKeys.replaceAll("\\+", " ");						
-			//콤마 (,)를 기준으로 나눔
-			String[] keys = searchKeys.split(",");
-			
-			for(String keyword : keys ) {
-				
-				if(!keyword.equals("")) {
-					logger.debug("불러온 쿠키 값 : " + keyword);
-					ImageKeyword temp = new ImageKeyword();
-					temp.setImageId(image.getImageId());
-					temp.setKeywordEn(keyword);	
-					
-					keylist.add(temp);
-				}
-			}
-			
-		}
-		
-		//중복 키워드가 있는지 확인후 검색기준에 추가
-		keylist = CommonUtil.checkEqualKeyword(keylist);
-		search.setKeywords(keylist);			
-		
-		
-		//키워드 연관 이미지 추출
-		List<Image> relatedImages = imageServices.getImageListFromImage(search);
-		
-		//선택한 이미지는 유사 리스트 에서 제거
-		relatedImages.remove(image);
-		
-		//추출된 이미지리스트에 있는 이미지가 선택된 이미지의 키워드와 같은 값을 몇개 가지고 있는지 체크
-		if(relatedImages.size() > 0) {						
-			for(Image target : relatedImages) {
-				for(ImageKeyword key : keylist) {
-					if(target.getKeyword().contains(key)) {
-						target.setCurrentKeywordSameCount(target.getCurrentKeywordSameCount()+1);
-					}					
-				}				
-			}			
-		}	
-		
-		// 같은 키워드를 많이 가지고 있는 순으로 정렬
-		Collections.sort(relatedImages);		
-		
-				
+		Image image = imageServices.getImageOne(imageId);
+	
 		model.addAttribute("baseImage", image);
-		model.addAttribute("list", relatedImages);
+		//model.addAttribute("list", relatedImages);
 		return new ModelAndView("forward:/search/getSearchImageResult.jsp");
 	}
 	

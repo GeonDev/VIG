@@ -399,6 +399,7 @@ public class CommonUtil {
 	            	result += target.get(i).getKeywordEn() +",";                
 	            }
 	        }
+	        System.out.println("조합 결과 : " + result.substring(0, result.length()-1));
 	        return result.substring(0, result.length()-1);
 	    }
 
