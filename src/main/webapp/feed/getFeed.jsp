@@ -660,7 +660,7 @@ function imageModal(imageId){
 		
 			<div class="feedbottom">
 			
-			<h6 style="font-weight: bold">카테고리    | <a style="display: inline-block; color: black;" href="/VIG/search/getSearchList?Mode=Feed&keyword=${feed.feedCategory.categoryName }">${feed.feedCategory.categoryName }</a></h6>
+			<h6 style="font-weight: bold">카테고리    | <a style="display: inline-block; color: black;" href="/VIG/search/getSearchList?Mode=Feed&category=${feed.feedCategory.categoryId }">${feed.feedCategory.categoryName }</a></h6>
 			
 			</div>
 			<br>
@@ -724,7 +724,7 @@ function imageModal(imageId){
 	
 					
 						<div id="tag" style=" border: 1px solid #C2C3C2; margin: 3px 1px 3px 1px; padding: 1px 3px 1px 3px; display: inline-block; border-radius: 5px;">
-					    <a style="color: black; font-size: 13px;" href="/VIG/search/getSearchList?Mode=Feed&keyword=${keywords.keywordOrigin}">${keywords.keywordOrigin }</a>
+					    <a style="color: black; font-size: 13px;" href="/VIG/search/getSearchList?Mode=Feed&keyword=${keyword.keywordOrigin}">${keyword.keywordOrigin}</a>
 						</div>
 	
 					</c:if>
