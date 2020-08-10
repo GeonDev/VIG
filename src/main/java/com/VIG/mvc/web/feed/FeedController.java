@@ -10,6 +10,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,12 +43,15 @@ import com.VIG.mvc.service.keyword.KeywordServices;
 import com.VIG.mvc.service.like.LikeServices;
 import com.VIG.mvc.service.user.UserServices;
 import com.VIG.mvc.util.CommonUtil;
+import com.VIG.mvc.util.VisionInfo;
+import com.VIG.mvc.web.main.mainController;
 
 
 @Controller
 @RequestMapping("/feed/*")
 public class FeedController {
 	
+	public static final Logger logger = LogManager.getLogger(FeedController.class); 
 	
 	@Value("#{commonProperties['uploadPath']}")
 	String uploadPath;
@@ -102,21 +107,12 @@ public class FeedController {
 	
 	
 	@RequestMapping(value = "addFeed", method = RequestMethod.POST)
-	public ModelAndView addFeed(@RequestParam("keyword") String keyword,@ModelAttribute("feed") Feed feed, @ModelAttribute("category") Category category,@RequestParam("uploadFile") List<MultipartFile> files, @SessionAttribute("user") User user) throws Exception {
-		//System.out.println(keyword);	
-		
-	//	System.out.println(category);
-		
-		
-		
-		
+	public ModelAndView addFeed(@RequestParam("keyword") String keyword,@ModelAttribute("feed") Feed feed, @ModelAttribute("category") Category category,@RequestParam("uploadFile") List<MultipartFile> files, @SessionAttribute("user") User user,@ModelAttribute("joinUser") JoinUser joinUser) throws Exception {
 		
 		feed.setWriter(user);									
 		feed.setFeedCategory(category);			
 		feedServices.addFeed(feed);
-
-		System.out.println("feed : "+feed);						
-		
+							
         String path = context.getRealPath("/");        
         path = path.substring(0,path.indexOf("\\.metadata"));         
         path = path +  uploadPath;  
@@ -124,6 +120,7 @@ public class FeedController {
         String result = new String("VISION KEY : ");
         List<ImageKeyword> keys = new ArrayList<ImageKeyword>();
         List<ImageColor> colors = new ArrayList<ImageColor>();
+        
         
 		if(files !=null) {
 			int k=0;	
@@ -140,9 +137,6 @@ public class FeedController {
 	    		multipartFile.transferTo(f);		    		
 	    		
 	    		Image image = new Image();
-	    	//	if(k==0) {
-	    		//	image.setIsThumbnail(1);					//이미지 순서가 0번째면 썸네일 
-	    	//	}
 	    		String imageFile=inDate+multipartFile.getOriginalFilename();
 	    	    System.out.println("imageFile:"+imageFile);
 	    	    
@@ -150,26 +144,33 @@ public class FeedController {
 	    	    
 	    		int getfeedId = feedServices.getLastFeedId();				//마지막 피드아이디 = getfeedId
 	    		image.setFeedId(getfeedId);											//이미지에 피드ID,이미지파일 셋
-	    		image.setImageFile(imageFile);												
+	    		image.setImageFile(imageFile);		
+	    		
+	    		if(k == files.size()) {
+					image.setIsThumbnail(1);										      //썸네일 지정 
+	    		}
+	    		
 	    		imageServices.addImage(image);												
-	    		
-	    		int imageId = imageServices.getLastImageId();				//마지막 이미지Id  = imageId
-	    		
+				
+	    		int imageId = imageServices.getLastImageId();				//마지막 이미지Id를 뽑는다
+	    	
 	    		
 	    		
 				String[] originKeyword = keyword.split(","); //스트링으로 받은 키워드를 파싱후 string[]에 담는다
 	    									
    				for(int i =0; i < originKeyword.length;  i++) {			    			
    					
-	    					ImageKeyword imageKeyword = new ImageKeyword();          
+	    					ImageKeyword imageKeyword = new ImageKeyword();
+	    				
 	    					imageKeyword.setKeywordOrigin(originKeyword[i]);                //이미지키워드에 오리진키워드 set
-	    					imageKeyword.setIsTag(1);
-	    					imageKeyword.setImageId(imageId);
+	    					imageKeyword.setIsTag(1);														  //태그,키워드 구별
+	    					imageKeyword.setImageId(imageId);										  //키워드 이미지 연결
+	    					
 	    					keywordServices.addKeyword(imageKeyword);                		  
 	    					System.out.println(imageKeyword);	
 	    					}
-    		System.out.println(image);
-	    		
+   							System.out.println(image);
+	  
 	    		//keys = VisionInfo.getKeywordForVision(path+inDate+multipartFile.getOriginalFilename());	    			
 	    		//colors = VisionInfo.getColorForVision(path+inDate+multipartFile.getOriginalFilename());
 			}
@@ -195,8 +196,8 @@ public class FeedController {
 		}	
 		
 		
-		return new ModelAndView("forward:/common/alertView.jsp", "message", result);
-	}	
+		return new ModelAndView("forward:/history/getMyHistoryList?userCode="+user.getUserCode());
+	}		
 	
 	@RequestMapping(value="getFeed", method=RequestMethod.GET)
 	public ModelAndView getFeed(@RequestParam("feedId") int feedId, HttpSession session, HttpServletRequest request) throws Exception {
