@@ -25,9 +25,10 @@
 		<!-- JQuery -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	
-	<!-- Tag  -->
-	<script src="/VIG/javascript/jQuery.tagify.min.js"></script>
- 	<link rel="stylesheet" href="/VIG/css/tagify.css">
+		<!--  태그 사용 -->
+ 	<script src="/VIG/javascript/jquery.tagsinput-revisited.js"></script>
+	
+	<link rel="stylesheet" href="/VIG/css/jquery.tagsinput-revisited.css">
  	
  	<!--  drag and drop -->
  	<script src="/VIG/javascript/dropify.js"></script>
@@ -40,6 +41,9 @@
  	<link rel="stylesheet" href="/VIG/css/jquery.Jcrop.css"  type="text/css" />
  	<link rel="stylesheet" href="/VIG/css/jquery.Jcrop.min.css"  type="text/css" />
  	
+ 	<!-- crop2 -->
+ 	<script src="/VIG/javascript/cropper.min.js"></script>
+ 	<link rel="stylesheet" href="/VIG/css/cropper.min.css"  type="text/css" />
  	<!-- select -->
  	<script src="/VIG/javascript/justselect.min.js"></script>
  	<link rel="stylesheet" href="/VIG/css/justselect.css" >
@@ -63,6 +67,13 @@
 	   
 	}
 	
+	#target{
+	display : block;  
+	
+	max-width : 100%; 
+	
+	}
+		
 	#feedend{
 		 position:absolute;
 		 bottom : -400px;	
@@ -129,12 +140,24 @@ function fileCheck(el) {
         
     }
 }
-//태그
-	$(function (){
-		var input = document.querySelector('input[name=keyword]');
-		new Tagify(input)
-	});
+//태그 처리
+$(function (){
 
+	
+	$('#keyword').tagsInput({
+		'onAddTag': function(input, value) {
+			console.log('tag added', input, value);
+		},
+		'onRemoveTag': function(input, value) {
+			console.log('tag removed', input, value);
+		},
+		'onChange': function(input, value) {
+			console.log('change triggered', input, value);
+		}
+	});
+	
+
+});
 </script>
 
 <script type="text/javascript">
@@ -156,72 +179,47 @@ $(function(){
 
 			    //로컬 이미지를 보여주기
 			 document.querySelector('#target').src = reader.result;
-			   
-			   var jcrop_api,
-		        boundx,
-		        boundy,
-		        
-		        $preview = $('#preview-pane'),
-		        $pcnt = $('#preview-pane .preview-container'),
-		        $pimg = $('#preview-pane .preview-container img'), 
+			     		
 			    
-		        xsize = $pcnt.width(),
-		        ysize = $pcnt.height();
+			
+			 const image = document.getElementById('target');
+			 const cropper = new Cropper(image, {
+			   aspectRatio: 4 / 3,
+			   viewMode: 3,
+			   modal:true,
+			   guides:true,
+			   background:true,
 			   
+			   crop(event) {
+			     console.log(event.detail.x);
+			     console.log(event.detail.y);
+			     console.log(event.detail.width);
+			     console.log(event.detail.height);
+			     console.log(event.detail.rotate);
+			     console.log(event.detail.scaleX);
+			     console.log(event.detail.scaleY);
+			     console.log(cropper);
+			     
+			     cropper.getCroppedCanvas();
+			     console.log(cropper);
+			   },
+			  
 			   
-				$('#target').Jcrop({
 					
-		            bgColor:     'black',
-		            bgOpacity:   .4,
-				onChange: updatePreview,
-				onSelect: updatePreview,
-				aspectRatio: 4/3 
-				},function(){
-				console.log(200);
-			      // Use the API to get the real image size
-			      var bounds = this.getBounds();
-			      boundx = bounds[0];
-			      boundy = bounds[1];
-			      // Store the API in the jcrop_api variable
-			      jcrop_api = this;
 
-			      // Move the preview into the jcrop container for css positioning
-			      $preview.appendTo(jcrop_api.ui.holder);
-			    });
-			    
-				
-				function updatePreview(c)
-		  	    {
-		  			
-		  	      if (parseInt(c.w) > 0)
-		  	      {
-		  	        var rx = xsize / c.w;
-		  	        var ry = ysize / c.h;
 
-		  	        $pimg.css({
-		  	          width: Math.round(rx * boundx) + 'px',
-		  	          height: Math.round(ry * boundy) + 'px',
-		  	          marginLeft: '-' + Math.round(rx * c.x) + 'px',
-		  	          marginTop: '-' + Math.round(ry * c.y) + 'px'
-		  	        });
-		  	      };
-		  	    };
-			    
-		  		};
-		  		
-		  		
-			    
 		
-	});
-	
-	
-	
-	
-	
+			   
+			   
+			 });
+			 
+			 
+		
+	};
+		
 	
   });
-	
-
+});
 
 
 </script>
@@ -301,8 +299,12 @@ function deleteInput() {
 	
 });
 	
+	//drag and drop
 	
-	
+	$(function (){
+		$('.dropify').dropify();
+		
+		});	
 	
 </script>
 
@@ -351,13 +353,13 @@ function deleteInput() {
 							<input type="button" value="추가" onclick="addInput();" />
 <input type="button" value="삭제" onclick="deleteInput();"/>
 							<div class="md-form md-bg">
-							<input name='keyword' value='' placeholder="Please enter your tags" class="form-control">
+							<input name='keyword' value='' placeholder="Please enter your tags" class="form-control" id="keyword">
 							
 							</div>
 							
 							<div class="md-form md-bg input-with-pre-icon">
   											<i class="fas fa-user input-prefix"></i>
-  														<input type="text" id="test123" class="form-control" placeholder="Please enter a collaborator" name="test123">
+  														<input type="text" id="test123" class="form-control" placeholder="Please enter a collaborator" name="joinUser">
  									 <label for="prefixInside4"> </label>
  									  
  									
@@ -470,19 +472,13 @@ function deleteInput() {
  	 <div class="modal-dialog modal-lg">
     		<div class="modal-content">
     											<div>
-													 <img id="target" src="" width="700" alt="로컬에 있는 이미지가 보여지는 영역">
-													<input type="file" id="getfile" accept="image/*">
+													 <strong>썸네일 크기는 4:3으로 업로드 해주세요.</strong>
+													<input type='file' class='dropify' name='uploadFile' accept='image/*' onchange='fileCheck(this)' data-height='400'>
 													
 													</div>
-													<div id="preview-pane">
-   												 <div class="preview-container">
-    									  <img src="/VIG/images/uploadFiles/feed01_1.jpg" class="jcrop-preview" alt="Preview" />
-    										</div>
- 												 </div>
+													
  									
-  					    <button type="button" class="btn btn-elegant">Save</button>
-    						
-					    <button type="button" class="btn btn-elegant">Cancel</button>
+  					    
       
     		</div>
  	 </div>
