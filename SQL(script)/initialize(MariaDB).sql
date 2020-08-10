@@ -1196,27 +1196,27 @@ INTO feeds(feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed
 VALUES (20057, 'CityLife', 'Hello LA',	'User06', Now(), 1, 10000);
 
 INSERT
-INTO Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES (	image_id,	20057, 0, 1, 'feed58_thumbnail.jpg' );			
 
 INSERT	
-INTO Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES (	image_id,	20057, 0,	0, 'feed58_01.jpg' );		
 
 INSERT
-INTO Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES (	image_id,	20057, 1,	0, 'feed58_02.jpg' );	
 
 INSERT
-INTO Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20057, 2,	0, 'feed58_03.jpg'	);		
 
 INSERT 
-INTO Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20057, 3,	0, 'feed58_04.jpg'	);			
 
 INSERT
-INTO Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20057, 4,	0, 'feed58_05.jpg'	);
 
 
@@ -1225,19 +1225,19 @@ INTO	feeds(feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed
 VALUES(	20058,	'ALICE',	'IN WONDERLAND',	'User06',	Now(),	1,	10007	);
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20058,	0,	1,	'feed59_thumbnail.jpg'	);			
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
 VALUES(	image_id,	20058,	0,	0,	'feed59_01.jpg'	);			
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20058,	1,	0,	'feed59_02.jpg'	);			
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20058,	2,	0,	'feed59_03.jpg'	);
 
 
@@ -1246,39 +1246,39 @@ INTO	feeds(feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed
 VALUES(	20059,	'PORCHE 911',	'CONCEPT DESIGN',	'User06',	Now(),	1,	10003	)	;
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20059,	0,	1,	'feed60_thumbnail.jpg'	);		
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20059,	0,	0,	'feed60_01.jpg'	);		
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20059,	1,	0,	'feed60_02.jpg'	);			
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20059,	2,	0,	'feed60_03.jpg'	);
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
 VALUES(	image_id,	20059,	3,	0,	'feed60_04.jpg'	);		
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
 VALUES(	image_id,	20059,	4,	0,	'feed60_05.jpg'	);			
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
 VALUES(	image_id,	20059,	5,	0,	'feed60_06.jpg'	);			
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20059,	6,	0,	'feed60_07.jpg'	);			
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20059,	7,	0,	'feed60_08.jpg'	);			
 
 
@@ -1287,43 +1287,43 @@ INTO	feeds(feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed
 VALUES(	20060,	'BRAND NEW HOUSE',	'NEXT IN MORDERN APARTMENT',	'User07',	Now(),	1,	10002	)	;
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
 VALUES(	image_id,	20060,	0,	1,	'feed61_thumbnail.jpg'	);	
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20060,	0,	0,	'feed61_01.jpg'	);		
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20060,	1,	0,	'feed61_02.jpg'	);		
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
 VALUES(	image_id,	20060,	2,	0,	'feed61_03.jpg'	);	
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20060,	3,	0,	'feed61_04.jpg'	);	
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20060,	4,	0,	'feed61_05.jpg'	);	
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20060,	5,	0,	'feed61_06.jpg'	);		
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20060,	6,	0,	'feed61_07.jpg'	);			
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
 VALUES(	image_id,	20060,	7,	0,	'feed61_08.jpg'	);	
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
 VALUES(	image_id,	20060,	8,	0,	'feed61_09.jpg'	);	
 
 
@@ -1332,39 +1332,39 @@ INTO	feeds(feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed
 VALUES(	20061,	'Clay City Characters',	'Moodies',	'User07',	Now(),	1,	10000	);
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20061,	0,	1,	'feed62_thumbnail.jpg'	);			
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20061,	0,	0,	'feed62_01.png'	);			
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
 VALUES(	image_id,	20061,	1,	0,	'feed62_02.png'	);	
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
 VALUES(	image_id,	20061,	2,	0,	'feed62_03.png'	);			
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
 VALUES(	image_id,	20061,	3,	0,	'feed62_04.png'	);			
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20061,	4,	0,	'feed62_05.png'	);			
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20061,	5,	0,	'feed62_06.png'	);			
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20061,	6,	0,	'feed62_07.png'	);	
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20061,	7,	0,	'feed62_08.png'	);			
 
 
@@ -1373,35 +1373,35 @@ INTO	feeds(feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed
 VALUES(	20062,	'BMW Urbanage',	'BMW series',	'User07',	Now(),	1,	10003	);
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20062,	0,	1,	'feed63_thumbnail.jpg'	);			
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20062,	0,	0,	'feed63_01.jpg'	);			
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
 VALUES(	image_id,	20062,	1,	0,	'feed63_02.jpg'	);			
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
 VALUES(	image_id,	20062,	2,	0,	'feed63_03.jpg'	);
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20062,	3,	0,	'feed63_04.jpg'	);			
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20062,	4,	0,	'feed63_05.jpg'	);		
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20062,	5,	0,	'feed63_06.jpg'	);			
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20062,	6,	0,	'feed63_07.jpg'	);		
 
 
@@ -1410,31 +1410,31 @@ INTO	feeds(feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed
 VALUES(	20063,	'노르웨이 아파트',	'노르웨이 모던 아파트 디자인',	'User07',	Now(),	1,	10002	)	;
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
 VALUES(	image_id,	20063,	0,	1,	'feed64_thumbnail.jpg'	);			
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20063,	0,	0,	'feed64_01.jpg'	);			
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
 VALUES(	image_id,	20063,	1,	0,	'feed64_02.jpg'	);			
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20063,	2,	0,	'feed64_03.jpg'	);			
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20063,	3,	0,	'feed64_04.jpg'	);			
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20063,	4,	0,	'feed64_05.jpg'	);			
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20063,	5,	0,	'feed64_06.jpg'	);
 
 
@@ -1444,43 +1444,43 @@ INTO	feeds(feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed
 VALUES(	20064,	'만드는 사람들',	'무언가를 만드는 사람들을 만났다',	'User07',	Now(),	1,	10009	);
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
 VALUES(	image_id,	20064,	0,	1,	'feed65_thumbnail.jpg'	);			
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20064,	0,	0,	'feed65_01.jpg'	);			
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
 VALUES(	image_id,	20064,	1,	0,	'feed65_02.jpg'	);			
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20064,	2,	0,	'feed65_03.jpg'	);			
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
 VALUES(	image_id,	20064,	3,	0,	'feed65_04.jpg'	);	
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
 VALUES(	image_id,	20064,	4,	0,	'feed65_05.jpg'	);			
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20064,	5,	0,	'feed65_06.jpg'	);			
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
 VALUES(	image_id,	20064,	6,	0,	'feed65_07.jpg'	);		
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20064,	7,	0,	'feed65_08.png'	);			
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
 VALUES(	image_id,	20064,	8,	0,	'feed65_09.png'	);		
 
 INSERT
@@ -1488,15 +1488,15 @@ INTO	feeds(feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed
 VALUES(	20065,	'Under the moon',	'War and the girl sitting besides river',	'User07',	Now(),	1,	10007	);
 
 INSERT	
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)	
 VALUES(	image_id,	20065,	0,	1,	'feed66_thumbnail.jpg'	);			
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20065,	0,	0,	'feed66_01.jpg'	);			
 
 INSERT
-INTO	Images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+INTO	images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(	image_id,	20065,	1,	0,	'feed66_02.jpg'	);	
 
 

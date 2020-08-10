@@ -1,12 +1,11 @@
 use mysql;
 
-create user 'WIN98'@localhost identified by 'WIN98';
-create user 'WIN98'@'%' identified by 'WIN98';
+create user 'vig'@'13.125.196.55' identified by 'vig';
+create user 'vig'@'%' identified by 'vig';
 
-grant all privileges on VIG.* to 'WIN98'@localhost identified by 'WIN98' ;
-grant all privileges on VIG.* to 'WIN98'@'%' identified by 'WIN98' ;
+GRANT SELECT,INSERT,DELETE,CREATE,UPDATE,ALTER,DROP ON *.* TO 'vig'@'13.125.196.55';
+GRANT SELECT,INSERT,DELETE,CREATE,UPDATE,ALTER,DROP ON *.* TO 'vig'@'%';
 
-SHOW GRANTS FOR 'WIN98'@'%';
-SHOW GRANTS FOR 'WIN98'@localhost;
+
 
 flush privileges;
