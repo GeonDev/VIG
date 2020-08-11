@@ -31,7 +31,6 @@
 <body>
 
 
-
     <div class="container-fluid">  
       	
 <!-- 사이드바  시작-->    
@@ -39,17 +38,18 @@
 		
 			<!-- 다른 유저의 마이 피드 방문시 해당 유저의 정보만 노출 -->
 				<c:choose>
-					<c:when test="${user.userCode != writer.userCode}">		
+				<c:when test="${user.userCode != writer.userCode}">		
 					<img class="card-img-top" src="/VIG/images/uploadFiles/profile_img.jpg" id="pImg" alt="profile_img">
 			 			<div class="card-body">
 			 					<h3 class="user_name" align="center"><strong> ${writer.userName} </strong> </h3>			
 			 					<p class="user_bio" align="center" > ${writer.selfIntroduce} </p>		 					
-			 					<p class="sign_date" align="center"> Member Since :: ${writer.regDate}</p>
+			 					<p class="sign_date" align="center"> Member Since :: ${writer.regDate}</p>			 					
 			 			</div>	
 			 			<br/>		
 			 		</c:when>
-	 	
-					<c:when test="${user.userCode ==user.userCode}">					
+			
+					<c:when test="${user.userCode == writer.userCode}">	
+							
 						<img class="card-img-top" src="/VIG/images/uploadFiles/profile_img.jpg" id="pImg" alt="profile_img">
 				 			<div class="card-body">
 				 					<h4 class="user_name" align="center"> ${user.userName} </h4>

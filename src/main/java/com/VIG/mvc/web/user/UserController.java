@@ -203,6 +203,10 @@ public class UserController {
 		Date date  = new Date();			
 		int toDay = Integer.parseInt(format.format(date));
 		
+		if(dbUser == null) {
+			String msg = "가입되어 있지 않은 아이디입니다.";				
+			return new ModelAndView("forward:/common/alertView.jsp", "message", msg);
+		}
 		
 		if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())){				
 			
@@ -259,14 +263,16 @@ public class UserController {
 	//====업데이트 유저 nav
 	
 	@RequestMapping( value="updateUser", method=RequestMethod.GET )
-	public ModelAndView updateUser(@RequestParam(value="uesrCode", required=false) String userCode)throws Exception{ 
+	public ModelAndView updateUser(@RequestParam(value="uesrCode", required=false) String userCode,HttpSession session, User user)throws Exception{ 
 		
 		System.out.println("/user/updateUser : GEt");
-		User user = userServices.getUserOne(userCode);
-		
+	
+		User writer = userServices.getUserOne(user.getUserCode());
+		session.setAttribute("writer", writer);
+				System.out.println(writer.getUserCode());
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("forward:/user/updateUser.jsp");
-		mv.addObject("user", user);
+		mv.addObject("user", writer);
 		return mv;
 	}
 	
@@ -274,7 +280,8 @@ public class UserController {
 	public ModelAndView updateUser(@RequestParam("uploadFile") List<MultipartFile> files,@ModelAttribute("uesr") User user, HttpSession session )throws Exception{ 
 		
 		System.out.println("유저 업데이");
-	
+		
+	System.out.println(session.getAttribute("User"));
 		/*
 		String path = context.getRealPath("/");        
         path = path.substring(0,path.indexOf("\\.metadata"));         
@@ -299,19 +306,15 @@ public class UserController {
 	        }
 			*/
 		
-		if(user.getPassword() != null) {
-		String pwdBycrypt = passwordEncoder.encode(user.getPassword());
-	   user.setPassword(pwdBycrypt);
-	   //String hashedPw = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
-		//user.setPassword(hashedPw);
-		}
+		//if(user.getPassword() != null) {
+		//String pwdBycrypt = passwordEncoder.encode(user.getPassword());
+		// user.setPassword(pwdBycrypt); 
+		//}
 		userServices.updateUser(user);	
 		
 		ModelAndView mv = new ModelAndView();
 		System.out.println("user.getUserName():"+user.getUserName());
-		
-		
-		
+			
 		mv.addObject("user",user);
 		mv.setViewName("redirect:/user/updateUser.jsp");
 		

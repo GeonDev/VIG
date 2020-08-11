@@ -204,7 +204,7 @@
 
 
 <body>
-<c:set var="test1" value="tt" scope="request" />
+
 
 			<!-- 툴바 -->
 		      <div class="container-fluid">  
