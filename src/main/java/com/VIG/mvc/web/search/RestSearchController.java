@@ -680,20 +680,25 @@ public class RestSearchController {
 		
 		if(cookies != null) {
 			for(Cookie cookie :cookies) {
-				if((cookie.getName()).equals("searchKeys")) {		
+				if((cookie.getName()).equals("searchKeys")) {					
 					//두번 인코딩 방지를 위하여 추가되는 부분만 인코딩한다.
 					keyword = URLEncoder.encode(keyword +",", "UTF-8") + cookie.getValue();					
-					break;
+					break;					
 				} 				
 			}			
-		}		
-		
-		logger.debug("저장된 쿠키 값  : " +keyword);		
-		Cookie cookie = new Cookie("searchKeys", keyword );
-		//1시간 유지
-		cookie.setMaxAge(60*60);
-		cookie.setPath("/VIG/");
-		response.addCookie(cookie);		
+		}	
+		//쿠키에는 공백이 들어갈 수 없다./ 공백은 인코딩 되지 않음 
+		if(!keyword.contains(" ")) {
+			logger.debug("저장된 쿠키 값  : " +keyword);		
+			Cookie cookie = new Cookie("searchKeys", keyword );
+			//1시간 유지
+			cookie.setMaxAge(60*60);
+			cookie.setPath("/VIG/");
+			response.addCookie(cookie);				
+		}else {
+			logger.debug("공백이 포함되어 쿠키에 저장하지 않았습니다.");	
+		}
+	
 		
 	}
 
