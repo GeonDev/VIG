@@ -146,7 +146,7 @@
 	
 	function removeChat(){
 		
-		
+		$("h3").remove();
 		$("#selectUser div").remove();
 		$(".chat-body div").remove();
 		
@@ -162,7 +162,7 @@
 		console.log("!!!"+userinfo);
 		var list = userinfo.split(",");
 		console.log(list);
-		
+		$('input[name="roomId"]').val("");
 		selectUser = list[1];
 		$('input[name="selectUser"]').val(selectUser);
 		$('input[name="roomId"]').val(list[0]);
@@ -204,7 +204,7 @@
 							} else {
 								
 							displayValue ="<div class='media' style='align: left; text-align:left'><div class='media-left'><span class='author' style='font-weight: bold; color: black; text-align:right;'>"
-								+ data[i].receiver.userName + "</span></div><div class='innermedia'><div class='media-body' style='align: left'>" + data[i].contents + "<br><span class='msg-body'>("+data[i].createdAt+")</span></div></div></div>";
+								+ data[i].sender.userName + "</span></div><div class='innermedia'><div class='media-body' style='align: left'>" + data[i].contents + "<br><span class='msg-body'>("+data[i].createdAt+")</span></div></div></div>";
 								
 								$('.chat-body').append(displayValue);
 								
@@ -260,6 +260,26 @@
 		
 	};
 	
+	
+	function deleteChat(){
+		
+		
+		var result = confirm("그동안의 메세지가 모두 지워집니다. 삭제하시겠습니까?");
+		
+		if(result){
+		
+		roomId = $("input[name='roomId']").val();
+		
+		socket.emit('deleteChat', roomId);
+		$("#chatPlace").remove();
+		console.log("!!!!!!!!!!!!!!"+selectUser);
+		$("#"+selectUser).remove();
+		
+		}
+		
+		
+	};
+	
 	$(function(){	
 		
 				
@@ -300,7 +320,7 @@
 							} else {
 								
 							displayValue ="<div class='media' style='align: left ;text-align:left; padding-right: 8px'><div class='media-left'><span class='author' style='font-weight: bold; color: black; text-align:right;'>"
-								+ data.receiver.userName + "</span></div><div class='innermedia'><div class='media-body'>" + data.contents + "<br><span class='msg-body'>("+data.createdAt+")</span></div></div></div>";
+								+ data.sender.userName + "</span></div><div class='innermedia'><div class='media-body'>" + data.contents + "<br><span class='msg-body'>("+data.createdAt+")</span></div></div></div>";
 								
 							console.log(displayValue);
 							
@@ -407,7 +427,7 @@
 						"<img class='profileImage' src='/VIG/images/uploadFiles/"+dbuser.profileImg+"\'>"+
 						"<p style='display: inline-block; margin: 3px auto; font-weight: bold'>"+dbuser.userName+"</p></div>"
 						
-						
+						$("#userselect").val("");
 						$(".user_list").append(chatUser);
 						getChat(userinfo);
 						
@@ -418,27 +438,19 @@
 				
 				$("#deleteChat").on("click", function(){
 					
-					var result = confirm("그동안의 메세지가 모두 지워집니다. 삭제하시겠습니까?");
-					
-					if(result){
-					
-					roomId = $("input[name='roomId']").val();
-					
-					socket.emit('deleteChat', roomId);
-					$("#chatPlace").remove();
-					console.log("!!!!!!!!!!!!!!"+selectUser);
-					$("#"+selectUser).remove();
-					
-					}
+					deleteChat();
+					removeChat();
 					
 				});
 				
 				
 				
-				//메세지 보내기
-				$('#submit_btn').on("click",function(e){
-					
 				
+				//메세지 보내기
+				$('#submit_btn').on("click keypress",function(e){
+					
+					
+					socketUser.userName = '${user.userName}';
 					roomId = $('input[name="roomId"]').val();
 					var message = $('#message_input').val();
 					console.log(message);
@@ -449,25 +461,45 @@
 					otherUser.userName = dbuser.userName;
 					otherUser.profileImg = dbuser.profileImg;
 					console.log("메세지를 보낼 유저"+selectUser);
+					
 					if(message != ''){
-						socket.emit('send message', message, otherUser);
+						socket.emit('send message', message, socketUser, otherUser);
 						$('#message_input').val('');
-					} else if (attached != '') {
-						$("#status").empty().text("File is uploading...");
-					    $(this).ajaxSubmit({
-					        error: function(xhr) {
-							    status('Error: ' + xhr.status);
-					        },
-					        success: function(response) {
-							    $("#status").empty().text(response);
-					        }
-					    });
-						$('#attached_input').val('');
-						chatScrollfix();
 					}
-					return false;
+					$('#attached_input').val('');
+					chatScrollfix();
+				
 					
 				});
+				
+				$("#message_input").on("keydown", function(e){
+					
+					if(e.keyCode == 13 ){
+						socketUser.userName = '${user.userName}';
+						roomId = $('input[name="roomId"]').val();
+						var message = $('#message_input').val();
+						console.log(message);
+						var attached = $('#attached_input').val();
+						selectUser = $("input[name='selectUser']").val();
+						otherUser.userCode = selectUser;
+						dbuser = getChatUser(selectUser);
+						otherUser.userName = dbuser.userName;
+						otherUser.profileImg = dbuser.profileImg;
+						console.log("메세지를 보낼 유저"+selectUser);
+						
+						if(message != ''){
+							socket.emit('send message', message, socketUser, otherUser);
+							$('#message_input').val('');
+						}
+						$('#attached_input').val('');
+						chatScrollfix();
+						
+						
+					}
+					
+				});
+				
+				
 				
 
 
@@ -508,13 +540,15 @@
 	<hr>
 		<div class="row">
 			<div class="col-3">
-			
+				<h4 Style="margin-top: 10px"> 받은 메세지 </h4>
 				<div class="user_list">
 
 				</div>
 			
 			</div>
 			<div class="col-9" >
+			
+				<h3 style="text-align:center; margin-top: 60px; color: gray;"> 선택된 메세지가 없습니다.</h3>
 				<div id="chatPlace">
 					<div class="row">
 					
@@ -529,19 +563,19 @@
 					<hr>
 				<div  class="chat-body" style="  padding: 20px auto;">
 			
-				
+					
+					
 				</div>
 
 			
 				<hr>
-				<form id="chat_form" method="post" enctype="multipart/form-data">
+
 						
 					<input type="hidden" name="roomId">
 					<input type="hidden" name="selectUser">
 					<input type="hidden" name="userCode" value="${user.userCode}">
 					<div class="md-form input-group mb-3" style="margin: 3px auto">
 						<input style="width:600px; vertical-align: middle;background-color: white;" type="text" id="message_input" class="form-control" placeholder="메세지를 입력해주세요"
-						placeholder="Recipient's username" aria-label="Recipient's username"
 	  						aria-describedby="submit_btn">
 	  					<div class="input-group-append">
 							<button style="display: inline-block;" type="button" id="submit_btn" class="btn btn-md btn-secondary m-0 px-3">전송</button>
@@ -549,7 +583,7 @@
 					</div>
 						
 					
-				</form>
+
 		
 				</div>
 			</div>
