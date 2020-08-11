@@ -297,7 +297,7 @@ public class UserController {
 		    	    System.out.println("imageFile:"+imageFile);
 	    		}
 	        }
-		*/	
+			*/
 		
 		if(user.getPassword() != null) {
 		String pwdBycrypt = passwordEncoder.encode(user.getPassword());
@@ -310,11 +310,7 @@ public class UserController {
 		ModelAndView mv = new ModelAndView();
 		System.out.println("user.getUserName():"+user.getUserName());
 		
-		String sessionId=((User)session.getAttribute("user")).getUserCode();
-		System.out.println("sessionId:"+sessionId);
-		if(sessionId.equals(user.getUserCode())){
-			session.setAttribute("user", user);
-		}
+		
 		
 		mv.addObject("user",user);
 		mv.setViewName("redirect:/user/updateUser.jsp");
@@ -324,7 +320,6 @@ public class UserController {
 	}
 	
 	
-	//
 	
 	@RequestMapping( value="getUser", method=RequestMethod.GET )
 	public String getUser( @RequestParam("userCode") String userCode , Model model ) throws Exception {

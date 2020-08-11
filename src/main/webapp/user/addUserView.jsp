@@ -145,14 +145,14 @@
 				,success : function vcode(JSONData , status) {
 					var json = JSONData.verifCode
 				//알림 하나 띄우고 인증코드 입력 열기
-				alert(json);
+				
 				
 					$("#inputVerification").val(json);
 				//alert("1"+  $("#inputVerification").val(json).val())
-				alret("메일이 발송 되었습니다!");
+				alret("메일이 발송 되었습니다.");
 				},
 				error : function( error ) {
-					alert("없는 이메일 주소입니다.","error");
+					alert("없는 이메일 주소입니다.");
 				}	
 			});
 			}
@@ -162,7 +162,7 @@
 	$(function(){
 	$("#verifBtn").on("click",function(){
 		if( $("#inputVerification").val() != $("#verification").val()){
-			alert("인증번호가 다름.");
+			alert("인증에 실패했습니다.");
 		}else{
 			alert("인증되었습니다.");
 		}
