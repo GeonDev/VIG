@@ -86,9 +86,9 @@
 	 </select>
 	 
 	 
-	 <!--  -->
-	 <select id="loginCheck" parameterType="String" resultType = "int" >
-		SELECT count(*)
+	 <!-- 이메일인증사용 -->
+	 <select id="duplicationCheck" parameterType="String" resultType = "String" >
+		SELECT email
 	 	FROM users
 	 	WHERE user_code = #{value}
 	 </select>
@@ -138,15 +138,15 @@
 	<select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT user_code , user_name , email
+	  					FROM		(	SELECT user_code , user_name 
 											FROM users
 											<if test="searchCondition != null">
 												<where>
 													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				user_code = #{searchKeyword}
+										 				user_code LIKE CONCAT('%',#{keyword},'%')
 													</if>
 													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				user_name = #{searchKeyword}
+										 				user_name LIKE CONCAT('%',#{keyword},'%')
 													</if>
 												</where>
 											</if>
