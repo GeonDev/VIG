@@ -86,6 +86,8 @@
 	//페이지 로드가 완료 되었는지 체크(ajax 중복 호출 방지용)
 	var isLoadPage = false;	
 	
+	var pageSize = '${pageSize}'
+	
 	//전달받은 피드 리스트를 화면에 그린다.
 	function getfeedlistFromAjax(item, user){
 		var thumbnail = '';								
@@ -244,7 +246,7 @@
 						if (JSONData.list.length != 0){					
 						
 							//불러와야 되는 페이지보다 개수가 적은 경우 페이지가 끝났다
-							if (JSONData.list.length < 10){
+							if (JSONData.list.length < pageSize){
 								isPageEnd = true;
 							}
 	 						

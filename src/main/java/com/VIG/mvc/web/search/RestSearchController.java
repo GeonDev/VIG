@@ -465,6 +465,68 @@ public class RestSearchController {
 	}
 	
 	
+	//이미지 자세히 보기 
+	@RequestMapping(value = "json/getSearchSammImage")
+	public Map<String, Object> getSearchSameImageList(@RequestBody Map<String, String> jsonData, HttpSession session, @CookieValue(value = "searchKeys", defaultValue = "", required = false) String searchKeys ) throws Exception {		
+		
+		//연산 결과를 저장할 맵 생성
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		//기준 이미지 선택
+		Image image = imageServices.getImageOne(Integer.parseInt(jsonData.get("imageId")));				
+		
+		//키워드 연관 이미지 추출하고 담을 객체
+		List<Image> relatedImages = new ArrayList<Image>();
+				
+		//검색 기준 저장용 객체
+		Search search = new Search();
+		search.setPageSize(pageSize);				
+	
+		search.setCurrentPage(Integer.valueOf(jsonData.get("currentPage")));		
+		
+		
+		//선택된 이미지의 키워드 + 최근검색어를 저장할 리스트
+		List<ImageKeyword> keylist = new ArrayList<ImageKeyword>();
+		keylist.addAll(image.getKeyword());				
+
+		//쿠키에 저장된 검색어 기록을 가져온다.
+		if(!searchKeys.equals("") ) {			
+			
+			//쿠키에서 가져오면서 변경된 공백을 원래 상태로 돌림
+			searchKeys = searchKeys.replaceAll("\\+", " ");						
+			//콤마 (,)를 기준으로 나눔
+			String[] keys = searchKeys.split(",");
+			
+			for(String keyword : keys ) {
+				
+				if(!keyword.equals("")) {
+					logger.debug("불러온 쿠키 값 : " + keyword);
+					ImageKeyword temp = new ImageKeyword();
+					temp.setImageId(image.getImageId());
+					temp.setKeywordEn(keyword);	
+					
+					keylist.add(temp);
+				}
+			}
+			
+		}
+		
+		//중복 키워드가 있는지 확인후 검색기준에 추가
+		keylist = CommonUtil.checkEqualKeyword(keylist);
+		search.setKeywords(keylist);
+		
+		//키워드 연관 이미지 추출
+		relatedImages = imageServices.getImageListFromImage(search);
+		
+		//선택한 이미지는 유사 리스트 에서 제거
+		relatedImages.remove(image);
+		
+		
+				
+		//중복체크후 반환
+		map.put("list", CommonUtil.checkEqualImage(relatedImages));
+		return map;
+	}	
 	
 	
 	//이미지 자세히 보기 
