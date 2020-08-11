@@ -114,7 +114,7 @@ public class FeedController {
         path = path.substring(0,path.indexOf("\\.metadata"));         
         path = path +  uploadPath;  
 		
-        
+        long Totalstart = System.currentTimeMillis();
 		if(files != null) {
 			int k=0;	
 			
@@ -185,7 +185,8 @@ public class FeedController {
 	        		
 	    		
 			}	
-		
+		long Totalend = System.currentTimeMillis();		
+		logger.debug("피드 등록 완료 / 총 추출 시간 : " + getTotalWorkTime(Totalstart, Totalend)+"초");
 		
 		
 		return new ModelAndView("forward:/myfeed/getMyFeedList");
@@ -267,5 +268,7 @@ public class FeedController {
 		}
 		
 	
-
+	private int getTotalWorkTime(long start, long end) {		
+		return (int) ((end - start)/1000);
+	}
 }

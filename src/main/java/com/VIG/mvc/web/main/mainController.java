@@ -182,7 +182,7 @@ public class mainController {
 		}
 		
 		long Totalend = System.currentTimeMillis();		
-		logger.debug("이미지 정보 추출 완료 / 총 추출 시간 : " + getTotalWorkTime(Totalstart, Totalend));				
+		logger.debug("이미지 정보 추출 완료 / 총 추출 시간 : " + getTotalWorkTime(Totalstart, Totalend)+"초");				
 		return new ModelAndView("forward:/common/alertView.jsp", "message", "세팅 완료");
 		
 		}else {
