@@ -80,9 +80,9 @@ public class PaymentController {
 			
 			if(writer.getRole().contains("business")) {
 			
-			mav.setViewName("forward:/payment/addDonationView.jsp");
-			
-			mav.addObject("feed", feed);
+				mav.setViewName("forward:/payment/addDonationView.jsp");
+				
+				mav.addObject("feed", feed);
 			
 			}
 			
@@ -154,7 +154,7 @@ public class PaymentController {
 	}
 	
 	
-	@RequestMapping(value="getPaymentList", method=RequestMethod.GET)
+	@RequestMapping(value="getPaymentList")
 	public ModelAndView getPaymentList(@ModelAttribute("search") Search search, HttpSession session) throws Exception {
 		
 		User user = (User) session.getAttribute("user");
@@ -201,8 +201,8 @@ public class PaymentController {
 		return mav;
 	}
 	
-	@RequestMapping(value="getAllPaymentList", method=RequestMethod.GET)
-	public ModelAndView getAllPaymentList(HttpSession session) throws Exception {
+	@RequestMapping(value="getAllPaymentList")
+	public ModelAndView getAllPaymentList(HttpSession session, @ModelAttribute("search") Search search) throws Exception {
 		
 		
 		ModelAndView mav = new ModelAndView();
@@ -211,14 +211,13 @@ public class PaymentController {
 		
 		if(user==null) {
 
-		System.out.println("잘못된접근");
 		String message = "관리자만 접근할 수 있습니다.";
 		mav.setViewName("forward:/common/alertView.jsp");
 		mav.addObject("message", message);
 		
 		}else {
 		
-			Search search = new Search();
+			search = new Search();
 			if (search.getCurrentPage() == 0) {
 				search.setCurrentPage(1);
 			}

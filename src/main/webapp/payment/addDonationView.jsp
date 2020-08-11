@@ -45,7 +45,7 @@
 	}
 	
 	#main { 
-		width: 960px;
+		width: auto;
 		margin: 70px auto;
 	}
 	
@@ -54,6 +54,13 @@
 	.priceRadio {
 	
 		margin: 3px auto;
+		
+	}
+	
+	.feedinfo {
+	
+		align: right;
+		height: auto;
 	
 	}
 	
@@ -106,6 +113,11 @@ $(function(){
 
 $(function(){
 	
+	//최초로딩
+	
+	$("#select").text(0);
+	$("#commission").text(0);
+	$("#last").text(0);
 	
 	$("#after").on("click", function(){
 		
@@ -232,6 +244,12 @@ $(function(){
 	
 	});
 	
+	$(".moveFeed").on("click", function(){
+		
+		self.location="/VIG/feed/getFeed?feedId="+${feed.feedId};
+		
+	});
+	
 	
 	
 });
@@ -257,74 +275,98 @@ $(function(){
 	<br>
 	<form class="donationform">
 	<div class="container">
-	<div class="row">
-	<div class="col-6">
-	<div align="right"> <span style="font-size:20px; font-weight: bold;" > 후원 유저 코드 (피드ID) :  </span> &nbsp;&nbsp;</div>
-	<br>
-	<div align="right"> <span style="font-size:20px; font-weight: bold;" > 금액 :  </span> &nbsp;&nbsp;</div>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<div align="right"> <span style="font-size:20px; font-weight: bold;" > 결제 수단 :   </span> &nbsp;&nbsp;</div>
-	</div>
-	
-	
-	
-	<div class="col-6">
-	
-	
-	<input type="hidden" name="beneficiary" value="${feed.writer.userCode}">
-	<input type="hidden" name="feedId" value="${feed.feedId}">
-	<span style="font-size:18px;">${feed.writer.userCode} (${feed.feedId})</span>
-		${session.user.userCode}
-	<br><br>
-		<div class="form-check" align="left" style=" font-weight: bold; padding-top: 10px">
-		<div class="priceRadio">
-		  <input type="radio" class="form-check-input" id="materialChecked2" name="price" value="1000" checked> 1,000원
-		  </div>
-		  
-		  <div class="priceRadio">
-		   <input type="radio" class="form-check-input" id="materialChecked2" name="price" value="3000" > 3,000원
-		  </div>
-		    
-		    <div class="priceRadio">
-		   <input type="radio" class="form-check-input" id="materialChecked2" name="price" value="5000" > 5,000원
-		  </div>
-		    
-		    <div class="priceRadio">
-		   <input type="radio" class="form-check-input" id="materialChecked2" name="price" value="10000" > 10,000원
-		  </div>
-		    
-		    <div class="priceRadio">
-		   <input type="radio" class="form-check-input" id="after" name="price" value="0" >기타 :
-		   <input type="text" id="before" name="price" numberOnly disabled="disabled" placeholder="금액을 입력하세요"> 원
-		  </div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="feedinfo">
+				
+				<div class="view overlay z-depth-1">
+				<c:forEach var="images" items="${feed.images}">
+					<c:if test="${images.isThumbnail == '1'}">
+		        	  <img src="/VIG/images/uploadFiles/${images.imageFile}" class="img-fluid" alt="Sample image">
+			          <div class="mask flex-center blue-gradient-rgba">
+			            <a class="btn btn-outline-white btn-rounded moveFeed">See more</a>
+			          </div>
+			          </c:if>
+			     </c:forEach>
+		        </div>
+		        <p class="text-uppercase text-center text-muted mt-4 mb-0">${feed.feedTitle }</p>
+					
+				
+				</div>
+			</div>
+			<div class="col-md-8">
+				<div class="row">
+				<div class="col-6">
+				<div align="right"> <span style="font-size:20px; font-weight: bold;" > 후원 유저 코드 (피드ID) :  </span> &nbsp;&nbsp;</div>
+				<br>
+				<div align="right"> <span style="font-size:20px; font-weight: bold;" > 금액 :  </span> &nbsp;&nbsp;</div>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<div align="right"> <span style="font-size:20px; font-weight: bold;" > 결제 수단 :   </span> &nbsp;&nbsp;</div>
+				</div>
+				
+				
+				
+				<div class="col-6">
+				
+				
+				<input type="hidden" name="beneficiary" value="${feed.writer.userCode}">
+				<input type="hidden" name="feedId" value="${feed.feedId}">
+				<span style="font-size:18px;">${feed.writer.userCode} (${feed.feedId})</span>
+					${session.user.userCode}
+				<br><br>
+					<div class="form-check" align="left" style=" font-weight: bold; padding-top: 10px">
+					<div class="priceRadio">
+					  <input type="radio" class="form-check-input" id="materialChecked2" name="price" value="1000" checked> 1,000원
+					  </div>
+					  
+					  <div class="priceRadio">
+					   <input type="radio" class="form-check-input" id="materialChecked2" name="price" value="3000" > 3,000원
+					  </div>
+					    
+					    <div class="priceRadio">
+					   <input type="radio" class="form-check-input" id="materialChecked2" name="price" value="5000" > 5,000원
+					  </div>
+					    
+					    <div class="priceRadio">
+					   <input type="radio" class="form-check-input" id="materialChecked2" name="price" value="10000" > 10,000원
+					  </div>
+					    
+					    <div class="priceRadio">
+					   <input type="radio" class="form-check-input" id="after" name="price" value="0" >기타 :
+					   <input type="text" id="before" name="price" numberOnly disabled="disabled" placeholder="금액을 입력하세요"> 원
+					  </div>
+					</div>
+					<br>
+						<select class="browser-default custom-select"  name="paymentType" style="width: 200px">  
+						  <option value="card">카드결제</option>
+						  <option value="trans">실시간 계좌이체</option>
+						  <option value="phone">휴대폰 소액결제</option>
+						</select>
+						
+						<hr/>
+					
+						<div id="selectPrice" > <span style="font-weight: bold">선택 금액 : </span><span id="select"></span><p style="display:inline-block">원</p></div>
+						<div id="commissionPrice"><span style="font-weight: bold">수수료(VAT 10%) : </span><span id="commission"></span><p style="display:inline-block ;">원</p></div>
+						<div id="lastPrice"><span style="font-weight: bold">총 결제 금액 : </span><span id="last"></span><p style="display:inline-block ;">원</p></div>
+					
+					</div>
+					<input type="hidden" name="selectPrice">
+					<input type="hidden" name="lastPrice">
+					<input type="hidden" name="paymentId">
+					<input type="hidden" name="paymentType">
+					<input type="hidden" name="productType" value="2">
+				
+				
+				</div>
 		</div>
-		<br>
-			<select class="browser-default custom-select"  name="paymentType" style="width: 200px">  
-			  <option value="card">카드결제</option>
-			  <option value="trans">실시간 계좌이체</option>
-			  <option value="phone">휴대폰 소액결제</option>
-			</select>
-			
-			<hr/>
+
 		
-		<div id="selectPrice" > <span style="font-weight: bold">선택 금액 : </span><span id="select"></span><p style="display:inline-block ; width: 200px">원</p></div>
-		<div id="commissionPrice"><span style="font-weight: bold">수수료(VAT 10%) : </span><span id="commission"></span><p style="display:inline-block ; width: 200px">원</p></div>
-		<div id="lastPrice"><span style="font-weight: bold">총 결제 금액 : </span><span id="last"></span><p style="display:inline-block ; width: 200px">원</p></div>
-		</div>
-		<input type="hidden" name="selectPrice">
-		<input type="hidden" name="lastPrice">
-		<input type="hidden" name="paymentId">
-		<input type="hidden" name="paymentType">
-		<input type="hidden" name="productType" value="2">
-	
-	
-	</div>
-	
+	  </div>
 	<hr/>
 	
 	<div align="center">
