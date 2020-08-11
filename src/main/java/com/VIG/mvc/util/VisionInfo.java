@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 
 import com.VIG.mvc.service.domain.ImageColor;
 import com.VIG.mvc.service.domain.ImageKeyword;
+import com.VIG.mvc.web.feed.FeedController;
 import com.google.cloud.vision.v1.AnnotateImageRequest;
 import com.google.cloud.vision.v1.AnnotateImageResponse;
 import com.google.cloud.vision.v1.BatchAnnotateImagesResponse;
@@ -26,6 +29,7 @@ import com.google.protobuf.ByteString;
 // Run As - Run Configurations - Environment - New 
 public class VisionInfo extends Thread {	
 	
+	public static final Logger logger = LogManager.getLogger(VisionInfo.class); 
 	
 	private static final float targetScore = 0.01f;
 	
@@ -35,9 +39,6 @@ public class VisionInfo extends Thread {
 	private List<ImageKeyword> keywords;
 	private List<ImageColor> colors;
 	private int imageId;
-	
-	
-	
 	
 	
 	public VisionInfo() {}	
@@ -111,7 +112,7 @@ public class VisionInfo extends Thread {
 				
 	}	
 	
-	private void addColorList(ColorInfo color) {
+	private void addColorDataList(ColorInfo color) {
 		ImageColor imageColor = new ImageColor();	
 		
 		imageColor.setImageId(imageId);
@@ -162,7 +163,9 @@ public class VisionInfo extends Thread {
 			imageKeyword.setScore(annotation.getScore());
 			imageKeyword.setImageId(imageId);
 			keywords.add(imageKeyword);
-		}		
+		}
+		
+		logger.debug(imageId +" 키워드 세팅완료" );
 	}
 	
 	
@@ -170,9 +173,11 @@ public class VisionInfo extends Thread {
 		DominantColorsAnnotation colorList = res.getImagePropertiesAnnotation().getDominantColors();
 		for(ColorInfo color : colorList.getColorsList()) {
 			if((color.getPixelFraction()) > targetScore) {
-				addColorList(color);
+				addColorDataList(color);
 			}			
 		}
+		
+		logger.debug(imageId +" 색상 세팅완료" );
 	}
 	
 	private String getHaxcode(int num) {		
@@ -192,7 +197,15 @@ public class VisionInfo extends Thread {
 	@Override
 	public void run() {		
 		getKeywordForVision();
-		getColorForVision();		
+		getColorForVision();	
+		
+	}
+	
+	
+	public void setVisionData() {		
+		getKeywordForVision();
+		getColorForVision();	
+		
 	}
 	
 
