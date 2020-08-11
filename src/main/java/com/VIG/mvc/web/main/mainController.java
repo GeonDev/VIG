@@ -24,7 +24,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.VIG.mvc.service.alarm.AlarmServices;
 import com.VIG.mvc.service.category.CategoryServices;
 import com.VIG.mvc.service.color.ColorServices;
-import com.VIG.mvc.service.domain.Alarm;
 import com.VIG.mvc.service.domain.Category;
 import com.VIG.mvc.service.domain.Event;
 import com.VIG.mvc.service.domain.Image;
@@ -103,8 +102,8 @@ public class mainController {
 	public ModelAndView getMain(Model model, HttpSession session) throws Exception {
 		
 		List<Category> categoryList = categoryServices.getAllCategoryList();
-		List<Event> eventList = eventServices.getLastEventList();			
-		List<Alarm> alarmList = new ArrayList<Alarm>();
+		List<Event> eventList = eventServices.getLastEventList();		
+
 		
 		User user = (User)session.getAttribute("user");
 		
