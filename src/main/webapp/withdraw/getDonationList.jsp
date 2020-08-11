@@ -39,13 +39,12 @@
 	
 <style>
 	
-	body {
-		
-		maring-top: 70px;
-		font-family: "Nanum Gothic", sans-serif;
-
-	
-	}
+	body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}	
+	h1 { margin-left: 100px;}
+	.col-md-12{ margin-bottom: 50px;}
+	/*사이드바,본문 배치css*/
+	 .col-md-2.sideBarPlace { padding:0;  display: inline-block;float:left;}
+	 #mainMyFeedPage { margin-left: 0px;  display: inline-block; float:right;}
 	
 	#main { 
 		width: 960px;
@@ -146,24 +145,23 @@
 
 </head>
 <body>
-		<!-- toolbar -->
-     <div class="container-fluid">  
-      	 <div class="row">
-      		<div class="col-md-12">
-      			<jsp:include page="/main/toolbar.jsp" />
-     		</div>
-		</div>
+		<!-- 툴바 -->
+		      <div class="container-fluid">  
+		      	 <div class="row">
+		      		<div class="col-md-12">
+		      			<jsp:include page="/main/toolbar.jsp"></jsp:include>
+		     		</div>
+				</div>
 		
-		<div class="col-md-12">
-			<div class="row">
-				<!-- 사이드바 자리 -->		
-				<div class="col-md-2">		
-			    	<jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
-			    </div>  
-	   <div class="col-md-10" >		
-			<div id=main>
+		
+			<!-- 사이드바  -->		
+				<div class="col-md-2 sideBarPlace">		
+				 <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
+				 </div>
+  			<!-- 타이틀 -->
+			    <div class="col-md-10" id="mainMyFeedPage" >
 				
-				<h2> 받은 후원 목록 </h2> <a href="/VIG/withdraw/getWithdrawList">출금목록보기</a>
+				<h1> 받은 후원 목록 </h1> <a href="/VIG/withdraw/getWithdrawList">출금목록보기</a>
 				<hr>
 				
 				<div class="container">

@@ -88,15 +88,12 @@ public class RestFollowController {
 	
 	//나를 팔로우 하는 사람들
 	@RequestMapping(value="json/getFollowerList", method=RequestMethod.GET)
-	public List<User> getFollowList(HttpSession session) throws Exception {
+	public List<User> getFollowList(@RequestParam("userCode") String userCode) throws Exception {
+				
 		
-		
-		User user = (User)session.getAttribute("user");
-		
-		logger.debug(user);
-		
-		
-		List<User> follower = followServices.getFollowerList(user.getUserCode()); 
+		logger.debug(userCode);
+			
+		List<User> follower = followServices.getFollowerList(userCode); 
 		
 		logger.debug(follower);
 		
@@ -107,15 +104,13 @@ public class RestFollowController {
 	
 	//내가 팔로우 하는 사람들
 	@RequestMapping(value="json/getFollowingList", method=RequestMethod.GET)
-	public List<User> getFollowingList(HttpSession session) throws Exception {
+	public List<User> getFollowingList(@RequestParam("userCode") String userCode) throws Exception {
 		
 		
-		User user = (User)session.getAttribute("user");
-		
-		logger.debug(user);
+		logger.debug(userCode);
 		
 		
-		List<User> following = followServices.getFollowingList(user.getUserCode()); 
+		List<User> following = followServices.getFollowingList(userCode); 
 		
 		logger.debug(following);
 		
