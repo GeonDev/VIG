@@ -52,7 +52,7 @@
 				}
 			
 				if( password != password2){		
-					alert("비밍번호를 확인해주세요.");
+					alert("비밀번호를 확인해주세요.");
 					return;
 				}
 				
@@ -71,7 +71,7 @@
 		    		return;
 				}
 				}
-			});
+			});	
 		});
 		
 	
@@ -81,11 +81,12 @@
 		
 		body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}	
 		h1 { margin-left: 100px;}
-	
+		.col-md-12{ margin-bottom: 50px;}
 	/*사이드바,본문 배치css*/
 	 .col-md-2.sideBarPlace { padding:0;  display: inline-block;float:left;}
 	 #mainMyFeedPage { margin-left: 0px;  display: inline-block; float:right;}	
 		
+		#warning{ color: red;}
 </style>		
 	
 </head>
@@ -113,18 +114,18 @@
 			
 
 		<form>
-		
+		<div class="container-fluid" style="width:60%; float:center; margin: auto; margin-top:100px">
 		<!-- 레이아웃 수정하기 -->
-		 탈퇴 후 회원정보가 모두 삭제됩니다.
+		 탈퇴 후 회원정보가 모두 삭제됩니다.<p>
 		  메일주소, 핸드폰 번호/기타 연락처 등 회원정보가 모두 삭제되며, 삭제된 데이터는 복구되지 않습니다.
-		
-		
-		 탈퇴 후에도 작성된 게시글은 그대로 남아 있습니다.
-		  각 게시판에 등록한 게시물 및 댓글은 탈퇴 후에도 남아있습니다.
-		  삭제를 원하시는 게시물은 탈퇴 전 반드시 삭제하시기 바랍니다.
+		<br/>
+		<br/>
+		 탈퇴 후에도 작성된 게시글은 그대로 남아 있습니다.<br>
+		  각 게시판에 등록한 게시물 및 댓글은 탈퇴 후에도 남아있습니다.<br>
+		  삭제를 원하시는 게시물은 탈퇴 전 반드시 삭제하시기 바랍니다.<p>
 		  (탈퇴 후에는 게시글 임의 삭제 요청을 받지 않습니다.)
 		  <hr/>
-		  탈퇴 후에는 게시판의 게시글은 삭제할 수 없으며, 위의 안내 내용에 동의합니다.
+		 <div id="warning"> *탈퇴 후에는 게시판의 게시글은 삭제할 수 없으며, 위의 안내 내용에 동의합니다.</div>
 		  <hr/>
 		  <input type="checkbox" name="check" value="true"> 안내사항을 모두 동의하며, 이의제기를 하지않습니다.
 		
@@ -146,10 +147,12 @@
 	
 			<div class="modal-footer justify-content-center" style="border:0;">
 	        	<a type="button" class="btn btn-outline-warning waves-effect" id="deleteCheck_btn">탈퇴 <i class="fas fa-paper-plane-o ml-1"></i></a>
-	        	<a type="button" class="btn btn-outline-warning waves-effect" id="cancelDeleteUser">취소 <i class="fas fa-paper-plane-o ml-1"></i></a>
+	        	<a type="button" class="btn btn-outline-warning waves-effect" id="cancelDeleteUser" onClick="history.go(-1);">
+	        	취소 <i class="fas fa-paper-plane-o ml-1"></i></a>
 	     	</div>
+	     	</div>
+
 	     	</form>		 	
-
-
+			
 </body>
 </html>

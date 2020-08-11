@@ -336,34 +336,7 @@ public class UserController {
 	}
 	
 	//=====유저 리스트 nav
-	/*
-	@RequestMapping("getUserList")
-	public ModelAndView getUserList(@ModelAttribute("search") Search search) throws Exception{
-		// 현재 페이지값이 없으면 첫번째 페이지로 설정
-				if (search.getCurrentPage() == 0) {
-					search.setCurrentPage(1);
-				}
-				
-				//키워드 데이터가 NULL이라면
-				if(search.getKeyword() == null) {
-					search.setKeyword("");
-				}
-				search.setCurrentDate(currentDate);
-				search.setPageSize(pageSize);
-				
-				Page resultPage = new Page(search.getCurrentPage(), userServices.getTotalCount(search), pageUnit, pageSize);
-			
-				ModelAndView modelAndView = new ModelAndView();
-
-				// Model 과 View 연결
-				modelAndView.setViewName("forward:/user/getUserList.jsp");
-				modelAndView.addObject("list", userServices.getUserList(search));
-				modelAndView.addObject("resultPage", resultPage);
-				modelAndView.addObject("search", search);
-
-				return modelAndView;	
-			}
-			*/
+	
 
 	@RequestMapping( value="getUserList" )
 	public String getUserList( @ModelAttribute("search") Search search ,Model model) throws Exception{
@@ -397,51 +370,6 @@ public class UserController {
 	
 	
 	
-	
-	
-	
-	
-	//=======이메일 보내기============================================================//
-		
-	@RequestMapping (value="sendEmail",method = {RequestMethod.GET, RequestMethod.POST} )
-		public boolean sendEmail(User user)throws Exception {
-			boolean test=false;
-			
-			String toEmail = user.getEmail(); //받을 이메일 주소
-			String fromEmail = "0o0neneng0o0@gmail.com"; //보내는 메일 주소
-			String ePassword = "pw";
-			
-			try {
-				Properties pr = new Properties();
-				pr.put("mail.smtp.auth" , "true");
-				pr.put("mail.smtp.starttls.enable" , "true");
-				pr.put("mail.smtp.host" , "smtp.gmail.com");
-				pr.put("mail.smtp.port" , "587");
-				//  maven 추가하기
-				Session session = Session.getInstance(pr, new Authenticator() {
-					@Override
-					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication(fromEmail, ePassword);
-					}
-				});		
-				Message mess = new MimeMessage(session);
-				mess.setFrom(new InternetAddress(fromEmail));
-				
-				System.out.println("sendEmail: toEmail="+toEmail);
-				
-				mess.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
-				mess.setSubject("subject"); //메일 제목
-				mess.setText("text:"+user.getVariedCode()); //메일 내용+인증 코드
-				
-				Transport.send(mess);			
-				test=true;
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}		
-			return test;
-		}
-
 	
 	//======탈퇴==================================//
 		

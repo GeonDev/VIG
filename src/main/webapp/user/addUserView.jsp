@@ -126,9 +126,48 @@
 			
 		});
 	
+	///이메일 발송 이벤트
 	
+	$(function(){
+		$("#emailcheck").on("click",function(){
+			if($("#email").val() == ''){
+				alert("이메일을 입력해주세요.");
+			}else{
+			
+				$.ajax({
+				type: "GET",
+				url: "json/emailSend?email="+$("#email").val(),
+				dataType : "json" ,
+				headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+							}
+				,success : function vcode(JSONData , status) {
+					var json = JSONData.verifCode
+				//알림 하나 띄우고 인증코드 입력 열기
+				alert(json);
+				
+					$("#inputVerification").val(json);
+				//alert("1"+  $("#inputVerification").val(json).val())
+				alret("메일이 발송 되었습니다!");
+				},
+				error : function( error ) {
+					alert("없는 이메일 주소입니다.","error");
+				}	
+			});
+			}
+		});
+	});
 	
-
+	$(function(){
+	$("#verifBtn").on("click",function(){
+		if( $("#inputVerification").val() != $("#verification").val()){
+			alert("인증번호가 다름.");
+		}else{
+			alert("인증되었습니다.");
+		}
+	})
+	});
 		//로그인 페이지로 이동 이벤트
 		 $( function() {
 				$("#login_nav").on("click" , function() {
@@ -149,6 +188,13 @@
 	.container { padding-right: 300px; padding-left: 300px; padding-top: 100px;' margin-right: auto; margin-left: auto; }
 	 #variedCode { margin:auto; }
 	#top_title { margin : 30px;}
+	
+	#emailcheck { margin: 5px 0 5px 0; display: block; float:left;}
+	#verification { display: block; width: 250px;float: left; margin-left: 58px;}
+	
+	
+	.btn.btn-primary.btn-sm { display: block;float: right; }
+	
 </style>
 </head>
 <body>
@@ -208,17 +254,21 @@
 		     
 		<!-- 이메일 -->
 		<div class="form-group" style="margin-bottom:0px;">
-		   	<input type="email" id="email" name="email" class="form-control " placeholder="email" value="${user.email}">
+		   	<input type="email" id="email" name="email" class="form-control bt " placeholder="email" value="${user.email}" 
+		   	style="display: block;float: left; width: 70%;">
 		    <label data-error="wrong" data-success="right" for="email"></label> 
-		 </div>
-		 
-		<!-- 이메일 인증 폼만 구현중-->   
-		    <button type="button" class="btn btn-primary btn-sm" id="sendEmail">send email</button>  
-			<input type="hidden" id="variedCode" name="variedCode" value="0" class="form-control" placeholder="variedCode" width="50px">
-			<button type="button" class="btn btn-primary btn-sm" id="send_email">check</button>  
+		
+		<button type="button" class="btn btn-sm" id="emailcheck" >이메일발송</button>  
+		  <input type="hidden" id="inputVerification" name ="inputVerification" placeholder="${inputVerification}"> 
+			
+			</div> 
+                <input type="text" id="verification" name="verification" class="form-control bt" placeholder="variedCode" 
+                style="display: block;float: left; width: 70%;">               
+                <button type="button" id="verifBtn" class="btn btn-sm">인증번호확인</button> 
+           
 	
 		<!-- role -->
-			<input type="hidden" id="role" name="role" class="form-control mb-4"  value="user">
+			<input type="hidden" id="role" name="role" class="form-control"  value="user">
 			
 		<!-- google -->	
 			<input type="hidden" id="googleId" name="googleId" class="form-control "  value="${user.googleId}">

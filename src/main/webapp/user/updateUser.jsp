@@ -91,6 +91,17 @@
 			});
 		});
 	
+		//비지니스 계정 전환
+		/*
+		$("#business_btn").on("click", function(){			
+			var cf = confirm("비지니스 계정으로 전환 하시겠습니까?");
+			
+			if(cf==true){				
+			self.location="/VIG/payment/addPayment?productType=1&userCode=${user.userCode}"; //세션에서 user코드를 가져온다.			
+			} else if (cf==false) {				
+			}		
+		});
+		*/
 	
 		</script>
 	
@@ -98,8 +109,7 @@
 		
 		body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}	
 		h1 { margin-left: 100px;}
-	
-	.col-md-12{ margin-bottom: 50px;}
+		.col-md-12{ margin-bottom: 50px;}
 	.col-md-12_top {	width: 100%; height: 100%; position: relative; margin:50px; }		
 	.profile {	width: 100%; height: 100%; position: relative; margin:50px; }
 	.col-md-12_List {
@@ -132,8 +142,7 @@
 </head>
 <body>
 	
-	
-		<!-- 툴바 -->
+	<!-- 툴바 -->
 		      <div class="container-fluid">  
 		      	 <div class="row">
 		      		<div class="col-md-12">
@@ -209,14 +218,16 @@
 	
 	<div class="btn_grop" style="display: flex;justify-content: center;margin-bottom: 30px;">
 		<!-- 비지니스 계정 번환 버튼 -->	
+		
 		<c:if test="${user.role=='user'}">  
-	    	<button  class="btn btn-primary" id="business_btn" style="font-size: middle; margin-left: 0px; text-align: top;"
-	    	> 비지니스 계정 전환</button>
+	    	<button  class="btn" id="business_btn" style="font-size: middle; margin-left: 0px; text-align: top;"> 
+	    	비지니스 계정 전환</button>
 			</c:if>
+			
 		<!-- 구글 로그인  -->
 			<c:if test="${empty user.googleId}">  
 			
-	    	<button  class="btn btn-primary  " id="googlelogin" >
+	    	<button  class="btn" id="googlelogin" >
 	    		<i class="fab fa-google" id="googlelogin" style="font-size: large; margin-left: 0px; text-align: top;"></i>&emsp; Google
 	    		</button>
 			</c:if>
@@ -225,8 +236,8 @@
 			
 			
 			<div class="btn_group2" style="display: flex;justify-content: center;margin-bottom: 30px;">
-				 	<button type="button" class="button btn btn-primary" id="updateUser_btn">수 &nbsp;정</button>		 
-				     <button type="button" class="btn btn-primary btn-lg" id="deleteUser_nav">탈 &nbsp;퇴</button> 
+				 	<button type="button" class="btn" id="updateUser_btn">수 &nbsp;정</button>		 
+				     <button type="button" class="btn" id="deleteUser_nav">탈 &nbsp;퇴</button> 
 				</div>
 		
 		
