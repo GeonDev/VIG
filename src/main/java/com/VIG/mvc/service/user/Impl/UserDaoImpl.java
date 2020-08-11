@@ -109,4 +109,25 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	
+	//이메일인증사용
+	@Override
+	public boolean duplicationCheck(String email) throws Exception {
+		
+		String result = sqlSession.selectOne("UserMapper.duplicationCheck", email);
+			System.out.println("이메일인증성공기원"+result);
+		if(result != null) {
+			System.out.println("mail check");
+			return false;
+		}else {
+			System.out.println("fail");
+			return true;
+			}
+		}
+	
+	
+	
+	
+	
 	}
+	
+	

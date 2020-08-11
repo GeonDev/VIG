@@ -132,6 +132,13 @@ public class UserServicesImpl implements UserServices {
 		return (userDao.getLastUserNum()+1);
 	}
 
+	
+	//이메일인증사용
+	@Override
+	public boolean duplicationCheck(String email) throws Exception {
+		// TODO Auto-generated method stub	
+		return userDao.duplicationCheck(email);
+	}
 
 
 }
