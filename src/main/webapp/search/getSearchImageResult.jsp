@@ -54,69 +54,80 @@
 	//페이지의 끝인지 체크
 	var isPageEnd = false;
 	
-	var baseImageId = ${baseImage.imageId};
+	//페이지 로드가 완료 되었는지 체크(ajax 중복 호출 방지용)
+	var isLoadPage = false;	
+	
+	var baseImageId = '${baseImage.imageId}';
+	
+	var pageSize = '${pageSize}'
 
 	
+	//전달받은 이미지 리스트를 화면에 그림
 	function getImagelistFromAjax(item){
-		var displayValue = 
+		//변수  초기화
+		var displayValue ='';
+		displayValue =
 			"<div class = 'view overlay'>"
-			+"<div class = 'img_image'>"
-			+ "<img src='/VIG/images/uploadFiles/" + item.imageFile + "' alt='thumbnail' class='img-fluid rounded-sm' style='width: auto; height: 300px;'>"
-				+"<div class='mask flex-center waves-effect waves-light rgba-black-strong'>"
-					+"<p class='white-text'>"
-					+"<a href='/VIG/search/getSearchImages?imageId="+ item.imageId +"'/>"
-					+ '이것은 이미지'
-					+"</p>"
-				+"</div>"									
-			+"</div>"
-		+"</div>";
+				+ "<div class = 'img_image'>"
+					+ "<a href='/VIG/search/getSearchImages?imageId="+ item.imageId +"' class='text-light'>"
+					+ "<img src='/VIG/images/uploadFiles/" + item.imageFile + "' alt='thumbnail' class='img-fluid rounded-sm ' style='width: auto; height: 300px;'>"
+						+"<div class='mask flex-center waves-effect waves-light rgba-black-strong'>"						
+						+"</div>"
+					+ "</a>"
+				+ "</div>"
+			+ "</div>";
 			
 			$(".row:last").append(displayValue);		
-	}	
+	}
 	
 	
 	function getSearchImagekeyword(keyword) {
 		var link ='/VIG/search/getSearchList?Mode=Image&keyword=';
 		link =  link.concat(keyword);
 		$(location).attr("href", link); 
-	}
-	
-
-	
+	}	
 	
 	function getImageItemList() {
 		
-		if(isPageEnd == true){
-			//페이지의 끝이라면 실행안함
+		if(isPageEnd == true || isLoadPage == true){
+			//페이지의 끝, 또는 페이지 로드중 이라면 실행안함
 			return;
 		}		
 		page += 1;
-		console.log(page);		
-		
+		console.log(page);				
 		
 		$.ajax( 
 				{
-					url : "/VIG/search/json/getSearchResultList",
+					url : "/VIG/search/json/getSearchSammImage",
 					method : "POST",
 					dataType : "Json",					
 					headers : {
 						"Accept" : "application/json",
 						"Content-Type" : "application/json"
 					},
-					data :  JSON.stringify({baseImageID : imageId , currentPage : page}),
+					data :  JSON.stringify({imageId : baseImageId , currentPage : page}),
 					success : function(JSONData , status) {
 						
-						//불러와야 되는 페이지보다 개수가 적은 경우 페이지가 끝났다
-						if (JSONData.list.length < 10){
-							isPageEnd = true;
-						}				
+						//그려야 하는 것이 있을 경우
+						if(JSONData.list.length != 0){						
+						
+							//불러와야 되는 페이지보다 개수가 적은 경우 페이지가 끝났다
+							if (JSONData.list.length < pageSize){
+								isPageEnd = true;
+							}				
 	 						$.each(JSONData.list, function(index, item) {	
 									
-									getImagelistFromAjax(item); 									
+									getImagelistFromAjax(item); 
+									isLoadPage = true;
 													
 							});		
+						}else{
+							isPageEnd = true;
+							isLoadPage = true;
+						}
  						
 					}
+					
 			});
 		
 	}	
@@ -125,14 +136,15 @@
 	
 	$(function(){			
 			// 최초 진입시 첫번째 페이지 로딩
-			//getImageItemList();
+			getImageItemList();
 				
    			
-		$(window).scroll(function() {
+	
+			$(window).scroll(function() {
 			    if ($(window).scrollTop() + 500 >= $(document).height() - $(window).height()) {     			     
-   				  			    	
+			    	getImageItemList();	   			    	
 			    }
-			});		    			
+			});	
 			
 	});	
 	
@@ -169,20 +181,7 @@
 		
 		
 		<!--  이미지가 출력되는 부분  -->
-		<div class="row justify-content-center" style = "margin: 5px;">		
-			<c:forEach var="image" items="${list}">
-				<div class = "view overlay">
-					<div class = "img_image">
-					<img src="/VIG/images/uploadFiles/${image.imageFile}"  class="img-fluid rounded-sm" style="width: auto; height: 300px;">
-						<div class="mask flex-center waves-effect waves-light rgba-black-strong">
-							<p class="white-text">
-							<a href="/VIG/search/getSearchImages?imageId=${image.imageId}"/>
-							유사 이미지 보기
-							</p>
-						</div>							
-					</div>
-				</div>		
-			</c:forEach>		
+		<div class="row justify-content-center" style = "margin: 5px;">			
 		</div>	
 	</div>
 
