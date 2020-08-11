@@ -8,6 +8,8 @@
 
 <!-- SocketJS CDN -->
 <script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
+<!-- favicon 영역 이후 툴바 적용 -->
+<link rel="shortcut icon" type="image/png" href="http://127.0.0.1:8080/VIG/images/others/favicon-16x16.png">
 
 
 <script type="text/javascript">
@@ -227,8 +229,8 @@
 	<style>
 	
 	#logoTop{
-	 width: 90px;
-	 height: 45px;
+	 width: auto;
+	 height: 38px;
 	}
 	#login_btn , #logout_btn{
 	color: white;
@@ -271,7 +273,7 @@
 <!--Navbar start-->	
 			<nav class="mb-1 navbar fixed-top navbar-expand-xl navbar-dark bg-dark py-2" id="toolbar">			
 <!-- 로고 -->		
-			  <a href="/VIG/main/VIG"><img src='/VIG/images/others/VIG_logo.png' id="logoTop" alt="VIG" style="margin-left: 30px;" ></a>
+			  <a href="/VIG/main/VIG"><img src='/VIG/images/others/viglogo.png' id="logoTop" alt="VIG" style="margin-left: 30px;" ></a>
 			      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="toolbar_logo"
 				    aria-controls="toolbar_logo" aria-expanded="false" aria-label="Toggle navigation">
 				    <span class="navbar-toggler-icon"></span>
