@@ -131,13 +131,8 @@
 	 	UPDATE users 
 	 	SET state = 4
 	 	WHERE user_code = #{userCode}
-<<<<<<< HEAD
-	 </update >
-	
-=======
 	 </update > 
 
->>>>>>> refs/heads/fatch
 	
 <!-- SQL : SELECT LIST -->
 	<select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
