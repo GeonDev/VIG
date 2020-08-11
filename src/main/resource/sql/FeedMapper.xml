@@ -163,12 +163,12 @@
 		</select>
 		
 		
+		<!-- 주어진 키워드에 해당하는 피드를 출력  -->
 		<select id="getfeedListFromKeyword" parameterType="search" resultMap="FeedSelectMap">
 			SELECT *  FROM
-			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feeds.* FROM feeds, images, keywords
+			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_view_count DESC) num, feeds.* FROM feeds, images, keywords
 			WHERE feeds.feed_id = images.feed_id
-			AND images.image_id = keywords.image_id
-			AND images.is_thumbnail = 1
+			AND images.image_id = keywords.image_id			
 			AND feeds.feed_state = 0
 			AND feeds.feed_is_prime = 0
 			<if test="keyword !=''">
@@ -184,7 +184,7 @@
 		<!-- 피드 타이틀에 입력한 키워드를 포함하는지 확인 (OR 연산 속도가 느려서 따로 계산) -->
 		<select id="getfeedListFromTitle" parameterType="search" resultMap="FeedSelectMap">
 			SELECT *  FROM
-			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feeds.* FROM feeds
+			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_view_count DESC) num, feeds.* FROM feeds
 			WHERE feeds.feed_state = 0
 			AND feeds.feed_is_prime = 0
 			<if test="keyword !=''">
@@ -218,11 +218,10 @@
 		
 		<!-- 자동완성용 쿼리문 -->
 		<select id ="getfeedTitleList" parameterType="String" resultType="String">
-			SELECT temp.feed_title FROM
-			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feed_title FROM feeds
+			SELECT feed_title FROM feeds
 			WHERE feed_title LIKE CONCAT('%',#{value},'%')
-			)temp
-			WHERE num BETWEEN 1 AND 5
+			LIMIT 5
+			
 		</select>
 		
 		<update id ="updatePrimeFeedViewCount" parameterType="feed">
@@ -261,7 +260,9 @@
 		
 		<!-- 내가 봤던 피드의 키워드를 1개라도 가지고 있는 피드를 불러온다. -->
 		<select id="getRecommendFeedList" parameterType="search" resultMap="FeedSelectMap">
-			SELECT feeds.* FROM feeds, images, keywords
+			SELECT *  FROM
+			(SELECT ROW_NUMBER() OVER(ORDER BY temp.same DESC) num, temp.* FROM
+			(SELECT COUNT(feeds.feed_id) same, feeds.* FROM feeds, images, keywords
 			WHERE feeds.feed_id = images.feed_id
 			AND images.image_id = keywords.image_id	
 			AND feeds.feed_state = 0
@@ -269,8 +270,8 @@
 			<foreach collection="keywords" item="item" open="(" close=")" separator=",">
 			 #{item.keywordEn}
 			</foreach>
-			GROUP BY feeds.feed_id
-			ORDER BY feed_view_count DESC
+			GROUP BY feeds.feed_id) temp) tab
+			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}			
 		</select>
 		
 		
