@@ -350,8 +350,8 @@ function deleteInput() {
 						
 		</div>
 							<div id="parah"></div>
-							<input type="button" value="추가" onclick="addInput();" />
-<input type="button" value="삭제" onclick="deleteInput();"/>
+							<input type="button" class="btn btn-dark" value="추가" onclick="addInput();"/>
+<input type="button" class="btn btn-light" value="삭제" onclick="deleteInput();"/>
 							<div class="md-form md-bg">
 							<input name='keyword' value='' placeholder="Please enter your tags" class="form-control" id="keyword">
 							
