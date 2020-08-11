@@ -42,7 +42,7 @@
 	body {
 		
 		font-family: "Nanum Gothic", sans-serif;
-
+		 padding-top : 100px;
 	
 	}
 	

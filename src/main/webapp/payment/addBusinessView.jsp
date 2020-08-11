@@ -75,9 +75,6 @@ $(function(){
 	
 		
 	
-	
-
-	
 	$("button:contains('결제')").on("click", function(){
 		
 		

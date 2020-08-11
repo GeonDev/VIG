@@ -46,7 +46,7 @@
 		
 		var addAlarms = 
 	    	"<li id='alarm_" + data[6] + "' class='alarms'>"
-	    	+ "<a href='/VIG/myfeed/getMyFeedList?userCode="+ data[5]+ "'>"
+	    	+ "<a href='/VIG/myfeed/getMyFeedList?userCode="+ data[5]+ "' style='padding:0px;'>"
 	   	 		+"<img src='/VIG/images/uploadFiles/" + data[1]+ "' class='rounded-circle' style='width: 45px; float:left;'>"
 	   	 	+"</a>"
 	   	 	+ "<a class='nav-link' href='/VIG/feed/getFeed?feedId="+ data[0]+ "'>"
@@ -55,6 +55,26 @@
 				+"</h6>"
 				+"<img src='/VIG/images/uploadFiles/" + data[3] + "' style='width: 45px;'>"
 			 +"</a>"		
+	        +"</li>"
+	        +"<div class='dropdown-divider'></div>";   			    
+	    
+	    
+	    $("#addAlarm").prepend(addAlarms);
+	}
+	
+	function setFollowAlarm(item) {
+		var data = (item).split(',');
+		
+		var addAlarms = 
+	    	"<li id='alarm_" + data[6] + "' class='alarms'>"
+	    	+ "<a href='/VIG/myfeed/getMyFeedList?userCode="+ data[5]+ "' style='padding:0px;'>"
+	   	 		+"<img src='/VIG/images/uploadFiles/" + data[1]+ "' class='rounded-circle' style='width: 45px; float:left;'>"
+	   	 	+"</a>"	 
+		   	 	+"<div style='height: 45px; margin-top:10px;'>"
+		   	 		+"<h6 style='width: 320px; padding-left:55px; padding-top:10px;'>"
+		   	 			+"<strong>" + data[2]+ "</strong>님이 당신을 팔로우합니다."	
+		   	 		+"</h6>"
+		   	 	+"</div>"
 	        +"</li>"
 	        +"<div class='dropdown-divider'></div>";   			    
 	    
@@ -88,10 +108,12 @@
 								
 								var data = (item).split(',');
 								
-								if(data[4] == 0){
+								if(data[4] == '0'){
 							    	setLikeAlarm(item);
-							    }else if(data[4] == 1){
+							    }else if(data[4] == '1'){
 							    	setCommentAlarm(item);
+							    }else{
+							    	setFollowAlarm(item);
 							    }
 									
 							});	
@@ -142,18 +164,19 @@
 		}
 		
 	    var data = (evt.data).split(',');				    
+	    console.log((evt.data));
 	    
 	    //좋아요를 눌렀을 경우
-	    if(data[4] == 0){
+	    if(data[4] == '0'){
 	    	setLikeAlarm((evt.data));
 	    	
 	    //댓글을 남겼을 경우	
-	    }else if(data[4] == 1){
+	    }else if(data[4] == '1'){
 	    	setCommentAlarm((evt.data));
 	    	
 	    //팔로우를 했을 경우	
 	    }else{
-	    	
+	    	setFollowAlarm((evt.data));
 	    	
 	    }
 	    //sock.close();
