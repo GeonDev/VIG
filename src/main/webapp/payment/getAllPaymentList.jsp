@@ -66,6 +66,7 @@
 	table {
 	
 	text-align: center;
+
 	
 	}
 	#myFeedMain { padding: 70px;}
@@ -74,7 +75,7 @@
 		h1 { margin-left: 100px;}
 		/*사이드바,본문 배치css*/
 	 .col-md-2.sideBarPlace { padding:0;  display: inline-block;float:left;}
-	 #mainMyFeedPage { margin-left: 0px;  display: inline-block; float:right;}
+	 #mainMyFeedPage { margin-left: 10px;  display: inline-block; float:right; width: 80%;}
 
 
 </style>
@@ -100,6 +101,12 @@
 	 
  }
  
+	function funcGetList(currentPage) {
+		$("#currentPage").val(currentPage);
+		$("form").attr("action", "./getAllPaymentList");
+		$("form").submit();
+	}
+ 
 
 
 
@@ -124,120 +131,112 @@
 				 <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
 				 </div>
   			<!-- 타이틀 -->
-			    <div class="col-md-10" id="mainMyFeedPage" >	
-	
-	<h1> 전체 결제 목록 </h1>
-	<hr>
-	
-					<div class="row justify-content-end"  style="margin: 45px 10px 27px 10px;">							
-					<div class="input-group md-form form-sm form-1 pl-0 col-3">
-					  <div class="input-group-prepend">
-					    <span class="input-group-text cyan lighten-2" id="basic-text1"><i id="searchIcon" class="fas fa-search text-white" aria-hidden="true"></i></span>
-					  </div>
-					</div>					
-				</div>
-	
-		<div class="row">
-		<table class="table" >
-
-        <thead class="grey lighten-2">
-		    <tr>
-		      <th scope="col">결제번호</th>
-		      <th scope="col">결제자</th>
-		      <th scope="col">결제유형</th>
-		      <th scope="col">상품유형</th>
-		      <th scope="col">후원자</th>
-		      <th scope="col">결제금액</th>
-		      <th scope="col">결제일</th>
-		      <th scope="col">취소</th>
-		    </tr>
-		  </thead>
-		  <tbody>
-			<c:if test="${list != null }">
-				<c:forEach var="payment" items="${list}">
-				<c:set var="i" value="0"/>
-				<c:set var="i" value="${i+1}"/>
-				
-				
-					<tr>
-					<th scope="row"><div style="width: 120px">${payment.paymentId}</div></th>
-					<td>${payment.buyer.userCode }</td>
-					<td>
-						<c:if test="${payment.paymentOption== '0' }">
-						카드결제
-						</c:if>
-						<c:if test="${payment.paymentOption== '1' }">
-						실시간계좌이체
-						</c:if>
-					</td>
-					<td>
-						<c:if test="${payment.productType== '0' }">
-						프라임피드추가
-						</c:if>
-						<c:if test="${payment.productType== '1' }">
-						비즈니스전환
-						</c:if>
-						<c:if test="${payment.productType== '2' }">
-						후원
-						</c:if>
-					</td>
-					<td>
-						<c:if test="${payment.beneficiary !=  null }">
-						
-						${payment.beneficiary }
-						<br>
-						( ${payment.feedId } )
-						
-						
-						</c:if>
-					</td>
-					<td>
-						${payment.lastPrice} 원
-					</td>
-					<td>
-						${payment.paymentDate }
-					</td>
-					<td>
-					<c:if test="${payment.isCancel == '0' }">
-					<c:if test="${payment.isWithdraw == '0' }">
-					<button class="btn blue-gradient" onclick="fncdeletepay('${payment.paymentId}')" >결제취소</button>
-					</c:if>
-					<c:if test="${payment.isWithdraw == '1' }">
-						취소불가
-					</c:if>
-					</c:if>
-					<c:if test="${payment.isCancel == '1' }">
-					취소됨
-					</c:if>
-					</td>
-				
-					</tr>
-				
-				
-				</c:forEach>
-			</c:if>
-		
-		</tbody>
-		</table>
-		
-					<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-						<input type="hidden" id="currentPage" name="currentPage" value=""/>	
-				</div>
+			<div class="col-md-10" id="mainMyFeedPage" >	
 			
-				
-			<div class="row justify-content-md-center">
-				<jsp:include page="../common/pageNavigator.jsp"/>
+						<h1> 전체 결제 목록 </h1>
+						<hr>
+						
+						
+			
+				<div class="row">
+						<table class="table" >
+		
+						        <thead class="grey lighten-2">
+								    <tr>
+								      <th scope="col">결제번호</th>
+								      <th scope="col">결제자</th>
+								      <th scope="col">결제유형</th>
+								      <th scope="col">상품유형</th>
+								      <th scope="col">후원자</th>
+								      <th scope="col">결제금액</th>
+								      <th scope="col">결제일</th>
+								      <th scope="col">취소</th>
+								    </tr>
+								  </thead>
+								  <tbody>
+									<c:if test="${list != null }">
+										<c:set var="i" value="0"/>
+										<c:set var="i" value="${i+1}"/>
+										<c:forEach var="payment" items="${list}">
+										
+										
+										
+											<tr>
+											<td style="font-weight:bold">${payment.paymentId}</td>
+											<td>${payment.buyer.userCode }</td>
+											<td>
+												<c:if test="${payment.paymentOption== '0' }">
+												카드결제
+												</c:if>
+												<c:if test="${payment.paymentOption== '1' }">
+												실시간계좌이체
+												</c:if>
+											</td>
+											<td>
+												<c:if test="${payment.productType== '0' }">
+												프라임피드추가
+												</c:if>
+												<c:if test="${payment.productType== '1' }">
+												비즈니스전환
+												</c:if>
+												<c:if test="${payment.productType== '2' }">
+												후원
+												</c:if>
+											</td>
+											<td>
+												<c:if test="${payment.beneficiary !=  null }">
+												
+												${payment.beneficiary }
+												<br>
+												( ${payment.feedId } )
+												
+												
+												</c:if>
+											</td>
+											<td>
+												${payment.lastPrice} 원
+											</td>
+											<td>
+												${payment.paymentDate }
+											</td>
+											<td>
+											<c:if test="${payment.isCancel == '0' }">
+											<c:if test="${payment.isWithdraw == '0' }">
+											<button class="btn blue-gradient" onclick="fncdeletepay('${payment.paymentId}')" >결제취소</button>
+											</c:if>
+											<c:if test="${payment.isWithdraw == '1' }">
+												취소불가
+											</c:if>
+											</c:if>
+											<c:if test="${payment.isCancel == '1' }">
+											취소됨
+											</c:if>
+											</td>
+										
+											</tr>
+										
+										
+										</c:forEach>
+									</c:if>
+								
+								</tbody>
+								</table>
+									<form method="POST">
+									
+											<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
+												<input type="hidden" id="currentPage" name="currentPage" value=""/>	
+									</form>	
+							
+							</div>
+						
+						
+							<div class="row justify-content-md-center">
+								<jsp:include page="../common/pageNavigator.jsp"/>
+							</div>
+					
 			</div>
-			
 	</div>
-	</div>
-	</div>
-	</div>
-	
-	
 
-	
-</div>
 
 
 </body>

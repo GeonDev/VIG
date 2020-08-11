@@ -977,7 +977,7 @@ VALUES(image_id, 20021, 3, 0,'feed22_04.jpg');
 
 INSERT
 INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
-VALUES(20022, 'The Atlantic – The Possibility Report', 'A series of illustrations I did for The Atlantic’s Possibility report titled ‘Build’.', 'user01', NOW(), 0, 10000);
+VALUES(20022, 'The Atlantic – The Possibility Report', 'A series of illustrations I did for The Atlantic’s Possibility report titled ‘Build’.', 'user02', NOW(), 0, 10000);
 
 INSERT
 INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
@@ -1002,6 +1002,55 @@ VALUES(image_id, 20022, 3, 0,'feed23_04.png');
 INSERT
 INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
 VALUES(image_id, 20022, 4, 0,'feed23_05.png');
+
+INSERT
+INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
+VALUES(20023, 'Oceans Adrift Part', 'Preserve, protect and save the oceans.<br/>I try to illustrate the oceans pollution with humorous pictures.', 'user03', NOW(), 0, 10005);
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20023, 0, 1,'feed24_thumbnail.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20023, 0, 0,'feed24_01.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20023, 1, 0,'feed24_02.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20023, 2, 0,'feed24_03.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20023, 3, 0,'feed24_04.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20023, 4, 0,'feed24_05.jpg');
+
+INSERT
+INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
+VALUES(20024, 'Take it Heinz', 'Executive Creative Directors: Livio Basoli e Lorenzo Picchiotti', 'user02', NOW(), 0, 10005);
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20024, 0, 1,'feed25_thumbnail.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20024, 0, 0,'feed25_01.jpg');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20024, 1, 0,'feed25_02.gif');
+
+INSERT
+INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
+VALUES(image_id, 20024, 2, 0,'feed25_03.jpg');
+
 
 
 INSERT
