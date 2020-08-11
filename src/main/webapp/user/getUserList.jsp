@@ -30,7 +30,7 @@
 				
 	<script type="text/javascript">
 
-	function funcGetList(currentPage) {
+	function fncGetList(currentPage) {
 		$("#currentPage").val(currentPage);
 		$("form").attr("action", "getUserList");
 		$("form").submit();
@@ -39,7 +39,7 @@
 	$(function(){
 		$("#inputKeyword").keydown(function(key) {
             if (key.keyCode == 13) {
-            	funcGetList(1);
+            	fncGetList(1);
             }
 		});
 	});
@@ -122,7 +122,7 @@
 					<div class="input-group md-form form-sm form-1 pl-0 col-3">
 					  <div class="input-group-prepend">
 					   <span class="input-group-text " id="basic-text1"><i class="fas fa-search" class="fas fa-search text-white" aria-hidden="true"></i></span>
-					  <select class="form-control" name="searchCondition" >
+					  <select class="form-control" name="searchCondition" style="width:80px">
 						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>회원ID</option>
 						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>회원명</option>
 					</select>

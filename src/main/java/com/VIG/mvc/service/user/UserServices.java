@@ -57,6 +57,9 @@ public interface UserServices {
 	
 	//소셜로그인 시 userCode 자동 생성을 위한 번호 갖고오기
 	public int getLastUserNum() throws Exception;
+
+	//이메일인증시사용
+	public boolean duplicationCheck(String email) throws Exception;
 	
 
 }

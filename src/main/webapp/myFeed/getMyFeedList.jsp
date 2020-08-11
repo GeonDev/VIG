@@ -147,9 +147,7 @@
 		
 	});	
 	
-	
-	
-	
+
 
 	</script>
 	
@@ -157,7 +155,6 @@
 	
 	body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}	
 	h1 { margin-left: 100px;}
-	
 	.col-md-12{ margin-bottom: 50px;}
 	.img_feed {	width: 388px; height: 291px; overflow:hidden;}	
 	.view {	 margin: 5px 10px;}	
@@ -204,7 +201,7 @@
 
 
 <body>
-<c:set var="test1" value="tt" scope="request" />
+
 
 			<!-- 툴바 -->
 		      <div class="container-fluid">  
@@ -230,12 +227,39 @@
 		 		<div class="row justify-content-center">
 					 <div class="box_body_m">
 					 <div class="wrap_m">
-					 	<a id="btn_ch_m" class="btn3" >팔로워</a>
-						<a id="btn_ch_m" class="btn3" >팔로잉</a>
+					 	<a id="btn_ch_m" class="btn3" id="follwer_btn" data-toggle="modal" data-target="#followModal">팔로워</a>
+						<a id="btn_ch_m" class="btn3" data-toggle="modal" data-target="#followModal">팔로잉</a>
 						<a id="btn_ch_m" class="btn3" href="#">채 팅</a>
+			
 					</div>	 			
 				</div>   		
-			    	<br/>			    		
+			    	<br/>	
+			    	
+			  <!-- 팔로잉 팔로워 모달-->
+					<div class="modal fade" id="followModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+					  aria-hidden="true">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					      
+					        팔로우 목록
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+			    	
+			    	
+			    	
+			    			    		
 			    		
 			<!-- 피드리스트를 그려줄 부분 -->		
 				<div id="showFeedList" class="row justify-content-center" style="margin: 50px 30px 10px 30px;"></div>
