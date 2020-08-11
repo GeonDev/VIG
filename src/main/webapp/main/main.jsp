@@ -149,7 +149,7 @@
 			getFeedItemList(categoryName);				
 		}		
 		
-		/*
+		
 		//카테고리 +버튼을 누름
 		function CategoriesPlue() {			 
 			$('#categoryList').scrollLeft($('#categoryList').scrollLeft() + 200);
@@ -160,17 +160,8 @@
 		function CategoriesMinus() {			
 			$('#categoryList').scrollLeft($('#categoryList').scrollLeft() - 200);
 		}
-		*/
 		
-		
-		//카테고리 +버튼을 누름
-		function CategoriesPlue() {			 
-			$('#categoryList').animate( { scrollLeft: '+200'});
-		}
-		//카테고리 -버튼을 누름
-		function CategoriesMinus() {			
-			$('#categoryList').animate( { scrollLeft: '-200'});
-		}
+	
 		
 		//피드를 숨길지 물어본다.
 		function addhideFeed(feedId){	   	
