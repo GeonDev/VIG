@@ -112,7 +112,7 @@
 				<div class="row justify-content-end" style="margin: 45px 10px 27px 10px;">							
 					<div class="input-group md-form form-sm form-1 pl-0 col-3">
 					  <div class="input-group-prepend">
-					    <span class="input-group-text " id="basic-text1"><i class="fas fa-search" class="fas fa-search text-white" aria-hidden="true"></i></span>
+					    <span class="input-group-text " id="basic-text1"><i id="searchIcon" class="fas fa-search text-white" aria-hidden="true"></i></span>
 					  </div>
 					  <input id="inputKeyword" class="form-control my-0 py-1" type="text" name="keyword" value="${search.keyword}" placeholder="유저코드 입력" aria-label="Search">
 					</div>					

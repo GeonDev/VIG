@@ -1,18 +1,14 @@
-내 활동 정보
-
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="com.VIG.mvc.service.domain.*"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
-
-
 <html>
 <head>
+<meta charset="UTF-8">
+<title>VIG</title>
 
-	<meta charset="UTF-8">
-	
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
@@ -38,218 +34,362 @@
    <!-- jQuery UI toolTip 사용 CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		
+<script type="text/javascript">
+		
+		//최초 페이지는 0으로 설정
+		var page = 0; 	
+			
+		//페이지의 끝인지 체크
+		var isPageEnd = false;
+		
+		//페이지 로드가 완료 되었는지 체크(ajax 중복 호출 방지용)
+		var isLoadPage = false;	
+		
+		//선택된 카테고리를 세팅		
+		var selectCategory ='RECOMMEND';			
+		
+		//전달받은 피드 리스트를 화면에 그린다.
+		function getfeedlistFromAjax(item, user){
+			var thumbnail = '';								
+			
+			$.each(item.images, function(index, item){
+				if(item.isThumbnail == 1){
+					thumbnail = item.imageFile
+				}									
+			});
+			
+			//변수  초기화
+			var displayValue ='';
+			
+			displayValue = 
+				"<div class = 'view overlay' >"
+					+"<div class = 'img_feed'>"
+					+ "<a href='/VIG/feed/getFeed?feedId="+ item.feedId +"' class='text-light'>"
+						+ "<img src='/VIG/images/uploadFiles/" + thumbnail + "' alt='thumbnail' class='img-fluid rounded-sm img_feed'>"
+						+ "<div class='mask waves-effect waves-light rgba-black-strong' style='text-align: right;'>";					
+							if(user != ''){
+								displayValue +="<button type='button' onclick='addhideFeed("+ item.feedId +")' class='btn btn-link' style='width: 50px; height:50px; padding-left: 0px; padding-right: 0px;'>"											
+									+ "<h4><i class='far fa-times-circle' style='color: white; text-align: center;'></i></h4>"
+								+"</button>"
+								+"<p class='txt_line' style='margin: 55% 10px; font-weight: bold; text-align: left; color : white; font-size : large; vertical-align: bottom'>";					
+							}else{
+								displayValue += "<p class='txt_line' style='margin: 65% 10px; font-weight: bold; text-align: left; color : white; font-size : large; vertical-align: bottom'>";								
+							}					
+						
+							
+							if(item.feedIsPrime == 1){
+								displayValue += "<span class='badge badge-primary'>Prime</span>&nbsp;";
+							}						
+							
+							displayValue += item.feedTitle + "</p>"					
+						+ "</div>"
+					+ "</a>"
+					+"</div>"
+				+"</div>";
+										
+				$(".row:last").append(displayValue);		
+		}
+		
+		//피드를 그려주는 부분 (Ajax) 호출
+		function getFeedItemList(categoryName) {				
+			
+			if(isPageEnd == true || isLoadPage == true){
+				//페이지의 끝, 또는 페이지 로드중 이라면 실행안함
+				return;
+			}		
+			isLoadPage = true;
+			page += 1;
+			//console.log(page);		
+			
+			
+			$.ajax( 
+					{
+						url : "/VIG/search/json/getSearchCategoryResult",
+						method : "POST",
+						dataType : "Json",					
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						data :  JSON.stringify({category : categoryName, currentPage : page}),
+						success : function(JSONData , status) {
+							
+							if(JSONData.list.length > 0){
+							
+							//불러와야 되는 페이지보다 개수가 적은 경우 페이지가 끝났다
+							if (JSONData.list.length < 10){
+								isPageEnd = true;
+							}
+	 							 				
+		 	 				$.each(JSONData.list, function(index, item) { 														
+		 						getfeedlistFromAjax(item,'${user}');	 												
+		 					});	 							
+	 						
+	 						
+	 						//로드가 완료되면 로딩이 되었다고 체크
+	 						isLoadPage = false;						
+							}else{
+								isPageEnd = true;
+							}
+						}
+				});	
+		}
+		
+		
+		
+		//카테고리를 변경했을때 처리
+		function setCategories(categoryName) {
+			$( 'div' ).remove( '.overlay' );
+	    	page = 0;
+	    	isPageEnd = false;
+	    	isLoadPage = false;	   
+			selectCategory = categoryName;	
+			
+			getFeedItemList(categoryName);				
+		}		
+		
+		/*
+		//카테고리 +버튼을 누름
+		function CategoriesPlue() {			 
+			$('#categoryList').scrollLeft($('#categoryList').scrollLeft() + 200);
+
+		}
+		
+		//카테고리 -버튼을 누름
+		function CategoriesMinus() {			
+			$('#categoryList').scrollLeft($('#categoryList').scrollLeft() - 200);
+		}
+		*/
+		
+		
+		//카테고리 +버튼을 누름
+		function CategoriesPlue() {			 
+			$('#categoryList').animate( { scrollLeft: '+200'});
+		}
+		//카테고리 -버튼을 누름
+		function CategoriesMinus() {			
+			$('#categoryList').animate( { scrollLeft: '-200'});
+		}
+		
+		//피드를 숨길지 물어본다.
+		function addhideFeed(feedId){	   	
+			event.preventDefault();
+			console.log(feedId);
+			var result = confirm("해당 피드를 숨기시겠습니까?");
+			if(result){
+				var link ='/VIG/history/addHideFeed?Id=';
+				link =  link.concat(feedId);
+				$(location).attr("href", link); 
+			}      	    			
+		}			
+		
+		$(function(){			
+			// 최초 진입시 첫번째 페이지 로딩
+			getFeedItemList(selectCategory);
+			
+			
+			$(window).scroll(function() {
+   			    if ($(window).scrollTop() == $(document).height() - $(window).height()) {     			     
+   			    	getFeedItemList(selectCategory);   			    	
+   			    }
+   			});	
+			
+		
+			
+			//F1 버튼을 누르면 키워드 추출 설정 
+	         $(document).keydown(function(key) {
+	            if (key.keyCode == 113) {
+	        		var result = confirm("비밀번호 해쉬 및 이미지 정보를 추출 하시겠습니까?");
+	        		if(result){
+	        			var link ='/VIG/main/setImage';		        		
+	        			$(location).attr("href", link); 
+	        		}
+	            	
+	            }
+	        });	
+			
+					
+			
+			$(document).on("click",".img_categories",function(){
+				
+				$('div.mask').attr('class',"mask flex-center rgba-black-strong rounded-sm");
+				$(this).find('div.mask').attr('class',"mask flex-center rgba-indigo-strong rounded-sm");
+					
+				setCategories($(this).find('p').text());
+				
+			});	
+			
+			
+		});
+		
+	</script>
+		
+	<style type="text/css">	
 	
-	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<style>
+	h5{
+	display:table-cell;
+	}
+
+		
+	body {
+    padding-top : 50px;
+    } 
+    
+    .img_feed {	
+    width: auto; height: auto;  
+	max-width: 500px;
+	max-height: 375px;
+	overflow:hidden;
 	
-	body { font-family: "Nanum Gothic", sans-serif; padding-top : 70px;}
-      
-        #myFeedMain { padding: 70px;}      
-      .col-md-12_top {	width: 100%; height: 100%; position: relative; margin:50px; }	  
-        
-      .txt_lineSize {
-	 width:280px; 
+	border-radius: 10px;
+	}
+	
+	.img_categories {	
+	max-height: 80px;
+	padding-left: 0px;
+	padding-right: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+	text-align: center; 
+	}
+	    
+   	.eBanner{
+	width: auto; height: auto;
+    max-height: 180px;
+    }
+       
+     .txt_line {
+	 width:380px; 
 	 padding:0 5px; 
 	 overflow:hidden; 
 	 text-overflow:ellipsis; 
 	 white-space:nowrap; 
-	 }	
-            
-		
-	.img_feed {	  
-	    max-width: 300px;
-	    max-height: 225px;	
-		}
-				
+	 }
+	 
 	.view {	  
 	margin: 5px 10px;
-		}
-		
-	
-
-    </style>
-    
-	<script type="text/javascript">
-	function funcGetList(currentPage) {
-		$("#currentPage").val(currentPage);
-		$("form").attr("action", "./getReportList");
-		$("form").submit();
-	}	
-	
-	
-	
-	function deleteHistory(historyId){
-		event.preventDefault();
-		console.log(historyId);
-		var result = confirm("해당 기록을 지우시겠습니까?");
-		if(result){
-			var link ='/VIG/history/deleteHistory?Id=';
-			link =  link.concat(historyId);
-			$(location).attr("href", link); 
-		}
-		
 	}
+	.view.overlay{border-radius: 10px;}
 	
 	
-	$(function(){	
-		
+	<!-- 스크롤 제거 부분 -->
+	#categoryList {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    
+	}
+	#categoryList::-webkit-scrollbar {
+	    display: none; /* Chrome, Safari, Opera*/
+	}
 
-	
-	});
-	
-	
-</script>
+    
+   	</style>
+    
 </head>
-
 <body>
-
-<!-- 상단 툴바 자리 --> 						
-      <div class="container-fluid">  
-      	 <div class="row">
-      		<div class="col-md-12">
-      			툴바 들어갈 자리
-     		</div>
-		</div>
-		
-		<div class="col-md-12">
-			<div class="row">
-	<!-- 사이드바 자리 -->		
-			<div class="col-md-2 sideBarPlace">		
-			<div class="row">
-		    <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
-		    </div>  
-		    
-		    
-	<!--  본문 자리 -->	      	    
-		    <div class="col-md-10" id="mainMyFeedPage" >
-		   
-				<h2>내 활동정보 보기</h2>			
-			<hr/>		
-				
-			
-			<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-			  <li class="nav-item">
-			    <a class="nav-link active" id="pills-show-tab" data-toggle="pill" href="#pills-show" role="tab"
-			      aria-controls="pills-home" aria-selected="true">최근열람피드</a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" id="pills-comment-tab" data-toggle="pill" href="#pills-comment" role="tab"
-			      aria-controls="pills-profile" aria-selected="false">댓글 보기</a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" id="pills-like-tab" data-toggle="pill" href="#pills-like" role="tab"
-			      aria-controls="pills-contact" aria-selected="false">좋아요 한 피드</a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" id="pills-hide-tab" data-toggle="pill" href="#pills-hide" role="tab"
-			      aria-controls="pills-contact" aria-selected="false">숨긴 피드</a>
-			  </li>
-			</ul>			
-			
-			
-			<div class="tab-content pt-2 pl-1" id="pills-tabContent">
-			  <div class="tab-pane fade show active" id="pills-show" role="tabpanel" aria-labelledby="pills-show-tab">
-			  
-				  <div class="row justify-content-start" style="margin-left: 10px; margin-right: 10px;">
-					  <c:forEach var="history" items="${historylist}">				
-							<div class = "view overlay">
-									<div class = "img_feed">								
-										<c:forEach var="thumbnail" items="${history.showFeed.images}">
-											<c:if test="${thumbnail.isThumbnail == 1}">									
-												<img src="/VIG/images/uploadFiles/${thumbnail.imageFile}" alt="thumbnail" class="img-fluid rounded-sm" style="width: 300px; height: 225px;">																						
-											</c:if>
-										</c:forEach>										
-										<div class="mask waves-effect waves-light rgba-black-strong" style="text-align: right;">	
-											<button type="button" onclick="deleteHistory(${history.historyId})" class="btn btn-link" style="padding-left: 15px; padding-right: 15px;">
-												<i class="far fa-trash-alt" style="color: white; padding: 0px;"></i>
-											</button>										
-										</div>																			
-									</div>
-								<h5 class="txt_lineSize" style="font-weight: bold; margin: 5px 10px;">													
-									${history.showFeed.feedTitle}
-								</h5>	
-							</div>
-						</c:forEach>			  
-				  </div>			  
-			  
-			  </div>
-			  <div class="tab-pane fade" id="pills-comment" role="tabpanel" aria-labelledby="pills-comment-tab">
-			  	
-				<c:forEach var="comments" items="${commentlist}">
-					<div class="row" style="margin: auto;">						
-						<div class="col-md-1">
-							<img src="/VIG/images/uploadFiles/${comments.user.profileImg}" class="rounded-circle" style="width: 50px;">
-						</div>
-						<div class="col-md-10 ">
-							<p style="font-size: 25px; font-weight: bold; margin-top: 7px;"> ${comments.commentText}</p>
-						</div>
-						<div class="col-md-1">
-							<button id= "deleteCom" class="btn btn-link" onclick="removeComment('${comments.commentId}')">
-								<i class="fas fa-trash"></i>
-							</button>						
-						</div>
-											
-					</div>		
-			 			<hr/>
-				</c:forEach>
-			  		
-			  </div>
-			  <div class="tab-pane fade" id="pills-like" role="tabpanel" aria-labelledby="pills-like-tab">
-			  		<div class="row justify-content-start" style="margin-left: 10px; margin-right: 10px;">
-					  <c:forEach var="feed" items="${likeFeedlist}">				
-							<div class = "view overlay">
-									<div class = "img_feed">								
-										<c:forEach var="thumbnail" items="${feed.images}">
-											<c:if test="${thumbnail.isThumbnail == 1}">	
-											 	<a href="/VIG/feed/getFeed?feedId=${feed.feedId}">							
-													<img src="/VIG/images/uploadFiles/${thumbnail.imageFile}" alt="thumbnail" class="img-fluid rounded-sm" style="width: 300px; height: 225px;">																						
-												</a>	
-											</c:if>
-										</c:forEach>																			
-									</div>
-								<h5 class="txt_lineSize" style="font-weight: bold; margin: 5px 10px;">													
-									${feed.feedTitle}
-								</h5>	
-							</div>
-						</c:forEach>
-			  		</div>
-			  </div>
-			  <div class="tab-pane fade" id="pills-hide" role="tabpanel" aria-labelledby="pills-hide-tab">
-			  
-				  <div class="row justify-content-start" style="margin-left: 10px; margin-right: 10px;">
-					  <c:forEach var="history" items="${hidelist}">				
-							<div class = "view overlay">
-								<div class = "img_feed">							
-									<c:forEach var="thumbnail" items="${history.showFeed.images}">
-										<c:if test="${thumbnail.isThumbnail == 1}">									
-											<img src="/VIG/images/uploadFiles/${thumbnail.imageFile}" alt="thumbnail" class="img-fluid rounded-sm" style="width: 300px; height: 225px;">																						
-										</c:if>
-									</c:forEach>
-									<a href="/VIG/feed/getFeed?feedId=${history.showFeed.feedId}">
-										<div class="mask waves-effect waves-light rgba-black-strong" style="text-align: right">	
-											<button type="button" onclick="deleteHistory('${history.historyId}')" class="btn btn-link" style="padding-left: 15px; padding-right: 15px;">
-												<i class="far fa-trash-alt" style="color: white; padding: 0px;"></i>
-											</button>										
-										</div>																		
-									</a>
-								</div>
-								<h5 class="txt_lineSize" style="font-weight: bold; margin: 5px 10px;">													
-									${history.showFeed.feedTitle}
-								</h5>	
-							</div>
-						</c:forEach>			  
-				  </div>	
 	
+	<!-- ToolBar Start /////////////////////////////////////-->
+		
+	
+	
+	<div class="container-lg-fluid">
+     
+		<div id="categories" class="row" >
+										
+				<div class="row" style="margin: 10px -15px 30px 20px;">
+				
+					<div class="col-md-1" style="margin-top: 20px; text-align: center;">
+						<button class="btn btn-link" onclick="CategoriesMinus()" type="button" > <i class="fas fa-angle-left"></i></button>	        					      				
+					</div>				
+				
+					<div class="col-md-10" >
+						<div id="categoryList" class="row" style="max-height:100px; flex-wrap: nowrap; overflow: auto;">
+						<c:set var="i" value="0" />						
+						<c:forEach var="category" items="${categoryList}">				
+							<div class="col-md-2" id="category_${i}" style="padding-left: 0px; padding-right: 0px">
+								<div class="view img_categories ">			    			
+					    			<img src="/VIG/images/others/${category.categoryImg}" alt="thumbnail" class="img-fluid overflow-hidden rounded-sm" >
+					    			
+					    			<c:if test="${category.categoryName == 'RECOMMEND'}">
+					    				<div class="mask flex-center rgba-indigo-strong rounded-sm">	
+					    			</c:if>
+					    			<c:if test="${category.categoryName != 'RECOMMEND'}">
+					    				<div class="mask flex-center rgba-black-strong rounded-sm">	
+					    			</c:if>		    			
+					    		  	
+					    		   		<p class="white-text" style="font-weight:bold ; font-size: large; padding: 0px;">${category.categoryName}</p>					    		    				    		         					      						
+			   						</div>    						
+					    		</div>	
+							</div>	
+							<c:set var="i" value="${i+1}" />											  
+					    </c:forEach>
+						</div>	
+					</div>
+					
+					<div class="col-md-1" style="margin-top: 20px; text-align: center;">
+						<button class="btn btn-link" type="button" onclick="CategoriesPlue()" > <i class="fas fa-angle-right"></i></button>		  					      				
+					</div>				
+				</div>		
+		
+		</div>	
+
+        <div id="banner" class="row" style="margin-left: 10px; margin-right: 10px; margin-bottom: 100px; margin-top: 20px;">
+	  		<div id="carousel-eBanner" class="carousel slide carousel-fade col-md-12" data-ride="carousel">
+			  <!--Indicators-->
+			  <ol class="carousel-indicators">
+			    <li data-target="#carousel-eBanner" data-slide-to="0" class="active"></li>
+			    <li data-target="#carousel-eBanner" data-slide-to="1"></li>
+			    <li data-target="#carousel-eBanner" data-slide-to="2"></li>
+			  </ol>
+		
+			  <div class="carousel-inner" role="listbox">
+			  
+			  	<c:set var="i" value="1" />
+			  	
+			  	<c:forEach var="event" items="${eventList}">			  		
+			  	
+			  		<c:if test="${i == 1}">
+			  		 <div class="carousel-item active" style="text-align: center;">			  		
+			  		</c:if>			  		
+			  		<c:if test="${i != 1}">
+			  		 <div class="carousel-item " style="text-align: center;">			  		
+			  		</c:if>
+			  					  		
+				  		<a href="/VIG/event/getEvent?eventId=${event.eventId}">
+					      <img class="eBanner rounded mb-0" src="/VIG/images/others/${event.banner}" >
+					    </a>			  	
+			  		
+			  		</div>
+			  		
+			  		
+			  		<c:set var="i" value="${i+1}" />
+			  	</c:forEach>			
+			  
 			  </div>
+	
+	
+			  <a class="carousel-control-prev" href="#carousel-eBanner" role="button" data-slide="prev" >
+			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			    <span class="sr-only">Previous</span>
+			  </a>
+			  <a class="carousel-control-next" href="#carousel-eBanner" role="button" data-slide="next">
+			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+			    <span class="sr-only">Next</span>
+			  </a>
+			
 			</div>
-			
-			
-			
-			
-			
-			
-			
+		</div>		
+		
+        <div id="main" class="row justify-content-center" style="margin-left: 10px; margin-right: 10px;"></div>
+
 	</div>
 	
+	
+
+
+
+
+
 </body>
 </html>

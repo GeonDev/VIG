@@ -9,8 +9,7 @@
 <title>Insert title here</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
 <script type="text/javascript">
 
 
@@ -53,7 +52,7 @@
 		  50% {-webkit-transform: scale(1.1, 0.9);transform: scale(1.1, 0.9);}
 		  75% {-webkit-transform: scale(0.95, 1.05);t}
 			/* 버튼 CSS */
-			
+
 			
 	</style>
 	
@@ -67,7 +66,6 @@
 <!-- 사이드바  시작-->    
 		<div class="row" id="sideBar">
 		
-		
 			<!-- 다른 유저의 마이 피드 방문시 해당 유저의 정보만 노출 -->
 				<c:choose>
 					<c:when test="${user.userCode != writer.userCode}">		
@@ -75,16 +73,12 @@
 			 			<div class="card-body">
 			 					<h3 class="user_name" align="center"><strong> ${writer.userName} </strong> </h3>			
 			 					<p class="user_bio" align="center" > ${writer.selfIntroduce} </p>		 					
-			 					<p class="sign_date" align="center"> Member Since :: ${user.regDate}</p>
+			 					<p class="sign_date" align="center"> Member Since :: ${writer.regDate}</p>
 			 			</div>	
 			 			<br/>		
 			 		</c:when>
-			 	</c:choose>
-		 			
-
-			<!-- 마이페이지 접속시 메뉴   //// 아니 조건문 어떻게 줘?ㅠ.ㅠ-->    
-			 	<c:choose>
-					<c:when test="${user.userCode == writer.userCode}">	
+	 	
+					<c:when test="${user.userCode ==user.userCode}">					
 						<img class="card-img-top" src="/VIG/images/uploadFiles/profile_img.jpg" id="pImg" alt="profile_img">
 				 			<div class="card-body">
 				 					<h4 class="user_name" align="center"> ${user.userName} </h4>
@@ -94,49 +88,53 @@
 				 				<p class="sign_date" align="center" style="margin-bottom:30px;"> Member Since :: ${user.regDate}</p>	
 				 				<br/>
 				 			</div>
-				 				<br/>		
-				 	
-						
-						<c:choose>
-					<c:when test="${sessionScope.user.role=='user' || sessionScope.user.role=='business'}">
-			 			
-			 <div class="box_body">
-				<div class="wrap">
- 					<a id="btn_ch" class="btn3" href="/VIG/myfeed/getMyFeedList?userCode=${user.userCode}">
- 						마이피드 목록</a>
- 					<br/>
- 					<a id="btn_ch" class="btn3" href="/VIG/history/getMyHistoryList?userCode=${user.userCode}">
- 						내 활동 보기</a>
- 					 <br/>
- 					 <a id="btn_ch" class="btn3" href="/VIG/user/updateUser">
- 						내 정보 수정</a>
- 					 <br/>
-
+				 		<br/>		
+ 				
+					 <div class="box_body">
+						<div class="wrap">
+		 					<a id="btn_ch" class="btn3" href="/VIG/myfeed/getMyFeedList?userCode=${user.userCode}">
+		 						마이피드 목록</a>
+		 					<br/>
+		 					<a id="btn_ch" class="btn3" href="/VIG/history/getMyHistoryList?userCode=${user.userCode}">
+		 						내 활동 보기</a>
+		 					 <br/>
+		 					 <a id="btn_ch" class="btn3" href="/VIG/user/updateUser?userCode=${user.userCode}">
+		 						내 정보 수정</a>
+		 					 <br/>	
+		 					 </div>
+				 	</div>				
  					
- 					 <!-- 비지니스 유저만 통계-->
+ 					
+ 					
 			 		<c:if test="${sessionScope.user.role=='business'}">
 			 			<a id="btn_ch" class="btn3" href="/VIG/chart/getChart">통 계</a>
 			 				<br/>	
-				 		</c:if>							
-				 		
+				 	</c:if>							
+				 	
  					
  					
- 					<a id="btn_ch" class="btn3" data-toggle="dropdown"aria-haspopup="true" aria-expanded="false" href="#">
+ 				<a id="btn_ch" class="btn3" data-toggle="dropdown"aria-haspopup="true" aria-expanded="false" href="#">
  						결제 </a>
  						<div class="dropdown-menu" style="position: absolute;will-change: transform;top: 0px;left: 10px;transform: translate3d(20px, 347px, 0px);">
 					  <a class="dropdown-item" href="/VIG/payment/getPaymentList">내 결제 목록</a>
-					 <c:if test="${sessionScope.user.role=='user'}">
-					  <a class="dropdown-item" href="#">후원 목록</a>
-					  </c:if>
-					 <c:if test="${sessionScope.user.role=='business'}">
-					  <a class="dropdown-item" href="#">후원 받은 목록</a>
-					  </c:if>
-				    </div>
- 					<br/>
- 					</div>
- 					</div>
-		 		</c:when>
-			 		</c:choose>
+							 <c:if test="${sessionScope.user.role=='user'}">
+									  <a class="dropdown-item" href="#">후원 목록</a>
+						    </c:if>
+							<c:if test="${sessionScope.user.role=='business'}">
+									  <a class="dropdown-item" href="#">후원 받은 목록</a>
+							</c:if>
+						</div>
+						
+		 			<br/>
+		 			
+		 			</c:when>
+		 			
+		 			</c:choose>
+		 			
+		 		</div>
+		 	</div>
+ 				
+ 		
 			 		
 			<!-- 관리자 로그인시 --> 		
 			 		<c:if test="${sessionScope.user.role=='admin'}">
@@ -147,10 +145,9 @@
 			 			<a type="button" class="btn btn-block" href="/VIG/payment/getAllPaymentList">결제 조회</a>
 			 				<br/>
 			 		</c:if>	
-			 	</c:when>
-			 	</c:choose>	
-			 		</div>
- 					</div>		
+			
+	
+			 		
 			 	
 			 		
 	
