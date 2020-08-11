@@ -79,11 +79,7 @@
    
 </script>
 	<style type="text/css">
-	.lodin_modal{
-	 margin: auto;
-    width: 30%;
-    margin-top: 100px;
-    }
+	
 	 .fail_text { margin:10px; }
 	 #top_title{ margin: 20px; }
 	 
