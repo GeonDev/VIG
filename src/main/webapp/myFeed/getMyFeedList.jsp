@@ -230,12 +230,15 @@
 		 		<div class="row justify-content-center">
 					 <div class="box_body_m">
 					 <div class="wrap_m">
-					 	<a id="btn_ch_m" class="btn3" >팔로워</a>
-						<a id="btn_ch_m" class="btn3" >팔로잉</a>
-						<a id="btn_ch_m" class="btn3" href="#">채 팅</a>
+					 	<a id="btn_ch_m" class="btn3" href="/VIG/myfeed/getFollowerList?userCode=${writer.userCode}" >팔로워</a>
+					 	
+						<a id="btn_ch_m" class="btn3" href="/VIG/myfeed/getFollowingList?userCode=${writer.userCode}" >팔로잉</a>
+						
+						<a id="btn_ch_m" class="btn3" href="/VIG/chat/getChat">채 팅</a>
 					</div>	 			
 				</div>   		
-			    	<br/>			    		
+			    	<br/>				    	
+			    			    		
 			    		
 			<!-- 피드리스트를 그려줄 부분 -->		
 				<div id="showFeedList" class="row justify-content-center" style="margin: 50px 30px 10px 30px;"></div>
