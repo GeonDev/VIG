@@ -50,7 +50,7 @@ public class WithdrawController {
 	}
 	
 	@RequestMapping(value="getDonationList")
-	public ModelAndView getDonationList(HttpSession session) throws Exception {
+	public ModelAndView getDonationList(HttpSession session, @ModelAttribute("search") Search search) throws Exception {
 		
 		logger.debug("getDonationList");
 		ModelAndView mav = new ModelAndView();
@@ -62,7 +62,7 @@ public class WithdrawController {
 		} else {
 		User user = (User)session.getAttribute("user");
 
-		Search search = new Search();
+		search = new Search();
 		String userCode = user.getUserCode();
 		search.setKeyword(userCode);
 		
@@ -121,8 +121,8 @@ public class WithdrawController {
 		return mav;
 	}
 	
-	@RequestMapping(value="getWithdrawList", method=RequestMethod.GET)
-	public ModelAndView getWithdrawList(HttpSession session, Search search) throws Exception {
+	@RequestMapping(value="getWithdrawList")
+	public ModelAndView getWithdrawList(HttpSession session, @ModelAttribute("search") Search search) throws Exception {
 		
 		logger.debug("getWithdrawList");
 		ModelAndView mav = new ModelAndView();
