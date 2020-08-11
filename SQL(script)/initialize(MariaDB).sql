@@ -167,6 +167,7 @@ CREATE TABLE withdraw (
 	acc_holder 		VARCHAR(20),
 	bank_code 		TINYINT(1),
 	withdraw_date 	DATE,
+	amount 	INT,
 	PRIMARY KEY(withdraw_id)
 );
 
@@ -3594,6 +3595,18 @@ INSERT INTO
 event(event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner) 
 VALUES( event_id, '중국대표브랜드 펜 디자인 공모전', '중국 5대볼펜 브랜드 vience에서 드로잉펜 디자인 공모전을 진행합니다.' , '2020-09-28', '2020-10-26', 'Event04_thumbnail.jpg', 'Vience공모전, 2020Vience공모전, 2020드로잉펜공모전', 'Event04_1.jpg', 0, 'Event04_banner.jpg');
 
+INSERT INTO 
+event(event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner) 
+values( event_id, 'The Grand Tour', 'NASA SPACE POSTER DESIGN' , '2020-07-16', '2020-09-17', 'Event05_thumbnail.jpg', 'NASA, PORSTERDESIGN, NASADEGIN', 'Event05_1.jpg', 0, 'Event05_banner.jpg');
+      
+      
+INSERT INTO 
+event(event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner) 
+values( event_id, 'CULT', 'CAMBODIAs ULTIMATE LIFESTYLE TRADE.' , '2020-08-06', '2020-09-17', 'Event06_thumbnail.jpg', 'CAMBODIA, ULTIMATE LIFESTYLE, CULTTRADE', 'Event06_01.jpg', 0, 'Event06_banner.jpg');
+
+INSERT INTO 
+event(event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner) 
+values( event_id, 'FORGE', 'A Collective for car' , '2020-08-06', '2020-09-17', 'Event07_thumbnail.jpg', 'CAMBODIA, ULTIMATE LIFESTYLE, CULTTRADE', 'Event07_01.jpg', 0, 'Event07_banner.jpg');
 
 INSERT INTO 
 alarm(alarm_id, send_user_code, receive_user_code,  is_watch, alarm_type, add_date)
