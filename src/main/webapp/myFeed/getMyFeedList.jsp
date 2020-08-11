@@ -204,6 +204,8 @@
 
 
 <body>
+<c:set var="test1" value="tt" scope="request" />
+
 			<!-- 툴바 -->
 		      <div class="container-fluid">  
 		      	 <div class="row">
@@ -228,8 +230,8 @@
 		 		<div class="row justify-content-center">
 					 <div class="box_body_m">
 					 <div class="wrap_m">
-					 	<a id="btn_ch_m" class="btn3" data-toggle="modal" data-target="#theModal">팔로워</a>
-						<a id="btn_ch_m" class="btn3" data-toggle="modal" data-target="#theModal2">팔로잉</a>
+					 	<a id="btn_ch_m" class="btn3" >팔로워</a>
+						<a id="btn_ch_m" class="btn3" >팔로잉</a>
 						<a id="btn_ch_m" class="btn3" href="#">채 팅</a>
 					</div>	 			
 				</div>   		

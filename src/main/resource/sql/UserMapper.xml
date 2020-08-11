@@ -113,8 +113,9 @@
 	    WHERE num BETWEEN 1 AND 5	 
 	 </select>
 	 
-	  <update id="updateUser" parameterType="user">
+	  <update id="updateUser" parameterType="user" >
 	 	UPDATE users SET 
+	 		user_code = #{userCode}
 	 		self_introduce = #{selfIntroduce:VARCHAR},
 	 		user_name = #{userName:VARCHAR},
 	 		password = #{password:VARCHAR},
@@ -127,11 +128,12 @@
 	 </update>	
 	 
 	 
-	 <delete id="deleteUser" parameterType="String">
-	 	DELETE 
-	 	FROM users 
-	 	WHERE user_code = #{value}
-	 </delete>
+	 <update  id="deleteUser" parameterType="user" >
+	 	UPDATE 
+	 	users 
+	 	SET state = 4
+	 	WHERE user_code = #{userCode}
+	 </update >
 	 
 	<!--   
 	 <update id="deleteUser" parameterType="String">
