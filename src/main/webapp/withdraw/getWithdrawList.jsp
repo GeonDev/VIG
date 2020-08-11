@@ -68,6 +68,12 @@
 	
 	}
 	
+	body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}	
+	h2 { margin-left: 100px;}
+	.col-md-12{ margin-bottom: 50px;}
+	/*사이드바,본문 배치css*/
+	 .col-md-2.sideBarPlace { padding:0;  display: inline-block;float:left;}
+	 #mainMyFeedPage { margin-left: 0px;  display: inline-block; float:right;}
 
 
 
@@ -137,7 +143,22 @@
 <body>
 	
 	
-<div id=main>
+
+<!-- 툴바 -->
+		      <div class="container-fluid">  
+		      	 <div class="row">
+		      		<div class="col-md-12">
+		      			<jsp:include page="/main/toolbar.jsp"></jsp:include>
+		     		</div>
+				</div>
+		
+		
+			<!-- 사이드바  -->		
+				<div class="col-md-2 sideBarPlace">		
+				 <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
+				 </div>
+  			<!-- 타이틀 -->
+			    <div class="col-md-10" id="mainMyFeedPage" >
 	
 	<h2> 전체 출금 신청 목록 </h2>
 	<hr>
@@ -276,7 +297,7 @@
 
 	</div>
 	
-	
+	</div>
 		
 	
 	
