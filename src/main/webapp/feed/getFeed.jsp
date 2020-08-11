@@ -555,8 +555,7 @@ function imageModal(imageId){
 			<img src="/VIG/images/uploadFiles/${images.imageFile}" style="width:960px"/>
 			
 									
-				<div class="modal fade bd-example-modal-xl" id="${images.imageId }" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
-				  aria-hidden="true">
+				<div class="modal fade bd-example-modal-xl" id="${images.imageId }" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
 				  <div class="modal-dialog modal-xl">
 				    <div class="modal-content" style="align:center">
 				    <div style="text-align:center;">

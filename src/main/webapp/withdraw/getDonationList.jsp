@@ -91,8 +91,14 @@
  }
  
  $(function(){
+	 
+	 $("button:contains('출금목록보기')").on("click", function(){
+		 
+		 self.location="/VIG/withdraw/getWithdrawList";
+		 
+	 });
 	
-	 $("a:contains('출금신청')").on("click", function(){
+	 $("button:contains('출금신청')").on("click", function(){
 		 var amount = $("input[name='amount']").val();
 		 if(amount< 10000){
 			 alert("1만원 이상부터 출금신청 할 수 있습니다.");
@@ -100,6 +106,7 @@
 		 }
 		 
 	 });
+	
 	 
 	 $("button:contains('출금신청')").on("click", function(){
 		
@@ -160,10 +167,16 @@
 				 </div>
   			<!-- 타이틀 -->
 			    <div class="col-md-10" id="mainMyFeedPage" >
-				
-				<h1> 받은 후원 목록 </h1> <a href="/VIG/withdraw/getWithdrawList">출금목록보기</a>
+				<div class="row">
+					<div class="col-md-8">
+						<h2> 받은 후원 목록 </h2> 
+					</div>
+					<div class="col-md-4">
+						<div style="text-align: right; padding-right: 10px;"><button class="btn btn-outline-dark-green">출금목록보기</button></div>
+					</div>
+					
+				</div>
 				<hr>
-				
 				<div class="container">
 					 <form name="withdrawForm">
 					<table class="table">
@@ -258,19 +271,18 @@
 									      </div>
 									     
 									      <div class="modal-body mx-3">
-									      	 <p style="text-align: center;"><fmt:formatNumber value="${possibleAmount}" pattern="0,000"/>원 출금신청</p>
+									      	 <p style="text-align: center; font-weight: bold"><fmt:formatNumber value="${possibleAmount}" pattern="0,000"/>원 출금신청</p>
 									      	 <input type="hidden" name="amount" value="${possibleAmount }">
 									        <div class="md-form mb-5">
 									          <input type="text" id="orangeForm-name" name="holder" class="form-control validate">
 									          <label data-error="wrong" data-success="right" for="orangeForm">예금주 명</label>
 									        </div>
 									        <div class="md-form mb-5">
-									          <input type="number" id="orangeForm-number" name="accNo" class="form-control">
+									          <input type="text" id="orangeForm-number" name="accNo" class="form-control">
 									          <label data-error="wrong" data-success="right" for="orangeForm">계좌번호</label>
 									        </div>
 									
 									        <div class="md-form mb-4">
-									          <i class="fas fa-lock prefix grey-text"></i>
 									          <input type="password" id="orangeForm-pass" class="form-control" name="RRN">
 									          <label data-error="wrong" data-success="right" for="orangeForm">주민등록번호(앞 7자리)</label>
 									        </div>
@@ -320,9 +332,7 @@
 				
 			</div>
 			</div>
-			</div>
-		</div>
-	</div>
+
 		
 </body>
 </html>

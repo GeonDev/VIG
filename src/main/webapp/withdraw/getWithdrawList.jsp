@@ -42,9 +42,15 @@
 	body {
 		
 		font-family: "Nanum Gothic", sans-serif;
-
+		 padding-top : 100px;
 	
 	}
+	
+	h1 { margin-left: 100px;}
+	.col-md-12{ margin-bottom: 50px;}
+	/*사이드바,본문 배치css*/
+	 .col-md-2.sideBarPlace { padding:0;  display: inline-block;float:left;}
+	 #mainMyFeedPage { margin-left: 0px;  display: inline-block; float:right;}
 	
 	#main { 
 		width: 960px;
@@ -135,151 +141,170 @@
 
 </head>
 <body>
-	
-	
-<div id=main>
-	
-	<h2> 전체 출금 신청 목록 </h2>
-	<hr>
-	
-	<div class="container">
-		
-		<table class="table">
-		  <thead>
-		    <tr>
-		      <th scope="col">No.</th>
-		      <th scope="col">출금ID</th>
-		      <th scope="col">예금주</th>
-		      <th scope="col">출금계좌</th>
-		      <th scope="col">은행명</th>
-		      <th scope="col">출금금액</th>
-		      <th scope="col">출금일시</th>
-		    </tr>
-		  </thead>
-		  <tbody>
-			<c:set var="i" value="0"/>
-			<c:if test="${list != null }">
-				<c:forEach var="withdraw" items="${list}">
-				
-				<c:set var="i" value="${i+1}"/>
-				
-				
-					<tr>
-						<th scope="row">${i}</th>
-						<td>
-							${withdraw.withdrawId}
-						</td>
-						<td>
-							${withdraw.holder}
-						</td>
-						<td>
-							${withdraw.accNo}
-						</td>
-						<td>
-							<c:if test="${withdraw.bankCode == 35}">
-							경남은행
-							</c:if>
-							<c:if test="${withdraw.bankCode == 29}">
-							광주은행
-							</c:if>
-							<c:if test="${withdraw.bankCode == 7}">
-							국민은행
-							</c:if>
-							<c:if test="${withdraw.bankCode == 5}">
-							기업은행
-							</c:if>
-							<c:if test="${withdraw.bankCode == 15}">
-							농협중앙회
-							</c:if>
-							<c:if test="${withdraw.bankCode == 25}">
-							대구은행
-							</c:if>
-							<c:if test="${withdraw.bankCode == 27}">
-							부산은행
-							</c:if>
-							<c:if test="${withdraw.bankCode == 3}">
-							산업은행
-							</c:if>
-							<c:if test="${withdraw.bankCode == 37}">
-							새마을금고
-							</c:if>
-							<c:if test="${withdraw.bankCode == 11}">
-							수협중앙회
-							</c:if>
-							<c:if test="${withdraw.bankCode == 39}">
-							신협중앙회
-							</c:if>
-							<c:if test="${withdraw.bankCode == 60}">
-							신한은행
-							</c:if>
-							<c:if test="${withdraw.bankCode == 9}">
-							외환은행
-							</c:if>
-							<c:if test="${withdraw.bankCode == 19}">
-							우리은행
-							</c:if>
-							<c:if test="${withdraw.bankCode == 56}">
-							우체국
-							</c:if>
-							<c:if test="${withdraw.bankCode == 33}">
-							전북은행
-							</c:if>
-							<c:if test="${withdraw.bankCode == 31}">
-							제주은행
-							</c:if>
-							<c:if test="${withdraw.bankCode == 68}">
-							카카오뱅크
-							</c:if>
-							<c:if test="${withdraw.bankCode == 67}">
-							케이뱅크
-							</c:if>
-							<c:if test="${withdraw.bankCode == 59}">
-							하나은행
-							</c:if>
-							<c:if test="${withdraw.bankCode == 23}">
-							한국시티은행
-							</c:if>
-							<c:if test="${withdraw.bankCode == 21}">
-							SC제일은행
-							</c:if>
 
-						</td>
-						<td>
-							${withdraw.amount }
-						</td>
-						<td>
-							${withdraw.withdrawDate }
-						</td>
-				
-					</tr>
-				
-				
-				</c:forEach>
-			</c:if>
-
-		
-		</tbody>
-
-		
-		</table>
-				<c:if test="${empty list}">
-				<p style="text-align:center; font-weight: bold; height: 30px">신청내역이 없습니다.</p>
-				</c:if>
-		<hr>		
-			<div class="row justify-content-md-center">
-				<jsp:include page="../common/pageNavigator.jsp"/>
-			</div>
+<!-- 툴바 -->
+		 <div class="container-fluid">  
+		      	 <div class="row">
+		      		<div class="col-md-12">
+		      			<jsp:include page="/main/toolbar.jsp"></jsp:include>
+		     		</div>
+				</div>
 		
 		
+			<!-- 사이드바  -->		
+				<div class="col-md-2 sideBarPlace">		
+				 <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
+				 </div>
+  			<!-- 타이틀 -->
+			    <div class="col-md-10" id="mainMyFeedPage" >
+			<c:choose>
+				<c:when test="${user.role == 'admin' }">
+					<h2> 전체 출금 신청 목록 </h2>
+				</c:when>
+				<c:otherwise>
+					<h2> 출금 신청 목록</h2>
+				</c:otherwise>
+			</c:choose>	
+					<hr>
 	
-
-
+					<div class="container">
+						
+						<table class="table">
+						  <thead>
+						    <tr>
+						      <th scope="col">No.</th>
+						      <th scope="col">출금ID</th>
+						      <th scope="col">예금주</th>
+						      <th scope="col">출금계좌</th>
+						      <th scope="col">은행명</th>
+						      <th scope="col">출금금액</th>
+						      <th scope="col">출금일시</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+							<c:set var="i" value="0"/>
+							<c:if test="${list != null }">
+								<c:forEach var="withdraw" items="${list}">
+								
+								<c:set var="i" value="${i+1}"/>
+								
+								
+									<tr>
+										<th scope="row">${i}</th>
+										<td>
+											${withdraw.withdrawId}
+										</td>
+										<td>
+											${withdraw.holder}
+										</td>
+										<td>
+											${withdraw.accNo}
+										</td>
+										<td>
+											<c:if test="${withdraw.bankCode == 35}">
+											경남은행
+											</c:if>
+											<c:if test="${withdraw.bankCode == 29}">
+											광주은행
+											</c:if>
+											<c:if test="${withdraw.bankCode == 7}">
+											국민은행
+											</c:if>
+											<c:if test="${withdraw.bankCode == 5}">
+											기업은행
+											</c:if>
+											<c:if test="${withdraw.bankCode == 15}">
+											농협중앙회
+											</c:if>
+											<c:if test="${withdraw.bankCode == 25}">
+											대구은행
+											</c:if>
+											<c:if test="${withdraw.bankCode == 27}">
+											부산은행
+											</c:if>
+											<c:if test="${withdraw.bankCode == 3}">
+											산업은행
+											</c:if>
+											<c:if test="${withdraw.bankCode == 37}">
+											새마을금고
+											</c:if>
+											<c:if test="${withdraw.bankCode == 11}">
+											수협중앙회
+											</c:if>
+											<c:if test="${withdraw.bankCode == 39}">
+											신협중앙회
+											</c:if>
+											<c:if test="${withdraw.bankCode == 60}">
+											신한은행
+											</c:if>
+											<c:if test="${withdraw.bankCode == 9}">
+											외환은행
+											</c:if>
+											<c:if test="${withdraw.bankCode == 19}">
+											우리은행
+											</c:if>
+											<c:if test="${withdraw.bankCode == 56}">
+											우체국
+											</c:if>
+											<c:if test="${withdraw.bankCode == 33}">
+											전북은행
+											</c:if>
+											<c:if test="${withdraw.bankCode == 31}">
+											제주은행
+											</c:if>
+											<c:if test="${withdraw.bankCode == 68}">
+											카카오뱅크
+											</c:if>
+											<c:if test="${withdraw.bankCode == 67}">
+											케이뱅크
+											</c:if>
+											<c:if test="${withdraw.bankCode == 59}">
+											하나은행
+											</c:if>
+											<c:if test="${withdraw.bankCode == 23}">
+											한국시티은행
+											</c:if>
+											<c:if test="${withdraw.bankCode == 21}">
+											SC제일은행
+											</c:if>
+				
+										</td>
+										<td>
+											${withdraw.amount }
+										</td>
+										<td>
+											${withdraw.withdrawDate }
+										</td>
+								
+									</tr>
+								
+								
+								</c:forEach>
+							</c:if>
+				
+						
+						</tbody>
+				
+						
+						</table>
+								<c:if test="${empty list}">
+								<p style="text-align:center; font-weight: bold; height: 30px">신청내역이 없습니다.</p>
+								</c:if>
+						<hr>		
+							<div class="row justify-content-md-center">
+								<jsp:include page="../common/pageNavigator.jsp"/>
+							</div>
+						
+						
+					
+				
+				
+					</div>
+	
+	
+		
+	
 	</div>
-	
-	
-		
-	
-	
 		
 	
 </div>

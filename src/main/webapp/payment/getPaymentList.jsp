@@ -110,6 +110,11 @@
 	 
  }
  
+function funcGetList(currentPage) {
+	$("#currentPage").val(currentPage);
+	$("form").attr("action", "./getPaymentList");
+	$("form").submit();
+}
 
 
 
@@ -163,82 +168,88 @@
 	
 	<div class="row" style="flex-wrap: wrap;margin-right: 40px;margin-left: 50px;">
 		
-		<table class="table table-hover table-striped" >
-
-        <thead class="grey lighten-2">
-		    <tr>
-		      <th scope="col">결제번호</th>
-		      <th scope="col">결제자</th>
-		      <th scope="col">결제유형</th>
-		      <th scope="col">상품유형</th>
-		      <th scope="col">결제금액</th>
-		      <th scope="col">결제일</th>
-		      <th scope="col">취소</th>
-		    </tr>
-		  </thead>
-		  <tbody>
-			<c:if test="${list != null }">
-				<c:forEach var="payment" items="${list}">
-				<c:set var="i" value="0"/>
-				<c:set var="i" value="${i+1}"/>
+						<table class="table table-hover table-striped" >
 				
-				
-					<tr>
-					<th scope="row"><div style="width: 120px">${payment.paymentId}</div></th>
-					<td>${payment.buyer.userCode }</td>
-					<td>
-						<c:if test="${payment.paymentOption== '0' }">
-						카드결제
-						</c:if>
-						<c:if test="${payment.paymentOption== '1' }">
-						실시간계좌이체
-						</c:if>
-					</td>
-					<td>
-						<c:if test="${payment.productType== '0' }">
-						프라임피드추가
-						</c:if>
-						<c:if test="${payment.productType== '1' }">
-						비즈니스전환
-						</c:if>
-						<c:if test="${payment.productType== '2' }">
-						후원
-						</c:if>
-					</td>
-					<td>
-						${payment.lastPrice}
-					</td>
-					<td>
-						${payment.paymentDate }
-					</td>
-					<td>
-					<c:if test="${payment.isCancel == '0' }">
-					<c:if test="${payment.isWithdraw == '0' }">
-					<button class="btn blue-gradient" onclick="fncdeletepay('${payment.paymentId}')" >결제취소</button>
-					</c:if>
-					<c:if test="${payment.isWithdraw == '1' }">
-						취소불가
-					</c:if>
-					</c:if>
-					<c:if test="${payment.isCancel == '1' }">
-					취소됨
-					</c:if>
-					</td>
-				
-					</tr>
-				
-				
-				</c:forEach>
-			</c:if>
-		
-		</tbody>
-		</table>
-			
-	</div>
-	
-	
-
-	
+				        <thead class="grey lighten-2">
+						    <tr>
+						      <th scope="col">결제번호</th>
+						      <th scope="col">결제자</th>
+						      <th scope="col">결제유형</th>
+						      <th scope="col">상품유형</th>
+						      <th scope="col">결제금액</th>
+						      <th scope="col">결제일</th>
+						      <th scope="col">취소</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+							<c:if test="${list != null }">
+								<c:forEach var="payment" items="${list}">
+								<c:set var="i" value="0"/>
+								<c:set var="i" value="${i+1}"/>
+								
+								
+									<tr>
+									<th scope="row"><div style="width: 120px">${payment.paymentId}</div></th>
+									<td>${payment.buyer.userCode }</td>
+									<td>
+										<c:if test="${payment.paymentOption== '0' }">
+										카드결제
+										</c:if>
+										<c:if test="${payment.paymentOption== '1' }">
+										실시간계좌이체
+										</c:if>
+									</td>
+									<td>
+										<c:if test="${payment.productType== '0' }">
+										프라임피드추가
+										</c:if>
+										<c:if test="${payment.productType== '1' }">
+										비즈니스전환
+										</c:if>
+										<c:if test="${payment.productType== '2' }">
+										후원
+										</c:if>
+									</td>
+									<td>
+										${payment.lastPrice}
+									</td>
+									<td>
+										${payment.paymentDate }
+									</td>
+									<td>
+									<c:if test="${payment.isCancel == '0' }">
+									<c:if test="${payment.isWithdraw == '0' }">
+									<button class="btn blue-gradient" onclick="fncdeletepay('${payment.paymentId}')" >결제취소</button>
+									</c:if>
+									<c:if test="${payment.isWithdraw == '1' }">
+										취소불가
+									</c:if>
+									</c:if>
+									<c:if test="${payment.isCancel == '1' }">
+									취소됨
+									</c:if>
+									</td>
+								
+									</tr>
+								
+								
+								</c:forEach>
+							</c:if>
+						
+						</tbody>
+						</table>
+								<form method="POST">
+								
+										<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
+											<input type="hidden" id="currentPage" name="currentPage" value=""/>	
+								</form>	
+						
+						</div>
+					
+					
+				<div class="row justify-content-md-center">
+					<jsp:include page="../common/pageNavigator.jsp"/>
+				</div>
 </div>
 
 
