@@ -2,16 +2,13 @@ package com.VIG.mvc.util;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
 
 import com.VIG.mvc.service.domain.ImageColor;
 import com.VIG.mvc.service.domain.ImageKeyword;
-import com.VIG.mvc.web.feed.FeedController;
 import com.google.cloud.vision.v1.AnnotateImageRequest;
 import com.google.cloud.vision.v1.AnnotateImageResponse;
 import com.google.cloud.vision.v1.BatchAnnotateImagesResponse;
@@ -163,9 +160,7 @@ public class VisionInfo extends Thread {
 			imageKeyword.setScore(annotation.getScore());
 			imageKeyword.setImageId(imageId);
 			keywords.add(imageKeyword);
-		}
-		
-		logger.debug(imageId +" 키워드 세팅완료" );
+		}		
 	}
 	
 	
@@ -175,9 +170,8 @@ public class VisionInfo extends Thread {
 			if((color.getPixelFraction()) > targetScore) {
 				addColorDataList(color);
 			}			
-		}
+		}	
 		
-		logger.debug(imageId +" 색상 세팅완료" );
 	}
 	
 	private String getHaxcode(int num) {		
@@ -197,11 +191,10 @@ public class VisionInfo extends Thread {
 	@Override
 	public void run() {		
 		getKeywordForVision();
-		getColorForVision();	
-		
+		getColorForVision();		
 	}
 	
-	
+	//개별이미지 세팅시 사용 
 	public void setVisionData() {		
 		getKeywordForVision();
 		getColorForVision();	
