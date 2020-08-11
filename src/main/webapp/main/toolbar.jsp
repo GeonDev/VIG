@@ -8,6 +8,8 @@
 
 <!-- SocketJS CDN -->
 <script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
+<!-- favicon 영역 이후 툴바 적용 -->
+<link rel="shortcut icon" type="image/png" href="http://127.0.0.1:8080/VIG/images/others/favicon-16x16.png">
 
 
 <script type="text/javascript">
@@ -227,8 +229,8 @@
 	<style>
 	
 	#logoTop{
-	 width: 90px;
-	 height: 45px;
+	 width: auto;
+	 height: 38px;
 	}
 	#login_btn , #logout_btn{
 	color: white;
@@ -271,7 +273,7 @@
 <!--Navbar start-->	
 			<nav class="mb-1 navbar fixed-top navbar-expand-xl navbar-dark bg-dark py-2" id="toolbar">			
 <!-- 로고 -->		
-			  <a href="/VIG/main/VIG"><img src='/VIG/images/others/VIG_logo.png' id="logoTop" alt="VIG" style="margin-left: 30px;" ></a>
+			  <a href="/VIG/main/VIG"><img src='/VIG/images/others/viglogo.png' id="logoTop" alt="VIG" style="margin-left: 30px;" ></a>
 			      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="toolbar_logo"
 				    aria-controls="toolbar_logo" aria-expanded="false" aria-label="Toggle navigation">
 				    <span class="navbar-toggler-icon"></span>
@@ -284,6 +286,7 @@
 	          <i class="fas fa-search fas_ntn" ></i>
 	        </a>	   
 <!-- 알람버튼 -->
+				<c:if test="${!empty sessionScope.user }"> 
                   <li class="dropdown ">                 
                      <i id="Alarmbell" class="fas fa-bell fas_ntn dropdown-toggle"  data-toggle="dropdown" aria-expanded="false" style="margin-right: 15px;">
                      	<i id="AlarmNoti" class="fas fa-circle" style="color: red; font-size: xx-small; float: right; display: none;"></i>
@@ -296,15 +299,16 @@
          					<h6>새로운 소식이 없습니다.</h6>
          				</li>
          				<div id="addAlarm"></div>
-                     </ul>
-                     
+                     </ul>    
                  </li>
-		
+				</c:if>
 	              
-<!-- 채팅버튼 -->      
-	        <a class="nav-link waves-effect waves-light" id=" chat_btn" href="#">
+<!-- 채팅버튼 -->    
+			<c:if test="${!empty sessionScope.user }">   
+	        <a class="nav-link waves-effect waves-light" id=" chat_btn" href="/VIG/chat/getChat">
 	          <i class="fas fa-comments fas_ntn" ></i></a>
-   	
+   			</c:if>
+   			
 <!-- //비로그인 상태 -->
 <!-- 로그인 클릭시 모달 -->
 			<c:if test="${empty sessionScope.user }"> 

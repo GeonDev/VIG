@@ -23,36 +23,7 @@
 	#sns_nav { display:flex; margin-left:auto; margin-right:auto; flex-direction: row; justify-content: center;}
 	#sideBar { padding: auto; margin:auto; display: block;}
 
-		
-		/* 버튼 CSS */
-		.box_body {box-sizing: border-box; font-family: "Futura PT", "Futura", sans-serif; -webkit-font-smoothing: antialiased;}
-		.wrap {position: absolute;top: 150%;left: 50%;margin-top: -250px;margin-left: -110px;text-align: center;}
-		#btn_ch { padding: 12px 50px;text-decoration: none;font-size: 12px; display: block;margin: 3px 20px;}
-		.btn:hover, .btn:link:hover, .btn:visited:hover {box-shadow: 0 4em 0 0 #2c3e50 inset, 0em 0em 0 0 #bbb;-webkit-transform: translate(0.3em, 0.2em);transform: translate(0.3em, 0.2em); color: #fff;}
-		.btn3, .btn3:link, .btn3:visited {color: #333;font-size: .8em;text-transform: uppercase;min-width: 100px;position: relative;
-		  	margin: 0 auto;border: 2px solid transparent;-webkit-transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);}
-		.btn3:after, .btn3:before, .btn3:link:after, .btn3:link:before, .btn3:visited:after, .btn3:visited:before { content: "";position: absolute;letter-spacing: .1em;left: -1em;top: -2px; height: 3em; width: 0;
-			border: 1px solid #c75842;-webkit-transition: inherit;transition: inherit;}
-		.btn3:after, .btn3:link:after, .btn3:visited:after {left: auto;right: -1em;}
-		.btn3:hover, .btn3:link:hover, .btn3:visited:hover {border-color: #c75842;-webkit-transition: border-color 0.2s 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);transition: border-color 0.2s 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);}
-		.btn3:hover:after, .btn3:hover:before, .btn3:link:hover:after, .btn3:link:hover:before, .btn3:visited:hover:after, .btn3:visited:hover:before {
-		  right: -2px;-webkit-transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);}
-		.btn3:hover:before, .btn3:link:hover:before, .btn3:visited:hover:before {left: -2px;right: auto;}
-		@-webkit-keyframes gelatine {
-		  from,to {-webkit-transform: scale(1, 1);}
-		  25% {-webkit-transform: scale(0.9, 1.1);}
-		  50% {-webkit-transform: scale(1.1, 0.9);}
-		  75% {-webkit-transform: scale(0.95, 1.05);}
-		  from,to {-webkit-transform: scale(1, 1);}
-		  25% {-webkit-transform: scale(0.9, 1.1);}
-		  50% {-webkit-transform: scale(1.1, 0.9);}
-		  75% {-webkit-transform: scale(0.95, 1.05);}}
-		@keyframes gelatine {from,to {-webkit-transform: scale(1, 1); transform: scale(1, 1);}
-		  25% {-webkit-transform: scale(0.9, 1.1); transform: scale(0.9, 1.1);}
-		  50% {-webkit-transform: scale(1.1, 0.9);transform: scale(1.1, 0.9);}
-		  75% {-webkit-transform: scale(0.95, 1.05);t}
-			/* 버튼 CSS */
-
+	.dropdown-menu.sideBar.show { position: absolute; transform: translate3d(14px, 675px, 0px); top: 0px; left: 0; will-change: transform; width: 91%;}
 			
 	</style>
 	
@@ -92,13 +63,13 @@
  				
 					 <div class="box_body">
 						<div class="wrap">
-		 					<a id="btn_ch" class="btn3" href="/VIG/myfeed/getMyFeedList?userCode=${user.userCode}">
+		 					<a id="btn_ch" class="btn btn-block" href="/VIG/myfeed/getMyFeedList?userCode=${user.userCode}">
 		 						마이피드 목록</a>
 		 					<br/>
-		 					<a id="btn_ch" class="btn3" href="/VIG/history/getMyHistoryList?userCode=${user.userCode}">
+		 					<a id="btn_ch" class="btn btn-block" href="/VIG/history/getMyHistoryList?userCode=${user.userCode}">
 		 						내 활동 보기</a>
 		 					 <br/>
-		 					 <a id="btn_ch" class="btn3" href="/VIG/user/updateUser?userCode=${user.userCode}">
+		 					 <a id="btn_ch" class="btn btn-block" href="/VIG/user/updateUser?userCode=${user.userCode}">
 		 						내 정보 수정</a>
 		 					 <br/>	
 		 					 </div>
@@ -107,24 +78,28 @@
  					
  					
 			 		<c:if test="${sessionScope.user.role=='business'}">
-			 			<a id="btn_ch" class="btn3" href="/VIG/chart/getChart">통 계</a>
+			 			<a id="btn_ch" class="btn btn-block" href="/VIG/chart/getChart">통 계</a>
 			 				<br/>	
 				 	</c:if>							
 				 	
  					
  					
- 				<a id="btn_ch" class="btn3" data-toggle="dropdown"aria-haspopup="true" aria-expanded="false" href="#">
- 						결제 </a>
- 						<div class="dropdown-menu" style="position: absolute;will-change: transform;top: 0px;left: 10px;transform: translate3d(20px, 347px, 0px);">
-					  <a class="dropdown-item" href="/VIG/payment/getPaymentList">내 결제 목록</a>
-							 <c:if test="${sessionScope.user.role=='user'}">
-									  <a class="dropdown-item" href="#">후원 목록</a>
-						    </c:if>
-							<c:if test="${sessionScope.user.role=='business'}">
-									  <a class="dropdown-item" href="#">후원 받은 목록</a>
-							</c:if>
-						</div>
-						
+ 			<button class="btn btn-block dropdown-toggle" id="toggleID" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">결 제</button>
+				
+				<div class="dropdown-menu sideBar">
+				
+				<c:if test="${sessionScope.user.role=='user'}">
+				 <a class="dropdown-item" id="toggleID" href="/VIG/payment/getPaymentList" style="text-align: center;">내 결제 목록</a>
+				  </c:if>
+				  
+				  <c:if test="${sessionScope.user.role=='business'}">
+				  <a class="dropdown-item" id="toggleID" href="/VIG/payment/getPaymentList" style="text-align: center;">내 결제 목록</a>
+				  <div class="dropdown-divider"></div>
+				  <a class="dropdown-item" id="toggleID" href="/VIG/withdraw/getDonationList" style="text-align: center;">후원 받은 목록</a>
+				  </c:if>
+				  
+				</div>
+ 					
 		 			<br/>
 		 			
 		 			</c:when>
