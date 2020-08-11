@@ -30,6 +30,14 @@
  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <style>
+
+body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}	
+	h1 { margin-left: 100px;}
+.col-md-12{ margin-bottom: 50px;}
+.col-md-2.sideBarPlace { padding:0;  display: inline-block;float:left;}
+
+	#mainMyFeedPage { margin-left: 0px;  display: inline-block; float:right;}
+	
 	.chart-container{
 	width:1000px;
 	height:500px;
@@ -45,61 +53,55 @@
 	 text-overflow:ellipsis; 
 	 white-space:nowrap; 
 	 }	
-	 #selectBox{
-	 width:200px;
-	 }
+	
 	 #momo{
+	 	padding-left:50px;
+	 	left:120px;
 	 	max-width:300px;
-	 	left:100px;
 	 }
-	 
-	 #main{
-	 padding-top:0px;
-	 padding-left:200px;
-	  left:250px;
-	 }
+	
+	
 	 body {
     	padding-top : 50px;
         }
-     
-    .img_image {
-	    width: auto; height: auto;
-	    max-width: 600px;
-	    max-height: 300px;	  
-		}
-		
-	.view {	  
-	margin: 5px 10px;
-		} 
+   
+	
 </style>
 <script>
 
 </script>
 </head>
 <body>
-<div class="container-fluid">	
-
-
-<jsp:include page="/main/toolbar.jsp" />
-
-<div id="main">
-<div class="page-header text-info">
-
-			<h3>통계페이지</h3>	
-			<hr>
+	<!-- 툴바 -->
+			<div class="container-fluid">	
+				<div class="row">
+					<div class="col-md-12">
+						<jsp:include page="/main/toolbar.jsp" />
+					</div>
 			</div>
-			<div class="col-md-12">
-			
-			<div class="row">
-			
-				<div>
+<!-- 사이드바  -->				
+			<div class="col-md-2 sideBarPlace">		
+				 <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
+				 </div>	
+				
+				
+<!-- 타이틀 -->
+<div class="col-md-10" id="mainMyFeedPage" >					
+					<h1>
+						<strong>통계페이지</strong> 
+					</h1>	
+					<hr/>
+						
+			<div class=row >
+					
+							<div>
 							<select class="browser-default custom-select" id="year">
  							 <option selected>년도를 선택해주세요</option>
  							 <option value="2020">2020</option>
  							 
-							</select>								
-			    </div>
-			    <div >
+							</select>
+							</div>						
+							<div>
 							<select class="browser-default custom-select" id="month">
  							 <option selected>월을 선택해주세요</option>
  							 <option value="01">1월</option>
@@ -117,51 +119,77 @@
 						     
 							</select>								
 			    </div>
+			    	
 			    </div>
-			    </div>
-	<div class="row">
-			
-			
-		
-			
-			
-
-                   <div class="col-md-8">
-                    
-			<div class="chart-container">
+			    <div class=row>
+			    
+			    <div class="col-md-8">
+			    
+			    <div class="chart-container">
 				
 				<canvas id="line-chart"></canvas>
 
 			</div>
 			</div>
-			<div class="col-md-4" id="momo">
-					<div id="countLike">
-					<Strong>년 월의 총 Like수 ${likeCount2}</Strong> 
+			<div class="col-md-2" id="momo">
+			<div class="card elegant-color white-text">
+          <div class="card-body d-flex justify-content-between align-items-center">
+			    <div id="countLike">
+					년 월의 총 Like수 
+					<p class="mb-0">${likeCount2}</p>
 					</div>
-					<hr>
+					<i class="far fa-heart"></i>
+					<div>
+              
+            </div>
+          </div>
+          <a class="card-footer footer-hover small text-center white-text border-0 p-2">More info<i class="fas fa-arrow-circle-right pl-2"></i></a>
+          
+          
+        </div>
+        
+        
+				<div class="card stylish-color white-text">
+          <div class="card-body d-flex justify-content-between align-items-center">
 					<div id="countView">
-					<Strong>년 월의 총 View수 ${viewCount2}</Strong>
-					</div>
-					<hr>
+					년 월의 총 View수 
+					<p class="mb-0">${viewCount2}</p>
+						</div>
+						<i class="far fa-eye"></i>
+					<div>
+             
+            </div>
+          </div>
+          <a class="card-footer footer-hover small text-center white-text border-0 p-2">More info<i class="fas fa-arrow-circle-right pl-2"></i></a>
+        </div>
+        
+        
+        
+        
+        <div class="card special-color white-text">
+          <div class="card-body d-flex justify-content-between align-items-center">
 					<div id="countPrime">
-					<Strong>년 월의 총 primefeed노출수 ${primeCount2}</Strong>
+					년 월의 총 primefeed노출수
+					<p class="mb-0"> ${primeCount2}</p>
 					</div>
-					<hr>
-					  </div>
-</div>
+					<div>
+              <i class="fas fa-crown"></i>
+            </div>
+          </div>
+          <a class="card-footer footer-hover small text-center white-text border-0 p-2">More info<i class="fas fa-arrow-circle-right pl-2"></i></a>
+        </div>
+			    </div>
+			    </div>
+			   
+		</div>
+		</div>
+		
+			    
+			  
 
-<br>
- 
-<div class="row">
-<div class="col-md-12">
-	
-		
-		
-		
-</div>
-	</div>
-	</div>
-	</div>
+
+
+
 
 <script>
 
