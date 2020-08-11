@@ -47,7 +47,9 @@
 		var isLoadPage = false;	
 		
 		//선택된 카테고리를 세팅		
-		var selectCategory ='RECOMMEND';			
+		var selectCategory ='RECOMMEND';	
+				
+		var pageSize = '${pageSize}'
 		
 		//전달받은 피드 리스트를 화면에 그린다.
 		function getfeedlistFromAjax(item, user){
@@ -118,7 +120,7 @@
 							if(JSONData.list.length > 0){
 							
 							//불러와야 되는 페이지보다 개수가 적은 경우 페이지가 끝났다
-							if (JSONData.list.length < 10){
+							if (JSONData.list.length < pageSize){
 								isPageEnd = true;
 							}
 	 							 				
@@ -131,6 +133,7 @@
 	 						isLoadPage = false;						
 							}else{
 								isPageEnd = true;
+								sLoadPage = true;
 							}
 						}
 				});	
@@ -227,13 +230,10 @@
     padding-top : 50px;
     } 
     
-    .img_feed {	
-    width: auto; height: auto;  
-	max-width: 500px;
-	max-height: 375px;
+    .img_feed {	  
+	width: 500px;
+	height: 375px;
 	overflow:hidden;
-	
-	border-radius: 10px;
 	}
 	
 	.img_categories {	

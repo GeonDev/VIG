@@ -43,7 +43,7 @@
 	}
 		
     .img_feed {	
-    width: auto; height: 375px; 	
+    width: 500px; height: 375px; 	
 	overflow:hidden;	
 	}
 		

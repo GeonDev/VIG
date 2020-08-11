@@ -159,7 +159,7 @@
 	h1 { margin-left: 100px;}
 	
 	.col-md-12{ margin-bottom: 50px;}
-	.img_feed {	width: auto; height: 290px; overflow:hidden;}	
+	.img_feed {	width: 388px; height: 291px; overflow:hidden;}	
 	.view {	 margin: 5px 10px;}	
 	.txt_line { width:380px;  padding:0 5px; overflow:hidden; text-overflow:ellipsis;  white-space:nowrap; }	
 	.row.justify-content-center { margin: 50px 0px 10px 0px;}
