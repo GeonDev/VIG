@@ -28,8 +28,7 @@
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 	<script src="http://192.168.0.13:3000/socket.io/socket.io.js"></script>
-	<!-- favicon 영역 이후 툴바 적용 -->
-	<link rel="icon" type="image/png" sizes="16x16" href="/VIG/images/others/favicon-16x16.png">
+	
 	
 	<style type="text/css">
 	 body {
