@@ -43,6 +43,7 @@ import com.VIG.mvc.service.keyword.KeywordServices;
 import com.VIG.mvc.service.like.LikeServices;
 import com.VIG.mvc.service.user.UserServices;
 import com.VIG.mvc.util.CommonUtil;
+import com.VIG.mvc.util.Translater;
 import com.VIG.mvc.util.VisionInfo;
 import com.VIG.mvc.web.main.mainController;
 
@@ -117,10 +118,6 @@ public class FeedController {
         path = path.substring(0,path.indexOf("\\.metadata"));         
         path = path +  uploadPath;  
 		
-        String result = new String("VISION KEY : ");
-        List<ImageKeyword> keys = new ArrayList<ImageKeyword>();
-        List<ImageColor> colors = new ArrayList<ImageColor>();
-        
         
 		if(files !=null) {
 			int k=0;	
@@ -140,7 +137,8 @@ public class FeedController {
 	    		String imageFile=inDate+multipartFile.getOriginalFilename();
 	    	    System.out.println("imageFile:"+imageFile);
 	    	    
-	    	    
+
+			
 	    	    
 	    		int getfeedId = feedServices.getLastFeedId();				//마지막 피드아이디 = getfeedId
 	    		image.setFeedId(getfeedId);											//이미지에 피드ID,이미지파일 셋
@@ -164,39 +162,46 @@ public class FeedController {
 	    				
 	    					imageKeyword.setKeywordOrigin(originKeyword[i]);                //이미지키워드에 오리진키워드 set
 	    					imageKeyword.setIsTag(1);														  //태그,키워드 구별
+	    				    String enKeyword = Translater.autoDetectTranslate(originKeyword[i],"en");																		//오리진 키워드 번역후 en에 set
+	    				    imageKeyword.setKeywordEn(enKeyword);
 	    					imageKeyword.setImageId(imageId);										  //키워드 이미지 연결
 	    					
 	    					keywordServices.addKeyword(imageKeyword);                		  
 	    					System.out.println(imageKeyword);	
+	    					
 	    					}
-   							System.out.println(image);
-	  
-	    		//keys = VisionInfo.getKeywordForVision(path+inDate+multipartFile.getOriginalFilename());	    			
-	    		//colors = VisionInfo.getColorForVision(path+inDate+multipartFile.getOriginalFilename());
+   							
+   							
+   				//			ArrayList<VisionInfo> visions = new ArrayList<VisionInfo>(); 	//비전 정보 + 쓰레드 동작을 위한 비전 배열
+   							logger.debug("이미지 정보 추출 시작");			
+   							VisionInfo vision = new VisionInfo(path+imageFile,imageId);
+   						 
+   							vision.start();			
+   								System.out.println("시작?");
+   							
+   								
+   							//	ImageKeyword imageKeyword = new ImageKeyword();
+   								 vision.getKeywords();
+   								System.out.println("비전키워드"+vision.getKeywords());
+//   							for(ImageKeyword imageKeyword : vision.getKeywords()) {
+//   								keywordServices.addKeyword(imageKeyword);
+//   								System.out.println("비전"+imageKeyword);
+//   							}
+   							
+   							for(ImageColor color : vision.getColors()) {
+   								colorServices.addColor(color);
+   							}		
+   							
+   						}
+	        		
+	    		
 			}
 	        
-		}		
-		
-		if(keys.size() > 1) {
-			for(ImageKeyword word : keys) {				
-				result +=" "+word.getKeywordEn();
 				
-			}
-		}	
-		
-		if(colors.size() > 1) {
-			for(ImageColor color : colors) {
-				result +=" R: "+color.getRed();
-				result +=" G: "+color.getGreen();
-				result +=" B: "+color.getBlue();
-				result +=" Ratio: "+color.getRatio();
-				
-			}
 			
-		}	
 		
 		
-		return new ModelAndView("forward:/history/getMyHistoryList?userCode="+user.getUserCode());
+		return new ModelAndView("forward:/myFeed/getMyFeedList.jsp");
 	}			
 	
 	@RequestMapping(value="getFeed", method=RequestMethod.GET)
