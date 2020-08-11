@@ -118,6 +118,7 @@ public class mainController {
 		
 		model.addAttribute("eventList", eventList);		
 		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("pageSize", pageSize);
 		
 		return new ModelAndView("forward:/main/main.jsp");
 	}

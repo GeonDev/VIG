@@ -172,7 +172,7 @@ public class RestSearchController {
 		
 		
 		//선택된 카테고리가 사용자 추천인지 체크
-		if(search.getKeyword().equals("RECOMMEND") && jsonData.get("currentPage").equals("1") ) {
+		if(search.getKeyword().equals("RECOMMEND")) {
 			
 			//로그인 하지 않았다면 조회수가 가장 많은 피드를 추천
 			if(user == null) {
@@ -183,8 +183,9 @@ public class RestSearchController {
 				
 				Search tempSearch = new Search();
 				tempSearch.setKeyword(user.getUserCode());
-				tempSearch.setPageSize(pageSize);
+				tempSearch.setPageSize(20);
 				
+				//일반 피드를 본 기록을 가지고 온다.
 				tempSearch.setSearchType(0);
 				//첫페이지 양만 가지고 옴
 				tempSearch.setCurrentPage(1);				
@@ -199,7 +200,6 @@ public class RestSearchController {
 					for(History history : historyList) {						
 						keywordList.addAll(history.getShowFeed().getKeywords());
 					}
-					
 					
 					//쿠키에 저장된 검색어 기록을 가져온다.
 					if(!searchKeys.equals("") ) {			
@@ -219,26 +219,14 @@ public class RestSearchController {
 								keywordList.add(temp);
 							}
 						}						
-					}				
-					
+					}					
 					
 					tempSearch.setKeywords(CommonUtil.checkEqualKeyword(keywordList));
+					tempSearch.setPageSize(pageSize);
+					tempSearch.setCurrentPage(Integer.valueOf(jsonData.get("currentPage")));
 					
-					feedlist = CommonUtil.checkEqualFeed(feedServices.getRecommendFeedList(tempSearch));				
-					
-					if(feedlist.size() > 0) {					
-						
-						for(Feed feed : feedlist) {					
-							for(ImageKeyword keyword : keywordList) {
-								if(feed.getKeywords().contains(keyword)) {
-									feed.setCurrentKeywordSameCount(feed.getCurrentKeywordSameCount()+1);
-								}
-							}
-						}
-						
-						//피드 리스트를 소팅한다.
-						Collections.sort(feedlist);					
-					}
+					feedlist = CommonUtil.checkEqualFeed(feedServices.getRecommendFeedList(tempSearch));									
+	
 					
 				//다른 피드를 본 기록이 없는 유저	
 				}else {
