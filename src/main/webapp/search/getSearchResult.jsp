@@ -43,7 +43,7 @@
 	}
 		
     .img_feed {	
-    width: auto; height: 375px; 	
+    width: 500px; height: 375px; 	
 	overflow:hidden;	
 	}
 		
@@ -85,6 +85,8 @@
 	
 	//페이지 로드가 완료 되었는지 체크(ajax 중복 호출 방지용)
 	var isLoadPage = false;	
+	
+	var pageSize = '${pageSize}'
 	
 	//전달받은 피드 리스트를 화면에 그린다.
 	function getfeedlistFromAjax(item, user){
@@ -244,7 +246,7 @@
 						if (JSONData.list.length != 0){					
 						
 							//불러와야 되는 페이지보다 개수가 적은 경우 페이지가 끝났다
-							if (JSONData.list.length < 10){
+							if (JSONData.list.length < pageSize){
 								isPageEnd = true;
 							}
 	 						
@@ -432,21 +434,30 @@
 	<div class="container-lg-fluid">
 	
 		<div class="row justify-content-center">
-			<div class="col-sm-1">				
-				<i id="startedSearchIcon" class="fas fa-search d-flex justify-content-end mt-3" aria-hidden="true" style="font-size: x-large;"></i>
-			</div>		
+	
 		
-			<div class="col-sm-9">					
-				<div class="d-flex justify-content-center md-form mt-0 mb-0">					  
-					  <input id="Keyword" class="form-control w-100" type="text" placeholder="Search" aria-label="Search" value="${keyword}" style="font-size: x-large;">
-			</div>			
-							
+			<div class="col-sm-9">				
+				<div class="row">
+					<div class="col-sm-1">				
+						<i id="startedSearchIcon" class="fas fa-search d-flex justify-content-end mt-3" aria-hidden="true" style="font-size: x-large;"></i>
+					</div>
+					
+					<div class="col-sm-11">
+						<div class="d-flex justify-content-center md-form mt-0 mb-0">					  
+							  <input id="Keyword" class="form-control w-100" type="text" placeholder="Search" aria-label="Search" value="${keyword}" style="font-size: x-large;">
+						</div>	
+					</div>	
+				</div>								
 			</div>
 			
-			<div class="col-sm-2 form-inline mt-0">
-					<button type="button" class="btn btn-cyan mode" style=" padding-left: 15px; padding-right: 15px;">Feed</button>
-					<button type="button" class="btn btn-cyan mode" style="padding-left: 10px; padding-right: 10px;">Image</button>
-					<button type="button" class="btn btn-cyan mode" style="padding-left: 8px; padding-right: 8px;">Writer</button>									
+			<div class="col-sm-3 ">
+				<div class="row row-cols-4">
+					<button type="button" class="btn btn-cyan mode" style="padding-left: 0px; padding-right: 0px;">Feed</button>
+					<button type="button" class="btn btn-cyan mode" style="padding-left: 0px; padding-right: 0px;">Image</button>
+					<button type="button" class="btn btn-cyan mode" style="padding-left: 0px; padding-right: 0px;">Writer</button>
+				</div>
+			
+									
 			</div>							
 		</div>
 		
