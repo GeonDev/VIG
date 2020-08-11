@@ -124,7 +124,15 @@
 <script type="text/javascript">
 //업로드 
 $(function() {
+	
 	$( "#feedend" ).on("click" , function() {
+		
+		if($("#categoryId").val() ==""){
+			alert("카테고리를 선택해주세요.");
+			return;
+		}		
+		
+		
 		document.myform.action='addFeed';
 		document.myform.submit();
 	});

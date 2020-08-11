@@ -1,6 +1,7 @@
 package com.VIG.mvc.web.feed;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -55,8 +56,7 @@ public class FeedController {
 
 	@Autowired 
 	@Qualifier("userServicesImpl")
-	private UserServices userServices;
-	
+	private UserServices userServices;	
 
 	@Autowired 
 	@Qualifier("imageServicesImpl")
@@ -104,7 +104,7 @@ public class FeedController {
 	
 	
 	@RequestMapping(value = "addFeed", method = RequestMethod.POST)
-	public ModelAndView addFeed(@RequestParam("keyword") String keyword,@ModelAttribute("feed") Feed feed, @ModelAttribute("category") Category category,@RequestParam("uploadFile") List<MultipartFile> files, @SessionAttribute("user") User user,@ModelAttribute("joinUser") JoinUser joinUser) throws Exception {
+	public ModelAndView addFeed(@RequestParam("keyword") String keyword, @ModelAttribute("feed") Feed feed, @ModelAttribute("category") Category category,@RequestParam("uploadFile") List<MultipartFile> files, @SessionAttribute("user") User user,@ModelAttribute("joinUser") JoinUser joinUser) throws Exception {
 		
 		feed.setWriter(user);									
 		feed.setFeedCategory(category);			
@@ -113,16 +113,16 @@ public class FeedController {
         String path = context.getRealPath("/");        
         path = path.substring(0,path.indexOf("\\.metadata"));         
         path = path +  uploadPath;  
-		
+        
+		//비전 정보 + 쓰레드 동작을 위한 비전 배열
+		ArrayList<VisionInfo> visions = new ArrayList<VisionInfo>();        
+        		
         long Totalstart = System.currentTimeMillis();
 		if(files != null) {
 			int k=0;	
 			
-	        for (MultipartFile multipartFile : files) {
-	        	
-	        	k++;
-	        	logger.debug("이미지순서: "+ k );
-	        	
+	        for (MultipartFile multipartFile : files) {	        	
+	        	k++;	        		        	
 	        		
 	        	//파일 업로드시 시간을 이용하여 이름이 중복되지 않게 한다.
 	        	String inDate   = new java.text.SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date());
@@ -147,50 +147,53 @@ public class FeedController {
 	    		
 				String[] originKeyword = keyword.split(","); //스트링으로 받은 키워드를 파싱후 string[]에 담는다
 	    			
-				if(originKeyword.length > 0) {					
-	   				for(int i =0; i < originKeyword.length;  i++) {			    			
-	   					
-						ImageKeyword imageKeyword = new ImageKeyword();
+				if(originKeyword.length > 0) {
 					
-						imageKeyword.setKeywordOrigin(originKeyword[i]);                //이미지키워드에 오리진키워드 set
-						imageKeyword.setIsTag(1);										//태그,키워드 구별
-					    String enKeyword = Translater.autoDetectTranslate(originKeyword[i],"en");																		//오리진 키워드 번역후 en에 set
-					    imageKeyword.setKeywordEn(enKeyword);
-						imageKeyword.setImageId(imageServices.getLastImageId());		 //키워드 이미지 연결
-						
-						keywordServices.addKeyword(imageKeyword);                		  
-						System.out.println(imageKeyword);	
-		    					
-		    		}
+	   				for(String tag :  originKeyword) {		    				   					
+
+	   					//추가할 단어가 null인지 확인
+	   					if(!CommonUtil.null2str(tag).equals("")) {
+							ImageKeyword imageKeyword = new ImageKeyword();
+							
+							imageKeyword.setKeywordOrigin(tag);                //이미지키워드에 오리진키워드 set
+							imageKeyword.setIsTag(1);										//태그,키워드 구별
+						    String enKeyword = Translater.autoDetectTranslate(tag,"en");																		//오리진 키워드 번역후 en에 set
+						    imageKeyword.setKeywordEn(enKeyword);
+							imageKeyword.setImageId(imageServices.getLastImageId());		 //키워드 이미지 연결
+							
+							keywordServices.addKeyword(imageKeyword); 	
+	   					}		    		
+	   				}  	
 				}
-
    							
-   							
-					logger.debug("이미지 정보 추출 시작");			
 					VisionInfo vision = new VisionInfo(path+imageFile, imageServices.getLastImageId());
-					 
-					//비전 데이터 추출 - 쓰레드 사용 X
-					vision.setVisionData();					
-
-						for (ImageKeyword imageKeyword : vision.getKeywords()) {
-							keywordServices.addKeyword(imageKeyword);
-
-						}
-
-						for (ImageColor color : vision.getColors()) {
-							colorServices.addColor(color);
-						}		
-   							
-   				}
-	        		
-	    		
-			}	
+					vision.start();			
+					visions.add(vision); 
+					
+   				}//end of For
+	        
+				for (VisionInfo vision : visions) {			
+					vision.join();
+				}
+				
+				for (VisionInfo vision : visions) {			
+					for(ImageKeyword vkeyword : vision.getKeywords()) {
+						keywordServices.addKeyword(vkeyword);
+					}
+					
+					for(ImageColor color : vision.getColors()) {
+						colorServices.addColor(color);
+					}			
+				}    		
+			}
+		
 		long Totalend = System.currentTimeMillis();		
 		logger.debug("피드 등록 완료 / 총 추출 시간 : " + getTotalWorkTime(Totalstart, Totalend)+"초");
 		
 		
 		return new ModelAndView("forward:/myfeed/getMyFeedList");
-	}			
+	}
+	
 	
 	@RequestMapping(value="getFeed", method=RequestMethod.GET)
 	public ModelAndView getFeed(@RequestParam("feedId") int feedId, HttpSession session, HttpServletRequest request) throws Exception {
