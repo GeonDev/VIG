@@ -474,7 +474,7 @@ function deleteInput() {
     											<div>
 													 <strong>썸네일 크기는 4:3으로 업로드 해주세요.</strong>
 													<input type='file' class='dropify' name='uploadFile' accept='image/*' onchange='fileCheck(this)' data-height='400'>
-													
+													<button type="button" class="btn btn-elegant" data-dismiss="modal">완료</button>
 													</div>
 													
  									

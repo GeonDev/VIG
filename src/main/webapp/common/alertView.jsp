@@ -68,8 +68,8 @@
 
     <div id="myModal" class="modal">
       <div class="modal-content">
-     	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-     	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;${message }
+   
+      	<p style="text-align: center;">${message}</p>    	
      	 
      	 <button  class="btn btn-block my-4" id="login" style="background-color: #212121; color: white;" 
      	 onClick="close_pop();">close</button>   

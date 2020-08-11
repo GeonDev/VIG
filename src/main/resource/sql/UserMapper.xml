@@ -106,16 +106,15 @@
 	 
 	 
 	 <select id="getAutoUserName" parameterType="String" resultType="String">
-	 	SELECT temp.user_name FROM
-	 	(SELECT ROW_NUMBER() OVER(ORDER BY users.user_code) num, users.user_name FROM users
+	 	SELECT users.user_name FROM users
 	 	WHERE users.user_name LIKE CONCAT('%',#{value},'%')
-	 	AND users.role in('user','business') )temp
-	    WHERE num BETWEEN 1 AND 5	 
+	 	AND users.role in('user','business')
+	    limt 5	 
 	 </select>
 	 
 	  <update id="updateUser" parameterType="user" >
-	 	UPDATE users SET 
-	 		user_code = #{userCode}
+	 	UPDATE users 
+	 	SET	 	
 	 		self_introduce = #{selfIntroduce:VARCHAR},
 	 		user_name = #{userName:VARCHAR},
 	 		password = #{password:VARCHAR},
@@ -129,12 +128,16 @@
 	 
 	 
 	 <update  id="deleteUser" parameterType="user" >
-	 	UPDATE 
-	 	users 
+	 	UPDATE users 
 	 	SET state = 4
 	 	WHERE user_code = #{userCode}
+<<<<<<< HEAD
 	 </update >
 	
+=======
+	 </update > 
+
+>>>>>>> refs/heads/fatch
 	
 <!-- SQL : SELECT LIST -->
 	<select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
