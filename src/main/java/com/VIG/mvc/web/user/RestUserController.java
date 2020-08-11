@@ -122,7 +122,7 @@ public String simpleWithObject(User user) {
 
 
 @RequestMapping( value = "json/getUser/{userCode}" , method=RequestMethod.GET)
-public User getUser(@PathVariable("userCode") String userCode) throws Exception{
+public User getUser(@PathVariable String userCode) throws Exception{
 	System.out.println("json get");
 	return userServices.getUserOne(userCode);
 }

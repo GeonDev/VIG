@@ -79,7 +79,7 @@ public class UserServicesImpl implements UserServices {
 	
 	@Override
 	public void deleteUser(User user) throws Exception{
-		
+		userDao.deleteUser(user);
 	}
 
 	@Override

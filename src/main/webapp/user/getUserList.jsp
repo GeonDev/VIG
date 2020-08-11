@@ -36,7 +36,13 @@
 		$("form").submit();
 	}
 	
-	
+	$(function(){
+		$("#inputKeyword").keydown(function(key) {
+            if (key.keyCode == 13) {
+            	funcGetList(1);
+            }
+		});
+	});
 
 	
 	$(function() {
@@ -74,6 +80,7 @@
 	
 	
 	</script>
+	
 	<style>
 	  body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}	
 		h1 { margin-left: 100px;}
@@ -109,12 +116,16 @@
 					<hr/>		
 	   
 
-
+					
 	    <div class="row justify-content-end" style="margin: 45px 10px 27px 10px;">							
 					
 					<div class="input-group md-form form-sm form-1 pl-0 col-3">
 					  <div class="input-group-prepend">
 					   <span class="input-group-text " id="basic-text1"><i class="fas fa-search" class="fas fa-search text-white" aria-hidden="true"></i></span>
+					  <select class="form-control" name="searchCondition" >
+						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>회원ID</option>
+						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>회원명</option>
+					</select>
 					  <input id="inputKeyword" class="form-control form-control-sm ml-3 w-75" type="text" name="keyword" value="${search.keyword}" placeholder="Search" aria-label="Search">
 					  </div>				
 				</div>
