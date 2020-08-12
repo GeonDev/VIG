@@ -129,10 +129,8 @@
 	 <update id="updateBusiness" parameterType="user">
 	 	UPDATE users
 	 	SET
-	 	<if test="role!=business">
-	 	role = #{role}
-	 	</if>
-	 	prime_count = prime_count+1000	 
+	 	role = #{role:VARCHAR},
+	 	prime_count = #{primeCount:NUMERIC}	 
 	 	WHERE user_code = #{userCode}
 	 </update>	
 	 
