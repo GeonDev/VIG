@@ -48,7 +48,7 @@ public class ReportDaoImpl implements ReportDao {
 	@Override
 	public int getCountReportList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("ReportMapper.getUserList", search);
+		return sqlSession.selectOne("ReportMapper.getCountReportList", search);
 	}
 
 	@Override
