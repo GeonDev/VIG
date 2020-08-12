@@ -124,6 +124,15 @@ public class UserDaoImpl implements UserDao {
 			}
 		}
 	
+	//유저 결제용
+	@Override
+	public void updateBusiness(User user) throws Exception {
+		// TODO Auto-generated method stub
+		
+		sqlSession.update("UserMapper.updateBusiness", user);
+		
+	}
+	
 	
 	
 	
