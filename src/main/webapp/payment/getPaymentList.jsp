@@ -101,8 +101,7 @@
  function fncdeletepay(paymentId){
 	 
 
-	 alert("취소합니다.");
-	 alert(paymentId);
+	 swal("결제를 취소합니다.");
 	 
 	 //아임포트 ajax 환불하는 곳
 	 
@@ -219,9 +218,11 @@ function funcGetList(currentPage) {
 									<td>
 									<c:if test="${payment.isCancel == '0' }">
 									<c:if test="${payment.isWithdraw == '0' }">
+									<c:if test="${payment.productType!='1' }">
 									<button class="btn blue-gradient" onclick="fncdeletepay('${payment.paymentId}')" >결제취소</button>
 									</c:if>
-									<c:if test="${payment.isWithdraw == '1' }">
+									</c:if>
+									<c:if test="${payment.isWithdraw == '1' || payment.productType == '1' }">
 										취소불가
 									</c:if>
 									</c:if>
