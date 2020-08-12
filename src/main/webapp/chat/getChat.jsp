@@ -27,7 +27,7 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
-	<script src="http://192.168.0.13:3000/socket.io/socket.io.js"></script>
+	<script src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
 	
 	
 	<style type="text/css">
@@ -129,7 +129,7 @@
 	var diplayValue;
 	var user;
 	var dbuser; //db에서 가져온 유저
-	var url = "http://192.168.0.13:3000/";
+	var url = "http://127.0.0.1:3000/";
 	
 	var socketUser = new Object(); //socket으로 주고 받을 유저 생성
 	var otherUser = new Object();
@@ -188,7 +188,7 @@
 				var inputSelect = document.getElementsByName("selectUser");
 				var user = '<div class="selectChat" style="vertical-align: middle">'+
 				"<img class='profileImage' src='/VIG/images/uploadFiles/"+list[3]+"\'>"+
-				"<p id='selectChat' style='display: inline-block; margin: 3px auto; font-weight: bold;'>"+list[2]+"</p></div>";
+				"<p id='selectChat' style='display: inline-block; margin: 3px auto; font-weight: bold;'>"+list[2]+"</p>("+list[1]+")</div>";
 				
 				 for(var i = 0; i<data.length; i++){
 					 
@@ -228,6 +228,73 @@
 		
 		
 	};
+	
+	
+	function getChatList(socketUser) {
+		
+		$(".user_list div").remove();
+		//page로딩시 ajax로 userlist를 가져온다.
+		$.ajax({
+			
+			url: url+'chat/getChatList/'+socketUser.userCode,
+			method: 'get',
+			dataType: 'json',
+			async: false,
+			headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+			},
+			success: function(JSONData, status) {
+				
+				data = JSON.stringify(JSONData);
+				console.log(data);
+				data = JSON.parse(data);
+				console.log("JsonData"+data);
+				console.log("json크기"+data.length);
+				console.log("username확인"+username);
+				for(var i = 0; i < data.length; i++){
+					
+					
+						
+					
+						for(var j=0; j< data[i].userCodes.length; j++) {
+							
+							
+
+							if(i==0){
+								$('input[name="roomId"]').val(data[i]._id);
+							}
+							
+							if(username != data[i].userCodes[j].userCode){ 
+								console.log(data[i].userCodes[j].userCode);
+								console.log(data[i].userCodes[j].userName);
+								
+								var userinfo="";
+								userinfo += data[i]._id+",";
+								userinfo += data[i].userCodes[j].userCode+",";
+								userinfo += data[i].userCodes[j].userName+",";
+								userinfo += data[i].userCodes[j].profileImg;
+								console.log(userinfo.replace('undefined', ""));
+					
+							user = '<div class="chatUser" id=\"'+data[i].userCodes[j].userCode+'\"onClick="getChat(\''+userinfo+'\')">'+
+											"<img class='profileImage' src='/VIG/images/uploadFiles/"+data[i].userCodes[j].profileImg+"\'>"+
+											"<p style='display: inline-block; margin: 3px auto; font-weight: bold'>"+data[i].userCodes[j].userName+"</p>("+data[i].userCodes[j].userCode+")</div>"
+							
+							
+							$(".user_list").append(user);
+							} 
+						
+						
+						}
+					
+				}
+					
+				
+			}
+			});
+		
+		
+	}
 	
 	
 	
@@ -301,6 +368,8 @@
 	
 				});
 				
+				getChatList(socketUser);
+				
 				
 				//보낸 메세지 받기
 				socket.on('send message', function(data){
@@ -329,65 +398,7 @@
 				});
 
 				
-				//page로딩시 ajax로 userlist를 가져온다.
-				$.ajax({
-					
-					url: url+'chat/getChatList/'+socketUser.userCode,
-					method: 'get',
-					dataType: 'json',
-					async: false,
-					headers : {
-						"Accept" : "application/json",
-						"Content-Type" : "application/json"
-					},
-					success: function(JSONData, status) {
-						
-						data = JSON.stringify(JSONData);
-						console.log(data);
-						data = JSON.parse(data);
-						console.log("JsonData"+data);
-						console.log("json크기"+data.length);
-						console.log("username확인"+username);
-						for(var i = 0; i < data.length; i++){
-							
-							
-								
-							
-								for(var j=0; j< data[i].userCodes.length; j++) {
-									
-									
-	
-									if(i==0){
-										$('input[name="roomId"]').val(data[i]._id);
-									}
-									
-									if(username != data[i].userCodes[j].userCode){ 
-										console.log(data[i].userCodes[j].userCode);
-										console.log(data[i].userCodes[j].userName);
-										
-										var userinfo="";
-										userinfo += data[i]._id+",";
-										userinfo += data[i].userCodes[j].userCode+",";
-										userinfo += data[i].userCodes[j].userName+",";
-										userinfo += data[i].userCodes[j].profileImg;
-										console.log(userinfo.replace('undefined', ""));
-							
-									user = '<div class="chatUser" id=\"'+data[i].userCodes.userCode+'\"onClick="getChat(\''+userinfo+'\')">'+
-													"<img class='profileImage' src='/VIG/images/uploadFiles/"+data[i].userCodes[j].profileImg+"\'>"+
-													"<p style='display: inline-block; margin: 3px auto; font-weight: bold'>"+data[i].userCodes[j].userName+"</p></div>"
-									
-									
-									$(".user_list").append(user);
-									} 
-								
-								
-								}
-							
-						}
-							
-						
-					}
-					});
+				
 				
 
 					
@@ -417,14 +428,9 @@
 						userinfo += dbuser.profileImg;
 						console.log(userinfo.replace('undefined', ""));
 						
-						user = '<div class="selectChat" style="vertical-align: middle">'+
-						"<img class='profileImage' src='/VIG/images/uploadFiles/"+dbuser.profileImg+"\'>"+
-						"<p id='selectChat' style='display: inline-block; margin: 3px auto; font-weight: bold;'>"+dbuser.userName+"</p></div>";
-						
-						
 						var chatUser = '<div class="chatUser" id=\"'+dbuser.userCode+'\"onClick="getChat(\''+userinfo+'\')">'+
 						"<img class='profileImage' src='/VIG/images/uploadFiles/"+dbuser.profileImg+"\'>"+
-						"<p style='display: inline-block; margin: 3px auto; font-weight: bold'>"+dbuser.userName+"</p></div>"
+						"<p style='display: inline-block; margin: 3px auto; font-weight: bold'>"+dbuser.userName+"</p>("+dbuser.userCode+")</div>"
 						
 						$("#userselect").val("");
 						$(".user_list").append(chatUser);
@@ -439,6 +445,7 @@
 					
 					deleteChat();
 					removeChat();
+					getChatList(socketUser);
 					
 				});
 				
