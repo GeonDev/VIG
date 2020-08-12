@@ -120,18 +120,18 @@
 										<td align="left">${report.banDate}</td>
 										<td align="left">									
 										 	<c:choose>								
-											<c:when test="${report.banType == '0'}">		
-												이상없음
-											</c:when>
-											<c:when test="${report.banType == '1'}">
-												3일 접속제한
-											</c:when>
-											<c:when test="${report.banType == '2'}">
-												7일 접속제한 
-											</c:when>
-											<c:when test="${report.banType == '3'}">
-												영구 정지
-											</c:when>								
+												<c:when test="${report.banType == '0'}">		
+													이상없음
+												</c:when>
+												<c:when test="${report.banType == '1'}">
+													3일 접속제한
+												</c:when>
+												<c:when test="${report.banType == '2'}">
+													7일 접속제한 
+												</c:when>
+												<c:when test="${report.banType == '3'}">
+													영구 정지
+												</c:when>								
 											</c:choose>													
 										</td>
 										<td align="left">										
@@ -141,7 +141,7 @@
 											    <span class="caret"></span>
 											  </button>
 											  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-											    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">이상없음</a></li>
+											    <li role="presentation"><a role="menuitem" tabindex="-1" href="updateUserBanFromReport?reportId=${report.reportId}&banType=0">혐의 없음</a></li>
 											    <li role="presentation"><a role="menuitem" tabindex="-1" href="updateUserBanFromReport?reportId=${report.reportId}&banType=1">3일 접속제한</a></li>
 											    <li role="presentation"><a role="menuitem" tabindex="-1" href="updateUserBanFromReport?reportId=${report.reportId}&banType=2">7일 접속제한</a></li>
 											    <li role="presentation"><a role="menuitem" tabindex="-1" href="updateUserBanFromReport?reportId=${report.reportId}&banType=3">영구 정지</a></li>
