@@ -197,8 +197,7 @@ public class UserController {
 		User dbUser = userServices.getUserOne(user.getUserCode());
 		ModelAndView mv = new ModelAndView();
 		System.out.println("로그인 시도 :"+user.getUserCode());
-		System.out.println(dbUser);
-			
+
 		SimpleDateFormat format = new SimpleDateFormat ("yyyyMMdd");
 		Date date  = new Date();			
 		int toDay = Integer.parseInt(format.format(date));
@@ -240,6 +239,7 @@ public class UserController {
 			mv.addObject("msg", "fail");
 			return mv;
 		}
+		
 	}
 
 
@@ -279,9 +279,8 @@ public class UserController {
 	@RequestMapping( value="updateUser", method=RequestMethod.POST )
 	public ModelAndView updateUser(@RequestParam("uploadFile") List<MultipartFile> files,@ModelAttribute("uesr") User user, HttpSession session )throws Exception{ 
 		
-		System.out.println("유저 업데이");
+		System.out.println("유저 업데이트");
 		
-	System.out.println(session.getAttribute("User"));
 		/*
 		String path = context.getRealPath("/");        
         path = path.substring(0,path.indexOf("\\.metadata"));         
@@ -306,15 +305,11 @@ public class UserController {
 	        }
 			*/
 		
-		//if(user.getPassword() != null) {
-		//String pwdBycrypt = passwordEncoder.encode(user.getPassword());
-		// user.setPassword(pwdBycrypt); 
-		//}
-		userServices.updateUser(user);	
+		String pwdBycrypt = passwordEncoder.encode(user.getPassword());
+		 user.setPassword(pwdBycrypt); 
 		
+		userServices.updateUser(user);	
 		ModelAndView mv = new ModelAndView();
-		System.out.println("user.getUserName():"+user.getUserName());
-			
 		mv.addObject("user",user);
 		mv.setViewName("redirect:/user/updateUser.jsp");
 		
