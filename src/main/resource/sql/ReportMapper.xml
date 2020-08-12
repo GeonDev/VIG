@@ -77,7 +77,10 @@
 	
 	<update id="updateBanState" parameterType="report">
 		UPDATE report INNER JOIN users on report.violator_code = users.user_code
-		SET report.current_ban_type = #{banType}, report.current_ban_date = DATE_FORMAT(NOW(), '%Y-%m-%d'), users.state = #{banType}, users.ban_date = DATE_FORMAT(NOW(), '%Y-%m-%d')  
+		SET report.current_ban_type = #{banType}, 
+		users.state = #{banType},
+		report.current_ban_date = DATE_FORMAT(NOW(), '%Y-%m-%d'), 		 
+		users.ban_date = DATE_FORMAT(NOW(), '%Y-%m-%d')  		
 		WHERE report_id = #{reportId}	
 	</update>
 	
