@@ -115,7 +115,7 @@
 			 		<c:if test="${sessionScope.user.role=='admin'}">
 			 			<a type="button" class="btn btn-block" href="/VIG/user/getUserList">회원 목록</a>
 			 				<br/>
-			 			<a type="button" class="btn btn-block"href="/VIG/report/getReportlist.jsp">신고 조회</a>
+			 			<a type="button" class="btn btn-block"href="/VIG/report/getReportList">신고 조회</a>
 			 				<br/>
 			 			<a type="button" class="btn btn-block" href="/VIG/payment/getAllPaymentList">결제 조회</a>
 			 				<br/>
