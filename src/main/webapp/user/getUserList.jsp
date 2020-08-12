@@ -30,7 +30,7 @@
 				
 	<script type="text/javascript">
 
-	function fncGetList(currentPage) {
+	function funcGetList(currentPage) {
 		$("#currentPage").val(currentPage);
 		$("form").attr("action", "getUserList");
 		$("form").submit();
@@ -39,7 +39,7 @@
 	$(function(){
 		$("#inputKeyword").keydown(function(key) {
             if (key.keyCode == 13) {
-            	fncGetList(1);
+            	funcGetList(1);
             }
 		});
 	});
@@ -116,62 +116,66 @@
 					<hr/>		
 	   
 
-					
-	    <div class="row justify-content-end" style="margin: 45px 10px 27px 10px;">							
-					
-					<div class="input-group md-form form-sm form-1 pl-0 col-3">
-					  <div class="input-group-prepend">
-					   <span class="input-group-text " id="basic-text1"><i class="fas fa-search" class="fas fa-search text-white" aria-hidden="true"></i></span>
-					  <select class="form-control" name="searchCondition" style="width:80px">
-						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>회원ID</option>
-						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>회원명</option>
-					</select>
-					  <input id="inputKeyword" class="form-control form-control-sm ml-3 w-75" type="text" name="keyword" value="${search.keyword}" placeholder="Search" aria-label="Search">
-					  </div>				
-				</div>
-				</div>
-		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
-		
-		<div class="row" style="flex-wrap: wrap;margin-right: 40px;margin-left: 50px;">
-     
-      <!--  table Start /////////////////////////////////////-->
-    
-      <table class="table table-hover table-striped" >
-
-        <thead class="grey lighten-2">
-          <tr>
-            <th scope="col">No</th>
-            <th scope="col" >유저코드</th>
-            <th scope="col">유저네임</th>
-            <th scope="col">role</th>
-            <th scope="col">간략정보</th>
-          </tr>
-        </thead> 
-		<tbody>
-		
-		  <c:set var="i" value="0" />
-		  <c:forEach var="user" items="${list}">
-			<c:set var="i" value="${ i+1 }" />
-			<tr>
-			  <td scope="col">${ i }</td>
-			  <td scope="col" title="Click : 회원정보 확인">${user.userCode}</td>
-			  <td scope="col">${user.userName}</td>
-			   <td scope="col">${user.role}</td>
-			  <td scope="col">
-			  	<i class="fas fa-check"></i>
-			  	<input type="hidden" value="${user.userCode}">
-			  	<span id="${user.userCode}" > </span>
-			  </td>
-			  	
-			</tr>
-          </c:forEach>
-        
-        </tbody>
-      
-      </table>
-
-						<input type="hidden" id="currentPage" name="currentPage" value=""/>	
- 	</div>
+		<form method="post" >			
+		    <div class="row justify-content-end" style="margin: 45px 10px 27px 10px;">							
+						
+						<div class="input-group md-form form-sm form-1 pl-0 col-3">
+						  <div class="input-group-prepend">
+						   <span class="input-group-text " id="basic-text1"><i class="fas fa-search" class="fas fa-search text-white" aria-hidden="true"></i></span>
+						  <select class="form-control" name="searchCondition" style="width:80px">
+							<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>회원ID</option>
+							<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>회원명</option>
+						</select>
+						  <input id="inputKeyword" class="form-control form-control-sm ml-3 w-75" type="text" name="keyword" value="${search.keyword}" placeholder="Search" aria-label="Search">
+						  </div>				
+					</div>
+					</div>
+			<!-- table 위쪽 검색 Start /////////////////////////////////////-->
+			
+			<div class="row" style="flex-wrap: wrap;margin-right: 40px;margin-left: 50px;">
+	     
+	      <!--  table Start /////////////////////////////////////-->
+	    
+	      <table class="table table-hover table-striped" >
+	
+	        <thead class="grey lighten-2">
+	          <tr>
+	            <th scope="col">No</th>
+	            <th scope="col" >유저코드</th>
+	            <th scope="col">유저네임</th>
+	            <th scope="col">role</th>
+	            <th scope="col">간략정보</th>
+	          </tr>
+	        </thead> 
+			<tbody>
+			
+			  <c:set var="i" value="0" />
+			  <c:forEach var="user" items="${list}">
+				<c:set var="i" value="${ i+1 }" />
+				<tr>
+				  <td scope="col">${ i }</td>
+				  <td scope="col" title="Click : 회원정보 확인">${user.userCode}</td>
+				  <td scope="col">${user.userName}</td>
+				   <td scope="col">${user.role}</td>
+				  <td scope="col">
+				  	<i class="fas fa-check"></i>
+				  	<input type="hidden" value="${user.userCode}">
+				  	<span id="${user.userCode}" > </span>
+				  </td>
+				  	
+				</tr>
+	          </c:forEach>
+	        
+	        </tbody>
+	      
+	      </table>
+	
+	
+			<input type="hidden" id="currentPage" name="currentPage" value=""/>	
+	 	</div>
+ 	</form>
+ 	
+ 	
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
  	<div class="row justify-content-md-center" >
