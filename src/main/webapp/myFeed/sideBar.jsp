@@ -49,8 +49,8 @@
 			 		</c:when>
 			
 					<c:when test="${user.userCode == writer.userCode}">	
-							
-						<img class="card-img-top" src="/VIG/images/uploadFiles/profile_img.jpg" id="pImg" alt="profile_img">
+						<img id="profileImg" src="/VIG/images/others/${user.profileImg}" id="pImg" class="card-img-top"/>	
+						<img class="card-img-top" src="/VIG/images/uploadFiles/profile_img.jpg" id="pImg" alt="profile_img"/>
 				 			<div class="card-body">
 				 					<h4 class="user_name" align="center"> ${user.userName} </h4>
 				 					<br/>

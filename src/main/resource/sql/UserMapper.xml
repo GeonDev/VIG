@@ -117,12 +117,9 @@
 	 	SET	 	
 	 		self_introduce = #{selfIntroduce:VARCHAR},
 	 		user_name = #{userName:VARCHAR},
-	 		password = #{password:VARCHAR},
-	 		profile_img = #{profileImg:VARCHAR},
-	 		account = #{account:VARCHAR},
-	 		state = #{state:NUMERIC},
-	 		google_id = #{googleId:NUMERIC},
-	 		prime_count = #{primeCount:NUMERIC}
+	 		
+	 		profile_img = #{profileImg:VARCHAR}
+	 		
 	 	WHERE user_code = #{userCode}
 	 </update>	
 
