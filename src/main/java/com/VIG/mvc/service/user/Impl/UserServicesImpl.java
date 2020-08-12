@@ -140,5 +140,14 @@ public class UserServicesImpl implements UserServices {
 		return userDao.duplicationCheck(email);
 	}
 
+	//유저결제용
+	@Override
+	public void updateBusiness(User user) throws Exception {
+		// TODO Auto-generated method stub
+		
+		userDao.updateBusiness(user);
+		
+	}
+
 
 }
