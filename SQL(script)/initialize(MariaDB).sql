@@ -3646,7 +3646,7 @@ VALUES( event_id, '중국대표브랜드 펜 디자인 공모전', '중국 5대�
 
 INSERT INTO 
 event(event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner) 
-values( event_id, 'The Grand Tour', 'NASA SPACE POSTER DESIGN' , '2020-07-16', '2020-09-17', 'Event05_thumbnail.jpg', 'NASA, PORSTERDESIGN, NASADEGIN', 'Event05_1.jpg', 0, 'Event05_banner.jpg');
+values( event_id, 'The Grand Tour', 'NASA SPACE POSTER DESIGN' , '2020-07-16', '2020-09-17', 'Event05_thumbnail.jpg', 'NASA, PORSTERDESIGN, NASADEGIN', 'Event05_01.jpg', 0, 'Event05_banner.jpg');
       
       
 INSERT INTO 
