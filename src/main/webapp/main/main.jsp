@@ -237,7 +237,7 @@
 	}
 	
 	.img_categories {	
-	max-height: 80px;
+	max-height: 40px;
 	padding-left: 0px;
 	padding-right: 0px;
 	margin-left: 0px;
@@ -246,8 +246,9 @@
 	}
 	    
    	.eBanner{
-	width: auto; height: auto;
-    max-height: 180px;
+   	display: block;
+	width: auto; height: 240px; 
+    overflow:hidden; 
     }
        
      .txt_line {
@@ -285,47 +286,8 @@
 	
 	
 	<div class="container-lg-fluid">
-     
-		<div id="categories" class="row" >
-										
-				<div class="row" style="margin: 10px -15px 30px 20px;">
-				
-					<div class="col-md-1" style="margin-top: 20px; text-align: center;">
-						<button class="btn btn-link" onclick="CategoriesMinus()" type="button" > <i class="fas fa-angle-left"></i></button>	        					      				
-					</div>				
-				
-					<div class="col-md-10" >
-						<div id="categoryList" class="row" style="max-height:100px; flex-wrap: nowrap; overflow: auto;">
-						<c:set var="i" value="0" />						
-						<c:forEach var="category" items="${categoryList}">				
-							<div class="col-md-2" id="category_${i}" style="padding-left: 0px; padding-right: 0px">
-								<div class="view img_categories ">			    			
-					    			<img src="/VIG/images/others/${category.categoryImg}" alt="thumbnail" class="img-fluid overflow-hidden rounded-sm" >
-					    			
-					    			<c:if test="${category.categoryName == 'RECOMMEND'}">
-					    				<div class="mask flex-center rgba-indigo-strong rounded-sm">	
-					    			</c:if>
-					    			<c:if test="${category.categoryName != 'RECOMMEND'}">
-					    				<div class="mask flex-center rgba-black-strong rounded-sm">	
-					    			</c:if>		    			
-					    		  	
-					    		   		<p class="white-text" style="font-weight:bold ; font-size: large; padding: 0px;">${category.categoryName}</p>					    		    				    		         					      						
-			   						</div>    						
-					    		</div>	
-							</div>	
-							<c:set var="i" value="${i+1}" />											  
-					    </c:forEach>
-						</div>	
-					</div>
-					
-					<div class="col-md-1" style="margin-top: 20px; text-align: center;">
-						<button class="btn btn-link" type="button" onclick="CategoriesPlue()" > <i class="fas fa-angle-right"></i></button>		  					      				
-					</div>				
-				</div>		
-		
-		</div>	
-
-        <div id="banner" class="row" style="margin-left: 10px; margin-right: 10px; margin-bottom: 100px; margin-top: 20px;">
+     		
+        <div id="banner" class="row" style="margin-bottom: 20px; margin-top: 20px;">
 	  		<div id="carousel-eBanner" class="carousel slide carousel-fade col-md-12" data-ride="carousel">
 			  <!--Indicators-->
 			  <ol class="carousel-indicators">
@@ -371,6 +333,51 @@
 			
 			</div>
 		</div>		
+				
+		
+		<div id="categories" class="row" >										
+			<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+			
+				<div class="col-md-1" style="text-align: center;">
+					<button class="btn btn-link" onclick="CategoriesMinus()" type="button" > <i class="fas fa-angle-left"></i></button>	        					      				
+				</div>				
+			
+				<div class="col-md-10" >
+					<div id="categoryList" class="row" style="max-height:100px; flex-wrap: nowrap; overflow: auto;">
+					<c:set var="i" value="0" />						
+					<c:forEach var="category" items="${categoryList}">				
+						<div class="col-md-2" id="category_${i}" style="padding-left: 0px; padding-right: 0px">
+							<div class="view img_categories ">			    			
+				    			<img src="/VIG/images/others/${category.categoryImg}" alt="thumbnail" class="img-fluid overflow-hidden rounded-sm" >
+				    			
+				    			<c:if test="${category.categoryName == 'RECOMMEND'}">
+				    				<div class="mask flex-center rgba-indigo-strong rounded-sm">	
+				    			</c:if>
+				    			<c:if test="${category.categoryName != 'RECOMMEND'}">
+				    				<div class="mask flex-center rgba-black-strong rounded-sm">	
+				    			</c:if>		    			
+				    		  	
+				    		   		<p class="white-text" style="font-weight:bold ; font-size: large; padding: 0px;">${category.categoryName}</p>					    		    				    		         					      						
+		   						</div>    						
+				    		</div>	
+						</div>	
+						<c:set var="i" value="${i+1}" />											  
+				    </c:forEach>
+					</div>	
+				</div>
+				
+				<div class="col-md-1" style="text-align: center;">
+					<button class="btn btn-link" type="button" onclick="CategoriesPlue()" > <i class="fas fa-angle-right"></i></button>		  					      				
+				</div>				
+			</div>		
+		</div>	
+		
+		
+		
+		
+		
+		
+		
 		
         <div id="main" class="row justify-content-center" style="margin-left: 10px; margin-right: 10px;"></div>
 
