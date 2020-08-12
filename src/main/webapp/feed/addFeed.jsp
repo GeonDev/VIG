@@ -57,8 +57,8 @@
 	<!-- jQuery UI toolTip 사용 CSS-->
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>	
-
-
+	<!-- 알러트 -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
 <style>
 	
@@ -76,7 +76,7 @@
 		
 	#feedend{
 		 position:absolute;
-		 bottom : -400px;	
+		 bottom : -100px;	
 	}
 	
 	#main { 
@@ -127,17 +127,33 @@ $(function() {
 	
 	$( "#feedend" ).on("click" , function() {
 		
-		if($("#categoryId").val() ==""){
-			alert("카테고리를 선택해주세요.");
+		if($(".justselect").val() ==""){
+			alert("카테고리를 지정해주세요.");
 			return;
 		}		
 		
+		if($("#thumb").val() ==""){
+			alert("썸네일을 지정해주세요.");
+			return;
+		}
+		if($("#inputLGEx").val() ==""){
+			alert("피드의 제목은 반드시 입력해야합니다.");
+			return;
+		}
+				
 		
 		document.myform.action='addFeed';
 		document.myform.submit();
 	});
 });
-
+//썸넬저장후
+$(function() {
+	$( "#thumbsave" ).on("click" , function() {
+		
+		swal("Good job!", "You clicked the button!", "success");
+	});
+	
+	});
 
 //이미지 파일 유효성검사
 function fileCheck(el) { 
@@ -446,9 +462,11 @@ function deleteInput() {
 		</div>
 		</c:if>
 		
+		<button type="button" class="btn btn-elegant" id="feedend">UpLoad</button>
 		
 		
-		<button type="button" class="btn btn-info" id="feedend">UpLoad</button>
+		
+		
  										</div>
  										
  									 </div>
@@ -481,8 +499,8 @@ function deleteInput() {
     		<div class="modal-content">
     											<div>
 													 <strong>썸네일 크기는 4:3으로 업로드 해주세요.</strong>
-													<input type='file' class='dropify' name='uploadFile' accept='image/*' onchange='fileCheck(this)' data-height='400'>
-													<button type="button" class="btn btn-elegant" data-dismiss="modal">완료</button>
+													<input type='file' class='dropify' id="thumb" name='uploadFile' accept='image/*' onchange='fileCheck(this)' data-height='400'>
+													<button type="button" class="btn btn-elegant" data-dismiss="modal" id="thumbsave">완료</button>
 													</div>
 													
  									
