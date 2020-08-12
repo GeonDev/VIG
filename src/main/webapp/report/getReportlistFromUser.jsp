@@ -44,9 +44,17 @@
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
-	  body {
-            padding-top : 50px;
-        }
+	  body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}	
+		h1 { margin-left: 100px;}
+		/*사이드바,본문 배치css*/
+	 .col-md-2.sideBarPlace { padding:0;  display: inline-block;float:left;}
+	 #mainMyFeedPage { margin-left: 0px;  display: inline-block; float:right;}
+	 
+	 
+        #myFeedMain { padding: 70px;}
+        .col-md-12_top {	width: 100%; height: 100%; position: relative; margin:50px; }
+        
+   
     </style>
     
 	<script type="text/javascript">
@@ -62,18 +70,33 @@
 
 <body>
 
-	<div class="container-fluid">
-		<div class="col-md-8">			
-			<br/>
-				<div class="page-header text-info">
-					<h3>신고 내용 상세 조회</h3>
-				</div>			
+<!-- 툴바 -->
+		      <div class="container-fluid">  
+		      	 <div class="row">
+		      		<div class="col-md-12">
+		      			<jsp:include page="/main/toolbar.jsp"></jsp:include>
+		     		</div>
+				</div>
+		
+		
+			<!-- 사이드바  -->		
+				<div class="col-md-2 sideBarPlace">		
+				 <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
+				 </div>
+  			<!-- 타이틀 -->
+			    <div class="col-md-10" id="mainMyFeedPage" >	
+					<h1>신고 내용 상세 조회</h1>
+		
 				
 				<hr/>
 			
-				<form method="post">						
+				<form method="post">
+				<div class="row justify-content-end" style="margin: 90px 10px 27px 10px;">
+				</div>
+				
+				<div class="row" style="margin: 64px 21px 27px 51px;">							
 					<table class="table table-hover table-striped" >
-						<thead>
+						<thead class="grey lighten-2">
 				          <tr>
 				            <th align="center">No</th>
 				            <th align="left">유저 이름</th>
@@ -120,18 +143,18 @@
 										<td align="left">${report.banDate}</td>
 										<td align="left">									
 										 	<c:choose>								
-											<c:when test="${report.banType == '0'}">		
-												이상없음
-											</c:when>
-											<c:when test="${report.banType == '1'}">
-												3일 접속제한
-											</c:when>
-											<c:when test="${report.banType == '2'}">
-												7일 접속제한 
-											</c:when>
-											<c:when test="${report.banType == '3'}">
-												영구 정지
-											</c:when>								
+												<c:when test="${report.banType == '0'}">		
+													이상없음
+												</c:when>
+												<c:when test="${report.banType == '1'}">
+													3일 접속제한
+												</c:when>
+												<c:when test="${report.banType == '2'}">
+													7일 접속제한 
+												</c:when>
+												<c:when test="${report.banType == '3'}">
+													영구 정지
+												</c:when>								
 											</c:choose>													
 										</td>
 										<td align="left">										
@@ -141,7 +164,7 @@
 											    <span class="caret"></span>
 											  </button>
 											  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-											    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">이상없음</a></li>
+											    <li role="presentation"><a role="menuitem" tabindex="-1" href="updateUserBanFromReport?reportId=${report.reportId}&banType=0">혐의 없음</a></li>
 											    <li role="presentation"><a role="menuitem" tabindex="-1" href="updateUserBanFromReport?reportId=${report.reportId}&banType=1">3일 접속제한</a></li>
 											    <li role="presentation"><a role="menuitem" tabindex="-1" href="updateUserBanFromReport?reportId=${report.reportId}&banType=2">7일 접속제한</a></li>
 											    <li role="presentation"><a role="menuitem" tabindex="-1" href="updateUserBanFromReport?reportId=${report.reportId}&banType=3">영구 정지</a></li>
@@ -157,6 +180,7 @@
 						
 						<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 						<input type="hidden" id="currentPage" name="currentPage" value=""/>	
+						</div>
 				</form>
 				
 			<div class="row justify-content-md-center">
