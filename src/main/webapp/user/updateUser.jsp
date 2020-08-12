@@ -42,11 +42,11 @@
 		
 		
 		//업데이트 이벤트 
-		//$(function() {
-		//$("#updateUser_btn").on("click", function(){			
-		//		$("form").attr("method","POST").attr("enctype","multipart/form-data").attr("action","updateUser").submit();			
-		//	});
-		//});
+		$(function() {
+		$("#updateUser_btn").on("click", function(){			
+				$("form").attr("method","POST").attr("enctype","multipart/form-data").attr("action","updateUser").submit();			
+			});
+		});
 
 		$(function(){
 			$("input[name=password2]").keyup( function(){				 				
@@ -101,16 +101,17 @@
 	});
 	
 		//비지니스 계정 전환
-		/*
-		$("#business_btn").on("click", function(){			
+		$( function() {
+		$("#business_btn").on("click", function(){		
 			var cf = confirm("비지니스 계정으로 전환 하시겠습니까?");
 			
 			if(cf==true){				
-			self.location="/VIG/payment/addPayment?productType=1&userCode=${user.userCode}"; //세션에서 user코드를 가져온다.			
+			self.location="/VIG/payment/addPayment?productType=1"; //세션에서 user코드를 가져온다.			
 			} else if (cf==false) {				
 			}		
 		});
-		*/
+		});
+		
 	
 		</script>
 	
@@ -131,9 +132,6 @@
 	    margin-left: auto;
 	    margin-right: auto;
 	    margin-bottom: 30px;}
-	.info_box {
-    margin-left: 9%;
-    }
 	
 
 	
@@ -145,7 +143,8 @@
 	/*사이드바,본문 배치css*/
 	 .col-md-2.sideBarPlace { padding:0;  display: inline-block;float:left;}
 	 #mainMyFeedPage { margin-left: 0px;  display: inline-block; float:right;}	
-		
+	
+	.info_box.two { margin:50px;}	
 </style>		
 	
 </head>
@@ -188,9 +187,9 @@
  		</div>
  	<!-- 정보 리스트 -->
  	
-	<div class="row" style="padding-left: 10%; padding-right: 10%; display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap; margin-right: 100px; margin-left: -15px;" >
+	<div class="row" style="padding-left: 10%; padding-right: 10%; display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap; margin-left: -15px;" >
  					
- 	<div class="info_box one" style="margin-right: 100px;">			
+ 	<div class="info_box one" style="margin: auto;">			
 			<div class="form-group">
 			    <label for="userCode" class="col-sm-offset-5 col-md-5 control-label">아 이 디</label>
 			    <input type="text" class="form-control" id="userCode" name="userCode" value="${user.userCode }" readonly>
@@ -203,29 +202,29 @@
 			</div>
 			 
 			<!-- 비밀번호 -->
-		<div class="form-group" style="height:70px; margin:0; ">
+		<div class="form-group" style="height:70px;  ">
 		<label for="userName" class="col-sm-offset-5 col-md-5 control-label">비밀번호</label>
-		    <input type="password" id="password" name="password" class="form-control" placeholder="password" maxlength="8" required>
+		    <input type="password" id="password" name="password" class="form-control" placeholder="password" maxlength="8" required >
+		    <input type="hidden" name="password" class="form-control" value="${user.password }">
 		</div>
 		
 		<!-- 비밀번호2 -->   
 		<div class="form-group" style="height: 70px;">  
 		<label for="userName" class="col-sm-offset-5 col-md-5 control-label">비밀번호확인</label>
-			 <input type="password" id="password2" name="password2" class="form-control " placeholder="Password2" " required>
+			 <input type="password" id="password2" name="password2" class="form-control " placeholder="Password2"  required>
 		     <label data-error="wrong" data-success="right" for="password2"></label>
 		     <span id="helpBlock" class="help-block" >
 				<span class="check" style="margin-bottom:0px;"></span>
 			</span>
 		</div>
 		</div>
-		<div class="infor_box2 two">   
+		<div class="info_box two" style="margin: auto;">   
 			<div class="form-group">
-			    <label for="selfIntroduce" class="col-sm-offset-5 col-md-5 control-label">자기소개</label>
+			    <label for="selfIntroduce" class="col-sm-offset-5 col-md-5 control-label" style="padding-top: 20px;">자기소개</label>
 			    <textarea cols="40" rows="5" id="selfIntroduce" name="selfIntroduce" placeholder="${user.selfIntroduce }" 
 			    style="width: 500px;" maxlength="330" onkeyup="return textarea_maxlength(this)"></textarea>
 			</div>
 		
-	</form>
 	
 	 
 		<c:if test="${sessionScope.user.role=='user'}">  
@@ -233,6 +232,7 @@
 			    <button type="button" class="button btn btn-primary" id="business_btn">비지니스전환</button>
 			</div>
 		</c:if>
+
 		 <!-- Sign in Google button -->
     	<button  class="btn btn-primary btn-block my-4" id="googlelogin" >
     		<i class="fab fa-google" style="font-size: large; margin-left: 0px; text-align: top;"></i>&emsp; Sign in With Google
@@ -249,15 +249,10 @@
 				
 			
 			</div>
-					</div>
-					</div>
-				
-				  
-				  </div>
-			</div>
-		
-	
-	 </div>
+		</div>
+	</form>
+		</div>
+ </div>
 
 
 

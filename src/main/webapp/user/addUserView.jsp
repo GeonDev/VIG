@@ -67,6 +67,7 @@
 				alert("이메일은 반드시 입력하셔야 합니다.");
 				return;
 			}
+			
 			$("form").attr("method" , "post").attr("action" , "addUser").submit();
 		}
 		
@@ -144,12 +145,12 @@
 							}
 				,success : function vcode(JSONData , status) {
 					var json = JSONData.verifCode
-				//알림 하나 띄우고 인증코드 입력 열기
+					
 				
 				
 					$("#inputVerification").val(json);
 				//alert("1"+  $("#inputVerification").val(json).val())
-				alret("메일이 발송 되었습니다.");
+					alert("메일이 발송 되었습니다.");
 				},
 				error : function( error ) {
 					alert("없는 이메일 주소입니다.");
