@@ -51,8 +51,13 @@ public class FeedController {
 	
 	public static final Logger logger = LogManager.getLogger(FeedController.class); 
 	
+	 private static String OS = System.getProperty("os.name").toLowerCase();
+	
 	@Value("#{commonProperties['uploadPath']}")
 	String uploadPath;
+	
+	@Value("#{commonProperties['realPath']}")
+	String realPath;
 
 	@Autowired 
 	@Qualifier("userServicesImpl")
@@ -110,9 +115,20 @@ public class FeedController {
 		feed.setFeedCategory(category);			
 		feedServices.addFeed(feed);
 							
-        String path = context.getRealPath("/");        
-        path = path.substring(0,path.indexOf("\\.metadata"));         
-        path = path +  uploadPath;  
+        String path = context.getRealPath("/");  
+        
+        System.out.println(path);
+        
+        if(OS.contains("win")) {
+        	//워크스페이스 경로를 받아온다.
+            path = path.substring(0,path.indexOf("\\.metadata"));         
+            path +=  uploadPath;           
+        }else {
+        	//실제 톰켓 데이터가 저장되는 경로를 가리킨다.
+        	path +=  realPath;
+        }
+        
+       
         
 		//비전 정보 + 쓰레드 동작을 위한 비전 배열
 		ArrayList<VisionInfo> visions = new ArrayList<VisionInfo>();        
@@ -273,5 +289,18 @@ public class FeedController {
 	
 	private int getTotalWorkTime(long start, long end) {		
 		return (int) ((end - start)/1000);
+	}
+	
+	@RequestMapping(value = "deleteFeed", method = RequestMethod.GET)
+	public ModelAndView deleteFeed(HttpSession session, @RequestParam("feedId") int feedId) throws Exception {
+		User user = (User)session.getAttribute("user");
+		
+		logger.debug(feedId);
+		feedServices.deleteFeed(feedId);
+		
+	
+		ModelAndView mav = new ModelAndView("redirect:/myfeed/getMyFeedList?userCode="+user.getUserCode());
+		
+		return mav;
 	}
 }
