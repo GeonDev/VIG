@@ -45,6 +45,8 @@ body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}
 	padding-left:50px;
 	}
 	
+	
+	
 	.chart-container{
 	width:1000px;
 	height:500px;
@@ -74,9 +76,7 @@ body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}
    
 	
 </style>
-<script>
 
-</script>
 </head>
 <body>
 	<!-- 툴바 -->
@@ -104,14 +104,14 @@ body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}
 					
 							<div>
 							<select class="browser-default custom-select" id="year">
- 							 <option selected>년도를 선택해주세요</option>
+ 							 <option selected>Year</option>
  							 <option value="2020">2020</option>
  							 
 							</select>
 							</div>						
 							<div>
 							<select class="browser-default custom-select" id="month">
- 							 <option selected>월을 선택해주세요</option>
+ 							 <option selected>Month</option>
  							 <option value="01">1월</option>
  							 <option value="02">2월</option>
 						     <option value="03">3월</option>
@@ -141,11 +141,12 @@ body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}
 			</div>
 			</div>
 			<div class="col-md-2" id="momo">
+			 
 			<div class="card  teal lighten-1 white-text">
           <div class="card-body d-flex justify-content-between align-items-center">
 			    <div id="countLike">
 					Like
-					<div class="numscroller" data-min="0" data-max="${likeCount2}"  data-increment="1"></div>	
+					<div class="numscroller" data-min="0" data-max="${likeCount2}"  data-delay="1" data-increment="1"></div>	
 					</div>
 					<i class="far fa-heart"></i>
 					<div>
@@ -157,12 +158,12 @@ body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}
           
         </div>
         
-        
+       
 				<div class="card pink accent-1 white-text">
           <div class="card-body d-flex justify-content-between align-items-center">
 					<div id="countView">
 					View 
-				<div class="numscroller" data-min="0" data-max="${viewCount2}"  data-increment="1"></div>	
+				<div class="numscroller" data-min="0" data-max="${viewCount2}"  data-increment="1" data-delay="1"></div>	
 						</div>
 						<i class="far fa-eye"></i>
 					<div>
@@ -179,7 +180,7 @@ body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}
           <div class="card-body d-flex justify-content-between align-items-center">
 					<div id="countPrime">
 					Prime
-					<div class="numscroller" data-min="0" data-max="${primeCount2}" data-increment="1"></div>
+					<div class="numscroller" data-min="0" data-max="${primeCount2}" data-increment="1" data-delay="1"></div>
 					</div>
 					<div>
               <i class="fas fa-crown"></i>
@@ -314,6 +315,7 @@ $("#year, #month").on("change", function(){
 				
 
 </script>
+
 
 </body>
 

@@ -106,22 +106,24 @@ public class RestSearchController {
 			return null;
 		}
 		
+		String key = jsonData.get("keyword").toUpperCase();
+		
 		//피드의 타이틀을 자동완성
 		if(jsonData.get("mode").equals("Feed")) {
 			
-			return feedServices.getfeedTitleList(jsonData.get("keyword"));
+			return feedServices.getfeedTitleList(key);
 		}
 		
 		
 		//이미지의 키워드를 자동완성
 		if(jsonData.get("mode").equals("Image")) {
-			return imageServices.getAutoImageKeywordList(jsonData.get("keyword"));
+			return imageServices.getAutoImageKeywordList(key);
 					
 		}
 		
 		//유저의 닉네임을 자동완성
 		if(jsonData.get("mode").equals("Writer")) {			
-			return userServices.getAutoUserName(jsonData.get("keyword"));
+			return userServices.getAutoUserName(key);
 		}
 		
 		return null;
@@ -214,7 +216,7 @@ public class RestSearchController {
 							if(!keyword.equals("")) {
 								logger.debug("불러온 쿠키 값 : " + keyword);
 								ImageKeyword temp = new ImageKeyword();								
-								temp.setKeywordEn(keyword);	
+								temp.setKeywordEn(keyword.toUpperCase());	
 								
 								keywordList.add(temp);
 							}
@@ -327,7 +329,7 @@ public class RestSearchController {
 				}else {
 					//검색어를 영어로 변역
 					String keyword = Translater.autoDetectTranslate(jsonData.get("keyword"),"en");
-					search.setKeyword(keyword);
+					search.setKeyword(keyword.toUpperCase());
 					
 					//검색어를 쿠키에 추가
 					addSearchKeyCookie(keyword, request, response);					
@@ -402,7 +404,7 @@ public class RestSearchController {
 				}else {
 					//검색어를 영어로 변역
 					String keyword = Translater.autoDetectTranslate(jsonData.get("keyword"),"en");
-					search.setKeyword(keyword);
+					search.setKeyword(keyword.toUpperCase());
 					
 					//검색어를 쿠키에 추가
 					addSearchKeyCookie(keyword, request, response);
@@ -491,7 +493,7 @@ public class RestSearchController {
 					logger.debug("불러온 쿠키 값 : " + keyword);
 					ImageKeyword temp = new ImageKeyword();
 					temp.setImageId(image.getImageId());
-					temp.setKeywordEn(keyword);	
+					temp.setKeywordEn(keyword.toUpperCase());	
 					
 					keylist.add(temp);
 				}
@@ -555,7 +557,7 @@ public class RestSearchController {
 					logger.debug("불러온 쿠키 값 : " + keyword);
 					ImageKeyword temp = new ImageKeyword();
 					temp.setImageId(image.getImageId());
-					temp.setKeywordEn(keyword);	
+					temp.setKeywordEn(keyword.toUpperCase());	
 					
 					keylist.add(temp);
 				}
@@ -600,21 +602,7 @@ public class RestSearchController {
 		return map;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 	
 	//특정 피드를 원하는 위치로 이동
 	private List<Feed> setFeedOrder(List<Feed> base, Feed prime, int index){			

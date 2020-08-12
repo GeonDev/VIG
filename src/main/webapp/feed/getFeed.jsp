@@ -478,7 +478,7 @@ $(function(){
 			})
 			.then((willDelete) => {
 			  if (willDelete) {
-				//self.location = "/VIG/feed/deleteFeed?feedId=${feed.feedId}";
+				self.location = "/VIG/feed/deleteFeed?feedId=${feed.feedId}";
 			    swal("피드 삭제 완료!", {
 			      icon: "success",
 			    });
