@@ -29,6 +29,9 @@
  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+ <script src="/VIG/javascript/numscroller-1.0.js"></script>	
+
 <style>
 
 body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}	
@@ -37,6 +40,10 @@ body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}
 .col-md-2.sideBarPlace { padding:0;  display: inline-block;float:left;}
 
 	#mainMyFeedPage { margin-left: 0px;  display: inline-block; float:right;}
+	
+	#sbox{
+	padding-left:50px;
+	}
 	
 	.chart-container{
 	width:1000px;
@@ -91,8 +98,9 @@ body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}
 						<strong>통계페이지</strong> 
 					</h1>	
 					<hr/>
-						
-			<div class=row >
+						<br>
+					
+			<div class=row id="sbox">
 					
 							<div>
 							<select class="browser-default custom-select" id="year">
@@ -121,6 +129,7 @@ body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}
 			    </div>
 			    	
 			    </div>
+			    <br>
 			    <div class=row>
 			    
 			    <div class="col-md-8">
@@ -132,11 +141,11 @@ body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}
 			</div>
 			</div>
 			<div class="col-md-2" id="momo">
-			<div class="card elegant-color white-text">
+			<div class="card  teal lighten-1 white-text">
           <div class="card-body d-flex justify-content-between align-items-center">
 			    <div id="countLike">
-					년 월의 총 Like수 
-					<p class="mb-0">${likeCount2}</p>
+					Like
+					<div class="numscroller" data-min="0" data-max="${likeCount2}"  data-increment="1"></div>	
 					</div>
 					<i class="far fa-heart"></i>
 					<div>
@@ -149,11 +158,11 @@ body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}
         </div>
         
         
-				<div class="card stylish-color white-text">
+				<div class="card pink accent-1 white-text">
           <div class="card-body d-flex justify-content-between align-items-center">
 					<div id="countView">
-					년 월의 총 View수 
-					<p class="mb-0">${viewCount2}</p>
+					View 
+				<div class="numscroller" data-min="0" data-max="${viewCount2}"  data-increment="1"></div>	
 						</div>
 						<i class="far fa-eye"></i>
 					<div>
@@ -166,11 +175,11 @@ body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}
         
         
         
-        <div class="card special-color white-text">
+        <div class="card cyan darken-4 white-text">
           <div class="card-body d-flex justify-content-between align-items-center">
 					<div id="countPrime">
-					년 월의 총 primefeed노출수
-					<p class="mb-0"> ${primeCount2}</p>
+					Prime
+					<div class="numscroller" data-min="0" data-max="${primeCount2}" data-increment="1"></div>
 					</div>
 					<div>
               <i class="fas fa-crown"></i>
@@ -183,7 +192,8 @@ body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}
 			   
 		</div>
 		</div>
-		
+
+
 			    
 			  
 
@@ -290,9 +300,9 @@ $("#year, #month").on("change", function(){
 						
 						
 						
-						$('#countLike').text("2020년 "+month+"월의 총 Like 수 "+JSONData.likeCount2);
-						$('#countView').text("2020년 "+month+"월의 총 View 수 "+JSONData.viewCount2);
-						$('#countPrime').text("2020년 "+month+"월의 총 primefeed 노출수 "+JSONData.primeCount2);
+						$('#countLike').text("Like "+JSONData.likeCount2);
+						$('#countView').text("View "+JSONData.viewCount2);
+						$('#countPrime').text("Prime "+JSONData.primeCount2);
 				}
 			})
 			//합계 Ajax 시작 
@@ -301,7 +311,7 @@ $("#year, #month").on("change", function(){
      });
 
 
-
+				
 
 </script>
 

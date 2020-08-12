@@ -274,4 +274,17 @@ public class FeedController {
 	private int getTotalWorkTime(long start, long end) {		
 		return (int) ((end - start)/1000);
 	}
+	
+	@RequestMapping(value = "deleteFeed", method = RequestMethod.GET)
+	public ModelAndView deleteFeed(HttpSession session, @RequestParam("feedId") int feedId) throws Exception {
+		User user = (User)session.getAttribute("user");
+		
+		logger.debug(feedId);
+		feedServices.deleteFeed(feedId);
+		
+	
+		ModelAndView mav = new ModelAndView("redirect:/myfeed/getMyFeedList?userCode="+user.getUserCode());
+		
+		return mav;
+	}
 }
