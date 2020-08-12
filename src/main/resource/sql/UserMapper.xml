@@ -125,6 +125,16 @@
 	 		prime_count = #{primeCount:NUMERIC}
 	 	WHERE user_code = #{userCode}
 	 </update>	
+
+	 <update id="updateBusiness" parameterType="user">
+	 	UPDATE users
+	 	SET
+	 	<if test="role!=business">
+	 	role = #{role}
+	 	</if>
+	 	prime_count = prime_count+1000	 
+	 	WHERE user_code = #{userCode}
+	 </update>	
 	 
 	 
 	 <update  id="deleteUser" parameterType="user" >

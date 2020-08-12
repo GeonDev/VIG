@@ -37,6 +37,10 @@ public class PaymentController {
 	@Autowired
 	@Qualifier("feedServicesImpl")
 	private FeedServices feedServices;
+	
+	@Autowired
+	@Qualifier("userServicesImpl")
+	private UserServices userServices;
 
 	@Value("#{commonProperties['pageSize'] ?: 5}")
 	int pageSize;
@@ -117,16 +121,9 @@ public class PaymentController {
 		System.out.println(payment);
 		User sessionUser = (User)session.getAttribute("user");
 		
-		//feedCount 추가
-		int pc = sessionUser.getPrimeCount();
-		pc += 1000;
-		sessionUser.setPrimeCount(pc);
-		//UserServices.updatePrime
 		
+		userServices.updateBusiness(sessionUser);
 		payment.setBuyer(sessionUser);
-		
-		
-		
 		paymentServices.addPayment(payment);
 		
 		ModelAndView mav = new ModelAndView();
@@ -143,7 +140,13 @@ public class PaymentController {
 		
 		//role 변경
 		sessionUser.setRole("business");
-		//userServices.updateUser
+		
+		//프라임카운트와 롤 바꿔준다.
+		userServices.updateBusiness(sessionUser);
+		
+		//업데이트 한 유저정보로 바꿔준다.
+		User dbuser = userServices.getUserOne(sessionUser.getUserCode());
+		payment.setBuyer(dbuser);
 		
 		paymentServices.addPayment(payment);
 		
