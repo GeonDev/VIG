@@ -680,10 +680,15 @@ public class RestSearchController {
 		
 		if(cookies != null) {
 			for(Cookie cookie :cookies) {
-				if((cookie.getName()).equals("searchKeys")) {					
-					//두번 인코딩 방지를 위하여 추가되는 부분만 인코딩한다.
-					keyword = URLEncoder.encode(keyword +",", "UTF-8") + cookie.getValue();					
-					break;					
+				if((cookie.getName()).equals("searchKeys")) {														
+					//이미 같은 내용을 포함하고 있다면 쿠키에 추가안함
+					if(!cookie.getValue().contains(keyword) ) {
+						//두번 인코딩 방지를 위하여 추가되는 부분만 인코딩한다.	
+						keyword = URLEncoder.encode(keyword +",", "UTF-8") + cookie.getValue();					
+						break;						
+					}else {
+						keyword = cookie.getValue();	
+					} 					
 				} 				
 			}			
 		}	
