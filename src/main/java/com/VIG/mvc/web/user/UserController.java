@@ -336,7 +336,7 @@ public class UserController {
 	//=====유저 리스트 nav
 	
 
-	@RequestMapping( value="getUserList" )
+	@RequestMapping(value="getUserList" )
 	public String getUserList( @ModelAttribute("search") Search search ,Model model) throws Exception{
 		
 		System.out.println("유저리스트 가져오기");
