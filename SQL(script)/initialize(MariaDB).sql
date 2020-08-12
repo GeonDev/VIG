@@ -53,7 +53,7 @@ CREATE TABLE feeds (
 
 CREATE TABLE images ( 
 	image_id 				 INT(11)  		NOT NULL AUTO_INCREMENT,
-	feed_id  				 INT(11) 		NOT NULL REFERENCES feeds(feed_id),
+	feed_id  				 INT(11) 		NOT NULL REFERENCES feeds(feed_id) ON DELETE CASCADE,
 	feed_order  			 INT(11), 
 	is_thumbnail 			 TINYINT(1)		DEFAULT 0, 	
 	image_file  			 VARCHAR(100)  	NOT NULL,
@@ -63,7 +63,7 @@ CREATE TABLE images (
 
 CREATE TABLE colors ( 
 	color_id 				 INT(11)   NOT NULL AUTO_INCREMENT,
-	image_id 				 INT(11)   NOT NULL REFERENCES images(image_id),
+	image_id 				 INT(11)   NOT NULL REFERENCES images(image_id) ON DELETE CASCADE,
 	haxcode					 VARCHAR(7),
 	color_r 				 TINYINT(4)  UNSIGNED,
 	color_g 				 TINYINT(4)  UNSIGNED,
@@ -74,8 +74,8 @@ CREATE TABLE colors (
 
 CREATE TABLE joiner ( 
 	joiner_id 				INT(11)   	  NOT NULL AUTO_INCREMENT,
-	user_code 				VARCHAR(20)   NOT NULL REFERENCES users(user_code),
-	feed_id 				INT(11)   	  NOT NULL REFERENCES feeds(feed_id),
+	user_code 				VARCHAR(20)   NOT NULL REFERENCES users(user_code) ,
+	feed_id 				INT(11)   	  NOT NULL REFERENCES feeds(feed_id) ON DELETE CASCADE,
 	is_like 				TINYINT(1),
 	add_date  				DATE,
 	PRIMARY KEY(joiner_id)
@@ -84,7 +84,7 @@ CREATE TABLE joiner (
 
 CREATE TABLE keywords ( 
 	keyword_id 				 INT(11)  		NOT NULL AUTO_INCREMENT,
-	image_id  				 INT(11) 		REFERENCES images(image_id),
+	image_id  				 INT(11) 		REFERENCES images(image_id) ON DELETE CASCADE,
 	is_tag 					 TINYINT(1),
 	user_code  				 VARCHAR(20)    REFERENCES users(user_code),			 
 	keyword_en 				 VARCHAR(100), 
@@ -96,7 +96,7 @@ CREATE TABLE keywords (
 
 CREATE TABLE comments ( 
 	comment_id 				 INT(11)  		NOT NULL AUTO_INCREMENT,
-	feed_id  				 INT(11) 		NOT NULL REFERENCES feeds(feed_id),
+	feed_id  				 INT(11) 		NOT NULL REFERENCES feeds(feed_id) ON DELETE CASCADE,
 	comment_text 			 VARCHAR(1024) 	NOT NULL,
 	user_code   			 VARCHAR(20) 	NOT NULL REFERENCES users(user_code),
 	reg_date  			     DATE,
@@ -109,7 +109,7 @@ CREATE TABLE report (
 	reporter_code 		 VARCHAR(20) 	NOT NULL REFERENCES users(user_code),
 	violator_code 		 VARCHAR(20) 	NOT NULL REFERENCES users(user_code),
 	report_Type 	 	 TINYINT(1),
-	report_feed_id  	 INT(11) 		NOT NULL REFERENCES feeds(feed_id),
+	report_feed_id  	 INT(11) 		NOT NULL REFERENCES feeds(feed_id) ON DELETE CASCADE,
 	report_message 		 VARCHAR(1024), 
 	report_date  		 DATE, 
 	current_ban_type  	 TINYINT(1),
@@ -119,7 +119,7 @@ CREATE TABLE report (
 
 CREATE TABLE history ( 
 	history_id 				INT(11)  		NOT NULL AUTO_INCREMENT,
-	feed_id  				INT(11) 		NOT NULL REFERENCES feeds(feed_id),
+	feed_id  				INT(11) 		NOT NULL REFERENCES feeds(feed_id) ON DELETE CASCADE,
 	watch_user_code   		VARCHAR(20) 	REFERENCES users(user_code),
 	show_date  			    DATE, 
 	ip_address 				VARCHAR(20), 
@@ -138,7 +138,7 @@ CREATE TABLE alarm (
 	alarm_id 			INT(11)  		NOT NULL AUTO_INCREMENT,	
 	send_user_code   	VARCHAR(20) 	NOT NULL REFERENCES users(user_code),
 	receive_user_code   VARCHAR(20) 	NOT NULL REFERENCES users(user_code),
-	like_feed_id    	INT(11)    		REFERENCES feeds(feed_id),
+	like_feed_id    	INT(11)    		REFERENCES feeds(feed_id) ON DELETE CASCADE,
 	is_watch 			TINYINT(1),	
 	alarm_type  		TINYINT(1),	
 	add_date 			DATE, 
