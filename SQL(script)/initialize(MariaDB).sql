@@ -3292,7 +3292,7 @@ VALUES(image_id, 20195, 2, 0,'feed196_3.jpg');
 
 INSERT
 INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
-VALUES(image_id, 20195, 3, 0,'feed192_4.jpg');
+VALUES(image_id, 20195, 3, 0,'feed196_4.jpg');
 
 INSERT
 INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
