@@ -288,8 +288,7 @@ $(function(){
 	$("button:contains('등록')").on("click", function(){
 		
 		user = '${sessionScope.user}';
-		if(user==null) {
-			alert("로그인이 필요합니다.");
+		if(user==null||user=='') {
 			return false;
 		}
 			
@@ -317,7 +316,7 @@ $(function(){
 						success : function(JSONData, status) {
 							
 							
-							alert("등록되었습니다.");
+						
 							
 					    var displayValue = 
 						"<div id="+JSONData.commentId+"><img width='25px' style='margin-right:5px' src='/VIG/images/uploadFiles/"+JSONData.user.profileImg+"' class='rounded-circle'><a style='margin-right:9px' href='/VIG/myfeed/getMyFeedList?userCode='"
@@ -355,7 +354,7 @@ $(function(){
 	$("#like").on("click", function(){
 
 		user = '${sessionScope.user}';
-		if(user==null) {
+		if(user==null||user=='') {
 			alert("로그인이 필요합니다.");
 			return false;
 			
@@ -474,7 +473,7 @@ function removeComment(commentId){
 				
 			
 			});
-	alert("댓글이 삭제되었습니다");
+
 }
 //이미지 크게보기
 function imageModal(imageId){
