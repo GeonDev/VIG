@@ -3632,30 +3632,23 @@ INSERT
 INTO history (history_id, feed_id, watch_user_code, show_date, history_type)
 VALUES(history_id, 20169, 'user01', NOW(), 0);
 
-INSERT INTO 
-event(event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner) 
-VALUES( event_id, '로고 디자인 의뢰 특별 이벤트', 'LOGO BRAND에서 로고디자인을 공모합니다.' , '2020-07-29', '2020-09-29', 'Event02_thumbnail.jpg', 'LOGO&BRAND, 디자인의뢰, 특별이벤트', 'Event02_1.jpg', 0, 'Event02_banner.jpg');
 
 INSERT INTO 
 event(event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner) 
-VALUES( event_id, '더벤티 디자인 공모전', '더벤티에서 다양한 이야기가 담긴 디자인을 공모합니다.' , '2020-08-05', '2020-09-08', 'Event03_thumbnail.jpg', '더벤티공모전, 2020더벤티디자인, 2020더벤티공모전', 'Event03_1.jpg', 0, 'Event03_banner.jpg');
+values( event_id, 'TWOTYPESET', '간직하고 싶은 글자' , '2020-08-05', '2020-09-08', 'Event01_thumbnail.jpg', 'YoonGothicEvent,TPIST,YOONSHOWCASE2020', 'Event01_01.jpg', 0, 'Event01_banner.jpg');
 
 INSERT INTO 
 event(event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner) 
-VALUES( event_id, '중국대표브랜드 펜 디자인 공모전', '중국 5대볼펜 브랜드 vience에서 드로잉펜 디자인 공모전을 진행합니다.' , '2020-09-28', '2020-10-26', 'Event04_thumbnail.jpg', 'Vience공모전, 2020Vience공모전, 2020드로잉펜공모전', 'Event04_1.jpg', 0, 'Event04_banner.jpg');
+values( event_id, 'Design for People', '사람을 위한 디자인' , '2020-07-29', '2020-09-29', 'Event03_thumbnail.jpg', 'ReasonableDesign,DesignForPeople,EveryPersonNeedsDesign', 'Event03_01.jpg', 0, 'Event03_banner.jpg');
 
 INSERT INTO 
 event(event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner) 
-values( event_id, 'The Grand Tour', 'NASA SPACE POSTER DESIGN' , '2020-07-16', '2020-09-17', 'Event05_thumbnail.jpg', 'NASA, PORSTERDESIGN, NASADEGIN', 'Event05_01.jpg', 0, 'Event05_banner.jpg');
-      
-      
-INSERT INTO 
-event(event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner) 
-values( event_id, 'CULT', 'CAMBODIAs ULTIMATE LIFESTYLE TRADE.' , '2020-08-06', '2020-09-17', 'Event06_thumbnail.jpg', 'CAMBODIA, ULTIMATE LIFESTYLE, CULTTRADE', 'Event06_01.jpg', 0, 'Event06_banner.jpg');
+values( event_id, 'HERTZ', 'Function Shifted Answer Code Request' , '2020-07-29', '2020-09-29', 'Event02_thumbnail.jpg', 'REDHEAD,DOUBLE U JAY,A.BREHME', 'Event02_01.jpg', 0, 'Event02_banner.jpg');
 
 INSERT INTO 
 event(event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner) 
-values( event_id, 'FORGE', 'A Collective for car' , '2020-08-06', '2020-09-17', 'Event07_thumbnail.jpg', 'CAMBODIA, ULTIMATE LIFESTYLE, CULTTRADE', 'Event07_01.jpg', 0, 'Event07_banner.jpg');
+values( event_id, 'BOOKLAND', 'BOOKLAND vol.001' , '2020-09-28', '2020-10-26', 'Event04_thumbnail.jpg', 'BOOKLAND,booklandVol001,BOOKLAND EVENT', 'Event04_01.gif', 0, 'Event04_banner.gif');
+
 
 INSERT INTO 
 alarm(alarm_id, send_user_code, receive_user_code,  is_watch, alarm_type, add_date)
