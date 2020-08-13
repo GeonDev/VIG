@@ -1089,20 +1089,19 @@ VALUES(image_id, 20026, 0, 0,'gwahejksr.jpg');
 
 INSERT
 INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
-VALUES(image_id, 20026, 1, 0,'gwahejksr.jpg');
+VALUES(image_id, 20026, 1, 0,'4039689k0m.jpg');
 
 INSERT
 INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
-VALUES(image_id, 20026, 2, 0,'4039689k0m.jpg');
+VALUES(image_id, 20026, 2, 0,'b7b41a37d65d3bde8923af06226a.jpg');
 
 INSERT
 INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
-VALUES(image_id, 20026, 3, 0,'b7b41a37d65d3bde8923af06226a.jpg');
+VALUES(image_id, 20026, 3, 0,'ghqehqwe.gif');
 
 INSERT
 INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
-VALUES(image_id, 20026, 4, 0,'ghqehqwe.gif');
-
+VALUES(image_id, 20026, 4, 0,'siz47icted.gif');
 
 INSERT
 INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_is_prime, category_id)
