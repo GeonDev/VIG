@@ -247,7 +247,15 @@ public class CommonUtil {
 			rgb.setGreen(cheackColorRange(getColorNumber(hax.substring(3, 5)),colorRange));
 			rgb.setBlue(cheackColorRange(getColorNumber(hax.substring(5)),colorRange));
 						
-			search.setColor(rgb);
+			String haxCode ="#"; 
+			haxCode += getHaxcode(rgb.getRed());
+			haxCode += getHaxcode(rgb.getGreen());
+			haxCode += getHaxcode(rgb.getBlue());
+			
+			rgb.setHaxcode(haxCode);
+			
+			search.setColor(rgb);			
+			search.setKeyword(haxCode);
 			
 			return search;
 		}
@@ -263,19 +271,9 @@ public class CommonUtil {
 			return num;	
 		}
 		
-		public static int cheackColorRange(int num, int range) {
+		public static int cheackColorRange(int num, int range) {			 							
 			
-			int result = 0;
-						
-			if(num+range > 255) {
-				result = 255;
-			}else if(num-range <0) {
-				result = 0;
-			}else {
-				result = num;
-			}		
-			
-			return result;
+			return (int)(num/range) * range;
 		}
 		
 		
@@ -401,6 +399,19 @@ public class CommonUtil {
 	        }
 	        return result.substring(0, result.length()-1);
 	    }
+	    
+	    
+	    public static String getHaxcode(int num) {		
+			
+			String hax = Integer.toHexString(num);
+			if(hax.length() == 1) {
+				String temp = "0";
+				temp += hax;
+				hax = temp; 
+			}
+			
+			return hax;
+		}
 
 	
 }

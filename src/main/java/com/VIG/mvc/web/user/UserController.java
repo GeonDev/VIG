@@ -4,20 +4,11 @@ package com.VIG.mvc.web.user;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Date;
-import java.util.Properties;
 
-import javax.mail.Authenticator;
-import javax.mail.Message;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
@@ -35,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.VIG.mvc.service.domain.GoogleProfile;
 import com.VIG.mvc.service.domain.Page;
@@ -54,6 +44,8 @@ public class UserController {
 	
 	public static final Logger logger = LogManager.getLogger(EventController.class); 
 	
+	private static String OS = System.getProperty("os.name").toLowerCase();
+	
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
 	
@@ -66,10 +58,14 @@ public class UserController {
 	
 	@Autowired
 	@Qualifier("reportServicesImpl")
-	private ReportServices reportService;
-	
+	private ReportServices reportService; 
+		
 	@Value("#{commonProperties['uploadPath']}")
 	String uploadPath;
+	
+	@Value("#{commonProperties['realPath']}")
+	String realPath;
+	
 	@Value("#{commonProperties['otherPath']}")
 	String otherPath;
 	
@@ -316,34 +312,31 @@ public class UserController {
 	}
 	
 	@RequestMapping( value="updateUser", method=RequestMethod.POST )
-	public ModelAndView updateUser(@ModelAttribute("user") User user,@RequestParam("uploadFile") MultipartFile files, HttpSession session )throws Exception{ 
+	public ModelAndView updateUser(@ModelAttribute("user") User user, @RequestParam("uploadFile") MultipartFile file, HttpSession session )throws Exception{ 
 		
-		logger.debug("유저 업데이트");
-		System.out.println(user);		
+		logger.debug("유저 업데이트");	
 		
-		String path = context.getRealPath("/");        
-        path = path.substring(0,path.indexOf("\\.metadata"));         
-        path = path +  otherPath;  
-        System.out.println(files);
+        String path = context.getRealPath("/");  
+        
+        System.out.println(path);
+        
+        if(OS.contains("win")) {
+        	//워크스페이스 경로를 받아온다.
+            path = path.substring(0,path.indexOf("\\.metadata"));         
+            path +=  uploadPath;           
+        }else {
+        	//실제 톰켓 데이터가 저장되는 경로를 가리킨다.
+        	path +=  realPath;
+        }
 			
-		if(files !=null) {
+		if(file !=null) {
 			
-	        MultipartFile multipartFile = null; 
-	        	//파일 업로드시 시간을 이용하여 이름이 중복되지 않게 한다.
-	        	
-	        	String inDate   = new java.text.SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date());
-	        	
-	        	if(multipartFile.getOriginalFilename()!="") { //multipartFile이 있는지 확인
-	    
-	        		File f = null;
-		    		//원하는 위치에 파일 저장
-	        	
-	        		
-	    				f=new File(path+inDate+multipartFile.getOriginalFilename());
-		    			multipartFile.transferTo(f);
-		    			user.setProfileImg(f.getName());	
-	    		
-	        	}
+        	//파일 업로드시 시간을 이용하여 이름이 중복되지 않게 한다.	        	
+        	String inDate = new java.text.SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date());		
+      	       	
+        	File f=new File(path+inDate+file.getOriginalFilename());
+        	file.transferTo(f);
+			user.setProfileImg(f.getName());	        	
 	        
 		}
 		userServices.updateUser(user);	

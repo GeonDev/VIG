@@ -46,8 +46,8 @@
 		//페이지 로드가 완료 되었는지 체크(ajax 중복 호출 방지용)
 		var isLoadPage = false;	
 		
-		//선택된 카테고리를 세팅		
-		var selectCategory ='RECOMMEND';	
+		//선택된 카테고리 ID를 세팅 - 추천		
+		var selectCategory = 10012;	
 				
 		var pageSize = '${pageSize}'
 		
@@ -94,7 +94,7 @@
 		}
 		
 		//피드를 그려주는 부분 (Ajax) 호출
-		function getFeedItemList(categoryName) {				
+		function getFeedItemList(categoryId) {				
 			
 			if(isPageEnd == true || isLoadPage == true){
 				//페이지의 끝, 또는 페이지 로드중 이라면 실행안함
@@ -102,8 +102,7 @@
 			}		
 			isLoadPage = true;
 			page += 1;
-			//console.log(page);		
-			
+		
 			
 			$.ajax( 
 					{
@@ -114,7 +113,7 @@
 							"Accept" : "application/json",
 							"Content-Type" : "application/json"
 						},
-						data :  JSON.stringify({category : categoryName, currentPage : page}),
+						data :  JSON.stringify({category : categoryId, currentPage : page}),
 						success : function(JSONData , status) {
 							
 							if(JSONData.list.length > 0){
@@ -142,14 +141,14 @@
 		
 		
 		//카테고리를 변경했을때 처리
-		function setCategories(categoryName) {
+		function setCategories(categoryId) {
 			$( 'div' ).remove( '.overlay' );
 	    	page = 0;
 	    	isPageEnd = false;
 	    	isLoadPage = false;	   
-			selectCategory = categoryName;	
+			selectCategory = categoryId;	
 			
-			getFeedItemList(categoryName);				
+			getFeedItemList(categoryId);				
 		}		
 		
 		
@@ -191,7 +190,7 @@
 			
 		
 			
-			//F1 버튼을 누르면 키워드 추출 설정 
+			//F2 버튼을 누르면 키워드 추출 설정 
 	         $(document).keydown(function(key) {
 	            if (key.keyCode == 113) {
 	        		var result = confirm("비밀번호 해쉬 및 이미지 정보를 추출 하시겠습니까?");
@@ -210,7 +209,9 @@
 				$('div.mask').attr('class',"mask flex-center rgba-black-strong rounded-sm");
 				$(this).find('div.mask').attr('class',"mask flex-center rgba-indigo-strong rounded-sm");
 					
-				setCategories($(this).find('p').text());
+				console.log($(this).find('p').attr('value'));
+				
+				setCategories($(this).find('p').attr('value'));
 				
 			});	
 			
@@ -357,7 +358,8 @@
 				    				<div class="mask flex-center rgba-black-strong rounded-sm">	
 				    			</c:if>		    			
 				    		  	
-				    		   		<p class="white-text" style="font-weight:bold ; font-size: large; padding: 0px;">${category.categoryName}</p>					    		    				    		         					      						
+				    		   		<p class="white-text" style="font-weight:bold ; font-size: large; padding: 0px;" value="${category.categoryId}" >${category.categoryName}</p>
+				    		  				    		    				    		         					      						
 		   						</div>    						
 				    		</div>	
 						</div>	
