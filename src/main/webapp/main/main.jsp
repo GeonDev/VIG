@@ -239,6 +239,7 @@
 	
 	.img_categories {	
 	max-height: 40px;
+	min-width: 120px;
 	padding-left: 0px;
 	padding-right: 0px;
 	margin-left: 0px;
@@ -286,69 +287,69 @@
 		<jsp:include page="toolbar.jsp" />
 	
 	
-	<div class="container-lg-fluid">
-     		
-        <div id="banner" class="row" style="margin-bottom: 20px; margin-top: 20px;">
-	  		<div id="carousel-eBanner" class="carousel slide carousel-fade col-md-12" data-ride="carousel">
-			  <!--Indicators-->
-			  <ol class="carousel-indicators">
-			    <li data-target="#carousel-eBanner" data-slide-to="0" class="active"></li>
-			    <li data-target="#carousel-eBanner" data-slide-to="1"></li>
-			    <li data-target="#carousel-eBanner" data-slide-to="2"></li>
-			  </ol>
-		
-			  <div class="carousel-inner" role="listbox">
-			  
-			  	<c:set var="i" value="1" />
-			  	
-			  	<c:forEach var="event" items="${eventList}">			  		
-			  	
-			  		<c:if test="${i == 1}">
-			  		 <div class="carousel-item active" style="text-align: center;">			  		
-			  		</c:if>			  		
-			  		<c:if test="${i != 1}">
-			  		 <div class="carousel-item " style="text-align: center;">			  		
-			  		</c:if>
-			  					  		
-				  		<a href="/VIG/event/getEvent?eventId=${event.eventId}">
-					      <img class="eBanner rounded mb-0" src="/VIG/images/others/${event.banner}" >
-					    </a>			  	
-			  		
-			  		</div>
-			  		
-			  		
-			  		<c:set var="i" value="${i+1}" />
-			  	</c:forEach>			
-			  
-			  </div>
-	
-	
-			  <a class="carousel-control-prev" href="#carousel-eBanner" role="button" data-slide="prev" >
-			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			    <span class="sr-only">Previous</span>
-			  </a>
-			  <a class="carousel-control-next" href="#carousel-eBanner" role="button" data-slide="next">
-			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-			    <span class="sr-only">Next</span>
-			  </a>
+	<div class="container-fluid">
+     	<div class="row">	
+	        <div id="banner" style="margin-bottom: 20px; margin-top: 20px; margin-left: auto; margin-right: auto;">
+		  		<div id="carousel-eBanner" class="carousel slide carousel-fade col-sm-12" data-ride="carousel">
+				  <!--Indicators-->
+				  <ol class="carousel-indicators">
+				    <li data-target="#carousel-eBanner" data-slide-to="0" class="active"></li>
+				    <li data-target="#carousel-eBanner" data-slide-to="1"></li>
+				    <li data-target="#carousel-eBanner" data-slide-to="2"></li>
+				  </ol>
 			
-			</div>
-		</div>		
+				  <div class="carousel-inner" role="listbox" >
+				  
+				  	<c:set var="i" value="1" />
+				  	
+				  	<c:forEach var="event" items="${eventList}">			  		
+				  	
+				  		<c:if test="${i == 1}">
+				  		 <div class="carousel-item active" style="text-align: center;">			  		
+				  		</c:if>			  		
+				  		<c:if test="${i != 1}">
+				  		 <div class="carousel-item " style="text-align: center;">			  		
+				  		</c:if>
+				  					  		
+					  		<a href="/VIG/event/getEvent?eventId=${event.eventId}">
+						      <img class="eBanner rounded mb-0" src="/VIG/images/others/${event.banner}" style="margin-left: auto; margin-right: auto;">
+						    </a>			  	
+				  		
+				  		</div>
+				  		
+				  		
+				  		<c:set var="i" value="${i+1}" />
+				  	</c:forEach>			
+				  
+				  </div>
+		
+		
+				  <a class="carousel-control-prev" href="#carousel-eBanner" role="button" data-slide="prev" >
+				    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				    <span class="sr-only">Previous</span>
+				  </a>
+				  <a class="carousel-control-next" href="#carousel-eBanner" role="button" data-slide="next">
+				    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+				    <span class="sr-only">Next</span>
+				  </a>
 				
+				</div>
+			</div>		
+		</div>		
 		
 		<div id="categories" class="row" >										
 			<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
 			
-				<div class="col-md-1" style="text-align: center;">
+				<div class="col-sm-1" style="text-align: center;">
 					<button class="btn btn-link" onclick="CategoriesMinus()" type="button" > <i class="fas fa-angle-left"></i></button>	        					      				
 				</div>				
 			
-				<div class="col-md-10" >
+				<div class="col-sm-10" >
 					<div id="categoryList" class="row" style="max-height:100px; flex-wrap: nowrap; overflow: auto;">
 					<c:set var="i" value="0" />						
 					<c:forEach var="category" items="${categoryList}">				
-						<div class="col-md-2" id="category_${i}" style="padding-left: 0px; padding-right: 0px">
-							<div class="view img_categories ">			    			
+						<div class="col-sm-2" id="category_${i}" style="padding-left: 0px; padding-right: 0px;">
+							<div class="view img_categories">			    			
 				    			<img src="/VIG/images/others/${category.categoryImg}" alt="thumbnail" class="img-fluid overflow-hidden rounded-sm" >
 				    			
 				    			<c:if test="${category.categoryName == 'RECOMMEND'}">
@@ -368,7 +369,7 @@
 					</div>	
 				</div>
 				
-				<div class="col-md-1" style="text-align: center;">
+				<div class="col-sm-1" style="text-align: center;">
 					<button class="btn btn-link" type="button" onclick="CategoriesPlue()" > <i class="fas fa-angle-right"></i></button>		  					      				
 				</div>				
 			</div>		
