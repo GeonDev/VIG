@@ -40,15 +40,14 @@ public class UserDaoImpl implements UserDao {
 	
 	@Override
 	public void deleteUser(User user) throws Exception{
-		System.out.println("delete?");
+	
 		sqlSession.update("UserMapper.deleteUser", user);
 	}
 
 	@Override
 	public User getUserOne(String userCode) throws Exception {
-		// TODO Auto-generated method stub
-		User user = sqlSession.selectOne("UserMapper.getUserOne", userCode);
-		return user;
+		// TODO Auto-generated method stub	
+		return sqlSession.selectOne("UserMapper.getUserOne", userCode);
 	}
 
 	public int getCountUserList(Search search) throws Exception {
@@ -114,7 +113,7 @@ public class UserDaoImpl implements UserDao {
 	public boolean duplicationCheck(String email) throws Exception {
 		
 		String result = sqlSession.selectOne("UserMapper.duplicationCheck", email);
-			System.out.println("이메일인증성공기원"+result);
+		
 		if(result != null) {
 			System.out.println("mail check");
 			return false;

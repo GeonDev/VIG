@@ -128,7 +128,7 @@ public class UserServicesImpl implements UserServices {
 
 	@Override
 	public int getLastUserNum() throws Exception {		
-		//최대값 보다 1큰 값을 전달
+		//최대값 보다 1큰 값을 전달 => 유저코드 자동 생성용
 		return (userDao.getLastUserNum()+1);
 	}
 

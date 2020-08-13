@@ -51,7 +51,7 @@ public class FeedController {
 	
 	public static final Logger logger = LogManager.getLogger(FeedController.class); 
 	
-	 private static String OS = System.getProperty("os.name").toLowerCase();
+	private static String OS = System.getProperty("os.name").toLowerCase();
 	
 	@Value("#{commonProperties['uploadPath']}")
 	String uploadPath;

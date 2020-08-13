@@ -34,7 +34,7 @@
  	
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 		<script type="text/javascript">
-					
+			
 		
 		//탈퇴 페이지로 이동 
 		$(function() {
@@ -248,19 +248,19 @@
 					
 				
 				 
-					<c:if test="${sessionScope.user.role=='user'}">  
+					<c:if test="${sessionScope.user.role =='user'}">  
 						<div class="form-group">
 						    <button type="button" class="button btn btn-primary" id="business_btn">비지니스전환</button>
 						</div>
 					</c:if>
 					
-					<c:if test="${sessionScope.user.role=='business'}">  
+					<c:if test="${sessionScope.user.role =='business'}">  
 						<div class="form-group">
 						    <button type="button" class="button btn btn-primary" id="addPrimeFeed_btn">프라임피드 추가 결제</button>
 						</div>
-					</c:if>
+					</c:if>					
 					
-					<c:if test="${empty sessionScope.user.googleId}"> 					
+					<c:if test="${user.googleId == null}"> 					
 				    	<button  class="btn btn-primary btn-block my-4" id="googlelogin" style="width: 500px;">
 				    		<i class="fab fa-google" style="font-size: large; text-align: top;"></i>&emsp; Sign in With Google
 				    	</button>

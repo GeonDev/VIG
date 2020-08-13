@@ -117,9 +117,8 @@
 	 	SET	 	
 	 		self_introduce = #{selfIntroduce:VARCHAR},
 	 		user_name = #{userName:VARCHAR},
-	 		
-	 		profile_img = #{profileImg:VARCHAR}
-	 		
+	 		google_id = #{googleId:VARCHAR},
+	 		profile_img = #{profileImg:VARCHAR}	 		
 	 	WHERE user_code = #{userCode}
 	 </update>	
 
