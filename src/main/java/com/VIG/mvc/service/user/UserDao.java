@@ -47,6 +47,9 @@ public interface UserDao {
 	//이메일인증사용
 	public boolean duplicationCheck(String email) throws Exception;
 	
+	//유저 결제용
+	public void updateBusiness(User user) throws Exception;
+	
 
 	
 }

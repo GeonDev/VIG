@@ -7,7 +7,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class Feed implements Serializable , Comparable<Feed>{
+public class Feed implements Serializable {
 	
 	private int feedId;
 	private String feedTitle;
@@ -33,11 +33,8 @@ public class Feed implements Serializable , Comparable<Feed>{
 	private List<Comment> comments;
 	
 	// 피드가 가지고 있는 키워드 - 서비스에서 세팅해 주어야 한다.
-	private List<ImageKeyword> keywords;
-	
-	//최근 검색 키워드와 겹치는 개수 - 검색시 정렬용으로 사용
-	private int currentKeywordSameCount;
-	
+	private List<ImageKeyword> keywords;	
+
 
 	public Feed() {
 		// TODO Auto-generated constructor stub
@@ -49,18 +46,7 @@ public class Feed implements Serializable , Comparable<Feed>{
 		user.setPassword("");
 		user.setGoogleId("");
 		return user;
-	}
-	
-	@Override
-	public int compareTo(Feed o) {
-		//내림차순 정렬		
-		if(this.currentKeywordSameCount > o.currentKeywordSameCount) {
-			return -1;
-		}else if(this.currentKeywordSameCount < o.currentKeywordSameCount) {
-			return 1;
-		}		
-		
-		return 0;
-	}
+	}	
+
 
 }

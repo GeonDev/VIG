@@ -31,6 +31,8 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+	<!-- sweetAlert -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 	
 <style>
@@ -143,12 +145,13 @@
 	.color {
 	
 	display:inline-block;
-	width: 35px;
-	height: 35px;
+	width: 40px;
+	height: 40px;
 	border-radius: 23px;
 	background-color: #5CA45B;
-	margin: 5px 10px 5px 10px;
-	border: 1px solid white;
+	margin: 5px 8px 5px 8px;
+	border: 3px solid white;
+	cursor: pointer;
 	
 	}
 	
@@ -172,12 +175,22 @@
 	  bottom: 50px;
 	  display: none;
 	  font-size: 45px;
+	  cursor: pointer;
 	 
 	}
 	.fa-arrow-alt-circle-up{
 	  color: #FBA635;
 	
 	}
+	
+	.img_categories {
+		
+		height: 60px;
+		vertical-align: middle;
+		cursor: pointer;
+	
+	}
+	
 
 </style>
 
@@ -211,7 +224,7 @@ $(function(){
 	} );
 	
 	//스크롤탑 애니메이션
-	$( '#top' ).click( function() {
+	$( '#pageUp' ).click( function() {
 		$( 'html, body' ).animate( { scrollTop : 0 }, 400 );
 		return false;
 	} );
@@ -419,25 +432,68 @@ $(function(){
 	//후원
 	$("#donation").on("click", function(){
 		
-		var cf = confirm("후원을 진행 하시겠습니까?");
+		swal({
+			  text: "후원하시겠습니까?",
+			  icon: "info",
+			  buttons: true,
+			  dangerMode: true,
+			})
+			.then((willDelete) => {
+			  if (willDelete) {
+			    self.location="/VIG/payment/addPayment?productType=2&feedId=${feed.feedId}"; //세션에서 user코드를 가져온다.
+			  } else {
+			    swal("후원을 취소하였습니다.");
+			  }
+			});
 		
-		if(cf==true){
-			
-		self.location="/VIG/payment/addPayment?productType=2&feedId=${feed.feedId}"; //세션에서 user코드를 가져온다.
-		
-		} else if (cf==false) {
-			
-			
-			
-		}
 		
 	});
+	
+	
+	$(".img_categories").on("click", function(){
+		
+		self.location="/VIG/search/getSearchList?Mode=Feed&category=${feed.feedCategory.categoryId }";
+		
+	});
+	
 	
 
 
 	
 	
 });
+
+//피드 삭제
+$(function(){
+	
+	
+	$("#deleteFeed").on("click", function(){
+		
+		swal({
+			  title: "Are you sure?",
+			  text: "피드를 삭제하면 완전히 지워집니다.",
+			  icon: "warning",
+			  buttons: true,
+			  dangerMode: true,
+			})
+			.then((willDelete) => {
+			  if (willDelete) {
+				self.location = "/VIG/feed/deleteFeed?feedId=${feed.feedId}";
+			    swal("피드 삭제 완료!", {
+			      icon: "success",
+			    });
+			  } else {
+			    swal("피드 삭제를 취소하였습니다.");
+			  }
+			});
+		
+		
+		
+	});	
+	
+	
+});
+
 
 
 //색상검색
@@ -496,11 +552,10 @@ function imageModal(imageId){
 	
 	<div id="outline">
 	
-	<div id="top">
-	<i class="fas fa-arrow-alt-circle-up"></i>
-	</div>
+	
 	
 	<div id="main">
+
 	
 	<br/>
 	<br/>
@@ -518,10 +573,11 @@ function imageModal(imageId){
 	<h5> ${feed.feedExplanation}</h5>
 
 	</div>
-	<div class="col-2">
+	<div class="col-md-2">
 	<br>
 		<!-- 좋아요 & 조회수 -->
 		<div align="right">
+
 		<c:if test="${isLike == false }">
 		
 		<i id="like" class="fas fa-heart" style="font-size: 25px"> <fmt:formatNumber value="${fn:length(feed.likes)}" pattern="#,####"/></i>
@@ -573,7 +629,7 @@ function imageModal(imageId){
 	<!-- 작성자 프로필 -->
 	<div class="container">
 	 <div class="row">
-		 <div class="col-8">
+		 <div class="col-md-8">
 		 <span id="profile">
 		<img src="/VIG/images/uploadFiles/${feed.writer.profileImg}" class="rounded-circle" width="35px"> &nbsp; <a id="writerName" href="/VIG/myfeed/getMyFeedList?userCode=${feed.writer.userCode}">${feed.writer.userName}</a>
 		 </span>
@@ -604,10 +660,10 @@ function imageModal(imageId){
 	<!--  getFeed 하단부 -->
 	<div class="container">
 	 <div class="row">
-		<div class="col-8">
+		<div class="col-md-8">
 		<div style="font-size: 25px; font-weight: bold"> Comments </div>
 		<div class="row">
-		<div class="col-10" id="comform">
+		<div class="col-md-10" id="comform">
 		<form id="myform">
 			<div class="md-form">
 			  <textarea id="textarea-char-counter" class="form-control md-textarea" length="500" rows="2"></textarea>
@@ -615,7 +671,7 @@ function imageModal(imageId){
 			</div>
 		</form>
 		</div>
-		<div class="col-2" align="right" id="combutton">
+		<div class="col-md-2" align="right" id="combutton">
 		<br>
 		<button type="submit" class="btn btn-indigo">등록</button>
 		</div>
@@ -654,20 +710,25 @@ function imageModal(imageId){
 		
 		</div>
 		
-		<div class="col-4" id="feedInfo">
+		<div class="col-md-4" id="feedInfo">
 		
-			<div class="feedbottom">
+		
+					<div class="view img_categories ">			    			
+		    			<img style="vertical-align: middle;"src="/VIG/images/others/${feed.feedCategory.categoryImg }" alt="thumbnail" class="img-fluid overflow-hidden rounded-sm" >
+
+		    				<div class="mask flex-center rgba-black-strong rounded-sm">	
+		    		   			<p class="white-text" style="font-weight:bold ; font-size: large; padding: 0px;">Category | ${feed.feedCategory.categoryName }</p>					    		    				    		         					      						
+   							</div>
+   					</div>    	
 			
-			<h6 style="font-weight: bold">카테고리    | <a style="display: inline-block; color: black;" href="/VIG/search/getSearchList?Mode=Feed&category=${feed.feedCategory.categoryId }">${feed.feedCategory.categoryName }</a></h6>
 			
-			</div>
 			<br>
 			
 			
 		
 			<c:if test="${!empty feed.feedUseGears }">
 			<div class="feedbottom">
-			<h6 style="font-weight: bold">사용장비</h6>
+			<h6 style="font-weight: bold">Using Gears</h6>
 			
 			${feed.feedUseGears}
 			</div>
@@ -680,7 +741,7 @@ function imageModal(imageId){
 			<c:if test="${!empty images.color }">
 
 			<div class="feedbottom">
-			<h6 style="font-weight: bold">색 상</h6>
+			<h6 style="font-weight: bold">Colors</h6>
 			
 			<c:forEach var="color" items="${images.color}">
 			<c:if test="${!empty color }">
@@ -701,7 +762,7 @@ function imageModal(imageId){
 			
 			<c:if test="${!empty feed.coworkers }">
 			<div class="feedbottom">	
-			<h6 style="font-weight: bold">협업자</h6>
+			<h6 style="font-weight: bold">Coworkers</h6>
 			
 			<c:forEach var="coworkers" items="${feed.coworkers}">
 				<c:set var="i" value="0"/>
@@ -714,7 +775,7 @@ function imageModal(imageId){
 
 			
 			<div class="feedbottom" id="tags" style="display:none">
-			<h6 style="font-weight: bold">태그</h6>
+			<h6 style="font-weight: bold">Tags</h6>
 			
 			<c:forEach var="keyword" items="${feed.keywords}">			
 				<c:if test="${!empty keyword.keywordOrigin}">
@@ -740,7 +801,14 @@ function imageModal(imageId){
 			<jsp:include page="/report/addReport.jsp" />
 	
 	</div>
-	
+		<div id="top">
+		<c:if test="${feed.writer.userCode == user.userCode }">
+		
+		<div id="deleteFeed" style="text-align: center; font-size: 35px; color: red;"><i class="fas fa-trash-alt"></i></div>
+		
+		</c:if>
+		<i id="pageUp" class="fas fa-arrow-alt-circle-up"></i>
+		</div>
 
 	</div>
 	

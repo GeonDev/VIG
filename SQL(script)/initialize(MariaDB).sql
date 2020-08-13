@@ -10,7 +10,7 @@ CREATE TABLE users (
 	user_name  			 VARCHAR(50) 		NOT NULL,
 	password  			 VARCHAR(200),
 	role  				 VARCHAR(10)  		DEFAULT 'user',	
-	profile_img 		 VARCHAR(50)	    DEFAULT 'profile_img.jpg',
+	profile_img 		 VARCHAR(100)	    DEFAULT 'profile_img.jpg',
 	self_introduce  	 VARCHAR(1024),	
 	sex  				 VARCHAR(10),
 	birth  				 INT(4),
@@ -53,7 +53,7 @@ CREATE TABLE feeds (
 
 CREATE TABLE images ( 
 	image_id 				 INT(11)  		NOT NULL AUTO_INCREMENT,
-	feed_id  				 INT(11) 		NOT NULL REFERENCES feeds(feed_id),
+	feed_id  				 INT(11) 		NOT NULL REFERENCES feeds(feed_id) ON DELETE CASCADE,
 	feed_order  			 INT(11), 
 	is_thumbnail 			 TINYINT(1)		DEFAULT 0, 	
 	image_file  			 VARCHAR(100)  	NOT NULL,
@@ -63,7 +63,7 @@ CREATE TABLE images (
 
 CREATE TABLE colors ( 
 	color_id 				 INT(11)   NOT NULL AUTO_INCREMENT,
-	image_id 				 INT(11)   NOT NULL REFERENCES images(image_id),
+	image_id 				 INT(11)   NOT NULL REFERENCES images(image_id) ON DELETE CASCADE,
 	haxcode					 VARCHAR(7),
 	color_r 				 TINYINT(4)  UNSIGNED,
 	color_g 				 TINYINT(4)  UNSIGNED,
@@ -74,8 +74,8 @@ CREATE TABLE colors (
 
 CREATE TABLE joiner ( 
 	joiner_id 				INT(11)   	  NOT NULL AUTO_INCREMENT,
-	user_code 				VARCHAR(20)   NOT NULL REFERENCES users(user_code),
-	feed_id 				INT(11)   	  NOT NULL REFERENCES feeds(feed_id),
+	user_code 				VARCHAR(20)   NOT NULL REFERENCES users(user_code) ,
+	feed_id 				INT(11)   	  NOT NULL REFERENCES feeds(feed_id) ON DELETE CASCADE,
 	is_like 				TINYINT(1),
 	add_date  				DATE,
 	PRIMARY KEY(joiner_id)
@@ -84,7 +84,7 @@ CREATE TABLE joiner (
 
 CREATE TABLE keywords ( 
 	keyword_id 				 INT(11)  		NOT NULL AUTO_INCREMENT,
-	image_id  				 INT(11) 		REFERENCES images(image_id),
+	image_id  				 INT(11) 		REFERENCES images(image_id) ON DELETE CASCADE,
 	is_tag 					 TINYINT(1),
 	user_code  				 VARCHAR(20)    REFERENCES users(user_code),			 
 	keyword_en 				 VARCHAR(100), 
@@ -96,7 +96,7 @@ CREATE TABLE keywords (
 
 CREATE TABLE comments ( 
 	comment_id 				 INT(11)  		NOT NULL AUTO_INCREMENT,
-	feed_id  				 INT(11) 		NOT NULL REFERENCES feeds(feed_id),
+	feed_id  				 INT(11) 		NOT NULL REFERENCES feeds(feed_id) ON DELETE CASCADE,
 	comment_text 			 VARCHAR(1024) 	NOT NULL,
 	user_code   			 VARCHAR(20) 	NOT NULL REFERENCES users(user_code),
 	reg_date  			     DATE,
@@ -109,7 +109,7 @@ CREATE TABLE report (
 	reporter_code 		 VARCHAR(20) 	NOT NULL REFERENCES users(user_code),
 	violator_code 		 VARCHAR(20) 	NOT NULL REFERENCES users(user_code),
 	report_Type 	 	 TINYINT(1),
-	report_feed_id  	 INT(11) 		NOT NULL REFERENCES feeds(feed_id),
+	report_feed_id  	 INT(11) 		NOT NULL REFERENCES feeds(feed_id) ON DELETE CASCADE,
 	report_message 		 VARCHAR(1024), 
 	report_date  		 DATE, 
 	current_ban_type  	 TINYINT(1),
@@ -119,7 +119,7 @@ CREATE TABLE report (
 
 CREATE TABLE history ( 
 	history_id 				INT(11)  		NOT NULL AUTO_INCREMENT,
-	feed_id  				INT(11) 		NOT NULL REFERENCES feeds(feed_id),
+	feed_id  				INT(11) 		NOT NULL REFERENCES feeds(feed_id) ON DELETE CASCADE,
 	watch_user_code   		VARCHAR(20) 	REFERENCES users(user_code),
 	show_date  			    DATE, 
 	ip_address 				VARCHAR(20), 
@@ -138,7 +138,7 @@ CREATE TABLE alarm (
 	alarm_id 			INT(11)  		NOT NULL AUTO_INCREMENT,	
 	send_user_code   	VARCHAR(20) 	NOT NULL REFERENCES users(user_code),
 	receive_user_code   VARCHAR(20) 	NOT NULL REFERENCES users(user_code),
-	like_feed_id    	INT(11)    		REFERENCES feeds(feed_id),
+	like_feed_id    	INT(11)    		REFERENCES feeds(feed_id) ON DELETE CASCADE,
 	is_watch 			TINYINT(1),	
 	alarm_type  		TINYINT(1),	
 	add_date 			DATE, 
@@ -256,15 +256,15 @@ VALUES (category_id, 'RECOMMEND', 'recommend.jpg');
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, state, reg_date)
-VALUES ('admin', '관리자', '1234', 'admin', 'profile_img.jpg', 0, NOW());
+VALUES ('admin', '관리자', '1234', 'admin', 'admin.jpg', 0, NOW());
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
-VALUES ('user01', 'atom', '1111', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
+VALUES ('user01', 'atom', '1111', 'business', 'songeon.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
-VALUES ('user02', 'afternoon', '2222', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+VALUES ('user02', 'afternoon', '2222', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
@@ -284,15 +284,15 @@ VALUES ('user06', 'cassette', '6666', 'business', 'profile_img.jpg', 'Hellow. my
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
-VALUES ('user07', 'chopstick', '7777', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+VALUES ('user07', 'chopstick', '7777', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
-VALUES ('user08', 'diary', '8888', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+VALUES ('user08', 'diary', '8888', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
-VALUES ('user09', 'dish', '9999', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+VALUES ('user09', 'dish', '9999', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
@@ -300,11 +300,11 @@ VALUES ('user10', 'door', '1010', 'business', 'profile_img.jpg', 'Hellow. my nam
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
-VALUES ('user11', 'echo', '1111', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+VALUES ('user11', 'echo', '1111', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
-VALUES ('user12', 'farm', '1212', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+VALUES ('user12', 'farm', '1212', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
@@ -320,7 +320,7 @@ VALUES ('user15', 'door', '1515', 'user', 'profile_img.jpg', 'Hellow. my name is
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
-VALUES ('user16', 'hat', '1616', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+VALUES ('user16', 'hat', '1616', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
@@ -328,15 +328,15 @@ VALUES ('user17', 'jet', '1717', 'business', 'profile_img.jpg', 'Hellow. my name
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
-VALUES ('user18', 'kitchen', '1818', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+VALUES ('user18', 'kitchen', '1818', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
-VALUES ('user19', 'lion', '1919', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+VALUES ('user19', 'lion', '1919', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date, ban_date)
-VALUES ('user20', 'night', '2020', 'user', 'profile_img.jpg', 'Hellow. my name is night!', 2, 0, NOW(), NOW());
+VALUES ('user20', 'night', '2020', 'business', 'profile_img.jpg', 'Hellow. my name is night!', 2, 1000, NOW(), NOW());
 
 
 
@@ -3292,7 +3292,7 @@ VALUES(image_id, 20195, 2, 0,'feed196_3.jpg');
 
 INSERT
 INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
-VALUES(image_id, 20195, 3, 0,'feed192_4.jpg');
+VALUES(image_id, 20195, 3, 0,'feed196_4.jpg');
 
 INSERT
 INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file)
@@ -3632,30 +3632,23 @@ INSERT
 INTO history (history_id, feed_id, watch_user_code, show_date, history_type)
 VALUES(history_id, 20169, 'user01', NOW(), 0);
 
-INSERT INTO 
-event(event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner) 
-VALUES( event_id, '로고 디자인 의뢰 특별 이벤트', 'LOGO BRAND에서 로고디자인을 공모합니다.' , '2020-07-29', '2020-09-29', 'Event02_thumbnail.jpg', 'LOGO&BRAND, 디자인의뢰, 특별이벤트', 'Event02_1.jpg', 0, 'Event02_banner.jpg');
 
 INSERT INTO 
 event(event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner) 
-VALUES( event_id, '더벤티 디자인 공모전', '더벤티에서 다양한 이야기가 담긴 디자인을 공모합니다.' , '2020-08-05', '2020-09-08', 'Event03_thumbnail.jpg', '더벤티공모전, 2020더벤티디자인, 2020더벤티공모전', 'Event03_1.jpg', 0, 'Event03_banner.jpg');
+values( event_id, 'TWOTYPESET', '간직하고 싶은 글자' , '2020-08-05', '2020-09-08', 'Event01_thumbnail.jpg', 'YoonGothicEvent,TPIST,YOONSHOWCASE2020', 'Event01_01.jpg', 0, 'Event01_banner.jpg');
 
 INSERT INTO 
 event(event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner) 
-VALUES( event_id, '중국대표브랜드 펜 디자인 공모전', '중국 5대볼펜 브랜드 vience에서 드로잉펜 디자인 공모전을 진행합니다.' , '2020-09-28', '2020-10-26', 'Event04_thumbnail.jpg', 'Vience공모전, 2020Vience공모전, 2020드로잉펜공모전', 'Event04_1.jpg', 0, 'Event04_banner.jpg');
+values( event_id, 'Design for People', '사람을 위한 디자인' , '2020-07-29', '2020-09-29', 'Event03_thumbnail.jpg', 'ReasonableDesign,DesignForPeople,EveryPersonNeedsDesign', 'Event03_01.jpg', 0, 'Event03_banner.jpg');
 
 INSERT INTO 
 event(event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner) 
-values( event_id, 'The Grand Tour', 'NASA SPACE POSTER DESIGN' , '2020-07-16', '2020-09-17', 'Event05_thumbnail.jpg', 'NASA, PORSTERDESIGN, NASADEGIN', 'Event05_1.jpg', 0, 'Event05_banner.jpg');
-      
-      
-INSERT INTO 
-event(event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner) 
-values( event_id, 'CULT', 'CAMBODIAs ULTIMATE LIFESTYLE TRADE.' , '2020-08-06', '2020-09-17', 'Event06_thumbnail.jpg', 'CAMBODIA, ULTIMATE LIFESTYLE, CULTTRADE', 'Event06_01.jpg', 0, 'Event06_banner.jpg');
+values( event_id, 'HERTZ', 'Function Shifted Answer Code Request' , '2020-07-29', '2020-09-29', 'Event02_thumbnail.jpg', 'REDHEAD,DOUBLE U JAY,A.BREHME', 'Event02_01.jpg', 0, 'Event02_banner.jpg');
 
 INSERT INTO 
 event(event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner) 
-values( event_id, 'FORGE', 'A Collective for car' , '2020-08-06', '2020-09-17', 'Event07_thumbnail.jpg', 'CAMBODIA, ULTIMATE LIFESTYLE, CULTTRADE', 'Event07_01.jpg', 0, 'Event07_banner.jpg');
+values( event_id, 'BOOKLAND', 'BOOKLAND vol.001' , '2020-09-28', '2020-10-26', 'Event04_thumbnail.jpg', 'BOOKLAND,booklandVol001,BOOKLAND EVENT', 'Event04_01.gif', 0, 'Event04_banner.gif');
+
 
 INSERT INTO 
 alarm(alarm_id, send_user_code, receive_user_code,  is_watch, alarm_type, add_date)
@@ -3663,7 +3656,7 @@ VALUES(alarm_id, 'user02', 'user01', 0,  2, DATE_FORMAT('2010-01-03', '%Y-%m-%d'
 
 INSERT INTO 
 alarm(alarm_id, send_user_code, receive_user_code, is_watch, like_feed_id, alarm_type, add_date)
-VALUES(alarm_id, 'user02', 'user01', 0, 20000, 0, DATE_FORMAT('2010-01-03', '%Y-%m-%d'));
+VALUES(alarm_id, 'user02', 'user01', 0, 20000, 0, DATE_FORMAT(NOW(), '%Y-%m-%d'));
 
 
 commit;

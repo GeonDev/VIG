@@ -111,7 +111,7 @@ $(function(){
 		        msg += '상점 거래ID : ' + rsp.merchant_uid;
 		        msg += '결제 금액 : ' + rsp.paid_amount;
 		        msg += '카드 승인번호 : ' + rsp.apply_num;
-		        $("input[name='lastPrice']").val(rsp.paid_amount);
+	//	        $("input[name='lastPrice']").val(rsp.paid_amount);
 		        $("input[name='paymentId']").val(rsp.imp_uid);
 		        $("form").attr("action", "/VIG/payment/addPrime").attr("method", "post").submit();
 		    } else {

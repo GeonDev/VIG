@@ -128,7 +128,7 @@ public class UserServicesImpl implements UserServices {
 
 	@Override
 	public int getLastUserNum() throws Exception {		
-		//최대값 보다 1큰 값을 전달
+		//최대값 보다 1큰 값을 전달 => 유저코드 자동 생성용
 		return (userDao.getLastUserNum()+1);
 	}
 
@@ -138,6 +138,15 @@ public class UserServicesImpl implements UserServices {
 	public boolean duplicationCheck(String email) throws Exception {
 		// TODO Auto-generated method stub	
 		return userDao.duplicationCheck(email);
+	}
+
+	//유저결제용
+	@Override
+	public void updateBusiness(User user) throws Exception {
+		// TODO Auto-generated method stub
+		
+		userDao.updateBusiness(user);
+		
 	}
 
 

@@ -48,14 +48,12 @@
 			 			<br/>		
 			 		</c:when>
 			
-					<c:when test="${user.userCode == writer.userCode}">	
-							
-						<img class="card-img-top" src="/VIG/images/uploadFiles/profile_img.jpg" id="pImg" alt="profile_img">
+					<c:when test="${user.userCode == writer.userCode}">			
+						<img class="card-img-top" src="/VIG/images/uploadFiles/${user.profileImg}" id="pImg" alt="profile_img"/>
 				 			<div class="card-body">
-				 					<h4 class="user_name" align="center"> ${user.userName} </h4>
-				 					<br/>
+				 					<h3 class="user_name" align="center" style="font-weight: bold;"> ${user.userName} </h3>				 					
 				 					<p class="user_bio" align="center"> ${user.selfIntroduce} </p>
-				 					<br><br/>
+				 					<br>
 				 				<p class="sign_date" align="center" style="margin-bottom:30px;"> Member Since :: ${user.regDate}</p>	
 				 				<br/>
 				 			</div>

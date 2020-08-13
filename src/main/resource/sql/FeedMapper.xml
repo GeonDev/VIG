@@ -101,16 +101,15 @@
 			WHERE feeds.feed_id = images.feed_id				
 			AND images.image_id = keywords.image_id
 			AND feeds.user_code = users.user_code
-			AND users.prime_count > 0
-			AND images.is_thumbnail = 1
+			AND users.prime_count > 0			
 			AND feeds.feed_is_prime = 1 
 			AND feeds.feed_state = 0
 			<if test="keyword !=''">
-			AND keywords.keyword_en LIKE CONCAT('%',#{keyword},'%')				
+			AND UPPER(keywords.keyword_en) LIKE CONCAT('%',#{keyword},'%')				
 			</if>
 			GROUP BY feeds.feed_id
 			ORDER BY feeds.prime_feed_view_count
-			limit 2 	
+			limit 3	
 		</select>
 		
 		
@@ -125,7 +124,7 @@
 			AND feeds.feed_title LIKE CONCAT('%',#{keyword},'%')				
 			</if>		
 			ORDER BY feeds.prime_feed_view_count
-			limit 2 	
+			limit 3 	
 		</select>
 		
 		
@@ -152,11 +151,10 @@
 						
 		<select id="getfeedListFromCategory" parameterType="search" resultMap="FeedSelectMap">
 			SELECT *  FROM
-			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feeds.* FROM feeds, categories
-			WHERE feeds.category_id = categories.category_id 
-			AND feeds.feed_state = 0
-			<if test="keyword !=''">
-				AND categories.category_name = #{keyword}
+			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feeds.* FROM feeds
+			WHERE feeds.feed_state = 0
+			<if test="searchType !=''">
+			AND	feeds.category_id = #{searchType}
 			</if>			
 			) temp
 			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}		
@@ -172,7 +170,7 @@
 			AND feeds.feed_state = 0
 			AND feeds.feed_is_prime = 0
 			<if test="keyword !=''">
-			AND keywords.keyword_en LIKE CONCAT('%',#{keyword},'%')				
+			AND UPPER(keywords.keyword_en) LIKE CONCAT('%',#{keyword},'%')				
 			</if>
 			<if test="searchType != 0">
 			AND	feeds.category_id = #{searchType}	
@@ -200,14 +198,12 @@
 				
 		<select id="getfeedListFromColor" parameterType="search" resultMap="FeedSelectMap">
 			SELECT *  FROM
-			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feeds.* FROM feeds, images,colors
+			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feeds.* FROM feeds, images, colors
 			WHERE feeds.feed_id = images.feed_id 
 			AND images.image_id = colors.image_id
 			AND images.is_thumbnail = 1
 			AND feeds.feed_state = 0
-			AND colors.color_r BETWEEN #{startRed} AND #{endRed} 
-			AND colors.color_g BETWEEN #{startGreen} AND #{endGreen} 
-			AND colors.color_b BETWEEN #{startBlue} AND #{endBlue}
+			AND colors.haxcode = #{keyword}
 			<if test="searchType != 0">
 			AND	feeds.category_id = #{searchType}	
 			</if>
@@ -220,6 +216,7 @@
 		<select id ="getfeedTitleList" parameterType="String" resultType="String">
 			SELECT feed_title FROM feeds
 			WHERE feed_title LIKE CONCAT('%',#{value},'%')
+			AND feeds.feed_state = 0 
 			LIMIT 5
 			
 		</select>
@@ -266,7 +263,7 @@
 			WHERE feeds.feed_id = images.feed_id
 			AND images.image_id = keywords.image_id	
 			AND feeds.feed_state = 0
-			AND keywords.keyword_en IN
+			AND UPPER(keywords.keyword_en) IN
 			<foreach collection="keywords" item="item" open="(" close=")" separator=",">
 			 #{item.keywordEn}
 			</foreach>
