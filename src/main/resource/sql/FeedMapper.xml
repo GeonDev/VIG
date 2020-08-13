@@ -101,8 +101,7 @@
 			WHERE feeds.feed_id = images.feed_id				
 			AND images.image_id = keywords.image_id
 			AND feeds.user_code = users.user_code
-			AND users.prime_count > 0
-			AND images.is_thumbnail = 1
+			AND users.prime_count > 0			
 			AND feeds.feed_is_prime = 1 
 			AND feeds.feed_state = 0
 			<if test="keyword !=''">
@@ -110,7 +109,7 @@
 			</if>
 			GROUP BY feeds.feed_id
 			ORDER BY feeds.prime_feed_view_count
-			limit 2 	
+			limit 3	
 		</select>
 		
 		
@@ -122,10 +121,10 @@
 			AND feeds.feed_state = 0
 			AND users.prime_count > 0
 			<if test="keyword !=''">
-			AND UPPER(feeds.feed_title) LIKE CONCAT('%',#{keyword},'%')				
+			AND feeds.feed_title LIKE CONCAT('%',#{keyword},'%')				
 			</if>		
 			ORDER BY feeds.prime_feed_view_count
-			limit 2 	
+			limit 3 	
 		</select>
 		
 		
@@ -152,11 +151,10 @@
 						
 		<select id="getfeedListFromCategory" parameterType="search" resultMap="FeedSelectMap">
 			SELECT *  FROM
-			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feeds.* FROM feeds, categories
-			WHERE feeds.category_id = categories.category_id 
-			AND feeds.feed_state = 0
-			<if test="keyword !=''">
-				AND categories.category_name = #{keyword}
+			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feeds.* FROM feeds
+			WHERE feeds.feed_state = 0
+			<if test="searchType !=''">
+			AND	feeds.category_id = #{searchType}
 			</if>			
 			) temp
 			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}		
@@ -188,7 +186,7 @@
 			WHERE feeds.feed_state = 0
 			AND feeds.feed_is_prime = 0
 			<if test="keyword !=''">
-			AND UPPER(feeds.feed_title) LIKE CONCAT('%',#{keyword},'%')				
+			AND feeds.feed_title LIKE CONCAT('%',#{keyword},'%')				
 			</if>
 			<if test="searchType != 0">
 			AND	feeds.category_id = #{searchType}	
@@ -217,7 +215,8 @@
 		<!-- 자동완성용 쿼리문 -->
 		<select id ="getfeedTitleList" parameterType="String" resultType="String">
 			SELECT feed_title FROM feeds
-			WHERE UPPER(feed_title) LIKE CONCAT('%',#{value},'%')
+			WHERE feed_title LIKE CONCAT('%',#{value},'%')
+			AND feeds.feed_state = 0 
 			LIMIT 5
 			
 		</select>
