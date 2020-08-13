@@ -56,7 +56,7 @@
 		margin: 3px auto;
 	
 	}
-	
+
 
 
 
@@ -108,7 +108,7 @@ $(function(){
 		        msg += '상점 거래ID : ' + rsp.merchant_uid;
 		        msg += '결제 금액 : ' + rsp.paid_amount;
 		        msg += '카드 승인번호 : ' + rsp.apply_num;
-		        $("input[name='lastPrice']").val(rsp.paid_amount);
+		     //   $("input[name='lastPrice']").val(rsp.paid_amount);
 		        $("input[name='paymentId']").val(rsp.imp_uid);
 		        $("form").attr("action", "/VIG/payment/addBusiness").attr("method", "post").submit();
 		    } else {
@@ -150,8 +150,64 @@ $(function(){
 	
 	<div id=main>
 	
+			<div class="container">
+			
+			  <!-- Section -->
+			  <section>
+			
+			    <h3 class="font-weight-bold text-center dark-grey-text pb-2">비즈니스 계정 전환</h3>
+			    <hr>
+			    <div class="row">
+			
+			       <div class="col-md-6 col-xl-3">
+			        <div class="card text-center rgba-brown-strong text-white">
+			          <div class="card-body">
+			            <p class="mt-4 pt-2"><i class="far fa-object-ungroup fa-4x"></i></p>
+			            <h5 class="font-weight-normal my-4 py-2"><a class="text-white" href="#">Prime Feed</a></h5>
+			            <p class="mb-4">내 피드를 메인에<br>우선적으로 노출되는 <br>Prime Feed로 만들 수 있습니다.</p>
+			          </div>
+			        </div>
+			      </div>
+			
+			      <div class="col-md-6 col-xl-3">
+			        <div class="card text-center">
+			          <div class="card-body">
+			            <p class="mt-4 pt-2"><i class="fas fa-gifts fa-4x"></i></p>
+			            <h5 class="font-weight-normal my-4 py-2"><a class="dark-grey-text" href="#">1,000 Prime Count</a></h5>
+			            <p class="text-muted mb-4">최초 결제시 <strong>1,000건</strong>의 Prime Feed 노출 수를 제공합니다.</p>
+			          </div>
+			        </div>
+			      </div>
+			
+			      <div class="col-md-6 col-xl-3">
+			        <div class="card text-center rgba-indigo-strong text-white">
+			          <div class="card-body">
+			            <p class="mt-4 pt-2"><i class="fas fa-chart-line fa-4x"></i></p>
+			            <h5 class="font-weight-normal my-4 py-2"><a class="text-white" href="#">피드 통계 제공</a></h5>
+			            <p class="mb-4">Prime Feed가 <br>노출된 숫자, 좋아요, 조회수를 월별 통계로 제공합니다.<br></p>
+			          </div>
+			        </div>
+			      </div>
+			      
+			      <div class="col-md-6 col-xl-3">
+			        <div class="card text-center ">
+			          <div class="card-body">
+			            <p class="mt-4 pt-2"><i class="fas fa-comments-dollar fa-4x grey-text"></i></p>
+			            <h5 class="font-weight-normal my-4 py-2"><a class="dark-grey-text" href="#">후원받기 </a></h5>
+			            <p class="text-muted mb-4">비즈니스 계정은 <br>다른 이용자로부터 <br>후원을 받고 수익을 창출할 수 있습니다. </p>
+			          </div>
+			        </div>
+			      </div>
+			
+			
+			    </div>
+			
+			  </section>
+			  <!-- Section -->
+			
+			</div>
 	
-	<h2 align="center" style="font-weight: bold;" > 비즈니스 계정 전환 </h2>
+	
 	<hr>
 	<br>
 	<form class="donationform">
@@ -193,9 +249,15 @@ $(function(){
 		<input type="hidden" name="paymentId">
 		<input type="hidden" name="paymentType">
 		<input type="hidden" name="productType" value="1">
-	
-	
+		
+		
+
 	</div>
+		<div class="row" style="text-align: center;">
+			 <div class="col-md-6" style="align: center; left: 25%">
+				<p style="font-size: 11px">결제를 위해 귀하의 개인정보를 제3자에게((주)아임포트)에 제공하는데 동의하십니까?<br>결제하시고자 하는 상품은 디지털 상품으로 결제와 동시에 사용되어 환불이 불가합니다.<br> 위 사항을 숙지하셨습니까?</p>
+			</div>					
+		</div>
 	
 	<hr/>
 	

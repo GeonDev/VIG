@@ -121,10 +121,18 @@ public class PaymentController {
 		System.out.println(payment);
 		User sessionUser = (User)session.getAttribute("user");
 		
+		User dbuser = userServices.getUserOne(sessionUser.getUserCode());
+		//db에서 user정보 가져와서 Setting 해주기
+		int count = dbuser.getPrimeCount();
+		count = count+1000;
+		dbuser.setPrimeCount(count);
 		
-		userServices.updateBusiness(sessionUser);
-		payment.setBuyer(sessionUser);
+		userServices.updateBusiness(dbuser);
+		
+		payment.setBuyer(dbuser);
 		paymentServices.addPayment(payment);
+		
+		session.setAttribute("user", dbuser);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("forward:/payment/addPayment.jsp");
@@ -138,17 +146,22 @@ public class PaymentController {
 		System.out.println(payment);
 		User sessionUser = (User)session.getAttribute("user");
 		
-		//role 변경
-		sessionUser.setRole("business");
+		User dbuser = userServices.getUserOne(sessionUser.getUserCode());
+		//db에서 user정보 가져와서 Setting 해주기
+		dbuser.setRole("business");
+		int count = dbuser.getPrimeCount();
+		count = count+1000;
+		dbuser.setPrimeCount(count);
 		
-		//프라임카운트와 롤 바꿔준다.
-		userServices.updateBusiness(sessionUser);
+		userServices.updateBusiness(dbuser);
 		
 		//업데이트 한 유저정보로 바꿔준다.
-		User dbuser = userServices.getUserOne(sessionUser.getUserCode());
 		payment.setBuyer(dbuser);
 		
+		System.out.println(payment);
 		paymentServices.addPayment(payment);
+		
+		session.setAttribute("user", dbuser);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("forward:/payment/addPayment.jsp");
