@@ -10,7 +10,7 @@ CREATE TABLE users (
 	user_name  			 VARCHAR(50) 		NOT NULL,
 	password  			 VARCHAR(200),
 	role  				 VARCHAR(10)  		DEFAULT 'user',	
-	profile_img 		 VARCHAR(50)	    DEFAULT 'profile_img.jpg',
+	profile_img 		 VARCHAR(100)	    DEFAULT 'profile_img.jpg',
 	self_introduce  	 VARCHAR(1024),	
 	sex  				 VARCHAR(10),
 	birth  				 INT(4),
@@ -256,11 +256,11 @@ VALUES (category_id, 'RECOMMEND', 'recommend.jpg');
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, state, reg_date)
-VALUES ('admin', '관리자', '1234', 'admin', 'profile_img.jpg', 0, NOW());
+VALUES ('admin', '관리자', '1234', 'admin', 'admin.jpg', 0, NOW());
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
-VALUES ('user01', 'atom', '1111', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
+VALUES ('user01', 'atom', '1111', 'business', 'songeon.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)

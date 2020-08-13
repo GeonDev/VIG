@@ -90,7 +90,14 @@ public class UserController {
 		String query = "code=" + code;
 		query += "&client_id=" + "82747934090-ljsrvma8goa9dskv7hchor1mt2atl1ao.apps.googleusercontent.com";
 		query += "&client_secret=" + "bTfZRbsjifaPhndVAiFtbFYP";
-		query += "&redirect_uri=" + "http://localhost:8080/VIG/user/googleLogin";
+		
+		//서버 os가 윈도우라면 로컬로 판단
+		if(OS.contains("win")) {
+			query += "&redirect_uri=" + "http://localhost:8080/VIG/user/googleLogin";	
+		}else {
+			query += "&redirect_uri=" + "http://ec2-13-125-196-55.ap-northeast-2.compute.amazonaws.com:8080/VIG/user/googleLogin";
+		}		
+		
 		query += "&grant_type=authorization_code";
 
 		String tokenJson = CommonUtil.getHttpConnection("https://accounts.google.com/o/oauth2/token", query);	
@@ -101,10 +108,10 @@ public class UserController {
 		
 		GoogleProfile profile = gson.fromJson(ret, GoogleProfile.class);
 		
-		//로그인된 상테인지 체크		
-		String userCode = ((User)session.getAttribute("user")).getUserCode();
+		//로그인된 상태인지 체크		
+		User checkUser = ((User)session.getAttribute("user"));
 		
-		if(!CommonUtil.null2str(userCode).equals("")) {		
+		if(checkUser != null) {		
 			
 			//이미 같은 정보로 로그인한 기록이 있을 경우
 			if(userServices.getGoogleID(profile.getId()) != null) {				
@@ -112,16 +119,17 @@ public class UserController {
 				return new ModelAndView("forward:/common/alertView.jsp", "message", "이미 연동된 계정이 있습니다.");
 			} 
 			
-			//로그인된 유저라면 구글 정보를 업데이트 
-			User temp = userServices.getUserOne(userCode);
-			temp.setGoogleId(profile.getId());
+			//로그인된 유저라면 구글 정보를 업데이트 -> 세션에는 비밀번호가 없어 DB에서 전체 정보를 다시 받음			
+			User userTemp = userServices.getUserOne(checkUser.getUserCode());
 			
-			userServices.updateUser(temp);
+			userTemp.setGoogleId(profile.getId());
+			
+			userServices.updateUser(userTemp);
 			
 			//세션에 저장된 정보를 업데이트
-			session.setAttribute("user", temp);
+			session.setAttribute("user", userTemp);
 			
-			return new ModelAndView("forward:/main/main.jsp");
+			return new ModelAndView("redirect:/main/VIG");
 			
 		}else {
 			
@@ -132,7 +140,7 @@ public class UserController {
 				
 				if(user.getState() == 0 ) {
 					session.setAttribute("user",user);							
-					return new ModelAndView("forward:/main/main.jsp");
+					return new ModelAndView("redirect:/main/VIG");
 					
 				}else if(user.getState() == 3 || user.getState() == 4){		
 					String msg = "사용할 수 없는 아이디입니다";				
