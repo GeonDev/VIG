@@ -264,7 +264,7 @@ VALUES ('user01', 'atom', '1111', 'business', 'profile_img.jpg', 'Hellow. my nam
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
-VALUES ('user02', 'afternoon', '2222', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+VALUES ('user02', 'afternoon', '2222', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
@@ -284,15 +284,15 @@ VALUES ('user06', 'cassette', '6666', 'business', 'profile_img.jpg', 'Hellow. my
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
-VALUES ('user07', 'chopstick', '7777', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+VALUES ('user07', 'chopstick', '7777', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
-VALUES ('user08', 'diary', '8888', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+VALUES ('user08', 'diary', '8888', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
-VALUES ('user09', 'dish', '9999', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+VALUES ('user09', 'dish', '9999', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
@@ -300,11 +300,11 @@ VALUES ('user10', 'door', '1010', 'business', 'profile_img.jpg', 'Hellow. my nam
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
-VALUES ('user11', 'echo', '1111', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+VALUES ('user11', 'echo', '1111', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
-VALUES ('user12', 'farm', '1212', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+VALUES ('user12', 'farm', '1212', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
@@ -320,7 +320,7 @@ VALUES ('user15', 'door', '1515', 'user', 'profile_img.jpg', 'Hellow. my name is
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
-VALUES ('user16', 'hat', '1616', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+VALUES ('user16', 'hat', '1616', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
@@ -328,15 +328,15 @@ VALUES ('user17', 'jet', '1717', 'business', 'profile_img.jpg', 'Hellow. my name
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
-VALUES ('user18', 'kitchen', '1818', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+VALUES ('user18', 'kitchen', '1818', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
-VALUES ('user19', 'lion', '1919', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 0, NOW());
+VALUES ('user19', 'lion', '1919', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date, ban_date)
-VALUES ('user20', 'night', '2020', 'user', 'profile_img.jpg', 'Hellow. my name is night!', 2, 0, NOW(), NOW());
+VALUES ('user20', 'night', '2020', 'business', 'profile_img.jpg', 'Hellow. my name is night!', 2, 1000, NOW(), NOW());
 
 
 
@@ -3656,7 +3656,7 @@ VALUES(alarm_id, 'user02', 'user01', 0,  2, DATE_FORMAT('2010-01-03', '%Y-%m-%d'
 
 INSERT INTO 
 alarm(alarm_id, send_user_code, receive_user_code, is_watch, like_feed_id, alarm_type, add_date)
-VALUES(alarm_id, 'user02', 'user01', 0, 20000, 0, DATE_FORMAT('2010-01-03', '%Y-%m-%d'));
+VALUES(alarm_id, 'user02', 'user01', 0, 20000, 0, DATE_FORMAT(NOW(), '%Y-%m-%d'));
 
 
 commit;

@@ -18,13 +18,10 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.VIG.mvc.service.color.ColorServices;
 import com.VIG.mvc.service.domain.Feed;
@@ -106,7 +103,7 @@ public class RestSearchController {
 			return null;
 		}
 		
-		String key = jsonData.get("keyword").toUpperCase();
+		String key = jsonData.get("keyword");
 		
 		//피드의 타이틀을 자동완성
 		if(jsonData.get("mode").equals("Feed")) {
@@ -126,8 +123,9 @@ public class RestSearchController {
 			return userServices.getAutoUserName(key);
 		}
 		
-		return null;
 		
+		//비정상적인 값이 왔을 경우 종료
+		return null;		
 	}
 	
 	
@@ -166,7 +164,10 @@ public class RestSearchController {
 		
 		search.setCurrentPage(Integer.valueOf(jsonData.get("currentPage")));
 		search.setPageSize(pageSize);
-		search.setKeyword(jsonData.get("category"));
+		
+		//카테고리 ID 세팅
+		search.setSearchType(Integer.parseInt(jsonData.get("category")));
+		
 		//로그인한 유저 정보를 받아옴
 		User user = (User)session.getAttribute("user");
 		
@@ -174,7 +175,7 @@ public class RestSearchController {
 		
 		
 		//선택된 카테고리가 사용자 추천인지 체크
-		if(search.getKeyword().equals("RECOMMEND")) {
+		if(search.getSearchType() ==  10012) {
 			
 			//로그인 하지 않았다면 조회수가 가장 많은 피드를 추천
 			if(user == null) {
@@ -216,7 +217,7 @@ public class RestSearchController {
 							if(!keyword.equals("")) {
 								logger.debug("불러온 쿠키 값 : " + keyword);
 								ImageKeyword temp = new ImageKeyword();								
-								temp.setKeywordEn(keyword.toUpperCase());	
+								temp.setKeywordEn(keyword);	
 								
 								keywordList.add(temp);
 							}
@@ -230,7 +231,7 @@ public class RestSearchController {
 					feedlist = CommonUtil.checkEqualFeed(feedServices.getRecommendFeedList(tempSearch));									
 	
 					
-				//다른 피드를 본 기록이 없는 유저	
+				// 다른 피드를 본 기록이 없는 유저	
 				}else {
 					// 조회수가 가장 많은 피드를 추천
 					feedlist = feedServices.getHightViewFeedList(search);
@@ -269,7 +270,7 @@ public class RestSearchController {
 		
 	
 	
-	//피드 검색 결과를 반환
+	//선택된 모드에 따라 검색 결과를 반환
 	@RequestMapping(value = "json/getSearchResultList")
 	public Map<String, Object> getSearchResult(@RequestBody Map<String, String> jsonData, HttpSession session, HttpServletRequest request, HttpServletResponse response ) throws Exception {	
 		
@@ -277,6 +278,7 @@ public class RestSearchController {
 		
 		Search search = new Search();		
 		
+		// 몇번째 페이지를 불러와야 하는지 세팅
 		search.setCurrentPage(Integer.valueOf(jsonData.get("currentPage")));
 		search.setPageSize(pageSize);		
 		
@@ -318,41 +320,47 @@ public class RestSearchController {
 				}else if( jsonData.get("keyword").charAt(0) == '#' ) {
 					
 					search.setKeyword(jsonData.get("keyword"));
+					
+					//저장 시 출력하는 해쉬 코드로 변환한다. -> 색상범위를 지정해줌
 					search = CommonUtil.getHaxtoRGB(search, colorRange);					
 					
 					//해쉬코드형식으로 정확하게 도착했다면
-					if(search !=null) {
+					if(search != null) {
 						//색상 기반으로 검색
+						logger.debug("변환된 색상 : "+ search.getKeyword());
 						feedlist = feedServices.getFeedListFromColor(search);
 					}				
 				
 				}else {
 					//검색어를 영어로 변역
 					String keyword = Translater.autoDetectTranslate(jsonData.get("keyword"),"en");
-					search.setKeyword(keyword.toUpperCase());
+					search.setKeyword(keyword);
 					
 					//검색어를 쿠키에 추가
 					addSearchKeyCookie(keyword, request, response);					
 					feedlist = feedServices.getFeedListFromKeyword(search);
 					primeFeed = feedServices.getPrimeFeed(search);
-				}				
-				
+				}					
 			}			
-			
 
-			
-			//프라임 피드는 2개 출력한다.
-			if(feedlist.size() > 1  && primeFeed.size() > 1 ) {					
-				//선택된 프라임 피드를 히스토리에 저장
-				setPrimeHistory(primeFeed, user, CommonUtil.getUserIp(request));					
+						
+			//프라임 피드를 지정된 위치에 출력시킨다.
+			if(primeFeed.size() > 0 ) {					
+					
+				for(int i=0; i< primeFeed.size(); i++) {
+					//프라임피드를 넣을 위치
+					int index = i*5;
+					
+					if(index > feedlist.size()-1) {
+						index = feedlist.size()-1;
+					}					
 				
-				//추천한 프라임피드가 이미 리스트에 있다면 삭제하고 최상위로 배치	
-				feedlist = setFeedOrder(feedlist, primeFeed.get(0), 0);
-				
-				//추천한 프라임피드가 이미 리스트에 있다면 삭제하고 페이지 뒤로 배치
-				feedlist = setFeedOrder(feedlist, primeFeed.get(1), feedlist.size()-1);				
-				
-			}	
+					feedlist.add(index, primeFeed.get(i));
+					
+					//선택된 프라임 피드를 히스토리에 저장
+					setPrimeHistory(primeFeed.get(i), user, CommonUtil.getUserIp(request));
+				}				
+			}				
 			
 			//숨김피드는 빼준다.
 			if(user !=null) {
@@ -398,13 +406,14 @@ public class RestSearchController {
 					
 					if(search != null) {
 						//색상 기반으로 검색
+						logger.debug("변환된 색상 : "+ search.getKeyword());	
 						imageList = imageServices.getImageListFromColor(search);
 					}
 					
 				}else {
 					//검색어를 영어로 변역
 					String keyword = Translater.autoDetectTranslate(jsonData.get("keyword"),"en");
-					search.setKeyword(keyword.toUpperCase());
+					search.setKeyword(keyword);
 					
 					//검색어를 쿠키에 추가
 					addSearchKeyCookie(keyword, request, response);
@@ -493,7 +502,7 @@ public class RestSearchController {
 					logger.debug("불러온 쿠키 값 : " + keyword);
 					ImageKeyword temp = new ImageKeyword();
 					temp.setImageId(image.getImageId());
-					temp.setKeywordEn(keyword.toUpperCase());	
+					temp.setKeywordEn(keyword);	
 					
 					keylist.add(temp);
 				}
@@ -557,7 +566,7 @@ public class RestSearchController {
 					logger.debug("불러온 쿠키 값 : " + keyword);
 					ImageKeyword temp = new ImageKeyword();
 					temp.setImageId(image.getImageId());
-					temp.setKeywordEn(keyword.toUpperCase());	
+					temp.setKeywordEn(keyword);	
 					
 					keylist.add(temp);
 				}
@@ -600,37 +609,15 @@ public class RestSearchController {
 		//중복체크후 반환
 		map.put("list", CommonUtil.checkEqualImage(relatedImages));
 		return map;
-	}
-	
-		
-	
-	//특정 피드를 원하는 위치로 이동
-	private List<Feed> setFeedOrder(List<Feed> base, Feed prime, int index){			
-		
-		int deleteIndex = 0;	
-		
-		for(int i = 0; i<base.size(); i++ ) {
-			if(base.get(i).getFeedId() == prime.getFeedId()) {
-				deleteIndex = i;
-				break;
-			}			
-		}		
-		base.remove(deleteIndex);
-		
-		//원하는 위치에 삽입
-		base.add(index, prime);
-		
-		return base;
-	}
-	
+	}	
 	
 	//프라임피드 히스토리 기록
-	private void setPrimeHistory(List<Feed> primeFeed, User user, String IP) throws Exception {		
-		for(Feed f : primeFeed ) {
+	private void setPrimeHistory(Feed primeFeed, User user, String IP) throws Exception {		
+		
 			History primeHistory = new History();
 			
 			//해당 피드의 작성자를 불러옴
-			User writer = userServices.getUserOne(f.getWriter().getUserCode());
+			User writer = userServices.getUserOne(primeFeed.getWriter().getUserCode());
 			
 			//프라임 피드 카운트를 깎음
 			if((writer.getPrimeCount()-1) < 0) {
@@ -645,7 +632,7 @@ public class RestSearchController {
 			
 			//히스토리 타입 - 프라임 피드 노출
 			primeHistory.setHistoryType(2);
-			primeHistory.setShowFeed(f);			
+			primeHistory.setShowFeed(primeFeed);			
 			primeHistory.setIpAddress(IP);
 			
 			//유저가 로그인 한 경우 저장
@@ -655,9 +642,9 @@ public class RestSearchController {
 			
 			historyServices. addHistory(primeHistory);			
 		
-			f.setPrimeFeedViewCount(f.getPrimeFeedViewCount()+1);
-			feedServices.updatePrimeFeedViewCount(f);
-		}		
+			primeFeed.setPrimeFeedViewCount(primeFeed.getPrimeFeedViewCount()+1);
+			feedServices.updatePrimeFeedViewCount(primeFeed);
+				
 	}
 	
 	
