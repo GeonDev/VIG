@@ -159,8 +159,12 @@
 				 </div>
   			<!-- 타이틀 -->
 			    <div class="col-md-10" id="mainMyFeedPage" >
-	
+	<c:if test="${user.role == 'admin' }">
 	<h2> 전체 출금 신청 목록 </h2>
+	</c:if>
+	<c:if test="${user.role == 'business' }">
+	<h2> 출금 목록 </h2>
+	</c:if>
 	<hr>
 	
 	<div class="container">
