@@ -27,8 +27,10 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+	<!--  sweet Alert -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<!--  socket.io -->
 	<script src="http://192.168.0.13:3000/socket.io/socket.io.js"></script>
-	
 	
 	<style type="text/css">
 	 body {
@@ -145,12 +147,19 @@
 	
 	function removeChat(){
 		
-		$("h3").remove();
-		$("#selectUser div").remove();
 		$(".chat-body div").remove();
 		
 		
 	}
+	
+	function showChat(){
+		
+		$("#selectUser").show();
+		$(".chat-body").show();
+		
+		
+	}
+	
 	
 	function getChat(userinfo){
 		//roomId, userCode, userName, profileImg 가 순서대로 온다.
@@ -158,19 +167,19 @@
 		//chat부분 초기화
 		removeChat();
 		//function으로 넘어오는 값 parsing
-		console.log("!!!"+userinfo);
+
 		var list = userinfo.split(",");
-		console.log(list);
+
 		$('input[name="roomId"]').val("");
 		selectUser = list[1];
 		$('input[name="selectUser"]').val(selectUser);
 		$('input[name="roomId"]').val(list[0]);
-		console.log("roomId="+$('input[name="selectUser"]').val());
-		
-		var select = $("#selectChat").text();
-		//선택한 유저가 이미 선택되었는지 확인,
-		
+
 	
+		//채팅쪽 다시 보여주기
+		$('h3').hide();
+		showChat();
+		
 		$.ajax({
 			url: url+'chat/getChat/'+list[0],
 			method: 'get',
@@ -188,12 +197,12 @@
 				var inputSelect = document.getElementsByName("selectUser");
 				var user = '<div class="selectChat" style="vertical-align: middle">'+
 				"<img class='profileImage' src='/VIG/images/uploadFiles/"+list[3]+"\'>"+
-				"<p id='selectChat' style='display: inline-block; margin: 3px auto; font-weight: bold;'>"+list[2]+"</p></div>";
+				"<p id='selectChat' style='display: inline-block; margin: 3px auto; font-weight: bold;'>"+list[2]+"</p>("+list[1]+")</div>";
 				
 				 for(var i = 0; i<data.length; i++){
-					 
+					
 					 if(data[i].sender.userCode != selectUser){
-							
+						 
 							displayValue ="<div class='media' style='align: right; text-align:right; padding-right: 8px'>"+
 							"<div class='media-body' style='align: right'><div class='innermedia'>" + data[i].contents + "<br><span class='msg-body'>("+data[i].createdAt+")</span></div></div></div>";
 							
@@ -201,11 +210,11 @@
 								
 								
 							} else {
-								
+								console.log(i);
 							displayValue ="<div class='media' style='align: left; text-align:left'><div class='media-left'><span class='author' style='font-weight: bold; color: black; text-align:right;'>"
 								+ data[i].sender.userName + "</span></div><div class='innermedia'><div class='media-body' style='align: left'>" + data[i].contents + "<br><span class='msg-body'>("+data[i].createdAt+")</span></div></div></div>";
 								
-								$('.chat-body').append(displayValue);
+							$('.chat-body').append(displayValue);
 								
 							}
 
@@ -215,7 +224,7 @@
 				}
 				$("#chatPlace").attr("style", "visibility:visible");
 				chatScrollfix();
-				$("#selectUser").append(user);
+				$("#selectUser").html(user);
 				
 				
 				
@@ -228,6 +237,63 @@
 		
 		
 	};
+	
+	
+	function getChatList(socketUser) {
+		
+		$(".user_list div").remove();
+		//page로딩시 ajax로 userlist를 가져온다.
+		$.ajax({
+			
+			url: url+'chat/getChatList/'+socketUser.userCode,
+			method: 'get',
+			dataType: 'json',
+			async: false,
+			headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+			},
+			success: function(JSONData, status) {
+				
+				data = JSON.stringify(JSONData);
+				console.log(data);
+				data = JSON.parse(data);
+				for(var i = 0; i < data.length; i++){
+					
+					
+						
+					
+						for(var j=0; j< data[i].userCodes.length; j++) {
+							
+							
+							if(username != data[i].userCodes[j].userCode){ 
+								
+								var userinfo="";
+								userinfo += data[i]._id+",";
+								userinfo += data[i].userCodes[j].userCode+",";
+								userinfo += data[i].userCodes[j].userName+",";
+								userinfo += data[i].userCodes[j].profileImg;
+								userinfo.replace('undefined', "");
+					
+							user = '<div class="chatUser" id=\"'+data[i].userCodes[j].userCode+'\"onClick="getChat(\''+userinfo+'\')">'+
+											"<img class='profileImage' src='/VIG/images/uploadFiles/"+data[i].userCodes[j].profileImg+"\'>"+
+											"<p style='display: inline-block; margin: 3px auto; font-weight: bold'>"+data[i].userCodes[j].userName+"</p>("+data[i].userCodes[j].userCode+")</div>"
+							
+							
+							$(".user_list").append(user);
+							} 
+						
+						
+						}
+					
+				}
+					
+				
+			}
+			});
+		
+		
+	}
 	
 	
 	
@@ -250,7 +316,6 @@
 				
 				dbuser = JSONData;
 				dbuser = JSON.parse(JSON.stringify(dbuser, ["userCode","userName", "profileImg"]));
-				console.log("로딩중"+dbuser);
 			}
 		});
 		
@@ -260,231 +325,170 @@
 	};
 	
 	
+	//채팅 삭제
 	function deleteChat(){
-		
-		
-		var result = confirm("그동안의 메세지가 모두 지워집니다. 삭제하시겠습니까?");
-		
-		if(result){
-		
-		roomId = $("input[name='roomId']").val();
-		
-		socket.emit('deleteChat', roomId);
-		$("#chatPlace").remove();
-		console.log("!!!!!!!!!!!!!!"+selectUser);
-		$("#"+selectUser).remove();
-		
-		}
-		
+			
+			
+		    roomId = $("input[name='roomId']").val();
+			
+		    console.log("delete"+roomId);
+		    
+			socket.emit('deleteChat', roomId);
+			$("#"+selectUser).remove();
+			$("#chatPlace").hide();
+			$("h3").show();
 		
 	};
 	
 	$(function(){	
 		
 				
-				//첫 로딩시에는 chat영역 안보임
-				$("#chatPlace").attr("style", "visibility:hidden");
-				
-				socket = io.connect(url);
-			
-				
-				//socket으로 서버에 username = socketId로 전달할 수 있도록 함
-				socketUser.userCode = username; //userCode 심어줌
-				socketUser.profileImg ='${user.profileImg}';
-				socketUser.userName = '${user.userName}';
-				socket.emit('setSocketId', socketUser);
-
-				
-				socket.on('connect', function(){
-	
-					$('input[name=username]').val(username);
-	
-				});
-				
-				
-				//보낸 메세지 받기
-				socket.on('send message', function(data){
-					data = JSON.stringify(data);
-					data = JSON.parse(data);
-					console.log(data);
-					 if(data.sender.userCode == username){
-							
-							displayValue ="<div class='media' style='align: right ;text-align:right'>"+
-							"<div class='media-body'><div class='innermedia'>" + data.contents + "<br><span class='msg-body'>("+data.createdAt+")</span></div></div></div>";
-							
-							console.log(displayValue);
-							
-								
-								
-							} else {
-								
-							displayValue ="<div class='media' style='align: left ;text-align:left; padding-right: 8px'><div class='media-left'><span class='author' style='font-weight: bold; color: black; text-align:right;'>"
-								+ data.sender.userName + "</span></div><div class='innermedia'><div class='media-body'>" + data.contents + "<br><span class='msg-body'>("+data.createdAt+")</span></div></div></div>";
-								
-							console.log(displayValue);
-							
-							}
-					 $('.chat-body').append(displayValue);
-					 
-				});
-
-				
-				//page로딩시 ajax로 userlist를 가져온다.
-				$.ajax({
+					//첫 로딩시에는 chat영역 안보임
+					$("#chatPlace").hide();
 					
-					url: url+'chat/getChatList/'+socketUser.userCode,
-					method: 'get',
-					dataType: 'json',
-					async: false,
-					headers : {
-						"Accept" : "application/json",
-						"Content-Type" : "application/json"
-					},
-					success: function(JSONData, status) {
-						
-						data = JSON.stringify(JSONData);
-						console.log(data);
-						data = JSON.parse(data);
-						console.log("JsonData"+data);
-						console.log("json크기"+data.length);
-						console.log("username확인"+username);
-						for(var i = 0; i < data.length; i++){
-							
-							
-								
-							
-								for(var j=0; j< data[i].userCodes.length; j++) {
-									
-									
+					socket = io.connect(url);
+				
+					
+					//socket으로 서버에 username = socketId로 전달할 수 있도록 함
+					socketUser.userCode = username; //userCode 심어줌
+					socketUser.profileImg ='${user.profileImg}';
+					socketUser.userName = '${user.userName}';
+					socket.emit('setSocketId', socketUser);
 	
-									if(i==0){
-										$('input[name="roomId"]').val(data[i]._id);
-									}
-									
-									if(username != data[i].userCodes[j].userCode){ 
-										console.log(data[i].userCodes[j].userCode);
-										console.log(data[i].userCodes[j].userName);
-										
-										var userinfo="";
-										userinfo += data[i]._id+",";
-										userinfo += data[i].userCodes[j].userCode+",";
-										userinfo += data[i].userCodes[j].userName+",";
-										userinfo += data[i].userCodes[j].profileImg;
-										console.log(userinfo.replace('undefined', ""));
-							
-									user = '<div class="chatUser" id=\"'+data[i].userCodes.userCode+'\"onClick="getChat(\''+userinfo+'\')">'+
-													"<img class='profileImage' src='/VIG/images/uploadFiles/"+data[i].userCodes[j].profileImg+"\'>"+
-													"<p style='display: inline-block; margin: 3px auto; font-weight: bold'>"+data[i].userCodes[j].userName+"</p></div>"
-									
-									
-									$(".user_list").append(user);
-									} 
+					
+					socket.on('connect', function(){
+		
+						$('input[name=username]').val(username);
+		
+					});
+					
+					//최초로딩시 받기
+					getChatList(socketUser);
+				
+				
+					//보낸 메세지 받기
+					socket.on('send message', function(data){
+						data = JSON.stringify(data);
+						data = JSON.parse(data);
+						console.log(data);
+						 if(data.sender.userCode == username){
 								
+								displayValue ="<div class='media' style='align: right ;text-align:right'>"+
+								"<div class='media-body'><div class='innermedia'>" + data.contents + "<br><span class='msg-body'>("+data.createdAt+")</span></div></div></div>";
+								
+								console.log(displayValue);
+								
+									
+									
+								} else {
+									
+								displayValue ="<div class='media' style='align: left ;text-align:left; padding-right: 8px'><div class='media-left'><span class='author' style='font-weight: bold; color: black; text-align:right;'>"
+									+ data.sender.userName + "</span></div><div class='innermedia'><div class='media-body'>" + data.contents + "<br><span class='msg-body'>("+data.createdAt+")</span></div></div></div>";
+									
+								console.log(displayValue);
 								
 								}
-							
-						}
-							
-						
-					}
+						 $('.chat-body').append(displayValue);
+						 
 					});
+
+				
+				
 				
 
 					
 				
-				//유저 선택하고, 메세지 보내기를 누르면  roomCreate
-				$("#sendMessages").on("click", function(){
-					
-					
-					selectUser = $("#userselect").val();
-					otherUser.userCode = selectUser; //userCode 심어줌
-					dbuser = getChatUser(selectUser);
-					console.log(dbuser);
-					otherUser.profileImg =dbuser.profileImg;
-					otherUser.userName = dbuser.userName;
-					socket.emit('createChat', socketUser, otherUser);
-					socket.on('add user', function(results){
-						
-						console.log(results);
-						results = JSON.stringify(results);
-						results = JSON.parse(results);
-						$("input[name='roomId']").val(results._id);
-						
-						var userinfo="";
-						userinfo += results._id+",";
-						userinfo += dbuser.userCode+",";
-						userinfo += dbuser.userName+",";
-						userinfo += dbuser.profileImg;
-						console.log(userinfo.replace('undefined', ""));
-						
-						user = '<div class="selectChat" style="vertical-align: middle">'+
-						"<img class='profileImage' src='/VIG/images/uploadFiles/"+dbuser.profileImg+"\'>"+
-						"<p id='selectChat' style='display: inline-block; margin: 3px auto; font-weight: bold;'>"+dbuser.userName+"</p></div>";
+					//유저 선택하고, 메세지 보내기를 누르면  roomCreate
+					$("#sendMessages").on("click", function(){
 						
 						
-						var chatUser = '<div class="chatUser" id=\"'+dbuser.userCode+'\"onClick="getChat(\''+userinfo+'\')">'+
-						"<img class='profileImage' src='/VIG/images/uploadFiles/"+dbuser.profileImg+"\'>"+
-						"<p style='display: inline-block; margin: 3px auto; font-weight: bold'>"+dbuser.userName+"</p></div>"
+						selectUser = $("#userselect").val();
+						otherUser.userCode = selectUser; //userCode 심어줌
+						dbuser = getChatUser(selectUser);
 						
-						$("#userselect").val("");
-						$(".user_list").append(chatUser);
-						getChat(userinfo);
+						if(dbuser == null || dbuser == ''){
+							
+							swal("없는 유저입니다.");
+							$("#userselect").val("");
+							return false;
+							
+						}
+						otherUser.profileImg =dbuser.profileImg;
+						otherUser.userName = dbuser.userName;
+						socket.emit('createChat', socketUser, otherUser);
+						socket.on('add user', function(results){
+	
+							results = JSON.stringify(results);
+							results = JSON.parse(results);
+							console.log("resultId!!!"+results._id);
+							$("input[name='roomId']").val(results._id);
+							
+							var userinfo="";
+							userinfo += results._id+",";
+							userinfo += dbuser.userCode+",";
+							userinfo += dbuser.userName+",";
+							userinfo += dbuser.profileImg;
+							userinfo.replace('undefined', "");
+							
+							var chatUser = '<div class="chatUser" id=\"'+dbuser.userCode+'\"onClick="getChat(\''+userinfo+'\')">'+
+							"<img class='profileImage' src='/VIG/images/uploadFiles/"+dbuser.profileImg+"\'>"+
+							"<p style='display: inline-block; margin: 3px auto; font-weight: bold'>"+dbuser.userName+"</p>("+dbuser.userCode+")</div>"
+							
+							$("#userselect").val("");
+							$(".user_list").append(chatUser);
+							getChat(userinfo);
+							
+						});
+						
 						
 					});
-					
-					
-				});
 				
-				$("#deleteChat").on("click", function(){
-					
-					deleteChat();
-					removeChat();
-					
-				});
+					$("#deleteChat").on("click", function(){
+						
+						swal({
+							  title: "Are you sure?",
+							  text: "그동안의 메세지가 모두 지워집니다. 삭제하시겠습니까?",
+							  icon: "warning",
+							  buttons: true,
+							  dangerMode: true,
+							})
+							.then((willDelete) => {
+							  if (willDelete) {
+								 
+								  deleteChat();
+								  
+							    swal("Poof! Your imaginary file has been deleted!", {
+							      icon: "success",
+							    });
+							  } else {
+							    swal("취소되었습니다.");
+							  }
+							});
+						
+						
+						socketUser.userCode = username; //userCode 심어줌
+						socketUser.profileImg ='${user.profileImg}';
+						socketUser.userName = '${user.userName}';
+						getChatList(socketUser);
+						
+					});
 				
 				
 				
 				
 				//메세지 보내기
-				$('#submit_btn').on("click keypress",function(e){
-					
-					
-					socketUser.userName = '${user.userName}';
-					roomId = $('input[name="roomId"]').val();
-					var message = $('#message_input').val();
-					console.log(message);
-					var attached = $('#attached_input').val();
-					selectUser = $("input[name='selectUser']").val();
-					otherUser.userCode = selectUser;
-					dbuser = getChatUser(selectUser);
-					otherUser.userName = dbuser.userName;
-					otherUser.profileImg = dbuser.profileImg;
-					console.log("메세지를 보낼 유저"+selectUser);
-					
-					if(message != ''){
-						socket.emit('send message', message, socketUser, otherUser);
-						$('#message_input').val('');
-					}
-					$('#attached_input').val('');
-					chatScrollfix();
-				
-					
-				});
-				
-				$("#message_input").on("keydown", function(e){
-					
-					if(e.keyCode == 13 ){
+					$('#submit_btn').on("click keypress",function(e){
+						
+						
 						socketUser.userName = '${user.userName}';
 						roomId = $('input[name="roomId"]').val();
 						var message = $('#message_input').val();
-						console.log(message);
 						var attached = $('#attached_input').val();
 						selectUser = $("input[name='selectUser']").val();
 						otherUser.userCode = selectUser;
 						dbuser = getChatUser(selectUser);
 						otherUser.userName = dbuser.userName;
 						otherUser.profileImg = dbuser.profileImg;
-						console.log("메세지를 보낼 유저"+selectUser);
 						
 						if(message != ''){
 							socket.emit('send message', message, socketUser, otherUser);
@@ -492,16 +496,35 @@
 						}
 						$('#attached_input').val('');
 						chatScrollfix();
-						
-						
-					}
 					
-				});
+						
+					});
 				
+					$("#message_input").on("keydown", function(e){
+						
+						if(e.keyCode == 13 ){
+							socketUser.userName = '${user.userName}';
+							roomId = $('input[name="roomId"]').val();
+							var message = $('#message_input').val();
+							var attached = $('#attached_input').val();
+							selectUser = $("input[name='selectUser']").val();
+							otherUser.userCode = selectUser;
+							dbuser = getChatUser(selectUser);
+							otherUser.userName = dbuser.userName;
+							otherUser.profileImg = dbuser.profileImg;
+							
+							if(message != ''){
+								socket.emit('send message', message, socketUser, otherUser);
+								$('#message_input').val('');
+							}
+							$('#attached_input').val('');
+							chatScrollfix();
+							
+							
+						}
+						
+					});
 				
-				
-
-
 				
 			});
 	
@@ -530,8 +553,13 @@
 			</div>
 			<div class="col-4"  >
 				<div style="text-align: right; vertical-align:text-bottom;" >
-					<input type="text" id="userselect" value="${receiver}">
-					<button class=" -roundedbtn btn-floating btn-indigo btn-sm" id="sendMessages"><i class="fas fa-envelope"></i></button>
+						<div class="input-group">
+						  <input type="text" class="form-control" placeholder="Insert UserCode" id="userselect" aria-label="Recipient's username with two button addons"
+						    aria-describedby="button-addon4" value="${receiver}">
+						  <div class="input-group-append" id="button-addon4">
+						    <button class="btn btn-md btn-outline-info m-0 px-3 py-2 z-depth-0 waves-effect" id="sendMessages" type="button">send</button>
+						  </div>
+						</div>
 				</div>
 			</div>
 		
@@ -545,7 +573,7 @@
 				</div>
 			
 			</div>
-			<div class="col-9" >
+			<div class="col-9 chatpart" >
 			
 				<h3 style="text-align:center; margin-top: 60px; color: gray;"> 선택된 메세지가 없습니다.</h3>
 				<div id="chatPlace">

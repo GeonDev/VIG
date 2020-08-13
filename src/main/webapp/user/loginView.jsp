@@ -66,7 +66,6 @@
 		
 		
 	$( function() {
-		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		$("#googlelogin").on("click" , function() {
 			location.href="https://accounts.google.com/o/oauth2/auth?client_id="+
 			"82747934090-ljsrvma8goa9dskv7hchor1mt2atl1ao.apps.googleusercontent.com"+

@@ -37,6 +37,10 @@ public class PaymentController {
 	@Autowired
 	@Qualifier("feedServicesImpl")
 	private FeedServices feedServices;
+	
+	@Autowired
+	@Qualifier("userServicesImpl")
+	private UserServices userServices;
 
 	@Value("#{commonProperties['pageSize'] ?: 5}")
 	int pageSize;
@@ -117,17 +121,18 @@ public class PaymentController {
 		System.out.println(payment);
 		User sessionUser = (User)session.getAttribute("user");
 		
-		//feedCount 추가
-		int pc = sessionUser.getPrimeCount();
-		pc += 1000;
-		sessionUser.setPrimeCount(pc);
-		//UserServices.updatePrime
+		User dbuser = userServices.getUserOne(sessionUser.getUserCode());
+		//db에서 user정보 가져와서 Setting 해주기
+		int count = dbuser.getPrimeCount();
+		count = count+1000;
+		dbuser.setPrimeCount(count);
 		
-		payment.setBuyer(sessionUser);
+		userServices.updateBusiness(dbuser);
 		
-		
-		
+		payment.setBuyer(dbuser);
 		paymentServices.addPayment(payment);
+		
+		session.setAttribute("user", dbuser);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("forward:/payment/addPayment.jsp");
@@ -141,11 +146,22 @@ public class PaymentController {
 		System.out.println(payment);
 		User sessionUser = (User)session.getAttribute("user");
 		
-		//role 변경
-		sessionUser.setRole("business");
-		//userServices.updateUser
+		User dbuser = userServices.getUserOne(sessionUser.getUserCode());
+		//db에서 user정보 가져와서 Setting 해주기
+		dbuser.setRole("business");
+		int count = dbuser.getPrimeCount();
+		count = count+1000;
+		dbuser.setPrimeCount(count);
 		
+		userServices.updateBusiness(dbuser);
+		
+		//업데이트 한 유저정보로 바꿔준다.
+		payment.setBuyer(dbuser);
+		
+		System.out.println(payment);
 		paymentServices.addPayment(payment);
+		
+		session.setAttribute("user", dbuser);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("forward:/payment/addPayment.jsp");

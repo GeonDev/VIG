@@ -86,7 +86,6 @@ $(function (){
 	
 	var afterPrime = ${user.primeCount};
 	var beforePrime = parseInt(afterPrime) - 1000;
-	alter(beforePrime);
 	$("#beforePrime").text(beforePrime);
 	
 	

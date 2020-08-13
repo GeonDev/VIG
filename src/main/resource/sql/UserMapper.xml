@@ -117,12 +117,16 @@
 	 	SET	 	
 	 		self_introduce = #{selfIntroduce:VARCHAR},
 	 		user_name = #{userName:VARCHAR},
-	 		password = #{password:VARCHAR},
-	 		profile_img = #{profileImg:VARCHAR},
-	 		account = #{account:VARCHAR},
-	 		state = #{state:NUMERIC},
-	 		google_id = #{googleId:NUMERIC},
-	 		prime_count = #{primeCount:NUMERIC}
+	 		google_id = #{googleId:VARCHAR},
+	 		profile_img = #{profileImg:VARCHAR}	 		
+	 	WHERE user_code = #{userCode}
+	 </update>	
+
+	 <update id="updateBusiness" parameterType="user">
+	 	UPDATE users
+	 	SET
+	 	role = #{role:VARCHAR},
+	 	prime_count = #{primeCount:NUMERIC}	 
 	 	WHERE user_code = #{userCode}
 	 </update>	
 	 

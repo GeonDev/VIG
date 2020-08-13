@@ -35,6 +35,8 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 	<!--  아임포트 결제 구현  -->
 	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+	<!-- sweetAlert -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
 	
 <style>
@@ -98,7 +100,7 @@
 		 
 	 });
 	
-	 $("button:contains('출금신청')").on("click", function(){
+	 $("a:contains('출금신청')").on("click", function(){
 		 var amount = $("input[name='amount']").val();
 		 if(amount< 10000){
 			 alert("1만원 이상부터 출금신청 할 수 있습니다.");

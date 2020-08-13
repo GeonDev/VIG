@@ -102,9 +102,7 @@
 							//디폴트를 삭제한다.
 							$("#defaultAlarm").remove();
 							
-							$.each(JSONData, function(index, item) { 
-								
-								console.log(item);
+							$.each(JSONData, function(index, item) { 						
 								
 								var data = (item).split(',');
 								
@@ -163,8 +161,7 @@
 			$("#defaultAlarm").remove();
 		}
 		
-	    var data = (evt.data).split(',');				    
-	    console.log((evt.data));
+	    var data = (evt.data).split(',');	    
 	    
 	    //좋아요를 눌렀을 경우
 	    if(data[4] == '0'){

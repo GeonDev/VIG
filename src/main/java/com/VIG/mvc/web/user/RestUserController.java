@@ -177,7 +177,7 @@ public List<User> getUserListFromName(@PathVariable("userName") String name) thr
 			String verCode=RestUserController.getAlphaNumericString();
 			String recipient = email; //받는 사람 이메일 주소 
 			String subject = "이메일 인증입니다."; //메일 제목 
-			String body = " 인증코드\n\t\t"+"[ "+ verCode+" ]"; //메일 내용
+			String body = " 인증코드\n\t\t"+"[ "+verCode+" ]"; //메일 내용
 			Properties props = System.getProperties(); // 메일 제목, 내용을 담을 properties 만들기. 
 			
 			props.put("mail.smtp.host", host);
@@ -208,7 +208,7 @@ public List<User> getUserListFromName(@PathVariable("userName") String name) thr
 				messageContent.setText(body); //내용 세팅
 				Transport.send(messageContent);	
 			//javax.mail.Transport.send() 이용하는 거임
-				System.out.println("메일발송됨??");
+				System.out.println("메일발송");
 			return verCode;
 		}
 		

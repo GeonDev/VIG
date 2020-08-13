@@ -120,9 +120,9 @@ public class VisionInfo extends Thread {
 		imageColor.setRatio(color.getPixelFraction());		
 		
 		String haxcode ="#";		
-		haxcode += getHaxcode((int) (color.getColor().getRed()/colorRange)*colorRange);
-		haxcode += getHaxcode((int) (color.getColor().getGreen()/colorRange)*colorRange);
-		haxcode += getHaxcode((int) (color.getColor().getBlue()/colorRange)*colorRange);		
+		haxcode += CommonUtil.getHaxcode((int) (color.getColor().getRed()/colorRange)*colorRange);
+		haxcode += CommonUtil.getHaxcode((int) (color.getColor().getGreen()/colorRange)*colorRange);
+		haxcode += CommonUtil.getHaxcode((int) (color.getColor().getBlue()/colorRange)*colorRange);		
 		
 		imageColor.setHaxcode(haxcode);
 		
@@ -174,17 +174,7 @@ public class VisionInfo extends Thread {
 		
 	}
 	
-	private String getHaxcode(int num) {		
-		
-		String hax = Integer.toHexString(num);
-		if(hax.length() == 1) {
-			String temp = "0";
-			temp += hax;
-			hax = temp; 
-		}
-		
-		return hax;
-	}
+
 	
 	
 

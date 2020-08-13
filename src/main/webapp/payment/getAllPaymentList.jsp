@@ -37,46 +37,17 @@
 	
 	
 <style>
-	  #myFeedMain { padding: 70px;} 
-	.col-md-12_top {	width: 100%; height: 100%; position: relative; margin:50px; }	
-	body {
-		
-		font-family: "Nanum Gothic", sans-serif;
-
+	 
 	
-	}
-	
-	
-	
-
-	
-	#priceRadio {
-	
-		margin: 3px auto;
-	
-	}
-	
-	#content {
-	
-		align: center;
-		
-	
-	}
-	
-	table {
-	
-	text-align: center;
-
-	
-	}
-	#myFeedMain { padding: 70px;}
-
-		body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}	
+	 body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}	
 		h1 { margin-left: 100px;}
 		/*사이드바,본문 배치css*/
 	 .col-md-2.sideBarPlace { padding:0;  display: inline-block;float:left;}
-	 #mainMyFeedPage { margin-left: 10px;  display: inline-block; float:right; width: 80%;}
-
+	 #mainMyFeedPage { margin-left: 0px;  display: inline-block; float:right;}
+	 
+	 
+        #myFeedMain { padding: 70px;}
+        .col-md-12_top {	width: 100%; height: 100%; position: relative; margin:50px; }
 
 </style>
 
@@ -138,7 +109,11 @@
 						
 						
 			
-				<div class="row">
+				
+				<div class="row justify-content-end" style="margin: 90px 10px 27px 10px;">
+				</div>
+				
+				<div class="row" style="margin: 64px 21px 27px 51px;">
 						<table class="table" >
 		
 						        <thead class="grey lighten-2">
@@ -226,16 +201,16 @@
 											<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 												<input type="hidden" id="currentPage" name="currentPage" value=""/>	
 									</form>	
-							
 							</div>
+						
 						
 						
 							<div class="row justify-content-md-center">
 								<jsp:include page="../common/pageNavigator.jsp"/>
 							</div>
-					
+					</div>
 			</div>
-	</div>
+	
 
 
 
