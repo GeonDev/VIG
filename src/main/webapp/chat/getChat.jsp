@@ -27,8 +27,10 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
-	<script src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
-	
+	<!--  sweet Alert -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<!--  socket.io -->
+	<script src="http://192.168.0.13:3000/socket.io/socket.io.js"></script>
 	
 	<style type="text/css">
 	 body {
@@ -129,7 +131,7 @@
 	var diplayValue;
 	var user;
 	var dbuser; //db에서 가져온 유저
-	var url = "http://127.0.0.1:3000/";
+	var url = "http://192.168.0.13:3000/";
 	
 	var socketUser = new Object(); //socket으로 주고 받을 유저 생성
 	var otherUser = new Object();
@@ -145,9 +147,15 @@
 	
 	function removeChat(){
 		
-		$("h3").remove();
-		$("#selectUser div").remove();
 		$(".chat-body div").remove();
+		
+		
+	}
+	
+	function showChat(){
+		
+		$("#selectUser").show();
+		$(".chat-body").show();
 		
 		
 	}
@@ -166,12 +174,12 @@
 		selectUser = list[1];
 		$('input[name="selectUser"]').val(selectUser);
 		$('input[name="roomId"]').val(list[0]);
-		console.log("roomId="+$('input[name="selectUser"]').val());
-		
-		var select = $("#selectChat").text();
-		//선택한 유저가 이미 선택되었는지 확인,
-		
+
 	
+		//채팅쪽 다시 보여주기
+		$('h3').hide();
+		showChat();
+		
 		$.ajax({
 			url: url+'chat/getChat/'+list[0],
 			method: 'get',
@@ -192,9 +200,9 @@
 				"<p id='selectChat' style='display: inline-block; margin: 3px auto; font-weight: bold;'>"+list[2]+"</p>("+list[1]+")</div>";
 				
 				 for(var i = 0; i<data.length; i++){
-					 
+					
 					 if(data[i].sender.userCode != selectUser){
-							
+						 
 							displayValue ="<div class='media' style='align: right; text-align:right; padding-right: 8px'>"+
 							"<div class='media-body' style='align: right'><div class='innermedia'>" + data[i].contents + "<br><span class='msg-body'>("+data[i].createdAt+")</span></div></div></div>";
 							
@@ -202,11 +210,11 @@
 								
 								
 							} else {
-								
+								console.log(i);
 							displayValue ="<div class='media' style='align: left; text-align:left'><div class='media-left'><span class='author' style='font-weight: bold; color: black; text-align:right;'>"
 								+ data[i].sender.userName + "</span></div><div class='innermedia'><div class='media-body' style='align: left'>" + data[i].contents + "<br><span class='msg-body'>("+data[i].createdAt+")</span></div></div></div>";
 								
-								$('.chat-body').append(displayValue);
+							$('.chat-body').append(displayValue);
 								
 							}
 
@@ -216,7 +224,7 @@
 				}
 				$("#chatPlace").attr("style", "visibility:visible");
 				chatScrollfix();
-				$("#selectUser").append(user);
+				$("#selectUser").html(user);
 				
 				
 				
@@ -257,11 +265,6 @@
 					
 						for(var j=0; j< data[i].userCodes.length; j++) {
 							
-							
-
-							if(i==0){
-								$('input[name="roomId"]').val(data[i]._id);
-							}
 							
 							if(username != data[i].userCodes[j].userCode){ 
 								
@@ -322,21 +325,18 @@
 	};
 	
 	
+	//채팅 삭제
 	function deleteChat(){
-		
-		
-		var result = confirm("그동안의 메세지가 모두 지워집니다. 삭제하시겠습니까?");
-		
-		if(result){
-		
-		roomId = $("input[name='roomId']").val();
-		
-		socket.emit('deleteChat', roomId);
-		$("#chatPlace").remove();
-		$("#"+selectUser).remove();
-		
-		}
-		
+			
+			
+		    roomId = $("input[name='roomId']").val();
+			
+		    console.log("delete"+roomId);
+		    
+			socket.emit('deleteChat', roomId);
+			$("#"+selectUser).remove();
+			$("#chatPlace").hide();
+			$("h3").show();
 		
 	};
 	
@@ -344,7 +344,7 @@
 		
 				
 					//첫 로딩시에는 chat영역 안보임
-					$("#chatPlace").attr("style", "visibility:hidden");
+					$("#chatPlace").hide();
 					
 					socket = io.connect(url);
 				
@@ -362,6 +362,7 @@
 		
 					});
 					
+					//최초로딩시 받기
 					getChatList(socketUser);
 				
 				
@@ -404,6 +405,14 @@
 						selectUser = $("#userselect").val();
 						otherUser.userCode = selectUser; //userCode 심어줌
 						dbuser = getChatUser(selectUser);
+						
+						if(dbuser == null || dbuser == ''){
+							
+							swal("없는 유저입니다.");
+							$("#userselect").val("");
+							return false;
+							
+						}
 						otherUser.profileImg =dbuser.profileImg;
 						otherUser.userName = dbuser.userName;
 						socket.emit('createChat', socketUser, otherUser);
@@ -411,6 +420,7 @@
 	
 							results = JSON.stringify(results);
 							results = JSON.parse(results);
+							console.log("resultId!!!"+results._id);
 							$("input[name='roomId']").val(results._id);
 							
 							var userinfo="";
@@ -435,8 +445,30 @@
 				
 					$("#deleteChat").on("click", function(){
 						
-						deleteChat();
-						removeChat();
+						swal({
+							  title: "Are you sure?",
+							  text: "그동안의 메세지가 모두 지워집니다. 삭제하시겠습니까?",
+							  icon: "warning",
+							  buttons: true,
+							  dangerMode: true,
+							})
+							.then((willDelete) => {
+							  if (willDelete) {
+								 
+								  deleteChat();
+								  
+							    swal("Poof! Your imaginary file has been deleted!", {
+							      icon: "success",
+							    });
+							  } else {
+							    swal("취소되었습니다.");
+							  }
+							});
+						
+						
+						socketUser.userCode = username; //userCode 심어줌
+						socketUser.profileImg ='${user.profileImg}';
+						socketUser.userName = '${user.userName}';
 						getChatList(socketUser);
 						
 					});
@@ -521,11 +553,12 @@
 			</div>
 			<div class="col-4"  >
 				<div style="text-align: right; vertical-align:text-bottom;" >
-						<div class="md-form md-bg input-with-pre-icon">
-						  	 <i class="fas fa-user input-prefix"></i>
-						 	 <input type="text" id="userselect" class="form-control" id="userselect" value="${receiver}">
-						 	 <label for="userselect">Insert UserCode </label>
-						 	 <button class=" -roundedbtn btn-floating btn-indigo btn-sm" id="sendMessages"><i class="fas fa-envelope"></i></button>
+						<div class="input-group">
+						  <input type="text" class="form-control" placeholder="Insert UserCode" id="userselect" aria-label="Recipient's username with two button addons"
+						    aria-describedby="button-addon4">
+						  <div class="input-group-append" id="button-addon4">
+						    <button class="btn btn-md btn-outline-info m-0 px-3 py-2 z-depth-0 waves-effect" id="sendMessages" type="button">send</button>
+						  </div>
 						</div>
 				</div>
 			</div>
@@ -540,7 +573,7 @@
 				</div>
 			
 			</div>
-			<div class="col-9" >
+			<div class="col-9 chatpart" >
 			
 				<h3 style="text-align:center; margin-top: 60px; color: gray;"> 선택된 메세지가 없습니다.</h3>
 				<div id="chatPlace">
