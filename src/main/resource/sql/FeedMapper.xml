@@ -106,7 +106,7 @@
 			AND feeds.feed_is_prime = 1 
 			AND feeds.feed_state = 0
 			<if test="keyword !=''">
-			AND keywords.keyword_en LIKE CONCAT('%',#{keyword},'%')				
+			AND UPPER(keywords.keyword_en) LIKE CONCAT('%',#{keyword},'%')				
 			</if>
 			GROUP BY feeds.feed_id
 			ORDER BY feeds.prime_feed_view_count
@@ -122,7 +122,7 @@
 			AND feeds.feed_state = 0
 			AND users.prime_count > 0
 			<if test="keyword !=''">
-			AND feeds.feed_title LIKE CONCAT('%',#{keyword},'%')				
+			AND UPPER(feeds.feed_title) LIKE CONCAT('%',#{keyword},'%')				
 			</if>		
 			ORDER BY feeds.prime_feed_view_count
 			limit 2 	
@@ -172,7 +172,7 @@
 			AND feeds.feed_state = 0
 			AND feeds.feed_is_prime = 0
 			<if test="keyword !=''">
-			AND keywords.keyword_en LIKE CONCAT('%',#{keyword},'%')				
+			AND UPPER(keywords.keyword_en) LIKE CONCAT('%',#{keyword},'%')				
 			</if>
 			<if test="searchType != 0">
 			AND	feeds.category_id = #{searchType}	
@@ -188,7 +188,7 @@
 			WHERE feeds.feed_state = 0
 			AND feeds.feed_is_prime = 0
 			<if test="keyword !=''">
-			AND feeds.feed_title LIKE CONCAT('%',#{keyword},'%')				
+			AND UPPER(feeds.feed_title) LIKE CONCAT('%',#{keyword},'%')				
 			</if>
 			<if test="searchType != 0">
 			AND	feeds.category_id = #{searchType}	
@@ -219,7 +219,7 @@
 		<!-- 자동완성용 쿼리문 -->
 		<select id ="getfeedTitleList" parameterType="String" resultType="String">
 			SELECT feed_title FROM feeds
-			WHERE feed_title LIKE CONCAT('%',#{value},'%')
+			WHERE UPPER(feed_title) LIKE CONCAT('%',#{value},'%')
 			LIMIT 5
 			
 		</select>
@@ -266,7 +266,7 @@
 			WHERE feeds.feed_id = images.feed_id
 			AND images.image_id = keywords.image_id	
 			AND feeds.feed_state = 0
-			AND keywords.keyword_en IN
+			AND UPPER(keywords.keyword_en) IN
 			<foreach collection="keywords" item="item" open="(" close=")" separator=",">
 			 #{item.keywordEn}
 			</foreach>

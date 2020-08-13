@@ -25,9 +25,13 @@
 		INSERT INTO payment(payment_id, buyer, beneficiary, product_type,
 							feed_id, payment_option, select_price, last_price, payment_date, 
 							is_withdraw, is_cancel)
-		VALUE (#{paymentId}, #{buyer.userCode}, #{beneficiary:VARCHAR}, #{productType:NUMERIC}, #{feedId:NUMERIC},
+							
+		VALUE (#{paymentId}, #{buyer.userCode}, IFNULL(#{beneficiary:VARCHAR}, NULL), #{productType:NUMERIC},
+				<if test="feedId == 0">
+				NULL,
+				</if>
 				#{paymentOption:NUMERIC}, #{selectPrice:NUMERIC}, #{lastPrice:NUMERIC}, NOW(),
-				#{isWithdraw:NUMERIC}, #{isCancel:NUMERIC})
+				IFNULL(#{isWithdraw:NUMERIC},0), IFNULL(#{isCancel:NUMERIC}, 0))
 	
 	</insert>
 	

@@ -131,8 +131,37 @@ public class UserController {
 			
 			//구글에 연결된 정보가 있다면 정보를 불러옴
 			if(userServices.getGoogleID(profile.getId()) != null ) {
-				session.setAttribute("user", userServices.getGoogleID(profile.getId()));
-				return new ModelAndView("forward:/main/main.jsp");
+				
+				User user =  userServices.getGoogleID(profile.getId());				
+				
+				if(user.getState() == 0 ) {
+					session.setAttribute("user",user);							
+					return new ModelAndView("forward:/main/main.jsp");
+					
+				}else if(user.getState() == 3 || user.getState() == 4){		
+					String msg = "사용할 수 없는 아이디입니다";				
+					return new ModelAndView("forward:/common/alertView.jsp", "message", msg);
+				}else {
+					
+					int banDate = Integer.parseInt(user.getBanDate().toString().replaceAll("-",""));	
+					
+					if(user.getState() == 1) {
+						banDate = banDate + 3;
+					}else if(user.getState() == 2) {
+						banDate = banDate+ 7;
+					}  
+					
+					SimpleDateFormat format = new SimpleDateFormat ("yyyyMMdd");
+					Date date  = new Date();			
+					int toDay = Integer.parseInt(format.format(date));
+					
+					int remainDate = banDate-toDay;
+					
+					String msg = "접속 금지 상태 입니다.\n \n 남은 기간 : " + remainDate +"일";				
+					return new ModelAndView("forward:/common/alertView.jsp", "message", msg);						
+					
+				}		
+
 			}
 			
 			//구글 연동이 안되어 있으면 가입 화면으로 이동
@@ -404,11 +433,7 @@ public class UserController {
 			session.invalidate();
 			mv.setViewName("redirect:/");
 			return mv;
-		}
-			
-	
-		
-		
+		}	
 		
 
 }
