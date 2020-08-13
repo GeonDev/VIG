@@ -18,13 +18,10 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.VIG.mvc.service.color.ColorServices;
 import com.VIG.mvc.service.domain.Feed;
@@ -126,8 +123,9 @@ public class RestSearchController {
 			return userServices.getAutoUserName(key);
 		}
 		
-		return null;
 		
+		//비정상적인 값이 왔을 경우 종료
+		return null;		
 	}
 	
 	
@@ -230,7 +228,7 @@ public class RestSearchController {
 					feedlist = CommonUtil.checkEqualFeed(feedServices.getRecommendFeedList(tempSearch));									
 	
 					
-				//다른 피드를 본 기록이 없는 유저	
+				// 다른 피드를 본 기록이 없는 유저	
 				}else {
 					// 조회수가 가장 많은 피드를 추천
 					feedlist = feedServices.getHightViewFeedList(search);
@@ -269,7 +267,7 @@ public class RestSearchController {
 		
 	
 	
-	//피드 검색 결과를 반환
+	//선택된 모드에 따라 검색 결과를 반환
 	@RequestMapping(value = "json/getSearchResultList")
 	public Map<String, Object> getSearchResult(@RequestBody Map<String, String> jsonData, HttpSession session, HttpServletRequest request, HttpServletResponse response ) throws Exception {	
 		
@@ -277,6 +275,7 @@ public class RestSearchController {
 		
 		Search search = new Search();		
 		
+		// 몇번째 페이지를 불러와야 하는지 세팅
 		search.setCurrentPage(Integer.valueOf(jsonData.get("currentPage")));
 		search.setPageSize(pageSize);		
 		
@@ -318,11 +317,14 @@ public class RestSearchController {
 				}else if( jsonData.get("keyword").charAt(0) == '#' ) {
 					
 					search.setKeyword(jsonData.get("keyword"));
+					
+					//저장 시 출력하는 해쉬 코드로 변환한다. -> 색상범위를 지정해줌
 					search = CommonUtil.getHaxtoRGB(search, colorRange);					
 					
 					//해쉬코드형식으로 정확하게 도착했다면
-					if(search !=null) {
+					if(search != null) {
 						//색상 기반으로 검색
+						logger.debug("변환된 색상 : "+ search.getKeyword());
 						feedlist = feedServices.getFeedListFromColor(search);
 					}				
 				
@@ -341,8 +343,8 @@ public class RestSearchController {
 			
 
 			
-			//프라임 피드는 2개 출력한다.
-			if(feedlist.size() > 1  && primeFeed.size() > 1 ) {					
+			//프라임 피드를 지정된 위치에 출력시킨다.
+			if(primeFeed.size() > 1 ) {					
 				//선택된 프라임 피드를 히스토리에 저장
 				setPrimeHistory(primeFeed, user, CommonUtil.getUserIp(request));					
 				
@@ -398,6 +400,7 @@ public class RestSearchController {
 					
 					if(search != null) {
 						//색상 기반으로 검색
+						logger.debug("변환된 색상 : "+ search.getKeyword());
 						imageList = imageServices.getImageListFromColor(search);
 					}
 					

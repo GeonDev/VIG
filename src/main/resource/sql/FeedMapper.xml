@@ -200,14 +200,12 @@
 				
 		<select id="getfeedListFromColor" parameterType="search" resultMap="FeedSelectMap">
 			SELECT *  FROM
-			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feeds.* FROM feeds, images,colors
+			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feeds.* FROM feeds, images, colors
 			WHERE feeds.feed_id = images.feed_id 
 			AND images.image_id = colors.image_id
 			AND images.is_thumbnail = 1
 			AND feeds.feed_state = 0
-			AND colors.color_r BETWEEN #{startRed} AND #{endRed} 
-			AND colors.color_g BETWEEN #{startGreen} AND #{endGreen} 
-			AND colors.color_b BETWEEN #{startBlue} AND #{endBlue}
+			AND colors.haxcode = #{keyword}
 			<if test="searchType != 0">
 			AND	feeds.category_id = #{searchType}	
 			</if>

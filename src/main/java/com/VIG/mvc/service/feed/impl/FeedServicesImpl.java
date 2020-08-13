@@ -106,12 +106,10 @@ public class FeedServicesImpl implements FeedServices {
 	public List<Feed> getPrimeFeed(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		
-		List<Feed> feedList = feedDao.getPrimeFeed(search);
-		
-		//출력할 프라임 피드의 개수가 부족할 때 
-		if(feedList.size() < 2) {
-			feedList.addAll(feedDao.getPrimeFeedTitle(search));
-		}		
+		List<Feed> feedList = feedDao.getPrimeFeed(search);		
+
+		//프라임 피드 중 검색어를 타이틀에 포함하고 있는 피드를 포함한다.
+		feedList.addAll(feedDao.getPrimeFeedTitle(search));				
 		
 		//피드 중복체크 이후 반환
 		return CommonUtil.checkEqualFeed(feedList);
@@ -120,8 +118,7 @@ public class FeedServicesImpl implements FeedServices {
 	@Override
 	public void updatePrimeFeedViewCount(Feed feed) throws Exception {
 		// TODO Auto-generated method stub
-		feedDao.updatePrimeFeedViewCount(feed);
-		
+		feedDao.updatePrimeFeedViewCount(feed);		
 	}
 
 	@Override
