@@ -6,7 +6,8 @@
 #### 2. Spring 5.0
 #### 3. MariaDB 10.4
 #### 4. Mybatis 3.2.1
-#### 5. JSTL/EL 적용
+#### 5. MAVEN 3.6.3
+#### 6. JSTL/EL
 
 ## 기타 적용 
 ###### * apache tomcat 8.5(servlet 3.1) 사용
@@ -15,7 +16,7 @@
 ###### * Web socket(실시간 알람) 적용
 ###### * google API(login, VISION, TRANS) 적용 
 ###### * 결제(I'm port) 적용 
-###### * AWS EC2/ RDS 에서 동작
+###### * AWS EC2/ RDS 배포
    
    
 ## 참고 사항
@@ -25,4 +26,5 @@
 
 ## AWS EC2 주소 
 http://13.125.196.55:8080/VIG/
+
 (구글 API 키가 적용되어 있지 않아 파일 업로드 불가) 
