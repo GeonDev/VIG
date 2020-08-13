@@ -40,10 +40,16 @@
 			var pw=$("input[name='password']").val();
 			var pw_confirm=$("input[name='password2']").val();	
 			var name=$("input[name='userName']").val();
+			var birth = $("input[name='birth']").val();
 			var email=$("input[name='email']").val();
+			
 			
 			if(id == null || id.length <1){
 				alert("아이디는 반드시 입력하셔야 합니다.");
+				return;
+			}
+			if(name == null || name.length <1){
+				alert("이름은  반드시 입력하셔야 합니다.");
 				return;
 			}
 			if(pw == null || pw.length <1){
@@ -54,19 +60,21 @@
 				alert("패스워드 확인은  반드시 입력하셔야 합니다.");
 				return;
 			}
-			if(name == null || name.length <1){
-				alert("이름은  반드시 입력하셔야 합니다.");
-				return;
-			}
+		
 			if( pw != pw_confirm ) {				
 				alert("비밀번호 확인이 일치하지 않습니다.");
 				$("input:text[name='password2']").focus();
+				return;
+			}
+			if(birth == null || birth.length<1){
+				alert("생년월일은 반드시 입력하셔야 합니다.");
 				return;
 			}
 			if(email == null){
 				alert("이메일은 반드시 입력하셔야 합니다.");
 				return;
 			}
+			
 			$("form").attr("method" , "post").attr("action" , "addUser").submit();
 		}
 		
@@ -131,6 +139,7 @@
 	$(function(){
 		$("#emailcheck").on("click",function(){
 			if($("#email").val() == ''){
+				$("input:email[name='email']").focus();
 				alert("이메일을 입력해주세요.");
 			}else{
 			
@@ -144,12 +153,12 @@
 							}
 				,success : function vcode(JSONData , status) {
 					var json = JSONData.verifCode
-				//알림 하나 띄우고 인증코드 입력 열기
+					
 				
 				
 					$("#inputVerification").val(json);
 				//alert("1"+  $("#inputVerification").val(json).val())
-				alret("메일이 발송 되었습니다.");
+					alert("메일이 발송 되었습니다.");
 				},
 				error : function( error ) {
 					alert("없는 이메일 주소입니다.");
@@ -238,14 +247,14 @@
 		
 		<!-- 성별 -->
 		<div class="form-group" style="height: 40px; margin-bottom:0;">
-			  <input type="radio" id="check_userSex" name="sex" value="female" ><label for="sex">female</label>
+			  <input type="radio" id="check_userSex" name="sex" value="female" checked><label for="sex" >female</label>
 			  <input type="radio" id="check_userSex" name="sex" value="male"><label for="sex">male</label>
 			</div>
 
 		<!-- 생년월일-->
 		<div class="form-group" style="height: 50px;">
 			<hr/>
-			<p>Birth: <input type="text" id="datepicker" name="birth" placeholder="click"></p>
+			<p>Birth: <input type="text" id="datepicker" name="birth" placeholder="click me"></p>
 			<label data-error="wrong" data-success="right" for="birth"></label>
 		</div>	
 		<!--  -->
