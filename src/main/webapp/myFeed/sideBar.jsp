@@ -39,7 +39,7 @@
 			<!-- 다른 유저의 마이 피드 방문시 해당 유저의 정보만 노출 -->
 				<c:choose>
 				<c:when test="${user.userCode != writer.userCode}">		
-					<img class="card-img-top" src="/VIG/images/uploadFiles/profile_img.jpg" id="pImg" alt="profile_img">
+					<img class="card-img-top" src="/VIG/images/uploadFiles/${writer.profileImg}" id="pImg" alt="profile_img">
 			 			<div class="card-body">
 			 					<h3 class="user_name" align="center"><strong> ${writer.userName} </strong> </h3>			
 			 					<p class="user_bio" align="center" > ${writer.selfIntroduce} </p>		 					
