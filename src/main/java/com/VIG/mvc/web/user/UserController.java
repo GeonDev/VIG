@@ -10,6 +10,8 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,11 +34,14 @@ import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.report.ReportServices;
 import com.VIG.mvc.service.user.UserServices;
 import com.VIG.mvc.util.CommonUtil;
+import com.VIG.mvc.web.event.EventController;
 import com.google.gson.Gson;
 
 @Controller
 @RequestMapping("/user/*")
 public class UserController {
+	
+	public static final Logger logger = LogManager.getLogger(EventController.class); 
 	
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
@@ -54,6 +59,10 @@ public class UserController {
 	
 	@Value("#{commonProperties['uploadPath']}")
 	String uploadPath;
+	@Value("#{commonProperties['otherPath']}")
+	String otherPath;
+	
+	
 	
 	@Value("#{commonProperties['currentDate'] ?: 30}")
 	int currentDate;
@@ -215,8 +224,7 @@ public class UserController {
 		User dbUser = userServices.getUserOne(user.getUserCode());
 		ModelAndView mv = new ModelAndView();
 		System.out.println("로그인 시도 :"+user.getUserCode());
-		System.out.println(dbUser);
-			
+
 		SimpleDateFormat format = new SimpleDateFormat ("yyyyMMdd");
 		Date date  = new Date();			
 		int toDay = Integer.parseInt(format.format(date));
@@ -232,6 +240,7 @@ public class UserController {
 				session.setAttribute("user", dbUser);
 				System.out.println("로그인 성공");
 				mv.setViewName("redirect:/main/VIG");
+						System.out.println("로그인후db비번:"+user.getPassword());
 				return mv;					
 			}else if(dbUser.getState() == 3 || dbUser.getState() == 4){		
 				String msg = "사용할 수 없는 아이디입니다";				
@@ -258,6 +267,7 @@ public class UserController {
 			mv.addObject("msg", "fail");
 			return mv;
 		}
+		
 	}
 
 
@@ -295,53 +305,52 @@ public class UserController {
 	}
 	
 	@RequestMapping( value="updateUser", method=RequestMethod.POST )
-	public ModelAndView updateUser(@RequestParam("uploadFile") List<MultipartFile> files,@ModelAttribute("uesr") User user, HttpSession session )throws Exception{ 
+	public ModelAndView updateUser(@ModelAttribute("user") User user,@RequestParam("uploadFile") MultipartFile files, HttpSession session )throws Exception{ 
 		
-		System.out.println("유저 업데이");
+		logger.debug("유저 업데이트");
+		System.out.println(user);		
 		
-	System.out.println(session.getAttribute("User"));
-		/*
 		String path = context.getRealPath("/");        
         path = path.substring(0,path.indexOf("\\.metadata"));         
-        path = path +  uploadPath;  
+        path = path +  otherPath;  
+        System.out.println(files);
 			
 		if(files !=null) {
 			
-	        for (MultipartFile multipartFile : files) {
+	        MultipartFile multipartFile = null; 
 	        	//파일 업로드시 시간을 이용하여 이름이 중복되지 않게 한다.
 	        	
 	        	String inDate   = new java.text.SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date());
+	        	
+	        	if(multipartFile.getOriginalFilename()!="") { //multipartFile이 있는지 확인
 	    
-	    		File f =new File(path+multipartFile.getOriginalFilename());
-	    		//원하는 위치에 파일 저장
-	    		multipartFile.transferTo(f);
-	    			if(f!=null) {
-	    			user.setProfileImg(f.getName());	
-	    			}
-	    			String imageFile=inDate+multipartFile.getOriginalFilename();
-		    	    System.out.println("imageFile:"+imageFile);
-	    		}
-	        }
-			*/
-		
-		//if(user.getPassword() != null) {
-		//String pwdBycrypt = passwordEncoder.encode(user.getPassword());
-		// user.setPassword(pwdBycrypt); 
-		//}
+	        		File f = null;
+		    		//원하는 위치에 파일 저장
+	        	
+	        		
+	    				f=new File(path+inDate+multipartFile.getOriginalFilename());
+		    			multipartFile.transferTo(f);
+		    			user.setProfileImg(f.getName());	
+	    		
+	        	}
+	        
+		}
 		userServices.updateUser(user);	
-		
+
 		ModelAndView mv = new ModelAndView();
-		System.out.println("user.getUserName():"+user.getUserName());
-			
-		mv.addObject("user",user);
+		mv.addObject("user",userServices.getUserOne(user.getUserCode()));
 		mv.setViewName("redirect:/user/updateUser.jsp");
 		
 		return mv;
-		
+	        
 	}
 	
 	
 	
+	
+	
+	
+	//
 	@RequestMapping( value="getUser", method=RequestMethod.GET )
 	public String getUser( @RequestParam("userCode") String userCode , Model model ) throws Exception {
 		
