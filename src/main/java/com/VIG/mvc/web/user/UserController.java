@@ -287,7 +287,7 @@ public class UserController {
 	}
 	
 	@RequestMapping( value="updateUser", method=RequestMethod.POST )
-	public ModelAndView updateUser(@ModelAttribute("user") User user,@RequestParam("uploadFile") List<MultipartFile> files, HttpSession session )throws Exception{ 
+	public ModelAndView updateUser(@ModelAttribute("user") User user,@RequestParam("uploadFile") MultipartFile files, HttpSession session )throws Exception{ 
 		
 		logger.debug("유저 업데이트");
 		System.out.println(user);		
@@ -298,11 +298,10 @@ public class UserController {
         System.out.println(files);
 			
 		if(files !=null) {
-			int i = 0;
-	        for (MultipartFile multipartFile : files) {
+			
+	        MultipartFile multipartFile = null; 
 	        	//파일 업로드시 시간을 이용하여 이름이 중복되지 않게 한다.
-	        	i++;
-	        	System.out.println("index: "+i);
+	        	
 	        	String inDate   = new java.text.SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date());
 	        	
 	        	if(multipartFile.getOriginalFilename()!="") { //multipartFile이 있는지 확인
@@ -310,13 +309,13 @@ public class UserController {
 	        		File f = null;
 		    		//원하는 위치에 파일 저장
 	        	
-	        		if(i == 1) {
+	        		
 	    				f=new File(path+inDate+multipartFile.getOriginalFilename());
 		    			multipartFile.transferTo(f);
 		    			user.setProfileImg(f.getName());	
-	    		}
+	    		
 	        	}
-	        }
+	        
 		}
 		userServices.updateUser(user);	
 
