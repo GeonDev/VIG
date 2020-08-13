@@ -555,7 +555,7 @@
 				<div style="text-align: right; vertical-align:text-bottom;" >
 						<div class="input-group">
 						  <input type="text" class="form-control" placeholder="Insert UserCode" id="userselect" aria-label="Recipient's username with two button addons"
-						    aria-describedby="button-addon4">
+						    aria-describedby="button-addon4" value="${receiver}">
 						  <div class="input-group-append" id="button-addon4">
 						    <button class="btn btn-md btn-outline-info m-0 px-3 py-2 z-depth-0 waves-effect" id="sendMessages" type="button">send</button>
 						  </div>
