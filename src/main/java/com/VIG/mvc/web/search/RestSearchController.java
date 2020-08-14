@@ -465,7 +465,7 @@ public class RestSearchController {
 	
 	
 	//이미지 자세히 보기 
-	@RequestMapping(value = "json/getSearchSammImage")
+	@RequestMapping(value = "json/getSearchSameImage")
 	public Map<String, Object> getSearchSameImageList(@RequestBody Map<String, String> jsonData, HttpSession session, @CookieValue(value = "searchKeys", defaultValue = "", required = false) String searchKeys ) throws Exception {		
 		
 		//연산 결과를 저장할 맵 생성
