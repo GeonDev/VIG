@@ -48,8 +48,14 @@
 		
 		//선택된 카테고리 ID를 세팅 - 추천		
 		var selectCategory = 10012;	
-				
+		
+		//페이지의 크기 세팅
 		var pageSize = '${pageSize}'
+		
+		//카테고리 스크롤을 작동시키기 위한 변수
+		var intervalScroll = 0;
+		
+		
 		
 		//전달받은 피드 리스트를 화면에 그린다.
 		function getfeedlistFromAjax(item, user){
@@ -153,14 +159,13 @@
 		
 		
 		//카테고리 +버튼을 누름
-		function CategoriesPlue() {			 
-			$('#categoryList').scrollLeft($('#categoryList').scrollLeft() + 200);
-
+		function CategoriesPlue() {				
+			$('#categoryList').scrollLeft($('#categoryList').scrollLeft() + 2);
 		}
 		
 		//카테고리 -버튼을 누름
 		function CategoriesMinus() {			
-			$('#categoryList').scrollLeft($('#categoryList').scrollLeft() - 200);
+			$('#categoryList').scrollLeft($('#categoryList').scrollLeft() - 2);
 		}
 		
 	
@@ -216,6 +221,25 @@
 			});	
 			
 			
+			$("#plus").on("mousedown",function(){
+				intervalScroll = setInterval(CategoriesPlue , 1);				
+			});
+			
+			$("#plus").on("mouseup",function(){
+				clearInterval(intervalScroll);				
+			});
+			
+			$("#Minus").on("mousedown",function(){
+				intervalScroll = setInterval(CategoriesMinus , 1);				
+			});
+			
+			$("#Minus").on("mouseup",function(){
+				clearInterval(intervalScroll);				
+			});
+			
+			
+			
+			
 		});
 		
 	</script>
@@ -238,8 +262,7 @@
 	}
 	
 	.img_categories {	
-	max-height: 40px;
-	min-width: 120px;
+	height: 40px;
 	padding-left: 0px;
 	padding-right: 0px;
 	margin-left: 0px;
@@ -264,7 +287,10 @@
 	.view {	  
 	margin: 5px 10px;
 	}
-	.view.overlay{border-radius: 10px;}
+	
+	.view.overlay
+	{border-radius: 10px;
+	}
 	
 	
 	<!-- 스크롤 제거 부분 -->
@@ -341,7 +367,7 @@
 			<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
 			
 				<div class="col-sm-1" style="text-align: center;">
-					<button class="btn btn-link" onclick="CategoriesMinus()" type="button" > <i class="fas fa-angle-left"></i></button>	        					      				
+					<button id="Minus" class="btn btn-link" type="button" > <i class="fas fa-angle-left"></i></button>	        					      				
 				</div>				
 			
 				<div class="col-sm-10" >
@@ -370,7 +396,7 @@
 				</div>
 				
 				<div class="col-sm-1" style="text-align: center;">
-					<button class="btn btn-link" type="button" onclick="CategoriesPlue()" > <i class="fas fa-angle-right"></i></button>		  					      				
+					<button id="plus" class="btn btn-link" type="button" > <i class="fas fa-angle-right"></i></button>		  					      				
 				</div>				
 			</div>		
 		</div>	
