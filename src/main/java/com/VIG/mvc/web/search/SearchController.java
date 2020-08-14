@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -92,6 +93,7 @@ public class SearchController {
 		delfault.setCategoryId(0);
 		delfault.setCategoryName("All");
 		categorylist.add(0, delfault);
+				
 		
 		model.addAttribute("mode", mode);	
 		model.addAttribute("user", user);
