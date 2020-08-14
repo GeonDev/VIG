@@ -200,10 +200,12 @@ function funcGetList(currentPage) {
 									<c:if test="${payment.isCancel == '0' }">
 									<c:if test="${payment.isWithdraw == '0' }">
 									<c:if test="${payment.productType!='1' }">
+									<c:if test="${payment.productType!='0' }">
 									<button class="btn blue-gradient" onclick="fncdeletepay('${payment.paymentId}')" >결제취소</button>
 									</c:if>
 									</c:if>
-									<c:if test="${payment.isWithdraw == '1' || payment.productType == '1' }">
+									</c:if>
+									<c:if test="${payment.isWithdraw == '1' || payment.productType == '1' || payment.productType=='0' }">
 										취소불가
 									</c:if>
 									</c:if>
