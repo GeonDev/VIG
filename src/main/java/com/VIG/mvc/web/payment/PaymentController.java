@@ -55,8 +55,7 @@ public class PaymentController {
 	@RequestMapping(value="addPayment", method=RequestMethod.GET)
 	public ModelAndView addPayment(@RequestParam("productType") int productType, HttpServletRequest request) throws Exception {
 		
-		System.out.println("addPayment:GET");
-		System.out.println(productType+" : ");
+
 		ModelAndView mav = new ModelAndView();
 		
 		
@@ -77,10 +76,10 @@ public class PaymentController {
 		if(productType == 2) {
 			//후원 결제
 			int feedId = Integer.parseInt(request.getParameter("feedId"));
-			System.out.println(feedId);
+
 			Feed feed = feedServices.getFeed(feedId);
 			User writer = feed.getWriter();
-			System.out.println(writer);
+			
 			
 			if(writer.getRole().contains("business")) {
 			
