@@ -285,8 +285,11 @@ public class UserController {
 	@RequestMapping( value="updateUser", method=RequestMethod.POST )
 	public ModelAndView updateUser(@ModelAttribute("user") User user, @RequestParam("uploadFile") MultipartFile file, HttpSession session )throws Exception{ 
 		
-		
-        String path = context.getRealPath("/");         
+        String path = context.getRealPath("/");  
+
+        System.out.println(path);
+        
+        User dbuser = userServices.getUserOne(user.getUserCode());
         
         if(OS.contains("win")) {
         	//워크스페이스 경로를 받아온다.
@@ -296,8 +299,8 @@ public class UserController {
         	//실제 톰켓 데이터가 저장되는 경로를 가리킨다.
         	path +=  realPath;
         }
-			
-		if(file !=null) {
+        
+		if(!file.isEmpty()) {
 			
         	//파일 업로드시 시간을 이용하여 이름이 중복되지 않게 한다.	        	
         	String inDate = new java.text.SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date());		
@@ -306,12 +309,25 @@ public class UserController {
         	file.transferTo(f);
 			user.setProfileImg(f.getName());	        	
 	        
+		}else {
+			
+			user.setProfileImg(dbuser.getProfileImg());
+			
 		}
+		//비밀번호는 필수 입력
+		if(user.getPassword()!= null || user.getPassword()!="") {
+			
+			String pwdBycrypt = passwordEncoder.encode(user.getPassword());
+		    user.setPassword(pwdBycrypt);
+			
+		}
+		
 		userServices.updateUser(user);	
+		session.setAttribute("user", userServices.getUserOne(user.getUserCode()));
 
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("user",userServices.getUserOne(user.getUserCode()));
-		mv.setViewName("redirect:/user/updateUser.jsp");
+		mv.addObject("user", userServices.getUserOne(user.getUserCode()));
+		mv.setViewName("redirect:/user/updateUser?userCode="+user.getUserCode());
 		
 		return mv;
 	        

@@ -196,6 +196,7 @@ public class PaymentController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("forward:/payment/getPaymentList.jsp");
 		mav.addObject("list", list);
+		mav.addObject("writer", userServices.getUserOne(user.getUserCode()));
 		mav.addObject("resultPage", resultPage);
 		
 		return mav;
@@ -247,6 +248,7 @@ public class PaymentController {
 		
 		mav.setViewName("forward:/payment/getAllPaymentList.jsp");
 		mav.addObject("list", list);
+		mav.addObject("writer", userServices.getUserOne(user.getUserCode()));
 		mav.addObject("resultPage", resultPage);
 		
 		}
