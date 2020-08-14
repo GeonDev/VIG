@@ -85,7 +85,7 @@
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		$("#googlelogin").on("click" , function() {
 			location.href="https://accounts.google.com/o/oauth2/auth?client_id="+
-			"82747934090-ljsrvma8goa9dskv7hchor1mt2atl1ao.apps.googleusercontent.com"+
+			"153642235365-kg8rl6mmbhk7rh4tuefg790id1llegd1.apps.googleusercontent.com"+
 			"&redirect_uri="+
 			"http://localhost:8080/VIG/user/googleLogin" +
 			"&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email&approval_prompt=force&access_type=offline";				
