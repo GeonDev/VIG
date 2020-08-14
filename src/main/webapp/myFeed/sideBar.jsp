@@ -97,6 +97,8 @@
 				  <a class="dropdown-item" id="toggleID" href="/VIG/payment/getPaymentList" style="text-align: center;">내 결제 목록</a>
 				  <div class="dropdown-divider"></div>
 				  <a class="dropdown-item" id="toggleID" href="/VIG/withdraw/getDonationList" style="text-align: center;">후원 받은 목록</a>
+				   <div class="dropdown-divider"></div>
+				  <a class="dropdown-item" id="toggleID" href="/VIG/withdraw/getWithdrawList" style="text-align: center;">내 출금 목록</a>
 				  </c:if>
 				  
 				</div>
@@ -120,6 +122,8 @@
 			 				<br/>
 			 			<a type="button" class="btn btn-block" href="/VIG/payment/getAllPaymentList">결제 조회</a>
 			 				<br/>
+			 			<a type="button" class="btn btn-block" href="/VIG/withdraw/getWithdrawList">출금 조회</a>
+			 				<br/>	
 			 		</c:if>	
 			
 	
