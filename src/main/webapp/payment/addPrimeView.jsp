@@ -33,6 +33,8 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 	<!--  아임포트 결제 구현  -->
 	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+	<!-- 알러트 -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
 	
 <style>
@@ -91,6 +93,12 @@ $(function(){
 		$("input[name='paymentOption']").val(1);
 		}
 		
+		if($("#defaultUnchecked").is(":checked") == false ){
+			
+			swal("필수 동의 사항을 선택해주세요.");
+			return false;
+			
+		}
 		
 		 IMP.request_pay({
 		    pg : 'inicis', // version 1.1.0부터 지원.
@@ -119,7 +127,7 @@ $(function(){
 		        msg += '에러내용 : ' + rsp.error_msg;
 		        
 		    }
-		    alert(msg); 
+		    swal(msg); 
 		  
 		    
 		});
@@ -192,12 +200,27 @@ $(function(){
 		<div id="selectPrice" > <span style="font-weight: bold">선택 금액 :</span><span id="select">10,000</span><p style="display:inline-block ; width: 200px">원</p></div>
 		<div id="commissionPrice"><span style="font-weight: bold">수수료(VAT 10%) : </span><span id="commission">1,000</span><p style="display:inline-block ; width: 200px">원</p></div>
 		<div id="lastPrice"><span style="font-weight: bold">총 결제 금액 : </span><span id="last">11,000</span><p style="display:inline-block ; width: 200px">원</p></div>
+				
+				<p style="font-size: 14px; text-align:left;">
+					결제를 위해 귀하의 개인정보를 제3자((주)아임포트)에 제공하는데 동의하십니까?
+					결제하시고자 하는 상품은 디지털 상품으로 결제와 동시에 사용되어 환불이 불가합니다. 
+					위 사항에 동의하십니까?<br>
+					(동의하지 않으면 결제가 진행되지 않을 수 있습니다.)
+				</p>
+				<div class="custom-control custom-checkbox" style="text-align:center">
+					    <input type="checkbox" class="custom-control-input" id="defaultUnchecked">
+					    <label class="custom-control-label" for="defaultUnchecked">예, 동의합니다.(필수)</label>
+				</div>
+		
+		
 		</div>
 		<input type="hidden" name="selectPrice" value="10000">
 		<input type="hidden" name="lastPrice" value="11000">
 		<input type="hidden" name="paymentId">
 		<input type="hidden" name="paymentType">
 		<input type="hidden" name="productType" value="0">
+		
+					
 	
 	
 	</div>

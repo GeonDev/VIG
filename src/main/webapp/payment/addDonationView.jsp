@@ -33,6 +33,8 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 	<!--  아임포트 결제 구현  -->
 	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+	<!-- 알러트 -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
 	
 <style>
@@ -45,7 +47,7 @@
 	}
 	
 	#main { 
-		width: auto;
+		width: 80%;
 		margin: 70px auto;
 	}
 	
@@ -145,22 +147,27 @@ $(function(){
 	var IMP = window.IMP; // 생략가능
 	IMP.init('imp09736662');
 	
+	var selectPrice;
+	var commission;
+	var lastPrice;
+	
 	
 	$('input:radio').on("change", function(){
 		
 		
 		
-		var selectPrice;
+		selectPrice;
 		if($('input[name="price"]:checked').val() != '0'){
 			
 		selectPrice = $('input[name="price"]:checked').val();
-		var commission = selectPrice*0.1;
-		var lastPrice = parseInt(selectPrice)+parseInt(commission);
+		commission = selectPrice*0.1;
+		lastPrice = parseInt(selectPrice)+parseInt(commission);
 
 		$("#select").text(selectPrice);
 		$("input[name='selectPrice']").val(selectPrice);
 		$("#commission").text(commission);
 		$("#last").text(lastPrice);
+		$("input[name='lastPrice']").val(lastPrice);
 		
 		
 		} 
@@ -173,12 +180,13 @@ $(function(){
 			var change = parseInt($("#before").val());
 			$("#after").val(change);
 			selectPrice = $("#after").val();
-			var commission = selectPrice*0.1;
-			var lastPrice = parseInt(selectPrice)+parseInt(commission);
+			commission = selectPrice*0.1;
+			lastPrice = parseInt(selectPrice)+parseInt(commission);
 			$("#select").text(selectPrice);
 			$("#commission").text(commission);
 			$("#last").text(lastPrice);
-		
+			$("input[name='lastPrice']").val(lastPrice);
+			
 		});
 
 		}
@@ -192,13 +200,20 @@ $(function(){
 		
 		
 		
-		var lastPrice = parseInt($("#last").text());
+		lastPrice = parseInt($("#last").text());
 		
 		var option = $("select option:selected").val();
 		if(option == 'card'){
-		$("input[name='paymentOption']").val(0);
+			$("input[name='paymentOption']").val(0);
 		} else if(option == 'trans') {
-		$("input[name='paymentOption']").val(1);
+			$("input[name='paymentOption']").val(1);
+		}
+		
+		if($("#defaultUnchecked").is(":checked") == false ){
+			
+			swal("필수 동의 사항을 선택해주세요.");
+			return false;
+			
 		}
 		
 		
@@ -207,7 +222,7 @@ $(function(){
 		    pay_method : option,
 		    merchant_uid : 'merchant_' + new Date().getTime(),
 		    name : '주문명:결제테스트',
-		    amount : lastPrice,
+		    amount : 100,
 		    buyer_email : 'iamport@siot.do',
 		    buyer_name : "주문자이름",
 		    buyer_tel : '010-1234-5678',
@@ -228,7 +243,7 @@ $(function(){
 		        var msg = '결제에 실패하였습니다.';
 		        msg += '에러내용 : ' + rsp.error_msg;
 		    }
-		    alert(msg);
+		    swal(msg);
 		   
 		    
 		});
@@ -273,108 +288,123 @@ $(function(){
 	<h2 align="center" style="font-weight: bold;" > 후원결제 </h2>
 	<hr>
 	<br>
-	<form class="donationform">
+	
 	<div class="container">
-		<div class="row">
-			<div class="col-md-4">
-				<div class="feedinfo">
-				
-				<div class="view overlay z-depth-1">
-				<c:forEach var="images" items="${feed.images}">
-					<c:if test="${images.isThumbnail == '1'}">
-		        	  <img src="/VIG/images/uploadFiles/${images.imageFile}" class="img-fluid" alt="Sample image">
-			          <div class="mask flex-center blue-gradient-rgba">
-			            <a class="btn btn-outline-white btn-rounded moveFeed">See more</a>
-			          </div>
-			          </c:if>
-			     </c:forEach>
-		        </div>
-		        <p class="text-uppercase text-center text-muted mt-4 mb-0">${feed.feedTitle }</p>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="feedinfo">
 					
-				
-				</div>
-			</div>
-			<div class="col-md-8">
-				<div class="row">
-				<div class="col-6">
-				<div align="right"> <span style="font-size:20px; font-weight: bold;" > 후원 유저 코드 (피드ID) :  </span> &nbsp;&nbsp;</div>
-				<br>
-				<div align="right"> <span style="font-size:20px; font-weight: bold;" > 금액 :  </span> &nbsp;&nbsp;</div>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-				<div align="right"> <span style="font-size:20px; font-weight: bold;" > 결제 수단 :   </span> &nbsp;&nbsp;</div>
-				</div>
-				
-				
-				
-				<div class="col-6">
-				
-				
-				<input type="hidden" name="beneficiary" value="${feed.writer.userCode}">
-				<input type="hidden" name="feedId" value="${feed.feedId}">
-				<span style="font-size:18px;">${feed.writer.userCode} (${feed.feedId})</span>
-					${session.user.userCode}
-				<br><br>
-					<div class="form-check" align="left" style=" font-weight: bold; padding-top: 10px">
-					<div class="priceRadio">
-					  <input type="radio" class="form-check-input" id="materialChecked2" name="price" value="1000" checked> 1,000원
-					  </div>
-					  
-					  <div class="priceRadio">
-					   <input type="radio" class="form-check-input" id="materialChecked2" name="price" value="3000" > 3,000원
-					  </div>
-					    
-					    <div class="priceRadio">
-					   <input type="radio" class="form-check-input" id="materialChecked2" name="price" value="5000" > 5,000원
-					  </div>
-					    
-					    <div class="priceRadio">
-					   <input type="radio" class="form-check-input" id="materialChecked2" name="price" value="10000" > 10,000원
-					  </div>
-					    
-					    <div class="priceRadio">
-					   <input type="radio" class="form-check-input" id="after" name="price" value="0" >기타 :
-					   <input type="text" id="before" name="price" numberOnly disabled="disabled" placeholder="금액을 입력하세요"> 원
-					  </div>
-					</div>
-					<br>
-						<select class="browser-default custom-select"  name="paymentType" style="width: 200px">  
-						  <option value="card">카드결제</option>
-						  <option value="trans">실시간 계좌이체</option>
-						  <option value="phone">휴대폰 소액결제</option>
-						</select>
+					<div class="view overlay z-depth-1">
+					<c:forEach var="images" items="${feed.images}">
+						<c:if test="${images.isThumbnail == '1'}">
+			        	  <img src="/VIG/images/uploadFiles/${images.imageFile}" class="img-fluid" alt="Sample image">
+				          <div class="mask flex-center blue-gradient-rgba">
+				            <a class="btn btn-outline-white btn-rounded moveFeed">See more</a>
+				          </div>
+				          </c:if>
+				     </c:forEach>
+			        </div>
+			        <p class="text-uppercase text-center text-muted mt-4 mb-0">${feed.feedTitle }</p>
 						
-						<hr/>
-					
-						<div id="selectPrice" > <span style="font-weight: bold">선택 금액 : </span><span id="select"></span><p style="display:inline-block">원</p></div>
-						<div id="commissionPrice"><span style="font-weight: bold">수수료(VAT 10%) : </span><span id="commission"></span><p style="display:inline-block ;">원</p></div>
-						<div id="lastPrice"><span style="font-weight: bold">총 결제 금액 : </span><span id="last"></span><p style="display:inline-block ;">원</p></div>
 					
 					</div>
-					<input type="hidden" name="selectPrice">
-					<input type="hidden" name="lastPrice">
-					<input type="hidden" name="paymentId">
-					<input type="hidden" name="paymentType">
-					<input type="hidden" name="productType" value="2">
-				
-				
 				</div>
-		</div>
+			
+				<div class="col-md-8">
+				
+					<div class="row">
+					<div class="col-6">
+					<div align="right"> <span style="font-size:20px; font-weight: bold;" > 후원 유저 (피드ID) :  </span> &nbsp;&nbsp;</div>
+					<br>
+					<div align="right"> <span style="font-size:20px; font-weight: bold;" > 금액 :  </span> &nbsp;&nbsp;</div>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<div align="right"> <span style="font-size:20px; font-weight: bold;" > 결제 수단 :   </span> &nbsp;&nbsp;</div>
+					</div>
+					
+					
+					
+					<div class="col-6">
+					
+				
 
-		
-	  </div>
+					<span style="font-size:18px;">${feed.writer.userName} (${feed.feedId})</span>
+					<br><br>
+						<div class="form-check" align="left" style=" font-weight: bold; padding-top: 10px">
+						<div class="priceRadio">
+						  <input type="radio" class="form-check-input" id="materialChecked2" name="price" value="1000" checked> 1,000원
+						  </div>
+						  
+						  <div class="priceRadio">
+						   <input type="radio" class="form-check-input" id="materialChecked2" name="price" value="3000" > 3,000원
+						  </div>
+						    
+						    <div class="priceRadio">
+						   <input type="radio" class="form-check-input" id="materialChecked2" name="price" value="5000" > 5,000원
+						  </div>
+						    
+						    <div class="priceRadio">
+						   <input type="radio" class="form-check-input" id="materialChecked2" name="price" value="10000" > 10,000원
+						  </div>
+						    
+						    <div class="priceRadio">
+						   <input type="radio" class="form-check-input" id="after" name="price" value="0" >기타 :
+						   <input type="text" id="before" name="price" numberOnly disabled="disabled" placeholder="금액을 입력하세요"> 원
+						  </div>
+						</div>
+						<br>
+							<select class="browser-default custom-select"  name="paymentType" style="width: 200px">  
+							  <option value="card">카드결제</option>
+							  <option value="trans">실시간 계좌이체</option>
+							  <option value="phone">휴대폰 소액결제</option>
+							</select>
+							
+							<hr/>
+						
+							<div id="selectPrice" > <span style="font-weight: bold">선택 금액 : </span><span id="select"></span><p style="display:inline-block">원</p></div>
+							<div id="commissionPrice"><span style="font-weight: bold">수수료(VAT 10%) : </span><span id="commission"></span><p style="display:inline-block ;">원</p></div>
+							<div id="lastPrice"><span style="font-weight: bold">총 결제 금액 : </span><span id="last"></span><p style="display:inline-block ;">원</p></div>
+							
+								<p style="font-size: 14px; text-align:left;">
+									결제를 위해 귀하의 개인정보를 제3자((주)아임포트)에<br> 제공하는데 동의하십니까?<br>
+									(동의하지 않으면 결제가 진행되지 않을 수 있습니다.)
+								</p>
+								<div class="custom-control custom-checkbox" style="text-align:center">
+									    <input type="checkbox" class="custom-control-input" id="defaultUnchecked">
+									    <label class="custom-control-label" for="defaultUnchecked">예, 동의합니다.(필수)</label>
+								</div>
+							
+						</div>
+						<form class="donationform">	
+							<input type="hidden" name="beneficiary" value="${feed.writer.userCode}">
+						    <input type="hidden" name="feedId" value="${feed.feedId}">
+							<input type="hidden" name="selectPrice">
+							<input type="hidden" name="lastPrice">
+							<input type="hidden" name="paymentId">
+							<input type="hidden" name="paymentType">
+							<input type="hidden" name="productType" value="2">
+						</form>
+					
+					</div>
+				
+			 </div>
+			
+	
+			
+		  	</div>
+		  </div>
 	<hr/>
 	
 	<div align="center">
 	<button type="button" class="btn btn-info">결제</button>
 	<button type="button" class="btn btn-light">취소</button>
 	</div>
-	</div>
-	</form>
+	
+	
 	</div>
 	
 
