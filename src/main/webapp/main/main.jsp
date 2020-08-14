@@ -238,8 +238,7 @@
 	}
 	
 	.img_categories {	
-	max-height: 40px;
-	min-width: 120px;
+	height: 40px;
 	padding-left: 0px;
 	padding-right: 0px;
 	margin-left: 0px;
@@ -264,7 +263,10 @@
 	.view {	  
 	margin: 5px 10px;
 	}
-	.view.overlay{border-radius: 10px;}
+	
+	.view.overlay
+	{border-radius: 10px;
+	}
 	
 	
 	<!-- 스크롤 제거 부분 -->

@@ -390,8 +390,9 @@
    			});		
 		
 		
+			//자동완성 기능
 			$("#Keyword").on("keyup", function(){				
-				if($("#Keyword").val().length >= 1){
+				if($("#Keyword").val().length > 1){
 					getkeywords();
 				}					
 			});				
@@ -407,7 +408,7 @@
 			
 			//검색 아이콘을 클릭하면 검색 수행
 			$("#startedSearchIcon").on("click", function(){				
-				if($("#Keyword").val().length >= 1){
+				if($("#Keyword").val().length > 1){
 					startKeywordSearch();
 				}	
 			});				
