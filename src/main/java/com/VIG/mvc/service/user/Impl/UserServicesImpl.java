@@ -62,11 +62,7 @@ public class UserServicesImpl implements UserServices {
 		return map;
 	}
 	
-	@Override
-	public boolean sendEmail(String email) throws Exception{
-		
-		return false;
-	}
+	
 		
 	public boolean checkDuplication(String userCode) throws Exception {
 		boolean result=true;

@@ -45,110 +45,37 @@ private UserServices userServices;
 public RestUserController() {
 	}
 
-
-/*
-@RequestMapping(value="/json/login", method=RequestMethod.POST)
-
-public User login( @RequestBody User user, HttpSession session) throws Exception{
-		System.out.println("json/login");
-	User dbUser = userServices.getUserOne(user.getUserCode());
-		System.out.println("json/dbUser:"+dbUser);
-	if( user.getPassword().equals(dbUser.getPassword())) {
-		session.setAttribute("user", dbUser);
-	}
-	return dbUser;	
-}
-*/
-
-
-
-@RequestMapping( value="json/checkDuplication", method=RequestMethod.POST)
-@ResponseBody
-public boolean checkDuplication( @RequestParam ("userCode") String userCode ) throws Exception{			
-	
-	return userServices.checkDuplication(userCode);	
-}
-
-
-
-
-//================================================================탈퇴시 비번 확인 //    ajax 테스트 중 ㅠㅠ
-/*
-@RequestMapping( value="json/checkPw", method=RequestMethod.POST)
-@ResponseBody
-public boolean checkPw( @RequestParam ("password") String password ) throws Exception{			
-	
-	return userServices.checkDuplication(password);	
-}
-*/
-
-
-/*
-@RequestMapping( value="/json/login", method=RequestMethod.POST )
-@ResponseBody
-public String login(@ModelAttribute("user") User user, HttpSession session) throws Exception{
-	
-		User dbUser = userServices.getUserOne(user.getUserCode());
-				
-		if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())){	
-		session.setAttribute("user", dbUser);
-		System.out.println("dbUser:"+dbUser);
-		System.out.println(session.getAttribute("user"));
-		return "id,pw=ok";
-		}else {
-			return "check your ID or password";
-		}
-}
-*/
-
-@RequestMapping(value="/json/login", method=RequestMethod.POST)
-@ResponseBody
-public User loginCheck( @RequestBody User user, HttpSession session) throws Exception{
-		System.out.println("json/login");
-	User dbUser = userServices.getUserOne(user.getUserCode());
-		System.out.println("json/dbUser:"+dbUser);
-		if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())) {
-		session.setAttribute("user", dbUser);
-	}
-	return dbUser;	
-}
+		//회원가입시 아이디 체크
+		@RequestMapping( value="json/checkDuplication", method=RequestMethod.POST)
+		@ResponseBody
+		public boolean checkDuplication( @RequestParam ("userCode") String userCode ) throws Exception{			
 			
-
-
-///// json TEst용//*
-/*@RequestMapping(value="json/jsonTest", method=RequestMethod.POST)
-@ResponseBody
-public String simpleWithObject(User user) {
-    //필요한 로직 처리
-    return user.getUserCode();
-}
-*/
-//////=============================================================================
-
-
-
-
-
-
-
-@RequestMapping( value = "json/getUser/{userCode}" , method=RequestMethod.GET)
-public User getUser(@PathVariable String userCode) throws Exception{
-	System.out.println("json get");
-	return userServices.getUserOne(userCode);
-}
-
-/*
-@RequestMapping( value = "json/getUser/{userName}" , method=RequestMethod.GET)
-public List<User> getUserListFromName(@PathVariable("userName") String name) throws Exception{
+			return userServices.checkDuplication(userCode);	
+		}
 	
-	Search search = new Search();
-	search.setKeyword(name);
-	System.out.println("jsondata!! : "+name);
-	return userServices.getUserListFromName(search);
-}
-*/
-//===================
+		//로그인시 아이디,비번 체크 (구현마저하기)
+		@RequestMapping(value="/json/login", method=RequestMethod.POST)
+		@ResponseBody
+		public User loginCheck( @RequestBody User user, HttpSession session) throws Exception{
+				System.out.println("json/login");
+			User dbUser = userServices.getUserOne(user.getUserCode());
+				System.out.println("json/dbUser:"+dbUser);
+				if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())) {
+				session.setAttribute("user", dbUser);
+			}
+			return dbUser;	
+		}
+				
+	
+		
+		@RequestMapping( value = "json/getUser/{userCode}" , method=RequestMethod.GET)
+		public User getUser(@PathVariable String userCode) throws Exception{
+			System.out.println("json get");
+			return userServices.getUserOne(userCode);
+		}
 
+	
+		//이메일 인증
 		@RequestMapping(value="json/emailSend",method=RequestMethod.GET)
 		public Map emailSend(@RequestParam("email") String email) throws Exception{
 			System.out.println(" ---------------------------------------");
@@ -171,13 +98,13 @@ public List<User> getUserListFromName(@PathVariable("userName") String name) thr
 		public String mailSender(String email) throws AddressException, MessagingException {
 			
 			String host = "smtp.gmail.com"; 
-			final String username = "bitwin98@gmail.com"; //네이버 아이이디 
-			final String password = "winwin98!"; //네이버 비번 
+			final String username = "bitwin98@gmail.com"; //보내는 이메일 주소 
+			final String password = "winwin98!"; //보내는 이메일 비번
 			int port=587; 
 			String verCode=RestUserController.getAlphaNumericString();
 			String recipient = email; //받는 사람 이메일 주소 
-			String subject = "이메일 인증입니다."; //메일 제목 
-			String body = " 인증코드\n\t\t"+"[ "+verCode+" ]"; //메일 내용
+			String subject = "[VIG] 이메일 인증 번호입니다."; //메일 제목 
+			String body = " 인증코드 번호는"+"[ "+verCode+" ]"+"입니다"; //메일 내용
 			Properties props = System.getProperties(); // 메일 제목, 내용을 담을 properties 만들기. 
 			
 			props.put("mail.smtp.host", host);
