@@ -118,6 +118,7 @@
 	 		self_introduce = #{selfIntroduce:VARCHAR},
 	 		user_name = #{userName:VARCHAR},
 	 		google_id = #{googleId:VARCHAR},
+	 		password = #{password:VARCHAR},
 	 		profile_img = #{profileImg:VARCHAR}	 		
 	 	WHERE user_code = #{userCode}
 	 </update>	
