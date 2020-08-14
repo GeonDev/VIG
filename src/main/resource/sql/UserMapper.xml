@@ -13,8 +13,6 @@
 		<result property="role" 			column="role" 				jdbcType="VARCHAR" />
 		<result property="profileImg" 		column="profile_img" 		jdbcType="VARCHAR" />
 		<result property="selfIntroduce" 	column="self_introduce" 	jdbcType="VARCHAR" />
-		<result property="sex" 				column="sex" 				jdbcType="VARCHAR" />
-		<result property="birth" 			column="birth" 				jdbcType="VARCHAR" />
 		<result property="state" 			column="state" 				jdbcType="NUMERIC" />
 		<result property="googleId" 		column="google_id" 			jdbcType="VARCHAR" />
 		<result property="account" 			column="account" 			jdbcType="VARCHAR" />
@@ -37,8 +35,8 @@
 	 <!-- SQL : INSERT -->
 	<insert	id="addUser" parameterType="user"  >
 	 	INSERT
-		INTO users(user_code , user_name , password , profile_img, sex, birth, state, prime_count, email, role, reg_date, google_id) 
-		VALUES (#{userCode}, #{userName}, #{password:VARCHAR}, #{profileImg:VARCHAR},  #{sex:VARCHAR}, #{birth:VARCHAR}, #{state:NUMERIC}, #{primeCount:NUMERIC}, #{email:VARCHAR}, DEFAULT, NOW(), #{googleId:VARCHAR})
+		INTO users(user_code , user_name , password , profile_img, state, prime_count, email, role, reg_date, google_id) 
+		VALUES (#{userCode}, #{userName}, #{password:VARCHAR}, #{profileImg:VARCHAR}, #{state:NUMERIC}, #{primeCount:NUMERIC}, #{email:VARCHAR}, DEFAULT, NOW(), #{googleId:VARCHAR})
 	 </insert>
 	 
 	 

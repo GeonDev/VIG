@@ -12,8 +12,6 @@ CREATE TABLE users (
 	role  				 VARCHAR(10)  		DEFAULT 'user',	
 	profile_img 		 VARCHAR(100)	    DEFAULT 'profile_img.jpg',
 	self_introduce  	 VARCHAR(1024),	
-	sex  				 VARCHAR(10),
-	birth  				 INT(4),
 	state  				 TINYINT(1),
 	google_id  			 VARCHAR(100),
 	account  			 VARCHAR(50),
