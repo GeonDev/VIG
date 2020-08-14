@@ -44,20 +44,20 @@
 			var email=$("input[name='email']").val();
 			
 			
-			if(id == null || id.length <1){
-				alert("아이디는 반드시 입력하셔야 합니다.");
+			if(id == null || id.length <2){
+				alert("아이디는 2글자 이상입니다.");
 				return;
 			}
 			if(name == null || name.length <1){
-				alert("이름은  반드시 입력하셔야 합니다.");
+				alert("이름은 반드시 입력하셔야 합니다.");
 				return;
 			}
-			if(pw == null || pw.length <1){
-				alert("패스워드는  반드시 입력하셔야 합니다.");
+			if(pw == null || pw.length <4){
+				alert("패스워드는 4자리 이상 입니다.");
 				return;
 			}
-			if(pw_confirm == null || pw_confirm.length <1){
-				alert("패스워드 확인은  반드시 입력하셔야 합니다.");
+			if(pw_confirm == null || pw_confirm.length <4){
+				alert("패스워드 확인은 반드시 입력하셔야 합니다.");
 				return;
 			}
 		
@@ -66,10 +66,7 @@
 				$("input:text[name='password2']").focus();
 				return;
 			}
-			if(birth == null || birth.length<1){
-				alert("생년월일은 반드시 입력하셔야 합니다.");
-				return;
-			}
+	
 			if(email == null){
 				alert("이메일은 반드시 입력하셔야 합니다.");
 				return;
@@ -113,7 +110,7 @@
 				type: "POST",
 				data : form,
 				success: function(data){
-					console.log("00 "+ data);
+				
 					if (data== false) {
 						$("#id_check").text("사용중인 아이디입니다.");
 						$("#id_check").css("color", "red");
@@ -178,13 +175,7 @@
 	})
 	});
 		
-		//달력 setting
-		$( function() {
-			   $( "#datepicker" ).datepicker({
-			    showMonthAfterYear: true, 
-				 dateFormat: "yy-mm-dd"	    
-			    });
-			  });
+
 		
 		$(function(){
 			$('#theModal').on('show.bs.modal', function(e) {		
@@ -251,19 +242,7 @@
 			
 		<!-- 플필 -->  
 		     <input type="hidden" id="profileImg" name="profileImg" class="form-control " value="profile_img.jpg">
-		
-		<!-- 성별 -->
-		<div class="form-group" style="height: 40px; margin-bottom:0;">
-			  <input type="radio" id="check_userSex" name="sex" value="female" checked><label for="sex" >female</label>
-			  <input type="radio" id="check_userSex" name="sex" value="male"><label for="sex">male</label>
-			</div>
 
-		<!-- 생년월일-->
-		<div class="form-group" style="height: 50px;">
-			<hr/>
-			<p>Birth: <input type="text" id="datepicker" name="birth" placeholder="click me"></p>
-			<label data-error="wrong" data-success="right" for="birth"></label>
-		</div>	
 		<!--  -->
 		     <input type="hidden" id="state" name="state" class="form-control " value="0">
 		     <input type="hidden" id="primeCount" name="primeCount" class="form-control mb-4" value="0">
