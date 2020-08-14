@@ -42,6 +42,8 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 	<!--  아임포트 결제 구현  -->
 	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+	<!-- 알러트 -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
 	
 <style>
@@ -91,7 +93,6 @@ $(function (){
 	
 	
 	$("#confirmbutton").on("click", function(){
-		alert("");
 
 		self.location="/VIG/payment/getPaymentList";
 		
