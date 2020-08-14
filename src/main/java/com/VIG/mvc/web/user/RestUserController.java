@@ -83,7 +83,7 @@ public RestUserController() {
 	
 		//이메일 인증
 		@RequestMapping(value="json/emailSend",method=RequestMethod.GET)
-		public Map emailSend(@RequestParam("email") String email) throws Exception{
+		public Map<String,Object> emailSend(@RequestParam("email") String email) throws Exception{
 			System.out.println(" ---------------------------------------");
 			System.out.println("[ /user/json/emailCheck/"+email+" : GET]");
 			System.out.println(" ---------------------------------------");
@@ -94,7 +94,7 @@ public RestUserController() {
 			
 			System.out.println("\n\n[ "+verCode+" ]\n\n");
 			
-			Map map = new HashMap();
+			Map<String,Object> map = new HashMap<String, Object>();
 			map.put("verifCode", verCode);
 			
 			////리턴 값 설정 해주기.

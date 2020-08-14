@@ -16,4 +16,6 @@ public interface LikeDao {
 	
 	//특정 일(date : '20200802')에 특정 유저(userCode : 'user01')가 작성한 피드에 좋아요를 누른 수 - 손건
 	public int getLikeDateCount(HashMap<String, String> keys)throws Exception;
+	
+	public int getLikeCount (int feedId) throws Exception;  // 좋아요 수 받아오기
 }

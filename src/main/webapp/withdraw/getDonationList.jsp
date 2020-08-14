@@ -134,7 +134,6 @@
 			 alert("은행을 선택해주세요");
 		 }
 		 if(holder != "" && accNo != "" && RRN != ""&& bankCode!=""){
-			 alert("");
 		$("form").attr("method", "post").attr("action", "/VIG/withdraw/addWithdraw").submit();
 		 }
 		 

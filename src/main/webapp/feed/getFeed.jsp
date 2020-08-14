@@ -365,69 +365,50 @@ $(function(){
 	
 	//좋아요 연결
 	$("#like").on("click", function(){
-
 		user = '${sessionScope.user}';
 		if(user==null||user=='') {
 			alert("로그인이 필요합니다.");
-			return false;
-			
+			return false;			
 		}
-
 		
-		//실시간 알람을 보내는 부분
-		sendMessage('${feed.writer.userCode}','${feed.feedId}','0');
+	
 		
-
-		var likeClass = $("#like").attr("class");
-		console.log(likeClass);
-		if(likeClass =='far fa-heart'){
-			
-		$("#like").attr("class", "fas fa-heart");
-		//deleteLike 추가
-		$.ajax(
-				
-				{ url: "/VIG/like/json/addLike?feedId=${feed.feedId}",
-					method : "GET",	
-					dataType: "json",
+		$.ajax( 
+				{
+					url : "/VIG/like/json/addLike/${feed.feedId}",
+					method : "GET",
+					dataType : "Json",					
 					headers : {
-						
-						"Accept" : "applicion/json",
+						"Accept" : "application/json",
 						"Content-Type" : "application/json"
-					},
-					success : function(JSONData, status) {
+					},					
+					success : function(JSONData , status) {
 						
-					alert(status);	
-					
+						//좋아요 카운트를 받아옴
+						$("#like").text(" "+JSONData);
+						
+						if($("#like").attr("class") == 'fas fa-heart'){
+							$("#like").attr("class","far fa-heart");
+							
+							//실시간 알람을 보내는 부분
+							sendMessage('${feed.writer.userCode}','${feed.feedId}','0');
+							
+						}else{
+							$("#like").attr("class","fas fa-heart");
+						}
+						
+						
 					}
-					
-				
-				});
+			});	
 		
-		}else{
-			
-		$("#like").attr("class", "far fa-heart");	
-		//addLike 추가 
-		$.ajax(
-				
-				{ url: "/VIG/like/json/addLike?feedId=${feed.feedId}",
-					method : "GET",	
-					dataType: "json",
-					headers : {
-						
-						"Accept" : "applicion/json",
-						"Content-Type" : "application/json"
-					},
-					success : function(JSONData, status) {
-						
-					alert(status);	
-					
-					}
-					
-				
-				});
-		}
+	
 		
 	});
+	
+	
+	
+	
+	
 	
 	//후원
 	$("#donation").on("click", function(){
