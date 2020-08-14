@@ -181,8 +181,6 @@ public class UserController {
 	@RequestMapping( value="addUser", method=RequestMethod.POST )
 	public String addUser(@ModelAttribute("user") User user, HttpSession session ) throws Exception {
 		
-		user.setBirth(user.getBirth().replaceAll("-", ""));
-		
 		String pwdBycrypt = passwordEncoder.encode(user.getPassword());
 	    user.setPassword(pwdBycrypt);
 		userServices.addUser(user);
@@ -220,11 +218,6 @@ public class UserController {
 				
 		User dbUser = userServices.getUserOne(user.getUserCode());
 		ModelAndView mv = new ModelAndView();
-		
-
-		SimpleDateFormat format = new SimpleDateFormat ("yyyyMMdd");
-		Date date  = new Date();			
-		int toDay = Integer.parseInt(format.format(date));
 		
 		if(dbUser == null) {
 			String msg = "가입되어 있지 않은 아이디입니다.";				
@@ -405,10 +398,8 @@ public class UserController {
 		
 	
 		@RequestMapping (value="deleteUser", method = {RequestMethod.GET, RequestMethod.POST})
-		public ModelAndView deleteUser(User user,HttpSession session) throws Exception{
-			
-			
-		System.out.println("모르겟숴....");
+		public ModelAndView deleteUser(User user,HttpSession session) throws Exception{			
+	
 			ModelAndView mv = new ModelAndView();
 			userServices.deleteUser(user);
 			session.invalidate();

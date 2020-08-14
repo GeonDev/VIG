@@ -56,6 +56,12 @@ public class LikeDaoImpl implements LikeDao{
 		return sqlSession.selectOne("JoinerMapper.getLikeMounthCount",keys);
 	}
 
+	@Override
+	public int getLikeCount(int feedId) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("JoinerMapper.getLikeUserCount",feedId);
+	}
+
 
 	
 	

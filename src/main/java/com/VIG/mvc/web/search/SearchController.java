@@ -1,7 +1,5 @@
 package com.VIG.mvc.web.search;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -22,15 +20,12 @@ import com.VIG.mvc.service.category.CategoryServices;
 import com.VIG.mvc.service.color.ColorServices;
 import com.VIG.mvc.service.domain.Category;
 import com.VIG.mvc.service.domain.Image;
-import com.VIG.mvc.service.domain.ImageKeyword;
-import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.feed.FeedServices;
 import com.VIG.mvc.service.history.HistoryServices;
 import com.VIG.mvc.service.image.ImageServices;
 import com.VIG.mvc.service.keyword.KeywordServices;
 import com.VIG.mvc.service.user.UserServices;
-import com.VIG.mvc.util.CommonUtil;
 
 
 @Controller
@@ -98,6 +93,7 @@ public class SearchController {
 		delfault.setCategoryId(0);
 		delfault.setCategoryName("All");
 		categorylist.add(0, delfault);
+				
 		
 		model.addAttribute("mode", mode);	
 		model.addAttribute("user", user);
