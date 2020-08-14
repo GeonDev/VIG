@@ -98,7 +98,7 @@
 		
 		$.ajax( 
 				{
-					url : "/VIG/search/json/getSearchSammImage",
+					url : "/VIG/search/json/getSearchSameImage",
 					method : "POST",
 					dataType : "Json",					
 					headers : {

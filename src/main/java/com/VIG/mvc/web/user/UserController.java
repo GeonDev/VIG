@@ -145,24 +145,10 @@ public class UserController {
 				}else if(user.getState() == 3 || user.getState() == 4){		
 					String msg = "사용할 수 없는 아이디입니다";				
 					return new ModelAndView("forward:/common/alertView.jsp", "message", msg);
-				}else {
+				}else {	
 					
-					int banDate = Integer.parseInt(user.getBanDate().toString().replaceAll("-",""));	
-					
-					if(user.getState() == 1) {
-						banDate = banDate + 3;
-					}else if(user.getState() == 2) {
-						banDate = banDate+ 7;
-					}  
-					
-					SimpleDateFormat format = new SimpleDateFormat ("yyyyMMdd");
-					Date date  = new Date();			
-					int toDay = Integer.parseInt(format.format(date));
-					
-					int remainDate = banDate-toDay;
-					
-					String msg = "접속 금지 상태 입니다.\n \n 남은 기간 : " + remainDate +"일";				
-					return new ModelAndView("forward:/common/alertView.jsp", "message", msg);						
+					String msg = "접속불가<br/>신고로 인하여 접속이 불가능합니다.<br/>접속 불가능 기간 : " + user.getBanDate().toString() +"까지";				
+					return new ModelAndView("forward:/common/alertView.jsp", "message", msg);				
 					
 				}		
 
@@ -186,7 +172,7 @@ public class UserController {
 	
 	@RequestMapping(value="addUserView", method=RequestMethod.GET)
 	public ModelAndView addUser() throws Exception{		
-		System.out.println("addUser(GET):회원가입 페이지로 이동");
+	
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("forward:/user/addUserView.jsp");	
 		return modelAndView;
@@ -196,23 +182,20 @@ public class UserController {
 	public String addUser(@ModelAttribute("user") User user, HttpSession session ) throws Exception {
 		
 		user.setBirth(user.getBirth().replaceAll("-", ""));
-		System.out.println("addUser(POST):회원가입");
 		
 		String pwdBycrypt = passwordEncoder.encode(user.getPassword());
 	    user.setPassword(pwdBycrypt);
-		userServices.addUser(user);		
-		//User userInfo = userServices.getUserOne(user.getUserCode());
-		session.setAttribute("userInfo", userServices.getUserOne(user.getUserCode()));
-		System.out.println(pwdBycrypt);
+		userServices.addUser(user);
+		
+		session.setAttribute("user", userServices.getUserOne(user.getUserCode()));		
 		return "redirect:/main/VIG";
 	}
 			
 //====id 체크 =====
 	
 	@RequestMapping( value="checkDuplication", method=RequestMethod.POST )
-	public String checkDuplication( @RequestParam("userCode") String userCode , Model model ) throws Exception{
+	public String checkDuplication( @RequestParam("userCode") String userCode , Model model ) throws Exception{		
 		
-		System.out.println("/user/checkDuplication : POST");
 		//Business Logic
 		boolean result=userServices.checkDuplication(userCode);
 		// Model 과 View 연결
@@ -225,8 +208,7 @@ public class UserController {
 //=======로그인=====
 		
 	@RequestMapping( value="login", method=RequestMethod.GET)
-	public ModelAndView login() throws Exception{		
-		System.out.println("login(GET):로그인 페이지로 이동");	
+	public ModelAndView login() throws Exception{			
 
 		ModelAndView model = new ModelAndView();
 		model.setViewName("login");		
@@ -238,7 +220,7 @@ public class UserController {
 				
 		User dbUser = userServices.getUserOne(user.getUserCode());
 		ModelAndView mv = new ModelAndView();
-		System.out.println("로그인 시도 :"+user.getUserCode());
+		
 
 		SimpleDateFormat format = new SimpleDateFormat ("yyyyMMdd");
 		Date date  = new Date();			
@@ -252,33 +234,20 @@ public class UserController {
 		if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())){				
 			
 			if(dbUser.getState() == 0) {
-				session.setAttribute("user", dbUser);
-				System.out.println("로그인 성공");
+				session.setAttribute("user", dbUser);		
 				mv.setViewName("redirect:/main/VIG");
-						System.out.println("로그인후db비번:"+user.getPassword());
+						
 				return mv;					
 			}else if(dbUser.getState() == 3 || dbUser.getState() == 4){		
 				String msg = "사용할 수 없는 아이디입니다";				
 				return new ModelAndView("forward:/common/alertView.jsp", "message", msg);
-			}
-				
-				int banDate = Integer.parseInt(dbUser.getBanDate().toString().replaceAll("-",""));	
-				
-				if(dbUser.getState() == 1) {
-					banDate = banDate + 3;
-				}else if(dbUser.getState() == 2) {
-					banDate = banDate+ 7;
-				}  
-				
-				
-				int remainDate = banDate-toDay;
-				
-				String msg = "접속 금지 상태 입니다.\n \n 남은 기간 : " + remainDate +"일";				
+			}				
+			
+				String msg = "접속불가<br/>신고로 인하여 접속이 불가능합니다.<br/>접속 불가능 기간 : " + dbUser.getBanDate().toString() +"까지";				
 				return new ModelAndView("forward:/common/alertView.jsp", "message", msg);
 				
 		} else {
-			mv.setViewName("forward:/user/loginView.jsp");
-			System.out.println("로그인 실패");
+			mv.setViewName("forward:/user/loginView.jsp");		
 			mv.addObject("msg", "fail");
 			return mv;
 		}
@@ -290,29 +259,23 @@ public class UserController {
 	
 	@RequestMapping( value="logout", method=RequestMethod.GET)
 	public ModelAndView logout(HttpSession session) throws Exception{
-			
-			System.out.println("logout");
-			session.removeAttribute("login");
+					
+			//유저 세션을 삭제함
+			session.removeAttribute("user");		
+		
+			//저장된 세션정보를 무효화 시킴
 			session.invalidate();
 			
-		ModelAndView model = new ModelAndView();
-		model.setViewName("redirect:/main/VIG");
-		return model;
+		return new ModelAndView("redirect:/main/VIG");
 	}
 
 	
-	
-
-	//====업데이트 유저 nav
-	
+	//====업데이트 유저 nav	
 	@RequestMapping( value="updateUser", method=RequestMethod.GET )
 	public ModelAndView updateUser(@RequestParam(value="uesrCode", required=false) String userCode,HttpSession session, User user)throws Exception{ 
-		
-		System.out.println("/user/updateUser : GEt");
 	
 		User writer = userServices.getUserOne(user.getUserCode());
-		session.setAttribute("writer", writer);
-				System.out.println(writer.getUserCode());
+		session.setAttribute("writer", writer);			
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("forward:/user/updateUser.jsp");
 		mv.addObject("user", writer);
@@ -322,11 +285,8 @@ public class UserController {
 	@RequestMapping( value="updateUser", method=RequestMethod.POST )
 	public ModelAndView updateUser(@ModelAttribute("user") User user, @RequestParam("uploadFile") MultipartFile file, HttpSession session )throws Exception{ 
 		
-		logger.debug("유저 업데이트");	
 		
-        String path = context.getRealPath("/");  
-        
-        System.out.println(path);
+        String path = context.getRealPath("/");         
         
         if(OS.contains("win")) {
         	//워크스페이스 경로를 받아온다.
@@ -355,18 +315,12 @@ public class UserController {
 		
 		return mv;
 	        
-	}
-	
-	
-	
-	
-	
+	}	
 	
 	//
 	@RequestMapping( value="getUser", method=RequestMethod.GET )
-	public String getUser( @RequestParam("userCode") String userCode , Model model ) throws Exception {
-		
-		System.out.println("getUser GET");	
+	public String getUser( @RequestParam("userCode") String userCode , Model model ) throws Exception {		
+
 		User user = userServices.getUserOne(userCode);
 		model.addAttribute("user", user);		
 		return "forward:/user/getUser.jsp";
@@ -376,9 +330,19 @@ public class UserController {
 	
 
 	@RequestMapping(value="getUserList" )
-	public String getUserList( @ModelAttribute("search") Search search ,Model model) throws Exception{
+	public String getUserList( @ModelAttribute("search") Search search, Model model, HttpSession session) throws Exception{		
 		
-		System.out.println("유저리스트 가져오기");
+		
+		User admin = (User)session.getAttribute("user");		
+		
+		if(admin == null) {
+			
+			model.addAttribute("message", "로그인이 필요합니다.");
+			return "forward:/common/alertView.jsp";
+		}else if(!admin.getRole().equals("admin")) {
+			model.addAttribute("message", "관리자만 조회 가능합니다.");
+		}		
+		
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
@@ -393,13 +357,14 @@ public class UserController {
 		Map<String , Object> map=userServices.getUserList(search);
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		System.out.println(resultPage);
+	
 
 		// Model 과 View 연결
 				model.addAttribute("list", map.get("list"));
 				model.addAttribute("resultPage", resultPage);
 				model.addAttribute("search", search);
 				model.addAttribute("map", map);
+				model.addAttribute("writer", admin);
 			
 				
 		return "forward:/user/getUserList.jsp";
@@ -415,8 +380,7 @@ public class UserController {
 			
 			User user = userServices.getUserOne(((User)session.getAttribute("user")).getUserCode());
 			
-			ModelAndView mv = new ModelAndView();
-			System.out.println("탈퇴페이지로 이동");
+			ModelAndView mv = new ModelAndView();		
 			mv.addObject("user", user);
 			mv.setViewName("forward:/user/deleteUser.jsp");
 			
