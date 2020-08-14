@@ -280,23 +280,23 @@ VALUES ('user05', 'Kim Bora', '5555', 'business', 'a6f5e63b13.jpg', 'Hellow. my 
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
-VALUES ('user06', 'cassette', '6666', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
+VALUES ('user06', 'Youdong Choi', '6666', 'business', 'user06_img.jpg', '안녕하세요. 최유정입니다.', 0, 1000, NOW());
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
-VALUES ('user07', 'chopstick', '7777', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
+VALUES ('user07', 'Jaseong Gu', '7777', 'business', 'user07_img.jpg', 'Hellow. my name is Jaseong!', 0, 1000, NOW());
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
-VALUES ('user08', 'diary', '8888', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
+VALUES ('user08', 'Elly Jeong', '8888', 'business', 'user08_img.jpg', 'Hellow. my name is Elly!', 0, 1000, NOW());
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
-VALUES ('user09', 'dish', '9999', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
+VALUES ('user09', 'Dodo Kim', '9999', 'business', 'user09_img.jpg', 'Hellow. my name is Dodo!', 0, 1000, NOW());
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
-VALUES ('user10', 'door', '1010', 'business', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, 1000, NOW());
+VALUES ('user10', 'Kyo Gu', '1010', 'business', 'user10_img.jpg', 'Hellow. my name is Kyo!', 0, 1000, NOW());
 
 INSERT
 INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, prime_count, reg_date)
