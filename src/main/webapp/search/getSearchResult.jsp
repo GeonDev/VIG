@@ -374,7 +374,13 @@
 					$("#categorySelecter").prop("disabled", true);
 					$("#categorySelecter").val(0);
 					$("#colorSelecter").prop("disabled", true);
-				}		
+				}	
+				
+				//현재 URL을 가지고 옴
+				var newURL = (location.href).split("?");				
+				
+				//Url에 모드를 넣고 변경
+				history.pushState(null, null, newURL[0]+"?Mode="+Mode);
 				
 	
 				//모드를 변경했음으로 페이지 다시 로드

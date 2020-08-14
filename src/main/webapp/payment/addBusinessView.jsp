@@ -32,7 +32,8 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 	<!--  아임포트 결제 구현  -->
 	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-	
+	<!-- 알러트 -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
 <style>
 	
@@ -44,7 +45,7 @@
 	}
 	
 	#main { 
-		width: 960px;
+		width: 80%;
 		margin: 70px auto;
 	}
 	
@@ -87,6 +88,13 @@ $(function(){
 		$("input[name='paymentOption']").val(1);
 		}
 		
+		if($("#defaultUnchecked").is(":checked") == false ){
+			
+			swal("필수 동의 사항을 선택해주세요.");
+			return false;
+			
+		}
+		
 		
 		IMP.request_pay({
 		    pg : 'inicis', // version 1.1.0부터 지원.
@@ -114,7 +122,7 @@ $(function(){
 		        var msg = '결제에 실패하였습니다.';
 		        msg += '에러내용 : ' + rsp.error_msg;
 		    }
-		    alert(msg);
+		    swal(msg);
 		   
 		    
 		});
@@ -147,125 +155,117 @@ $(function(){
 
 	
 	
-	<div id=main>
+	<div id="main">
 	
 			<div class="container">
-			
-			  <!-- Section -->
-			  <section>
-			
-			    <h3 class="font-weight-bold text-center dark-grey-text pb-2">비즈니스 계정 전환</h3>
+				 <h3 class="font-weight-bold text-center dark-grey-text pb-2">비즈니스 계정 전환</h3>
 			    <hr>
-			    <div class="row">
-			
-			       <div class="col-md-6 col-xl-3">
-			        <div class="card text-center rgba-brown-strong text-white">
-			          <div class="card-body">
-			            <p class="mt-4 pt-2"><i class="far fa-object-ungroup fa-4x"></i></p>
-			            <h5 class="font-weight-normal my-4 py-2"><a class="text-white" href="#">Prime Feed</a></h5>
-			            <p class="mb-4">내 피드를 메인에<br>우선적으로 노출되는 <br>Prime Feed로 만들 수 있습니다.</p>
-			          </div>
-			        </div>
-			      </div>
-			
-			      <div class="col-md-6 col-xl-3">
-			        <div class="card text-center">
-			          <div class="card-body">
-			            <p class="mt-4 pt-2"><i class="fas fa-gifts fa-4x"></i></p>
-			            <h5 class="font-weight-normal my-4 py-2"><a class="dark-grey-text" href="#">1,000 Prime Count</a></h5>
-			            <p class="text-muted mb-4">최초 결제시 <strong>1,000건</strong>의 Prime Feed 노출 수를 제공합니다.</p>
-			          </div>
-			        </div>
-			      </div>
-			
-			      <div class="col-md-6 col-xl-3">
-			        <div class="card text-center rgba-indigo-strong text-white">
-			          <div class="card-body">
-			            <p class="mt-4 pt-2"><i class="fas fa-chart-line fa-4x"></i></p>
-			            <h5 class="font-weight-normal my-4 py-2"><a class="text-white" href="#">피드 통계 제공</a></h5>
-			            <p class="mb-4">Prime Feed가 <br>노출된 숫자, 좋아요, 조회수를 월별 통계로 제공합니다.<br></p>
-			          </div>
-			        </div>
-			      </div>
-			      
-			      <div class="col-md-6 col-xl-3">
-			        <div class="card text-center ">
-			          <div class="card-body">
-			            <p class="mt-4 pt-2"><i class="fas fa-comments-dollar fa-4x grey-text"></i></p>
-			            <h5 class="font-weight-normal my-4 py-2"><a class="dark-grey-text" href="#">후원받기 </a></h5>
-			            <p class="text-muted mb-4">비즈니스 계정은 <br>다른 이용자로부터 <br>후원을 받고 수익을 창출할 수 있습니다. </p>
-			          </div>
-			        </div>
-			      </div>
-			
-			
-			    </div>
-			
-			  </section>
 			  <!-- Section -->
+			  <div class="row">
+				  	<div class ="col-sm md-sm mb-sm">
+				    <section class="text-center dark-grey-text">
+	    
+					    <div class="row text-center d-flex justify-content-center my-5">
+					      <div class="col-lg-6 col-md-6 mb-4">
+					        <i class="fas fa-object-ungroup fa-3x mb-4 grey-text"></i>
+					        <h5 class="font-weight-normal mb-3">Prime Feed</h5>
+					        <p class="text-muted mb-0"> 우선적으로 노출되는 Prime Feed 사용 가능</p>
+					      </div>
+					      <div class="col-lg-6 col-md-6 mb-4">
+					        <i class="fas fa-gifts fa-3x mb-4 grey-text"></i>
+					        <h5 class="font-weight-normal mb-3">1,000 Prime Count</h5>
+					        <p class="text-muted mb-0"> Prime Feed Count 1,000건 제공</p>
+					      </div>
+					      <br>
+					      <div class="col-lg-6 col-md-6 mb-4">
+					        <i class="fas fa-chart-line fa-3x mb-4 grey-text"></i>
+					        <h5 class="font-weight-normal mb-3">피드 통계 제공</h5>
+					        <p class="text-muted mb-0">내 피드의 월별 통계를 제공합니다.</p>
+					      </div>
+					      <div class="col-lg-6 col-md-6 mb-4">
+					        <i class="fas fa-comments-dollar fa-3x mb-4 grey-text"></i>
+					        <h5 class="font-weight-normal mb-3">후원받기</h5>
+					        <p class="text-muted mb-0"> 피드를 통해 후원을 받고 수익을 창출할 수 있습니다.</p>
+					      </div>
+					    </div>
+					    
+					  </section>
+				  <!-- Section -->
+				
+					</div>
 			
-			</div>
-	
+				
 	
 	<hr>
 	<br>
-	<form class="donationform">
-	<div class="container">
-	<div class="row">
-	<div class="col-6">
-	<div align="right"> <span style="font-size:20px; font-weight: bold;" > 상품명 :  </span> &nbsp;&nbsp;</div>
-	<br>
-	<div align="right"> <span style="font-size:20px; font-weight: bold;" > 금액 :  </span> &nbsp;&nbsp;</div>
-	<br>
-
-
-	<div align="right"> <span style="font-size:20px; font-weight: bold;" > 결제 수단 :   </span> &nbsp;&nbsp;</div>
-	</div>
-	<div class="col-6">
-	
-	
-	
-	<span style="font-size:18px;">비즈니스 계정 전환</span>
-	<br><br>
-			30,000 원
-		<br>
-		<br>
-
-			<select class="browser-default custom-select"  name="paymentType" style="width: 200px">  
-			  <option value="card">카드결제</option>
-			  <option value="trans">실시간 계좌이체</option>
-			  <option value="phone">휴대폰 소액결제</option>
-			</select>
-			
-			<hr/>
+					<div class ="col-sm md-sm mb-sm">
+					<form class="donationform">
 		
-		<div id="selectPrice" > <span style="font-weight: bold">선택 금액 :</span><span id="select">30,000</span><p style="display:inline-block ; width: 200px">원</p></div>
-		<div id="commissionPrice"><span style="font-weight: bold">수수료(VAT 10%) : </span><span id="commission">3,000</span><p style="display:inline-block ; width: 200px">원</p></div>
-		<div id="lastPrice"><span style="font-weight: bold">총 결제 금액 : </span><span id="last">33,000</span><p style="display:inline-block ; width: 200px">원</p></div>
-		</div>
-		<input type="hidden" name="selectPrice" value="30000">
-		<input type="hidden" name="lastPrice" value="33000">
-		<input type="hidden" name="paymentId">
-		<input type="hidden" name="paymentType">
-		<input type="hidden" name="productType" value="1">
+					<div class="row">
+					<div class="col-3 md-3 mb-3">
+					<div align="left"> <span style="font-size:120%; font-weight: bold;" > 상품명 :  </span> &nbsp;&nbsp;</div>
+					<br>
+					<div align="left"> <span style="font-size:120%; font-weight: bold;" > 금액 :  </span> &nbsp;&nbsp;</div>
+					<br>
+				
+				
+					<div align="left"> <span style="font-size:120%; font-weight: bold;" > 결제 수단 :   </span> &nbsp;&nbsp;</div>
+					</div>
+					<div class="col-9 md-9 mb-9">
 		
-		
-
-	</div>
-		<div class="row" style="text-align: center;">
-			 <div class="col-md-6" style="align: center; left: 25%">
-				<p style="font-size: 11px">결제를 위해 귀하의 개인정보를 제3자에게((주)아임포트)에 제공하는데 동의하십니까?<br>결제하시고자 하는 상품은 디지털 상품으로 결제와 동시에 사용되어 환불이 불가합니다.<br> 위 사항을 숙지하셨습니까?</p>
-			</div>					
-		</div>
+					<span style="font-size:18px;">비즈니스 계정 전환</span>
+					<br><br>
+							30,000 원
+						<br>
+						<br>
+				
+							<select class="browser-default custom-select"  name="paymentType" style="width: 200px">  
+							  <option value="card">카드결제</option>
+							  <option value="trans">실시간 계좌이체</option>
+							  <option value="phone">휴대폰 소액결제</option>
+							</select>
+							
+							<hr/>
+						
+						<div id="selectPrice" > <span style="font-weight: bold">선택 금액 :</span><span id="select">30,000</span><p style="display:inline-block ; width: 200px">원</p></div>
+						<div id="commissionPrice"><span style="font-weight: bold">수수료(VAT 10%) : </span><span id="commission">3,000</span><p style="display:inline-block ; width: 200px">원</p></div>
+						<div id="lastPrice"><span style="font-weight: bold">총 결제 금액 : </span><span id="last">33,000</span><p style="display:inline-block ; width: 200px">원</p></div>
+						</div>
+						<input type="hidden" name="selectPrice" value="30000">
+						<input type="hidden" name="lastPrice" value="33000">
+						<input type="hidden" name="paymentId">
+						<input type="hidden" name="paymentType">
+						<input type="hidden" name="productType" value="1">
+						
+						
+				
+					</div>
+					<hr>
+					<p style="font-size: 14px; text-align:left;">
+					결제를 위해 귀하의 개인정보를 제3자((주)아임포트)에 제공하는데 동의하십니까?<br>
+					결제하시고자 하는 상품은 디지털 상품으로 결제와 동시에 사용되어 환불이 불가합니다.<br> 
+					위 사항에 동의하십니까?
+					(동의하지 않으면 결제가 진행되지 않을 수 있습니다.)
+					</p>
+					
+					<div class="custom-control custom-checkbox" style="text-align:center">
+					    <input type="checkbox" class="custom-control-input" id="defaultUnchecked">
+					    <label class="custom-control-label" for="defaultUnchecked">예, 동의합니다.(필수)</label>
+					</div>
+					
+					
+					<hr/>
+					
+					<div align="center">
+					<button type="button" class="btn btn-info">결제</button>
+					<button type="button" class="btn btn-light">취소</button>
+					</div>
+					
+					</form>
+					</div>
 	
-	<hr/>
-	
-	<div align="center">
-	<button type="button" class="btn btn-info">결제</button>
-	<button type="button" class="btn btn-light">취소</button>
+	 </div>
 	</div>
-	</div>
-	</form>
 	</div>
 	
 
