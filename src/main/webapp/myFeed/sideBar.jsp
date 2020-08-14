@@ -19,7 +19,7 @@
 	<style type="text/css">
 	
 	.row_toolbar_top_ { padding: 70px;}
-	#pImg { display:block; margin-left:auto; margin-right:auto; width: auto; height: auto; max-width: 150px; max-height: 150px; border-radius:50%; padding:0;}
+	#pImg { display:block; margin-left:auto; margin-right:auto; width: auto; height: 150px; max-width: 150px; border-radius:50%; padding:0;}
 	#sns_nav { display:flex; margin-left:auto; margin-right:auto; flex-direction: row; justify-content: center;}
 	#sideBar { padding: auto; margin:auto; display: block;}
 
@@ -41,7 +41,7 @@
 				<c:when test="${user.userCode != writer.userCode}">		
 					<img class="card-img-top" src="/VIG/images/uploadFiles/${writer.profileImg}" id="pImg" alt="profile_img">
 			 			<div class="card-body">
-			 					<h3 class="user_name" align="center"><strong> ${writer.userName} </strong> </h3>			
+			 					<h3 class="user_name" align="center"><strong>${writer.userName} </strong> </h3>			
 			 					<p class="user_bio" align="center" > ${writer.selfIntroduce} </p>		 					
 			 					<p class="sign_date" align="center"> Member Since :: ${writer.regDate}</p>			 					
 			 			</div>	
@@ -60,17 +60,19 @@
 				 		<br/>		
  				
 					 <div class="box_body">
-						<div class="wrap">
-		 					<a id="btn_ch" class="btn btn-block" href="/VIG/myfeed/getMyFeedList?userCode=${user.userCode}">
-		 						마이피드 목록</a>
-		 					<br/>
-		 					<a id="btn_ch" class="btn btn-block" href="/VIG/history/getMyHistoryList?userCode=${user.userCode}">
-		 						내 활동 보기</a>
-		 					 <br/>
-		 					 <a id="btn_ch" class="btn btn-block" href="/VIG/user/updateUser?userCode=${user.userCode}">
-		 						내 정보 수정</a>
-		 					 <br/>	
-		 					 </div>
+						 <c:if test="${sessionScope.user.role!='admin'}">
+							<div class="wrap">
+			 					<a id="btn_ch" class="btn btn-block" href="/VIG/myfeed/getMyFeedList?userCode=${user.userCode}">
+			 						마이피드 목록</a>
+			 					<br/>
+			 					<a id="btn_ch" class="btn btn-block" href="/VIG/history/getMyHistoryList?userCode=${user.userCode}">
+			 						내 활동 보기</a>
+			 					 <br/>
+			 					 <a id="btn_ch" class="btn btn-block" href="/VIG/user/updateUser?userCode=${user.userCode}">
+			 						내 정보 수정</a>
+			 					 <br/>	
+			 				 </div>
+			 			 </c:if>
 				 	</div>				
  					
  					
@@ -81,8 +83,9 @@
 				 	</c:if>							
 				 	
  					
- 					
- 			<button class="btn btn-block dropdown-toggle" id="toggleID" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">결 제</button>
+ 				<c:if test="${sessionScope.user.role!='admin'}">
+ 					<button class="btn btn-block dropdown-toggle" id="toggleID" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">결 제</button>
+				</c:if>
 				
 				<div class="dropdown-menu sideBar">
 				
