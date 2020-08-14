@@ -41,7 +41,7 @@
 	
 <style>
 	
-	body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}	
+	body { padding-top : 100px;}	
 	h1 { margin-left: 100px;}
 	.col-md-12{ margin-bottom: 50px;}
 	/*사이드바,본문 배치css*/
@@ -171,10 +171,7 @@
 			    <div class="col-md-10" id="mainMyFeedPage" >
 				<div class="row">
 					<div class="col-md-8">
-						<h2> 받은 후원 목록 </h2> 
-					</div>
-					<div class="col-md-4">
-						<div style="text-align: right; padding-right: 10px;"><button class="btn btn-outline-dark-green">출금목록보기</button></div>
+						<h1> 받은 후원 목록 </h1> 
 					</div>
 					
 				</div>

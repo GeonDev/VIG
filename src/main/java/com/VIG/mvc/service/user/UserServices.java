@@ -23,8 +23,6 @@ public interface UserServices {
 	// delete 
 	public void deleteUser(User user) throws Exception;
 	
-	// delete 
-	//public void deleteUser(String userCode) throws Exception;
 
 	public List<User> getAllUserList() throws Exception;
 	
@@ -32,8 +30,6 @@ public interface UserServices {
 	// user list 
 	public Map<String , Object> getUserList( Search search) throws Exception;
 	
-	// send email
-	public boolean sendEmail(String email) throws Exception;
 	
 	// 비번 체크
 	public int chcekPw(String password) throws Exception;

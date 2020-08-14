@@ -38,7 +38,7 @@
 	
 <style>
 	
-	body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}
+	body {padding-top : 100px;}
     h1 { margin-left: 100px;}  
     
     /*사이드바,본문 배치css*/
@@ -143,33 +143,13 @@ function funcGetList(currentPage) {
 				<h1> 내 결제 목록 </h1>
 				<hr>
 				
+
 	
-	<div class="row justify-content-end" style="margin: 45px 10px 27px 10px;">		
-		<!-- <div class="box_body_m" style="margin-right: 200px;">
-					 <div class="wrap_m">
-						<a id="btn_ch_m" class="btn3" data-toggle="modal" data-target="#theModal">팔로워</a>
-						<a id="btn_ch_m" class="btn3" data-toggle="modal" data-target="#theModal2">팔로잉</a>
-						<a id="btn_ch_m" class="btn3" href="#">채 팅</a>
-					</div>	 			
-				</div>   	
-		 -->
-						
-					<div class="input-group md-form form-sm form-1 pl-0 col-3">
-					  <div class="input-group-prepend">
-					   <i class="fas fa-search" class="fas fa-search text-white" aria-hidden="true"></i>
-					  <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" aria-label="Search">
-					  </div>
-					</div>	
+	
+			<div class="container">
 					
-					
-				</div>
-	
-	
-	<div class="row" style="flex-wrap: wrap;margin-right: 40px;margin-left: 50px;">
-		
-						<table class="table table-hover table-striped" >
-				
-				        <thead class="grey lighten-2">
+					<table class="table">
+					  <thead>
 						    <tr>
 						      <th scope="col">결제번호</th>
 						      <th scope="col">결제자</th>
@@ -239,6 +219,10 @@ function funcGetList(currentPage) {
 						
 						</tbody>
 						</table>
+						<c:if test="${empty list}">
+						<p style="text-align:center; font-weight: bold; height: 30px">결제내역이 없습니다.</p>
+						</c:if>
+						<hr>		
 								<form method="POST">
 								
 										<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
@@ -251,8 +235,8 @@ function funcGetList(currentPage) {
 				<div class="row justify-content-md-center">
 					<jsp:include page="../common/pageNavigator.jsp"/>
 				</div>
+			</div>
 </div>
-
 
 </body>
 </html>
