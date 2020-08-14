@@ -177,12 +177,7 @@
 		}
 	})
 	});
-		//로그인 페이지로 이동 이벤트
-		 $( function() {
-				$("#login_nav").on("click" , function() {
-					location.href="/VIG/user/loginView.jsp";
-				});
-			});		
+		
 		//달력 setting
 		$( function() {
 			   $( "#datepicker" ).datepicker({
@@ -191,17 +186,29 @@
 			    });
 			  });
 		
+		$(function(){
+			$('#theModal').on('show.bs.modal', function(e) {		
+				var button = $(e.relatedTarget);
+				var modal = $(this);
+				
+				modal.find('.modal-body').load(button.data("remote"));			
+		});
+		});
+		
 </script>
 <style type="text/css">
 	
-	.container { padding-right: 300px; padding-left: 300px; padding-top: 100px;' margin-right: auto; margin-left: auto; }
+	
 	 #variedCode { margin:auto; }
 	#top_title { margin : 30px;}
 	
-	#emailcheck { margin: 5px 0 5px 0; display: block; float:left;}
-	#verification { display: block; width: 250px;float: left; margin-left: 58px;}
 	
+	#verification { display: block; width: 250px;float: left;}
 	
+	.container_addUser {     width: 650px;
+    display: block;
+    margin: auto;
+    margin-top: 100px;}
 	.btn.btn-primary.btn-sm { display: block;float: right; }
 	
 </style>
@@ -211,7 +218,7 @@
 <jsp:include page="../main/toolbar.jsp"></jsp:include>
 
 <form>
-<div class="container">
+<div class="container_addUser">
 	<div class="text-center border border-light p-4">
 	  <div class="row" id="top_title">
 	    <p class="h4 mb-6" style="margin:30px;">Sign up</p>
@@ -270,11 +277,11 @@
 		<button type="button" class="btn btn-sm" id="emailcheck" >이메일발송</button>  
 		  <input type="hidden" id="inputVerification" name ="inputVerification" placeholder="${inputVerification}"> 
 			
-			</div> 
+			 
                 <input type="text" id="verification" name="verification" class="form-control bt" placeholder="variedCode" 
                 style="display: block;float: left; width: 70%;">               
                 <button type="button" id="verifBtn" class="btn btn-sm">인증번호확인</button> 
-           
+           </div>
 	
 		<!-- role -->
 			<input type="hidden" id="role" name="role" class="form-control"  value="user">
@@ -285,7 +292,8 @@
 		<!-- 가입버튼 -->
 		    <button  class="btn btn-block my-4" id="signUp_btn" style="background-color: #212121; color: white;" >Sign up</button>   
 				<p >Already a member? </p>
-		          <span id="login_nav" class="blue-text ml-1" href="#" > login</span>
+		          <span id="login_nav" class="blue-text ml-1"  data-remote="/VIG/user/loginView.jsp"
+				data-toggle="modal" data-target="#theModal" > login</span>
 				</div>
 			</div>
 		
@@ -294,4 +302,16 @@
 
 
 </body>
+		<div class="modal fade" id="theModal" role="dialog" >
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header"></div>
+							<form action="/VIG/user/login" method="POST">
+							<div class="modal-body"></div>
+								</form>
+							<div class="modal-footer">
+							</div>
+						</div>
+					</div>
+				</div>
 </html>

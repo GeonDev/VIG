@@ -70,10 +70,7 @@ public class ReportController {
 		reportService.addReport(report);		
 		
 		return new ModelAndView("forward:/common/alertView.jsp", "message", "신고가 접수 되었습니다.");
-	}
-	
-	
-	
+	}	
 	
 	
 	@RequestMapping("getReportList")

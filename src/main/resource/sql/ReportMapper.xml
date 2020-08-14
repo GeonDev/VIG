@@ -79,8 +79,14 @@
 		UPDATE report INNER JOIN users on report.violator_code = users.user_code
 		SET report.current_ban_type = #{banType}, 
 		users.state = #{banType},
-		report.current_ban_date = DATE_FORMAT(NOW(), '%Y-%m-%d'), 		 
-		users.ban_date = DATE_FORMAT(NOW(), '%Y-%m-%d')  		
+		<if test="banType == 1">
+			report.current_ban_date = DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 3 DAY), '%Y-%m-%d'), 		 
+			users.ban_date = DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 3 DAY), '%Y-%m-%d')  
+		</if>		
+		<if test="banType == 2">
+			report.current_ban_date = DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 1 WEEK), '%Y-%m-%d'), 		 
+			users.ban_date = DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 1 WEEK), '%Y-%m-%d')  
+		</if>			
 		WHERE report_id = #{reportId}	
 	</update>
 	
