@@ -26,10 +26,6 @@ public class RestLikeController {
 	@Qualifier("likeServicesImpl")	
 	private LikeServices likeServices;
 	
-	@Autowired
-	@Qualifier("feedServicesImpl")
-	private FeedServices feedServices;
-	
 	@Value("#{commonProperties['pageUnit'] ?: 5}")
 	int pageUnit;
 
@@ -59,17 +55,10 @@ public class RestLikeController {
 		}else {
 			likeServices.deleteLike(joinUser);					
 			System.out.println("좋아요 취소");
-		}
+		}		
+
 		
-		Feed feed = feedServices.getFeed(feedId);
-		
-		int likeSize = feed.getLikes().size();
-		System.out.println("좋아요 갯수 : "+likeSize);
-		
-	//    Map<String, Integer> myMap = new HashMap<String, Integer>();
-	//	myMap.put("likeSize",likeSize);
-		
-		return likeSize;
+		return likeServices.getLikeCount(feedId);
 	}
 	
 	
