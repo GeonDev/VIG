@@ -118,8 +118,8 @@
 	 		self_introduce = #{selfIntroduce:VARCHAR},
 	 		user_name = #{userName:VARCHAR},
 	 		google_id = #{googleId:VARCHAR},
-	 		password = #{password:VARCHAR},
-	 		profile_img = #{profileImg:VARCHAR}	 		
+	 		password = IFNULL(#{password:VARCHAR}, password),
+	 		profile_img = IFNULL(#{profileImg:VARCHAR}, profile_img)	 		
 	 	WHERE user_code = #{userCode}
 	 </update>	
 
