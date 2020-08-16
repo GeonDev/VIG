@@ -62,8 +62,6 @@
 								var displayValue = "<h6 id='info'>"
 															+"유저코드 : "+JSONData.userCode+"<br/>"
 															+"유저네임 : "+JSONData.userName+"<br/>"
-															+"성별 : "+JSONData.sex+"<br/>"
-															+"생년월일 : "+JSONData.birth+"<br/>"
 															+"이메일 : "+JSONData.email+"<br/>"
 															+"ROLE   : "+ JSONData.role+"<br/>"
 															+"</h6>";
@@ -87,10 +85,9 @@
 		/*사이드바,본문 배치css*/
 	 .col-md-2.sideBarPlace { padding:0;  display: inline-block;float:left;}
 	 #mainMyFeedPage { margin-left: 0px;  display: inline-block; float:right;}
+	 .col-md-12 { margin-bottom: 50px;}
 	 
-	 
-        #myFeedMain { padding: 70px;}
-       .col-md-12_top {	width: 100%; height: 100%; position: relative; margin:50px; }	 
+     	 
     </style>
 </head>
 

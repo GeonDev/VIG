@@ -25,6 +25,37 @@
 
 	.dropdown-menu.sideBar.show { position: absolute; transform: translate3d(14px, 675px, 0px); top: 0px; left: 0; will-change: transform; width: 91%;}
 			
+			
+	.btn.btn-block {
+    margin: .375rem;
+    color: slategrey;
+    text-transform: capitalize;
+    word-wrap: break-word;
+    white-space: inherit;
+    cursor: pointer;
+    border: 0;
+    border-radius: .125rem;
+   
+    padding: .84rem 2.14rem;
+	}
+	.btn {
+    margin: .375rem;
+    color: black;
+    text-transform: uppercase;
+    word-wrap: break-word;
+    white-space: normal;
+    cursor: pointer;
+    border: 0;
+    border-radius: .125rem;
+  
+    padding: .84rem 2.14rem;
+    font-size: .81rem;
+	}
+	.btn:hover, .btn:link:hover, .btn:visited:hover {
+    box-shadow: 0 4em 0 0 #2c3e50 inset, 0em 0em 0 0 #bbb;
+    color: #fafafa;
+    background-color:#1C2331;
+	}		
 	</style>
 	
 </head>
@@ -54,8 +85,10 @@
 				 					<h3 class="user_name" align="center" style="font-weight: bold;"> ${user.userName} </h3>				 					
 				 					<p class="user_bio" align="center"> ${user.selfIntroduce} </p>
 				 					<br>
+				 					<c:if test="${sessionScope.user.role!='admin'}">
 				 				<p class="sign_date" align="center" style="margin-bottom:30px;"> Member Since :: ${user.regDate}</p>	
 				 				<br/>
+				 				</c:if>
 				 			</div>
 				 		<br/>		
  				

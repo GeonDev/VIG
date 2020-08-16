@@ -176,9 +176,9 @@
 		.btn3, .btn3:link, .btn3:visited {color: #333;font-size: .8em;text-transform: uppercase;min-width: 100px;position: relative;
 		  	margin: 0 auto;border: 2px solid transparent;-webkit-transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);}
 		.btn3:after, .btn3:before, .btn3:link:after, .btn3:link:before, .btn3:visited:after, .btn3:visited:before { content: "";position: absolute;letter-spacing: .1em;left: -1em;top: -2px; height: 3em; width: 0;
-			border: 1px solid #c75842;-webkit-transition: inherit;transition: inherit;}
+			border: 1px solid #ff9100;-webkit-transition: inherit;transition: inherit;}
 		.btn3:after, .btn3:link:after, .btn3:visited:after {left: auto;right: -1em;}
-		.btn3:hover, .btn3:link:hover, .btn3:visited:hover {border-color: #c75842;-webkit-transition: border-color 0.2s 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);transition: border-color 0.2s 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);}
+		.btn3:hover, .btn3:link:hover, .btn3:visited:hover {border-color: #ff9100;-webkit-transition: border-color 0.2s 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);transition: border-color 0.2s 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);}
 		.btn3:hover:after, .btn3:hover:before, .btn3:link:hover:after, .btn3:link:hover:before, .btn3:visited:hover:after, .btn3:visited:hover:before {
 		  right: -2px;-webkit-transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);}
 		.btn3:hover:before, .btn3:link:hover:before, .btn3:visited:hover:before {left: -2px;right: auto;}
@@ -196,7 +196,7 @@
 		  50% {-webkit-transform: scale(1.1, 0.9);transform: scale(1.1, 0.9);}
 		  75% {-webkit-transform: scale(0.95, 1.05);t}
 			/* 버튼 CSS */
-	
+
 	
 	</style>
 

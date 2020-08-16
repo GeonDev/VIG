@@ -87,11 +87,12 @@
 </head>
 <body>
 
-<form action="/VIG/user/login" method="POST">
+
+<form action="/VIG/user/login" method="POST" style="width: fit-content; margin: auto;">
 	<div class="lodin_modal">
 	<div class="container-fluid" id="login_container">	
 	
-		<div class="text-center border border-light p-5">
+		<div class="text-center ">
   			<div class="row" id="top_title">
    			 <p class="h4 mb-6">Login</p>
    			</div>

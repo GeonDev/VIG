@@ -34,8 +34,9 @@
 		<script type="text/javascript">
 					
 		
-		
-		
+		//뒤로가기 방지
+		 window.history.forward();
+		 function noBack(){window.history.forward();}
 		
 		//탈퇴 모달 창에서 탈퇴 재확인
 		$(function() {
@@ -91,6 +92,8 @@
 	
 </head>
 <body>
+	<!-- 뒤로가기방지 -->
+	<body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="">
 	
 	<c:set var="test1" value="tt" scope="request" />
 
@@ -114,20 +117,21 @@
 			
 
 		<form>
-		<div class="container-fluid" style="width:60%; float:center; margin: auto; margin-top:100px">
-		<!-- 레이아웃 수정하기 -->
+		<div class="container-fluid" style="width:50%; float:center; margin: auto; margin-top:100px">
+		
 		 탈퇴 후 회원정보가 모두 삭제됩니다.<p>
-		  메일주소, 핸드폰 번호/기타 연락처 등 회원정보가 모두 삭제되며, 삭제된 데이터는 복구되지 않습니다.
+		 아이디,닉네임,이메일 등 회원정보가 모두 삭제되며, 삭제된 데이터는 복구되지 않습니다.<br>
+		 삭제된 아이디로 재 가입이 불가능합니다.
 		<br/>
 		<br/>
 		 탈퇴 후에도 작성된 게시글은 그대로 남아 있습니다.<br>
-		  각 게시판에 등록한 게시물 및 댓글은 탈퇴 후에도 남아있습니다.<br>
-		  삭제를 원하시는 게시물은 탈퇴 전 반드시 삭제하시기 바랍니다.<p>
+		 각 게시판에 등록한 게시물 및 댓글은 탈퇴 후에도 남아있습니다.<br>
+		 삭제를 원하시는 게시물은 탈퇴 전 반드시 삭제하시기 바랍니다.<p>
 		  (탈퇴 후에는 게시글 임의 삭제 요청을 받지 않습니다.)
 		  <hr/>
-		 <div id="warning"> *탈퇴 후에는 게시판의 게시글은 삭제할 수 없으며, 위의 안내 내용에 동의합니다.</div>
+		 <div id="warning"> *탈퇴 후에는 게시판의 게시글은 삭제할 수 없으며, 위의 안내 내용에 동의합니다. </div>
 		  <hr/>
-		  <input type="checkbox" name="check" value="true"> 안내사항을 모두 동의하며, 이의제기를 하지않습니다.
+		  <input type="checkbox" name="check" value="true"> 안내사항을 모두 동의하며, 이의제기를 하지않습니다. (필수)
 		
 		<input type="hidden" name="userCode" value="${user.userCode}">
 		
@@ -146,8 +150,8 @@
 		</div>
 	
 			<div class="modal-footer justify-content-center" style="border:0;">
-	        	<a type="button" class="btn btn-outline-warning waves-effect" id="deleteCheck_btn">탈퇴 <i class="fas fa-paper-plane-o ml-1"></i></a>
-	        	<a type="button" class="btn btn-outline-warning waves-effect" id="cancelDeleteUser" onClick="history.go(-1);">
+	        	<a type="button" class="btn btn waves-effect" id="deleteCheck_btn" style="color: slategrey;">탈퇴 <i class="fas fa-paper-plane-o ml-1"></i></a>
+	        	<a type="button" class="btn btn waves-effect" id="cancelDeleteUser" onClick="history.go(-1);" style="color: slategrey;">
 	        	취소 <i class="fas fa-paper-plane-o ml-1"></i></a>
 	     	</div>
 	     	</div>

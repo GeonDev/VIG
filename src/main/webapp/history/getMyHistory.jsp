@@ -40,7 +40,7 @@
 	<style>
 	
 	body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}
-    h1 { margin-left: 120px;}  	       
+    h1 { margin-left: 100px;}  	       
     
     .col-md-12{ margin-bottom: 50px;}
     .txt_lineSize { width:280px; padding:0 5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }	           		
@@ -53,6 +53,11 @@
 	
 	#pills-tabContent { margin-top: 50px; }
 	#pills-show { margin-top: 20px;}
+	.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fafafa;
+    background-color: #263238;
+    }
+    .nav-link{ color:#263238;}
 	
 	/*사이드바,본문 배치css*/
 	 .col-md-2.sideBarPlace { padding:0;  display: inline-block;float:left;}
