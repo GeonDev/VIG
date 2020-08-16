@@ -200,7 +200,7 @@
 								<tr>
 									<th scope="row">${i}</th>
 									<td>
-										${payment.buyer.userCode}
+										<a href="/VIG/myfeed/getMyFeedList?userCode=${payment.buyer.userCode }">${payment.buyer.userCode}</a>
 										
 										<input type="hidden" name="paymentId" value="${payment.paymentId }"> <!-- sever side에서 상태 변경용 paymentId를 심는다 -->
 										
@@ -209,7 +209,7 @@
 										${payment.selectPrice}
 									</td>
 									<td>
-										${payment.feedId}
+										<a href="/VIG/feed/getFeed?feedId=${payment.feedId }">${payment.feedId}</a>
 									</td>
 									<td>
 										${payment.paymentDate }

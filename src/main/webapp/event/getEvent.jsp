@@ -37,14 +37,14 @@
 	
 	#outline {
 	
-		width: 1300px;
+		width: 70%;
 		margin: 0 auto;
 	
 	}
 	
 	#main { 
 		
-		width: 960px;
+		width: 75%;
 		margin: 0 auto;
 		align: center;
 		
@@ -52,7 +52,7 @@
 	
 	#inline {
 		
-		width: 1500px;
+		width: 100%;
 		margin: 0 auto;
 
 	
@@ -190,7 +190,7 @@ $(function(){
 
 	<!--  이벤트 본문 -->
 	<hr/>
-		<img id="evimg" src="/VIG/images/others/${event.eventImage}" style="width:960px" class="img-rounded"/>
+		<img id="evimg" src="/VIG/images/others/${event.eventImage}" style="width:100%" class="img-rounded"/>
 	<hr/>
 	<br/>
 	

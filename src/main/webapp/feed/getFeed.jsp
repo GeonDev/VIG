@@ -46,14 +46,14 @@
 	
 	#outline {
 	
-		width: 1300px;
+		width: 90%;
 		margin: 70px auto;
 		
 	}
 	
 	#main { 
 		
-		width: 960px;
+		width: 58%;
 		margin: 0 auto;
 		
 	}
@@ -244,7 +244,7 @@ $(function(){
 					dataType: "json",
 					headers : {
 						
-						"Accept" : "applicion/json",
+						"Accept" : "application/json",
 						"Content-Type" : "application/json"
 					},
 
@@ -272,7 +272,7 @@ $(function(){
 					dataType: "json",
 					headers : {
 						
-						"Accept" : "applicion/json",
+						"Accept" : "application/json",
 						"Content-Type" : "application/json"
 					},
 
@@ -588,7 +588,7 @@ function imageModal(imageId){
 
 		<c:if test="${images.isThumbnail == '0'}">
 			<div id="image" onclick='imageModal("${images.imageId}")'>
-			<img src="/VIG/images/uploadFiles/${images.imageFile}" style="width:960px"/>
+			<img src="/VIG/images/uploadFiles/${images.imageFile}" style="width:100%"/>
 			
 									
 				<div class="modal fade bd-example-modal-xl" id="${images.imageId }" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
@@ -654,7 +654,7 @@ function imageModal(imageId){
 		</div>
 		<div class="col-md-2" align="right" id="combutton">
 		<br>
-		<button type="submit" class="btn btn-indigo">등록</button>
+		<button type="submit" class="btn btn-rounded btn-deep-purple">등록</button>
 		</div>
 		</div>
 
@@ -764,7 +764,7 @@ function imageModal(imageId){
 	
 					
 						<div id="tag" style=" border: 1px solid #C2C3C2; margin: 3px 1px 3px 1px; padding: 1px 3px 1px 3px; display: inline-block; border-radius: 5px;">
-					    <a style="color: black; font-size: 13px;" href="/VIG/search/getSearchList?Mode=Feed&keyword=${keyword.keywordOrigin}">${keyword.keywordOrigin}</a>
+					    <a style="color: black; font-size: 12%;" href="/VIG/search/getSearchList?Mode=Feed&keyword=${keyword.keywordOrigin}">${keyword.keywordOrigin}</a>
 						</div>
 	
 					</c:if>
