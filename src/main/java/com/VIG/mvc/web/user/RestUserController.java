@@ -8,13 +8,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
@@ -104,7 +110,7 @@ public RestUserController() {
 			String verCode=RestUserController.getAlphaNumericString();
 			String recipient = email; //받는 사람 이메일 주소 
 			String subject = "[VIG] 이메일 인증 번호입니다."; //메일 제목 
-			String body = " 인증코드 번호는"+"[ "+verCode+" ]"+"입니다"; //메일 내용
+			String body = " <html><body><h1> VIG </h1> 인증코드는"+"[ "+verCode+" ]"+"입니다.</body></html>"; //메일 내용
 			Properties props = System.getProperties(); // 메일 제목, 내용을 담을 properties 만들기. 
 			
 			props.put("mail.smtp.host", host);
@@ -132,8 +138,38 @@ public RestUserController() {
 				//발신자  이메일 세팅
 				messageContent.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient)); //수신자 세팅 
 				messageContent.setSubject(subject); //제목 세팅 
-				messageContent.setText(body); //내용 세팅
-				Transport.send(messageContent);	
+				messageContent.setContent(body, "text/html;charset=utf-8"); //내용 세팅
+				
+				
+				/*
+				MimeMultipart multipart = new MimeMultipart("related"); // body,embeded image 발송
+				// first part  (the html)
+				   BodyPart messageBodyPart = new MimeBodyPart();
+				   String htmlText = "<body><H1>VIG</H1>인증코드는"+"[ "+verCode+" ]"+"입니다</body>"
+				   		+ "<img src=\"cid:http://13.125.196.55:8080/VIG/images/uploadFiles/feed201_1.jpg\"></img>";
+				   messageBodyPart.setContent(htmlText, "text/html");
+
+				   // add it
+				   multipart.addBodyPart(messageBodyPart);
+				    
+				   // second part (the image)
+				   messageBodyPart = new MimeBodyPart();
+				   DataSource fds = new FileDataSource
+				     ("C:\\workspace\\20200803145349category04.jpg");
+				   messageBodyPart .setDataHandler(new DataHandler(fds));
+				   messageBodyPart .setHeader("Content-ID","<my-image>");
+				 
+				   // add it
+				   multipart.addBodyPart(messageBodyPart );
+				   
+				   //msg.setContent(message, "text/plain;charset=KSC5601");
+				   messageContent.setContent(multipart);
+				 */
+				
+				
+				
+				
+				Transport.send(messageContent);	//메일 보냄
 			//javax.mail.Transport.send() 이용하는 거임
 				System.out.println("메일발송");
 			return verCode;
