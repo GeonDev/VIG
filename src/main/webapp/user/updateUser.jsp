@@ -190,7 +190,8 @@
 	font-size: 20px;
 	
 	}
-	
+	.btn-primary{ background-color: #3F729B !important;}
+	.btn.a{ color: #fafafa;}
 
 </style>		
 	
@@ -277,14 +278,16 @@
 					
 					<c:if test="${sessionScope.user.role =='business'}">  
 						<div class="form-group">
-						    <button type="button" class="button btn btn-primary" id="addPrimeFeed_btn">프라임피드 추가 결제</button>
+						    <button type="button" class="button btn a btn-primary" id="addPrimeFeed_btn">프라임피드 추가 결제</button>
 						</div>
 					</c:if>					
 					
-					<c:if test="${user.googleId == null}"> 					
-				    	<button  class="btn btn-primary btn-block my-4" id="googlelogin" style="width: 500px;">
+					<c:if test="${user.googleId == null}"> 		
+					<div class="form-group">			
+				    	<button  class="button btn a btn-primary" id="googlelogin" style="width: 500px; margin:auto; ">
 				    		<i class="fab fa-google" style="font-size: large; text-align: top;"></i>&emsp; Sign in With Google
 				    	</button>
+				    	</div>
 					</c:if>				
 				
 				

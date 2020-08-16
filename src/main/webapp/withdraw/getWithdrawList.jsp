@@ -58,11 +58,10 @@
 	
 	body {padding-top : 100px;}
     h1 { margin-left: 100px;}  
-	.col-md-12{ margin-bottom: 50px;}
 	/*사이드바,본문 배치css*/
 	 .col-md-2.sideBarPlace { padding:0;  display: inline-block;float:left;}
 	 #mainMyFeedPage { margin-left: 0px;  display: inline-block; float:right;}
-
+	.col-md-12 { margin-bottom: 50px;}
 
 
 </style>
