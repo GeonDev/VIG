@@ -11,7 +11,7 @@ public class Follow implements Serializable{
 	
 	private int followId;
 	
-	private User setUser;
+	private User tagetUser;
 	
 	private User followUser; 
 	

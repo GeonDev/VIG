@@ -57,7 +57,7 @@ public class RestFollowController {
 		if(userCode != followerCode) {
 		Follow follow = new Follow();
 	
-		follow.setFollowingUser(userServices.getUserOne(userCode));
+		follow.setTagetUser(userServices.getUserOne(userCode));
 
 		follow.setFollowUser(userServices.getUserOne(followerCode));
 		
@@ -72,7 +72,7 @@ public class RestFollowController {
 		
 		Follow follow = new Follow();		
 		
-		follow.setFollowingUser(userServices.getUserOne(userCode));
+		follow.setTagetUser(userServices.getUserOne(userCode));
 		follow.setFollowUser(userServices.getUserOne(followerCode));
 		
 		followServices.deleteFollow(follow);
