@@ -250,7 +250,7 @@ public class FeedController {
 			
 			Follow follow = new Follow();
 			follow.setFollowingUser(user);
-			follow.setFollowedUser(writer);
+			follow.setFollowUser(writer);
 			int isFollow = followServices.getFollow(follow);
 			
 			mav.addObject("isFollow", isFollow);

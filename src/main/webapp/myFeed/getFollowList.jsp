@@ -38,8 +38,10 @@
 	
 	function addFollower(follower) {
 		var link = "/VIG/follow/json/addFollow?userCode=${user.userCode}&followerCode="+follower;	
-		sendMessage(followUser,'','2');	
-		var id = "#follow_"+following;
+		sendMessage(follower,'','2');	
+		var id = "#follow_"+follower;
+		
+		//$(id).css('display','none');
 		
 		$.ajax(				
 				{ url: link,
@@ -51,7 +53,7 @@
 					},					
 			
 				});
-		$(id).css('display','none');
+		
 		
 	}
 	
@@ -59,7 +61,9 @@
 	function deleteFollower(following) {
 		var link = "/VIG/follow/json/deleteFollow?userCode=${user.userCode}&followerCode="+ following;
 		var id = "#follow_"+following;
+		
 		$(id).css('display','none');
+		
 		$.ajax(				
 				{ url: link,
 					method : "GET",	
@@ -71,61 +75,7 @@
 			
 				});
 	}
-	
-	
-	
-	$(function(){			
-	    			
-/* 		//follow 구현
-		$("#follow").on("click", function(){	
-			
-			var followUser = $(this).children('span').text();			
-			
-			if($(this).text() == "Follow"){
-					
-			//실시간 알람을 보내는 부분
-			sendMessage(followUser,'','2');
-			$.ajax(
-				
-					{ url: "/VIG/follow/json/addFollow?userCode=${user.userCode}&followerCode="+followUser,
-						method : "GET",	
-						dataType: "json",
-						headers : {
-							
-							"Accept" : "applicion/json",
-							"Content-Type" : "application/json"
-						},					
-				
-					});
-			
-				$(this).text("following").attr("class", "btn btn-default btn-rounded");		
-			
-			
-			} else {			
-				
-				$.ajax(
-				
-					{ url: "/VIG/follow/json/deleteFollow?userCode=${user.userCode}&followerCode="+followUser,
-						method : "GET",	
-						dataType: "json",
-						headers : {
-							
-							"Accept" : "applicion/json",
-							"Content-Type" : "application/json"
-						},					
-					});
-				
-				$(this).text("Follow").attr("class", "btn btn-outline-default btn-rounded");
-				
-			}
-		}); */
-		
-		
-		
-	});	
-	
-	
-	
+
 	
 
 	</script>
@@ -219,42 +169,77 @@
 				<div id="showFollowlist" class="row justify-content-center" style="margin: 50px 30px 10px 30px;"></div>
 			    	
 			    	<c:forEach var="follow" items="${follow}">
-			    		<div id="follow_${follow.userCode}">			    		
+			    	
+			    	<c:if test="${type == '팔로워'}">
+			    		<div id="follow_${follow.followUser.userCode}">			    		
 					    	<div class="row">		
 					    		<div class="col-md-2 ">
-						    		<a  href="/VIG/myfeed/getMyFeedList?userCode=${follow.userCode}">
-						    			<img src="/VIG/images/uploadFiles/${follow.profileImg}" class="rounded-circle"  style="max-height: 120px; margin-left: 20px;">				    		
+						    		<a  href="/VIG/myfeed/getMyFeedList?userCode=${follow.followUser.userCode}">
+						    			<img src="/VIG/images/uploadFiles/${follow.followUser.profileImg}" class="rounded-circle"  style="max-height: 120px; margin-left: 20px;">				    		
 						    		</a>		    		
 					    		</div>
 					    
 					    		<div class="col-md-8" style="margin-top: 20px;">
-					    			<h2><strong>${follow.userName}</strong></h2>
-					    			<h4>${follow.selfIntroduce}</h4>				    		
+					    			<h2><strong>${follow.followUser.userName}</strong></h2>
+					    			<h4>${follow.followUser.selfIntroduce}</h4>				    		
 					    		</div>
 					    		
-					    		<div class="col-md-2">
-					    			<c:if test="${type == '팔로워'}">
-					    				<button type="button" id="follow" class="btn btn-outline-default btn-rounded" style="margin-top: 20px;" onclick="addFollower('${follow.userCode}')">Follow		
-					    				</button>
-					    			</c:if>
-					    			
-					    			<c:if test="${type == '팔로잉'}">
-					    				<button type="button" id="follow" class="btn btn-default btn-rounded" style="margin-top: 20px;" onclick="deleteFollower('${follow.userCode}')" >following				    					
-					    				</button>
-					    			</c:if>				    		
+					    		<div class="col-md-2">				    			
+					    				<c:if test="${user.userCode == follow.isF4F}">
+					    					<button type="button" id="follow" class="btn btn-default btn-rounded" style="margin-top: 20px;" onclick="deleteFollower('${follow.followUser.userCode}')" >
+					    					<strong style="color: white;">Following</strong>					    					
+					    					</button>
+					    				</c:if>
+					    				
+					    				<c:if test="${user.userCode != follow.isF4F}">
+						    				<button type="button" id="follow" class="btn btn-outline-default btn-rounded" style="margin-top: 20px;" onclick="addFollower('${follow.followUser.userCode}')">
+						    				Follow		
+						    				</button>
+					    				</c:if>							    		
 					    		</div>
 						  </div>  
 						  <hr/>		
 					  </div>
-					    				    		
+			    	</c:if>
+			    	
+			    	<c:if test="${type == '팔로잉'}">		
+			    		<div id="follow_${follow.followUser.userCode}">			    		
+					    	<div class="row">		
+					    		<div class="col-md-2 ">
+						    		<a  href="/VIG/myfeed/getMyFeedList?userCode=${follow.followUser.userCode}">
+						    			<img src="/VIG/images/uploadFiles/${follow.followUser.profileImg}" class="rounded-circle"  style="max-height: 120px; margin-left: 20px;">				    		
+						    		</a>		    		
+					    		</div>
+					    
+					    		<div class="col-md-8" style="margin-top: 20px;">
+					    			<h2><strong>${follow.followUser.userName}</strong></h2>
+					    			<h4>${follow.followUser.selfIntroduce}</h4>				    		
+					    		</div>
+					    		
+					    		<div class="col-md-2">				    			
+					    				<c:if test="${user.userCode == follow.isF4F}">
+					    					<button type="button" id="follow" class="btn btn-default btn-rounded" style="margin-top: 20px;" onclick="deleteFollower('${follow.followUser.userCode}')" >
+					    					<strong style="color: white;">Following</strong>					    					
+					    					</button>
+					    				</c:if>
+					    				
+					    				<c:if test="${user.userCode != follow.isF4F}">
+						    				<button type="button" id="follow" class="btn btn-outline-default btn-rounded" style="margin-top: 20px;" onclick="addFollower('${follow.followUser.userCode}')">
+						    				Follow		
+						    				</button>
+					    				</c:if>							    		
+					    		</div>
+						  </div>  
+						  <hr/>		
+					  </div>    	
+			    	</c:if>  		
 			    		
 			    					    		
 			    	</c:forEach>	
 			    	
 			    	<c:if test="${empty follow}">
 			    		<br/>
-			    		<h2 style="text-align: center;">${type} 유저가 없습니다. </h2>		    		
-			    	
+			    		<h2 style="text-align: center;">${type} 유저가 없습니다. </h2>			    	
 			    	</c:if>
 			    		    				    
 			    				    
