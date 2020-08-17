@@ -187,7 +187,7 @@
 					    		<div class="col-md-2">				    			
 					    				<c:if test="${user.userCode == follow.isF4F}">
 					    					<button type="button" id="follow" class="btn btn-default btn-rounded" style="margin-top: 20px;" onclick="deleteFollower('${follow.tagetUser.userCode}')" >
-					    					<strong style="color: white;">Following</strong>					    					
+					    					<strong style="color: white;">UnFollow</strong>					    					
 					    					</button>
 					    				</c:if>
 					    				
@@ -216,12 +216,11 @@
 					    			<h4>${follow.followUser.selfIntroduce}</h4>				    		
 					    		</div>
 					    		
-					    		<div class="col-md-2">			    			
-					    				
+					    		<!-- 팔로잉 유저는 한번더 터치하면 바로 삭제 -->
+					    		<div class="col-md-2">  				    				
 			    					<button type="button" id="follow" class="btn btn-default btn-rounded" style="margin-top: 20px;" onclick="deleteFollower('${follow.followUser.userCode}')" >
-			    					<strong style="color: white;">Following</strong>					    					
-			    					</button>				    				
-					    									    		
+			    					<strong style="color: white;">UnFollow</strong>					    					
+			    					</button>							    									    		
 					    		</div>
 						  </div>  
 						  <hr/>		
