@@ -92,6 +92,12 @@
 	display: inline-block;
 	
 	}
+	
+	#eventFeeds {
+	
+		margin-bottom: 10%;
+	
+	}
 
 	
 
@@ -227,7 +233,7 @@ $(function(){
 			</c:if>
 			<c:if test="${!empty feedList }">
 			<div class="container">
-			<div class="row">
+			<div class="row" id="eventFeeds">
 
 					
 						<c:forEach var="feeds" items="${feedList}">
