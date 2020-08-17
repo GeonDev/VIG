@@ -320,7 +320,7 @@ public class UserController {
 
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("user", userServices.getUserOne(user.getUserCode()));
-		mv.setViewName("redirect:/user/updateUser?userCode="+user.getUserCode());
+		mv.setViewName("redirect:/myfeed/getMyFeedList?userCode="+user.getUserCode());
 		
 		return mv;
 	        
