@@ -229,8 +229,7 @@ public class FeedController {
 		User writer = feed.getWriter();
 		System.out.println("User"+user);
 		System.out.println("Writer"+writer);
-		
-		
+				
 		
 		// 로그인한 유저정보가 있는지 체크 - 히스토리를 남기는 부분입니다. 삭제 X(손건)
 		History history = new History();		
@@ -249,36 +248,30 @@ public class FeedController {
 			boolean isLike = likeServices.getLikeState(joinUser);
 			
 			Follow follow = new Follow();
-			follow.setFollowingUser(user);
+			follow.setTagetUser(user);
 			follow.setFollowUser(writer);
 			int isFollow = followServices.getFollow(follow);
 			
 			mav.addObject("isFollow", isFollow);
 			mav.addObject("isLike", isLike);
-			
-			System.out.println("회원조회");
-			
-			int count = historyServices.getViewHistory(history);
-			System.out.println(count);
-			if(count == 0 ) {
-			
-				feedServices.updateViewCount(feedId);
-				historyServices.addHistory(history);
+		
+			if(historyServices.getViewHistory(history) == 0 ) {			
+				feedServices.updateViewCount(feedId);				
 			}
-			//historyServices.addHistory(history);
+			
+			//피드 뷰카운트는 늘지 않더라도 내가 본 기록에는 추가
+			historyServices.addHistory(history);
 			
 		
 		}//비회원이면
-		else if(user==null) {
-				System.out.println("비회원 조회");
-					int count = historyServices.getViewHistory(history);
-					System.out.println(count);
-					if(count == 0 ) {
-						
-						historyServices.addHistory(history);
-						feedServices.updateViewCount(feedId);
-						
-					}
+		else if(user==null) {					
+			if(historyServices.getViewHistory(history) == 0 ) {
+				
+				//비회원의 조회 기록은 중복하여 저장할 필요가 없음
+				historyServices.addHistory(history);
+				feedServices.updateViewCount(feedId);
+				
+			}
 			
 		}		
 		Feed dbFeed = feedServices.getFeed(feedId);

@@ -171,28 +171,28 @@
 			    	<c:forEach var="follow" items="${follow}">
 			    	
 			    	<c:if test="${type == '팔로워'}">
-			    		<div id="follow_${follow.followUser.userCode}">			    		
+			    		<div id="follow_${follow.tagetUser.userCode}">			    		
 					    	<div class="row">		
 					    		<div class="col-md-2 ">
-						    		<a  href="/VIG/myfeed/getMyFeedList?userCode=${follow.followUser.userCode}">
-						    			<img src="/VIG/images/uploadFiles/${follow.followUser.profileImg}" class="rounded-circle"  style="max-height: 120px; margin-left: 20px;">				    		
+						    		<a  href="/VIG/myfeed/getMyFeedList?userCode=${follow.tagetUser.userCode}">
+						    			<img src="/VIG/images/uploadFiles/${follow.tagetUser.profileImg}" class="rounded-circle"  style="max-height: 120px; margin-left: 20px;">				    		
 						    		</a>		    		
 					    		</div>
 					    
 					    		<div class="col-md-8" style="margin-top: 20px;">
-					    			<h2><strong>${follow.followUser.userName}</strong></h2>
-					    			<h4>${follow.followUser.selfIntroduce}</h4>				    		
+					    			<h2><strong>${follow.tagetUser.userName}</strong></h2>
+					    			<h4>${follow.tagetUser.selfIntroduce}</h4>				    		
 					    		</div>
 					    		
 					    		<div class="col-md-2">				    			
 					    				<c:if test="${user.userCode == follow.isF4F}">
-					    					<button type="button" id="follow" class="btn btn-default btn-rounded" style="margin-top: 20px;" onclick="deleteFollower('${follow.followUser.userCode}')" >
+					    					<button type="button" id="follow" class="btn btn-default btn-rounded" style="margin-top: 20px;" onclick="deleteFollower('${follow.tagetUser.userCode}')" >
 					    					<strong style="color: white;">Following</strong>					    					
 					    					</button>
 					    				</c:if>
 					    				
 					    				<c:if test="${user.userCode != follow.isF4F}">
-						    				<button type="button" id="follow" class="btn btn-outline-default btn-rounded" style="margin-top: 20px;" onclick="addFollower('${follow.followUser.userCode}')">
+						    				<button type="button" id="follow" class="btn btn-outline-default btn-rounded" style="margin-top: 20px;" onclick="addFollower('${follow.tagetUser.userCode}')">
 						    				Follow		
 						    				</button>
 					    				</c:if>							    		
@@ -216,18 +216,12 @@
 					    			<h4>${follow.followUser.selfIntroduce}</h4>				    		
 					    		</div>
 					    		
-					    		<div class="col-md-2">				    			
-					    				<c:if test="${user.userCode == follow.isF4F}">
-					    					<button type="button" id="follow" class="btn btn-default btn-rounded" style="margin-top: 20px;" onclick="deleteFollower('${follow.followUser.userCode}')" >
-					    					<strong style="color: white;">Following</strong>					    					
-					    					</button>
-					    				</c:if>
+					    		<div class="col-md-2">			    			
 					    				
-					    				<c:if test="${user.userCode != follow.isF4F}">
-						    				<button type="button" id="follow" class="btn btn-outline-default btn-rounded" style="margin-top: 20px;" onclick="addFollower('${follow.followUser.userCode}')">
-						    				Follow		
-						    				</button>
-					    				</c:if>							    		
+			    					<button type="button" id="follow" class="btn btn-default btn-rounded" style="margin-top: 20px;" onclick="deleteFollower('${follow.followUser.userCode}')" >
+			    					<strong style="color: white;">Following</strong>					    					
+			    					</button>				    				
+					    									    		
 					    		</div>
 						  </div>  
 						  <hr/>		

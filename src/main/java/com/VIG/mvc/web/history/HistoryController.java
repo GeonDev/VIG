@@ -99,6 +99,7 @@ public class HistoryController {
 		modelAndView.addObject("hidelist", historyServices.getHistoryList(search));
 		modelAndView.addObject("commentlist", commentServices.getCommentFromUser(search));
 		modelAndView.addObject("likeFeedlist", feedServices.getLikedFeedList(search));
+		modelAndView.addObject("writer", user);
 		
 		modelAndView.addObject("resultPage", resultPage);		
 				

@@ -14,7 +14,7 @@
 		<result property="isF4F" 	column="isF4F" 		jdbcType="VARCHAR"/>	
 			
 		<association property="followUser" 	column="follower_code" 	javaType="user"	  select="setFollow"/>	
-		<association property="setUser" 	column="user_code" 	javaType="user"	  select="setFollow"/>		
+		<association property="tagetUser" 	column="user_code" 	javaType="user"	  select="setFollow"/>		
 		
 	</resultMap>
  	
@@ -26,19 +26,19 @@
 	
 	<insert id="addFollow" parameterType="follow">
 		INSERT INTO follow(user_code, follower_code, add_date)
-		VALUES (#{userCode:VARCHAR}, #{followUser.userCode:VARCHAR}, NOW())
+		VALUES (#{tagetUser.userCode:VARCHAR}, #{followUser.userCode:VARCHAR}, NOW())
 
 	</insert>
 
 	<delete id="deleteFollow" parameterType="follow">
 		DELETE FROM follow
-      	WHERE user_code=#{userCode} and follower_code=#{followUser.userCode}
+      	WHERE user_code=#{tagetUser.userCode} and follower_code=#{followUser.userCode}
 	</delete>
 	
 	<select id="getFollow" parameterType="follow" resultType="int">
 	
 		SELECT COUNT(*) FROM follow
-		WHERE user_code=#{userCode} and follower_code=#{followUser.userCode}
+		WHERE user_code=#{tagetUser.userCode} and follower_code=#{followUser.userCode}
 	
 	</select>
 	
@@ -49,21 +49,24 @@
 	
 	</select>
 	
-	<!-- 내가 팔로우 한 사람 -->
+	<!-- 내가 팔로우 한 사람 팔로잉-->
 	<select id="getFollowingList" parameterType="string" resultMap="FollowSelectMap">
-		SELECT F.*, (R.follower_code) AS isF4F 
-		FROM follow AS F, follow AS R
-		WHERE F.follower_code = R.user_code		
-		AND F.user_code=#{value}				
+		SELECT F.*, 
+			(SELECT user_code FROM follow
+			 WHERE follower_code =  #{value} 
+			 AND user_code = F.follower_code ) AS isF4F 
+		FROM follow AS F
+		WHERE F.user_code= #{value}					
 	</select>
 	
-	<!-- 나를 팔로우 한 사람 -->
+	<!-- 나를 팔로우 한 사람 팔로워-->
 	<select id="getFollowerList" parameterType="string" resultMap="FollowSelectMap">		
-		SELECT F.follower_id, F.user_code, F.follower_code, F.add_date, (R.user_code) AS isF4F 
-		FROM follow AS F, follow AS R
-		WHERE F.follower_code = R.user_code		
-		AND F.follower_code=#{value}
-		GROUP BY F.follower_id				
+		SELECT F.*, 
+		(SELECT user_code FROM follow
+		WHERE user_code =  #{value} 
+		AND follower_code = F.user_code ) AS isF4F 
+		FROM follow AS F
+		WHERE F.follower_code= #{value}				
 	</select>
 
 
