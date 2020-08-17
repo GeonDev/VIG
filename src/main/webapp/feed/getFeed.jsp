@@ -129,7 +129,7 @@
 	border-radius: 23px;
 	background-color: #5CA45B;
 	padding: 3px 3px 3px 9px;
-	
+	cursor: pointer;
 
 	
 	}
@@ -308,7 +308,13 @@ $(function(){
 		
 		var obj = new Object();			
 		commentText=$('#textarea-char-counter').val();
-		    
+		
+		if(commentText == ''|| commentText== null){
+			
+			swal("댓글내용을 입력해주세요");
+			return false;
+			
+		}
 			obj.feedId='${feed.feedId}';
 			obj.commentText =commentText;
 		var jsonData = JSON.stringify(obj);
@@ -417,7 +423,6 @@ $(function(){
 			  text: "후원하시겠습니까?",
 			  icon: "info",
 			  buttons: true,
-			  dangerMode: true,
 			})
 			.then((willDelete) => {
 			  if (willDelete) {
@@ -610,31 +615,31 @@ function imageModal(imageId){
 	<!-- 작성자 프로필 -->
 	<div class="container">
 	 <div class="row">
-		 <div class="col-md-8">
-		 <span id="profile">
-		<img src="/VIG/images/uploadFiles/${feed.writer.profileImg}" class="rounded-circle" width="35px"> &nbsp; <a id="writerName" href="/VIG/myfeed/getMyFeedList?userCode=${feed.writer.userCode}">${feed.writer.userName}</a>
-		 </span>
-		 </div>
+				 <div class="col-md-8">
+					 <a id="profile" style="font-weight: bold; color: black; font-size: large;" href="/VIG/myfeed/getMyFeedList?userCode=${feed.writer.userCode}">
+					<img src="/VIG/images/uploadFiles/${feed.writer.profileImg}" class="rounded-circle" width="35px"> &nbsp; ${feed.writer.userName}
+					 </a>
+				 </div>
 		 <!-- 팔로우와 후원 -->
-		 <c:if test="${!empty user.role }">
+			<c:if test="${!empty user.role }">
 		
-		    <div class="col-4 dofo" align="left">
-		    	<c:if test="${feed.writer.userCode != user.userCode }">
-		    	<c:if test="${feed.writer.role == 'business' }">
-		    	
-		    	<span id="donation"><i class="fas fa-dollar-sign"></i></span>
-				</c:if>
-				
-				<c:if test="${ isFollow == 0}">
-		    	<button type="button" id="follow" class="btn btn-outline-default btn-rounded" >Follow</button>
-		    	</c:if>
-		    	<c:if test="${ isFollow == 1}">
-		    	<button type="button" id="follow" class="btn btn-default btn-rounded" >following</button>
-		    	</c:if>
-		    	</c:if>
-		    </div>
+			    <div class="col-md-4 dofo" align="left">
+			    	<c:if test="${feed.writer.userCode != user.userCode }">
+			    	<c:if test="${feed.writer.role == 'business' }">
+			    	
+			    	<p id="donation"><i class="fas fa-dollar-sign"></i></p>
+					</c:if>
+					
+					<c:if test="${ isFollow == 0}">
+			    	<button type="button" id="follow" class="btn btn-outline-default btn-rounded" >Follow</button>
+			    	</c:if>
+			    	<c:if test="${ isFollow == 1}">
+			    	<button type="button" id="follow" class="btn btn-default btn-rounded" >following</button>
+			    	</c:if>
+			    	</c:if>
+			    </div>
 		    
-		  </c:if>
+		  	</c:if>
 	  </div>
 </div>
 	<hr/>
@@ -642,9 +647,9 @@ function imageModal(imageId){
 	<div class="container">
 	 <div class="row">
 		<div class="col-md-8">
-		<div style="font-size: 25px; font-weight: bold"> Comments </div>
+		<div style="font-size: 150%; font-weight: bold"> Comments </div>
 		<div class="row">
-		<div class="col-md-10" id="comform">
+		<div class="col-md-9" id="comform">
 		<form id="myform">
 			<div class="md-form">
 			  <textarea id="textarea-char-counter" class="form-control md-textarea" length="500" rows="2"></textarea>
@@ -652,9 +657,9 @@ function imageModal(imageId){
 			</div>
 		</form>
 		</div>
-		<div class="col-md-2" align="right" id="combutton">
+		<div class="col-md-3 " align="right" id="combutton">
 		<br>
-		<button type="submit" class="btn btn-rounded btn-deep-purple">등록</button>
+		<button type="button" class="btn btn-dark" style="white-space:normal">등록</button>
 		</div>
 		</div>
 
