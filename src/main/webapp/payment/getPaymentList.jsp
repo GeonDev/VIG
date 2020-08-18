@@ -34,7 +34,8 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 	<!--  아임포트 결제 구현  -->
 	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-	
+	<!-- 알러트 -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
 <style>
 	
@@ -102,11 +103,26 @@
  function fncdeletepay(paymentId){
 	 
 
-	 swal("결제를 취소합니다.");
+		swal({
+			  text: "결제를 취소하시겠습니까?",
+			  icon: "info",
+			  buttons: true,
+			})
+			.then((willDelete) => {
+			  if (willDelete) {
+
+				 swal({text: "완료되었습니다.",
+					  icon: "info",}) 
+				  self.location="/VIG/payment/cancelPayment?paymentId="+paymentId;
+				  
+			  } else {
+			    
+			  }
+			});
 	 
 	 //아임포트 ajax 환불하는 곳
 	 
-	 self.location="/VIG/payment/cancelPayment?paymentId="+paymentId;
+	 
 	 
  }
  
