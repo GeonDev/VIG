@@ -172,7 +172,10 @@ public class mainController {
 		
 		//쓰래드 실행이 완료 된 이후 DB에 데이터 삽입
 		for (VisionInfo vision : visions) {			
-			for(ImageKeyword keyword : vision.getKeywords()) {
+			
+			logger.debug(vision.getImageFilePath() +"DB 저장 중");
+			
+			for(ImageKeyword keyword : vision.getKeywords()) {				
 				keywordServices.addKeyword(keyword);
 			}
 			
