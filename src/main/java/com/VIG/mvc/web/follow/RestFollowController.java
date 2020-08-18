@@ -54,15 +54,12 @@ public class RestFollowController {
 	@RequestMapping(value="json/addFollow", method=RequestMethod.GET)
 	public void addFollow(@RequestParam("userCode") String userCode, @RequestParam("followerCode") String followerCode) throws Exception {
 		
-		System.out.println(userCode+":"+followerCode);
-		System.out.println("follow함");
 		if(userCode != followerCode) {
 		Follow follow = new Follow();
-		User followingUser = userServices.getUserOne(userCode);
-		follow.setFollowingUser(followingUser);
-		
-		User followedUser = userServices.getUserOne(followerCode);
-		follow.setFollowedUser(followedUser);
+	
+		follow.setTagetUser(userServices.getUserOne(userCode));
+
+		follow.setFollowUser(userServices.getUserOne(followerCode));
 		
 		
 		followServices.addFollow(follow);
@@ -73,14 +70,10 @@ public class RestFollowController {
 	@RequestMapping(value="json/deleteFollow", method=RequestMethod.GET)
 	public void deleteFollow(@RequestParam("userCode") String userCode, @RequestParam("followerCode") String followerCode) throws Exception {
 		
-		System.out.println(userCode+":"+followerCode);
-		System.out.println("unfollow함");
-		Follow follow = new Follow();
-		User followingUser = userServices.getUserOne(userCode);
-		follow.setFollowingUser(followingUser);
+		Follow follow = new Follow();		
 		
-		User followedUser = userServices.getUserOne(followerCode);
-		follow.setFollowedUser(followedUser);
+		follow.setTagetUser(userServices.getUserOne(userCode));
+		follow.setFollowUser(userServices.getUserOne(followerCode));
 		
 		followServices.deleteFollow(follow);
 
@@ -88,12 +81,12 @@ public class RestFollowController {
 	
 	//나를 팔로우 하는 사람들
 	@RequestMapping(value="json/getFollowerList", method=RequestMethod.GET)
-	public List<User> getFollowList(@RequestParam("userCode") String userCode) throws Exception {
+	public List<Follow> getFollowList(@RequestParam("userCode") String userCode) throws Exception {
 				
 		
 		logger.debug(userCode);
 			
-		List<User> follower = followServices.getFollowerList(userCode); 
+		List<Follow> follower = followServices.getFollowerList(userCode); 
 		
 		logger.debug(follower);
 		
@@ -104,13 +97,13 @@ public class RestFollowController {
 	
 	//내가 팔로우 하는 사람들
 	@RequestMapping(value="json/getFollowingList", method=RequestMethod.GET)
-	public List<User> getFollowingList(@RequestParam("userCode") String userCode) throws Exception {
+	public List<Follow> getFollowingList(@RequestParam("userCode") String userCode) throws Exception {
 		
 		
 		logger.debug(userCode);
 		
 		
-		List<User> following = followServices.getFollowingList(userCode); 
+		List<Follow> following = followServices.getFollowingList(userCode); 
 		
 		logger.debug(following);
 		

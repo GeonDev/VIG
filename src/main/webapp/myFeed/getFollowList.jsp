@@ -32,14 +32,17 @@
 	 <!-- jQuery UI toolTip 사용 CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script type="text/javascript">
-		
+  
+  
+  <script type="text/javascript">
+	
+  var type = '${type}';
 
 	
 	function addFollower(follower) {
 		var link = "/VIG/follow/json/addFollow?userCode=${user.userCode}&followerCode="+follower;	
-		sendMessage(followUser,'','2');	
-		var id = "#follow_"+following;
+		sendMessage(follower,'','2');	
+		var id = "#follow_"+follower;
 		
 		$.ajax(				
 				{ url: link,
@@ -51,15 +54,19 @@
 					},					
 			
 				});
-		$(id).css('display','none');
+		
+		if(type =='팔로워'){
+			$(id).find("#follow").css('display','none');				
+			$(id).find("#unfollow").css('display','inline');				
+		}
 		
 	}
 	
 	
 	function deleteFollower(following) {
 		var link = "/VIG/follow/json/deleteFollow?userCode=${user.userCode}&followerCode="+ following;
-		var id = "#follow_"+following;
-		$(id).css('display','none');
+		var id = "#follow_"+following;	
+		
 		$.ajax(				
 				{ url: link,
 					method : "GET",	
@@ -70,62 +77,15 @@
 					},					
 			
 				});
+		
+		if(type =='팔로잉'){
+			$(id).css('display','none');				
+		}else{
+			$(id).find("#follow").css('display','inline');				
+			$(id).find("#unfollow").css('display','none');	
+		}
 	}
-	
-	
-	
-	$(function(){			
-	    			
-/* 		//follow 구현
-		$("#follow").on("click", function(){	
-			
-			var followUser = $(this).children('span').text();			
-			
-			if($(this).text() == "Follow"){
-					
-			//실시간 알람을 보내는 부분
-			sendMessage(followUser,'','2');
-			$.ajax(
-				
-					{ url: "/VIG/follow/json/addFollow?userCode=${user.userCode}&followerCode="+followUser,
-						method : "GET",	
-						dataType: "json",
-						headers : {
-							
-							"Accept" : "applicion/json",
-							"Content-Type" : "application/json"
-						},					
-				
-					});
-			
-				$(this).text("following").attr("class", "btn btn-default btn-rounded");		
-			
-			
-			} else {			
-				
-				$.ajax(
-				
-					{ url: "/VIG/follow/json/deleteFollow?userCode=${user.userCode}&followerCode="+followUser,
-						method : "GET",	
-						dataType: "json",
-						headers : {
-							
-							"Accept" : "applicion/json",
-							"Content-Type" : "application/json"
-						},					
-					});
-				
-				$(this).text("Follow").attr("class", "btn btn-outline-default btn-rounded");
-				
-			}
-		}); */
-		
-		
-		
-	});	
-	
-	
-	
+
 	
 
 	</script>
@@ -219,42 +179,78 @@
 				<div id="showFollowlist" class="row justify-content-center" style="margin: 50px 30px 10px 30px;"></div>
 			    	
 			    	<c:forEach var="follow" items="${follow}">
-			    		<div id="follow_${follow.userCode}">			    		
+			    	
+			    	<c:if test="${type == '팔로워'}">
+			    		<div id="follow_${follow.tagetUser.userCode}">			    		
 					    	<div class="row">		
 					    		<div class="col-md-2 ">
-						    		<a  href="/VIG/myfeed/getMyFeedList?userCode=${follow.userCode}">
-						    			<img src="/VIG/images/uploadFiles/${follow.profileImg}" class="rounded-circle"  style="max-height: 120px; margin-left: 20px;">				    		
+						    		<a  href="/VIG/myfeed/getMyFeedList?userCode=${follow.tagetUser.userCode}">
+						    			<img src="/VIG/images/uploadFiles/${follow.tagetUser.profileImg}" class="rounded-circle"  style="max-height: 120px; margin-left: 20px;">				    		
 						    		</a>		    		
 					    		</div>
 					    
 					    		<div class="col-md-8" style="margin-top: 20px;">
-					    			<h2><strong>${follow.userName}</strong></h2>
-					    			<h4>${follow.selfIntroduce}</h4>				    		
+					    			<h2><strong>${follow.tagetUser.userName}</strong></h2>
+					    			<h4>${follow.tagetUser.selfIntroduce}</h4>				    		
 					    		</div>
 					    		
-					    		<div class="col-md-2">
-					    			<c:if test="${type == '팔로워'}">
-					    				<button type="button" id="follow" class="btn btn-outline-default btn-rounded" style="margin-top: 20px;" onclick="addFollower('${follow.userCode}')">Follow		
-					    				</button>
-					    			</c:if>
-					    			
-					    			<c:if test="${type == '팔로잉'}">
-					    				<button type="button" id="follow" class="btn btn-default btn-rounded" style="margin-top: 20px;" onclick="deleteFollower('${follow.userCode}')" >following				    					
-					    				</button>
-					    			</c:if>				    		
+					    		<div class="col-md-2" id ="follower">				    			
+					    				<c:if test="${user.userCode == follow.isF4F}">
+					    					<button type="button" id="unfollow" class="btn btn-default btn-rounded" style="margin-top: 20px;" onclick="deleteFollower('${follow.tagetUser.userCode}')" >
+					    					<strong style="color: white;">UnFollow</strong>					    					
+					    					</button>
+					    					
+					    					<button type="button" id="follow" class="btn btn-outline-default btn-rounded" style="margin-top: 20px; display:none;" onclick="addFollower('${follow.tagetUser.userCode}')">
+						    				Follow		
+						    				</button>
+					    				</c:if>
+					    				
+					    				<c:if test="${user.userCode != follow.isF4F}">
+					    					<button type="button" id="unfollow" class="btn btn-default btn-rounded" style="margin-top: 20px; display: none;" onclick="deleteFollower('${follow.tagetUser.userCode}')" >
+					    					<strong style="color: white;">UnFollow</strong>					    					
+					    					</button>					    				
+					    				
+						    				<button type="button" id="follow" class="btn btn-outline-default btn-rounded" style="margin-top: 20px;" onclick="addFollower('${follow.tagetUser.userCode}')">
+						    				Follow		
+						    				</button>
+					    				</c:if>							    		
 					    		</div>
 						  </div>  
 						  <hr/>		
 					  </div>
-					    				    		
+			    	</c:if>
+			    	
+			    	<c:if test="${type == '팔로잉'}">		
+			    		<div id="follow_${follow.followUser.userCode}">			    		
+					    	<div class="row">		
+					    		<div class="col-md-2 ">
+						    		<a  href="/VIG/myfeed/getMyFeedList?userCode=${follow.followUser.userCode}">
+						    			<img src="/VIG/images/uploadFiles/${follow.followUser.profileImg}" class="rounded-circle"  style="max-height: 120px; margin-left: 20px;">				    		
+						    		</a>		    		
+					    		</div>
+					    
+					    		<div class="col-md-8" style="margin-top: 20px;">
+					    			<h2><strong>${follow.followUser.userName}</strong></h2>
+					    			<h4>${follow.followUser.selfIntroduce}</h4>				    		
+					    		</div>
+					    		
+					    		<!-- 팔로잉 유저는 한번더 터치하면 바로 삭제 -->
+					    		<div class="col-md-2">  				    				
+			    					<button type="button" id="unfollowing" class="btn btn-default btn-rounded" style="margin-top: 20px;" onclick="deleteFollower('${follow.followUser.userCode}')" >
+			    					<strong style="color: white;">UnFollow</strong>					    					
+			    					</button>							    									    		
+					    		</div>
+						  </div>  
+						  <hr/>		
+					  </div>    	
+			    	</c:if>  		
 			    		
 			    					    		
 			    	</c:forEach>	
 			    	
 			    	<c:if test="${empty follow}">
 			    		<br/>
-			    		<h2 style="text-align: center;">${type} 유저가 없습니다. </h2>		    		
-			    	
+			    		<h2 style="text-align: center;">${type} 유저가 없습니다. </h2>			    	
 			    	</c:if>
 			    		    				    
 			    				    

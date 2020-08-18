@@ -332,14 +332,11 @@ $(function(){
 						},
 						data : jsonData,
 						   
-						success : function(JSONData, status) {
-							
-							
-						
+						success : function(JSONData, status) {	
 							
 					    var displayValue = 
 						"<div id="+JSONData.commentId+"><img width='25px' style='margin-right:5px' src='/VIG/images/uploadFiles/"+JSONData.user.profileImg+"' class='rounded-circle'><a style='margin-right:9px' href='/VIG/myfeed/getMyFeedList?userCode='"
-								+JSONData.user.userCode+">"+JSONData.user.userName+"</a>"+JSONData.commentText+"<button id= 'deleteCom' class='fas fa-trash' onclick="+"removeComment("+JSONData.commentId+")></button><hr></div>";
+								+JSONData.user.userCode+">"+JSONData.user.userName+"</a>"+JSONData.commentText+"<button id= 'deleteCom' class='btn btn-link' onclick="+"removeComment("+JSONData.commentId+")><i class='fas fa-trash'></i></button><hr></div>";
 							
 					    
 					    $('#textarea-char-counter').val("");
@@ -675,7 +672,9 @@ function imageModal(imageId){
 			<img width="25px"src="/VIG/images/uploadFiles/${comments.user.profileImg }" style="margin-right:5px" class="rounded-circle"><a href="/VIG/myfeed/getMyFeedList?userCode=${comments.user.userCode}">${ comments.user.userName}</a>
 			 ${comments.commentText}  
 			 <c:if test="${user.userCode == comments.user.userCode}">
-			 <button id= "deleteCom" class="fas fa-trash" onclick="removeComment('${comments.commentId}')"></button>
+				 <button id = "deleteCom" class="btn btn-link" onclick="removeComment('${comments.commentId}')">
+				 	<i class="fas fa-trash"></i>
+				 </button>
 			 </c:if>
 
 			 <hr>

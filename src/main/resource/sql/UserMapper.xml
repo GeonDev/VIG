@@ -107,7 +107,7 @@
 	 	SELECT users.user_name FROM users
 	 	WHERE users.user_name LIKE CONCAT('%',#{value},'%')
 	 	AND users.role in('user','business')
-	    limt 5	 
+	    LIMIT 5	 
 	 </select>
 	 
 	  <update id="updateUser" parameterType="user" >
