@@ -42,13 +42,13 @@ public class FollowServicesImpl implements FollowServices {
 	}
 
 	@Override
-	public List<User> getFollowerList(String userCode) throws Exception {
+	public List<Follow> getFollowerList(String userCode) throws Exception {
 		// TODO Auto-generated method stub
 		return followDao.getFollowerList(userCode);
 	}
 
 	@Override
-	public List<User> getFollowingList(String userCode) throws Exception {
+	public List<Follow> getFollowingList(String userCode) throws Exception {
 		// TODO Auto-generated method stub
 		return followDao.getFollowingList(userCode);
 	}

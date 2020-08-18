@@ -98,7 +98,7 @@
    			</div>
 			
     <!-- id -->
-	    <input type="text" id="userCode" name="userCode" class="form-control mb-5" placeholder="id" required>
+	    <input type="text" id="userCode" name="userCode" class="form-control mb-4" placeholder="id" required>
 	    <span class="glyphicon glyphicon-ok form-control-feedback"></span>
 
     <!-- Password -->
