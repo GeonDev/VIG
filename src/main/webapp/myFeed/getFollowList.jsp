@@ -32,8 +32,11 @@
 	 <!-- jQuery UI toolTip 사용 CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script type="text/javascript">
-		
+  
+  
+  <script type="text/javascript">
+	
+  var type = '${type}';
 
 	
 	function addFollower(follower) {
@@ -41,8 +44,6 @@
 		sendMessage(follower,'','2');	
 		var id = "#follow_"+follower;
 		
-		//$(id).css('display','none');
-		
 		$.ajax(				
 				{ url: link,
 					method : "GET",	
@@ -54,15 +55,17 @@
 			
 				});
 		
+		if(type =='팔로워'){
+			$(id).find("#follow").css('display','none');				
+			$(id).find("#unfollow").css('display','inline');				
+		}
 		
 	}
 	
 	
 	function deleteFollower(following) {
 		var link = "/VIG/follow/json/deleteFollow?userCode=${user.userCode}&followerCode="+ following;
-		var id = "#follow_"+following;
-		
-		$(id).css('display','none');
+		var id = "#follow_"+following;	
 		
 		$.ajax(				
 				{ url: link,
@@ -74,6 +77,13 @@
 					},					
 			
 				});
+		
+		if(type =='팔로잉'){
+			$(id).css('display','none');				
+		}else{
+			$(id).find("#follow").css('display','inline');				
+			$(id).find("#unfollow").css('display','none');	
+		}
 	}
 
 	
@@ -184,14 +194,22 @@
 					    			<h4>${follow.tagetUser.selfIntroduce}</h4>				    		
 					    		</div>
 					    		
-					    		<div class="col-md-2">				    			
+					    		<div class="col-md-2" id ="follower">				    			
 					    				<c:if test="${user.userCode == follow.isF4F}">
-					    					<button type="button" id="follow" class="btn btn-default btn-rounded" style="margin-top: 20px;" onclick="deleteFollower('${follow.tagetUser.userCode}')" >
+					    					<button type="button" id="unfollow" class="btn btn-default btn-rounded" style="margin-top: 20px;" onclick="deleteFollower('${follow.tagetUser.userCode}')" >
 					    					<strong style="color: white;">UnFollow</strong>					    					
 					    					</button>
+					    					
+					    					<button type="button" id="follow" class="btn btn-outline-default btn-rounded" style="margin-top: 20px; display:none;" onclick="addFollower('${follow.tagetUser.userCode}')">
+						    				Follow		
+						    				</button>
 					    				</c:if>
 					    				
 					    				<c:if test="${user.userCode != follow.isF4F}">
+					    					<button type="button" id="unfollow" class="btn btn-default btn-rounded" style="margin-top: 20px; display: none;" onclick="deleteFollower('${follow.tagetUser.userCode}')" >
+					    					<strong style="color: white;">UnFollow</strong>					    					
+					    					</button>					    				
+					    				
 						    				<button type="button" id="follow" class="btn btn-outline-default btn-rounded" style="margin-top: 20px;" onclick="addFollower('${follow.tagetUser.userCode}')">
 						    				Follow		
 						    				</button>
@@ -218,7 +236,7 @@
 					    		
 					    		<!-- 팔로잉 유저는 한번더 터치하면 바로 삭제 -->
 					    		<div class="col-md-2">  				    				
-			    					<button type="button" id="follow" class="btn btn-default btn-rounded" style="margin-top: 20px;" onclick="deleteFollower('${follow.followUser.userCode}')" >
+			    					<button type="button" id="unfollowing" class="btn btn-default btn-rounded" style="margin-top: 20px;" onclick="deleteFollower('${follow.followUser.userCode}')" >
 			    					<strong style="color: white;">UnFollow</strong>					    					
 			    					</button>							    									    		
 					    		</div>

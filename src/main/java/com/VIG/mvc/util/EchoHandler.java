@@ -79,7 +79,7 @@ public class EchoHandler extends TextWebSocketHandler{
     	
     	//메세지(알람) 타입에 따라 내용 분류 (좋아요 또는 댓글)
     	if(split[2].equals("0") || split[2].equals("1") ) {
-    		System.out.println("좋아요 댓글 알람 출력/ 타입 : "+split[2]);
+    		
     		Feed feed = feedServices.getFeed(Integer.parseInt(split[1]));
     		alarm.setLikefeed(feed);
     		
@@ -93,7 +93,9 @@ public class EchoHandler extends TextWebSocketHandler{
     		
     		alarmServices.addAlarm(alarm);
     		
-        	if(reqSession != null) {
+        	if(reqSession != null && reqSession.isOpen()) {
+        		System.out.println("좋아요 댓글 알람 출력/ 타입 : "+split[2]);
+        		
         		//피드 ID/ 보낸 유저 프로필/ 보낸 유저 이름/ 썸네일 이미지/ 알람타입/ 보낸 유저코드/ 알람ID  
           		reqSession.sendMessage(new TextMessage(split[1] + "," + profile+ "," + sendUserName + "," + image.getImageFile() + "," + split[2] + ","+ sendUserCode + ","+alarmServices.getLastAlarmId()));
           	  	
@@ -102,10 +104,12 @@ public class EchoHandler extends TextWebSocketHandler{
     	//팔로우 알림
     	}else if(split[2].equals("2")) {
     		
-    		System.out.println("팔로우 알람 출력/ 타입 : "+split[2]);
+    		
     		alarmServices.addAlarm(alarm);
     		
-    		if(reqSession != null) {
+    		if(reqSession != null && reqSession.isOpen()) {
+    			
+    			System.out.println("팔로우 알람 출력/ 타입 : "+split[2]);
     			//피드 ID/ 보낸 유저 프로필/ 보낸 유저 이름/ 썸네일 이미지/ 알람타입/ 보낸 유저코드/ 알람ID
     			reqSession.sendMessage(new TextMessage(split[1] + "," + profile+ "," + sendUserName + "," + "0" + "," + split[2] + ","+ sendUserCode + ","+alarmServices.getLastAlarmId()));
     		}
