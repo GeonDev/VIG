@@ -54,7 +54,7 @@
 		SELECT F.*, 
 			(SELECT user_code FROM follow
 			 WHERE follower_code =  #{value} 
-			 AND user_code = F.follower_code ) AS isF4F 
+			 AND user_code = F.follower_code LIMIT 1) AS isF4F 
 		FROM follow AS F
 		WHERE F.user_code= #{value}					
 	</select>
@@ -64,7 +64,7 @@
 		SELECT F.*, 
 		(SELECT user_code FROM follow
 		WHERE user_code =  #{value} 
-		AND follower_code = F.user_code ) AS isF4F 
+		AND follower_code = F.user_code LIMIT 1 ) AS isF4F 
 		FROM follow AS F
 		WHERE F.follower_code= #{value}				
 	</select>
