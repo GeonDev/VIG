@@ -28,3 +28,7 @@
 http://13.125.196.55:8080/VIG/
 
 (구글 API 키가 적용되어 있지 않아 파일 업로드 불가) 
+
+
+## 시연 동영상
+https://www.youtube.com/watch?v=WnwgxZhQiuA&feature=youtu.be
