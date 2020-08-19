@@ -30,6 +30,9 @@
 				<if test="feedId == 0">
 				NULL,
 				</if>
+				<if test="feedId != 0">
+				#{feedId:NUMERIC},
+				</if>
 				#{paymentOption:NUMERIC}, #{selectPrice:NUMERIC}, #{lastPrice:NUMERIC}, NOW(),
 				IFNULL(#{isWithdraw:NUMERIC},0), IFNULL(#{isCancel:NUMERIC}, 0))
 	

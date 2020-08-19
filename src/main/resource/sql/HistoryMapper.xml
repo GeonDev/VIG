@@ -61,6 +61,15 @@
 		AND history.history_type = #{searchType} 		
 	</select>
 	
+	
+	<select id="checkHistory" parameterType="history" resultMap="HistorySelectMap">
+		SELECT history.* FROM history
+		WHERE history_type = 0
+		AND watch_user_code = #{watchUser.userCode}
+		AND feed_id = #{showFeed.feedId}	
+	</select>
+	
+	
 	<delete id="deleteHistory" parameterType="int">
 		DELETE 
 	 	FROM history 

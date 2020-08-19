@@ -32,6 +32,10 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script type="text/javascript">
+
+//뒤로가기 방지
+window.history.forward();
+function noBack(){window.history.forward();}
 	
 //=======회원가입
 		function fncAddUser() {	
@@ -40,24 +44,23 @@
 			var pw=$("input[name='password']").val();
 			var pw_confirm=$("input[name='password2']").val();	
 			var name=$("input[name='userName']").val();
-			var birth = $("input[name='birth']").val();
-			var email=$("input[name='email']").val();
+			var email = document.getElementById("email");
 			
 			
-			if(id == null || id.length <1){
-				alert("아이디는 반드시 입력하셔야 합니다.");
+			if(id == null || id.length <2){
+				alert("아이디는 2글자 이상입니다.");
 				return;
 			}
 			if(name == null || name.length <1){
-				alert("이름은  반드시 입력하셔야 합니다.");
+				alert("이름은 반드시 입력하셔야 합니다.");
 				return;
 			}
-			if(pw == null || pw.length <1){
-				alert("패스워드는  반드시 입력하셔야 합니다.");
+			if(pw == null || pw.length <4){
+				alert("패스워드는 4자리 이상 입니다.");
 				return;
 			}
-			if(pw_confirm == null || pw_confirm.length <1){
-				alert("패스워드 확인은  반드시 입력하셔야 합니다.");
+			if(pw_confirm == null || pw_confirm.length <4){
+				alert("패스워드 확인은 반드시 입력하셔야 합니다.");
 				return;
 			}
 		
@@ -66,14 +69,12 @@
 				$("input:text[name='password2']").focus();
 				return;
 			}
-			if(birth == null || birth.length<1){
-				alert("생년월일은 반드시 입력하셔야 합니다.");
-				return;
-			}
-			if(email == null){
-				alert("이메일은 반드시 입력하셔야 합니다.");
-				return;
-			}
+	
+			if(email.value=="") {
+		           alert("이메일을 입력해 주세요");
+		           email.focus();
+		           return false;
+		       }
 			
 			$("form").attr("method" , "post").attr("action" , "addUser").submit();
 		}
@@ -113,7 +114,7 @@
 				type: "POST",
 				data : form,
 				success: function(data){
-					console.log("00 "+ data);
+				
 					if (data== false) {
 						$("#id_check").text("사용중인 아이디입니다.");
 						$("#id_check").css("color", "red");
@@ -140,7 +141,7 @@
 		$("#emailcheck").on("click",function(){
 			if($("#email").val() == ''){
 				$("input:email[name='email']").focus();
-				alert("이메일을 입력해주세요.");
+				alert("이메일을 입력해주세요!");
 			}else{
 			
 				$.ajax({
@@ -158,10 +159,10 @@
 				
 					$("#inputVerification").val(json);
 				//alert("1"+  $("#inputVerification").val(json).val())
-					alert("메일이 발송 되었습니다.");
+					alert("메일이 발송되었습니다!");
 				},
 				error : function( error ) {
-					alert("없는 이메일 주소입니다.");
+					alert("이메일 주소를 확인해주세요!");
 				}	
 			});
 			}
@@ -171,55 +172,106 @@
 	$(function(){
 	$("#verifBtn").on("click",function(){
 		if( $("#inputVerification").val() != $("#verification").val()){
-			alert("인증에 실패했습니다.");
+			alert("인증에 실패했습니다");
 		}else{
-			alert("인증되었습니다.");
+			alert("인증되었습니다");
 		}
 	})
 	});
-		//로그인 페이지로 이동 이벤트
-		 $( function() {
-				$("#login_nav").on("click" , function() {
-					location.href="/VIG/user/loginView.jsp";
-				});
-			});		
-		//달력 setting
-		$( function() {
-			   $( "#datepicker" ).datepicker({
-			    showMonthAfterYear: true, 
-				 dateFormat: "yy-mm-dd"	    
-			    });
-			  });
+		
+
+		
+		$(function(){
+			$('#theModal').on('show.bs.modal', function(e) {		
+				var button = $(e.relatedTarget);
+				var modal = $(this);
+				
+				modal.find('.modal-body').load(button.data("remote"));			
+		});
+		});
 		
 </script>
 <style type="text/css">
 	
-	.container { padding-right: 300px; padding-left: 300px; padding-top: 100px;' margin-right: auto; margin-left: auto; }
+	
 	 #variedCode { margin:auto; }
 	#top_title { margin : 30px;}
 	
-	#emailcheck { margin: 5px 0 5px 0; display: block; float:left;}
-	#verification { display: block; width: 250px;float: left; margin-left: 58px;}
 	
+	#verification { display: block; width: 250px;float: left;}
 	
+	.container_addUser {     width: 650px;
+    display: block;
+    margin: auto;
+    margin-top: 100px;}
 	.btn.btn-primary.btn-sm { display: block;float: right; }
+	.container_addUser{ background-color:white;}
+	
+	/* 회원가입 바탕 CSS */
+	@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+	* { -webkit-box-sizing:border-box; -moz-box-sizing:border-box; -ms-box-sizing:border-box; -o-box-sizing:border-box; box-sizing:border-box; }
+
+	html { width: 100%; height:100%; overflow:hidden; }
+
+	body { 
+    width: 100%;
+    height:100%;
+    font-family: 'Open Sans', sans-serif;
+    background: #092756;
+    background: -moz-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%),-moz-linear-gradient(top,  rgba(57,173,219,.25) 0%, rgba(42,60,87,.4) 100%), -moz-linear-gradient(-45deg,  #670d10 0%, #092756 100%);
+    background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -webkit-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -webkit-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
+    background: -o-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -o-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -o-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
+    background: -ms-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -ms-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -ms-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
+    background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), linear-gradient(to bottom,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), linear-gradient(135deg,  #670d10 0%,#092756 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3E1D6D', endColorstr='#092756',GradientType=1 );
+	}
+
+	input { 
+    width: 100%; 
+    margin-bottom: 10px; 
+    background: rgba(0,0,0,0.3);
+    border: none;
+    outline: none;
+    padding: 10px;
+    font-size: 13px;
+    color: #fff;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+    border: 1px solid rgba(0,0,0,0.3);
+    border-radius: 4px;
+    box-shadow: inset 0 -5px 45px rgba(100,100,100,0.2), 0 1px 1px rgba(255,255,255,0.2);
+    -webkit-transition: box-shadow .5s ease;
+    -moz-transition: box-shadow .5s ease;
+    -o-transition: box-shadow .5s ease;
+    -ms-transition: box-shadow .5s ease;
+    transition: box-shadow .5s ease;
+	}
+	input:focus { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgba(255,255,255,0.2); }
+	
+
+	
 	
 </style>
 </head>
-<body>
+<!-- 뒤로가기방지 -->
+	<body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="">
 
 <jsp:include page="../main/toolbar.jsp"></jsp:include>
 
 <form>
-<div class="container">
+
+
+	
+<div class="container_addUser">
 	<div class="text-center border border-light p-4">
+	<div id="logo" >
 	  <div class="row" id="top_title">
 	    <p class="h4 mb-6" style="margin:30px;">Sign up</p>
 	  </div>
-	  
+	  </div>
 		<!-- id -->  
 		<div class="form-group"  style="height:70px; margin:0; ">
-			<input type="text" id="userCode" name="userCode" class="form-control " placeholder="userCode" value="${user.userCode}" required>   
+			<input type="text" id="userCode" name="userCode" class="form-control " placeholder="id" value="${user.userCode}" required>   
 			<div class="check_font" id="id_check" style="margin:7px;"></div>
 		</div>
 			
@@ -244,19 +296,7 @@
 			
 		<!-- 플필 -->  
 		     <input type="hidden" id="profileImg" name="profileImg" class="form-control " value="profile_img.jpg">
-		
-		<!-- 성별 -->
-		<div class="form-group" style="height: 40px; margin-bottom:0;">
-			  <input type="radio" id="check_userSex" name="sex" value="female" checked><label for="sex" >female</label>
-			  <input type="radio" id="check_userSex" name="sex" value="male"><label for="sex">male</label>
-			</div>
 
-		<!-- 생년월일-->
-		<div class="form-group" style="height: 50px;">
-			<hr/>
-			<p>Birth: <input type="text" id="datepicker" name="birth" placeholder="click me"></p>
-			<label data-error="wrong" data-success="right" for="birth"></label>
-		</div>	
 		<!--  -->
 		     <input type="hidden" id="state" name="state" class="form-control " value="0">
 		     <input type="hidden" id="primeCount" name="primeCount" class="form-control mb-4" value="0">
@@ -270,11 +310,11 @@
 		<button type="button" class="btn btn-sm" id="emailcheck" >이메일발송</button>  
 		  <input type="hidden" id="inputVerification" name ="inputVerification" placeholder="${inputVerification}"> 
 			
-			</div> 
-                <input type="text" id="verification" name="verification" class="form-control bt" placeholder="variedCode" 
+			 
+                <input type="text" id="verification" name="verification" class="form-control bt" placeholder="verificationCode" 
                 style="display: block;float: left; width: 70%;">               
                 <button type="button" id="verifBtn" class="btn btn-sm">인증번호확인</button> 
-           
+           </div>
 	
 		<!-- role -->
 			<input type="hidden" id="role" name="role" class="form-control"  value="user">
@@ -285,7 +325,8 @@
 		<!-- 가입버튼 -->
 		    <button  class="btn btn-block my-4" id="signUp_btn" style="background-color: #212121; color: white;" >Sign up</button>   
 				<p >Already a member? </p>
-		          <span id="login_nav" class="blue-text ml-1" href="#" > login</span>
+		          <span id="login_nav" class="blue-text ml-1"  data-remote="/VIG/user/loginView.jsp"
+				data-toggle="modal" data-target="#theModal" > login</span>
 				</div>
 			</div>
 		
@@ -294,4 +335,16 @@
 
 
 </body>
+		<div class="modal fade" id="theModal" role="dialog" >
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header"></div>
+							<form action="/VIG/user/login" method="POST">
+							<div class="modal-body"></div>
+								</form>
+							<div class="modal-footer">
+							</div>
+						</div>
+					</div>
+				</div>
 </html>

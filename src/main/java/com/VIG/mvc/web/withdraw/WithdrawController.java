@@ -22,6 +22,7 @@ import com.VIG.mvc.service.domain.Search;
 import com.VIG.mvc.service.domain.User;
 import com.VIG.mvc.service.domain.Withdraw;
 import com.VIG.mvc.service.payment.PaymentServices;
+import com.VIG.mvc.service.user.UserServices;
 import com.VIG.mvc.service.withdraw.WithdrawServices;
 import com.VIG.mvc.web.event.EventController;
 
@@ -44,6 +45,10 @@ public class WithdrawController {
 	
 	@Value("#{commonProperties['pageUnit'] ?: 5}")
 	int pageUnit;
+	
+	@Autowired
+	@Qualifier("userServicesImpl")
+	private UserServices userServices;
 	
 	public WithdrawController() {
 		// TODO Auto-generated constructor stub
@@ -82,6 +87,7 @@ public class WithdrawController {
 		mav.addObject("search", search);
 		mav.addObject("list", list);
 		mav.addObject("possibleAmount", possibleAmount);
+		mav.addObject("writer", userServices.getUserOne(user.getUserCode()));
 		mav.setViewName("forward:/withdraw/getDonationList.jsp");
 		}
 		
@@ -157,6 +163,7 @@ public class WithdrawController {
 				list = withdrawServices.getWithdrawList(search);
 				mav.addObject("resultPage", resultPage);
 				mav.addObject("search", search);
+				mav.addObject("writer", userServices.getUserOne(user.getUserCode()));
 				mav.addObject("list", list);
 				mav.setViewName("forward:/withdraw/getWithdrawList.jsp");
 		}

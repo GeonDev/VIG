@@ -46,14 +46,14 @@
 	
 	#outline {
 	
-		width: 1300px;
+		width: 90%;
 		margin: 70px auto;
 		
 	}
 	
 	#main { 
 		
-		width: 960px;
+		width: 58%;
 		margin: 0 auto;
 		
 	}
@@ -129,7 +129,7 @@
 	border-radius: 23px;
 	background-color: #5CA45B;
 	padding: 3px 3px 3px 9px;
-	
+	cursor: pointer;
 
 	
 	}
@@ -244,7 +244,7 @@ $(function(){
 					dataType: "json",
 					headers : {
 						
-						"Accept" : "applicion/json",
+						"Accept" : "application/json",
 						"Content-Type" : "application/json"
 					},
 
@@ -272,7 +272,7 @@ $(function(){
 					dataType: "json",
 					headers : {
 						
-						"Accept" : "applicion/json",
+						"Accept" : "application/json",
 						"Content-Type" : "application/json"
 					},
 
@@ -308,7 +308,13 @@ $(function(){
 		
 		var obj = new Object();			
 		commentText=$('#textarea-char-counter').val();
-		    
+		
+		if(commentText == ''|| commentText== null){
+			
+			swal("댓글내용을 입력해주세요");
+			return false;
+			
+		}
 			obj.feedId='${feed.feedId}';
 			obj.commentText =commentText;
 		var jsonData = JSON.stringify(obj);
@@ -326,14 +332,11 @@ $(function(){
 						},
 						data : jsonData,
 						   
-						success : function(JSONData, status) {
-							
-							
-						
+						success : function(JSONData, status) {	
 							
 					    var displayValue = 
 						"<div id="+JSONData.commentId+"><img width='25px' style='margin-right:5px' src='/VIG/images/uploadFiles/"+JSONData.user.profileImg+"' class='rounded-circle'><a style='margin-right:9px' href='/VIG/myfeed/getMyFeedList?userCode='"
-								+JSONData.user.userCode+">"+JSONData.user.userName+"</a>"+JSONData.commentText+"<button id= 'deleteCom' class='fas fa-trash' onclick="+"removeComment("+JSONData.commentId+")></button><hr></div>";
+								+JSONData.user.userCode+">"+JSONData.user.userName+"</a>"+JSONData.commentText+"<button id= 'deleteCom' class='btn btn-link' onclick="+"removeComment("+JSONData.commentId+")><i class='fas fa-trash'></i></button><hr></div>";
 							
 					    
 					    $('#textarea-char-counter').val("");
@@ -365,69 +368,50 @@ $(function(){
 	
 	//좋아요 연결
 	$("#like").on("click", function(){
-
 		user = '${sessionScope.user}';
 		if(user==null||user=='') {
 			alert("로그인이 필요합니다.");
-			return false;
-			
+			return false;			
 		}
-
 		
-		//실시간 알람을 보내는 부분
-		sendMessage('${feed.writer.userCode}','${feed.feedId}','0');
+	
 		
-
-		var likeClass = $("#like").attr("class");
-		console.log(likeClass);
-		if(likeClass =='far fa-heart'){
-			
-		$("#like").attr("class", "fas fa-heart");
-		//deleteLike 추가
-		$.ajax(
-				
-				{ url: "/VIG/like/json/addLike?feedId=${feed.feedId}",
-					method : "GET",	
-					dataType: "json",
+		$.ajax( 
+				{
+					url : "/VIG/like/json/addLike/${feed.feedId}",
+					method : "GET",
+					dataType : "Json",					
 					headers : {
-						
-						"Accept" : "applicion/json",
+						"Accept" : "application/json",
 						"Content-Type" : "application/json"
-					},
-					success : function(JSONData, status) {
+					},					
+					success : function(JSONData , status) {
 						
-					alert(status);	
-					
+						//좋아요 카운트를 받아옴
+						$("#like").text(" "+JSONData);
+						
+						if($("#like").attr("class") == 'fas fa-heart'){
+							$("#like").attr("class","far fa-heart");
+							
+							//실시간 알람을 보내는 부분
+							sendMessage('${feed.writer.userCode}','${feed.feedId}','0');
+							
+						}else{
+							$("#like").attr("class","fas fa-heart");
+						}
+						
+						
 					}
-					
-				
-				});
+			});	
 		
-		}else{
-			
-		$("#like").attr("class", "far fa-heart");	
-		//addLike 추가 
-		$.ajax(
-				
-				{ url: "/VIG/like/json/addLike?feedId=${feed.feedId}",
-					method : "GET",	
-					dataType: "json",
-					headers : {
-						
-						"Accept" : "applicion/json",
-						"Content-Type" : "application/json"
-					},
-					success : function(JSONData, status) {
-						
-					alert(status);	
-					
-					}
-					
-				
-				});
-		}
+	
 		
 	});
+	
+	
+	
+	
+	
 	
 	//후원
 	$("#donation").on("click", function(){
@@ -436,7 +420,6 @@ $(function(){
 			  text: "후원하시겠습니까?",
 			  icon: "info",
 			  buttons: true,
-			  dangerMode: true,
 			})
 			.then((willDelete) => {
 			  if (willDelete) {
@@ -607,7 +590,7 @@ function imageModal(imageId){
 
 		<c:if test="${images.isThumbnail == '0'}">
 			<div id="image" onclick='imageModal("${images.imageId}")'>
-			<img src="/VIG/images/uploadFiles/${images.imageFile}" style="width:960px"/>
+			<img src="/VIG/images/uploadFiles/${images.imageFile}" style="width:100%"/>
 			
 									
 				<div class="modal fade bd-example-modal-xl" id="${images.imageId }" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
@@ -629,31 +612,31 @@ function imageModal(imageId){
 	<!-- 작성자 프로필 -->
 	<div class="container">
 	 <div class="row">
-		 <div class="col-md-8">
-		 <span id="profile">
-		<img src="/VIG/images/uploadFiles/${feed.writer.profileImg}" class="rounded-circle" width="35px"> &nbsp; <a id="writerName" href="/VIG/myfeed/getMyFeedList?userCode=${feed.writer.userCode}">${feed.writer.userName}</a>
-		 </span>
-		 </div>
+				 <div class="col-md-8">
+					 <a id="profile" style="font-weight: bold; color: black; font-size: large;" href="/VIG/myfeed/getMyFeedList?userCode=${feed.writer.userCode}">
+					<img src="/VIG/images/uploadFiles/${feed.writer.profileImg}" class="rounded-circle" width="35px"> &nbsp; ${feed.writer.userName}
+					 </a>
+				 </div>
 		 <!-- 팔로우와 후원 -->
-		 <c:if test="${!empty user.role }">
+			<c:if test="${!empty user.role }">
 		
-		    <div class="col-4 dofo" align="left">
-		    	<c:if test="${feed.writer.userCode != user.userCode }">
-		    	<c:if test="${feed.writer.role == 'business' }">
-		    	
-		    	<span id="donation"><i class="fas fa-dollar-sign"></i></span>
-				</c:if>
-				
-				<c:if test="${ isFollow == 0}">
-		    	<button type="button" id="follow" class="btn btn-outline-default btn-rounded" >Follow</button>
-		    	</c:if>
-		    	<c:if test="${ isFollow == 1}">
-		    	<button type="button" id="follow" class="btn btn-default btn-rounded" >following</button>
-		    	</c:if>
-		    	</c:if>
-		    </div>
+			    <div class="col-md-4 dofo" align="left">
+			    	<c:if test="${feed.writer.userCode != user.userCode }">
+			    	<c:if test="${feed.writer.role == 'business' }">
+			    	
+			    	<p id="donation"><i class="fas fa-dollar-sign"></i></p>
+					</c:if>
+					
+					<c:if test="${ isFollow == 0}">
+			    	<button type="button" id="follow" class="btn btn-outline-default btn-rounded" >Follow</button>
+			    	</c:if>
+			    	<c:if test="${ isFollow == 1}">
+			    	<button type="button" id="follow" class="btn btn-default btn-rounded" >following</button>
+			    	</c:if>
+			    	</c:if>
+			    </div>
 		    
-		  </c:if>
+		  	</c:if>
 	  </div>
 </div>
 	<hr/>
@@ -661,9 +644,9 @@ function imageModal(imageId){
 	<div class="container">
 	 <div class="row">
 		<div class="col-md-8">
-		<div style="font-size: 25px; font-weight: bold"> Comments </div>
+		<div style="font-size: 150%; font-weight: bold"> Comments </div>
 		<div class="row">
-		<div class="col-md-10" id="comform">
+		<div class="col-md-9" id="comform">
 		<form id="myform">
 			<div class="md-form">
 			  <textarea id="textarea-char-counter" class="form-control md-textarea" length="500" rows="2"></textarea>
@@ -671,9 +654,9 @@ function imageModal(imageId){
 			</div>
 		</form>
 		</div>
-		<div class="col-md-2" align="right" id="combutton">
+		<div class="col-md-3 " align="right" id="combutton">
 		<br>
-		<button type="submit" class="btn btn-indigo">등록</button>
+		<button type="button" class="btn btn-dark" style="white-space:normal">등록</button>
 		</div>
 		</div>
 
@@ -689,7 +672,9 @@ function imageModal(imageId){
 			<img width="25px"src="/VIG/images/uploadFiles/${comments.user.profileImg }" style="margin-right:5px" class="rounded-circle"><a href="/VIG/myfeed/getMyFeedList?userCode=${comments.user.userCode}">${ comments.user.userName}</a>
 			 ${comments.commentText}  
 			 <c:if test="${user.userCode == comments.user.userCode}">
-			 <button id= "deleteCom" class="fas fa-trash" onclick="removeComment('${comments.commentId}')"></button>
+				 <button id = "deleteCom" class="btn btn-link" onclick="removeComment('${comments.commentId}')">
+				 	<i class="fas fa-trash"></i>
+				 </button>
 			 </c:if>
 
 			 <hr>
@@ -783,7 +768,7 @@ function imageModal(imageId){
 	
 					
 						<div id="tag" style=" border: 1px solid #C2C3C2; margin: 3px 1px 3px 1px; padding: 1px 3px 1px 3px; display: inline-block; border-radius: 5px;">
-					    <a style="color: black; font-size: 13px;" href="/VIG/search/getSearchList?Mode=Feed&keyword=${keyword.keywordOrigin}">${keyword.keywordOrigin}</a>
+					    <a style="color: black; font-size: 12%;" href="/VIG/search/getSearchList?Mode=Feed&keyword=${keyword.keywordOrigin}">${keyword.keywordOrigin}</a>
 						</div>
 	
 					</c:if>

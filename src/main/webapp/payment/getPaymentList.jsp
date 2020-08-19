@@ -34,11 +34,12 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 	<!--  아임포트 결제 구현  -->
 	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-	
+	<!-- 알러트 -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
 <style>
 	
-	body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}
+	body {padding-top : 100px;}
     h1 { margin-left: 100px;}  
     
     /*사이드바,본문 배치css*/
@@ -58,6 +59,7 @@
 		
 	
 	}
+	
 	
 
 
@@ -101,11 +103,26 @@
  function fncdeletepay(paymentId){
 	 
 
-	 swal("결제를 취소합니다.");
+		swal({
+			  text: "결제를 취소하시겠습니까?",
+			  icon: "info",
+			  buttons: true,
+			})
+			.then((willDelete) => {
+			  if (willDelete) {
+
+				 swal({text: "완료되었습니다.",
+					  icon: "info",}) 
+				  self.location="/VIG/payment/cancelPayment?paymentId="+paymentId;
+				  
+			  } else {
+			    
+			  }
+			});
 	 
 	 //아임포트 ajax 환불하는 곳
 	 
-	 self.location="/VIG/payment/cancelPayment?paymentId="+paymentId;
+	 
 	 
  }
  
@@ -143,33 +160,13 @@ function funcGetList(currentPage) {
 				<h1> 내 결제 목록 </h1>
 				<hr>
 				
+
 	
-	<div class="row justify-content-end" style="margin: 45px 10px 27px 10px;">		
-		<!-- <div class="box_body_m" style="margin-right: 200px;">
-					 <div class="wrap_m">
-						<a id="btn_ch_m" class="btn3" data-toggle="modal" data-target="#theModal">팔로워</a>
-						<a id="btn_ch_m" class="btn3" data-toggle="modal" data-target="#theModal2">팔로잉</a>
-						<a id="btn_ch_m" class="btn3" href="#">채 팅</a>
-					</div>	 			
-				</div>   	
-		 -->
-						
-					<div class="input-group md-form form-sm form-1 pl-0 col-3">
-					  <div class="input-group-prepend">
-					   <i class="fas fa-search" class="fas fa-search text-white" aria-hidden="true"></i>
-					  <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" aria-label="Search">
-					  </div>
-					</div>	
+	
+			<div class="container">
 					
-					
-				</div>
-	
-	
-	<div class="row" style="flex-wrap: wrap;margin-right: 40px;margin-left: 50px;">
-		
-						<table class="table table-hover table-striped" >
-				
-				        <thead class="grey lighten-2">
+					<table class="table">
+					  <thead>
 						    <tr>
 						      <th scope="col">결제번호</th>
 						      <th scope="col">결제자</th>
@@ -219,10 +216,12 @@ function funcGetList(currentPage) {
 									<c:if test="${payment.isCancel == '0' }">
 									<c:if test="${payment.isWithdraw == '0' }">
 									<c:if test="${payment.productType!='1' }">
+									<c:if test="${payment.productType!='0' }">
 									<button class="btn blue-gradient" onclick="fncdeletepay('${payment.paymentId}')" >결제취소</button>
 									</c:if>
 									</c:if>
-									<c:if test="${payment.isWithdraw == '1' || payment.productType == '1' }">
+									</c:if>
+									<c:if test="${payment.isWithdraw == '1' || payment.productType == '1' || payment.productType=='0' }">
 										취소불가
 									</c:if>
 									</c:if>
@@ -239,6 +238,10 @@ function funcGetList(currentPage) {
 						
 						</tbody>
 						</table>
+						<c:if test="${empty list}">
+						<p style="text-align:center; font-weight: bold; height: 30px">결제내역이 없습니다.</p>
+						</c:if>
+						<hr>		
 								<form method="POST">
 								
 										<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
@@ -251,8 +254,8 @@ function funcGetList(currentPage) {
 				<div class="row justify-content-md-center">
 					<jsp:include page="../common/pageNavigator.jsp"/>
 				</div>
+			</div>
 </div>
-
 
 </body>
 </html>

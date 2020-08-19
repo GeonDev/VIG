@@ -47,13 +47,13 @@ public class FollowDaoImpl implements FollowDao {
 	}
 
 	@Override
-	public List<User> getFollowerList(String userCode) throws Exception {
+	public List<Follow> getFollowerList(String userCode) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("FollowMapper.getFollowerList", userCode);
 	}
 
 	@Override
-	public List<User> getFollowingList(String userCode) throws Exception {
+	public List<Follow> getFollowingList(String userCode) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("FollowMapper.getFollowingList", userCode);
 	}

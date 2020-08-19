@@ -98,7 +98,7 @@
 		
 		$.ajax( 
 				{
-					url : "/VIG/search/json/getSearchSammImage",
+					url : "/VIG/search/json/getSearchSameImage",
 					method : "POST",
 					dataType : "Json",					
 					headers : {
@@ -141,7 +141,7 @@
    			
 	
 			$(window).scroll(function() {
-			    if ($(window).scrollTop() + 500 >= $(document).height() - $(window).height()) {     			     
+			    if ($(window).scrollTop() + 600 >= $(document).height() - $(window).height()) {     			     
 			    	getImageItemList();	   			    	
 			    }
 			});	

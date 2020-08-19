@@ -30,7 +30,7 @@
 	<!--  sweet Alert -->
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<!--  socket.io -->
-	<script src="http://192.168.0.13:3000/socket.io/socket.io.js"></script>
+	<script src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
 	
 	<style type="text/css">
 	 body {
@@ -90,7 +90,7 @@
 	 
 	 span.msg-body {
 		 width: 150px;
-		 font-size: 10px;
+		 font-size: 100%;
 		 
 	 }
 	 .innermedia {
@@ -104,7 +104,6 @@
 	 
 	 border-radius: 3px 3px 3px 3px;
 	 margin: 5px auto;
-	 margin-bottom:
 	 padding-top: 8px;
 	 padding-left: 8px;
 	 padding-right: 12px;
@@ -131,7 +130,7 @@
 	var diplayValue;
 	var user;
 	var dbuser; //db에서 가져온 유저
-	var url = "http://192.168.0.13:3000/";
+	var url = "http://127.0.0.1:3000/";
 	
 	var socketUser = new Object(); //socket으로 주고 받을 유저 생성
 	var otherUser = new Object();
@@ -392,10 +391,20 @@
 						 
 					});
 
+					socket.on('add user', function(results){
+						
+						getChatList(socketUser);
+						
+					});
+					
+					socket.on('err messege', function(){
+						
+						swal("이미 존재하지 않는 채팅방입니다.");
+						$("#chatPlace").hide();
+						getChatList(socketUser);
+						
+					});
 				
-				
-				
-
 					
 				
 					//유저 선택하고, 메세지 보내기를 누르면  roomCreate
@@ -408,7 +417,7 @@
 						
 						if(dbuser == null || dbuser == ''){
 							
-							swal("없는 유저입니다.");
+							swal("존재하지 않는 유저입니다.");
 							$("#userselect").val("");
 							return false;
 							
@@ -435,7 +444,8 @@
 							"<p style='display: inline-block; margin: 3px auto; font-weight: bold'>"+dbuser.userName+"</p>("+dbuser.userCode+")</div>"
 							
 							$("#userselect").val("");
-							$(".user_list").append(chatUser);
+							//$(".user_list").append(chatUser);
+							getChatList(socketUser);
 							getChat(userinfo);
 							
 						});
@@ -447,7 +457,7 @@
 						
 						swal({
 							  title: "Are you sure?",
-							  text: "그동안의 메세지가 모두 지워집니다. 삭제하시겠습니까?",
+							  text: "채팅방이 사라집니다. 삭제하시겠습니까?",
 							  icon: "warning",
 							  buttons: true,
 							  dangerMode: true,
@@ -457,7 +467,7 @@
 								 
 								  deleteChat();
 								  
-							    swal("Poof! Your imaginary file has been deleted!", {
+							    swal("Your Chatting has been deleted!", {
 							      icon: "success",
 							    });
 							  } else {
@@ -549,7 +559,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-8">
-				<h1 style="text-align:left">Message</h1>
+				<h1 style="text-align:left; font-weight: bold">VIG CHAT</h1>
 			</div>
 			<div class="col-4"  >
 				<div style="text-align: right; vertical-align:text-bottom;" >
@@ -567,7 +577,7 @@
 	<hr>
 		<div class="row">
 			<div class="col-3">
-				<h4 Style="margin-top: 10px"> 받은 메세지 </h4>
+				<h4 Style="margin-top: 10px; "> 참여중인 채팅 </h4>
 				<div class="user_list">
 
 				</div>
@@ -575,7 +585,7 @@
 			</div>
 			<div class="col-9 chatpart" >
 			
-				<h3 style="text-align:center; margin-top: 60px; color: gray;"> 선택된 메세지가 없습니다.</h3>
+				<h3 style="text-align:center; margin-top: 60px; color: gray;"> 선택된 채팅방이 없습니다.</h3>
 				<div id="chatPlace">
 					<div class="row">
 					

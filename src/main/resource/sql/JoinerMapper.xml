@@ -27,6 +27,11 @@
 			WHERE feed_id = #{value} AND is_like = 1	
 		</select>
 		
+		<select id="getLikeUserCount" parameterType="int" resultType="int" >
+			SELECT COUNT(joiner_id) FROM joiner
+			WHERE feed_id = #{value} AND is_like = 1	
+		</select>
+				
 		<select id="getCoworkUser" parameterType="int" resultMap="joinerSelectMap" >
 			SELECT * FROM joiner
 			WHERE feed_id = #{value} AND is_like = 0	

@@ -285,8 +285,7 @@ public class RestSearchController {
 		//로그인한 유저 정보를 받아옴
 		User user = (User)session.getAttribute("user");
 		
-		logger.debug("전달된 키워드 : "+ jsonData.get("keyword") );
-		
+		logger.debug("전달된 키워드 : "+ jsonData.get("keyword") );		
 		
 		//피드 검색
 		if(jsonData.get("mode").equals("Feed")) {
@@ -465,7 +464,7 @@ public class RestSearchController {
 	
 	
 	//이미지 자세히 보기 
-	@RequestMapping(value = "json/getSearchSammImage")
+	@RequestMapping(value = "json/getSearchSameImage")
 	public Map<String, Object> getSearchSameImageList(@RequestBody Map<String, String> jsonData, HttpSession session, @CookieValue(value = "searchKeys", defaultValue = "", required = false) String searchKeys ) throws Exception {		
 		
 		//연산 결과를 저장할 맵 생성
@@ -671,8 +670,8 @@ public class RestSearchController {
 		if(!keyword.contains(" ")) {
 			logger.debug("저장된 쿠키 값  : " +keyword);		
 			Cookie cookie = new Cookie("searchKeys", keyword );
-			//1시간 유지
-			cookie.setMaxAge(60*60);
+			//30분 유지
+			cookie.setMaxAge(60*30);
 			cookie.setPath("/VIG/");
 			response.addCookie(cookie);				
 		}else {
@@ -680,7 +679,7 @@ public class RestSearchController {
 		}
 	
 		
-	}
+	}	
 
 
 }
