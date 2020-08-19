@@ -66,7 +66,6 @@ CREATE TABLE colors (
 	color_r 				 TINYINT(4)  UNSIGNED,
 	color_g 				 TINYINT(4)  UNSIGNED,
 	color_b 				 TINYINT(4)  UNSIGNED,
-	color_ratio				 FLOAT(5,5),
 	PRIMARY KEY(color_id)
 );
 

@@ -14,9 +14,6 @@ public class ImageColor implements Serializable{
 	private int green;
 	private int blue;
 	
-	//이미지에서 해당 색이 차지하는 비율
-	private float ratio;	
-	
 	private String haxcode;
 	
 	public ImageColor() {}	
