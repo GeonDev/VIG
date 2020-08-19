@@ -37,14 +37,14 @@
 	
 	#outline {
 	
-		width: 1300px;
+		width: 70%;
 		margin: 0 auto;
 	
 	}
 	
 	#main { 
 		
-		width: 960px;
+		width: 75%;
 		margin: 0 auto;
 		align: center;
 		
@@ -52,7 +52,7 @@
 	
 	#inline {
 		
-		width: 1500px;
+		width: 100%;
 		margin: 0 auto;
 
 	
@@ -90,6 +90,12 @@
 	margin: 0px;
 	padding: 5px 5px 5px 5px;
 	display: inline-block;
+	
+	}
+	
+	#eventFeeds {
+	
+		margin-bottom: 10%;
 	
 	}
 
@@ -190,7 +196,7 @@ $(function(){
 
 	<!--  이벤트 본문 -->
 	<hr/>
-		<img id="evimg" src="/VIG/images/others/${event.eventImage}" style="width:960px" class="img-rounded"/>
+		<img id="evimg" src="/VIG/images/others/${event.eventImage}" style="width:100%" class="img-rounded"/>
 	<hr/>
 	<br/>
 	
@@ -227,7 +233,7 @@ $(function(){
 			</c:if>
 			<c:if test="${!empty feedList }">
 			<div class="container">
-			<div class="row">
+			<div class="row" id="eventFeeds">
 
 					
 						<c:forEach var="feeds" items="${feedList}">

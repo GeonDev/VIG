@@ -68,7 +68,7 @@
 	$( function() {
 		$("#googlelogin").on("click" , function() {
 			location.href="https://accounts.google.com/o/oauth2/auth?client_id="+
-			"82747934090-ljsrvma8goa9dskv7hchor1mt2atl1ao.apps.googleusercontent.com"+
+			"153642235365-kg8rl6mmbhk7rh4tuefg790id1llegd1.apps.googleusercontent.com"+
 			"&redirect_uri="+
 			"http://localhost:8080/VIG/user/googleLogin" +
 			"&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email&approval_prompt=force&access_type=offline";				
@@ -87,17 +87,18 @@
 </head>
 <body>
 
-<form action="/VIG/user/login" method="POST">
+
+<form action="/VIG/user/login" method="POST" style="width: fit-content; margin: auto;">
 	<div class="lodin_modal">
 	<div class="container-fluid" id="login_container">	
 	
-		<div class="text-center border border-light p-5">
+		<div class="text-center ">
   			<div class="row" id="top_title">
    			 <p class="h4 mb-6">Login</p>
    			</div>
 			
     <!-- id -->
-	    <input type="text" id="userCode" name="userCode" class="form-control mb-5" placeholder="id" required>
+	    <input type="text" id="userCode" name="userCode" class="form-control mb-4" placeholder="id" required>
 	    <span class="glyphicon glyphicon-ok form-control-feedback"></span>
 
     <!-- Password -->

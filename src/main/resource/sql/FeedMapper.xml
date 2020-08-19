@@ -107,6 +107,9 @@
 			<if test="keyword !=''">
 			AND UPPER(keywords.keyword_en) LIKE CONCAT('%',#{keyword},'%')				
 			</if>
+			<if test="searchType != 0">
+			AND	feeds.category_id = #{searchType}	
+			</if>
 			GROUP BY feeds.feed_id
 			ORDER BY feeds.prime_feed_view_count
 			limit 3	
@@ -122,6 +125,9 @@
 			AND users.prime_count > 0
 			<if test="keyword !=''">
 			AND feeds.feed_title LIKE CONCAT('%',#{keyword},'%')				
+			</if>
+			<if test="searchType != 0">
+			AND	feeds.category_id = #{searchType}	
 			</if>		
 			ORDER BY feeds.prime_feed_view_count
 			limit 3 	

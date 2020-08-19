@@ -35,6 +35,9 @@
  	<script src="/VIG/javascript/jquery.tagsinput-revisited.js"></script>
 	
 	<link rel="stylesheet" href="/VIG/css/jquery.tagsinput-revisited.css">
+	
+	<!-- 알러트 -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 	
 <style>
@@ -79,6 +82,32 @@ $(function(){
 	
 	$("button:contains('등록')").on('click', function(){
 		
+		if($("input[name='eventTitle']").val()==''){
+			
+			swal("제목을 입력해주세요");
+			return false;
+		}
+		if($("input[name='eventSub']").val()==''){
+			
+			swal("내용을 입력해주세요");
+			return false;
+		}
+		if($("input[name='eventTags']").val()==''){
+			
+			swal("태그를 입력해주세요");
+			return false;
+		}
+		if($("input[name='eventStart']").val()==''){
+					
+			swal("시작일을 설정해주세요");
+			return false;
+		}
+		if($("input[name='eventEnd']").val()==''){
+			
+			swal("종료일을 설정해주세요");
+			return false;
+		}
+
 		$(".myform").attr("method", "post").attr("action", "./addEvent").attr( "enctype","multipart/form-data").submit();
 			
 	});

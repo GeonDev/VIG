@@ -82,4 +82,11 @@ public class HistoryDaoImpl implements HistoryDao {
 		return sqlSession.selectOne("HistoryMapper.getfeedHistoryPrimeDateCount", keys);
 	}
 
+
+	@Override
+	public History checkHistory(History history) throws Exception {	
+		
+		return sqlSession.selectOne("HistoryMapper.checkHistory", history);	
+	}
+
 }

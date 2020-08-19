@@ -39,12 +39,12 @@
 <style>
 	 
 	
-	 body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}	
-		h1 { margin-left: 100px;}
+		 body { padding-top : 100px;}	
+		 h1 { margin-left: 100px;}
 		/*사이드바,본문 배치css*/
-	 .col-md-2.sideBarPlace { padding:0;  display: inline-block;float:left;}
-	 #mainMyFeedPage { margin-left: 0px;  display: inline-block; float:right;}
-	 
+		 .col-md-2.sideBarPlace { padding:0;  display: inline-block;float:left;}
+		 #mainMyFeedPage { margin-left: 0px;  display: inline-block; float:right;}
+	 	.col-md-12 { margin-bottom: 50px;}
 	 
         #myFeedMain { padding: 70px;}
         .col-md-12_top {	width: 100%; height: 100%; position: relative; margin:50px; }

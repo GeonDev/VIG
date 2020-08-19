@@ -85,6 +85,12 @@ public class LikeServicesImpl implements LikeServices {
 		return lastKey;
 	}
 
+	@Override
+	public int getLikeCount(int feedId) throws Exception {
+		// TODO Auto-generated method stub
+		return likeDao.getLikeCount(feedId);
+	}
+
 
 
 }

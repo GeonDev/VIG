@@ -124,7 +124,7 @@ public class mainController {
 	
 	
 	
-	
+	//최소 세팅시만 실행하는 함수
 	@RequestMapping("setImage")
 	public ModelAndView setImageKeyword() throws Exception {		
 	
@@ -136,11 +136,7 @@ public class mainController {
 		
 		List<Image> imagelist = new ArrayList<Image>();		
 		//저장되어 있는 모든 이미지를 불러옴		
-		imagelist = imageServices.getALLImageList();
-		
-		//비전 정보 + 쓰레드 동작을 위한 비전 배열
-		ArrayList<VisionInfo> visions = new ArrayList<VisionInfo>();
-			
+		imagelist = imageServices.getALLImageList();			
 		
 		List<User>list = userServices.getAllUserList();
 		
@@ -158,32 +154,92 @@ public class mainController {
 		logger.debug("이미지 정보 추출 시작");		
 		long Totalstart = System.currentTimeMillis();
 				
-		for(Image image :imagelist) {					
-			VisionInfo vision = new VisionInfo(path + image.getImageFile(), image.getImageId());
-			vision.start();			
-			visions.add(vision);
-		}
-		
-		//생성된 쓰래드를 연결하여 모든 쓰레드가 완료 될때 까지 기다림
-		for (VisionInfo vision : visions) {			
-			vision.join();
-		}		
-		logger.debug("쓰레드 실행 완료 / DB 저장 시작");	
-		
-		//쓰래드 실행이 완료 된 이후 DB에 데이터 삽입
-		for (VisionInfo vision : visions) {			
-			for(ImageKeyword keyword : vision.getKeywords()) {
-				keywordServices.addKeyword(keyword);
+		//비전의 분당 최대 요청량 => 요청량이 1800이 넘을 경우 별도 처리
+		if(imagelist.size()*5 >1800) {
+			
+			//나누어 요청해야 되는 횟수
+			int imageGroup = (int)Math.ceil(imagelist.size()/350);
+			
+			for(int i =1; i<= imageGroup; i++) {
+				
+				//비전 정보 + 쓰레드 동작을 위한 비전 배열
+				ArrayList<VisionInfo> visions = new ArrayList<VisionInfo>();
+
+				
+				for(int j = (i-1)*350; j<(350*i)-1; j++) {
+					if(j< imagelist.size()) {						
+						VisionInfo vision = new VisionInfo(path + imagelist.get(j).getImageFile(), imagelist.get(j).getImageId());
+						vision.start();			
+						visions.add(vision);
+					} 					
+				}
+				
+				//생성된 쓰래드를 연결하여 모든 쓰레드가 완료 될때 까지 기다림
+				for (VisionInfo vision : visions) {			
+					vision.join();
+				}	
+				
+				//쓰래드 실행이 완료 된 이후 DB에 데이터 삽입
+				for (VisionInfo vision : visions) {			
+					
+					for(ImageKeyword keyword : vision.getKeywords()) {				
+						keywordServices.addKeyword(keyword);
+					}
+					
+					for(ImageColor color : vision.getColors()) {
+						colorServices.addColor(color);
+					}			
+				}
+				
+				//1동안 멈춤
+				logger.debug("VISION Request 할당량으로 인해 1분간 정지");	
+				Thread.sleep(60000);
+				logger.debug("이미지 정보 추출 재시작");	
+	
+			}			
+			
+			
+			long Totalend = System.currentTimeMillis();		
+			logger.debug("이미지 정보 추출 완료 / 총 추출 시간 : " + getTotalWorkTime(Totalstart, Totalend)+"초");				
+			return new ModelAndView("forward:/common/alertView.jsp", "message", "세팅 완료");
+			
+		}else {
+			
+			//비전 정보 + 쓰레드 동작을 위한 비전 배열
+			ArrayList<VisionInfo> visions = new ArrayList<VisionInfo>();
+
+			
+			for(Image image : imagelist) {					
+				VisionInfo vision = new VisionInfo(path + image.getImageFile(), image.getImageId());
+				vision.start();			
+				visions.add(vision);
 			}
 			
-			for(ImageColor color : vision.getColors()) {
-				colorServices.addColor(color);
-			}			
-		}
+			//생성된 쓰래드를 연결하여 모든 쓰레드가 완료 될때 까지 기다림
+			for (VisionInfo vision : visions) {			
+				vision.join();
+			}		
+			logger.debug("쓰레드 실행 완료 / DB 저장 시작");	
+			
+			//쓰래드 실행이 완료 된 이후 DB에 데이터 삽입
+			for (VisionInfo vision : visions) {			
+				
+				for(ImageKeyword keyword : vision.getKeywords()) {				
+					keywordServices.addKeyword(keyword);
+				}
+				
+				for(ImageColor color : vision.getColors()) {
+					colorServices.addColor(color);
+				}			
+			}
+			
+			long Totalend = System.currentTimeMillis();		
+			logger.debug("이미지 정보 추출 완료 / 총 추출 시간 : " + getTotalWorkTime(Totalstart, Totalend)+"초");				
+			return new ModelAndView("forward:/common/alertView.jsp", "message", "세팅 완료");
+			
+		} 
 		
-		long Totalend = System.currentTimeMillis();		
-		logger.debug("이미지 정보 추출 완료 / 총 추출 시간 : " + getTotalWorkTime(Totalstart, Totalend)+"초");				
-		return new ModelAndView("forward:/common/alertView.jsp", "message", "세팅 완료");
+
 		
 		}else {
 			return new ModelAndView("forward:/common/alertView.jsp", "message", "데이터가 이미 있습니다.");

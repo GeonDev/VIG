@@ -70,9 +70,6 @@ body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}
 	 }
 	
 	
-	 body {
-    	padding-top : 50px;
-        }
    
 	
 </style>
@@ -82,7 +79,7 @@ body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}
 	<!-- 툴바 -->
 			<div class="container-fluid">	
 				<div class="row">
-					<div class="col-md-12">
+					<div class="col-md-12" style="margin-bottom: 50px;">
 						<jsp:include page="/main/toolbar.jsp" />
 					</div>
 			</div>
@@ -95,7 +92,7 @@ body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}
 <!-- 타이틀 -->
 <div class="col-md-10" id="mainMyFeedPage" >					
 					<h1>
-						<strong>통계페이지</strong> 
+						통계페이지
 					</h1>	
 					<hr/>
 						<br>

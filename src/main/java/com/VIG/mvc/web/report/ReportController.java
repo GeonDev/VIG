@@ -70,14 +70,21 @@ public class ReportController {
 		reportService.addReport(report);		
 		
 		return new ModelAndView("forward:/common/alertView.jsp", "message", "신고가 접수 되었습니다.");
-	}
-	
-	
-	
+	}	
 	
 	
 	@RequestMapping("getReportList")
-	public ModelAndView getReportList(@ModelAttribute("search") Search search) throws Exception { 
+	public ModelAndView getReportList(@ModelAttribute("search") Search search, HttpSession session) throws Exception { 
+		
+		User admin = (User)session.getAttribute("user");		
+		
+		if(admin == null) {					
+			return new ModelAndView("forward:/common/alertView.jsp", "message", "로그인이 필요합니다.");
+				
+		}else if(!admin.getRole().equals("admin")) {
+			return new ModelAndView("forward:/common/alertView.jsp", "message", "관리자만 조회 가능합니다.");
+		}	
+		
 		
 		// 현재 페이지값이 없으면 첫번째 페이지로 설정
 		if (search.getCurrentPage() == 0) {
@@ -102,12 +109,27 @@ public class ReportController {
 		modelAndView.addObject("list", reportService.getReportList(search));
 		modelAndView.addObject("resultPage", resultPage);
 		modelAndView.addObject("search", search);
+		
+		//사이드바 프로필 그리기용 데이터
+		modelAndView.addObject("writer", admin);
 
 		return modelAndView;
 	}	
 	
 	@RequestMapping("getReportListFromUser")
-	public ModelAndView getReportListFromUser(@ModelAttribute("search") Search search, @RequestParam("userCode") String userCode) throws Exception { 
+	public ModelAndView getReportListFromUser(@ModelAttribute("search") Search search, @RequestParam("userCode") String userCode, HttpSession session) throws Exception { 
+		
+		
+		User admin = (User)session.getAttribute("user");		
+		
+		if(admin == null) {					
+			return new ModelAndView("forward:/common/alertView.jsp", "message", "로그인이 필요합니다.");
+				
+		}else if(!admin.getRole().equals("admin")) {
+			return new ModelAndView("forward:/common/alertView.jsp", "message", "관리자만 조회 가능합니다.");
+		}
+		
+		
 		
 		// 현재 페이지값이 없으면 첫번째 페이지로 설정
 		if (search.getCurrentPage() == 0) {
@@ -130,6 +152,9 @@ public class ReportController {
 		modelAndView.addObject("list", reportService.getReportListFromUser(search));
 		modelAndView.addObject("resultPage", resultPage);
 		modelAndView.addObject("search", search);
+		
+		//사이드바 프로필 그리기용 데이터
+		modelAndView.addObject("writer", admin);
 
 		return modelAndView;
 	}

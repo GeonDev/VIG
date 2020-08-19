@@ -31,6 +31,20 @@ public class HistoryServicesImpl implements HistoryServices {
 	@Override
 	public void addHistory(History history) throws Exception {
 		// TODO Auto-generated method stub
+		
+		//일반 피드 열람 시 
+		if(history.getHistoryType() == 0 && history.getWatchUser() != null) {
+		
+			History check =  historyDao.checkHistory(history);
+			
+			//이전에 같은 피드를 본 기록이 있다면 삭제
+			if(check != null) {
+				historyDao.deleteHistory(check.getHistoryId());
+			}			
+			
+		}
+		
+		//새로운 히스토리 기록으로 갱신
 		historyDao.addHistory(history);
 		
 	}
