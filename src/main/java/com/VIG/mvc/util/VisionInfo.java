@@ -61,7 +61,6 @@ public class VisionInfo extends Thread {
 	}
 	
 	
-	
 	//이미지의 키워드를 추출하는 함수
 	private void getKeywordForVision() {			
 		requestVision(Type.TEXT_DETECTION);
@@ -122,8 +121,7 @@ public class VisionInfo extends Thread {
 		
 		imageColor.setRed((int) (color.getColor().getRed()/colorRange)*colorRange);		
 		imageColor.setGreen((int)(color.getColor().getGreen()/colorRange)*colorRange);
-		imageColor.setBlue((int)(color.getColor().getBlue()/colorRange)*colorRange);
-		imageColor.setRatio(Math.round(color.getPixelFraction()*1000)/1000);		
+		imageColor.setBlue((int)(color.getColor().getBlue()/colorRange)*colorRange);	
 		
 		String haxcode ="#";		
 		haxcode += CommonUtil.getHaxcode((int) (color.getColor().getRed()/colorRange)*colorRange);
