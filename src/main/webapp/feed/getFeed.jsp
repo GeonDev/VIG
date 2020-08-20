@@ -342,6 +342,9 @@ $(function(){
 					    $('#textarea-char-counter').val("");
 					    $("#emptyCom").remove();
 					    $('#commentbox').append(displayValue);
+					    
+						//알람 전송
+						sendMessage('${feed.writer.userCode}','${feed.feedId}','1');
 						}
 						
 					
@@ -390,17 +393,17 @@ $(function(){
 						//좋아요 카운트를 받아옴
 						$("#like").text(" "+JSONData);
 						
-						if($("#like").attr("class") == 'fas fa-heart'){
-							$("#like").attr("class","far fa-heart");
-							
-							//실시간 알람을 보내는 부분
-							sendMessage('${feed.writer.userCode}','${feed.feedId}','0');
+						//하트를 누른상태였다면
+						if($("#like").attr("class") == 'fas fa-heart'){				
+
+							//하트를 끈다
+							$("#like").attr("class","far fa-heart");								
 							
 						}else{
+							//알람 전송
+							sendMessage('${feed.writer.userCode}','${feed.feedId}','0');
 							$("#like").attr("class","fas fa-heart");
-						}
-						
-						
+						}						
 					}
 			});	
 		
