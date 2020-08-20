@@ -125,7 +125,7 @@ public class FeedController {
             path +=  uploadPath;           
         }else {
         	//실제 톰켓 데이터가 저장되는 경로를 가리킨다.
-        	path +=  realPath;
+        	path =  realPath;
         }
         
        

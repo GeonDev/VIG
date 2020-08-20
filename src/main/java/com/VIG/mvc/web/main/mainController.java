@@ -44,6 +44,7 @@ public class mainController {
 	
 	public static final Logger logger = LogManager.getLogger(mainController.class); 
 	
+	private static String OS = System.getProperty("os.name").toLowerCase();
 	
 	@Autowired 
 	@Qualifier("userServicesImpl")
@@ -90,6 +91,9 @@ public class mainController {
 	@Value("#{commonProperties['uploadPath']}")
 	String uploadPath;
 	
+	@Value("#{commonProperties['realPath']}")
+	String realPath;
+	
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
 	
@@ -130,9 +134,16 @@ public class mainController {
 	
 		if(keywordServices.getKeywordAllCount() == 0) {	
 		
-		String path = context.getRealPath("/");        
-	    path = path.substring(0,path.indexOf("\\.metadata"));
-	    path = path +  uploadPath; 
+		String path = context.getRealPath("/");   
+		
+        if(OS.contains("win")) {
+        	//워크스페이스 경로를 받아온다.
+            path = path.substring(0,path.indexOf("\\.metadata"));         
+            path +=  uploadPath;           
+        }else {
+        	//실제 톰켓 데이터가 저장되는 경로를 가리킨다.
+        	path =  realPath;
+        }
 		
 		List<Image> imagelist = new ArrayList<Image>();		
 		//저장되어 있는 모든 이미지를 불러옴		
