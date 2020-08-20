@@ -31,10 +31,16 @@ import com.VIG.mvc.service.domain.Search;
 @RequestMapping("/event/*")
 public class EventController {
 	
-	public static final Logger logger = LogManager.getLogger(EventController.class); 
+	public static final Logger logger = LogManager.getLogger(EventController.class);
+	
+	private static String OS = System.getProperty("os.name").toLowerCase();
+	
 	
 	@Value("#{commonProperties['otherPath']}")
 	String otherPath;
+	
+	@Value("#{commonProperties['otherPath']}")
+	String realOtherPath;
 	
 	@Autowired
 	@Qualifier("eventServicesImpl")
@@ -77,10 +83,17 @@ public class EventController {
 		
 		System.out.println(event);
 		
-        String path = context.getRealPath("/");        
-        path = path.substring(0,path.indexOf("\\.metadata"));         
-        path = path +  otherPath;  
-        System.out.println(files);
+        String path = context.getRealPath("/"); 
+        
+        
+        if(OS.contains("win")) {
+        	//워크스페이스 경로를 받아온다.
+            path = path.substring(0,path.indexOf("\\.metadata"));         
+            path +=  otherPath;           
+        }else {
+        	//실제 톰켓 데이터가 저장되는 경로를 가리킨다.
+        	path =  realOtherPath;
+        }
 		
 		if(files !=null) {
 			int i = 0;
