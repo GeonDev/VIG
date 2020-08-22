@@ -5065,4 +5065,100 @@ alarm(alarm_id, send_user_code, receive_user_code, is_watch, like_feed_id, alarm
 VALUES(alarm_id, 'user02', 'user01', 0, 20000, 0, DATE_FORMAT(NOW(), '%Y-%m-%d'));
 
 
+INSERT INTO 
+keywords(keyword_id, image_id, is_tag, keyword_en, keyword_origin, keyword_score)
+VALUES(keyword_id, 30150, 1, 'TWICE','TWICE', 0.0);
+
+INSERT INTO 
+keywords(keyword_id, image_id, is_tag, keyword_en, keyword_origin, keyword_score)
+VALUES(keyword_id, 30151, 1, 'TWICE','TWICE', 0.0);
+
+INSERT INTO 
+keywords(keyword_id, image_id, is_tag, keyword_en, keyword_origin, keyword_score)
+VALUES(keyword_id, 30152, 1, 'TWICE','TWICE', 0.0);
+
+INSERT INTO 
+keywords(keyword_id, image_id, is_tag, keyword_en, keyword_origin, keyword_score)
+VALUES(keyword_id, 30153, 1, 'TWICE','TWICE', 0.0);
+
+INSERT INTO 
+keywords(keyword_id, image_id, is_tag, keyword_en, keyword_origin, keyword_score)
+VALUES(keyword_id, 30154, 1, 'TWICE','TWICE', 0.0);
+
+INSERT INTO 
+keywords(keyword_id, image_id, is_tag, keyword_en, keyword_origin, keyword_score)
+VALUES(keyword_id, 30155, 1, 'TWICE','TWICE', 0.0);
+
+INSERT INTO 
+keywords(keyword_id, image_id, is_tag, keyword_en, keyword_origin, keyword_score)
+VALUES(keyword_id, 30156, 1, 'TWICE','TWICE', 0.0);
+
+INSERT INTO 
+keywords(keyword_id, image_id, is_tag, keyword_en, keyword_origin, keyword_score)
+VALUES(keyword_id, 30157, 1, 'TWICE','TWICE', 0.0);
+
+INSERT INTO 
+keywords(keyword_id, image_id, is_tag, keyword_en, keyword_origin, keyword_score)
+VALUES(keyword_id, 30158, 1, 'TWICE','TWICE', 0.0);
+
+INSERT INTO 
+keywords(keyword_id, image_id, is_tag, keyword_en, keyword_origin, keyword_score)
+VALUES(keyword_id, 30159, 1, 'TWICE','TWICE', 0.0);
+
+INSERT INTO 
+keywords(keyword_id, image_id, is_tag, keyword_en, keyword_origin, keyword_score)
+VALUES(keyword_id, 30160, 1, 'TWICE','TWICE', 0.0);
+
+INSERT INTO 
+keywords(keyword_id, image_id, is_tag, keyword_en, keyword_origin, keyword_score)
+VALUES(keyword_id, 30160, 1, 'TWICE','TWICE', 0.0);
+
+INSERT INTO 
+keywords(keyword_id, image_id, is_tag, keyword_en, keyword_origin, keyword_score)
+VALUES(keyword_id, 30161, 1, 'TWICE','TWICE', 0.0);
+
+INSERT INTO 
+keywords(keyword_id, image_id, is_tag, keyword_en, keyword_origin, keyword_score)
+VALUES(keyword_id, 30162, 1, 'TWICE','TWICE', 0.0);
+
+INSERT INTO 
+keywords(keyword_id, image_id, is_tag, keyword_en, keyword_origin, keyword_score)
+VALUES(keyword_id, 30163, 1, 'TWICE','TWICE', 0.0);
+
+INSERT INTO 
+keywords(keyword_id, image_id, is_tag, keyword_en, keyword_origin, keyword_score)
+VALUES(keyword_id, 30164, 1, 'TWICE','TWICE', 0.0);
+
+INSERT INTO 
+keywords(keyword_id, image_id, is_tag, keyword_en, keyword_origin, keyword_score)
+VALUES(keyword_id, 30165, 1, 'TWICE','TWICE', 0.0);
+
+INSERT INTO 
+keywords(keyword_id, image_id, is_tag, keyword_en, keyword_origin, keyword_score)
+VALUES(keyword_id, 30166, 1, 'TWICE','TWICE', 0.0);
+
+INSERT INTO 
+keywords(keyword_id, image_id, is_tag, keyword_en, keyword_origin, keyword_score)
+VALUES(keyword_id, 30167, 1, 'TWICE','TWICE', 0.0);
+
+INSERT INTO 
+keywords(keyword_id, image_id, is_tag, keyword_en, keyword_origin, keyword_score)
+VALUES(keyword_id, 30168, 1, 'TWICE','TWICE', 0.0);
+
+INSERT INTO 
+keywords(keyword_id, image_id, is_tag, keyword_en, keyword_origin, keyword_score)
+VALUES(keyword_id, 30169, 1, 'TWICE','TWICE', 0.0);
+
+INSERT INTO 
+keywords(keyword_id, image_id, is_tag, keyword_en, keyword_origin, keyword_score)
+VALUES(keyword_id, 30170, 1, 'TWICE','TWICE', 0.0);
+
+INSERT INTO 
+keywords(keyword_id, image_id, is_tag, keyword_en, keyword_origin, keyword_score)
+VALUES(keyword_id, 30171, 1, 'TWICE','TWICE', 0.0);
+
+INSERT INTO 
+keywords(keyword_id, image_id, is_tag, keyword_en, keyword_origin, keyword_score)
+VALUES(keyword_id, 30172, 1, 'TWICE','TWICE', 0.0);
+
 commit;
