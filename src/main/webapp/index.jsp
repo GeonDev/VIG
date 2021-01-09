@@ -7,4 +7,4 @@
 
 <html>
  	<jsp:forward page="/main/VIG"/>
- </html>
+</html>

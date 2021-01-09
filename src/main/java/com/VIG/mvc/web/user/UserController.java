@@ -88,8 +88,8 @@ public class UserController {
 	@RequestMapping(value="googleLogin")
 	public ModelAndView googleLogin( @RequestParam("code") String code, Model model, HttpSession session) throws Exception{
 		String query = "code=" + code;
-		query += "&client_id=" + "153642235365-kg8rl6mmbhk7rh4tuefg790id1llegd1.apps.googleusercontent.com";
-		query += "&client_secret=" + "NeMh3KQqpOB7m6xI6Lo3ugxD";
+		query += "&client_id=" + "1061310625398-fgobhsfrgc0n2me6r6srqlv4ovuat8sk.apps.googleusercontent.com";
+		query += "&client_secret=" + "V4EhG-cqxcVbNujUtf1sXeTt";
 		
 		//서버 os가 윈도우라면 로컬로 판단
 		if(OS.contains("win")) {
