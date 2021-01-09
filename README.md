@@ -2,6 +2,13 @@
 사용자 맞춤형 이미지 검색 기반 포트폴리오(핀터레스트 & 비헨스) 클론 프로젝트 입니다.   
 사용자가 열람한 이미지, 사용자의 검색기록을 이용하여 사용자가 찾는 이미지와 가장 유사한 이미지를 추천합니다.
 
+
+# Screenshot
+
+<img src="https://user-images.githubusercontent.com/24502814/104086667-2b9d3c00-529d-11eb-8015-961d9042cb6f.PNG" width="900" />
+<img src="https://user-images.githubusercontent.com/24502814/104086668-2dff9600-529d-11eb-892d-29407e197275.PNG" width="900" />
+<img src="https://user-images.githubusercontent.com/24502814/104086670-2f30c300-529d-11eb-91d2-5439e41487a9.PNG" width="900" />
+
 ## 적용 내용
 #### 1. java 1.8
 #### 2. Spring 5.0
