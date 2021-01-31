@@ -4,9 +4,9 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="KeywordMapper"> 	
+<mapper namespace="com.mvc.vig.repository.KeywordMapper"> 	
  	
-	<resultMap id="keywordSelectMap" type="keyword">
+	<resultMap id="keywordSelectMap" type="imagekeyword">
 		<result property="keywordId" 		column="keyword_id" 		jdbcType="NUMERIC"/>
 		<result property="imageId"			column="image_id" 			jdbcType="NUMERIC" />
 		<result property="isTag" 			column="is_tag" 			jdbcType="NUMERIC" />
@@ -16,14 +16,14 @@
 		<result property="score" 			column="keyword_score" 		jdbcType="FLOAT" />					
 	</resultMap>	
 	
-	<insert id ="addkeyword" parameterType="keyword">
+	<insert id ="addkeyword" parameterType="imagekeyword">
 		INSERT INTO keywords (keyword_id, image_id, is_tag, keyword_en, keyword_origin, keyword_score)
 		VALUES(keyword_id, #{imageId}, #{isTag:NUMERIC}, #{keywordEn:VARCHAR}, #{keywordOrigin:VARCHAR}, #{score:FLOAT})		
 	</insert>
 	
 	
 	<!-- 태그만 따로 저장하는 쿼리 -->
-	<insert id ="addTag" parameterType="keyword">
+	<insert id ="addTag" parameterType="imagekeyword">
 		INSERT INTO keywords (keyword_id, is_tag, user_code, keyword_en, keyword_origin, keyword_score)
 		VALUES(keyword_id, 1, #{userCode:VARCHAR}, #{keywordEn:VARCHAR}, #{keywordOrigin:VARCHAR}, #{score:FLOAT})		
 	</insert>

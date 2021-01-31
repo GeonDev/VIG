@@ -22,12 +22,12 @@
 	    <dependency>
 	      <groupId>com.google.cloud</groupId>
 	      <artifactId>libraries-bom</artifactId>
-	      <version>5.3.0</version>
+	      <version>16.1.0</version>
 	      <type>pom</type>
 	      <scope>import</scope>
 	    </dependency>
 	  </dependencies>
-	</dependencyManagement>		
+</dependencyManagement>
 	
 	<dependencies>
 		<dependency>
@@ -112,18 +112,46 @@
 		
 		<dependency>
 		    <groupId>com.google.code.gson</groupId>
-		    <artifactId>gson</artifactId>
+		    <artifactId>gson</artifactId>	
 		</dependency>
 		
-	 <dependency>
-	    <groupId>com.google.cloud</groupId>
-	    <artifactId>google-cloud-vision</artifactId>
-	  </dependency>
+		<dependency>
+		    <groupId>com.google.cloud</groupId>
+		    <artifactId>google-cloud-vision</artifactId>	
+		</dependency>
 	
 	<dependency>
-    	<groupId>com.google.cloud</groupId>
-    	<artifactId>google-cloud-translate</artifactId>
- 	 </dependency>
+	    <groupId>com.google.cloud</groupId>
+	    <artifactId>google-cloud-translate</artifactId>	
+	</dependency>
+	
+	
+	<dependency>
+    <groupId>com.google.auto.value</groupId>
+    <artifactId>auto-value-annotations</artifactId>
+    <version>1.7.1</version>
+   </dependency>
+   
+	   <dependency>
+	    <groupId>com.google.guava</groupId>
+	    <artifactId>failureaccess</artifactId>
+	    <version>1.0.1</version>
+	</dependency>
+	
+	<dependency>
+	    <groupId>com.google.guava</groupId>
+	    <artifactId>listenablefuture</artifactId>
+	    <version>9999.0-empty-to-avoid-conflict-with-guava</version>
+	</dependency>
+	
+	<dependency>
+    <groupId>io.grpc</groupId>
+    <artifactId>grpc-alts</artifactId>
+    <version>1.33.1</version>
+</dependency>
+	
+	
+	
  	 
  	 <dependency>
     	<groupId>com.fasterxml.jackson.core</groupId>
@@ -140,7 +168,7 @@
 		<artifactId>log4j-core</artifactId>
 	</dependency>
 	
-
+<!-- JSP 사용을 위한 설청 -->
  	 
  	 <dependency>
  		<groupId>javax.servlet</groupId>

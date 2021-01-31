@@ -19,16 +19,5 @@ public class History implements Serializable{
 	public History() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	public User getWatchUser() {
-		
-		User user = this.watchUser;
-		if(user!=null) {
-		
-		user.setPassword("");
-		user.setGoogleId("");
-		}
-		return user;
-	}
 
 }

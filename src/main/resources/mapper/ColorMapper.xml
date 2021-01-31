@@ -4,9 +4,9 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="ColorMapper"> 	
+<mapper namespace="com.mvc.vig.repository.ColorMapper"> 	
  	
-	<resultMap id="ColorSelectMap" 	type="color">
+	<resultMap id="ColorSelectMap" 	type="imageColor">
 		<result property="colorId" 	column="color_id" 		jdbcType="NUMERIC"/>
 		<result property="ImageId"	column="image_id" 		jdbcType="NUMERIC" />
 		<result property="red" 		column="color_r" 		jdbcType="NUMERIC" />
@@ -15,7 +15,7 @@
 		<result property="haxcode" 	column="haxcode" 		jdbcType="VARCHAR" />						
 	</resultMap>	
 	
-	<insert id="addColor" parameterType="color">
+	<insert id="addColor" parameterType="imageColor">
 		INSERT INTO colors(color_id, image_id, color_r, color_g, color_b, haxcode)
 		VALUES(color_id, #{ImageId}, #{red:NUMERIC} ,#{green:NUMERIC}, #{blue:NUMERIC}, #{haxcode:VARCHAR} )	
 	</insert>

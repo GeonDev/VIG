@@ -4,7 +4,7 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="PaymentMapper"> 	
+<mapper namespace="com.mvc.vig.repository.PaymentMapper"> 	
  	
 	<resultMap id="PaymentSelectMap" type="payment">
 		<result property="paymentId" column="payment_id" jdbcType="VARCHAR"/>

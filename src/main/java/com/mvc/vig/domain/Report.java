@@ -34,21 +34,5 @@ public class Report implements Serializable{
 	public Report() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	//비밀번호가 밖으로 나가지 않도록
-	public User getViolator() {
-		User user = this.violator;
-		user.setPassword("");
-		user.setGoogleId("");
-		return user;		
-	}
-
-	//비밀번호가 밖으로 나가지 않도록
-	public User getReporter() {
-		User user = this.reporter;
-		user.setPassword("");
-		user.setGoogleId("");
-		return user;
-	}	
 
 }
