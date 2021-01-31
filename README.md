@@ -1,3 +1,8 @@
+> Springboot로 마이그레이션을 진행중 입니다  
+ https://velog.io/@kada/이미지-검색프로젝트VIG-MigrationRefactoring-1
+
+
+
 # VIG(Visual Inspiration Gallery)
 사용자 맞춤형 이미지 검색 기반 포트폴리오(핀터레스트 & 비헨스) 클론 프로젝트 입니다.   
 머리속에 있는 막연한 이미지와 유사한 이미지를 찾고 싶을때 사용자의 검색기록, 키워드 등을 활용하여
