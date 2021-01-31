@@ -4,7 +4,7 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="ReportMapper"> 	
+<mapper namespace="com.mvc.vig.repository.ReportMapper"> 	
  	
 	<resultMap id="ReportSelectMap"  		type="report">
 		<result property="reportId"  		column="report_id"  		jdbcType="NUMERIC"/>

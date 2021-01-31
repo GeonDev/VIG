@@ -4,7 +4,7 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="EventMapper"> 	
+<mapper namespace="com.mvc.vig.repository.EventMapper"> 	
  	
 	<resultMap id="EventSelectMap" 	type="event">
 		<result property="eventId" 	column="event_id" 		jdbcType="NUMERIC"/>

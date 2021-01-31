@@ -4,7 +4,7 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="ImageMapper"> 	
+<mapper namespace="com.mvc.vig.repository.ImageMapper"> 	
  	
 	<resultMap id="ImageSelectMap" type="image">
 		<result property="imageId" 			column="image_id" 			jdbcType="NUMERIC"/>

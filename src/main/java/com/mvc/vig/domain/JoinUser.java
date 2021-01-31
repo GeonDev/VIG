@@ -21,11 +21,6 @@ public class JoinUser implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public User getUser() {
-		User user = this.user;
-		user.setPassword("");
-		user.setGoogleId("");
-		return user;
-	}
+
 
 }

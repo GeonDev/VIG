@@ -39,14 +39,5 @@ public class Feed implements Serializable {
 	public Feed() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	//비밀번호가 밖으로 나가지 않도록 한다.
-	public User getWriter() {
-		User user = this.writer;
-		user.setPassword("");
-		user.setGoogleId("");
-		return user;
-	}	
-
 
 }

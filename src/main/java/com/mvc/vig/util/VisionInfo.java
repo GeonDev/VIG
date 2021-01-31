@@ -65,8 +65,7 @@ public class VisionInfo extends Thread {
 	private void getKeywordForVision() {			
 		requestVision(Type.TEXT_DETECTION);
 		requestVision(Type.LABEL_DETECTION);
-		requestVision(Type.LANDMARK_DETECTION);
-		requestVision(Type.LOGO_DETECTION);		
+		requestVision(Type.LANDMARK_DETECTION);	
 	}	
 	
 	//이미지의 색상정보를 추출하는 함수
