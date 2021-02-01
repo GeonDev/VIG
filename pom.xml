@@ -34,10 +34,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jdbc</artifactId>
 		</dependency>
+<!--  	
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+-->		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -69,12 +71,14 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+<!--  		
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+-->		
 
 		<!-- 이전　프로젝트에서　사용하던　dependency　START-->
 		
@@ -123,35 +127,8 @@
 	<dependency>
 	    <groupId>com.google.cloud</groupId>
 	    <artifactId>google-cloud-translate</artifactId>	
-	</dependency>
-	
-	
-	<dependency>
-    <groupId>com.google.auto.value</groupId>
-    <artifactId>auto-value-annotations</artifactId>
-    <version>1.7.1</version>
-   </dependency>
-   
-	   <dependency>
-	    <groupId>com.google.guava</groupId>
-	    <artifactId>failureaccess</artifactId>
-	    <version>1.0.1</version>
-	</dependency>
-	
-	<dependency>
-	    <groupId>com.google.guava</groupId>
-	    <artifactId>listenablefuture</artifactId>
-	    <version>9999.0-empty-to-avoid-conflict-with-guava</version>
-	</dependency>
-	
-	<dependency>
-    <groupId>io.grpc</groupId>
-    <artifactId>grpc-alts</artifactId>
-    <version>1.33.1</version>
-</dependency>
-	
-	
-	
+	</dependency>	
+
  	 
  	 <dependency>
     	<groupId>com.fasterxml.jackson.core</groupId>
