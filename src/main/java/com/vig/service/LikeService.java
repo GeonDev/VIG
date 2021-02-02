@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vig.domain.JoinUser;
+import com.vig.domain.LikeUser;
 import com.vig.repository.LikerMapper;
 
 @Service
@@ -16,19 +17,17 @@ public class LikeService  {
 	@Autowired
 	private LikerMapper likeMapper;
 	
-	public LikeService() {
-		
+	public LikeService() {	}
+	
+
+	public void addLike(LikeUser likeUser) throws Exception {
+		likeMapper.addLike(likeUser);
 	}
 	
 
-	public void addLike(JoinUser joinUser) throws Exception {
-		//likeMapper.addLike(joinUser);
-	}
-	
-
-	public void deleteLike(JoinUser joinUser) throws Exception {
+	public void deleteLike(LikeUser likeUser) throws Exception {
 		// TODO Auto-generated method stub
-		//likeMapper.deleteLike(joinUser);
+		likeMapper.deleteLike(likeUser);
 	}
 	
 
@@ -38,9 +37,9 @@ public class LikeService  {
 	}
 	
 
-	public boolean getLikeState(JoinUser joinUser) {
+	public boolean getLikeState(LikeUser likeUser) {
 		
-		if(likeMapper.getLikeState(joinUser) == null) {
+		if(likeMapper.getLikeState(likeUser) == null) {
 			return true;
 		}
 		else {
@@ -62,7 +61,7 @@ public class LikeService  {
 		
 			String date = keys.get("date");
 			
-			//maria DB Data_form에 맞추어 날짜 세팅
+			//DB Data_form에 맞추어 날짜 세팅
 			if(i+1 <10 ) {
 				date += "0"+ String.valueOf(i+1);
 			}else {
@@ -71,8 +70,8 @@ public class LikeService  {
 			
 			//연산된 날짜 추가
 			dateKey.put("date", date);	
-			//totalCount +=  likeMapper.getLikeDateCount(dateKey);			
-			//mouthCout.add( String.valueOf(likeMapper.getLikeDateCount(dateKey)) );						
+			totalCount +=  likeMapper.getLikeMounthCount(dateKey);			
+			mouthCout.add( String.valueOf(likeMapper.getLikeMounthCount(dateKey)) );						
 		}
 		
 		 HashMap<String,Object> lastKey = new HashMap<String,Object>();
@@ -85,8 +84,7 @@ public class LikeService  {
 
 	public int getLikeCount(int feedId) throws Exception {
 		// TODO Auto-generated method stub
-		//return likeMapper.getLikeCount(feedId);
-		return 0;
+		return likeMapper.getLikeUserCount(feedId);	
 	}
 
 
