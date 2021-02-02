@@ -21,15 +21,6 @@
 		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
 		<result property="banDate" 			column="ban_date" 			jdbcType="DATE" />			
 	</resultMap>	 
-	
-	
-		<!-- SQL : INSERT 
-	<insert	id="addUser" parameterType="user" >
-	 	INSERT
-		INTO users('user_code' , user_name , password , role , profile_img, self_introduce, sex, birth, state, google_id, account, prime_count, email, varied_code, reg_date) 
-		VALUES (user_code, #{userName}, #{password:VARCHAR}, #{role:VARCHAR}, #{profileImg:VARCHAR}, #{selfIntroduce:VARCHAR}, #{sex:VARCHAR}, #{birth:NUMERIC}, #{state:NUMERIC}, #{googleId:VARCHAR}, #{account:VARCHAR}, #{primeCount:NUMERIC}, #{email:VARCHAR}, NOW())
-	 </insert>
-	 -->
 
 	 
 	 <!-- SQL : INSERT -->
