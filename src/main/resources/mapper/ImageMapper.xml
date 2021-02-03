@@ -4,7 +4,7 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.mvc.vig.repository.ImageMapper"> 	
+<mapper namespace="com.vig.repository.ImageMapper"> 	
  	
 	<resultMap id="ImageSelectMap" type="image">
 		<result property="imageId" 			column="image_id" 			jdbcType="NUMERIC"/>
@@ -18,12 +18,12 @@
 					
 	</resultMap>		
 	
-	 <select id ="setKeywords" parameterType="int" resultMap="KeywordMapper.keywordSelectMap">
+	 <select id ="setKeywords" parameterType="int" resultMap="com.vig.repository.KeywordMapper.keywordSelectMap">
 		SELECT * FROM keywords
 		WHERE keywords.image_id = #{value}		
 	 </select>
 	 	
-	 <select id ="setColors" parameterType="int" resultMap="ColorMapper.ColorSelectMap">
+	 <select id ="setColors" parameterType="int" resultMap="com.vig.repository.ColorMapper.ColorSelectMap">
 		SELECT * FROM colors 
 		WHERE colors.image_id = #{value}		
 	 </select>

@@ -4,7 +4,7 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.mvc.vig.repository.LikerMapper"> 	
+<mapper namespace="com.vig.repository.LikerMapper"> 	
  	
 	<resultMap id="LikerSelectMap" type="likeUser">
 		<result property="likeId" 	 column="liker_id" 		jdbcType="NUMERIC"/>
@@ -14,7 +14,7 @@
 		<association property="user" column="user_code" javaType="user" select="setLiker" />					
 	</resultMap>
 	
-		<select id="setLiker" parameterType="string" resultMap="UserMapper.userSelectMap" >
+		<select id="setLiker" parameterType="string" resultMap="com.vig.repository.UserMapper.userSelectMap" >
 			SELECT * FROM users
 			WHERE user_code = #{value}		
 		</select>

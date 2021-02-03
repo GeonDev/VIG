@@ -14,4 +14,5 @@ public interface CategoryMapper {
 	
 	public List<Category> getAllCategoryList() throws Exception; 
 
+
 }

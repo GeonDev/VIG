@@ -10,7 +10,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,7 +72,7 @@ public class mainController {
 	String realPath;
 
 
-	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	//BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	public mainController() {
 	}
@@ -95,10 +94,12 @@ public class mainController {
 		model.addAttribute("user", user);
 
 		model.addAttribute("eventList", eventList);
-		model.addAttribute("categoryList", categoryList);
+		//model.addAttribute("categoryList", categoryList);
 		model.addAttribute("pageSize", pageSize);
 
-		return new ModelAndView("forward:/main/main.jsp");
+		
+		
+		return new ModelAndView("forward: /main/main.jsp");
 	}
 
 	// 최소 세팅시만 실행하는 함수
@@ -128,8 +129,10 @@ public class mainController {
 			logger.debug("회원정보 해쉬 적용 시작");
 
 			for (User user : list) {
-				String pwdBycrypt = passwordEncoder.encode(user.getPassword());
-				user.setPassword(pwdBycrypt);
+				//String pwdBycrypt = passwordEncoder.encode(user.getPassword());
+				//user.setPassword(pwdBycrypt);
+				
+				user.setPassword(user.getPassword());
 				userServices.updateUser(user);
 			}
 

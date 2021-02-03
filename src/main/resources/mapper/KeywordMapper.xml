@@ -4,7 +4,7 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.mvc.vig.repository.KeywordMapper"> 	
+<mapper namespace="com.vig.repository.KeywordMapper"> 	
  	
 	<resultMap id="keywordSelectMap" type="imagekeyword">
 		<result property="keywordId" 		column="keyword_id" 		jdbcType="NUMERIC"/>
