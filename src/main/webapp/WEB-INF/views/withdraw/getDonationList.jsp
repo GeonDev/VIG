@@ -88,7 +88,7 @@
 	 
 	 //아임포트 ajax 환불하는 곳
 	 
-	 self.location="/VIG/payment/cancelPayment?paymentId="+paymentId;
+	 self.location="/vig/payment/cancelPayment?paymentId="+paymentId;
 	 
  }
  
@@ -96,7 +96,7 @@
 	 
 	 $("button:contains('출금목록보기')").on("click", function(){
 		 
-		 self.location="/VIG/withdraw/getWithdrawList";
+		 self.location="/vig/withdraw/getWithdrawList";
 		 
 	 });
 	
@@ -134,7 +134,7 @@
 			 alert("은행을 선택해주세요");
 		 }
 		 if(holder != "" && accNo != "" && RRN != ""&& bankCode!=""){
-		$("form").attr("method", "post").attr("action", "/VIG/withdraw/addWithdraw").submit();
+		$("form").attr("method", "post").attr("action", "/vig/withdraw/addWithdraw").submit();
 		 }
 		 
 	 });
@@ -200,7 +200,7 @@
 								<tr>
 									<th scope="row">${i}</th>
 									<td>
-										<a href="/VIG/myfeed/getMyFeedList?userCode=${payment.buyer.userCode }">${payment.buyer.userCode}</a>
+										<a href="/vig/myfeed/getMyFeedList?userCode=${payment.buyer.userCode }">${payment.buyer.userCode}</a>
 										
 										<input type="hidden" name="paymentId" value="${payment.paymentId }"> <!-- sever side에서 상태 변경용 paymentId를 심는다 -->
 										
@@ -209,7 +209,7 @@
 										${payment.selectPrice}
 									</td>
 									<td>
-										<a href="/VIG/feed/getFeed?feedId=${payment.feedId }">${payment.feedId}</a>
+										<a href="/vig/feed/getFeed?feedId=${payment.feedId }">${payment.feedId}</a>
 									</td>
 									<td>
 										${payment.paymentDate }

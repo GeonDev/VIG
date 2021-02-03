@@ -79,7 +79,7 @@
 	 
 	 //아임포트 ajax 환불하는 곳
 	 
-	 self.location="/VIG/payment/cancelPayment?paymentId="+paymentId;
+	 self.location="/vig/payment/cancelPayment?paymentId="+paymentId;
 	 
  }
  
@@ -109,7 +109,7 @@
 			 alert("은행을 선택해주세요");
 		 }
 		 if(holder != "" && accNo != "" && RRN != ""&& bankCode!=""){
-		$("#withdrawForm").attr("method", "post").attr("action", "/VIG/withdraw/addWithdraw").submit();
+		$("#withdrawForm").attr("method", "post").attr("action", "/vig/withdraw/addWithdraw").submit();
 		 }
 		 
 	 });

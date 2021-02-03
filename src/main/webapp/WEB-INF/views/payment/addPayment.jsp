@@ -94,7 +94,7 @@ $(function (){
 	
 	$("#confirmbutton").on("click", function(){
 
-		self.location="/VIG/payment/getPaymentList";
+		self.location="/vig/payment/getPaymentList";
 		
 	
 	});

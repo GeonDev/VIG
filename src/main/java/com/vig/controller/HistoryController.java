@@ -80,7 +80,7 @@ public class HistoryController {
 		if(user != null) {
 			search.setKeyword(user.getUserCode());
 		}else {			
-			return new ModelAndView("forward:/common/alertView.jsp", "message", "로그인 후 이용가능합니다.");
+			return new ModelAndView("forward: common/alertView", "message", "로그인 후 이용가능합니다.");
 		}		
 
 		Page resultPage = new Page(search.getCurrentPage(), historyServices.getHistoryCount(search) , pageUnit, pageSize);

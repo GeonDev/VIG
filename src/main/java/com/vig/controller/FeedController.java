@@ -190,7 +190,7 @@ public class FeedController {
 		logger.debug("피드 등록 완료 / 총 추출 시간 : " + getTotalWorkTime(Totalstart, Totalend)+"초");
 		
 		
-		return new ModelAndView("forward:/myfeed/getMyFeedList");
+		return new ModelAndView("myfeed/getMyFeedList");
 	}
 	
 	
@@ -276,7 +276,7 @@ public class FeedController {
 		feedServices.deleteFeed(feedId);
 		
 	
-		ModelAndView mav = new ModelAndView("redirect:/myfeed/getMyFeedList?userCode="+user.getUserCode());
+		ModelAndView mav = new ModelAndView("redirect: myfeed/getMyFeedList?userCode="+user.getUserCode());
 		
 		return mav;
 	}
