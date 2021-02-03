@@ -12,7 +12,7 @@
 	<body>
 		<h2>최초 시작 페이지</h2>
 		<br>
-		<img src="resource/img/img.jpg" width="400px">
+		<img src="resource/images/others/category01.jpg" width="400px">
 		
 	</body>
 </html>
