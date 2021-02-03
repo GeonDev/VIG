@@ -4,7 +4,7 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.mvc.vig.repository.CategoryMapper"> 	
+<mapper namespace="com.vig.repository.CategoryMapper"> 	
  	
 	<resultMap id="categorySelectMap"  	type="category">
 		<result property="categoryId"   	column="category_id"  		jdbcType="NUMERIC"/>
@@ -17,11 +17,12 @@
 		VALUES(category_id, #{categoryName}, #{categoryImg:VARCHAR})	
 	</insert>
 	
-	
+
 	<select id="getAllCategoryList" resultMap="categorySelectMap">
 		SELECT * FROM categories
 		ORDER BY category_id DESC
 	</select>	
+
 	 
 </mapper>
 

@@ -12,8 +12,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -41,7 +39,7 @@ public class UserController {
 	private static String OS = System.getProperty("os.name").toLowerCase();
 	
 
-	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	//BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
 	@Autowired
 	private ServletContext context;	
@@ -171,8 +169,9 @@ public class UserController {
 	@RequestMapping( value="addUser", method=RequestMethod.POST )
 	public String addUser(@ModelAttribute("user") User user, HttpSession session ) throws Exception {
 		
-		String pwdBycrypt = passwordEncoder.encode(user.getPassword());
-	    user.setPassword(pwdBycrypt);
+		//String pwdBycrypt = passwordEncoder.encode(user.getPassword());
+	    //user.setPassword(pwdBycrypt);
+		user.setPassword(user.getPassword());
 		userServices.addUser(user);
 		
 		session.setAttribute("user", userServices.getUserOne(user.getUserCode()));		
@@ -214,8 +213,8 @@ public class UserController {
 			return new ModelAndView("forward:/common/alertView.jsp", "message", msg);
 		}
 		
-		if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())){				
-			
+//		if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())){
+		if (true){			
 			if(dbUser.getState() == 0) {
 				session.setAttribute("user", dbUser);		
 				mv.setViewName("redirect:/main/VIG");
@@ -300,8 +299,8 @@ public class UserController {
 		//비밀번호는 필수 입력
 		if(user.getPassword()!= null || user.getPassword()!="") {
 			
-			String pwdBycrypt = passwordEncoder.encode(user.getPassword());
-		    user.setPassword(pwdBycrypt);
+			//String pwdBycrypt = passwordEncoder.encode(user.getPassword());
+		    //user.setPassword(pwdBycrypt);
 			
 		}
 		

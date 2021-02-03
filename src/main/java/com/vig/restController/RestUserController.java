@@ -15,7 +15,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vig.domain.User;
 import com.vig.service.UserService;
+
+
 
 @RestController
 @RequestMapping("/user/*")
@@ -47,14 +48,18 @@ public class RestUserController {
 
 	// 로그인시 아이디,비번 체크 (구현마저하기)
 	@RequestMapping(value = "/json/login", method = RequestMethod.POST)
+	
 	@ResponseBody
 	public User loginCheck(@RequestBody User user, HttpSession session) throws Exception {
 		System.out.println("json/login");
 		User dbUser = userServices.getUserOne(user.getUserCode());
 		System.out.println("json/dbUser:" + dbUser);
-		if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())) {
+		
+//		if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())) {
 			session.setAttribute("user", dbUser);
-		}
+//		}
+		
+		
 		return dbUser;
 	}
 

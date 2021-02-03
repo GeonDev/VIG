@@ -4,7 +4,7 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.mvc.vig.repository.FeedMapper"> 	
+<mapper namespace="com.vig.repository.FeedMapper"> 	
  	
 	<resultMap id="FeedSelectMap" type="feed">
 		<result property="feedId" 				column="feed_id" 				jdbcType="NUMERIC"/>
@@ -24,43 +24,39 @@
 			
 		<collection property="images" 		column="feed_id" 	javaType="list" 	ofType="image" 		select="setFeedImages"/>
 		<collection property="likes" 		column="feed_id" 	javaType="list" 	ofType="joiner" 	select="setLikeUserlist"/>
-		<collection property="coworkers" 	column="feed_id" 	javaType="list" 	ofType="joiner" 	select="setCoworkUserlist"/>
 		<collection property="comments" 	column="feed_id" 	javaType="list" 	ofType="comment"	select="setCommentlist"/>
-		<collection property="keywords" 	column="feed_id" 	javaType="list" 	ofType="keyword"	select="setKeywordlist"/>	
+		<collection property="keywords" 	column="feed_id" 	javaType="list" 	ofType="keyword"	select="setKeywordlist"/>
+		
+		<!-- <collection property="coworkers" 	column="feed_id" 	javaType="list" 	ofType="joiner" 	select="setCoworkUserlist"/> -->	
 			
 	</resultMap>		
 	
-		<select id="setWriter" parameterType="string" resultMap="UserMapper.userSelectMap" >
+		<select id="setWriter" parameterType="string" resultMap="com.vig.repository.UserMapper.userSelectMap" >
 			SELECT * FROM users
 			WHERE user_code = #{value}		
 		</select>	
 		
-		<select id="setFeedImages" parameterType="int" resultMap="ImageMapper.ImageSelectMap" >
+		<select id="setFeedImages" parameterType="int" resultMap="com.vig.repository.ImageMapper.ImageSelectMap" >
 			SELECT * FROM images
 			WHERE feed_id = #{value}		
 		</select>
 		
-		<select id="setLikeUserlist" parameterType="int" resultMap="JoinerMapper.joinerSelectMap" >
-			SELECT * FROM joiner
-			WHERE feed_id = #{value} AND is_like = 1					
+		<select id="setLikeUserlist" parameterType="int" resultMap="com.vig.repository.LikerMapper.LikerSelectMap" >
+			SELECT * FROM liker
+			WHERE feed_id = #{value}
 		</select>
 		
-		<select id="setCoworkUserlist" parameterType="int" resultMap="JoinerMapper.joinerSelectMap" >
-			SELECT * FROM joiner
-			WHERE feed_id = #{value} AND is_like = 0					
-		</select>
-		
-		<select id="setCommentlist" parameterType="int" resultMap="CommentMapper.commentSelectMap" >
+		<select id="setCommentlist" parameterType="int" resultMap="com.vig.repository.CommentMapper.commentSelectMap" >
 			SELECT * FROM comments
 			WHERE feed_id = #{value}					
 		</select>
 		
-		<select id="setCategory"  parameterType="int"  resultMap="CategoryMapper.categorySelectMap" >
+		<select id="setCategory"  parameterType="int"  resultMap="com.vig.repository.CategoryMapper.categorySelectMap" >
 			SELECT * FROM categories
 			WHERE category_id = #{value}					
 		</select>
 		
-		<select id="setKeywordlist"  parameterType="int"  resultMap="KeywordMapper.keywordSelectMap" >
+		<select id="setKeywordlist"  parameterType="int"  resultMap="com.vig.repository.KeywordMapper.keywordSelectMap" >
 			SELECT keywords.* FROM images, keywords
 			WHERE images.image_id = keywords.image_id
 			AND images.is_thumbnail = 1
@@ -68,6 +64,13 @@
 								
 		</select>
 		
+		
+<!--  		
+		<select id="setCoworkUserlist" parameterType="int" resultMap="com.vig.repository.JoinerMapper.joinerSelectMap" >
+			SELECT * FROM joiner
+			WHERE feed_id = #{value} 					
+		</select>
+-->		
 		
 		<!-- 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 -->
 		

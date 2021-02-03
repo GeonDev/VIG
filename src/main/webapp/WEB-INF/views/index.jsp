@@ -5,14 +5,15 @@
 <!DOCTYPE html>
 
 <html>
- 	<%-- 
- 	<jsp:forward page="/main/VIG"/>
- 	--%> 
+
+ 	<jsp:forward page="/main/vig"/>
+
  	
-	<body>
+<%-- 	<body>
 		<h2>최초 시작 페이지</h2>
 		<br>
 		<img src="resource/images/others/category01.jpg" width="400px">
 		
 	</body>
+--%>
 </html>

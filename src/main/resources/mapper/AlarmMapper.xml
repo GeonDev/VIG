@@ -4,7 +4,7 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.mvc.vig.repository.AlarmMapper"> 	
+<mapper namespace="com.vig.repository.AlarmMapper"> 	
  	
 	<resultMap id="AlarmSelectMap" 		type="alarm">
 		<result property="alarmId" 		column="alarm_id" 		jdbcType="NUMERIC"/>
@@ -19,17 +19,17 @@
 										
 	</resultMap>	
 	
-		<select id="setSendUser" parameterType="string" resultMap="UserMapper.userSelectMap" >
+		<select id="setSendUser" parameterType="string" resultMap="com.vig.repository.UserMapper.userSelectMap" >
 			SELECT * FROM users
 			WHERE user_code = #{value}		
 		</select>
 		
-		<select id="setReceiveUser" parameterType="string" resultMap="UserMapper.userSelectMap" >
+		<select id="setReceiveUser" parameterType="string" resultMap="com.vig.repository.UserMapper.userSelectMap" >
 			SELECT * FROM users
 			WHERE user_code = #{value}		
 		</select>
 		
-		<select id="setlikeFeed" parameterType="int" resultMap="FeedMapper.FeedSelectMap" >
+		<select id="setlikeFeed" parameterType="int" resultMap="com.vig.repository.FeedMapper.FeedSelectMap" >
 			SELECT * FROM feeds
 			WHERE feeds.feed_id = #{value}			
 		</select>	

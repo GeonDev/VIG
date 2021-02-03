@@ -4,7 +4,7 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.mvc.vig.repository.HistoryMapper"> 	
+<mapper namespace="com.vig.repository.HistoryMapper"> 	
  	
 	<resultMap id="HistorySelectMap" 	type="history">
 		<result property="historyId" 	column="history_id"  	 	jdbcType="NUMERIC"/>	
@@ -16,12 +16,12 @@
 		<association property="showFeed"    column="feed_id"     		javaType="feed"      select="setShowfeed"/>						
 	</resultMap>	
 	
-	<select id="setWatcher" parameterType="string" resultMap="UserMapper.userSelectMap" >
+	<select id="setWatcher" parameterType="string" resultMap="com.vig.repository.UserMapper.userSelectMap" >
 		SELECT * FROM users
 		WHERE users.user_code = #{value}		
 	</select>
 	
-	<select id="setShowfeed" parameterType="int" resultMap="FeedMapper.FeedSelectMap" >
+	<select id="setShowfeed" parameterType="int" resultMap="com.vig.repository.FeedMapper.FeedSelectMap" >
 		SELECT * FROM feeds
 		WHERE feeds.feed_id = #{value}		
 	</select>	
