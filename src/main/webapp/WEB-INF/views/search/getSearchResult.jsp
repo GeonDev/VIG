@@ -28,8 +28,8 @@
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>	
 	
 	<!-- 색상선택기 플러그인 -->
-	<script type="text/javascript" src="/VIG/javascript/farbtastic.js"></script>
- 	<link rel="stylesheet" href="/VIG/css/farbtastic.css" type="text/css" />
+	<script type="text/javascript" src="res/javascript/farbtastic.js"></script>
+ 	<link rel="stylesheet" href="res/css/farbtastic.css" type="text/css" />
 
 	<style>
 	body {
@@ -104,8 +104,8 @@
 		displayValue = 
 			"<div class = 'view overlay'>"
 				+"<div class = 'img_feed'>"
-				+ "<a href='/VIG/feed/getFeed?feedId="+ item.feedId +"' class='text-light'>"
-					+ "<img src='/VIG/images/uploadFiles/" + thumbnail + "' alt='thumbnail' class='img-fluid rounded-sm img_feed '>"
+				+ "<a href='/vig/feed/getFeed?feedId="+ item.feedId +"' class='text-light'>"
+					+ "<img src='res/images/uploadFiles/" + thumbnail + "' alt='thumbnail' class='img-fluid rounded-sm img_feed '>"
 					+ "<div class='mask waves-effect waves-light rgba-black-strong' style='text-align: right;'>";					
 						if(user != ''){
 							displayValue +="<button type='button' onclick='addhideFeed("+ item.feedId +")' class='btn btn-link' style='width: 50px; height:50px; padding-left: 0px; padding-right: 0px;'>"											
@@ -139,8 +139,8 @@
 		displayValue =
 			"<div class = 'view overlay'>"
 				+ "<div class = 'img_image'>"
-					+ "<a href='/VIG/search/getSearchImages?imageId="+ item.imageId +"' class='text-light'>"
-					+ "<img src='/VIG/images/uploadFiles/" + item.imageFile + "' alt='thumbnail' class='img-fluid rounded-sm ' style='width: auto; height: 300px;'>"
+					+ "<a href='/vig/search/getSearchImages?imageId="+ item.imageId +"' class='text-light'>"
+					+ "<img src='res/images/uploadFiles/" + item.imageFile + "' alt='thumbnail' class='img-fluid rounded-sm ' style='width: auto; height: 300px;'>"
 						+"<div class='mask flex-center waves-effect waves-light rgba-black-strong'>"						
 						+"</div>"
 					+ "</a>"
@@ -159,7 +159,7 @@
 		var displayValue ='';
 		displayValue =
 			"<div class = 'view overlay'>"								
-			+ "<img src='/VIG/images/others/noResults.jpg'>"				
+			+ "<img src='res/images/others/noResults.jpg'>"				
 			+ "</div>";
 			
 			$(".row:last").append(displayValue);		
@@ -174,8 +174,8 @@
 		displayValue =
 			"<div class = 'view'>"
 				+"<div class = 'row'>"
-					+"<a class = 'col-md-1' href='/VIG/myfeed/getMyFeedList?userCode="+ item.userCode + "'>"
-					+ "<img src='/VIG/images/uploadFiles/" + item.profileImg + "' alt='thumbnail' class='img-fluid rounded-circle ' style=' width: 100%; padding-left: 0px; padding-right: 0px; margin-left : 15px;'>"
+					+"<a class = 'col-md-1' href='/vig/myfeed/getMyFeedList?userCode="+ item.userCode + "'>"
+					+ "<img src='res/images/uploadFiles/" + item.profileImg + "' alt='thumbnail' class='img-fluid rounded-circle ' style=' width: 100%; padding-left: 0px; padding-right: 0px; margin-left : 15px;'>"
 					+"</a>"
 					+"<div class='userInfo col-md-4 mt-2'>"
 						+"<h2 style='margin-bottom : 1px;'><b>" + item.userName +"</b></h2>"
@@ -206,8 +206,8 @@
 		var displayValue =
 		"<div class = 'view_small'>"
 			+"<div class = 'img_feed_thumb'>"
-			+"<a href='/VIG/feed/getFeed?feedId="+ item.feedId +"'>"
-			+ "<img src='/VIG/images/uploadFiles/" + thumbnail 	+ "' alt='thumbnail' class='img-fluid rounded-sm ' style='width: 125px; height: 100px;'>" 	 							
+			+"<a href='/vig/feed/getFeed?feedId="+ item.feedId +"'>"
+			+ "<img src='res/images/uploadFiles/" + thumbnail 	+ "' alt='thumbnail' class='img-fluid rounded-sm ' style='width: 125px; height: 100px;'>" 	 							
 			+"</a>"
 			+"</div>"
 		+"</div>";		
@@ -231,7 +231,7 @@
 		
 		$.ajax( 
 				{
-					url : "/VIG/search/json/getSearchResultList",
+					url : "/vig/search/json/getSearchResultList",
 					method : "POST",
 					dataType : "Json",					
 					headers : {
@@ -291,7 +291,7 @@
 	
 	//검색어 자동완성을 처리한다.
 	function getkeywords() {
-		$.ajax("/VIG/search/json/getSearchKeyword",
+		$.ajax("/vig/search/json/getSearchKeyword",
 		  {
 			method : "POST",
 			dataType : "Json",							
@@ -327,7 +327,7 @@
 		console.log(feedId);
 		var result = confirm("해당 피드를 숨기시겠습니까?");
 		if(result){
-			var link ='/VIG/history/addHideFeed?Id=';
+			var link ='/vig/history/addHideFeed?Id=';
 			link =  link.concat(feedId);
 			$(location).attr("href", link); 
 		}      	    			

@@ -32,10 +32,10 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 	
 	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+   <link href="res/css/animate.min.css" rel="stylesheet">
+   <link href="res/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
     <!-- Bootstrap Dropdown Hover JS -->
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+   <script src="res/javascript/bootstrap-dropdownhover.min.js"></script>
    
    
    <!-- jQuery UI toolTip 사용 CSS-->
