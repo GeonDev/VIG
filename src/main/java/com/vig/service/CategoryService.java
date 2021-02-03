@@ -11,12 +11,12 @@ import com.vig.domain.Category;
 import com.vig.repository.CategoryMapper;
 
 @Service
-public class CategoroyService {
+public class CategoryService {
 	
 	@Autowired	  
 	private CategoryMapper categoryMapper;
 
-	public CategoroyService() {
+	public CategoryService() {
 		// TODO Auto-generated constructor stub
 	}
 
