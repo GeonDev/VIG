@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vig.repository.HistoryMapper"> 	
+ 	
+	<resultMap id="HistorySelectMap" 	type="history">
+		<result property="historyId" 	column="history_id"  	 	jdbcType="NUMERIC"/>	
+		<result property="showDate"  	column="show_date" 	 		jdbcType="DATE" />
+		<result property="ipAddress"  	column="ip_address" 	  	jdbcType="VARCHAR" />
+		<result property="historyType"  column="history_type" 		jdbcType="NUMERIC" />	
+		
+		<association property="watchUser"   column="watch_user_code"    javaType="user"      select="setWatcher"/>	
+		<association property="showFeed"    column="feed_id"     		javaType="feed"      select="setShowfeed"/>						
+	</resultMap>	
+	
+	<select id="setWatcher" parameterType="string" resultMap="com.vig.repository.UserMapper.userSelectMap" >
+		SELECT * FROM users
+		WHERE users.user_code = #{value}		
+	</select>
+	
+	<select id="setShowfeed" parameterType="int" resultMap="com.vig.repository.FeedMapper.FeedSelectMap" >
+		SELECT * FROM feeds
+		WHERE feeds.feed_id = #{value}		
+	</select>	
+
+	
+	<!-- 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 -->
+	
+	
+	<!-- 유저가 열람한 히스토리를 넣어준다. -->
+	<insert id="addHistory" parameterType="history">
+		INSERT INTO history(history_id, show_date, ip_address, history_type, watch_user_code, feed_id )
+		VALUES(history_id, NOW(), #{ipAddress:VARCHAR}, #{historyType}, #{watchUser.userCode:VARCHAR}, #{showFeed.feedId:NUMERIC}  ) 		
+	</insert>
+	
+	
+	<!-- 특정 유저가 자신의 기록을 조회 하는데 사용  -->
+	<select id="getHistoryListFormUser" parameterType="search" resultMap="HistorySelectMap">
+		SELECT * FROM 
+		(SELECT ROW_NUMBER() OVER(ORDER BY history.history_id DESC) num, history.* FROM history
+		WHERE watch_user_code = #{keyword}	
+		AND history.history_type = #{searchType})temp
+		WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
+	</select>
+	
+	
+	<!-- 피드 검색시 필터용으로 사용될 전체 데이터 조회용 데이터 -->
+	<select id="getAllHistoryFromUser" parameterType="search" resultMap="HistorySelectMap">
+		SELECT history.* FROM history
+		WHERE history.history_type = #{searchType}
+		AND watch_user_code = #{keyword}			
+	</select>
+		
+	<!-- 전체 페이지 확인용 데이터 -->	
+	<select id="getHistoryCount" parameterType="search" resultType="int">
+		SELECT COUNT(history_id) FROM history
+		WHERE watch_user_code = #{keyword}	
+		AND history.history_type = #{searchType} 		
+	</select>
+	
+	
+	<select id="checkHistory" parameterType="history" resultMap="HistorySelectMap">
+		SELECT history.* FROM history
+		WHERE history_type = 0
+		AND watch_user_code = #{watchUser.userCode}
+		AND feed_id = #{showFeed.feedId}	
+	</select>
+	
+	
+	<delete id="deleteHistory" parameterType="int">
+		DELETE 
+	 	FROM history 
+	 	WHERE history_id = #{value} 
+	</delete>
+	
+	<select id="getViewHistory" parameterType="history" resultType="int">
+		SELECT COUNT(*)
+		FROM 
+		(SELECT * FROM history
+		WHERE feed_id=#{showFeed.feedId} AND ip_address=#{ipAddress}
+		<if test="watchUser!=null">
+			<if test="watchUser.userCode!=null">
+			AND watch_user_code = #{watchUser.userCode}
+			</if>
+		</if>
+		AND show_date  = CURRENT_DATE()
+		) countTable	
+	</select>
+	
+	
+	<!-- 방문자 기록을 담아둔 히스토리 기록을 삭제한다. 방문자는 유저코드가 없다. -->
+	<delete id="deleteTempHistory" >
+		DELETE FROM history 
+	 	WHERE NVL(watch_user_code,'0') = '0'	 	 
+	</delete>
+	
+	
+	<!-- 특정유저가 작성한 피드들의 조회수를 카운트 한다. -->
+	<select id = "getfeedHistoryDateCount" parameterType="hashMap" resultType="int">
+		SELECT COUNT(history.history_id) FROM history, feeds
+		WHERE  history.feed_id = feeds.feed_id	
+		AND history.history_type = 0
+		AND feeds.user_code = #{userCode}
+		AND date_format(history.show_date, '%Y%m%d') = #{date}				
+	</select>
+	
+	<!-- 특정유저가 작성한 피드들의 프라임피드 노출 수를 카운트 한다 -->
+	<select id = "getfeedHistoryPrimeDateCount" parameterType="hashMap" resultType="int">
+		SELECT COUNT(history.history_id) FROM history, feeds
+		WHERE  history.feed_id = feeds.feed_id	
+		AND history.history_type = 2
+		AND feeds.user_code = #{userCode}
+		AND date_format(history.show_date, '%Y%m%d') = #{date}				
+	</select>		
+	
+	 
+</mapper>
+
+

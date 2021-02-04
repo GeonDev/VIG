@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vig.repository.LikerMapper"> 	
+ 	
+	<resultMap id="LikerSelectMap" type="likeUser">
+		<result property="likeId" 	 column="liker_id" 		jdbcType="NUMERIC"/>
+		<result property="feedId"	 column="feed_id" 		jdbcType="NUMERIC" />	
+		<result property="addDate" 	 column="add_date" 		jdbcType="DATE" />
+				
+		<association property="user" column="user_code" javaType="user" select="setLiker" />					
+	</resultMap>
+	
+		<select id="setLiker" parameterType="string" resultMap="com.vig.repository.UserMapper.userSelectMap" >
+			SELECT * FROM users
+			WHERE user_code = #{value}		
+		</select>
+		
+		<!-- 000000000000000000000000000000000000000000000000000000000000000000000000000000000 -->
+				
+		<select id="getLikeList" parameterType="int" resultMap="LikerSelectMap" >
+			SELECT * FROM liker
+			WHERE feed_id = #{value}	
+		</select>
+		
+		<select id="getLikeUserCount" parameterType="int" resultType="int" >
+			SELECT COUNT(liker_id) FROM liker
+			WHERE feed_id = #{value}	
+		</select>	
+		
+		<insert id="addLike" parameterType="likeUser">
+		 	INSERT INTO joiner (liker_id, feed_id, add_date, user_code)
+		 	VALUES (joiner_id, #{feedId},  NOW(), #{user.userCode})
+		</insert>	
+		
+		<delete id="deleteLike" parameterType="likeUser" >
+			DELETE FROM liker
+			WHERE feed_id = #{feedId} AND user_code = #{user.userCode} 
+		</delete>
+		
+		<select id="getLikeState" parameterType="likeUser" resultMap="LikerSelectMap">
+			SELECT * FROM liker 
+			WHERE feed_id = #{feedId} AND user_code = #{user.userCode}
+		</select>
+		
+		
+		<!-- 특정 일에 특정 유저가 작성한 피드에 좋아요를 누른 수 -->
+		<select id ="getLikeMounthCount" parameterType="hashMap" resultType="int">
+			SELECT COUNT(liker_id) FROM liker, feeds
+			WHERE liker.feed_id = feeds.feed_id
+			AND date_format(add_date, '%Y%m%d') = #{date}
+			AND feeds.user_code = #{userCode}			
+		</select>		
+		
+		
+</mapper>
+
+
