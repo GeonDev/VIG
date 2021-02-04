@@ -325,7 +325,7 @@ function noBack(){window.history.forward();}
 		<!-- 가입버튼 -->
 		    <button  class="btn btn-block my-4" id="signUp_btn" style="background-color: #212121; color: white;" >Sign up</button>   
 				<p >Already a member? </p>
-		          <span id="login_nav" class="blue-text ml-1"  data-remote="/VIG/user/loginView.jsp"
+		          <span id="login_nav" class="blue-text ml-1"  data-remote="/vig/user/loginView.jsp"
 				data-toggle="modal" data-target="#theModal" > login</span>
 				</div>
 			</div>
@@ -339,7 +339,7 @@ function noBack(){window.history.forward();}
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header"></div>
-							<form action="/VIG/user/login" method="POST">
+							<form action="/vig/user/login" method="POST">
 							<div class="modal-body"></div>
 								</form>
 							<div class="modal-footer">

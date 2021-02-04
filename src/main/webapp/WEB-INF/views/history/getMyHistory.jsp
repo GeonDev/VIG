@@ -79,7 +79,7 @@
 		console.log(historyId);
 		var result = confirm("해당 기록을 지우시겠습니까?");
 		if(result){
-			var link ='/VIG/history/deleteHistory?Id=';
+			var link ='/vig/history/deleteHistory?Id=';
 			link =  link.concat(historyId);
 			$(location).attr("href", link); 
 		}
@@ -149,7 +149,7 @@
 									<div class = "img_feed">								
 										<c:forEach var="thumbnail" items="${history.showFeed.images}">
 											<c:if test="${thumbnail.isThumbnail == 1}">									
-												<img src="/VIG/images/uploadFiles/${thumbnail.imageFile}" alt="thumbnail" class="img-fluid rounded-sm" style="width: 300px; height: 225px;">																						
+												<img src="res/images/uploadFiles/${thumbnail.imageFile}" alt="thumbnail" class="img-fluid rounded-sm" style="width: 300px; height: 225px;">																						
 											</c:if>
 										</c:forEach>										
 										<div class="mask waves-effect waves-light rgba-black-strong" style="text-align: right;">	
@@ -171,7 +171,7 @@
 				<c:forEach var="comments" items="${commentlist}">
 					<div class="row" style="margin: auto;">						
 						<div class="col-md-1">
-							<img src="/VIG/images/uploadFiles/${comments.user.profileImg}" class="rounded-circle" style="width: 50px;">
+							<img src="res/images/uploadFiles/${comments.user.profileImg}" class="rounded-circle" style="width: 50px;">
 						</div>
 						<div class="col-md-10 ">
 							<p style="font-size: 25px; font-weight: bold; margin-top: 7px;"> ${comments.commentText}</p>
@@ -194,8 +194,8 @@
 									<div class = "img_feed">								
 										<c:forEach var="thumbnail" items="${feed.images}">
 											<c:if test="${thumbnail.isThumbnail == 1}">	
-											 	<a href="/VIG/feed/getFeed?feedId=${feed.feedId}">							
-													<img src="/VIG/images/uploadFiles/${thumbnail.imageFile}" alt="thumbnail" class="img-fluid rounded-sm" style="width: 300px; height: 225px;">																						
+											 	<a href="/vig/feed/getFeed?feedId=${feed.feedId}">							
+													<img src="res/images/uploadFiles/${thumbnail.imageFile}" alt="thumbnail" class="img-fluid rounded-sm" style="width: 300px; height: 225px;">																						
 												</a>	
 											</c:if>
 										</c:forEach>																			
@@ -215,10 +215,10 @@
 								<div class = "img_feed">							
 									<c:forEach var="thumbnail" items="${history.showFeed.images}">
 										<c:if test="${thumbnail.isThumbnail == 1}">									
-											<img src="/VIG/images/uploadFiles/${thumbnail.imageFile}" alt="thumbnail" class="img-fluid rounded-sm" style="width: 300px; height: 225px;">																						
+											<img src="res/images/uploadFiles/${thumbnail.imageFile}" alt="thumbnail" class="img-fluid rounded-sm" style="width: 300px; height: 225px;">																						
 										</c:if>
 									</c:forEach>
-									<a href="/VIG/feed/getFeed?feedId=${history.showFeed.feedId}">
+									<a href="/vig/feed/getFeed?feedId=${history.showFeed.feedId}">
 										<div class="mask waves-effect waves-light rgba-black-strong" style="text-align: right">	
 											<button type="button" onclick="deleteHistory('${history.historyId}')" class="btn btn-link" style="padding-left: 15px; padding-right: 15px;">
 												<i class="far fa-trash-alt" style="color: white; padding: 0px;"></i>

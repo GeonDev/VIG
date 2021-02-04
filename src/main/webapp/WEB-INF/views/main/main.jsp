@@ -72,8 +72,8 @@
 			displayValue = 
 				"<div class = 'view overlay' >"
 					+"<div class = 'img_feed'>"
-					+ "<a href='/VIG/feed/getFeed?feedId="+ item.feedId +"' class='text-light'>"
-						+ "<img src='/VIG/images/uploadFiles/" + thumbnail + "' alt='thumbnail' class='img-fluid rounded-sm img_feed'>"
+					+ "<a href='/vig/feed/getFeed?feedId="+ item.feedId +"' class='text-light'>"
+						+ "<img src='res/images/uploadFiles/" + thumbnail + "' alt='thumbnail' class='img-fluid rounded-sm img_feed'>"
 						+ "<div class='mask waves-effect waves-light rgba-black-strong' style='text-align: right;'>";					
 							if(user != ''){
 								displayValue +="<button type='button' onclick='addhideFeed("+ item.feedId +")' class='btn btn-link' style='width: 50px; height:50px; padding-left: 0px; padding-right: 0px;'>"											
@@ -111,7 +111,7 @@
 			
 			$.ajax( 
 					{
-						url : "/VIG/search/json/getSearchCategoryResult",
+						url : "/vig/search/json/getSearchCategoryResult",
 						method : "POST",
 						dataType : "Json",					
 						headers : {
@@ -175,7 +175,7 @@
 			console.log(feedId);
 			var result = confirm("해당 피드를 숨기시겠습니까?");
 			if(result){
-				var link ='/VIG/history/addHideFeed?Id=';
+				var link ='/vig/history/addHideFeed?Id=';
 				link =  link.concat(feedId);
 				$(location).attr("href", link); 
 			}      	    			
@@ -199,7 +199,7 @@
 	            if (key.keyCode == 113) {
 	        		var result = confirm("비밀번호 해쉬 및 이미지 정보를 추출 하시겠습니까?");
 	        		if(result){
-	        			var link ='/VIG/main/setImage';		        		
+	        			var link ='/vig/main/setImage';		        		
 	        			$(location).attr("href", link); 
 	        		}
 	            	
@@ -336,8 +336,8 @@
 				  		 <div class="carousel-item " style="text-align: center;">			  		
 				  		</c:if>
 				  					  		
-					  		<a href="/VIG/event/getEvent?eventId=${event.eventId}">
-						      <img class="eBanner rounded mb-0" src="/VIG/images/others/${event.banner}" style="margin-left: auto; margin-right: auto;">
+					  		<a href="/vig/event/getEvent?eventId=${event.eventId}">
+						      <img class="eBanner rounded mb-0" src="res/images/others/${event.banner}" style="margin-left: auto; margin-right: auto;">
 						    </a>			  	
 				  		
 				  		</div>
@@ -375,7 +375,7 @@
 					<c:forEach var="category" items="${categoryList}">				
 						<div class="col-sm-2" id="category_${i}" style="padding-left: 0px; padding-right: 0px;">
 							<div class="view img_categories">			    			
-				    			<img src="/VIG/images/others/${category.categoryImg}" alt="thumbnail" class="img-fluid overflow-hidden rounded-sm" >
+				    			<img src="res/images/others/${category.categoryImg}" alt="thumbnail" class="img-fluid overflow-hidden rounded-sm" >
 				    			
 				    			<c:if test="${category.categoryName == 'RECOMMEND'}">
 				    				<div class="mask flex-center rgba-indigo-strong rounded-sm">	

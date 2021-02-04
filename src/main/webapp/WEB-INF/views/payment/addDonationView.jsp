@@ -238,7 +238,7 @@ $(function(){
 		        msg += '카드 승인번호 : ' + rsp.apply_num;
 		     //   $("input[name='lastPrice']").val(rsp.paid_amount);
 		        $("input[name='paymentId']").val(rsp.imp_uid);
-		        $("form").attr("action", "/VIG/payment/addDonation").attr("method", "post").submit();
+		        $("form").attr("action", "/vig/payment/addDonation").attr("method", "post").submit();
 		    } else {
 		        var msg = '결제에 실패하였습니다.';
 		        msg += '에러내용 : ' + rsp.error_msg;
@@ -261,7 +261,7 @@ $(function(){
 	
 	$(".moveFeed").on("click", function(){
 		
-		self.location="/VIG/feed/getFeed?feedId="+${feed.feedId};
+		self.location="/vig/feed/getFeed?feedId="+${feed.feedId};
 		
 	});
 	
@@ -297,7 +297,7 @@ $(function(){
 					<div class="view overlay z-depth-1">
 					<c:forEach var="images" items="${feed.images}">
 						<c:if test="${images.isThumbnail == '1'}">
-			        	  <img src="/VIG/images/uploadFiles/${images.imageFile}" class="img-fluid" alt="Sample image">
+			        	  <img src="res/images/uploadFiles/${images.imageFile}" class="img-fluid" alt="Sample image">
 				          <div class="mask flex-center blue-gradient-rgba">
 				            <a class="btn btn-outline-white btn-rounded moveFeed">See more</a>
 				          </div>
