@@ -40,7 +40,7 @@
 
 	
 	function addFollower(follower) {
-		var link = "/vig/follow/json/addFollow?userCode=${user.userCode}&followerCode="+follower;	
+		var link = "/VIG/follow/json/addFollow?userCode=${user.userCode}&followerCode="+follower;	
 		sendMessage(follower,'','2');	
 		var id = "#follow_"+follower;
 		
@@ -64,7 +64,7 @@
 	
 	
 	function deleteFollower(following) {
-		var link = "/vig/follow/json/deleteFollow?userCode=${user.userCode}&followerCode="+ following;
+		var link = "/VIG/follow/json/deleteFollow?userCode=${user.userCode}&followerCode="+ following;
 		var id = "#follow_"+following;	
 		
 		$.ajax(				
@@ -165,11 +165,11 @@
 		 		<div class="row justify-content-center">
 					 <div class="box_body_m">
 						 <div class="wrap_m">
-						 	<a id="btn_ch_m" class="btn3" href="/vig/myfeed/getFollowerList?userCode=${writer.userCode}" >팔로워</a>
+						 	<a id="btn_ch_m" class="btn3" href="/VIG/myfeed/getFollowerList?userCode=${writer.userCode}" >팔로워</a>
 						 	
-							<a id="btn_ch_m" class="btn3" href="/vig/myfeed/getFollowingList?userCode=${writer.userCode}" >팔로잉</a>
+							<a id="btn_ch_m" class="btn3" href="/VIG/myfeed/getFollowingList?userCode=${writer.userCode}" >팔로잉</a>
 							
-							<a id="btn_ch_m" class="btn3" href="/vig/chat/getChat">채 팅</a>
+							<a id="btn_ch_m" class="btn3" href="/VIG/chat/getChat">채 팅</a>
 						</div>	 			
 					</div>   		
 			    					    	
@@ -184,8 +184,8 @@
 			    		<div id="follow_${follow.tagetUser.userCode}">			    		
 					    	<div class="row">		
 					    		<div class="col-md-2 ">
-						    		<a  href="/vig/myfeed/getMyFeedList?userCode=${follow.tagetUser.userCode}">
-						    			<img src="res/images/uploadFiles/${follow.tagetUser.profileImg}" class="rounded-circle"  style="max-height: 120px; margin-left: 20px;">				    		
+						    		<a  href="/VIG/myfeed/getMyFeedList?userCode=${follow.tagetUser.userCode}">
+						    			<img src="/VIG/images/uploadFiles/${follow.tagetUser.profileImg}" class="rounded-circle"  style="max-height: 120px; margin-left: 20px;">				    		
 						    		</a>		    		
 					    		</div>
 					    
@@ -224,8 +224,8 @@
 			    		<div id="follow_${follow.followUser.userCode}">			    		
 					    	<div class="row">		
 					    		<div class="col-md-2 ">
-						    		<a  href="/vig/myfeed/getMyFeedList?userCode=${follow.followUser.userCode}">
-						    			<img src="res/images/uploadFiles/${follow.followUser.profileImg}" class="rounded-circle"  style="max-height: 120px; margin-left: 20px;">				    		
+						    		<a  href="/VIG/myfeed/getMyFeedList?userCode=${follow.followUser.userCode}">
+						    			<img src="/VIG/images/uploadFiles/${follow.followUser.profileImg}" class="rounded-circle"  style="max-height: 120px; margin-left: 20px;">				    		
 						    		</a>		    		
 					    		</div>
 					    

@@ -90,7 +90,7 @@
      		self.location = document.referrer;
      	}else{
      		//페이지 정보가 없으면 메인으로 이동
-     		location.href = '/vig/main/vig';
+     		location.href = '/VIG/main/VIG';
      	}	
     };
 	
@@ -106,7 +106,7 @@
 		self.location = document.referrer;
 	}else{
 		//페이지 정보가 없으면 메인으로 이동
-		location.href = '/vig/main/vig';
+		location.href = '/VIG/main/VIG';
 	}		
 	*/
 		

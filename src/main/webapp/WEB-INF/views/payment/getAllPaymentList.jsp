@@ -62,7 +62,7 @@
 	 var result = confirm("취소할까요?");
 	 if(result){
 		 
-		 self.location="/vig/payment/cancelPayment?paymentId="+paymentId;
+		 self.location="/VIG/payment/cancelPayment?paymentId="+paymentId;
 		 
 	 }
 	 

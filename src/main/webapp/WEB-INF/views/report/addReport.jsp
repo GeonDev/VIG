@@ -19,7 +19,7 @@
 <meta charset="UTF-8">
 </head>
 <body>
-			<form name = "addReport" method="Post" action="/vig/report/addReport">
+			<form name = "addReport" method="Post" action="/VIG/report/addReport">
 
 					<!-- Modal -->
 				<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

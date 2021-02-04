@@ -61,8 +61,8 @@
 		displayValue = 
 			"<div class = 'view overlay'>"
 				+"<div class = 'img_feed'>"
-				+ "<a href='/vig/feed/getFeed?feedId="+ item.feedId +"' class='text-light'>"
-					+ "<img src='res/images/uploadFiles/" + thumbnail + "' alt='thumbnail' class='img-fluid rounded-sm img_feed '>"
+				+ "<a href='/VIG/feed/getFeed?feedId="+ item.feedId +"' class='text-light'>"
+					+ "<img src='/VIG/images/uploadFiles/" + thumbnail + "' alt='thumbnail' class='img-fluid rounded-sm img_feed '>"
 					+ "<div class='mask waves-effect waves-light rgba-black-strong' style='text-align: right;'>"	
 					+ "<p class='txt_line' style='margin: 65% 10px; font-weight: bold; text-align: left; color : white; font-size : large; vertical-align: bottom'>";								
 											
@@ -95,7 +95,7 @@
 		
 		$.ajax( 
 				{
-					url : "/vig/search/json/getSearchUserFeedResult",
+					url : "/VIG/search/json/getSearchUserFeedResult",
 					method : "POST",
 					dataType : "Json",					
 					headers : {
@@ -230,11 +230,11 @@
 		 		<div class="row justify-content-center">
 					 <div class="box_body_m">
 					 <div class="wrap_m">
-					 	<a id="btn_ch_m" class="btn3" href="/vig/myfeed/getFollowerList?userCode=${writer.userCode}" >팔로워</a>
+					 	<a id="btn_ch_m" class="btn3" href="/VIG/myfeed/getFollowerList?userCode=${writer.userCode}" >팔로워</a>
 					 	
-						<a id="btn_ch_m" class="btn3" href="/vig/myfeed/getFollowingList?userCode=${writer.userCode}" >팔로잉</a>
+						<a id="btn_ch_m" class="btn3" href="/VIG/myfeed/getFollowingList?userCode=${writer.userCode}" >팔로잉</a>
 						
-						<a id="btn_ch_m" class="btn3" href="/vig/chat/getChat?receiver=${writer.userCode}">채 팅</a>
+						<a id="btn_ch_m" class="btn3" href="/VIG/chat/getChat?receiver=${writer.userCode}">채 팅</a>
 					</div>	 			
 				</div>			    					    	
 			  </div>  			    		

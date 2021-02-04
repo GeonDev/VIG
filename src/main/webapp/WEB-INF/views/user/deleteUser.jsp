@@ -26,11 +26,11 @@
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 		
-	<script src="res/javascript/jQuery.tagify.min.js"></script>
- 	<link rel="stylesheet" href="res/css/tagify.css">
+	<script src="/VIG/javascript/jQuery.tagify.min.js"></script>
+ 	<link rel="stylesheet" href="/VIG/css/tagify.css">
  	<!--  drag and drop -->
- 	<script src="res/javascript/dropify.js"></script>
- 	<link rel="stylesheet" href="res/css/dropify.min.css">
+ 	<script src="/VIG/javascript/dropify.js"></script>
+ 	<link rel="stylesheet" href="/VIG/css/dropify.min.css">
 		<script type="text/javascript">
 					
 		

@@ -70,7 +70,7 @@
 			<!-- 다른 유저의 마이 피드 방문시 해당 유저의 정보만 노출 -->
 				<c:choose>
 				<c:when test="${user.userCode != writer.userCode}">		
-					<img class="card-img-top" src="res/images/uploadFiles/${writer.profileImg}" id="pImg" alt="profile_img">
+					<img class="card-img-top" src="/VIG/images/uploadFiles/${writer.profileImg}" id="pImg" alt="profile_img">
 			 			<div class="card-body">
 			 					<h3 class="user_name" align="center"><strong>${writer.userName} </strong> </h3>			
 			 					<p class="user_bio" align="center" > ${writer.selfIntroduce} </p>		 					
@@ -80,7 +80,7 @@
 			 		</c:when>
 			
 					<c:when test="${user.userCode == writer.userCode}">			
-						<img class="card-img-top" src="res/images/uploadFiles/${user.profileImg}" id="pImg" alt="profile_img"/>
+						<img class="card-img-top" src="/VIG/images/uploadFiles/${user.profileImg}" id="pImg" alt="profile_img"/>
 				 			<div class="card-body">
 				 					<h3 class="user_name" align="center" style="font-weight: bold;"> ${user.userName} </h3>				 					
 				 					<p class="user_bio" align="center"> ${user.selfIntroduce} </p>
@@ -95,13 +95,13 @@
 					 <div class="box_body">
 						 <c:if test="${sessionScope.user.role!='admin'}">
 							<div class="wrap">
-			 					<a id="btn_ch" class="btn btn-block" href="/vig/myfeed/getMyFeedList?userCode=${user.userCode}">
+			 					<a id="btn_ch" class="btn btn-block" href="/VIG/myfeed/getMyFeedList?userCode=${user.userCode}">
 			 						마이피드 목록</a>
 			 					<br/>
-			 					<a id="btn_ch" class="btn btn-block" href="/vig/history/getMyHistoryList?userCode=${user.userCode}">
+			 					<a id="btn_ch" class="btn btn-block" href="/VIG/history/getMyHistoryList?userCode=${user.userCode}">
 			 						내 활동 보기</a>
 			 					 <br/>
-			 					 <a id="btn_ch" class="btn btn-block" href="/vig/user/updateUser?userCode=${user.userCode}">
+			 					 <a id="btn_ch" class="btn btn-block" href="/VIG/user/updateUser?userCode=${user.userCode}">
 			 						내 정보 수정</a>
 			 					 <br/>	
 			 				 </div>
@@ -111,7 +111,7 @@
  					
  					
 			 		<c:if test="${sessionScope.user.role=='business'}">
-			 			<a id="btn_ch" class="btn btn-block" href="/vig/chart/getChart">통 계</a>
+			 			<a id="btn_ch" class="btn btn-block" href="/VIG/chart/getChart">통 계</a>
 			 				<br/>	
 				 	</c:if>							
 				 	
@@ -123,15 +123,15 @@
 				<div class="dropdown-menu sideBar">
 				
 				<c:if test="${sessionScope.user.role=='user'}">
-				 <a class="dropdown-item" id="toggleID" href="/vig/payment/getPaymentList" style="text-align: center;">내 결제 목록</a>
+				 <a class="dropdown-item" id="toggleID" href="/VIG/payment/getPaymentList" style="text-align: center;">내 결제 목록</a>
 				  </c:if>
 				  
 				  <c:if test="${sessionScope.user.role=='business'}">
-				  <a class="dropdown-item" id="toggleID" href="/vig/payment/getPaymentList" style="text-align: center;">내 결제 목록</a>
+				  <a class="dropdown-item" id="toggleID" href="/VIG/payment/getPaymentList" style="text-align: center;">내 결제 목록</a>
 				  <div class="dropdown-divider"></div>
-				  <a class="dropdown-item" id="toggleID" href="/vig/withdraw/getDonationList" style="text-align: center;">후원 받은 목록</a>
+				  <a class="dropdown-item" id="toggleID" href="/VIG/withdraw/getDonationList" style="text-align: center;">후원 받은 목록</a>
 				   <div class="dropdown-divider"></div>
-				  <a class="dropdown-item" id="toggleID" href="/vig/withdraw/getWithdrawList" style="text-align: center;">내 출금 목록</a>
+				  <a class="dropdown-item" id="toggleID" href="/VIG/withdraw/getWithdrawList" style="text-align: center;">내 출금 목록</a>
 				  </c:if>
 				  
 				</div>
@@ -149,13 +149,13 @@
 			 		
 			<!-- 관리자 로그인시 --> 		
 			 		<c:if test="${sessionScope.user.role=='admin'}">
-			 			<a type="button" class="btn btn-block" href="/vig/user/getUserList">회원 목록</a>
+			 			<a type="button" class="btn btn-block" href="/VIG/user/getUserList">회원 목록</a>
 			 				<br/>
-			 			<a type="button" class="btn btn-block"href="/vig/report/getReportList">신고 조회</a>
+			 			<a type="button" class="btn btn-block"href="/VIG/report/getReportList">신고 조회</a>
 			 				<br/>
-			 			<a type="button" class="btn btn-block" href="/vig/payment/getAllPaymentList">결제 조회</a>
+			 			<a type="button" class="btn btn-block" href="/VIG/payment/getAllPaymentList">결제 조회</a>
 			 				<br/>
-			 			<a type="button" class="btn btn-block" href="/vig/withdraw/getWithdrawList">출금 조회</a>
+			 			<a type="button" class="btn btn-block" href="/VIG/withdraw/getWithdrawList">출금 조회</a>
 			 				<br/>	
 			 		</c:if>	
 			

@@ -98,7 +98,8 @@ public class mainController {
 		model.addAttribute("pageSize", pageSize);
 
 		
-		return new ModelAndView("main/main");
+		
+		return new ModelAndView("forward: /main/main.jsp");
 	}
 
 	// 최소 세팅시만 실행하는 함수
@@ -186,7 +187,7 @@ public class mainController {
 
 				long Totalend = System.currentTimeMillis();
 				logger.debug("이미지 정보 추출 완료 / 총 추출 시간 : " + getTotalWorkTime(Totalstart, Totalend) + "초");
-				return new ModelAndView("common/alertView", "message", "세팅 완료");
+				return new ModelAndView("forward:/common/alertView.jsp", "message", "세팅 완료");
 
 			} else {
 
@@ -219,12 +220,12 @@ public class mainController {
 
 				long Totalend = System.currentTimeMillis();
 				logger.debug("이미지 정보 추출 완료 / 총 추출 시간 : " + getTotalWorkTime(Totalstart, Totalend) + "초");
-				return new ModelAndView("common/alertView", "message", "세팅 완료");
+				return new ModelAndView("forward:/common/alertView.jsp", "message", "세팅 완료");
 
 			}
 
 		} else {
-			return new ModelAndView("common/alertView", "message", "데이터가 이미 있습니다.");
+			return new ModelAndView("forward:/common/alertView.jsp", "message", "데이터가 이미 있습니다.");
 		}
 	}
 

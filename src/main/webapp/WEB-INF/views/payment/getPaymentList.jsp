@@ -113,7 +113,7 @@
 
 				 swal({text: "완료되었습니다.",
 					  icon: "info",}) 
-				  self.location="/vig/payment/cancelPayment?paymentId="+paymentId;
+				  self.location="/VIG/payment/cancelPayment?paymentId="+paymentId;
 				  
 			  } else {
 			    
