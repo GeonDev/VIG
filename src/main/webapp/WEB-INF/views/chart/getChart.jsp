@@ -30,7 +30,7 @@
  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
- <script src="res/javascript/numscroller-1.0.js"></script>	
+ <script src="/VIG/javascript/numscroller-1.0.js"></script>	
 
 <style>
 
@@ -271,7 +271,7 @@ $("#year, #month").on("change", function(){
 	//차트 업데이트
 	$.ajax(
    			{
-   				url : "/vig/chart/json/getChart",
+   				url : "/VIG/chart/json/getChart",
 				method : "GET" ,
 				headers : {
 					"Accept" : "application/json",

@@ -117,7 +117,7 @@ $(function(){
 			        msg += '카드 승인번호 : ' + rsp.apply_num;
 			     //   $("input[name='lastPrice']").val(rsp.paid_amount);
 			        $("input[name='paymentId']").val(rsp.imp_uid);
-			        $("form").attr("action", "/vig/payment/addBusiness").attr("method", "post").submit();
+			        $("form").attr("action", "/VIG/payment/addBusiness").attr("method", "post").submit();
 			    } else {
 			        var msg = '결제에 실패하였습니다.';
 			        msg += '에러내용 : ' + rsp.error_msg;
