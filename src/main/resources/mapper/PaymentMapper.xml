@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vig.repository.PaymentMapper"> 	
+ 	
+	<resultMap id="PaymentSelectMap" type="payment">
+		<result property="paymentId" column="payment_id" jdbcType="VARCHAR"/>
+		<result property="buyer.userCode" column="buyer" jdbcType="VARCHAR"/>
+		<result property="beneficiary" column="beneficiary" jdbcType="VARCHAR"/>
+		<result property="feedId" column="feed_id" jdbcType="NUMERIC"/>
+		<result property="paymentOption" column="payment_option" jdbcType="NUMERIC"/>
+		<result property="productType" column="product_type" jdbcType="NUMERIC"/>
+		<result property="selectPrice" column="select_price" jdbcType="NUMERIC"/>
+		<result property="lastPrice" column="last_price" jdbcType="NUMERIC"/>
+		<result property="paymentDate" column="payment_date" jdbcType="DATE"/>
+		<result property="isWithdraw" column="is_withdraw" jdbcType="NUMERIC"/>
+		<result property="isCancel" column="is_cancel" jdbcType="NUMERIC"/>
+	</resultMap>
+	
+	<insert id="addPayment" parameterType="payment">
+	
+		INSERT INTO payment(payment_id, buyer, beneficiary, product_type,
+							feed_id, payment_option, select_price, last_price, payment_date, 
+							is_withdraw, is_cancel)
+							
+		VALUE (#{paymentId}, #{buyer.userCode}, IFNULL(#{beneficiary:VARCHAR}, NULL), #{productType:NUMERIC},
+				<if test="feedId == 0">
+				NULL,
+				</if>
+				<if test="feedId != 0">
+				#{feedId:NUMERIC},
+				</if>
+				#{paymentOption:NUMERIC}, #{selectPrice:NUMERIC}, #{lastPrice:NUMERIC}, NOW(),
+				IFNULL(#{isWithdraw:NUMERIC},0), IFNULL(#{isCancel:NUMERIC}, 0))
+	
+	</insert>
+	
+	<update id="updatePayment" parameterType="payment">
+		UPDATE payment
+		SET is_withdraw = 1
+		WHERE payment_id = #{paymentId:VARCHAR}
+	
+	</update>
+	
+	<select id="getPayment" parameterType="String" resultMap="PaymentSelectMap">
+		
+		SELECT * FROM payment
+		WHERE payment_id = #{value}
+	
+	</select>
+	
+	
+	<select id="getPaymentList" parameterType="search" resultMap="PaymentSelectMap">
+		
+		SELECT * FROM
+		(SELECT ROW_NUMBER() OVER(ORDER BY payment.payment_date ASC) num, payment.* 
+		FROM payment
+		<if test="keyword !=null">
+		WHERE buyer = #{keyword}
+		</if>
+		) temp WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
+	
+	</select>
+	
+	<select id="getCountPayment"  parameterType="search"   resultType="int">
+		
+		SELECT COUNT(temp.payment_id) FROM
+		(SELECT payment_id FROM payment 
+		<if test="keyword != null">
+		WHERE buyer = #{keyword}
+		AND is_cancel = 0
+		</if>
+		
+		) temp
+	
+	</select>
+	
+	<update id="cancelPayment" parameterType="String">
+		
+		UPDATE payment
+		SET is_cancel = 1
+		WHERE payment_id = #{value}	
+	
+	</update>
+	
+	<select id="getDonationList" parameterType="search" resultMap="PaymentSelectMap">
+		SELECT * FROM
+		(SELECT ROW_NUMBER() OVER(ORDER BY payment.payment_date DESC) num, payment.* 
+		FROM payment
+		WHERE beneficiary = #{keyword:VARCHAR}
+		) temp WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
+	
+	</select>
+	
+	<select id="getCountDonation" parameterType="search" resultType="int">
+		
+		
+		SELECT COUNT(temp.payment_id) FROM
+		(
+		SELECT * FROM payment
+		WHERE beneficiary = #{keyword}
+		) temp
+	
+	</select>
+	
+	<select id="getPossiblePrice" parameterType="String" resultType="int">
+		
+		SELECT IFNULL (SUM(select_Price), 0) FROM payment
+		WHERE beneficiary = #{value}
+		AND is_cancel=0
+		AND is_withdraw=0
+		AND product_Type=2
+	
+	
+	</select>
+	
+
+	 
+</mapper>
+
+

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vig.repository.UserMapper"> 	
+ 	
+	<resultMap id="userSelectMap" type="user">
+		<result property="userCode" 		column="user_code" 			jdbcType="VARCHAR"/>
+		<result property="userName"			column="user_name" 			jdbcType="VARCHAR" />
+		<result property="password" 		column="password" 			jdbcType="VARCHAR" />
+		<result property="role" 			column="role" 				jdbcType="VARCHAR" />
+		<result property="profileImg" 		column="profile_img" 		jdbcType="VARCHAR" />
+		<result property="selfIntroduce" 	column="self_introduce" 	jdbcType="VARCHAR" />
+		<result property="state" 			column="state" 				jdbcType="NUMERIC" />
+		<result property="googleId" 		column="google_id" 			jdbcType="VARCHAR" />
+		<result property="account" 			column="account" 			jdbcType="VARCHAR" />
+		<result property="primeCount" 		column="prime_count" 		jdbcType="NUMERIC" />
+		<result property="email" 			column="email" 				jdbcType="VARCHAR" />
+		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
+		<result property="banDate" 			column="ban_date" 			jdbcType="DATE" />			
+	</resultMap>	 
+
+	 
+	 <!-- SQL : INSERT -->
+	<insert	id="addUser" parameterType="user"  >
+	 	INSERT
+		INTO users(user_code , user_name , password , profile_img, state, prime_count, email, role, reg_date, google_id) 
+		VALUES (#{userCode}, #{userName}, #{password:VARCHAR}, #{profileImg:VARCHAR}, #{state:NUMERIC}, #{primeCount:NUMERIC}, #{email:VARCHAR}, DEFAULT, NOW(), #{googleId:VARCHAR})
+	 </insert>
+	 
+	 
+	 <!-- #{searchType}에 따라 비즈니스, 일반 계정만 조회 하거나 전체를 조회함  -->
+	 <select id="getUserListFromName" parameterType = "search" resultMap="userSelectMap">
+	 	SELECT temp.* FROM
+	 	(SELECT ROW_NUMBER() OVER(ORDER BY users.user_code) num, users.*
+	 	FROM users
+	 	<where>
+		 	<if test="keyword != ''">
+		 		user_name LIKE CONCAT('%',#{keyword},'%')
+		 	</if>	 	
+		 	<if test="searchType == 0">
+		 		AND role in('user','business') 
+		 	</if>		 	
+	 	</where> 	
+	 	)temp
+	 	WHERE num BETWEEN #{startRowNum} AND #{endRowNum}	
+	 </select>
+	 
+	 
+	 <select id="getAllUserList"  resultMap="userSelectMap">
+	 	SELECT *
+	 	FROM users	 
+	 </select>
+	 
+	 
+	 <!-- 1일정지, 또는 7일 정지인 유저만 가지고 온다. -->
+	 <select id="getBanUserList"  resultMap="userSelectMap">
+	 	SELECT *
+	 	FROM users	 
+	 	WHERE state IN (1,2)
+	 </select>
+	 
+	 
+	 
+	 <select id="getUserOne" parameterType = "String" resultMap="userSelectMap">
+	 	SELECT * FROM users
+	 	WHERE user_code = #{value}	
+	 </select>
+	 
+	  <select id="getGoogleLogin" parameterType="string" resultMap="userSelectMap">
+	 	SELECT * from users
+	 	WHERE  google_id = #{value}	 
+	 </select>
+	 
+	 
+	 <!-- 이메일인증사용 -->
+	 <select id="duplicationCheck" parameterType="String" resultType = "String" >
+		SELECT email
+	 	FROM users
+	 	WHERE user_code = #{value}
+	 </select>
+	 
+	 <!-- 비번 확인용 -->
+		<select 	id="chcekPw"	parameterType="String"	resultType="int">
+		SELECT count(*)	
+		FROM users 
+		WHERE user_code = #{value}
+	 </select> 	 
+	 	 
+	  <select id="getLastUserNum" resultType="int">
+	 	SELECT COUNT(user_code) FROM users	 	
+	 </select>
+	 
+	 
+	 <select id="getAutoUserName" parameterType="String" resultType="String">
+	 	SELECT users.user_name FROM users
+	 	WHERE users.user_name LIKE CONCAT('%',#{value},'%')
+	 	AND users.role in('user','business')
+	    LIMIT 5	 
+	 </select>
+	 
+	  <update id="updateUser" parameterType="user" >
+	 	UPDATE users 
+	 	SET	 	
+	 		self_introduce = #{selfIntroduce:VARCHAR},
+	 		user_name = #{userName:VARCHAR},
+	 		google_id = #{googleId:VARCHAR},
+	 		password = IFNULL(#{password:VARCHAR}, password),
+	 		profile_img = IFNULL(#{profileImg:VARCHAR}, profile_img)	 		
+	 	WHERE user_code = #{userCode}
+	 </update>	
+
+	 <update id="updateBusiness" parameterType="user">
+	 	UPDATE users
+	 	SET
+	 	role = #{role:VARCHAR},
+	 	prime_count = #{primeCount:NUMERIC}	 
+	 	WHERE user_code = #{userCode}
+	 </update>	
+	 
+	 
+	 <update  id="deleteUser" parameterType="user" >
+	 	UPDATE users 
+	 	SET state = 4
+	 	WHERE user_code = #{userCode}
+	 </update > 
+
+	
+<!-- SQL : SELECT LIST -->
+	<select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT user_code , user_name 
+											FROM users
+											<if test="searchCondition != null">
+												<where>
+													<if test="searchCondition == 0 and searchKeyword !='' ">
+										 				user_code LIKE CONCAT('%',#{keyword},'%')
+													</if>
+													<if test="searchCondition == 1 and searchKeyword !='' ">
+										 				user_name LIKE CONCAT('%',#{keyword},'%')
+													</if>
+												</where>
+											</if>
+											ORDER BY user_code ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>
+	 
+	 
+	 
+	 <!-- SQL : SELECT ROW Count -->	 
+	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(user_code)
+	  	FROM(	SELECT user_code 
+						FROM users
+						GROUP BY user_code
+						<if test="keyword !=''">
+						 		HAVING	user_code LIKE CONCAT('%',#{keyword},'%')
+						</if> ) countTable						
+	 </select>
+</mapper>
