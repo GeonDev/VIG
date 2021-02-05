@@ -27,7 +27,7 @@ import com.vig.service.FeedService;
 
 
 @Controller
-@RequestMapping("/event/*")
+@RequestMapping("event/*")
 public class EventController {
 	
 	public static final Logger logger = LogManager.getLogger(EventController.class);
@@ -69,7 +69,7 @@ public class EventController {
 
 		ModelAndView modelAndView = new ModelAndView();
 		
-		modelAndView.setViewName("forward: event/addEventView.jsp");
+		modelAndView.setViewName("forward: eventView/addEventView.jsp");
 
 		return modelAndView;
 		
@@ -151,7 +151,7 @@ public class EventController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		
-		modelAndView.setViewName("redirect:/event/getEventList");
+		modelAndView.setViewName("redirect: eventView/getEventList");
 		
 		return modelAndView;
 		
@@ -171,7 +171,7 @@ public class EventController {
 		List<Feed> feedList = feedServices.getFeedListOnlyTag(tags);
 		System.out.println(feedList);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("forward:/event/getEvent.jsp");
+		mav.setViewName("forward: eventView/getEvent");
 		mav.addObject("event", event);
 		mav.addObject("feedList", feedList);
 		
@@ -200,7 +200,7 @@ public class EventController {
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("forward:/event/getEventList.jsp");
+		mav.setViewName("forward: eventView/getEventList");
 		mav.addObject("list", map.get("list"));
 		mav.addObject("resultPage", resultPage);
 		
@@ -217,7 +217,7 @@ public class EventController {
 		
 		eventServices.deleteEvent(eventId);
 		
-		ModelAndView mav = new ModelAndView("redirect:/event/getEventList");
+		ModelAndView mav = new ModelAndView("redirect: eventView/getEventList");
 		
 		return mav;
 	}
@@ -225,11 +225,11 @@ public class EventController {
 	@RequestMapping(value="updateEvent", method=RequestMethod.GET)
 	public ModelAndView updateEvent(@RequestParam("eventId") int eventId) throws Exception {
 		
-		System.out.println("updateEventView");
+	
 		Event dbEvent = eventServices.getEvent(eventId);
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("forward:/event/updateEventView.jsp");
+		mav.setViewName("forward: eventView/updateEventView");
 		mav.addObject("event", dbEvent);
 		
 		return mav;
@@ -303,7 +303,7 @@ public class EventController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		
-		modelAndView.setViewName("redirect:/event/getEventList");
+		modelAndView.setViewName("redirect: eventView/getEventList");
 		
 		return modelAndView;
 		

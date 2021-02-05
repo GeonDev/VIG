@@ -15,7 +15,7 @@ import com.vig.service.HistoryService;
 import com.vig.service.LikeService;
 //
 @Controller
-@RequestMapping("/chart/*")
+@RequestMapping("chart/*")
 public class ChartController {
 
 
@@ -54,7 +54,7 @@ public ChartController() {
 	    
 	    
 	    ModelAndView mav = new ModelAndView();
-	    mav.setViewName("forward: chart/getChart.jsp");
+	    mav.setViewName("forward: chartView/getChart");
 	    mav.addObject("likeCount", likeCount.get("mouthCout"));			//리스트
 	    mav.addObject("likeCount2",likeCount.get("totalCount"));			//총합
 	    //좋아요

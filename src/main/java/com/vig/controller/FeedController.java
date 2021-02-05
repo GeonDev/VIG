@@ -46,7 +46,7 @@ import com.vig.util.VisionInfo;
 
 
 @Controller
-@RequestMapping("/feed/*")
+@RequestMapping("feed/*")
 public class FeedController {
 	
 	public static final Logger logger = LogManager.getLogger(FeedController.class); 
@@ -190,18 +190,17 @@ public class FeedController {
 		logger.debug("피드 등록 완료 / 총 추출 시간 : " + getTotalWorkTime(Totalstart, Totalend)+"초");
 		
 		
-		return new ModelAndView("myfeed/getMyFeedList");
+		return new ModelAndView("myfeedView/getMyFeedList");
 	}
 	
 	
 	@RequestMapping(value="getFeed", method=RequestMethod.GET)
 	public ModelAndView getFeed(@RequestParam("feedId") int feedId, HttpSession session, HttpServletRequest request) throws Exception {
 		
-		System.out.println(feedId);
+
 		Feed feed = feedServices.getFeed(feedId);
-		System.out.println(feed);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("forward: feed/getFeed.jsp");
+		mav.setViewName("feedView/getFeed");
 		
 		
 		//ip로 조회수 counting 하는 부분
@@ -276,7 +275,7 @@ public class FeedController {
 		feedServices.deleteFeed(feedId);
 		
 	
-		ModelAndView mav = new ModelAndView("redirect: myfeed/getMyFeedList?userCode="+user.getUserCode());
+		ModelAndView mav = new ModelAndView("redirect: myfeedView/getMyFeedList?userCode="+user.getUserCode());
 		
 		return mav;
 	}

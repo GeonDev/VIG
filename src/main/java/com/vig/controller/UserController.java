@@ -31,7 +31,7 @@ import com.vig.service.UserService;
 import com.vig.util.CommonUtil;
 
 @Controller
-@RequestMapping("/user/*")
+@RequestMapping("user/*")
 public class UserController {
 	
 	public static final Logger logger = LogManager.getLogger(EventController.class); 
@@ -81,9 +81,9 @@ public class UserController {
 		
 		//서버 os가 윈도우라면 로컬로 판단
 		if(OS.contains("win")) {
-			query += "&redirect_uri=" + "http://localhost:8080/VIG/user/googleLogin";	
+			query += "&redirect_uri=" + "http://localhost:8080/user/googleLogin";	
 		}else {
-			query += "&redirect_uri=" + "http://ec2-13-125-196-55.ap-northeast-2.compute.amazonaws.com:8080/VIG/user/googleLogin";
+			query += "&redirect_uri=" + "http://ec2-13-125-196-55.ap-northeast-2.compute.amazonaws.com:8080/user/googleLogin";
 		}		
 		
 		query += "&grant_type=authorization_code";
@@ -104,7 +104,7 @@ public class UserController {
 			//이미 같은 정보로 로그인한 기록이 있을 경우
 			if(userServices.getGoogleID(profile.getId()) != null) {				
 				
-				return new ModelAndView("forward:/common/alertView.jsp", "message", "이미 연동된 계정이 있습니다.");
+				return new ModelAndView("forward: common/alertView", "message", "이미 연동된 계정이 있습니다.");
 			} 
 			
 			//로그인된 유저라면 구글 정보를 업데이트 -> 세션에는 비밀번호가 없어 DB에서 전체 정보를 다시 받음			
@@ -117,7 +117,7 @@ public class UserController {
 			//세션에 저장된 정보를 업데이트
 			session.setAttribute("user", userTemp);
 			
-			return new ModelAndView("redirect:/main/VIG");
+			return new ModelAndView("redirect: /");
 			
 		}else {
 			
@@ -128,15 +128,15 @@ public class UserController {
 				
 				if(user.getState() == 0 ) {
 					session.setAttribute("user",user);							
-					return new ModelAndView("redirect:/main/VIG");
+					return new ModelAndView("redirect: /");
 					
 				}else if(user.getState() == 3 || user.getState() == 4){		
 					String msg = "사용할 수 없는 아이디입니다";				
-					return new ModelAndView("forward:/common/alertView.jsp", "message", msg);
+					return new ModelAndView("forward: common/alertView", "message", msg);
 				}else {	
 					
 					String msg = "접속불가<br/>신고로 인하여 접속이 불가능합니다.<br/>접속 불가능 기간 : " + user.getBanDate().toString() +"까지";				
-					return new ModelAndView("forward:/common/alertView.jsp", "message", msg);				
+					return new ModelAndView("forward: common/alertView", "message", msg);				
 					
 				}		
 
@@ -151,7 +151,7 @@ public class UserController {
 			model.addAttribute("user", user);
 		}
 		
-		return new ModelAndView("forward:/user/addUserView.jsp");		
+		return new ModelAndView("forward: userView/addUserView");		
 	
 	}
 	
@@ -162,7 +162,7 @@ public class UserController {
 	public ModelAndView addUser() throws Exception{		
 	
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("forward:/user/addUserView.jsp");	
+		modelAndView.setViewName("forward: userView/addUserView");	
 		return modelAndView;
 	}
 
@@ -175,7 +175,7 @@ public class UserController {
 		userServices.addUser(user);
 		
 		session.setAttribute("user", userServices.getUserOne(user.getUserCode()));		
-		return "redirect:/main/VIG";
+		return "redirect: /";
 	}
 			
 //====id 체크 =====
@@ -189,7 +189,7 @@ public class UserController {
 		model.addAttribute("result", new Boolean(result));
 		model.addAttribute("userCode", userCode);
 
-		return "forward:/user/checkDuplication.jsp";
+		return "forward: userView/checkDuplication";
 	}
 
 //=======로그인=====
@@ -210,26 +210,26 @@ public class UserController {
 		
 		if(dbUser == null) {
 			String msg = "가입되어 있지 않은 아이디입니다.";				
-			return new ModelAndView("forward:/common/alertView.jsp", "message", msg);
+			return new ModelAndView("forward: common/alertView", "message", msg);
 		}
 		
 //		if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())){
 		if (true){			
 			if(dbUser.getState() == 0) {
 				session.setAttribute("user", dbUser);		
-				mv.setViewName("redirect:/main/VIG");
+				mv.setViewName("redirect:/");
 						
 				return mv;					
 			}else if(dbUser.getState() == 3 || dbUser.getState() == 4){		
 				String msg = "사용할 수 없는 아이디입니다";				
-				return new ModelAndView("forward:/common/alertView.jsp", "message", msg);
+				return new ModelAndView("forward: common/alertView", "message", msg);
 			}				
 			
 				String msg = "접속불가<br/>신고로 인하여 접속이 불가능합니다.<br/>접속 불가능 기간 : " + dbUser.getBanDate().toString() +"까지";				
-				return new ModelAndView("forward:/common/alertView.jsp", "message", msg);
+				return new ModelAndView("forward:/common/alertView", "message", msg);
 				
 		} else {
-			mv.setViewName("forward:/user/loginView.jsp");		
+			mv.setViewName("forward: userView/loginView");		
 			mv.addObject("msg", "fail");
 			return mv;
 		}

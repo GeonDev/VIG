@@ -51,7 +51,7 @@ public class mainController {
 		model.addAttribute("pageSize", pageSize);
 
 		
-		return new ModelAndView("main/main");
+		return new ModelAndView("mainView/main");
 	}
 
 
