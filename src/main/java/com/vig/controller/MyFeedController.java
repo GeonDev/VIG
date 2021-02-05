@@ -47,7 +47,7 @@ public class MyFeedController {
 		
 		ModelAndView mav = new ModelAndView();	
 		
-		mav.setViewName("forward:/myFeed/getMyFeedList.jsp");
+		mav.setViewName("forward: myFeedView/getMyFeedList");
 		mav.addObject("writer", writer);		
 		
 		return mav; 
@@ -62,7 +62,7 @@ public class MyFeedController {
 					
 		ModelAndView mav = new ModelAndView();	
 		
-		mav.setViewName("forward:/myFeed/getMyFeedList.jsp");
+		mav.setViewName("forward: myFeedView/getMyFeedList");
 		mav.addObject("writer", writer);	
 		mav.addObject("follower", followServices.getFollowerList(writer.getUserCode()));
 		mav.addObject("following", followServices.getFollowingList(writer.getUserCode()));		
@@ -78,7 +78,7 @@ public class MyFeedController {
 		
 		ModelAndView mav = new ModelAndView();	
 		
-		mav.setViewName("forward:/myFeed/getFollowList.jsp");
+		mav.setViewName("forward: myFeedView/getFollowList");
 		mav.addObject("writer", writer);
 		mav.addObject("type", "팔로워");
 		mav.addObject("follow", followServices.getFollowerList(writer.getUserCode()));	
@@ -94,7 +94,7 @@ public class MyFeedController {
 		
 		ModelAndView mav = new ModelAndView();	
 		
-		mav.setViewName("forward:/myFeed/getFollowList.jsp");
+		mav.setViewName("forward: myFeedView/getFollowList");
 		mav.addObject("writer", writer);
 		mav.addObject("type", "팔로잉");
 		mav.addObject("follow", followServices.getFollowingList(writer.getUserCode()));

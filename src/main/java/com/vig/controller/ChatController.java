@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
-@RequestMapping("/chat/*")
+@RequestMapping("chat/*")
 public class ChatController {
 
 	public ChatController() {}
@@ -21,7 +21,7 @@ public class ChatController {
 		
 		System.out.println("getChatList");
 	    ModelAndView mav = new ModelAndView();
-	    mav.setViewName("forward: chat/getChat.jsp");
+	    mav.setViewName("forward: chatView/getChat");
 	    
 	    if(receiver != null || receiver != "") {
 	    	mav.addObject("receiver", receiver);

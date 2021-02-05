@@ -57,13 +57,13 @@ public class PaymentController {
 		//0: 프라임피드결제 , 1: 비즈니스전환결제, 2:후원결제
 		if(productType == 0) {
 			//프라임 피드 결제
-			mav.setViewName("forward:/payment/addPrimeView.jsp");
+			mav.setViewName("forward: paymentView/addPrimeView");
 			
 		}
 		
 		if(productType == 1) {
 			//비즈니스 전환 결제
-			mav.setViewName("forward:/payment/addBusinessView.jsp");
+			mav.setViewName("forward: paymentView/addBusinessView");
 			
 			
 		}
@@ -78,7 +78,7 @@ public class PaymentController {
 			
 			if(writer.getRole().contains("business")) {
 			
-				mav.setViewName("forward:/payment/addDonationView.jsp");
+				mav.setViewName("forward: paymentView/addDonationView");
 				
 				mav.addObject("feed", feed);
 			
@@ -103,7 +103,7 @@ public class PaymentController {
 		
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("forward:/payment/addPayment.jsp");
+		mav.setViewName("forward: paymentView/addPayment");
 		mav.addObject("payment", payment);
 		
 		return mav;
@@ -129,7 +129,7 @@ public class PaymentController {
 		session.setAttribute("user", dbuser);
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("forward:/payment/addPayment.jsp");
+		mav.setViewName("forward: paymentView/addPayment");
 		mav.addObject("payment", payment);
 		return mav;
 	}
@@ -158,7 +158,7 @@ public class PaymentController {
 		session.setAttribute("user", dbuser);
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("forward:/payment/addPayment.jsp");
+		mav.setViewName("forward: paymentView/addPayment");
 		mav.addObject("payment", payment);
 		return mav;
 	}
@@ -188,7 +188,7 @@ public class PaymentController {
 		Page resultPage = new Page(search.getCurrentPage(), paymentServices.getCountPayment(search) , pageUnit, pageSize);
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("forward:/payment/getPaymentList.jsp");
+		mav.setViewName("forward: paymentView/getPaymentList");
 		mav.addObject("list", list);
 		mav.addObject("writer", userServices.getUserOne(user.getUserCode()));
 		mav.addObject("resultPage", resultPage);
@@ -204,10 +204,10 @@ public class PaymentController {
 		ModelAndView mav = new ModelAndView();
 		User user = (User)session.getAttribute("user");
 		if(user.getRole().contains("admin")) {
-		mav.setViewName("redirect:/payment/getAllPaymentList");	
+		mav.setViewName("redirect:/paymentView/getAllPaymentList");	
 			
 		}else {
-		mav.setViewName("redirect:/payment/getPaymentList");
+		mav.setViewName("redirect:/paymentView/getPaymentList");
 		}
 		return mav;
 	}
@@ -223,7 +223,7 @@ public class PaymentController {
 		if(user==null) {
 
 		String message = "관리자만 접근할 수 있습니다.";
-		mav.setViewName("forward:/common/alertView.jsp");
+		mav.setViewName("forward: common/alertView.jsp");
 		mav.addObject("message", message);
 		
 		}else {
@@ -240,7 +240,7 @@ public class PaymentController {
 		System.out.println(resultPage);
 		System.out.println(list);
 		
-		mav.setViewName("forward:/payment/getAllPaymentList.jsp");
+		mav.setViewName("forward: paymentView/getAllPaymentList");
 		mav.addObject("list", list);
 		mav.addObject("writer", userServices.getUserOne(user.getUserCode()));
 		mav.addObject("resultPage", resultPage);

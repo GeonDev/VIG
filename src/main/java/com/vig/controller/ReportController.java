@@ -1,6 +1,5 @@
 package com.vig.controller;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +18,8 @@ import com.vig.service.ReportService;
 import com.vig.service.UserService;
 
 
-
-
-
 @Controller
-@RequestMapping("/report/*")
+@RequestMapping("report/*")
 public class ReportController {	
 	
 	@Autowired
@@ -31,11 +27,7 @@ public class ReportController {
 	
 	@Autowired
 	private UserService userService;
-	
 
-	@Autowired
-	private ServletContext context;	
-	
 	
 	@Value("${currentDate}")
 	int currentDate;
@@ -60,7 +52,7 @@ public class ReportController {
 		User user = (User)session.getAttribute("user");
 		
 		if(user == null) {
-			return new ModelAndView("forward:/common/alertView.jsp", "message", "로그인후 이용가능합니다..");
+			return new ModelAndView("forward:/common/alertView", "message", "로그인후 이용가능합니다..");
 		}
 		
 		report.setReporter(user);
@@ -68,7 +60,7 @@ public class ReportController {
 		report.setViolator(userService.getUserOne(report.getViolatorCode()));
 		reportService.addReport(report);		
 		
-		return new ModelAndView("forward:/common/alertView.jsp", "message", "신고가 접수 되었습니다.");
+		return new ModelAndView("forward:/common/alertView", "message", "신고가 접수 되었습니다.");
 	}	
 	
 	
@@ -78,10 +70,10 @@ public class ReportController {
 		User admin = (User)session.getAttribute("user");		
 		
 		if(admin == null) {					
-			return new ModelAndView("forward:/common/alertView.jsp", "message", "로그인이 필요합니다.");
+			return new ModelAndView("forward:/common/alertView", "message", "로그인이 필요합니다.");
 				
 		}else if(!admin.getRole().equals("admin")) {
-			return new ModelAndView("forward:/common/alertView.jsp", "message", "관리자만 조회 가능합니다.");
+			return new ModelAndView("forward:/common/alertView", "message", "관리자만 조회 가능합니다.");
 		}	
 		
 		
@@ -104,7 +96,7 @@ public class ReportController {
 		ModelAndView modelAndView = new ModelAndView();
 
 		// Model 과 View 연결
-		modelAndView.setViewName("forward:/report/getReportlist.jsp");
+		modelAndView.setViewName("forward: reportView/getReportlist");
 		modelAndView.addObject("list", reportService.getReportList(search));
 		modelAndView.addObject("resultPage", resultPage);
 		modelAndView.addObject("search", search);
@@ -122,10 +114,10 @@ public class ReportController {
 		User admin = (User)session.getAttribute("user");		
 		
 		if(admin == null) {					
-			return new ModelAndView("forward:/common/alertView.jsp", "message", "로그인이 필요합니다.");
+			return new ModelAndView("forward:/common/alertView", "message", "로그인이 필요합니다.");
 				
 		}else if(!admin.getRole().equals("admin")) {
-			return new ModelAndView("forward:/common/alertView.jsp", "message", "관리자만 조회 가능합니다.");
+			return new ModelAndView("forward:/common/alertView", "message", "관리자만 조회 가능합니다.");
 		}
 		
 		
@@ -147,7 +139,7 @@ public class ReportController {
 		ModelAndView modelAndView = new ModelAndView();
 
 		// Model 과 View 연결
-		modelAndView.setViewName("forward:/report/getReportlistFromUser.jsp");
+		modelAndView.setViewName("forward: reportView/getReportlistFromUser");
 		modelAndView.addObject("list", reportService.getReportListFromUser(search));
 		modelAndView.addObject("resultPage", resultPage);
 		modelAndView.addObject("search", search);
@@ -168,7 +160,7 @@ public class ReportController {
 		reportService.updateBanState(updateReport);
 		
 
-		return new ModelAndView("forward:/common/alertView.jsp", "message", "신고 처리가 완료되었습니다.");
+		return new ModelAndView("forward:/common/alertView", "message", "신고 처리가 완료되었습니다.");
 	}
 
 

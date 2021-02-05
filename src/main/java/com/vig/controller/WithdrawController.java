@@ -27,7 +27,7 @@ import com.vig.service.WithdrawService;
 
 
 @Controller
-@RequestMapping("/withdraw/*")
+@RequestMapping(" withdraw/*")
 public class WithdrawController {
 	
 	public static final Logger logger = LogManager.getLogger(WithdrawController.class); 
@@ -60,7 +60,7 @@ public class WithdrawController {
 		if((User)session.getAttribute("user") == null) {
 		
 		mav.addObject("message", "로그인이 필요합니다.");
-		mav.setViewName("forward:../common/alertView.jsp");
+		mav.setViewName("forward: common/alertView");
 
 		} else {
 		User user = (User)session.getAttribute("user");
@@ -86,7 +86,7 @@ public class WithdrawController {
 		mav.addObject("list", list);
 		mav.addObject("possibleAmount", possibleAmount);
 		mav.addObject("writer", userServices.getUserOne(user.getUserCode()));
-		mav.setViewName("forward:/withdraw/getDonationList.jsp");
+		mav.setViewName("forward: withdrawView/getDonationList");
 		}
 		
 		return mav;
@@ -102,7 +102,7 @@ public class WithdrawController {
 		if((User)session.getAttribute("user") == null || withdraw.getAmount() <10000) {
 			
 			mav.addObject("message", "잘못된 접근입니다.");
-			mav.setViewName("forward:../common/alertView.jsp");
+			mav.setViewName("forward: common/alertView");
 
 		} else {
 		Payment payment = new Payment();
@@ -119,7 +119,7 @@ public class WithdrawController {
 				}
 		
 		
-		mav.setViewName("forward:/withdraw/getDonationList");
+		mav.setViewName("forward: withdrawView/getDonationList");
 		}
 		
 		return mav;
@@ -141,17 +141,14 @@ public class WithdrawController {
 		
 		if(user == null) {
 			mav.addObject("message", "잘못된 접근입니다.");
-			mav.setViewName("forward:../common/alertView.jsp");
+			mav.setViewName("forward: common/alertView");
 			
 		}else { 
 			
 			if (user.getRole() != "admin") {
 				
-			}else {
-				
-				search.setKeyword(user.getUserCode());
-				
-				
+			}else {			
+				search.setKeyword(user.getUserCode());	
 			}
 				
 				search.setPageSize(pageSize);
@@ -163,11 +160,8 @@ public class WithdrawController {
 				mav.addObject("search", search);
 				mav.addObject("writer", userServices.getUserOne(user.getUserCode()));
 				mav.addObject("list", list);
-				mav.setViewName("forward:/withdraw/getWithdrawList.jsp");
+				mav.setViewName("forward: withdrawView/getWithdrawList");
 		}
-		
-		
-		
 		return mav;
 	}
 
