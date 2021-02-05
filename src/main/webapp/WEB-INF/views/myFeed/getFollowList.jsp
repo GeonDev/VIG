@@ -1,4 +1,4 @@
-<%@page import="com.VIG.mvc.service.domain.*"%>
+<%@page import="com.vig.domain.*"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -40,7 +40,7 @@
 
 	
 	function addFollower(follower) {
-		var link = "/vig/follow/json/addFollow?userCode=${user.userCode}&followerCode="+follower;	
+		var link = "/follow/json/addFollow?userCode=${user.userCode}&followerCode="+follower;	
 		sendMessage(follower,'','2');	
 		var id = "#follow_"+follower;
 		
@@ -64,7 +64,7 @@
 	
 	
 	function deleteFollower(following) {
-		var link = "/vig/follow/json/deleteFollow?userCode=${user.userCode}&followerCode="+ following;
+		var link = "/follow/json/deleteFollow?userCode=${user.userCode}&followerCode="+ following;
 		var id = "#follow_"+following;	
 		
 		$.ajax(				
@@ -145,14 +145,14 @@
 		      <div class="container-fluid">  
 		      	 <div class="row">
 		      		<div class="col-md-12">
-		      			<jsp:include page="/main/toolbar.jsp"></jsp:include>
+		      			<jsp:include page="../main/toolbar.jsp"></jsp:include>
 		     		</div>
 				</div>
 		
 		
 			<!-- 사이드바  -->		
 				<div class="col-md-2 sideBarPlace">		
-				 <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
+				 <jsp:include page="sideBar.jsp"></jsp:include>
 				 </div>
   			<!-- 타이틀 -->
 			    <div class="col-md-10" id="mainMyFeedPage" >					
@@ -165,11 +165,11 @@
 		 		<div class="row justify-content-center">
 					 <div class="box_body_m">
 						 <div class="wrap_m">
-						 	<a id="btn_ch_m" class="btn3" href="/vig/myfeed/getFollowerList?userCode=${writer.userCode}" >팔로워</a>
+						 	<a id="btn_ch_m" class="btn3" href="/myfeed/getFollowerList?userCode=${writer.userCode}" >팔로워</a>
 						 	
-							<a id="btn_ch_m" class="btn3" href="/vig/myfeed/getFollowingList?userCode=${writer.userCode}" >팔로잉</a>
+							<a id="btn_ch_m" class="btn3" href="/myfeed/getFollowingList?userCode=${writer.userCode}" >팔로잉</a>
 							
-							<a id="btn_ch_m" class="btn3" href="/vig/chat/getChat">채 팅</a>
+							<a id="btn_ch_m" class="btn3" href="/chat/getChat">채 팅</a>
 						</div>	 			
 					</div>   		
 			    					    	
@@ -184,8 +184,8 @@
 			    		<div id="follow_${follow.tagetUser.userCode}">			    		
 					    	<div class="row">		
 					    		<div class="col-md-2 ">
-						    		<a  href="/vig/myfeed/getMyFeedList?userCode=${follow.tagetUser.userCode}">
-						    			<img src="res/images/uploadFiles/${follow.tagetUser.profileImg}" class="rounded-circle"  style="max-height: 120px; margin-left: 20px;">				    		
+						    		<a  href="/myfeed/getMyFeedList?userCode=${follow.tagetUser.userCode}">
+						    			<img src="/images/uploadFiles/${follow.tagetUser.profileImg}" class="rounded-circle"  style="max-height: 120px; margin-left: 20px;">				    		
 						    		</a>		    		
 					    		</div>
 					    
@@ -224,8 +224,8 @@
 			    		<div id="follow_${follow.followUser.userCode}">			    		
 					    	<div class="row">		
 					    		<div class="col-md-2 ">
-						    		<a  href="/vig/myfeed/getMyFeedList?userCode=${follow.followUser.userCode}">
-						    			<img src="res/images/uploadFiles/${follow.followUser.profileImg}" class="rounded-circle"  style="max-height: 120px; margin-left: 20px;">				    		
+						    		<a  href="/myfeed/getMyFeedList?userCode=${follow.followUser.userCode}">
+						    			<img src="/images/uploadFiles/${follow.followUser.profileImg}" class="rounded-circle"  style="max-height: 120px; margin-left: 20px;">				    		
 						    		</a>		    		
 					    		</div>
 					    

@@ -297,7 +297,7 @@ $(function(){
 					<div class="view overlay z-depth-1">
 					<c:forEach var="images" items="${feed.images}">
 						<c:if test="${images.isThumbnail == '1'}">
-			        	  <img src="res/images/uploadFiles/${images.imageFile}" class="img-fluid" alt="Sample image">
+			        	  <img src="/images/uploadFiles/${images.imageFile}" class="img-fluid" alt="Sample image">
 				          <div class="mask flex-center blue-gradient-rgba">
 				            <a class="btn btn-outline-white btn-rounded moveFeed">See more</a>
 				          </div>

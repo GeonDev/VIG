@@ -26,11 +26,11 @@
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 		
-	<script src="res/javascript/jQuery.tagify.min.js"></script>
- 	<link rel="stylesheet" href="res/css/tagify.css">
+	<script src="/javascript/jQuery.tagify.min.js"></script>
+ 	<link rel="stylesheet" href="/css/tagify.css">
  	<!--  drag and drop -->
- 	<script src="res/javascript/dropify.js"></script>
- 	<link rel="stylesheet" href="res/css/dropify.min.css">
+ 	<script src="/javascript/dropify.js"></script>
+ 	<link rel="stylesheet" href="/css/dropify.min.css">
 		<script type="text/javascript">
 					
 		
@@ -102,14 +102,14 @@
 		      <div class="container-fluid">  
 		      	 <div class="row">
 		      		<div class="col-md-12">
-		      			<jsp:include page="/main/toolbar.jsp"></jsp:include>
+		      			<jsp:include page="../main/toolbar.jsp"></jsp:include>
 		     		</div>
 				</div>
 		
 		
 			<!-- 사이드바  -->		
 				<div class="col-md-2 sideBarPlace">		
-				 <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
+				 <jsp:include page="../myFeed/sideBar.jsp"></jsp:include>
 				 </div>
   			<!-- 타이틀 -->
 			    <div class="col-md-10" id="mainMyFeedPage" >	

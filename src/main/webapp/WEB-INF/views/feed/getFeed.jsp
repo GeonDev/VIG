@@ -210,7 +210,7 @@ $(function(){
 	
 	//writer의 myFeed로 이동
 	$("#writerInfo").on("click", function (){
-		self.location="/vig/myfeed/getMyFeed/${feed.writer.userCode}";
+		self.location="/myfeed/getMyFeed/${feed.writer.userCode}";
 		
 	});
 	
@@ -239,7 +239,7 @@ $(function(){
 		sendMessage('${feed.writer.userCode}','${feed.feedId}','2');
 		$.ajax(
 			
-				{ url: "/vig/follow/json/addFollow?userCode=${user.userCode}&followerCode=${feed.writer.userCode}",
+				{ url: "/follow/json/addFollow?userCode=${user.userCode}&followerCode=${feed.writer.userCode}",
 					method : "GET",	
 					dataType: "json",
 					headers : {
@@ -267,7 +267,7 @@ $(function(){
 			//alert("Do you really want to unfollow?");
 			$.ajax(
 			
-				{ url: "/vig/follow/json/deleteFollow?userCode=${user.userCode}&followerCode=${feed.writer.userCode}",
+				{ url: "/follow/json/deleteFollow?userCode=${user.userCode}&followerCode=${feed.writer.userCode}",
 					method : "GET",	
 					dataType: "json",
 					headers : {
@@ -323,7 +323,7 @@ $(function(){
 			
 			$.ajax(
 					
-					{ url: "/vig/comment/json/addComment",
+					{ url: "/comment/json/addComment",
 						method : "POST",	
 						dataType: "json",
 						headers : {
@@ -335,7 +335,7 @@ $(function(){
 						success : function(JSONData, status) {	
 							
 					    var displayValue = 
-						"<div id="+JSONData.commentId+"><img width='25px' style='margin-right:5px' src='res/images/uploadFiles/"+JSONData.user.profileImg+"' class='rounded-circle'><a style='margin-right:9px' href='/vig/myfeed/getMyFeedList?userCode='"
+						"<div id="+JSONData.commentId+"><img width='25px' style='margin-right:5px' src='/images/uploadFiles/"+JSONData.user.profileImg+"' class='rounded-circle'><a style='margin-right:9px' href='/myfeed/getMyFeedList?userCode='"
 								+JSONData.user.userCode+">"+JSONData.user.userName+"</a>"+JSONData.commentText+"<button id= 'deleteCom' class='btn btn-link' onclick="+"removeComment("+JSONData.commentId+")><i class='fas fa-trash'></i></button><hr></div>";
 							
 					    
@@ -381,7 +381,7 @@ $(function(){
 		
 		$.ajax( 
 				{
-					url : "/vig/like/json/addLike/${feed.feedId}",
+					url : "/like/json/addLike/${feed.feedId}",
 					method : "GET",
 					dataType : "Json",					
 					headers : {
@@ -426,7 +426,7 @@ $(function(){
 			})
 			.then((willDelete) => {
 			  if (willDelete) {
-			    self.location="/vig/payment/addPayment?productType=2&feedId=${feed.feedId}"; //세션에서 user코드를 가져온다.
+			    self.location="/payment/addPayment?productType=2&feedId=${feed.feedId}"; //세션에서 user코드를 가져온다.
 			  } else {
 			    swal("후원을 취소하였습니다.");
 			  }
@@ -438,7 +438,7 @@ $(function(){
 	
 	$(".img_categories").on("click", function(){
 		
-		self.location="/vig/search/getSearchList?Mode=Feed&category=${feed.feedCategory.categoryId }";
+		self.location="/search/getSearchList?Mode=Feed&category=${feed.feedCategory.categoryId }";
 		
 	});
 	
@@ -464,7 +464,7 @@ $(function(){
 			})
 			.then((willDelete) => {
 			  if (willDelete) {
-				self.location = "/vig/feed/deleteFeed?feedId=${feed.feedId}";
+				self.location = "/feed/deleteFeed?feedId=${feed.feedId}";
 			    swal("피드 삭제 완료!", {
 			      icon: "success",
 			    });
@@ -485,7 +485,7 @@ $(function(){
 //색상검색
 function funcSearchColor(hexcode){
 	var code = hexcode.substring(1,7);
-	self.location="/vig/search/getSearchList?Mode=Feed&keyword=%23"+code;
+	self.location="/search/getSearchList?Mode=Feed&keyword=%23"+code;
 	
 }
 
@@ -499,7 +499,7 @@ function removeComment(commentId){
 	
 	$.ajax(
 			
-			{ url: "/vig/comment/json/deleteComment?userCode=${user.userCode}&feedId=${feed.feedId}&commentId="+commentId,
+			{ url: "/comment/json/deleteComment?userCode=${user.userCode}&feedId=${feed.feedId}&commentId="+commentId,
 				method : "GET",	
 				dataType: "json",
 				headers : {
@@ -593,14 +593,14 @@ function imageModal(imageId){
 
 		<c:if test="${images.isThumbnail == '0'}">
 			<div id="image" onclick='imageModal("${images.imageId}")'>
-			<img src="res/images/uploadFiles/${images.imageFile}" style="width:100%"/>
+			<img src="/images/uploadFiles/${images.imageFile}" style="width:100%"/>
 			
 									
 				<div class="modal fade bd-example-modal-xl" id="${images.imageId }" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
 				  <div class="modal-dialog modal-xl">
 				    <div class="modal-content" style="align:center">
 				    <div style="text-align:center;">
-				      <img src="res/images/uploadFiles/${images.imageFile}" style="width: 1200px; align:center"/>
+				      <img src="/images/uploadFiles/${images.imageFile}" style="width: 1200px; align:center"/>
 				      
 				    </div>
 				    </div>
@@ -616,8 +616,8 @@ function imageModal(imageId){
 	<div class="container">
 	 <div class="row">
 				 <div class="col-md-8">
-					 <a id="profile" style="font-weight: bold; color: black; font-size: large;" href="/vig/myfeed/getMyFeedList?userCode=${feed.writer.userCode}">
-					<img src="res/images/uploadFiles/${feed.writer.profileImg}" class="rounded-circle" width="35px"> &nbsp; ${feed.writer.userName}
+					 <a id="profile" style="font-weight: bold; color: black; font-size: large;" href="/myfeed/getMyFeedList?userCode=${feed.writer.userCode}">
+					<img src="/images/uploadFiles/${feed.writer.profileImg}" class="rounded-circle" width="35px"> &nbsp; ${feed.writer.userName}
 					 </a>
 				 </div>
 		 <!-- 팔로우와 후원 -->
@@ -672,7 +672,7 @@ function imageModal(imageId){
 			<c:set var="i" value="${i+1 }"/>
 			<div id="${comments.commentId}">
 
-			<img width="25px"src="res/images/uploadFiles/${comments.user.profileImg }" style="margin-right:5px" class="rounded-circle"><a href="/vig/myfeed/getMyFeedList?userCode=${comments.user.userCode}">${ comments.user.userName}</a>
+			<img width="25px"src="/images/uploadFiles/${comments.user.profileImg }" style="margin-right:5px" class="rounded-circle"><a href="/myfeed/getMyFeedList?userCode=${comments.user.userCode}">${ comments.user.userName}</a>
 			 ${comments.commentText}  
 			 <c:if test="${user.userCode == comments.user.userCode}">
 				 <button id = "deleteCom" class="btn btn-link" onclick="removeComment('${comments.commentId}')">
@@ -702,7 +702,7 @@ function imageModal(imageId){
 		
 		
 					<div class="view img_categories ">			    			
-		    			<img style="vertical-align: middle;"src="res/images/others/${feed.feedCategory.categoryImg }" alt="thumbnail" class="img-fluid overflow-hidden rounded-sm" >
+		    			<img style="vertical-align: middle;"src="/images/others/${feed.feedCategory.categoryImg }" alt="thumbnail" class="img-fluid overflow-hidden rounded-sm" >
 
 		    				<div class="mask flex-center rgba-black-strong rounded-sm">	
 		    		   			<p class="white-text" style="font-weight:bold ; font-size: large; padding: 0px;">Category | ${feed.feedCategory.categoryName }</p>					    		    				    		         					      						
@@ -771,7 +771,7 @@ function imageModal(imageId){
 	
 					
 						<div id="tag" style=" border: 1px solid #C2C3C2; margin: 3px 1px 3px 1px; padding: 1px 3px 1px 3px; display: inline-block; border-radius: 5px;">
-					    <a style="color: black; font-size: 12%;" href="/vig/search/getSearchList?Mode=Feed&keyword=${keyword.keywordOrigin}">${keyword.keywordOrigin}</a>
+					    <a style="color: black; font-size: 12%;" href="/search/getSearchList?Mode=Feed&keyword=${keyword.keywordOrigin}">${keyword.keywordOrigin}</a>
 						</div>
 	
 					</c:if>
@@ -786,7 +786,7 @@ function imageModal(imageId){
 			
 	</div>
 	</div>
-			<jsp:include page="/report/addReport.jsp" />
+			<jsp:include page="../report/addReport.jsp" />
 	
 	</div>
 		<div id="top">

@@ -1,4 +1,4 @@
-<%@page import="com.VIG.mvc.service.domain.*"%>
+<%@page import="com.vig.domain.*"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -74,14 +74,14 @@
 		      <div class="container-fluid">  
 		      	 <div class="row">
 		      		<div class="col-md-12">
-		      			<jsp:include page="/main/toolbar.jsp"></jsp:include>
+		      			<jsp:include page="../main/toolbar.jsp"></jsp:include>
 		     		</div>
 				</div>
 		
 		
 			<!-- 사이드바  -->		
 				<div class="col-md-2 sideBarPlace">		
-				 <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
+				 <jsp:include page="../myFeed/sideBar.jsp"></jsp:include>
 				 </div>
   			<!-- 타이틀 -->
 			    <div class="col-md-10" id="mainMyFeedPage" >	

@@ -115,19 +115,19 @@ $(function(){
 		var result = confirm("삭제하시겠습니까?");
 		
 		if(result){
-		self.location="/vig/event/deleteEvent?eventId=${event.eventId}";
+		self.location="/event/deleteEvent?eventId=${event.eventId}";
 		}
 	});
 	
 	$("#update").on("click", function(){
 		
-		self.location="/vig/event/updateEvent?eventId=${event.eventId}";
+		self.location="/event/updateEvent?eventId=${event.eventId}";
 		
 	});
 	
 	$("#list").on("click", function(){
 		
-		self.location="/vig/event/getEventList";
+		self.location="/event/getEventList";
 		
 	});
 	
@@ -139,7 +139,7 @@ $(function(){
 	function fncgetFeed(feedId){
 		
 		
-		self.location = '/vig/feed/getFeed?feedId='+feedId;
+		self.location = '/feed/getFeed?feedId='+feedId;
 		
 		
 	}
@@ -196,7 +196,7 @@ $(function(){
 
 	<!--  이벤트 본문 -->
 	<hr/>
-		<img id="evimg" src="res/images/others/${event.eventImage}" style="width:100%" class="img-rounded"/>
+		<img id="evimg" src="/images/others/${event.eventImage}" style="width:100%" class="img-rounded"/>
 	<hr/>
 	<br/>
 	
@@ -241,7 +241,7 @@ $(function(){
 						
 									<c:forEach var="images" items="${feeds.images}">
 										<c:if test="${images.isThumbnail == '1' }">
-											<img src="res/images/uploadFiles/${images.imageFile}" class="img-fluid" >
+											<img src="/images/uploadFiles/${images.imageFile}" class="img-fluid" >
 											  <a>
 											    <div class="mask waves-effect waves-light rgba-white-slight" ></div>
 											  </a>

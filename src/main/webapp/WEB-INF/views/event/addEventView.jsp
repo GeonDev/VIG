@@ -28,13 +28,13 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 	
  	<!--  drag and drop -->
- 	<script src="res/javascript/dropify.js"></script>
- 	<link rel="stylesheet" href="res/css/dropify.min.css">
+ 	<script src="/javascript/dropify.js"></script>
+ 	<link rel="stylesheet" href="/css/dropify.min.css">
  	
  	<!--  태그 사용 -->
  	<script src="/vig/javascript/jquery.tagsinput-revisited.js"></script>
 	
-	<link rel="stylesheet" href="res/css/jquery.tagsinput-revisited.css">
+	<link rel="stylesheet" href="/css/jquery.tagsinput-revisited.css">
 	
 	<!-- 알러트 -->
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

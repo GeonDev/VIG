@@ -201,7 +201,7 @@ public class FeedController {
 		Feed feed = feedServices.getFeed(feedId);
 		System.out.println(feed);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("forward:/feed/getFeed.jsp");
+		mav.setViewName("forward: feed/getFeed.jsp");
 		
 		
 		//ip로 조회수 counting 하는 부분

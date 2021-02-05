@@ -79,7 +79,7 @@
 	 
 	 //아임포트 ajax 환불하는 곳
 	 
-	 self.location="/vig/payment/cancelPayment?paymentId="+paymentId;
+	 self.location="/payment/cancelPayment?paymentId="+paymentId;
 	 
  }
  
@@ -109,7 +109,7 @@
 			 alert("은행을 선택해주세요");
 		 }
 		 if(holder != "" && accNo != "" && RRN != ""&& bankCode!=""){
-		$("#withdrawForm").attr("method", "post").attr("action", "/vig/withdraw/addWithdraw").submit();
+		$("#withdrawForm").attr("method", "post").attr("action", "/withdraw/addWithdraw").submit();
 		 }
 		 
 	 });
@@ -135,14 +135,14 @@
 		      <div class="container-fluid">  
 		      	 <div class="row">
 		      		<div class="col-md-12">
-		      			<jsp:include page="/main/toolbar.jsp"></jsp:include>
+		      			<jsp:include page="../main/toolbar.jsp"></jsp:include>
 		     		</div>
 				</div>
 		
 		
 			<!-- 사이드바  -->		
 				<div class="col-md-2 sideBarPlace">		
-				 <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
+				 <jsp:include page="../myFeed/sideBar.jsp"></jsp:include>
 				 </div>
   			<!-- 타이틀 -->
 			    <div class="col-md-10" id="mainMyFeedPage" >

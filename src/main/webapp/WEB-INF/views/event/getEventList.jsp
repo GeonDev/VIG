@@ -107,20 +107,20 @@ $( '.top' ).click( function() {
 //진행중인 이벤트
 $('.ing').on("click", function(){
 		
-	self.location="/vig/event/getEventList?keyword=0";
+	self.location="/event/getEventList?keyword=0";
 
 });
 
 //당첨자 발표
 $('.announce').on("click", function(){
 	
-	self.location="/vig/event/getEventList?keyword=1";
+	self.location="/event/getEventList?keyword=1";
 	
 });
 //종료된 이벤트
 $(".fin").on("click", function(){
 	
-	self.location="/vig/event/getEventList?keyword=2";
+	self.location="/event/getEventList?keyword=2";
 	
 });
 
@@ -144,7 +144,7 @@ if(eventmenu == 0) {
 
 $("#addEvent").on("click", function(){
 	
-	self.location="/vig/event/addEvent";
+	self.location="/event/addEvent";
 	
 });
 
@@ -194,7 +194,7 @@ $("#addEvent").on("click", function(){
 
 
 				 <div class="media position-relative">
-				  <img id="thumb" class="d-flex mr-3" style="height: 150px; width: 200px" src="res/images/others/${event.eventThumb }"
+				  <img id="thumb" class="d-flex mr-3" style="height: 150px; width: 200px" src="/images/others/${event.eventThumb }"
 				    alt="image">
 
 		

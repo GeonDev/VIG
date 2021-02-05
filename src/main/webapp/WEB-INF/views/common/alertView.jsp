@@ -90,26 +90,9 @@
      		self.location = document.referrer;
      	}else{
      		//페이지 정보가 없으면 메인으로 이동
-     		location.href = '/vig/main/vig';
+     		location.href = '/';
      	}	
-    };
-	
-	
-	/*
-	var message ="<c:out value="${message}"/>"; 			
-	
-	
-	alert(message);					
-
-	//이전페이지 정보가 있는지 체크
-	if(document.referrer){
-		self.location = document.referrer;
-	}else{
-		//페이지 정보가 없으면 메인으로 이동
-		location.href = '/vig/main/vig';
-	}		
-	*/
-		
+    };		
 	
 	 </script>
 
