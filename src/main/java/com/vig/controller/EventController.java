@@ -69,7 +69,7 @@ public class EventController {
 
 		ModelAndView modelAndView = new ModelAndView();
 		
-		modelAndView.setViewName("forward:/event/addEventView.jsp");
+		modelAndView.setViewName("forward: event/addEventView.jsp");
 
 		return modelAndView;
 		

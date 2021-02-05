@@ -120,7 +120,7 @@
 	
 	if(username==null|| username==''){
 		alert("로그인 해주세요");
-		self.location="/vig/main/vig";
+		self.location="/";
 	}
 	
 	var socket;
@@ -195,7 +195,7 @@
 				console.log(data);
 				var inputSelect = document.getElementsByName("selectUser");
 				var user = '<div class="selectChat" style="vertical-align: middle">'+
-				"<img class='profileImage' src='res/images/uploadFiles/"+list[3]+"\'>"+
+				"<img class='profileImage' src='/images/uploadFiles/"+list[3]+"\'>"+
 				"<p id='selectChat' style='display: inline-block; margin: 3px auto; font-weight: bold;'>"+list[2]+"</p>("+list[1]+")</div>";
 				
 				 for(var i = 0; i<data.length; i++){
@@ -275,7 +275,7 @@
 								userinfo.replace('undefined', "");
 					
 							user = '<div class="chatUser" id=\"'+data[i].userCodes[j].userCode+'\"onClick="getChat(\''+userinfo+'\')">'+
-											"<img class='profileImage' src='res/images/uploadFiles/"+data[i].userCodes[j].profileImg+"\'>"+
+											"<img class='profileImage' src='/images/uploadFiles/"+data[i].userCodes[j].profileImg+"\'>"+
 											"<p style='display: inline-block; margin: 3px auto; font-weight: bold'>"+data[i].userCodes[j].userName+"</p>("+data[i].userCodes[j].userCode+")</div>"
 							
 							
@@ -303,7 +303,7 @@
 		
 		$.ajax({
 			
-			url: "/vig/user/json/getUser/"+userCode,
+			url: "/user/json/getUser/"+userCode,
 			method: "get",
 			dataType: "json",
 			async: false,
@@ -440,7 +440,7 @@
 							userinfo.replace('undefined', "");
 							
 							var chatUser = '<div class="chatUser" id=\"'+dbuser.userCode+'\"onClick="getChat(\''+userinfo+'\')">'+
-							"<img class='profileImage' src='res/images/uploadFiles/"+dbuser.profileImg+"\'>"+
+							"<img class='profileImage' src='/images/uploadFiles/"+dbuser.profileImg+"\'>"+
 							"<p style='display: inline-block; margin: 3px auto; font-weight: bold'>"+dbuser.userName+"</p>("+dbuser.userCode+")</div>"
 							
 							$("#userselect").val("");
@@ -463,7 +463,7 @@
 							  dangerMode: true,
 							})
 							.then((willDelete) => {
-							  if (willDelete) {
+						  if (willDelete) {
 								 
 								  deleteChat();
 								  

@@ -30,7 +30,7 @@
  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
- <script src="res/javascript/numscroller-1.0.js"></script>	
+ <script src="/javascript/numscroller-1.0.js"></script>	
 
 <style>
 
@@ -80,12 +80,12 @@ body { font-family: "Nanum Gothic", sans-serif; padding-top : 100px;}
 			<div class="container-fluid">	
 				<div class="row">
 					<div class="col-md-12" style="margin-bottom: 50px;">
-						<jsp:include page="/main/toolbar.jsp" />
+						<jsp:include page="../main/toolbar.jsp" />
 					</div>
 			</div>
 <!-- 사이드바  -->				
 			<div class="col-md-2 sideBarPlace">		
-				 <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
+				 <jsp:include page="../myFeed/sideBar.jsp"></jsp:include>
 				 </div>	
 				
 				
@@ -271,7 +271,7 @@ $("#year, #month").on("change", function(){
 	//차트 업데이트
 	$.ajax(
    			{
-   				url : "/vig/chart/json/getChart",
+   				url : "/chart/json/getChart",
 				method : "GET" ,
 				headers : {
 					"Accept" : "application/json",

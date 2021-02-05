@@ -54,7 +54,7 @@ public ChartController() {
 	    
 	    
 	    ModelAndView mav = new ModelAndView();
-	    mav.setViewName("forward:/chart/getChart.jsp");
+	    mav.setViewName("forward: chart/getChart.jsp");
 	    mav.addObject("likeCount", likeCount.get("mouthCout"));			//리스트
 	    mav.addObject("likeCount2",likeCount.get("totalCount"));			//총합
 	    //좋아요

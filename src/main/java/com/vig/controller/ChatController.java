@@ -21,7 +21,7 @@ public class ChatController {
 		
 		System.out.println("getChatList");
 	    ModelAndView mav = new ModelAndView();
-	    mav.setViewName("forward:../chat/getChat.jsp");
+	    mav.setViewName("forward: chat/getChat.jsp");
 	    
 	    if(receiver != null || receiver != "") {
 	    	mav.addObject("receiver", receiver);

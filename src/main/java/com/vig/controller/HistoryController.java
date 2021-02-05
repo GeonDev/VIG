@@ -25,11 +25,7 @@ import com.vig.service.HistoryService;
 @RequestMapping("/history/*")
 public class HistoryController {
 	
-	
-	@Autowired
-	private ServletContext context;	
-	
-	
+
 	@Value("${currentDate}")
 	int currentDate;	
 	

@@ -31,13 +31,13 @@
 	
 
  	<!--  drag and drop -->
- 	<script src="/vig/javascript/dropify.js"></script>
- 	<link rel="stylesheet" href="res/css/dropify.min.css">
+ 	<script src="/javascript/dropify.js"></script>
+ 	<link rel="stylesheet" href="/css/dropify.min.css">
  	
  	 	<!--  태그 사용 -->
- 	<script src="res/javascript/jquery.tagsinput-revisited.js"></script>
+ 	<script src="/javascript/jquery.tagsinput-revisited.js"></script>
 	
-	<link rel="stylesheet" href="res/css/jquery.tagsinput-revisited.css">
+	<link rel="stylesheet" href="/css/jquery.tagsinput-revisited.css">
 
 	
 <style>
@@ -84,7 +84,7 @@ $(function(){
 	
 	$("button:contains('수정')").on('click', function(){
 		
-		$(".myform").attr("method", "post").attr("action", "/vig/event/updateEvent").attr( "enctype","multipart/form-data").submit();
+		$(".myform").attr("method", "post").attr("action", "/event/updateEvent").attr( "enctype","multipart/form-data").submit();
 			
 	});
 	
@@ -163,7 +163,7 @@ $('.dropify').dropify();
 	
 	
 	<hr/>
-		<input type="file" id="demo" name="uploadFile" class="dropify"  data-default-file="/vig/images/others/${event.eventImage }">
+		<input type="file" id="demo" name="uploadFile" class="dropify"  data-default-file="/images/others/${event.eventImage }">
 	
 	<hr/>
 	<br/>
@@ -191,7 +191,7 @@ $('.dropify').dropify();
 								<div class="info">
 									<h5>썸네일</h5>
 									<br>
-									<input type="file" id="demo" name="uploadFile" class="dropify"  data-default-file="/vig/images/others/${event.eventThumb }">
+									<input type="file" id="demo" name="uploadFile" class="dropify"  data-default-file="/images/others/${event.eventThumb }">
 								</div>
 								
 							<br>
@@ -199,7 +199,7 @@ $('.dropify').dropify();
 								<div class="info">
 									<h5>배너</h5>
 									<br>
-									<input type="file" id="demo" name="uploadFile" class="dropify"  data-default-file="/vig/images/others/${event.banner }">
+									<input type="file" id="demo" name="uploadFile" class="dropify"  data-default-file="/images/others/${event.banner }">
 								</div>
 								<div >
 									<button type="button" class="btn btn-dark" style="align: center;">수정</button>

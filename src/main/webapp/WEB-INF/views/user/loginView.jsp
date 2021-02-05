@@ -40,7 +40,7 @@
 	$( function() {
 		$("#ty").on("click" , function() {
 			//location.href="addUserView";
-			location.href="/vig/user/addUserView";
+			location.href="/user/addUserView";
 		});
 	});
 //=======로그인 이벤트
@@ -70,7 +70,7 @@
 			location.href="https://accounts.google.com/o/oauth2/auth?client_id="+
 			"1061310625398-fgobhsfrgc0n2me6r6srqlv4ovuat8sk.apps.googleusercontent.com"+
 			"&redirect_uri="+
-			"http://localhost:8080/vig/user/googleLogin" +
+			"http://localhost:8080/user/googleLogin" +
 			"&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email&approval_prompt=force&access_type=offline";				
 		});
 	});
@@ -88,7 +88,7 @@
 <body>
 
 
-<form action="/vig/user/login" method="POST" style="width: fit-content; margin: auto;">
+<form action="/user/login" method="POST" style="width: fit-content; margin: auto;">
 	<div class="lodin_modal">
 	<div class="container-fluid" id="login_container">	
 	

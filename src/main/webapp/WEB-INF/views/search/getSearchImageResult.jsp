@@ -69,8 +69,8 @@
 		displayValue =
 			"<div class = 'view overlay'>"
 				+ "<div class = 'img_image'>"
-					+ "<a href='/vig/search/getSearchImages?imageId="+ item.imageId +"' class='text-light'>"
-					+ "<img src='res/images/uploadFiles/" + item.imageFile + "' alt='thumbnail' class='img-fluid rounded-sm ' style='width: auto; height: 300px;'>"
+					+ "<a href='/search/getSearchImages?imageId="+ item.imageId +"' class='text-light'>"
+					+ "<img src='/images/uploadFiles/" + item.imageFile + "' alt='thumbnail' class='img-fluid rounded-sm ' style='width: auto; height: 300px;'>"
 						+"<div class='mask flex-center waves-effect waves-light rgba-black-strong'>"						
 						+"</div>"
 					+ "</a>"
@@ -82,7 +82,7 @@
 	
 	
 	function getSearchImagekeyword(keyword) {
-		var link ='/vig/search/getSearchList?Mode=Image&keyword=';
+		var link ='/search/getSearchList?Mode=Image&keyword=';
 		link =  link.concat(keyword);
 		$(location).attr("href", link); 
 	}	
@@ -98,7 +98,7 @@
 		
 		$.ajax( 
 				{
-					url : "/vig/search/json/getSearchSameImage",
+					url : "/search/json/getSearchSameImage",
 					method : "POST",
 					dataType : "Json",					
 					headers : {
@@ -162,7 +162,7 @@
 	<div class="container-lg-fluid">		
 	
 		<div class="row justify-content-center">		
-			<img class="col-md-10" alt="" src="res/images/uploadFiles/${baseImage.imageFile}" style="max-width: 960px;">	
+			<img class="col-md-10" alt="" src="/images/uploadFiles/${baseImage.imageFile}" style="max-width: 960px;">	
 		</div>
 		<hr/>
 		

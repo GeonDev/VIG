@@ -26,27 +26,27 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	
 		<!--  태그 사용 -->
- 	<script src="res/javascript/jquery.tagsinput-revisited.js"></script>
+ 	<script src="/javascript/jquery.tagsinput-revisited.js"></script>
 	
-	<link rel="stylesheet" href="res/css/jquery.tagsinput-revisited.css">
+	<link rel="stylesheet" href="/css/jquery.tagsinput-revisited.css">
  	
  	<!--  drag and drop -->
- 	<script src="res/javascript/dropify.js"></script>
- 	<link rel="stylesheet" href="res/css/dropify.min.css">
- 	<link rel="stylesheet" href="res/fonts/dropify.woff">
- 	<link rel="stylesheet" href="res/fonts/dropify.ttf">
+ 	<script src="/javascript/dropify.js"></script>
+ 	<link rel="stylesheet" href="/css/dropify.min.css">
+ 	<link rel="stylesheet" href="/fonts/dropify.woff">
+ 	<link rel="stylesheet" href="/fonts/dropify.ttf">
  	
  	<!-- crop -->	
- 	<script src="res/javascript/jquery.Jcrop.js"></script>
- 	<link rel="stylesheet" href="res/css/jquery.Jcrop.css"  type="text/css" />
- 	<link rel="stylesheet" href="res/css/jquery.Jcrop.min.css"  type="text/css" />
+ 	<script src="/javascript/jquery.Jcrop.js"></script>
+ 	<link rel="stylesheet" href="/css/jquery.Jcrop.css"  type="text/css" />
+ 	<link rel="stylesheet" href="/css/jquery.Jcrop.min.css"  type="text/css" />
  	
  	<!-- crop2 -->
- 	<script src="res/javascript/cropper.min.js"></script>
- 	<link rel="stylesheet" href="res/css/cropper.min.css"  type="text/css" />
+ 	<script src="/javascript/cropper.min.js"></script>
+ 	<link rel="stylesheet" href="/css/cropper.min.css"  type="text/css" />
  	<!-- select -->
- 	<script src="res/javascript/justselect.min.js"></script>
- 	<link rel="stylesheet" href="res/css/justselect.css" >
+ 	<script src="/javascript/justselect.min.js"></script>
+ 	<link rel="stylesheet" href="/css/justselect.css" >
  	
 	<!-- Bootstrap tooltips -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
@@ -289,7 +289,7 @@ function deleteInput() {
 	function getkeywords() {
 		
 		
-		$.ajax("/vig/search/json/getSearchKeyword",
+		$.ajax("/search/json/getSearchKeyword",
 		  {
 			method : "POST",
 			dataType : "Json",							

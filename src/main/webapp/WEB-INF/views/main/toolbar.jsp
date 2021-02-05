@@ -9,7 +9,7 @@
 <!-- SocketJS CDN -->
 <script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
 <!-- favicon 영역 이후 툴바 적용 -->
-<link rel="shortcut icon" type="image/png" href="http://127.0.0.1:8080/vig/images/others/favicon-16x16.png">
+<link rel="shortcut icon" type="image/png" href="http://127.0.0.1:8080/images/others/favicon-16x16.png">
 
 
 <script type="text/javascript">
@@ -26,14 +26,14 @@
 	    
 		var addAlarms = 
 			"<li id='alarm_" + data[6] + "' class='alarms'>"
-			+ "<a href='/vig/myfeed/getMyFeedList?userCode="+ data[5]+ "' style='padding:0px;'>"
-	   	 		+"<img src='res/images/uploadFiles/" + data[1]+ "' class='rounded-circle' style='width: 45px; float:left; '>"
+			+ "<a href='/myfeed/getMyFeedList?userCode="+ data[5]+ "' style='padding:0px;'>"
+	   	 		+"<img src='/images/uploadFiles/" + data[1]+ "' class='rounded-circle' style='width: 45px; float:left; '>"
 	   	 	+"</a>"
-	   	 	+ "<a  href='/vig/feed/getFeed?feedId="+ data[0]+ "' style='padding:0px;'>"
+	   	 	+ "<a  href='/feed/getFeed?feedId="+ data[0]+ "' style='padding:0px;'>"
 	   	 		+"<h6  style='width: 270px; margin-right:5px; margin-left:10px; margin-top: 7px; float:left;'>"
 	   	 			+"<strong>" + data[2]+ "</strong>님이 좋아요를 누르셨습니다."	    			
 				+"</h6>"
-				+"<img src='res/images/uploadFiles/" + data[3] + "' style='width: 50px; '>"
+				+"<img src='/images/uploadFiles/" + data[3] + "' style='width: 50px; '>"
 			 +"</a>"		
 	        +"</li><hr/>";  
 	    
@@ -46,14 +46,14 @@
 		
 		var addAlarms = 
 	    	"<li id='alarm_" + data[6] + "' class='alarms'>"
-	    	+ "<a href='/vig/myfeed/getMyFeedList?userCode="+ data[5]+ "' style='padding:0px;'>"
-	   	 		+"<img src='res/images/uploadFiles/" + data[1]+ "' class='rounded-circle' style='width: 45px; float:left;'>"
+	    	+ "<a href='/myfeed/getMyFeedList?userCode="+ data[5]+ "' style='padding:0px;'>"
+	   	 		+"<img src='/images/uploadFiles/" + data[1]+ "' class='rounded-circle' style='width: 45px; float:left;'>"
 	   	 	+"</a>"
-	   	 	+ "<a class='nav-link' href='/vig/feed/getFeed?feedId="+ data[0]+ "'>"
+	   	 	+ "<a class='nav-link' href='/feed/getFeed?feedId="+ data[0]+ "'>"
 	   	 		+"<h6  style='width: 270px; margin-right:5px; margin-left:5px; float:left;'>"
 	   	 			+"<strong>" + data[2]+ "</strong>님이 댓글을 남겼습니다."	    			
 				+"</h6>"
-				+"<img src='res/images/uploadFiles/" + data[3] + "' style='width: 45px;'>"
+				+"<img src='/images/uploadFiles/" + data[3] + "' style='width: 45px;'>"
 			 +"</a>"		
 	        +"</li>"
 	        +"<div class='dropdown-divider'></div>";   			    
@@ -67,8 +67,8 @@
 		
 		var addAlarms = 
 	    	"<li id='alarm_" + data[6] + "' class='alarms'>"
-	    	+ "<a href='/vig/myfeed/getMyFeedList?userCode="+ data[5]+ "' style='padding:0px;'>"
-	   	 		+"<img src='res/images/uploadFiles/" + data[1]+ "' class='rounded-circle' style='width: 45px; float:left;'>"
+	    	+ "<a href='/myfeed/getMyFeedList?userCode="+ data[5]+ "' style='padding:0px;'>"
+	   	 		+"<img src='/images/uploadFiles/" + data[1]+ "' class='rounded-circle' style='width: 45px; float:left;'>"
 	   	 	+"</a>"	 
 		   	 	+"<div style='height: 45px; margin-top:10px;'>"
 		   	 		+"<h6 style='width: 320px; padding-left:55px; padding-top:10px;'>"
@@ -88,7 +88,7 @@
 		
 		$.ajax( 
 				{
-					url : "/vig/alarm/json/getAlarmList",
+					url : "/alarm/json/getAlarmList",
 					method : "GET",
 					dataType : "Json",					
 					headers : {
@@ -127,7 +127,7 @@
 	function getCheckAlarms(id) {		
 		$.ajax( 
 				{
-					url : "/vig/alarm/json/getCheckAlarms/"+id,
+					url : "/alarm/json/getCheckAlarms/"+id,
 					method : "GET",
 					dataType : "Json",					
 					headers : {
@@ -195,7 +195,7 @@
 			
 			//===로그인
 			//$( "#login_btn:contains('Log in')" ).on("click" , function() {
-			//	$(self.location).attr("href","/vig/user/login");
+			//	$(self.location).attr("href","/user/login");
 			//}); 
 			
 			//loginView.jsp를 가지고 와서 모달로 띄움
@@ -209,7 +209,7 @@
 			
 			//===로그아웃	
 			$(".dropdown-item:contains('Log Out')" ).on("click" , function() {			
-					$(self.location).attr("href","/vig/user/logout");
+					$(self.location).attr("href","/user/logout");
 			}); 
 			
 			
@@ -293,7 +293,7 @@
 <!--Navbar start-->	
 			<nav class="mb-1 navbar fixed-top navbar-expand-xl navbar-dark bg-dark py-2" id="toolbar">			
 <!-- 로고 -->		
-			  <a href="/vig/main/vig"><img src='res/images/others/viglogo.png' id="logoTop" alt="VIG" style="margin-left: 30px;" ></a>
+			  <a href="/"><img src='/images/others/logo.png' id="logoTop" alt="VIG" style="margin-left: 30px;" ></a>
 			      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="toolbar_logo"
 				    aria-controls="toolbar_logo" aria-expanded="false" aria-label="Toggle navigation">
 				    <span class="navbar-toggler-icon"></span>
@@ -302,7 +302,7 @@
    					 <ul class="navbar-nav ml-auto">
 				 </ul>		
 <!-- 검색 버튼-->    	      
-	        <a class="nav-link waves-effect waves-light"  href="/vig/search/getSearchList">
+	        <a class="nav-link waves-effect waves-light"  href="/search/getSearchList">
 	          <i class="fas fa-search fas_ntn" ></i>
 	        </a>	   
 <!-- 알람버튼 -->
@@ -325,14 +325,14 @@
 	              
 <!-- 채팅버튼 -->    
 			<c:if test="${!empty sessionScope.user }">   
-	        <a class="nav-link waves-effect waves-light" id=" chat_btn" href="/vig/chat/getChat">
+	        <a class="nav-link waves-effect waves-light" id=" chat_btn" href="/chat/getChat">
 	          <i class="fas fa-comments fas_ntn" ></i></a>
    			</c:if>
    			
 <!-- //비로그인 상태 -->
 <!-- 로그인 클릭시 모달 -->
 			<c:if test="${empty sessionScope.user }"> 
-			  <a class="nav-link" data-remote="/vig/user/loginView.jsp"
+			  <a class="nav-link" data-remote="/user/loginView.jsp"
 				data-toggle="modal" data-target="#theModal" ><span id="white_wr" style="margin-right: 30px;">Log in</span></a>
 			</c:if> 
 	
@@ -347,12 +347,12 @@
 					</a>
 		         <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="login_dropdown" style="margin-top: 20px;">		         	
 					<h4 class="dropdown-header" style="text-align:left;  font-weight: bold; font-size: large; ">
-						<img src="res/images/uploadFiles/${user.profileImg}" class="rounded-circle" style="width: 50px;">
+						<img src="/images/uploadFiles/${user.profileImg}" class="rounded-circle" style="width: 50px;">
 						${user.userName}
 					</h4>
 						 <div class="dropdown-divider"></div>
-						    <a class="dropdown-item" href="/vig/myfeed/getMyFeedList?userCode=${user.userCode}" style="display: flex;justify-content: center;" >My Feed</a>
-						    <a class="dropdown-item" href="/vig/feed/addFeed.jsp" style="display: flex;justify-content: center;">Upload</a>
+						    <a class="dropdown-item" href="/myfeed/getMyFeedList?userCode=${user.userCode}" style="display: flex;justify-content: center;" >My Feed</a>
+						    <a class="dropdown-item" href="/feed/addFeed.jsp" style="display: flex;justify-content: center;">Upload</a>
 						  <div class="dropdown-divider"></div>
 						      <a class="dropdown-item" style="display: flex;justify-content: center;">Log Out</a>
 						 </div>
@@ -368,7 +368,7 @@
 		         <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="login_dropdown">
 					<h6 class="dropdown-header" style="text-align:left;  font-weight: bold; font-size: large; ">${user.userCode }</h6>
 						 <div class="dropdown-divider"></div>
-						    <a class="dropdown-item" href="/vig/user/getUserList" style="display: flex;justify-content: center;">관리자페이지</a>	
+						    <a class="dropdown-item" href="/user/getUserList" style="display: flex;justify-content: center;">관리자페이지</a>	
 						    <div class="dropdown-divider"></div>
 						      <a class="dropdown-item"  id="logout_btn" ><p id="black_wr" style="display: flex;justify-content: center;">Log Out</p></a>					   
 							 </div>
@@ -384,7 +384,7 @@
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header"></div>
-							<form action="/vig/user/login" method="POST">
+							<form action="/user/login" method="POST">
 							<div class="modal-body"></div>
 								</form>
 							<div class="modal-footer">

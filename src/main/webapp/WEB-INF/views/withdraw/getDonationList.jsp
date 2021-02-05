@@ -88,7 +88,7 @@
 	 
 	 //아임포트 ajax 환불하는 곳
 	 
-	 self.location="/vig/payment/cancelPayment?paymentId="+paymentId;
+	 self.location="/payment/cancelPayment?paymentId="+paymentId;
 	 
  }
  
@@ -96,7 +96,7 @@
 	 
 	 $("button:contains('출금목록보기')").on("click", function(){
 		 
-		 self.location="/vig/withdraw/getWithdrawList";
+		 self.location="/withdraw/getWithdrawList";
 		 
 	 });
 	
@@ -134,7 +134,7 @@
 			 alert("은행을 선택해주세요");
 		 }
 		 if(holder != "" && accNo != "" && RRN != ""&& bankCode!=""){
-		$("form").attr("method", "post").attr("action", "/vig/withdraw/addWithdraw").submit();
+		$("form").attr("method", "post").attr("action", "/withdraw/addWithdraw").submit();
 		 }
 		 
 	 });
@@ -157,14 +157,14 @@
 		      <div class="container-fluid">  
 		      	 <div class="row">
 		      		<div class="col-md-12">
-		      			<jsp:include page="/main/toolbar.jsp"></jsp:include>
+		      			<jsp:include page="../main/toolbar.jsp"></jsp:include>
 		     		</div>
 				</div>
 		
 		
 			<!-- 사이드바  -->		
 				<div class="col-md-2 sideBarPlace">		
-				 <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
+				 <jsp:include page="../myFeed/sideBar.jsp"></jsp:include>
 				 </div>
   			<!-- 타이틀 -->
 			    <div class="col-md-10" id="mainMyFeedPage" >
@@ -200,7 +200,7 @@
 								<tr>
 									<th scope="row">${i}</th>
 									<td>
-										<a href="/vig/myfeed/getMyFeedList?userCode=${payment.buyer.userCode }">${payment.buyer.userCode}</a>
+										<a href="/myfeed/getMyFeedList?userCode=${payment.buyer.userCode }">${payment.buyer.userCode}</a>
 										
 										<input type="hidden" name="paymentId" value="${payment.paymentId }"> <!-- sever side에서 상태 변경용 paymentId를 심는다 -->
 										
@@ -209,7 +209,7 @@
 										${payment.selectPrice}
 									</td>
 									<td>
-										<a href="/vig/feed/getFeed?feedId=${payment.feedId }">${payment.feedId}</a>
+										<a href="/feed/getFeed?feedId=${payment.feedId }">${payment.feedId}</a>
 									</td>
 									<td>
 										${payment.paymentDate }

@@ -30,8 +30,8 @@
 
 
  	<!--  drag and drop -->
- 	<script src="res/javascript/dropify.js"></script>
- 	<link rel="stylesheet" href="res/css/dropify.min.css">
+ 	<script src="/javascript/dropify.js"></script>
+ 	<link rel="stylesheet" href="/css/dropify.min.css">
  	
  	
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -41,7 +41,7 @@
 		//탈퇴 페이지로 이동 
 		$(function() {
 			$( "#deleteUser_nav" ).on("click" , function() {
-				location.href="/vig/user/deleteUser.jsp";
+				location.href="/user/deleteUser.jsp";
 			});
 		});	
 		
@@ -60,7 +60,7 @@
 					return false;
 					
 				}
-				$(".myform").attr("method","POST").attr("enctype","multipart/form-data").attr("action","/vig/user/updateUser").submit();			
+				$(".myform").attr("method","POST").attr("enctype","multipart/form-data").attr("action","/user/updateUser").submit();			
 			});
 		});
 
@@ -87,7 +87,7 @@
 			location.href="https://accounts.google.com/o/oauth2/auth?client_id="+
 			"153642235365-kg8rl6mmbhk7rh4tuefg790id1llegd1.apps.googleusercontent.com"+
 			"&redirect_uri="+
-			"http://localhost:8080/vig/user/googleLogin" +
+			"http://localhost:8080/user/googleLogin" +
 			"&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email&approval_prompt=force&access_type=offline";				
 		});
 	});
@@ -99,7 +99,7 @@
 				var cf = confirm("비지니스 계정으로 전환 하시겠습니까?");
 				
 				if(cf==true){				
-				self.location="/vig/payment/addPayment?productType=1"; //세션에서 user코드를 가져온다.			
+				self.location="/payment/addPayment?productType=1"; //세션에서 user코드를 가져온다.			
 				} else if (cf==false) {				
 				}		
 			});
@@ -112,7 +112,7 @@
 				var cf = confirm("프라임 피드 추가 결제를 진행 하시겠습니까?");
 				
 				if(cf==true){				
-				self.location="/vig/payment/addPayment?productType=0"; 			
+				self.location="/payment/addPayment?productType=0"; 			
 				} else if (cf==false) {				
 				}		
 			});
@@ -202,14 +202,14 @@
 	      <div class="container-fluid">  
 		    <div class="row">
 		    	<div class="col-md-12">
-		      			<jsp:include page="/main/toolbar.jsp"></jsp:include>
+		      			<jsp:include page="../main/toolbar.jsp"></jsp:include>
 		     	</div>
 			</div>
 		
 		
 			<!-- 사이드바  -->		
 			<div class="col-md-2 sideBarPlace">		
-				 <jsp:include page="/myFeed/sideBar.jsp"></jsp:include>
+				 <jsp:include page="../myFeed/sideBar.jsp"></jsp:include>
 			</div>
 				 
 				 
@@ -223,8 +223,8 @@
 				<form class="myform" enctype="multipart/form-data">
 					<br/>
 					<!-- 프로필 이미지 설정 -->
-					<!--  <img class="card-img-top" src="/vig/images/uploadFiles/${user.profileImg}" id="pImg" alt="profile_img"> -->
-					<input type="file" id="demo" name="uploadFile" class="dropify"  data-default-file="res/images/uploadFiles/${user.profileImg}">
+					<!--  <img class="card-img-top" src="/images/uploadFiles/${user.profileImg}" id="pImg" alt="profile_img"> -->
+					<input type="file" id="demo" name="uploadFile" class="dropify"  data-default-file="/images/uploadFiles/${user.profileImg}">
 					<br/>
 							
 			 			
