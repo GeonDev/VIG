@@ -69,7 +69,7 @@ public class EventController {
 
 		ModelAndView modelAndView = new ModelAndView();
 		
-		modelAndView.setViewName("forward: eventView/addEventView.jsp");
+		modelAndView.setViewName("eventView/addEventView");
 
 		return modelAndView;
 		
@@ -110,8 +110,6 @@ public class EventController {
 	    			File f = null;
 		    		//원하는 위치에 파일 저장
 	    			
-	    			
-		    		
 		    		if(i == 1) { //본문 이미지면
 		    			
 		    			f=new File(path+inDate+multipartFile.getOriginalFilename());
@@ -143,8 +141,6 @@ public class EventController {
 		}
 		
 		
-		
-		
 		System.out.println(event);
 		
 		eventServices.addEvent(event);
@@ -159,31 +155,24 @@ public class EventController {
 	//완료됨 키워드로 피드 받아와야함
 	@RequestMapping(value="getEvent", method=RequestMethod.GET)
 	public ModelAndView getEvent(@RequestParam("eventId") int eventId) throws Exception {
-		
-		logger.debug("getEvent");
+
 		Event event = eventServices.getEvent(eventId);
-		
-		logger.debug(event);
-		
-		//String[] tags = ((event.getEventTags()).split(","));
 		String tags = event.getEventTags();
-		System.out.println(tags);
 		List<Feed> feedList = feedServices.getFeedListOnlyTag(tags);
-		System.out.println(feedList);
+
+		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("forward: eventView/getEvent");
+		mav.setViewName("eventView/getEvent");
 		mav.addObject("event", event);
-		mav.addObject("feedList", feedList);
-		
-		return mav;
-		
+		mav.addObject("feedList", feedList);	
+	
+		return mav;		
 	}
 	
 	@RequestMapping(value="getEventList")
 	public ModelAndView getEventList( @ModelAttribute("search") Search search) throws Exception {
 		
-		logger.debug("getEventList");
-		logger.debug(search);
+	
 		
 		if(search.getCurrentPage() == 0 ){
 			search.setCurrentPage(1);
@@ -200,19 +189,17 @@ public class EventController {
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("forward: eventView/getEventList");
+		mav.setViewName("eventView/getEventList");
 		mav.addObject("list", map.get("list"));
 		mav.addObject("resultPage", resultPage);
 		
-		return mav;
-		
+		return mav;		
 	}
-	//완료됨
+	
+	
 	@RequestMapping(value="deleteEvent", method=RequestMethod.GET)
 	public ModelAndView deleteEvent(@RequestParam("eventId") int eventId) throws Exception {
-		
-		
-		
+			
 		System.out.println("deleteEvent");
 		
 		eventServices.deleteEvent(eventId);
@@ -229,7 +216,7 @@ public class EventController {
 		Event dbEvent = eventServices.getEvent(eventId);
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("forward: eventView/updateEventView");
+		mav.setViewName("eventView/updateEventView");
 		mav.addObject("event", dbEvent);
 		
 		return mav;

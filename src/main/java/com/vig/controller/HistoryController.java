@@ -76,7 +76,7 @@ public class HistoryController {
 		if(user != null) {
 			search.setKeyword(user.getUserCode());
 		}else {			
-			return new ModelAndView("forward: common/alertView", "message", "로그인 후 이용가능합니다.");
+			return new ModelAndView("common/alertView", "message", "로그인 후 이용가능합니다.");
 		}		
 
 		Page resultPage = new Page(search.getCurrentPage(), historyServices.getHistoryCount(search) , pageUnit, pageSize);
@@ -84,7 +84,7 @@ public class HistoryController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 
-		modelAndView.setViewName("forward: historyView/getMyHistory");
+		modelAndView.setViewName("historyView/getMyHistory");
 		modelAndView.addObject("historylist", historyServices.getHistoryList(search));
 		
 		// 유저의 숨김 리스트 출력
@@ -104,7 +104,7 @@ public class HistoryController {
 		
 		historyServices.deleteHistory(historyId);
 		
-		return new ModelAndView("forward: common/alertView", "message", "해당 기록이 삭제되었습니다.");
+		return new ModelAndView("common/alertView", "message", "해당 기록이 삭제되었습니다.");
 		
 		
 	}
@@ -115,7 +115,7 @@ public class HistoryController {
 		User user = (User)session.getAttribute("user");
 		
 		if(user == null) {
-			return new ModelAndView("forward: common/alertView.jsp", "message", "로그인 후 이용가능합니다.");
+			return new ModelAndView("common/alertView.jsp", "message", "로그인 후 이용가능합니다.");
 		}
 		
 		
@@ -127,7 +127,7 @@ public class HistoryController {
 		history.setWatchUser(user);
 		historyServices.addHistory(history);
 		
-		return new ModelAndView("forward: common/alertView", "message", "해당 피드가 숨김처리 됬습니다.");
+		return new ModelAndView("common/alertView", "message", "해당 피드가 숨김처리 됬습니다.");
 		
 		
 	}
