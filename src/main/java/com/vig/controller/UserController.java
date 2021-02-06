@@ -37,9 +37,7 @@ public class UserController {
 	public static final Logger logger = LogManager.getLogger(EventController.class); 
 	
 	private static String OS = System.getProperty("os.name").toLowerCase();
-	
 
-	//BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
 	@Autowired
 	private ServletContext context;	
@@ -169,8 +167,8 @@ public class UserController {
 	@RequestMapping( value="addUser", method=RequestMethod.POST )
 	public String addUser(@ModelAttribute("user") User user, HttpSession session ) throws Exception {
 		
-		//String pwdBycrypt = passwordEncoder.encode(user.getPassword());
-	    //user.setPassword(pwdBycrypt);
+		//String pwdBycrypt = passwordEncoder.encode();
+	    user.setPassword(CommonUtil.generateSHA256(user.getPassword()));
 		user.setPassword(user.getPassword());
 		userServices.addUser(user);
 		
@@ -213,8 +211,9 @@ public class UserController {
 			return new ModelAndView("common/alertView", "message", msg);
 		}
 		
-//		if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())){
-		if (true){			
+		String encode = CommonUtil.generateSHA256(user.getPassword());
+	
+		if (encode.equals(dbUser.getPassword())){			
 			if(dbUser.getState() == 0) {
 				session.setAttribute("user", dbUser);		
 				mv.setViewName("redirect:/");

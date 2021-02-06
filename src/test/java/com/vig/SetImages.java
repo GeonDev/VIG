@@ -19,6 +19,7 @@ import com.vig.service.ColorService;
 import com.vig.service.ImageService;
 import com.vig.service.KeywordService;
 import com.vig.service.UserService;
+import com.vig.util.CommonUtil;
 import com.vig.util.VisionInfo;
 
 public class SetImages {
@@ -85,11 +86,8 @@ public class SetImages {
 
 			logger.debug("회원정보 해쉬 적용 시작");
 
-			for (User user : list) {
-				//String pwdBycrypt = passwordEncoder.encode(user.getPassword());
-				//user.setPassword(pwdBycrypt);
-				
-				user.setPassword(user.getPassword());
+			for (User user : list) {			
+				user.setPassword(CommonUtil.generateSHA256(user.getPassword()));		
 				userServices.updateUser(user);
 			}
 
