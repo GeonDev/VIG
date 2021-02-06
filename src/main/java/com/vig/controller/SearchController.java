@@ -72,7 +72,7 @@ public class SearchController {
 		model.addAttribute("categorylist", categorylist);
 		model.addAttribute("pageSize", pageSize);
 		
-		return new ModelAndView("forward: searchView/getSearchResult");
+		return new ModelAndView("searchView/getSearchResult");
 	}	
 	
 	
@@ -86,7 +86,7 @@ public class SearchController {
 				
 		model.addAttribute("baseImage", image);		
 		model.addAttribute("pageSize", pageSize);
-		return new ModelAndView("forward: searchView/getSearchImageResult");
+		return new ModelAndView("searchView/getSearchImageResult");
 	}
 	
 	

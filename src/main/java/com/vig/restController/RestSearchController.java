@@ -40,7 +40,7 @@ import com.vig.util.Translater;
 
 
 @RestController
-@RequestMapping("/search/*")
+@RequestMapping("search/*")
 public class RestSearchController {	
 
 	public static final Logger logger = LogManager.getLogger(RestSearchController.class); 

@@ -96,7 +96,7 @@ public class ReportController {
 		ModelAndView modelAndView = new ModelAndView();
 
 		// Model 과 View 연결
-		modelAndView.setViewName("forward: reportView/getReportlist");
+		modelAndView.setViewName("reportView/getReportlist");
 		modelAndView.addObject("list", reportService.getReportList(search));
 		modelAndView.addObject("resultPage", resultPage);
 		modelAndView.addObject("search", search);
@@ -139,7 +139,7 @@ public class ReportController {
 		ModelAndView modelAndView = new ModelAndView();
 
 		// Model 과 View 연결
-		modelAndView.setViewName("forward: reportView/getReportlistFromUser");
+		modelAndView.setViewName("reportView/getReportlistFromUser");
 		modelAndView.addObject("list", reportService.getReportListFromUser(search));
 		modelAndView.addObject("resultPage", resultPage);
 		modelAndView.addObject("search", search);

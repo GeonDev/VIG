@@ -99,9 +99,7 @@ public class FeedController {
 		feedServices.addFeed(feed);
 							
         String path = context.getRealPath("/");  
-        
-        System.out.println(path);
-        
+            
         if(OS.contains("win")) {
         	//워크스페이스 경로를 받아온다.
             path = path.substring(0,path.indexOf("\\.metadata"));         
@@ -205,13 +203,11 @@ public class FeedController {
 		
 		//ip로 조회수 counting 하는 부분
 		String ipAddress = CommonUtil.getUserIp(request);
-		System.out.println(ipAddress);
+
 		
 		User user = (User)session.getAttribute("user");
 		User writer = feed.getWriter();
-		System.out.println("User"+user);
-		System.out.println("Writer"+writer);
-				
+
 		
 		// 로그인한 유저정보가 있는지 체크 - 히스토리를 남기는 부분입니다. 삭제 X(손건)
 		History history = new History();		

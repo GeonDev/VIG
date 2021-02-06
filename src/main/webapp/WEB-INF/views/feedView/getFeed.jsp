@@ -744,23 +744,6 @@ function imageModal(imageId){
 			
 			</c:forEach>
 	
-		
-		
-		
-			
-			<c:if test="${!empty feed.coworkers }">
-			<div class="feedbottom">	
-			<h6 style="font-weight: bold">Coworkers</h6>
-			
-			<c:forEach var="coworkers" items="${feed.coworkers}">
-				<c:set var="i" value="0"/>
-				<c:set var="i" value="${i+1 }"/>
-				<a href="/myfeed/${coworkers.user.userCode}">${coworkers.user.userName}</a>
-			</c:forEach>
-			</div>
-			<br>
-			</c:if>
-
 			
 			<div class="feedbottom" id="tags" style="display:none">
 			<h6 style="font-weight: bold">Tags</h6>

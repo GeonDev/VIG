@@ -17,7 +17,7 @@ import com.vig.domain.User;
 import com.vig.service.CommentService;
 
 @RestController
-@RequestMapping("/comment/*")
+@RequestMapping("comment/*")
 public class RestCommentController {
 	
 	@Autowired

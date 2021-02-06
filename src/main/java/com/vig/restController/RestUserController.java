@@ -29,7 +29,7 @@ import com.vig.service.UserService;
 
 
 @RestController
-@RequestMapping("/user/*")
+@RequestMapping("user/*")
 public class RestUserController {
 
 	@Autowired

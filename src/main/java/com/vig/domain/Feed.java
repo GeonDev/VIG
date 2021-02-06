@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
+import com.vig.repository.LikerMapper;
+
 import lombok.Data;
 
 @Data
@@ -27,9 +29,8 @@ public class Feed implements Serializable {
 	private int primeFeedViewCount;
 	// 0 = 모두 등록, 1= 팔로워만 등록, 2= 등록불가
 	private int commentRange;
-	private List<JoinUser> coworkers;
 	private List<Image> images;
-	private List<JoinUser> likes;
+	private List<LikeUser> likes;
 	private List<Comment> comments;
 	
 	// 피드가 가지고 있는 키워드 - 서비스에서 세팅해 주어야 한다.

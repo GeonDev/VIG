@@ -15,7 +15,7 @@ import com.vig.service.HistoryService;
 import com.vig.service.LikeService;
 
 @RestController
-@RequestMapping("/chart/*")
+@RequestMapping("chart/*")
 
 public class RestChartController {
 	
