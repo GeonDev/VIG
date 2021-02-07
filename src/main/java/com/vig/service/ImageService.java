@@ -64,9 +64,9 @@ public class ImageService  {
 	}
 
 
-	public List<Image> getImageListFromCategoroy(Search search) throws Exception {
+	public List<Image> getImageListFromCategory(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return  imageMapper.getImageListFromCategoroy(search);
+		return  imageMapper.getImageListFromCategory(search);
 	}
 
 
