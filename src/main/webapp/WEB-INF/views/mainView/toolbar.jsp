@@ -332,7 +332,7 @@
 <!-- //비로그인 상태 -->
 <!-- 로그인 클릭시 모달 -->
 			<c:if test="${empty sessionScope.user }"> 
-			  <a class="nav-link" data-remote="/user/loginView.jsp"
+			  <a class="nav-link" data-remote="/user/getModalLoginView"
 				data-toggle="modal" data-target="#theModal" ><span id="white_wr" style="margin-right: 30px;">Log in</span></a>
 			</c:if> 
 	

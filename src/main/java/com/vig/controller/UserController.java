@@ -228,7 +228,7 @@ public class UserController {
 				return new ModelAndView("forward:/common/alertView", "message", msg);
 				
 		} else {
-			mv.setViewName("userView/loginView");		
+			mv.setViewName("userView/");		
 			mv.addObject("msg", "fail");
 			return mv;
 		}
@@ -247,7 +247,7 @@ public class UserController {
 			//저장된 세션정보를 무효화 시킴
 			session.invalidate();
 			
-		return new ModelAndView("redirect:/main/VIG");
+		return new ModelAndView("redirect:/");
 	}
 
 	
@@ -258,7 +258,7 @@ public class UserController {
 		User writer = userServices.getUserOne(user.getUserCode());
 		session.setAttribute("writer", writer);			
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("forward:/user/updateUser.jsp");
+		mv.setViewName("/userView/updateUser");
 		mv.addObject("user", writer);
 		return mv;
 	}
@@ -298,8 +298,8 @@ public class UserController {
 		//비밀번호는 필수 입력
 		if(user.getPassword()!= null || user.getPassword()!="") {
 			
-			//String pwdBycrypt = passwordEncoder.encode(user.getPassword());
-		    //user.setPassword(pwdBycrypt);
+			String pwdBycrypt = CommonUtil.generateSHA256(user.getPassword());
+		    user.setPassword(pwdBycrypt);
 			
 		}
 		
@@ -320,7 +320,7 @@ public class UserController {
 
 		User user = userServices.getUserOne(userCode);
 		model.addAttribute("user", user);		
-		return "forward:/user/getUser.jsp";
+		return "userView/getUser";
 	}
 	
 	//=====유저 리스트 nav
@@ -364,7 +364,7 @@ public class UserController {
 				model.addAttribute("writer", admin);
 			
 				
-		return "forward:/user/getUserList.jsp";
+		return "userView/getUserList";
 	}
 	
 	
@@ -379,7 +379,7 @@ public class UserController {
 			
 			ModelAndView mv = new ModelAndView();		
 			mv.addObject("user", user);
-			mv.setViewName("forward:/user/deleteUser.jsp");
+			mv.setViewName("userView/deleteUser");
 			
 			return mv;
 		}
@@ -394,6 +394,11 @@ public class UserController {
 			mv.setViewName("redirect:/");
 			return mv;
 		}	
+		
+		@RequestMapping("getModalLoginView")
+		public String getModalLoginView() {
+			return "userView/loginView";
+		}
 		
 
 }
