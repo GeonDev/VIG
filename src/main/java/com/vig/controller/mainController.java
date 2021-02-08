@@ -54,6 +54,13 @@ public class mainController {
 		return new ModelAndView("mainView/main");
 	}
 
+	
+	@GetMapping("checkLogin")
+	public ModelAndView setAlertPopup() {		
+		String msg = "로그인이 필요합니다.";				
+		return new ModelAndView("common/alertView", "message", msg);
+		
+	}
 
 
 	
