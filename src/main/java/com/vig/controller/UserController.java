@@ -228,7 +228,7 @@ public class UserController {
 				return new ModelAndView("forward:/common/alertView", "message", msg);
 				
 		} else {
-			mv.setViewName("userView/");		
+			mv.setViewName("userView/loginView");		
 			mv.addObject("msg", "fail");
 			return mv;
 		}
@@ -314,18 +314,8 @@ public class UserController {
 	        
 	}	
 	
-	//
-	@RequestMapping( value="getUser", method=RequestMethod.GET )
-	public String getUser( @RequestParam("userCode") String userCode , Model model ) throws Exception {		
-
-		User user = userServices.getUserOne(userCode);
-		model.addAttribute("user", user);		
-		return "userView/getUser";
-	}
 	
 	//=====유저 리스트 nav
-	
-
 	@RequestMapping(value="getUserList" )
 	public String getUserList( @ModelAttribute("search") Search search, Model model, HttpSession session) throws Exception{		
 		
@@ -335,7 +325,8 @@ public class UserController {
 		if(admin == null) {
 			
 			model.addAttribute("message", "로그인이 필요합니다.");
-			return "forward:/common/alertView.jsp";
+			return "common/alertView";
+			
 		}else if(!admin.getRole().equals("admin")) {
 			model.addAttribute("message", "관리자만 조회 가능합니다.");
 		}		
