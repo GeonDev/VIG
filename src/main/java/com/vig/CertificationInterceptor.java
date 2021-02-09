@@ -1,4 +1,4 @@
-package com.vig.web;
+package com.vig;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

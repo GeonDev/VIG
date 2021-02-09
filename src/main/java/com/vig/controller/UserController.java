@@ -386,6 +386,7 @@ public class UserController {
 			return mv;
 		}	
 		
+		//툴바에서 로그인 모달창 출력용 메소드
 		@RequestMapping("getModalLoginView")
 		public String getModalLoginView() {
 			return "userView/loginView";

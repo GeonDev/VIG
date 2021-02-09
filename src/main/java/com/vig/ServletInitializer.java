@@ -1,4 +1,4 @@
-package com.vig.web;
+package com.vig;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

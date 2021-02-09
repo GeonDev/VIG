@@ -1,4 +1,4 @@
-package com.vig.web;
+package com.vig;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
