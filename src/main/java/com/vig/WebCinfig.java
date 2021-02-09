@@ -1,4 +1,4 @@
-package com.vig.web;
+package com.vig;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,8 +17,11 @@ public class WebCinfig implements WebMvcConfigurer {
 	@Autowired   
 	private CertificationInterceptor certificationInterceptor;   
    
-	@Value("${acceptURL}")
-	String acceptURL;
+	@Value("${checkUrlList}")
+	String checkUrls;
+	
+	@Value("${enableUrlList}")
+	String enableUrls;
 	
 	
 	@Override   
@@ -26,9 +29,11 @@ public class WebCinfig implements WebMvcConfigurer {
 		
 		//addPathPatterns 해당 패턴에 해당하는 URL을 인터럽트한다.
 		//excludePathPatterns 해당 패턴에 해당하는 URL은 인터럽트하지 않는다.
-		List<String> exceptUrlList = new ArrayList<>(Arrays.asList(acceptURL.split(",")));
+		List<String> addUrlList = new ArrayList<>(Arrays.asList(checkUrls.split(",")));
+		
+		List<String> excludeUrlList = new ArrayList<>(Arrays.asList(enableUrls.split(",")));
 				
-		//registry.addInterceptor(certificationInterceptor).excludePathPatterns(exceptUrlList);
+		registry.addInterceptor(certificationInterceptor).addPathPatterns(addUrlList).excludePathPatterns(excludeUrlList);
 		
 		
 	}  

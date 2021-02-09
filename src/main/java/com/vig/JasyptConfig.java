@@ -1,4 +1,4 @@
-package com.vig.web;
+package com.vig;
 
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;

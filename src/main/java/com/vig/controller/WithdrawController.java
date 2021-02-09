@@ -27,7 +27,7 @@ import com.vig.service.WithdrawService;
 
 
 @Controller
-@RequestMapping(" withdraw/*")
+@RequestMapping("withdraw/*")
 public class WithdrawController {
 	
 	public static final Logger logger = LogManager.getLogger(WithdrawController.class); 
