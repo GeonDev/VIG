@@ -56,7 +56,7 @@ public ChartController() {
 	    ModelAndView mav = new ModelAndView();
 	    mav.setViewName("chartView/getChart");
 	    mav.addObject("likeCount", likeCount.get("mouthCout"));			//리스트
-	    mav.addObject("likeCount2",likeCount.get("totalCount"));			//총합
+	    mav.addObject("likeCount2",likeCount.get("totalCount"));		//총합
 	    //좋아요
 	    mav.addObject("viewCount",viewCount.get("mouthCout"));
 	    mav.addObject("viewCount2",viewCount.get("totalCount"));

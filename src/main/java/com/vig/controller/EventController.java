@@ -147,7 +147,7 @@ public class EventController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		
-		modelAndView.setViewName("redirect: eventView/getEventList");
+		modelAndView.setViewName("redirect: event/getEventList");
 		
 		return modelAndView;
 		
@@ -204,7 +204,7 @@ public class EventController {
 		
 		eventServices.deleteEvent(eventId);
 		
-		ModelAndView mav = new ModelAndView("redirect: eventView/getEventList");
+		ModelAndView mav = new ModelAndView("redirect: event/getEventList");
 		
 		return mav;
 	}
