@@ -49,18 +49,12 @@ public class ReportController {
 	@RequestMapping("addReport")
 	public ModelAndView addReport(@ModelAttribute("report") Report report, HttpSession session ) throws Exception {
 		
-		User user = (User)session.getAttribute("user");
-		
-		if(user == null) {
-			return new ModelAndView("forward:/common/alertView", "message", "로그인후 이용가능합니다..");
-		}
-		
-		report.setReporter(user);
+		report.setReporter((User)session.getAttribute("user"));
 		
 		report.setViolator(userService.getUserOne(report.getViolatorCode()));
 		reportService.addReport(report);		
 		
-		return new ModelAndView("forward:/common/alertView", "message", "신고가 접수 되었습니다.");
+		return new ModelAndView("common/alertView", "message", "신고가 접수 되었습니다.");
 	}	
 	
 	
@@ -69,11 +63,8 @@ public class ReportController {
 		
 		User admin = (User)session.getAttribute("user");		
 		
-		if(admin == null) {					
-			return new ModelAndView("forward:/common/alertView", "message", "로그인이 필요합니다.");
-				
-		}else if(!admin.getRole().equals("admin")) {
-			return new ModelAndView("forward:/common/alertView", "message", "관리자만 조회 가능합니다.");
+		if(!admin.getRole().equals("admin")) {
+			return new ModelAndView("common/alertView", "message", "관리자만 조회 가능합니다.");
 		}	
 		
 		
@@ -113,11 +104,8 @@ public class ReportController {
 		
 		User admin = (User)session.getAttribute("user");		
 		
-		if(admin == null) {					
-			return new ModelAndView("forward:/common/alertView", "message", "로그인이 필요합니다.");
-				
-		}else if(!admin.getRole().equals("admin")) {
-			return new ModelAndView("forward:/common/alertView", "message", "관리자만 조회 가능합니다.");
+		if(!admin.getRole().equals("admin")) {
+			return new ModelAndView("common/alertView", "message", "관리자만 조회 가능합니다.");
 		}
 		
 		
@@ -160,7 +148,7 @@ public class ReportController {
 		reportService.updateBanState(updateReport);
 		
 
-		return new ModelAndView("forward:/common/alertView", "message", "신고 처리가 완료되었습니다.");
+		return new ModelAndView("common/alertView", "message", "신고 처리가 완료되었습니다.");
 	}
 
 
