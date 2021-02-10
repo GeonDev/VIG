@@ -107,8 +107,7 @@ public class FeedController {
         }else {
         	//실제 톰켓 데이터가 저장되는 경로를 가리킨다.
         	path =  realPath;
-        }
-        
+        }        
        
         
 		//비전 정보 + 쓰레드 동작을 위한 비전 배열
@@ -209,7 +208,7 @@ public class FeedController {
 		User writer = feed.getWriter();
 
 		
-		// 로그인한 유저정보가 있는지 체크 - 히스토리를 남기는 부분입니다. 삭제 X(손건)
+		// 로그인한 유저정보가 있는지 체크 - 히스토리를 남기는 부분입니다.
 		History history = new History();		
 		history.setWatchUser(user);
 		history.setHistoryType(0);
