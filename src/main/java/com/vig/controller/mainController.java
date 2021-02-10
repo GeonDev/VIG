@@ -61,6 +61,13 @@ public class mainController {
 		return new ModelAndView("common/alertView", "message", msg);
 		
 	}
+	
+	@GetMapping("checkAdmin")
+	public ModelAndView setAlertAdminPopup() {		
+		String msg = "관리자 권한이 필요합니다	.";				
+		return new ModelAndView("common/alertView", "message", msg);
+		
+	}
 
 
 	

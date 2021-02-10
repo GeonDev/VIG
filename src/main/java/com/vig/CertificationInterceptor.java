@@ -1,9 +1,14 @@
 package com.vig;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -14,9 +19,18 @@ import com.vig.domain.User;
 @Component
 public class CertificationInterceptor implements HandlerInterceptor{
 	
+	
+	@Value("${requireURLAdmin}")
+	private String requireAdmin;
+	
+	
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
+    	
+    	List<String> urlList = new ArrayList<>(Arrays.asList(requireAdmin.split(",")));    	
+    	String uri = request.getRequestURI();
+    	
         HttpSession session = request.getSession();
         User loginVO = (User) session.getAttribute("user");
  
@@ -25,7 +39,15 @@ public class CertificationInterceptor implements HandlerInterceptor{
          
             return false;
         }else{
-            session.setMaxInactiveInterval(30*60);
+        	session.setMaxInactiveInterval(30*60);
+        	
+        	if(urlList.contains(uri)) {
+        		if(!loginVO.getRole().equals("admin")) {
+        			response.sendRedirect("/checkAdmin");
+        			return false;
+        		}
+        	} 
+            
             return true;
         }
         
