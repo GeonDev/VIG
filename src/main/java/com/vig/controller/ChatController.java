@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
-@RequestMapping("/chat/*")
+@RequestMapping("chat/*")
 public class ChatController {
 
 	public ChatController() {}
@@ -19,9 +19,9 @@ public class ChatController {
 	@RequestMapping(value = "getChat",method = RequestMethod.GET)
 	public ModelAndView getChat(HttpSession session, @RequestParam(value="receiver", required=false) String receiver)throws Exception{
 		
-		System.out.println("getChatList");
+
 	    ModelAndView mav = new ModelAndView();
-	    mav.setViewName("forward:../chat/getChat.jsp");
+	    mav.setViewName("chatView/getChat");
 	    
 	    if(receiver != null || receiver != "") {
 	    	mav.addObject("receiver", receiver);

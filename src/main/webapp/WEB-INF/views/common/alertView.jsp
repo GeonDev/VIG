@@ -6,7 +6,7 @@
 <head>
  <script src="https://code.jquery.com/jquery-latest.js"></script> 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 
 	<!-- Font Awesome -->
@@ -43,7 +43,7 @@
             left: 0;
             top: 0;
             width: 100%; 
-            height: 100%; /
+            height: 100%; 
             overflow: auto; 
             background-color: rgb(0,0,0); 
             background-color: rgba(0,0,0,0.4);
@@ -90,26 +90,9 @@
      		self.location = document.referrer;
      	}else{
      		//페이지 정보가 없으면 메인으로 이동
-     		location.href = '/vig/main/vig';
+     		location.href = '/';
      	}	
-    };
-	
-	
-	/*
-	var message ="<c:out value="${message}"/>"; 			
-	
-	
-	alert(message);					
-
-	//이전페이지 정보가 있는지 체크
-	if(document.referrer){
-		self.location = document.referrer;
-	}else{
-		//페이지 정보가 없으면 메인으로 이동
-		location.href = '/vig/main/vig';
-	}		
-	*/
-		
+    };		
 	
 	 </script>
 

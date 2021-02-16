@@ -72,7 +72,7 @@
       	WHERE event_id=#{value}
 	</delete>
 	
-	<select id="getTotalCount" resultType="int">
+	<select id="getEventCount" resultType="int">
 		SELECT COUNT(*)
 		FROM(	
 		SELECT *

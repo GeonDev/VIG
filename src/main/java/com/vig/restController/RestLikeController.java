@@ -14,7 +14,7 @@ import com.vig.domain.User;
 import com.vig.service.LikeService;
 
 @RestController
-@RequestMapping("/like/*")
+@RequestMapping("like/*")
 public class RestLikeController {
 	
 	@Autowired

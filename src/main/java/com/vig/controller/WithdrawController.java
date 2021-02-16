@@ -27,7 +27,7 @@ import com.vig.service.WithdrawService;
 
 
 @Controller
-@RequestMapping("/withdraw/*")
+@RequestMapping("withdraw/*")
 public class WithdrawController {
 	
 	public static final Logger logger = LogManager.getLogger(WithdrawController.class); 
@@ -60,7 +60,7 @@ public class WithdrawController {
 		if((User)session.getAttribute("user") == null) {
 		
 		mav.addObject("message", "로그인이 필요합니다.");
-		mav.setViewName("forward:../common/alertView.jsp");
+		mav.setViewName("common/alertView");
 
 		} else {
 		User user = (User)session.getAttribute("user");
@@ -86,7 +86,7 @@ public class WithdrawController {
 		mav.addObject("list", list);
 		mav.addObject("possibleAmount", possibleAmount);
 		mav.addObject("writer", userServices.getUserOne(user.getUserCode()));
-		mav.setViewName("forward:/withdraw/getDonationList.jsp");
+		mav.setViewName("withdrawView/getDonationList");
 		}
 		
 		return mav;
@@ -99,10 +99,11 @@ public class WithdrawController {
 		logger.debug(withdraw);
 		logger.debug(paymentIds);
 		ModelAndView mav = new ModelAndView();
-		if((User)session.getAttribute("user") == null || withdraw.getAmount() <10000) {
+		
+		if( withdraw.getAmount() <10000) {
 			
 			mav.addObject("message", "잘못된 접근입니다.");
-			mav.setViewName("forward:../common/alertView.jsp");
+			mav.setViewName("common/alertView");
 
 		} else {
 		Payment payment = new Payment();
@@ -119,7 +120,7 @@ public class WithdrawController {
 				}
 		
 		
-		mav.setViewName("forward:/withdraw/getDonationList");
+		mav.setViewName("withdrawView/getDonationList");
 		}
 		
 		return mav;
@@ -138,35 +139,18 @@ public class WithdrawController {
 		}
 		
 		User user = (User)session.getAttribute("user");
+		search.setKeyword(user.getUserCode());	
 		
-		if(user == null) {
-			mav.addObject("message", "잘못된 접근입니다.");
-			mav.setViewName("forward:../common/alertView.jsp");
-			
-		}else { 
-			
-			if (user.getRole() != "admin") {
-				
-			}else {
-				
-				search.setKeyword(user.getUserCode());
-				
-				
-			}
-				
-				search.setPageSize(pageSize);
-				
-				resultPage = new Page(search.getCurrentPage(), withdrawServices.getCountWithdraw(user.getUserCode()) , pageUnit, pageSize);
-				
-				list = withdrawServices.getWithdrawList(search);
-				mav.addObject("resultPage", resultPage);
-				mav.addObject("search", search);
-				mav.addObject("writer", userServices.getUserOne(user.getUserCode()));
-				mav.addObject("list", list);
-				mav.setViewName("forward:/withdraw/getWithdrawList.jsp");
-		}
+		search.setPageSize(pageSize);
 		
+		resultPage = new Page(search.getCurrentPage(), withdrawServices.getCountWithdraw(user.getUserCode()) , pageUnit, pageSize);
 		
+		list = withdrawServices.getWithdrawList(search);
+		mav.addObject("resultPage", resultPage);
+		mav.addObject("search", search);
+		mav.addObject("writer", userServices.getUserOne(user.getUserCode()));
+		mav.addObject("list", list);
+		mav.setViewName("withdrawView/getWithdrawList");
 		
 		return mav;
 	}

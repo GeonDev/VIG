@@ -15,7 +15,7 @@ import com.vig.service.HistoryService;
 import com.vig.service.LikeService;
 
 @RestController
-@RequestMapping("/chart/*")
+@RequestMapping("chart/*")
 
 public class RestChartController {
 	
@@ -38,9 +38,6 @@ public class RestChartController {
 		String date = year+month;
 		
 		HashMap<String,String> keys = new HashMap<String,String>();
-		
-		
-		
 		
 		keys.put("userCode", user.getUserCode());
 		keys.put("date", date);

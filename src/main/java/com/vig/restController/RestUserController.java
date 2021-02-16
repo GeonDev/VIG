@@ -25,11 +25,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vig.domain.User;
 import com.vig.service.UserService;
+import com.vig.util.CommonUtil;
 
 
 
 @RestController
-@RequestMapping("/user/*")
+@RequestMapping("user/*")
 public class RestUserController {
 
 	@Autowired
@@ -53,11 +54,11 @@ public class RestUserController {
 	public User loginCheck(@RequestBody User user, HttpSession session) throws Exception {
 		System.out.println("json/login");
 		User dbUser = userServices.getUserOne(user.getUserCode());
-		System.out.println("json/dbUser:" + dbUser);
+
 		
-//		if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())) {
+		if (CommonUtil.generateSHA256(user.getPassword()).equals(dbUser.getPassword()) ) {
 			session.setAttribute("user", dbUser);
-//		}
+		}
 		
 		
 		return dbUser;
