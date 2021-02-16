@@ -18,7 +18,7 @@ import com.vig.service.UserService;
 
 
 @RestController
-@RequestMapping("/follow/*")
+@RequestMapping("follow/*")
 public class RestFollowController {
 	
 	public static final Logger logger = LogManager.getLogger(RestFollowController.class); 

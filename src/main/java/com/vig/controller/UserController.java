@@ -31,15 +31,13 @@ import com.vig.service.UserService;
 import com.vig.util.CommonUtil;
 
 @Controller
-@RequestMapping("/user/*")
+@RequestMapping("user/*")
 public class UserController {
 	
 	public static final Logger logger = LogManager.getLogger(EventController.class); 
 	
 	private static String OS = System.getProperty("os.name").toLowerCase();
-	
 
-	//BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
 	@Autowired
 	private ServletContext context;	
@@ -81,9 +79,9 @@ public class UserController {
 		
 		//서버 os가 윈도우라면 로컬로 판단
 		if(OS.contains("win")) {
-			query += "&redirect_uri=" + "http://localhost:8080/VIG/user/googleLogin";	
+			query += "&redirect_uri=" + "http://localhost:8080/user/googleLogin";	
 		}else {
-			query += "&redirect_uri=" + "http://ec2-13-125-196-55.ap-northeast-2.compute.amazonaws.com:8080/VIG/user/googleLogin";
+			query += "&redirect_uri=" + "http://ec2-13-125-196-55.ap-northeast-2.compute.amazonaws.com:8080/user/googleLogin";
 		}		
 		
 		query += "&grant_type=authorization_code";
@@ -104,7 +102,7 @@ public class UserController {
 			//이미 같은 정보로 로그인한 기록이 있을 경우
 			if(userServices.getGoogleID(profile.getId()) != null) {				
 				
-				return new ModelAndView("forward:/common/alertView.jsp", "message", "이미 연동된 계정이 있습니다.");
+				return new ModelAndView("common/alertView", "message", "이미 연동된 계정이 있습니다.");
 			} 
 			
 			//로그인된 유저라면 구글 정보를 업데이트 -> 세션에는 비밀번호가 없어 DB에서 전체 정보를 다시 받음			
@@ -117,7 +115,7 @@ public class UserController {
 			//세션에 저장된 정보를 업데이트
 			session.setAttribute("user", userTemp);
 			
-			return new ModelAndView("redirect:/main/VIG");
+			return new ModelAndView("redirect: /");
 			
 		}else {
 			
@@ -128,15 +126,15 @@ public class UserController {
 				
 				if(user.getState() == 0 ) {
 					session.setAttribute("user",user);							
-					return new ModelAndView("redirect:/main/VIG");
+					return new ModelAndView("redirect: /");
 					
 				}else if(user.getState() == 3 || user.getState() == 4){		
 					String msg = "사용할 수 없는 아이디입니다";				
-					return new ModelAndView("forward:/common/alertView.jsp", "message", msg);
+					return new ModelAndView("common/alertView", "message", msg);
 				}else {	
 					
 					String msg = "접속불가<br/>신고로 인하여 접속이 불가능합니다.<br/>접속 불가능 기간 : " + user.getBanDate().toString() +"까지";				
-					return new ModelAndView("forward:/common/alertView.jsp", "message", msg);				
+					return new ModelAndView("common/alertView", "message", msg);				
 					
 				}		
 
@@ -151,7 +149,7 @@ public class UserController {
 			model.addAttribute("user", user);
 		}
 		
-		return new ModelAndView("forward:/user/addUserView.jsp");		
+		return new ModelAndView("userView/addUserView");		
 	
 	}
 	
@@ -162,20 +160,20 @@ public class UserController {
 	public ModelAndView addUser() throws Exception{		
 	
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("forward:/user/addUserView.jsp");	
+		modelAndView.setViewName("userView/addUserView");	
 		return modelAndView;
 	}
 
 	@RequestMapping( value="addUser", method=RequestMethod.POST )
 	public String addUser(@ModelAttribute("user") User user, HttpSession session ) throws Exception {
 		
-		//String pwdBycrypt = passwordEncoder.encode(user.getPassword());
-	    //user.setPassword(pwdBycrypt);
+		//String pwdBycrypt = passwordEncoder.encode();
+	    user.setPassword(CommonUtil.generateSHA256(user.getPassword()));
 		user.setPassword(user.getPassword());
 		userServices.addUser(user);
 		
 		session.setAttribute("user", userServices.getUserOne(user.getUserCode()));		
-		return "redirect:/main/VIG";
+		return "redirect: /";
 	}
 			
 //====id 체크 =====
@@ -189,7 +187,7 @@ public class UserController {
 		model.addAttribute("result", new Boolean(result));
 		model.addAttribute("userCode", userCode);
 
-		return "forward:/user/checkDuplication.jsp";
+		return "userView/checkDuplication";
 	}
 
 //=======로그인=====
@@ -210,26 +208,27 @@ public class UserController {
 		
 		if(dbUser == null) {
 			String msg = "가입되어 있지 않은 아이디입니다.";				
-			return new ModelAndView("forward:/common/alertView.jsp", "message", msg);
+			return new ModelAndView("common/alertView", "message", msg);
 		}
 		
-//		if (BCrypt.checkpw(user.getPassword(), dbUser.getPassword())){
-		if (true){			
+		String encode = CommonUtil.generateSHA256(user.getPassword());
+	
+		if (encode.equals(dbUser.getPassword())){			
 			if(dbUser.getState() == 0) {
 				session.setAttribute("user", dbUser);		
-				mv.setViewName("redirect:/main/VIG");
+				mv.setViewName("redirect:/");
 						
 				return mv;					
 			}else if(dbUser.getState() == 3 || dbUser.getState() == 4){		
 				String msg = "사용할 수 없는 아이디입니다";				
-				return new ModelAndView("forward:/common/alertView.jsp", "message", msg);
+				return new ModelAndView("common/alertView", "message", msg);
 			}				
 			
 				String msg = "접속불가<br/>신고로 인하여 접속이 불가능합니다.<br/>접속 불가능 기간 : " + dbUser.getBanDate().toString() +"까지";				
-				return new ModelAndView("forward:/common/alertView.jsp", "message", msg);
+				return new ModelAndView("common/alertView", "message", msg);
 				
 		} else {
-			mv.setViewName("forward:/user/loginView.jsp");		
+			mv.setViewName("userView/loginView");		
 			mv.addObject("msg", "fail");
 			return mv;
 		}
@@ -248,7 +247,7 @@ public class UserController {
 			//저장된 세션정보를 무효화 시킴
 			session.invalidate();
 			
-		return new ModelAndView("redirect:/main/VIG");
+		return new ModelAndView("redirect:/");
 	}
 
 	
@@ -259,7 +258,7 @@ public class UserController {
 		User writer = userServices.getUserOne(user.getUserCode());
 		session.setAttribute("writer", writer);			
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("forward:/user/updateUser.jsp");
+		mv.setViewName("/userView/updateUser");
 		mv.addObject("user", writer);
 		return mv;
 	}
@@ -299,8 +298,8 @@ public class UserController {
 		//비밀번호는 필수 입력
 		if(user.getPassword()!= null || user.getPassword()!="") {
 			
-			//String pwdBycrypt = passwordEncoder.encode(user.getPassword());
-		    //user.setPassword(pwdBycrypt);
+			String pwdBycrypt = CommonUtil.generateSHA256(user.getPassword());
+		    user.setPassword(pwdBycrypt);
 			
 		}
 		
@@ -315,32 +314,12 @@ public class UserController {
 	        
 	}	
 	
-	//
-	@RequestMapping( value="getUser", method=RequestMethod.GET )
-	public String getUser( @RequestParam("userCode") String userCode , Model model ) throws Exception {		
-
-		User user = userServices.getUserOne(userCode);
-		model.addAttribute("user", user);		
-		return "forward:/user/getUser.jsp";
-	}
 	
 	//=====유저 리스트 nav
-	
-
 	@RequestMapping(value="getUserList" )
 	public String getUserList( @ModelAttribute("search") Search search, Model model, HttpSession session) throws Exception{		
 		
-		
-		User admin = (User)session.getAttribute("user");		
-		
-		if(admin == null) {
-			
-			model.addAttribute("message", "로그인이 필요합니다.");
-			return "forward:/common/alertView.jsp";
-		}else if(!admin.getRole().equals("admin")) {
-			model.addAttribute("message", "관리자만 조회 가능합니다.");
-		}		
-		
+		User admin = (User)session.getAttribute("user");	
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
@@ -365,9 +344,8 @@ public class UserController {
 				model.addAttribute("writer", admin);
 			
 				
-		return "forward:/user/getUserList.jsp";
+		return "userView/getUserList";
 	}
-	
 	
 	
 	
@@ -380,7 +358,7 @@ public class UserController {
 			
 			ModelAndView mv = new ModelAndView();		
 			mv.addObject("user", user);
-			mv.setViewName("forward:/user/deleteUser.jsp");
+			mv.setViewName("userView/deleteUser");
 			
 			return mv;
 		}
@@ -395,6 +373,12 @@ public class UserController {
 			mv.setViewName("redirect:/");
 			return mv;
 		}	
+		
+		//툴바에서 로그인 모달창 출력용 메소드
+		@RequestMapping("getModalLoginView")
+		public String getModalLoginView() {
+			return "userView/loginView";
+		}
 		
 
 }

@@ -23,11 +23,10 @@
 		<association property="feedCategory"   column="category_id"  javaType="category"  select="setCategory"/>		
 			
 		<collection property="images" 		column="feed_id" 	javaType="list" 	ofType="image" 		select="setFeedImages"/>
-		<collection property="likes" 		column="feed_id" 	javaType="list" 	ofType="joiner" 	select="setLikeUserlist"/>
+		<collection property="likes" 		column="feed_id" 	javaType="list" 	ofType="likeUser" 	select="setLikeUserlist"/>
 		<collection property="comments" 	column="feed_id" 	javaType="list" 	ofType="comment"	select="setCommentlist"/>
 		<collection property="keywords" 	column="feed_id" 	javaType="list" 	ofType="keyword"	select="setKeywordlist"/>
 		
-		<!-- <collection property="coworkers" 	column="feed_id" 	javaType="list" 	ofType="joiner" 	select="setCoworkUserlist"/> -->	
 			
 	</resultMap>		
 	
@@ -63,17 +62,7 @@
 			AND images.feed_id = #{value}
 								
 		</select>
-		
-		
-<!--  		
-		<select id="setCoworkUserlist" parameterType="int" resultMap="com.vig.repository.JoinerMapper.joinerSelectMap" >
-			SELECT * FROM joiner
-			WHERE feed_id = #{value} 					
-		</select>
--->		
-		
-		<!-- 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 -->
-		
+						
 		<select id = "getlastFeedId" resultType="int">
 			SELECT MAX(feed_id) FROM feeds
 		</select>		
@@ -158,7 +147,7 @@
 		 	WHERE feed_id = #{value}
 		</delete>
 						
-		<select id="getfeedListFromCategory" parameterType="search" resultMap="FeedSelectMap">
+		<select id="getFeedListFromCategory" parameterType="search" resultMap="FeedSelectMap">
 			SELECT *  FROM
 			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feeds.* FROM feeds
 			WHERE feeds.feed_state = 0
@@ -171,7 +160,7 @@
 		
 		
 		<!-- 주어진 키워드에 해당하는 피드를 출력  -->
-		<select id="getfeedListFromKeyword" parameterType="search" resultMap="FeedSelectMap">
+		<select id="getFeedListFromKeyword" parameterType="search" resultMap="FeedSelectMap">
 			SELECT *  FROM
 			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_view_count DESC) num, feeds.* FROM feeds, images, keywords
 			WHERE feeds.feed_id = images.feed_id
@@ -189,7 +178,7 @@
 		</select>	
 		
 		<!-- 피드 타이틀에 입력한 키워드를 포함하는지 확인 (OR 연산 속도가 느려서 따로 계산) -->
-		<select id="getfeedListFromTitle" parameterType="search" resultMap="FeedSelectMap">
+		<select id="getFeedListFromTitle" parameterType="search" resultMap="FeedSelectMap">
 			SELECT *  FROM
 			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_view_count DESC) num, feeds.* FROM feeds
 			WHERE feeds.feed_state = 0
@@ -205,7 +194,7 @@
 		</select>	
 		
 				
-		<select id="getfeedListFromColor" parameterType="search" resultMap="FeedSelectMap">
+		<select id="getFeedListFromColor" parameterType="search" resultMap="FeedSelectMap">
 			SELECT *  FROM
 			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_id) num, feeds.* FROM feeds, images, colors
 			WHERE feeds.feed_id = images.feed_id 
@@ -222,7 +211,7 @@
 		
 		
 		<!-- 자동완성용 쿼리문 -->
-		<select id ="getfeedTitleList" parameterType="String" resultType="String">
+		<select id ="getFeedTitleList" parameterType="String" resultType="String">
 			SELECT feed_title FROM feeds
 			WHERE feed_title LIKE CONCAT('%',#{value},'%')
 			AND feeds.feed_state = 0 

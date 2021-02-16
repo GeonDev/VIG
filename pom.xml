@@ -2,6 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -37,18 +38,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jdbc</artifactId>
 		</dependency>
-		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-				           <exclusions>
-                <exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
-           </exclusions>			
 		</dependency>
-		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-websocket</artifactId>
@@ -82,7 +75,11 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -99,14 +96,8 @@
 	 	  <dependency>
 	 	  	<groupId>org.apache.tomcat.embed</groupId> 
 	 	 	<artifactId>tomcat-embed-jasper</artifactId>
+	 	 	<scope>provided</scope>
 	 	  </dependency>
-	 	  
-	 	  <!--  jasypt  암호화-->
-	 	  <dependency>
-			    <groupId>com.github.ulisesbocchio</groupId>
-			    <artifactId>jasypt-spring-boot-starter</artifactId>
-			    <version>2.0.0</version>
-			</dependency>
 		
 		
 		<!--  External dependency   -->
@@ -119,21 +110,24 @@
 				
 				<dependency>
 				    <groupId>com.google.code.gson</groupId>
-				    <artifactId>gson</artifactId>
-				    <version>2.8.6</version>
+				    <artifactId>gson</artifactId>				
 				</dependency>				
 				
+				<dependency>
+				    <groupId>com.google.http-client</groupId>
+				    <artifactId>google-http-client</artifactId>
+				</dependency>
+			
+		
 				<!-- Google vision -->
 				 <dependency>
 				    <groupId>com.google.cloud</groupId>
-				    <artifactId>google-cloud-vision</artifactId>
-				    <version>1.100.10</version>
+				    <artifactId>google-cloud-vision</artifactId>			
 				  </dependency>
 				
 				<dependency>
 			    	<groupId>com.google.cloud</groupId>
-			    	<artifactId>google-cloud-translate</artifactId>
-			    	<version>1.95.7</version>
+			    	<artifactId>google-cloud-translate</artifactId>		
 			 	 </dependency>
 				
 				
@@ -156,6 +150,13 @@
 					<artifactId>mail</artifactId>
 					<version>1.4.7</version>
 				</dependency>					
+				
+			  <!--  jasypt  암호화-->
+	 	    <dependency>
+			    <groupId>com.github.ulisesbocchio</groupId>
+			    <artifactId>jasypt-spring-boot-starter</artifactId>
+			    <version>2.0.0</version>
+			</dependency>
 		
 		<!--  External dependency  -->
 		

@@ -22,7 +22,7 @@ import com.vig.service.ImageService;
 
 
 @Controller
-@RequestMapping("/search/*")
+@RequestMapping("search/*")
 public class SearchController {	
 	
 	public static final Logger logger = LogManager.getLogger(SearchController.class); 
@@ -72,7 +72,7 @@ public class SearchController {
 		model.addAttribute("categorylist", categorylist);
 		model.addAttribute("pageSize", pageSize);
 		
-		return new ModelAndView("forward:/search/getSearchResult.jsp");
+		return new ModelAndView("searchView/getSearchResult");
 	}	
 	
 	
@@ -86,7 +86,7 @@ public class SearchController {
 				
 		model.addAttribute("baseImage", image);		
 		model.addAttribute("pageSize", pageSize);
-		return new ModelAndView("forward:/search/getSearchImageResult.jsp");
+		return new ModelAndView("searchView/getSearchImageResult");
 	}
 	
 	

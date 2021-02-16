@@ -18,7 +18,7 @@ import com.vig.domain.User;
 import com.vig.service.AlarmService;
 
 @RestController
-@RequestMapping("/alarm/*")
+@RequestMapping("alarm/*")
 public class RestAlarmController {	
 	
 	@Autowired
