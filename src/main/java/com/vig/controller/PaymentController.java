@@ -58,14 +58,11 @@ public class PaymentController {
 		if(productType == 0) {
 			//프라임 피드 결제
 			mav.setViewName("paymentView/addPrimeView");
-			
 		}
 		
 		if(productType == 1) {
 			//비즈니스 전환 결제
 			mav.setViewName("paymentView/addBusinessView");
-			
-			
 		}
 		
 		if(productType == 2) {
@@ -219,37 +216,23 @@ public class PaymentController {
 		ModelAndView mav = new ModelAndView();
 		
 		User user = (User)session.getAttribute("user");
-		
-		if(user==null) {
-
-		String message = "관리자만 접근할 수 있습니다.";
-		mav.setViewName("common/alertView.jsp");
-		mav.addObject("message", message);
-		
-		}else {
-		
-			search = new Search();
-			if (search.getCurrentPage() == 0) {
-				search.setCurrentPage(1);
-			}
+				
+		search = new Search();
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}		
 		search.setPageSize(pageSize);
-		System.out.println(search);	
 		List<Payment> list = paymentServices.getPaymentList(search);
 		
 		Page resultPage = new Page(search.getCurrentPage(), paymentServices.getCountPayment(search) , pageUnit, pageSize);
-		System.out.println(resultPage);
-		System.out.println(list);
 		
 		mav.setViewName("paymentView/getAllPaymentList");
 		mav.addObject("list", list);
 		mav.addObject("writer", userServices.getUserOne(user.getUserCode()));
 		mav.addObject("resultPage", resultPage);
 		
-		}
 		
 		return mav;
-		
-		
 	}
 	
 	

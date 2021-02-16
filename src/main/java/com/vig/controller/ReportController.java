@@ -102,13 +102,7 @@ public class ReportController {
 	public ModelAndView getReportListFromUser(@ModelAttribute("search") Search search, @RequestParam("userCode") String userCode, HttpSession session) throws Exception { 
 		
 		
-		User admin = (User)session.getAttribute("user");		
-		
-		if(!admin.getRole().equals("admin")) {
-			return new ModelAndView("common/alertView", "message", "관리자만 조회 가능합니다.");
-		}
-		
-		
+		User admin = (User)session.getAttribute("user");	
 		
 		// 현재 페이지값이 없으면 첫번째 페이지로 설정
 		if (search.getCurrentPage() == 0) {

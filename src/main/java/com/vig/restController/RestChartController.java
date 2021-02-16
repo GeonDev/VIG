@@ -39,9 +39,6 @@ public class RestChartController {
 		
 		HashMap<String,String> keys = new HashMap<String,String>();
 		
-		
-		
-		
 		keys.put("userCode", user.getUserCode());
 		keys.put("date", date);
 		

@@ -99,7 +99,8 @@ public class WithdrawController {
 		logger.debug(withdraw);
 		logger.debug(paymentIds);
 		ModelAndView mav = new ModelAndView();
-		if((User)session.getAttribute("user") == null || withdraw.getAmount() <10000) {
+		
+		if( withdraw.getAmount() <10000) {
 			
 			mav.addObject("message", "잘못된 접근입니다.");
 			mav.setViewName("common/alertView");
@@ -138,30 +139,19 @@ public class WithdrawController {
 		}
 		
 		User user = (User)session.getAttribute("user");
+		search.setKeyword(user.getUserCode());	
 		
-		if(user == null) {
-			mav.addObject("message", "잘못된 접근입니다.");
-			mav.setViewName("common/alertView");
-			
-		}else { 
-			
-			if (user.getRole() != "admin") {
-				
-			}else {			
-				search.setKeyword(user.getUserCode());	
-			}
-				
-				search.setPageSize(pageSize);
-				
-				resultPage = new Page(search.getCurrentPage(), withdrawServices.getCountWithdraw(user.getUserCode()) , pageUnit, pageSize);
-				
-				list = withdrawServices.getWithdrawList(search);
-				mav.addObject("resultPage", resultPage);
-				mav.addObject("search", search);
-				mav.addObject("writer", userServices.getUserOne(user.getUserCode()));
-				mav.addObject("list", list);
-				mav.setViewName("withdrawView/getWithdrawList");
-		}
+		search.setPageSize(pageSize);
+		
+		resultPage = new Page(search.getCurrentPage(), withdrawServices.getCountWithdraw(user.getUserCode()) , pageUnit, pageSize);
+		
+		list = withdrawServices.getWithdrawList(search);
+		mav.addObject("resultPage", resultPage);
+		mav.addObject("search", search);
+		mav.addObject("writer", userServices.getUserOne(user.getUserCode()));
+		mav.addObject("list", list);
+		mav.setViewName("withdrawView/getWithdrawList");
+		
 		return mav;
 	}
 
