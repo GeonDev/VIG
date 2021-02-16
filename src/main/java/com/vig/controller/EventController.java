@@ -139,10 +139,7 @@ public class EventController {
 				} 	
 	        }
 		}
-		
-		
-		System.out.println(event);
-		
+
 		eventServices.addEvent(event);
 		
 		ModelAndView modelAndView = new ModelAndView();
@@ -276,15 +273,12 @@ public class EventController {
 			    			event.setBanner(f.getName());
 		    			
 		    		}
-		    		
-		    		System.out.println(i+"    "+f.getName());
+	
 		    		
 				} 	
 	        }
 		}
-		
-		
-		System.out.println(event);
+
 		
 		eventServices.updateEvent(event);
 		

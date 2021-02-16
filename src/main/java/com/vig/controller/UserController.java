@@ -225,7 +225,7 @@ public class UserController {
 			}				
 			
 				String msg = "접속불가<br/>신고로 인하여 접속이 불가능합니다.<br/>접속 불가능 기간 : " + dbUser.getBanDate().toString() +"까지";				
-				return new ModelAndView("forward:/common/alertView", "message", msg);
+				return new ModelAndView("common/alertView", "message", msg);
 				
 		} else {
 			mv.setViewName("userView/loginView");		
@@ -319,18 +319,7 @@ public class UserController {
 	@RequestMapping(value="getUserList" )
 	public String getUserList( @ModelAttribute("search") Search search, Model model, HttpSession session) throws Exception{		
 		
-		
-		User admin = (User)session.getAttribute("user");		
-		
-		if(admin == null) {
-			
-			model.addAttribute("message", "로그인이 필요합니다.");
-			return "common/alertView";
-			
-		}else if(!admin.getRole().equals("admin")) {
-			model.addAttribute("message", "관리자만 조회 가능합니다.");
-		}		
-		
+		User admin = (User)session.getAttribute("user");	
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
@@ -357,7 +346,6 @@ public class UserController {
 				
 		return "userView/getUserList";
 	}
-	
 	
 	
 	

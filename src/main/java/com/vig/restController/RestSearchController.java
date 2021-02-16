@@ -659,7 +659,7 @@ public class RestSearchController {
 			Cookie cookie = new Cookie("searchKeys", keyword );
 			//30분 유지
 			cookie.setMaxAge(60*30);
-			cookie.setPath("/VIG/");
+			cookie.setPath("/");
 			response.addCookie(cookie);				
 		}else {
 			logger.debug("공백이 포함되어 쿠키에 저장하지 않았습니다.");	

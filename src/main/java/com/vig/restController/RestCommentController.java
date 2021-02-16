@@ -45,28 +45,20 @@ public class RestCommentController {
 		comment.setCommentText(jsonData.get("commentText"));
 		
 		
-
+		//추가한 댓글
 		commentServices.addComment(comment);
-		System.out.println("추가한 댓글 : "+comment);
 		
-		int commentId = commentServices.getLastCommentId();
-		System.out.println("마지막댓글ID : "+commentId);
-		
+		//보여줄 댓글
+		int commentId = commentServices.getLastCommentId();	
 		Comment comment2 = new Comment();
 		comment2 = commentServices.getComment(commentId);
-		System.out.println("보여줄댓글 :"+comment2);
+
 		
 		return comment2;
 	}
 	@RequestMapping(value="json/deleteComment", method = RequestMethod.GET)
 	public void deleteComment(HttpSession session, @RequestParam("commentId") int commentId, @RequestParam("userCode") String userCode, @RequestParam("feedId") int feedId) throws Exception {
-	
-		System.out.println("컨트롤러 들어옴 "+  commentId+userCode);
 		
 		commentServices.deleteComment(commentId);
-		
-		
-		
-
 	}
 }
