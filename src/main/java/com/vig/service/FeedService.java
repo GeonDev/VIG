@@ -7,9 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vig.domain.Feed;
+import com.vig.domain.History;
 import com.vig.domain.ImageKeyword;
 import com.vig.domain.Search;
+import com.vig.domain.User;
 import com.vig.repository.FeedMapper;
+import com.vig.repository.HistoryMapper;
 import com.vig.util.CommonUtil;
 
 @Service
@@ -17,6 +20,10 @@ public class FeedService {
 	
 	@Autowired	  
 	private FeedMapper feedMapper;
+	
+	@Autowired
+	private HistoryMapper historyMapper;
+	
 
 	public FeedService() {	}
 
@@ -64,7 +71,34 @@ public class FeedService {
 	}
 
 	
-	public List<Feed> getFeedListFromCategory(Search search) throws Exception {	
+	//숨김처리한 피드를 제외하고 출력
+	public List<Feed> getFeedListFromCategory(Search search, User user) throws Exception {	
+		
+		
+		List<Feed> feedlist = feedMapper.getFeedListFromCategory(search);
+		
+		//숨김피드는 빼준다. -> 모든 카테고리 공통
+		if(user !=null) {
+			Search tempSearch = new Search();
+			tempSearch.setKeyword(user.getUserCode());
+			tempSearch.setSearchType(1);				
+			
+			//숨김처리한 모든 피드리스트를 가지고 온다.
+			List<History> hidelist = historyMapper.getAllHistoryList(tempSearch);				
+			
+			if(hidelist.size() > 0) {
+				for(History key : hidelist) {					
+					feedlist.remove(key.getShowFeed());
+				}				
+			}
+				
+		}
+		
+		return feedlist;
+	}
+	
+	//선택된 카테고리에서 출력
+	public List<Feed> getFeedListFromCategory(Search search ) throws Exception {	
 		
 		return  feedMapper.getFeedListFromCategory(search);
 	}

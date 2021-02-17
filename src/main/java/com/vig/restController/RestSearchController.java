@@ -180,7 +180,7 @@ public class RestSearchController {
 				//첫페이지 양만 가지고 옴
 				tempSearch.setCurrentPage(1);				
 				
-				//최근 본 피드정보를 가지고 온다.
+				//최근 본 피드정보 20개를 가지고 온다.
 				List<History> historyList =	historyServices.getHistoryList(tempSearch);					
 				
 				if(historyList.size() > 0) {					
@@ -191,25 +191,8 @@ public class RestSearchController {
 						keywordList.addAll(history.getShowFeed().getKeywords());
 					}
 					
-					//쿠키에 저장된 검색어 기록을 가져온다.
-					if(!searchKeys.equals("") ) {			
-						
-						//쿠키에서 가져오면서 변경된 공백을 원래 상태로 돌림
-						searchKeys = searchKeys.replaceAll("\\+", " ");						
-						//콤마 (,)를 기준으로 나눔
-						String[] keys = searchKeys.split(",");
-						
-						for(String keyword : keys ) {
-							
-							if(!keyword.equals("")) {
-								logger.debug("불러온 쿠키 값 : " + keyword);
-								ImageKeyword temp = new ImageKeyword();								
-								temp.setKeywordEn(keyword);	
-								
-								keywordList.add(temp);
-							}
-						}						
-					}					
+					keywordList = addkeywordListFromCookis(keywordList,searchKeys);
+					
 					
 					tempSearch.setKeywords(CommonUtil.checkEqualKeyword(keywordList));
 					tempSearch.setPageSize(pageSize);
@@ -228,25 +211,7 @@ public class RestSearchController {
 			
 		//추천 카테고리를 선택하지 않은 경우 - 카테고리에 해당하는 이미지를 출력	
 		}else {
-			feedlist = feedServices.getFeedListFromCategory(search);
-		}		
-		
-		
-		//숨김피드는 빼준다. -> 모든 카테고리 공통
-		if(user !=null) {
-			Search tempSearch = new Search();
-			tempSearch.setKeyword(user.getUserCode());
-			tempSearch.setSearchType(1);				
-			
-			//숨김처리한 모든 피드리스트를 가지고 온다.
-			List<History> hidelist = historyServices.getAllHistoryList(tempSearch);				
-			
-			if(hidelist.size() > 0) {
-				for(History key : hidelist) {					
-					feedlist.remove(key.getShowFeed());
-				}				
-			}
-				
+			feedlist = feedServices.getFeedListFromCategory(search, user);
 		}		
 		
 		map.put("list",feedlist);
@@ -474,27 +439,7 @@ public class RestSearchController {
 		List<ImageKeyword> keylist = new ArrayList<ImageKeyword>();
 		keylist.addAll(image.getKeyword());				
 
-		//쿠키에 저장된 검색어 기록을 가져온다.
-		if(!searchKeys.equals("") ) {			
-			
-			//쿠키에서 가져오면서 변경된 공백을 원래 상태로 돌림
-			searchKeys = searchKeys.replaceAll("\\+", " ");						
-			//콤마 (,)를 기준으로 나눔
-			String[] keys = searchKeys.split(",");
-			
-			for(String keyword : keys ) {
-				
-				if(!keyword.equals("")) {
-					logger.debug("불러온 쿠키 값 : " + keyword);
-					ImageKeyword temp = new ImageKeyword();
-					temp.setImageId(image.getImageId());
-					temp.setKeywordEn(keyword);	
-					
-					keylist.add(temp);
-				}
-			}
-			
-		}
+		keylist = addkeywordListFromCookis(keylist, searchKeys);
 		
 		//중복 키워드가 있는지 확인후 검색기준에 추가
 		keylist = CommonUtil.checkEqualKeyword(keylist);
@@ -538,27 +483,7 @@ public class RestSearchController {
 		List<ImageKeyword> keylist = new ArrayList<ImageKeyword>();
 		keylist.addAll(image.getKeyword());				
 
-		//쿠키에 저장된 검색어 기록을 가져온다.
-		if(!searchKeys.equals("") ) {			
-			
-			//쿠키에서 가져오면서 변경된 공백을 원래 상태로 돌림
-			searchKeys = searchKeys.replaceAll("\\+", " ");						
-			//콤마 (,)를 기준으로 나눔
-			String[] keys = searchKeys.split(",");
-			
-			for(String keyword : keys ) {
-				
-				if(!keyword.equals("")) {
-					logger.debug("불러온 쿠키 값 : " + keyword);
-					ImageKeyword temp = new ImageKeyword();
-					temp.setImageId(image.getImageId());
-					temp.setKeywordEn(keyword);	
-					
-					keylist.add(temp);
-				}
-			}
-			
-		}
+		keylist = addkeywordListFromCookis(keylist, searchKeys);
 		
 		//중복 키워드가 있는지 확인후 검색기준에 추가
 		keylist = CommonUtil.checkEqualKeyword(keylist);
@@ -664,9 +589,33 @@ public class RestSearchController {
 		}else {
 			logger.debug("공백이 포함되어 쿠키에 저장하지 않았습니다.");	
 		}
+	}
 	
+	//쿠키에서 추출한 데이터를 키워드와 합침
+	private List<ImageKeyword> addkeywordListFromCookis(List<ImageKeyword> keywordList, String searchKeys ){
 		
-	}	
+		//쿠키에 저장된 검색어 기록을 가져온다.
+		if(!searchKeys.equals("") ) {			
+			
+			//쿠키에서 가져오면서 변경된 공백을 원래 상태로 돌림
+			searchKeys = searchKeys.replaceAll("\\+", " ");						
+			//콤마 (,)를 기준으로 나눔
+			String[] keys = searchKeys.split(",");
+			
+			for(String keyword : keys ) {
+				
+				if(!keyword.equals("")) {
+					logger.debug("불러온 쿠키 값 : " + keyword);
+					ImageKeyword temp = new ImageKeyword();								
+					temp.setKeywordEn(keyword);	
+					
+					keywordList.add(temp);
+				}
+			}						
+		}
+		
+		return keywordList;
+	}
 
 
 }
