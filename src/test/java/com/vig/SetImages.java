@@ -51,22 +51,38 @@ public class SetImages {
 
 	public static void main(String[] args) {
 	
+		
 		SetImages setting = new SetImages();
 		
 		try {
-			setting.setImageKeyword();
+			setting.setPasswordforSHA();
+			//setting.setImageKeyword();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
+	
+	public void setPasswordforSHA() throws Exception{
+		
+		List<User> list = userServices.getAllUserList();
+		
+		logger.debug("회원정보 해쉬 적용 시작");
+
+		for (User user : list) {			
+			user.setPassword(CommonUtil.generateSHA256(user.getPassword()));		
+			userServices.updateUser(user);
+		}
+
+		logger.debug("회원정보 해쉬 적용 완료");
+	}
+	
+	
+	
 	// 최소 암호화, 비전 키워드, 색상을 추출해주는 함수
 	public void setImageKeyword() throws Exception {
-
-		//기본 세팅한 키워드 개수 : 24개
-		if (keywordServices.getKeywordAllCount() <= 25) {
-
+	
 			String path = context.getRealPath("/");
 
 			if (OS.contains("win")) {
@@ -81,17 +97,6 @@ public class SetImages {
 			List<Image> imagelist = new ArrayList<Image>();
 			// 저장되어 있는 모든 이미지를 불러옴
 			imagelist = imageServices.getALLImageList();
-
-			List<User> list = userServices.getAllUserList();
-
-			logger.debug("회원정보 해쉬 적용 시작");
-
-			for (User user : list) {			
-				user.setPassword(CommonUtil.generateSHA256(user.getPassword()));		
-				userServices.updateUser(user);
-			}
-
-			logger.debug("회원정보 해쉬 적용 완료");
 
 			logger.debug("이미지 정보 추출 시작");
 			long Totalstart = System.currentTimeMillis();
@@ -176,10 +181,7 @@ public class SetImages {
 				logger.debug("이미지 정보 추출 완료 / 총 추출 시간 : " + getTotalWorkTime(Totalstart, Totalend) + "초");
 			}
 
-		} else {
-		
-			logger.debug("이미 추출된 데이터가 있습니다.");
-		}
+
 	}
 	
 	private int getTotalWorkTime(long start, long end) {
