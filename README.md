@@ -1,4 +1,4 @@
-> Springboot로 마이그레이션을 진행중 입니다  
+> Springboot로 마이그레이션을 진행하였습니다
  https://velog.io/@kada/이미지-검색프로젝트VIG-MigrationRefactoring-1
 
 
