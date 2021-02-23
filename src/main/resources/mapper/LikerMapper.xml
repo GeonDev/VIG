@@ -32,8 +32,8 @@
 		</select>	
 		
 		<insert id="addLike" parameterType="likeUser">
-		 	INSERT INTO joiner (liker_id, feed_id, add_date, user_code)
-		 	VALUES (joiner_id, #{feedId},  NOW(), #{user.userCode})
+		 	INSERT INTO liker (liker_id, feed_id, add_date, user_code)
+		 	VALUES (liker_id, #{feedId},  NOW(), #{user.userCode})
 		</insert>	
 		
 		<delete id="deleteLike" parameterType="likeUser" >
