@@ -21,14 +21,14 @@
 
 ## 적용 내용
 #### 1. java 1.8
-#### 2. Spring 5.0
+#### 2. Spring 5.0 -> Springboot 2.4.2
 #### 3. MariaDB 10.4
 #### 4. Mybatis 3.2.1
 #### 5. MAVEN 3.6.3
 #### 6. JSTL/EL
 
 ## 기타 적용 
-###### * apache tomcat 8.5(servlet 3.1) 사용
+###### * apache tomcat 9(servlet 3.1) 사용
 ###### * bootstrap 4.0/MDB 적용
 ###### * Ajax/RestFul 서버 적용
 ###### * Web socket(실시간 알람) 적용
