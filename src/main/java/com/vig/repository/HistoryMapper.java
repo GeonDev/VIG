@@ -12,9 +12,9 @@ import com.vig.domain.Search;
 @Mapper
 public interface HistoryMapper {
 	
-	public List<History> getHistoryList(Search search) throws Exception;
+	public List<History> getHistoryListFormUser(Search search) throws Exception;
 	
-	public List<History> getAllHistoryList(Search search) throws Exception;
+	public List<History> getAllHistoryFromUser(Search search) throws Exception;
 	
 	public void addHistory(History history) throws Exception;
 	

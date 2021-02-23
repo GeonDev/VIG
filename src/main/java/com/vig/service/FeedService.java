@@ -84,7 +84,7 @@ public class FeedService {
 			tempSearch.setSearchType(1);				
 			
 			//숨김처리한 모든 피드리스트를 가지고 온다.
-			List<History> hidelist = historyMapper.getAllHistoryList(tempSearch);				
+			List<History> hidelist = historyMapper.getAllHistoryFromUser(tempSearch);				
 			
 			if(hidelist.size() > 0) {
 				for(History key : hidelist) {					

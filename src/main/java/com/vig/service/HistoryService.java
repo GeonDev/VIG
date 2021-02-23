@@ -22,7 +22,7 @@ public class HistoryService {
 
 	public List<History> getHistoryList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return historyMapper.getHistoryList(search);
+		return historyMapper.getHistoryListFormUser(search);
 	}
 
 
@@ -62,7 +62,7 @@ public class HistoryService {
 
 	public List<History> getAllHistoryList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return historyMapper.getAllHistoryList(search);
+		return historyMapper.getAllHistoryFromUser(search);
 	}
 
 

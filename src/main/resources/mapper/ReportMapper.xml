@@ -61,7 +61,7 @@
 	</select>
 	
 	
-	<select id="getReortListFromUser" parameterType="search" resultMap="ReportSelectMap">
+	<select id="getReportListFromUser" parameterType="search" resultMap="ReportSelectMap">
 		SELECT * FROM
 		(SELECT  ROW_NUMBER() OVER(ORDER BY report.report_id) num, report.* FROM report 
 		 WHERE violator_code = #{keyword}
