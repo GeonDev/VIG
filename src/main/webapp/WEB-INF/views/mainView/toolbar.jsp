@@ -216,7 +216,7 @@
 			if(chackUserLogin !=null){
 				//웹 소켓을 생성한다.
 				
-				sock = new SockJS("<c:url value="/echo"/>");
+				sock = new SockJS("<c:url value="/ws"/>");
 				
 				//자바스크립트 안에 function을 집어넣을 수 있음.
 				//데이터가 나한테 전달되었을때 자동으로 실행되는 function
