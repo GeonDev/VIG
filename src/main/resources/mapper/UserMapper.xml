@@ -130,23 +130,21 @@
 	
 <!-- SQL : SELECT LIST -->
 	<select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
-	  	SELECT *
-	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT user_code , user_name 
-											FROM users
-											<if test="searchCondition != null">
-												<where>
-													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				user_code LIKE CONCAT('%',#{keyword},'%')
-													</if>
-													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				user_name LIKE CONCAT('%',#{keyword},'%')
-													</if>
-												</where>
-											</if>
-											ORDER BY user_code ) inner_table
-						WHERE ROWNUM &lt;= #{endRowNum} )
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+		SELECT * FROM
+		(SELECT ROW_NUMBER() OVER(ORDER BY users.user_code) num, users.*
+	 	FROM users
+			<if test="searchCondition != null">
+				<where>
+					<if test="searchCondition == 0 and searchKeyword !='' ">
+		 				user_code LIKE CONCAT('%',#{keyword},'%')
+					</if>
+					<if test="searchCondition == 1 and searchKeyword !='' ">
+		 				user_name LIKE CONCAT('%',#{keyword},'%')
+					</if>
+				</where>
+			</if> 	
+	 	)temp
+		WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
 	 </select>
 	 
 	 
