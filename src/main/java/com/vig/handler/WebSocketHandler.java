@@ -1,4 +1,4 @@
-package com.vig.util;
+package com.vig.handler;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -119,12 +119,9 @@ public class WebSocketHandler extends TextWebSocketHandler{
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
        
-    	String name =  ((User)session.getAttributes().get("user")).getUserName();    	
-   
-        //Map 삭제
+       //Map 삭제
         sessions.remove(session.getId());                      
  
-        logger.debug("연결 끊김: " + name);
     }
  
 }
