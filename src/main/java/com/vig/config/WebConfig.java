@@ -1,4 +1,4 @@
-package com.vig;
+package com.vig.config;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,8 +10,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.vig.handler.CertificationInterceptor;
+
 @Configuration
-public class WebCinfig implements WebMvcConfigurer {
+public class WebConfig implements WebMvcConfigurer {
 	
 	/* 로그인 인증 Interceptor 설정 */   
 	@Autowired   

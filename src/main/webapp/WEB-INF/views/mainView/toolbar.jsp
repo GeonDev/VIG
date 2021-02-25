@@ -145,13 +145,14 @@
 	
 	
 	//알람 받을 유저의 유저코드, 피드ID(없으면 ''), 알람타입(0= 좋아요, 댓글, 팔로우) 
-	function sendMessage(userCode, feedID, alarmType){         	
+	function sendMessage(userCode, feedID, alarmType){   
+		console.log("send Realtime Alarm")
 		sock.send(userCode+","+ feedID+","+ alarmType);
 	}
 	
 	
 	//evt 파라미터는 웹 소켓을 보내준 데이터다.(자동으로 들어옴)
-	function onMessage(evt){					
+	function sockMessage(evt){					
 
 		//노티 표시
 		$("#AlarmNoti").css('display','inline');
@@ -179,11 +180,13 @@
 	    //sock.close();
 	}
 
-	function onClose(evt){
+	function sockClose(evt){
 	    $("#data").append("연결 끊김");
 	}
 	
-	
+	function sockOn(){		 
+		sock = new WebSocket("ws://" + location.host + "/rt");
+	}
 	
 	
 	
@@ -192,11 +195,7 @@
 		
 			//읽지 않은 알람을 세팅한다.
 			getAlarmList();
-			
-			//===로그인
-			//$( "#login_btn:contains('Log in')" ).on("click" , function() {
-			//	$(self.location).attr("href","/user/login");
-			//}); 
+	
 			
 			//loginView.jsp를 가지고 와서 모달로 띄움
 			$('#theModal').on('show.bs.modal', function(e) {		
@@ -213,17 +212,20 @@
 			}); 
 			
 			
-			if(chackUserLogin !=null){
-				//웹 소켓을 생성한다.
+			if(chackUserLogin != null){
 				
-				sock = new SockJS("<c:url value="/ws"/>");
+				console.log("is open!!");
+				
+				//웹 소켓을 생성한다.
+				sockOn();				
 				
 				//자바스크립트 안에 function을 집어넣을 수 있음.
 				//데이터가 나한테 전달되었을때 자동으로 실행되는 function
-				sock.onmessage=onMessage;
+				sock.onmessage = sockMessage;
 				
 				//데이터를 끊고싶을때 실행하는 메소드
-				sock.onclose = onClose;				
+				sock.onclose = sockClose;	
+				
 			}
 			
 			
@@ -238,8 +240,6 @@
 				var id = ($(this).attr('id')).split('_'); 				 				 
 				getCheckAlarms(id[1]);
 			})
-			
-			
 	
 		});				
 			

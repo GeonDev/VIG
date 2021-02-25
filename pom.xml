@@ -79,12 +79,16 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+		
+ 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
+		</dependency> 
+
+		
+		<dependency>		
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
@@ -155,12 +159,19 @@
 					<version>1.4.7</version>
 				</dependency>					
 				
-			  <!--  jasypt  암호화-->
-	 	    <dependency>
-			    <groupId>com.github.ulisesbocchio</groupId>
-			    <artifactId>jasypt-spring-boot-starter</artifactId>
-			    <version>2.0.0</version>
-			</dependency>
+				<!--  jasypt  암호화-->
+		 	    <dependency>
+				    <groupId>com.github.ulisesbocchio</groupId>
+				    <artifactId>jasypt-spring-boot-starter</artifactId>
+				    <version>2.0.0</version>
+				</dependency>
+				
+				<!-- json simple  -->
+				<dependency>
+				  <groupId>com.googlecode.json-simple</groupId>
+				  <artifactId>json-simple</artifactId>
+				  <version>1.1.1</version>
+				</dependency>
 		
 		<!--  External dependency  -->
 		
