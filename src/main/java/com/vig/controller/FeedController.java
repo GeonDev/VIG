@@ -31,6 +31,7 @@ import com.vig.domain.ImageKeyword;
 import com.vig.domain.JoinUser;
 import com.vig.domain.LikeUser;
 import com.vig.domain.User;
+import com.vig.scheduler.WaitingList;
 import com.vig.service.ColorService;
 import com.vig.service.CommentService;
 import com.vig.service.FeedService;
@@ -161,13 +162,16 @@ public class FeedController {
 	   					}		    		
 	   				}  	
 				}
+				
+				// 대기 리스트에 추가
+				WaitingList.setImage(imageServices.getLastImageId(), path+imageFile);
+	        }
    							
-					VisionInfo vision = new VisionInfo(path+imageFile, imageServices.getLastImageId());
-					vision.start();			
-					visions.add(vision); 
+/*				VisionInfo vision = new VisionInfo(path+imageFile, imageServices.getLastImageId());
+				vision.start();			
+				visions.add(vision); 
 					
-   				}//end of For
-	        
+   				}
 				for (VisionInfo vision : visions) {			
 					vision.join();
 				}
@@ -180,7 +184,7 @@ public class FeedController {
 					for(ImageColor color : vision.getColors()) {
 						colorServices.addColor(color);
 					}			
-				}    		
+				}  */  		
 			}
 		
 		long Totalend = System.currentTimeMillis();		
