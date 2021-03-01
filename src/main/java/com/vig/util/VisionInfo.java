@@ -176,10 +176,6 @@ public class VisionInfo extends Thread {
 		}	
 		
 	}
-	
-
-	
-	
 
 	@Override
 	public void run() {		
