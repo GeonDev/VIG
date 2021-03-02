@@ -1,26 +1,16 @@
 package com.vig.scheduler;
 
-import java.util.List;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import org.springframework.stereotype.Component;
+
+import com.vig.domain.ImageInfo;
 
 @Component
 public class WaitingList {
 
-	//추출 대기중인 이미지 ID
-	public static List<Integer> imageId = null;
-	
-	//추출 대기중인 이미지 경로
-	public static List<String> imageFilePath = null;
-	
-	public static void setImage(int id, String path) {
-			imageId.add(Integer.valueOf(id));
-			imageFilePath.add(path);		
-	}
-	
-	public static void deleteImage(int id, String path) {
-		imageId.remove(Integer.valueOf(id));
-		imageFilePath.remove(path);		
-	}
+	//추출 대기중인 이미지 큐
+	public static Queue<ImageInfo> images = new LinkedList<ImageInfo>();
 	
 }
