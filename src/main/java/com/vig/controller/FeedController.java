@@ -26,20 +26,19 @@ import com.vig.domain.Feed;
 import com.vig.domain.Follow;
 import com.vig.domain.History;
 import com.vig.domain.Image;
-import com.vig.domain.ImageColor;
+import com.vig.domain.ImageInfo;
 import com.vig.domain.ImageKeyword;
 import com.vig.domain.JoinUser;
 import com.vig.domain.LikeUser;
 import com.vig.domain.User;
+import com.vig.scheduler.WaitingList;
 import com.vig.service.ColorService;
-import com.vig.service.CommentService;
 import com.vig.service.FeedService;
 import com.vig.service.FollowService;
 import com.vig.service.HistoryService;
 import com.vig.service.ImageService;
 import com.vig.service.KeywordService;
 import com.vig.service.LikeService;
-import com.vig.service.UserService;
 import com.vig.util.CommonUtil;
 import com.vig.util.Translater;
 import com.vig.util.VisionInfo;
@@ -161,13 +160,21 @@ public class FeedController {
 	   					}		    		
 	   				}  	
 				}
+				
+								
+				ImageInfo info = new ImageInfo();
+				info.setImageId(imageServices.getLastImageId());
+				info.setPath(path+imageFile);
+				
+				//대기 리스트에 이미지 추가
+				WaitingList.images.offer(info);
+	        }
    							
-					VisionInfo vision = new VisionInfo(path+imageFile, imageServices.getLastImageId());
-					vision.start();			
-					visions.add(vision); 
+/*				VisionInfo vision = new VisionInfo(path+imageFile, imageServices.getLastImageId());
+				vision.start();			
+				visions.add(vision); 
 					
-   				}//end of For
-	        
+   				}
 				for (VisionInfo vision : visions) {			
 					vision.join();
 				}
@@ -180,7 +187,7 @@ public class FeedController {
 					for(ImageColor color : vision.getColors()) {
 						colorServices.addColor(color);
 					}			
-				}    		
+				}  */  		
 			}
 		
 		long Totalend = System.currentTimeMillis();		
