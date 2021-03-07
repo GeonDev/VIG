@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.cloud.vision.v1.AnnotateImageRequest;
 import com.google.cloud.vision.v1.AnnotateImageResponse;
@@ -20,11 +21,20 @@ import com.google.cloud.vision.v1.ImageAnnotatorClient;
 import com.google.protobuf.ByteString;
 import com.vig.domain.ImageColor;
 import com.vig.domain.ImageKeyword;
+import com.vig.service.ColorService;
+import com.vig.service.KeywordService;
 
 
 // 작동을 위해서는 API 키를 적용하야 합니다.
 // Run As - Run Configurations - Environment - New 
 public class VisionInfo extends Thread {	
+	
+	@Autowired
+	private KeywordService keywordService;
+	
+	@Autowired
+	private ColorService colorService;
+	
 	
 	public static final Logger logger = LogManager.getLogger(VisionInfo.class); 
 	
@@ -59,6 +69,21 @@ public class VisionInfo extends Thread {
 		return this.imageFilePath;
 		
 	}
+	
+	//Vision API를 이용하여 추출 한 데이터를 DB에 저장 한다.
+	public void setVisionInfo() throws Exception {
+		
+		for(ImageKeyword keyword : keywords ) {
+			keywordService.addKeyword(keyword);
+		}
+		
+		for(ImageColor color : colors ) {
+			colorService.addColor(color);
+		}
+		
+	}
+	
+	
 	
 	
 	//이미지의 키워드를 추출하는 함수
@@ -176,10 +201,6 @@ public class VisionInfo extends Thread {
 		}	
 		
 	}
-	
-
-	
-	
 
 	@Override
 	public void run() {		
