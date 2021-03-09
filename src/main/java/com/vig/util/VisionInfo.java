@@ -56,22 +56,11 @@ public class VisionInfo extends Thread {
 		colors = new ArrayList<ImageColor>();
 		keywords = new ArrayList<ImageKeyword>();
 	}	
-	
-	public List<ImageKeyword> getKeywords(){
-		return keywords;
-	}
-	
-	public List<ImageColor> getColors(){
-		return colors;
-	}
-	
-	public String getImageFilePath() {
-		return this.imageFilePath;
-		
-	}
+
+
 	
 	//Vision API를 이용하여 추출 한 데이터를 DB에 저장 한다.
-	public void setVisionInfo() throws Exception {
+	private void setVisionInfo() throws Exception {
 		
 		for(ImageKeyword keyword : keywords ) {
 			keywordService.addKeyword(keyword);
@@ -82,9 +71,6 @@ public class VisionInfo extends Thread {
 		}
 		
 	}
-	
-	
-	
 	
 	//이미지의 키워드를 추출하는 함수
 	private void getKeywordForVision() {			
@@ -205,16 +191,14 @@ public class VisionInfo extends Thread {
 	@Override
 	public void run() {		
 		getKeywordForVision();
-		getColorForVision();		
-	}
-	
-	//개별이미지 세팅시 사용 
-	public void setVisionData() {		
-		getKeywordForVision();
 		getColorForVision();	
 		
+		try {
+			setVisionInfo();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	
-
 	
 }
