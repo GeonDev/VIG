@@ -64,9 +64,6 @@ public class FeedController {
 	@Autowired 
 	private KeywordService keywordServices;
 	
-	@Autowired 
-	private ColorService colorServices;
-	
 	@Autowired
 	private FeedService feedServices;
 	
@@ -107,10 +104,7 @@ public class FeedController {
         	//실제 톰켓 데이터가 저장되는 경로를 가리킨다.
         	path =  realPath;
         }        
-       
-        
-		//비전 정보 + 쓰레드 동작을 위한 비전 배열
-		ArrayList<VisionInfo> visions = new ArrayList<VisionInfo>();        
+      
         		
         long Totalstart = System.currentTimeMillis();
 		if(files != null) {
@@ -159,8 +153,7 @@ public class FeedController {
 							keywordServices.addKeyword(imageKeyword); 	
 	   					}		    		
 	   				}  	
-				}
-				
+				}				
 								
 				ImageInfo info = new ImageInfo();
 				info.setImageId(imageServices.getLastImageId());
@@ -170,25 +163,8 @@ public class FeedController {
 				WaitingList.images.offer(info);
 	        }
    							
-/*				VisionInfo vision = new VisionInfo(path+imageFile, imageServices.getLastImageId());
-				vision.start();			
-				visions.add(vision); 
-					
-   				}
-				for (VisionInfo vision : visions) {			
-					vision.join();
-				}
-				
-				for (VisionInfo vision : visions) {			
-					for(ImageKeyword vkeyword : vision.getKeywords()) {
-						keywordServices.addKeyword(vkeyword);
-					}
-					
-					for(ImageColor color : vision.getColors()) {
-						colorServices.addColor(color);
-					}			
-				}  */  		
-			}
+ 		
+		}
 		
 		long Totalend = System.currentTimeMillis();		
 		logger.debug("피드 등록 완료 / 총 추출 시간 : " + getTotalWorkTime(Totalstart, Totalend)+"초");
