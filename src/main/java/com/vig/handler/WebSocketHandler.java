@@ -21,6 +21,14 @@ import com.vig.service.AlarmService;
 import com.vig.service.FeedService;
 import com.vig.service.UserService;
 
+
+/**
+ * 
+ * @content 웹 소캣 작동을 위한 핸들러 
+ * @author kada
+ * 
+ * */
+
 @Component
 public class WebSocketHandler extends TextWebSocketHandler{
 	

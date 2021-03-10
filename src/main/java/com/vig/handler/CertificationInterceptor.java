@@ -16,6 +16,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.vig.domain.User;
 
+/**
+ * 
+ * @content 로그인이 필요한 화면 인터셉트 수행 
+ * @author kada
+ * 
+ * */
 @Component
 public class CertificationInterceptor implements HandlerInterceptor{
 	
