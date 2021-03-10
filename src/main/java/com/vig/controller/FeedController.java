@@ -83,6 +83,16 @@ public class FeedController {
 	}	
 	
 	
+	@RequestMapping(value = "addFeedView", method = RequestMethod.GET)
+	public ModelAndView addFeedView() {
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("feedView/addFeed");
+		
+		return mav;
+	}
+	
+	
 	
 	@RequestMapping(value = "addFeed", method = RequestMethod.POST)
 	public ModelAndView addFeed(@RequestParam("keyword") String keyword, @ModelAttribute("feed") Feed feed, @ModelAttribute("category") Category category,@RequestParam("uploadFile") List<MultipartFile> files, @SessionAttribute("user") User user,@ModelAttribute("joinUser") JoinUser joinUser) throws Exception {
@@ -102,7 +112,6 @@ public class FeedController {
         	path =  realPath;
         }        
       
-        		
        
 		if(files != null) {
 			int k=0;	
@@ -163,7 +172,7 @@ public class FeedController {
 
 		
 		
-		return new ModelAndView("myfeedView/getMyFeedList");
+		return new ModelAndView("myFeedView/getMyFeedList");
 	}
 	
 	
@@ -242,7 +251,7 @@ public class FeedController {
 		feedServices.deleteFeed(feedId);
 		
 	
-		ModelAndView mav = new ModelAndView("redirect: myfeedView/getMyFeedList?userCode="+user.getUserCode());
+		ModelAndView mav = new ModelAndView("redirect: myFeedView/getMyFeedList?userCode="+user.getUserCode());
 		
 		return mav;
 	}
