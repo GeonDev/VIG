@@ -103,7 +103,7 @@ public class FeedController {
         }        
       
         		
-        long Totalstart = System.currentTimeMillis();
+       
 		if(files != null) {
 			int k=0;	
 			
@@ -160,9 +160,7 @@ public class FeedController {
 				WaitingList.images.offer(info);
 	        }			
 		}
-		
-		long Totalend = System.currentTimeMillis();		
-		logger.info("피드 등록 완료 / 총 추출 시간 : " + getTotalWorkTime(Totalstart, Totalend)+"초");
+
 		
 		
 		return new ModelAndView("myfeedView/getMyFeedList");
@@ -234,11 +232,7 @@ public class FeedController {
 		return mav;
 		
 		}
-		
-	
-	private int getTotalWorkTime(long start, long end) {		
-		return (int) ((end - start)/1000);
-	}
+
 	
 	@RequestMapping(value = "deleteFeed", method = RequestMethod.GET)
 	public ModelAndView deleteFeed(HttpSession session, @RequestParam("feedId") int feedId) throws Exception {
