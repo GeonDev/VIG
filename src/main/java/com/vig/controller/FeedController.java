@@ -1,7 +1,6 @@
 package com.vig.controller;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -32,7 +31,6 @@ import com.vig.domain.JoinUser;
 import com.vig.domain.LikeUser;
 import com.vig.domain.User;
 import com.vig.scheduler.WaitingList;
-import com.vig.service.ColorService;
 import com.vig.service.FeedService;
 import com.vig.service.FollowService;
 import com.vig.service.HistoryService;
@@ -41,7 +39,6 @@ import com.vig.service.KeywordService;
 import com.vig.service.LikeService;
 import com.vig.util.CommonUtil;
 import com.vig.util.Translater;
-import com.vig.util.VisionInfo;
 
 
 @Controller
@@ -63,9 +60,6 @@ public class FeedController {
 	
 	@Autowired 
 	private KeywordService keywordServices;
-	
-	@Autowired 
-	private ColorService colorServices;
 	
 	@Autowired
 	private FeedService feedServices;
@@ -107,12 +101,9 @@ public class FeedController {
         	//실제 톰켓 데이터가 저장되는 경로를 가리킨다.
         	path =  realPath;
         }        
-       
-        
-		//비전 정보 + 쓰레드 동작을 위한 비전 배열
-		ArrayList<VisionInfo> visions = new ArrayList<VisionInfo>();        
+      
         		
-        long Totalstart = System.currentTimeMillis();
+       
 		if(files != null) {
 			int k=0;	
 			
@@ -159,8 +150,7 @@ public class FeedController {
 							keywordServices.addKeyword(imageKeyword); 	
 	   					}		    		
 	   				}  	
-				}
-				
+				}				
 								
 				ImageInfo info = new ImageInfo();
 				info.setImageId(imageServices.getLastImageId());
@@ -168,30 +158,9 @@ public class FeedController {
 				
 				//대기 리스트에 이미지 추가
 				WaitingList.images.offer(info);
-	        }
-   							
-/*				VisionInfo vision = new VisionInfo(path+imageFile, imageServices.getLastImageId());
-				vision.start();			
-				visions.add(vision); 
-					
-   				}
-				for (VisionInfo vision : visions) {			
-					vision.join();
-				}
-				
-				for (VisionInfo vision : visions) {			
-					for(ImageKeyword vkeyword : vision.getKeywords()) {
-						keywordServices.addKeyword(vkeyword);
-					}
-					
-					for(ImageColor color : vision.getColors()) {
-						colorServices.addColor(color);
-					}			
-				}  */  		
-			}
-		
-		long Totalend = System.currentTimeMillis();		
-		logger.debug("피드 등록 완료 / 총 추출 시간 : " + getTotalWorkTime(Totalstart, Totalend)+"초");
+	        }			
+		}
+
 		
 		
 		return new ModelAndView("myfeedView/getMyFeedList");
@@ -263,17 +232,13 @@ public class FeedController {
 		return mav;
 		
 		}
-		
-	
-	private int getTotalWorkTime(long start, long end) {		
-		return (int) ((end - start)/1000);
-	}
+
 	
 	@RequestMapping(value = "deleteFeed", method = RequestMethod.GET)
 	public ModelAndView deleteFeed(HttpSession session, @RequestParam("feedId") int feedId) throws Exception {
 		User user = (User)session.getAttribute("user");
 		
-		logger.debug(feedId);
+		logger.info(feedId);
 		feedServices.deleteFeed(feedId);
 		
 	

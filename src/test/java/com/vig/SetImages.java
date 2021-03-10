@@ -125,18 +125,7 @@ public class SetImages {
 					for (VisionInfo vision : visions) {
 						vision.join();
 					}
-
-					// 쓰래드 실행이 완료 된 이후 DB에 데이터 삽입
-					for (VisionInfo vision : visions) {
-
-						for (ImageKeyword keyword : vision.getKeywords()) {
-							keywordServices.addKeyword(keyword);
-						}
-
-						for (ImageColor color : vision.getColors()) {
-							colorServices.addColor(color);
-						}
-					}
+			
 
 					// 1동안 멈춤
 					logger.debug("VISION Request 할당량으로 인해 1분간 정지");
@@ -164,18 +153,6 @@ public class SetImages {
 					vision.join();
 				}
 				logger.debug("쓰레드 실행 완료 / DB 저장 시작");
-
-				// 쓰래드 실행이 완료 된 이후 DB에 데이터 삽입
-				for (VisionInfo vision : visions) {
-
-					for (ImageKeyword keyword : vision.getKeywords()) {
-						keywordServices.addKeyword(keyword);
-					}
-
-					for (ImageColor color : vision.getColors()) {
-						colorServices.addColor(color);
-					}
-				}
 
 				long Totalend = System.currentTimeMillis();
 				logger.debug("이미지 정보 추출 완료 / 총 추출 시간 : " + getTotalWorkTime(Totalstart, Totalend) + "초");

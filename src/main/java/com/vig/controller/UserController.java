@@ -34,7 +34,7 @@ import com.vig.util.CommonUtil;
 @RequestMapping("user/*")
 public class UserController {
 	
-	public static final Logger logger = LogManager.getLogger(EventController.class); 
+	public static final Logger logger = LogManager.getLogger(UserController.class); 
 	
 	private static String OS = System.getProperty("os.name").toLowerCase();
 

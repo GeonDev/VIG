@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -27,7 +27,7 @@ import com.vig.util.VisionInfo;
 @Controller
 public class mainController {
 	
-	Logger logger = LoggerFactory.getLogger(mainController.class);	
+	public static final Logger logger = LogManager.getLogger(mainController.class); 	
 	
 	@Value("${limitVisionImageCount}")
 	private int limitCount;
@@ -84,9 +84,13 @@ public class mainController {
 		
 	}
 	
+	
+	// 1분에 한번씩 실행되는 스케줄러
 	@Scheduled(fixedDelay = 60000)
 	public void scheduleFixedRateTask() {
 		List<ImageInfo> imagelist = new ArrayList<ImageInfo>();
+		
+		//VISION API의 1분당 최대 처리량 이하로 요청하기 위해 이미지 수 체크
 		int currentSize = WaitingList.images.size();
 		
 		
@@ -104,6 +108,7 @@ public class mainController {
 			
 			for(ImageInfo info: imagelist) {
 				
+				//Vision API에서 이미지 정보를 추출하는 쓰레드 생성
 				VisionInfo vision = new VisionInfo(info.getPath(), info.getImageId());
 				vision.start();			
 			}
