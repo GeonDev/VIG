@@ -32,8 +32,8 @@ public interface UserMapper {
 	//유저 검색 시 자동생성
 	public List<String> getAutoUserName(String name) throws Exception;
 
-	//유저 전체를 받아옴 - 최초 해쉬 세팅용
-	public List<User> getAllUserList() throws Exception;
+	//유저 전체를 받아옴 - 최초 값 세팅/엑셀 추출용
+	public List<User> getAllUserList(Search search) throws Exception;
 	
 	//일시 정지 유저를 받아옴
 	public List<User> getBanUserList() throws Exception;

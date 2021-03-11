@@ -3,6 +3,7 @@ package com.vig.controller;
 
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -331,7 +332,7 @@ public class UserController {
 		search.setPageSize(pageSize);
 		
 		// Business logic 수행
-		Map<String , Object> map=userServices.getUserList(search);
+		Map<String , Object> map = userServices.getUserList(search);
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 	
@@ -341,10 +342,37 @@ public class UserController {
 				model.addAttribute("resultPage", resultPage);
 				model.addAttribute("search", search);
 				model.addAttribute("map", map);
+				
+				//사이드 바에 유저정보를 표시하기 위해 사용
 				model.addAttribute("writer", admin);
 			
 				
 		return "userView/getUserList";
+	}
+	
+	
+	
+	
+	@RequestMapping(value="excel" )
+	public String getExcelUserList( @ModelAttribute("search") Search search, Model model) throws Exception{		
+		
+		search.setCurrentPage(1);		
+		
+		if(search.getKeyword() == null) {
+			search.setKeyword("");
+		}
+		
+		//미사용 데이터 -> 단순 초기화용
+		search.setCurrentDate(0);
+		search.setPageSize(0);
+		
+		// Business logic 수행
+		List<User> list = userServices.getAllUserList(search); 
+		
+		model.addAttribute("list", list);
+	
+		
+		return "excelDownloader";
 	}
 	
 	
