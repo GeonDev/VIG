@@ -49,9 +49,19 @@
 	 </select>
 	 
 	 
-	 <select id="getAllUserList"  resultMap="userSelectMap">
+	 <select id="getAllUserList"  parameterType="search" resultMap="userSelectMap">
 	 	SELECT *
 	 	FROM users	 
+	 		<if test="searchCondition != null">
+				<where>
+					<if test="searchCondition == 0 and keyword !='' ">
+		 				user_code LIKE CONCAT('%',#{keyword},'%')
+					</if>
+					<if test="searchCondition == 1 and keyword !='' ">
+		 				user_name LIKE CONCAT('%',#{keyword},'%')
+					</if>
+				</where>
+			</if>
 	 </select>
 	 
 	 
@@ -135,10 +145,10 @@
 	 	FROM users
 			<if test="searchCondition != null">
 				<where>
-					<if test="searchCondition == 0 and searchKeyword !='' ">
+					<if test="searchCondition == 0 and keyword !='' ">
 		 				user_code LIKE CONCAT('%',#{keyword},'%')
 					</if>
-					<if test="searchCondition == 1 and searchKeyword !='' ">
+					<if test="searchCondition == 1 and keyword !='' ">
 		 				user_name LIKE CONCAT('%',#{keyword},'%')
 					</if>
 				</where>

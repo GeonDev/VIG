@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -84,16 +85,22 @@ public class FeedController {
 	
 	
 	@RequestMapping(value = "addFeedView", method = RequestMethod.GET)
-	public ModelAndView addFeedView() {
+	public ModelAndView addFeedView(@SessionAttribute("user") User user) {
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("feedView/addFeed");
 		
+		if(user.getRole().equals("admin")) {
+			
+			String msg = "관리자는 피드작성이 불가능합니다.";				
+			return new ModelAndView("common/alertView", "message", msg);
+		}
+		
+		mav.setViewName("feedView/addFeed");
 		return mav;
 	}
 	
 	
-	
+	@Transactional
 	@RequestMapping(value = "addFeed", method = RequestMethod.POST)
 	public ModelAndView addFeed(@RequestParam("keyword") String keyword, @ModelAttribute("feed") Feed feed, @ModelAttribute("category") Category category,@RequestParam("uploadFile") List<MultipartFile> files, @SessionAttribute("user") User user,@ModelAttribute("joinUser") JoinUser joinUser) throws Exception {
 		
