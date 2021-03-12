@@ -55,11 +55,7 @@ public class UserController {
 	
 	@Value("${otherPath}")
 	String otherPath;
-	
-	
-	
-	@Value("${currentDate}")
-	int currentDate;
+
 	
 	@Value("${pageSize}")
 	int pageSize;
@@ -322,13 +318,14 @@ public class UserController {
 		
 		User admin = (User)session.getAttribute("user");	
 		
-		if(search.getCurrentPage() ==0 ){
+		if(search.getCurrentPage() == 0 ){
 			search.setCurrentPage(1);
 		}
+		
 		if(search.getKeyword() == null) {
 			search.setKeyword("");
 		}
-		search.setCurrentDate(currentDate);
+		//search.setCurrentDate(currentDate);
 		search.setPageSize(pageSize);
 		
 		// Business logic 수행
@@ -355,8 +352,8 @@ public class UserController {
 	
 	@RequestMapping(value="excel" )
 	public String getExcelUserList( @ModelAttribute("search") Search search, Model model) throws Exception{		
-		
-		search.setCurrentPage(1);		
+				
+		search.setCurrentPage(1);
 		
 		if(search.getKeyword() == null) {
 			search.setKeyword("");
@@ -370,6 +367,7 @@ public class UserController {
 		List<User> list = userServices.getAllUserList(search); 
 		
 		model.addAttribute("list", list);
+		model.addAttribute("fileName", "UserList");
 	
 		
 		return "excelDownloader";

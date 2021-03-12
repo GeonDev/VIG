@@ -143,6 +143,13 @@ h1 {
 			
 				<div class="row justify-content-between" style="flex-wrap: wrap; margin-right: 40px; margin-left: 50px; height: 10%;">									
 			
+					<div class ="col-md-1" style="margin-top: 2%; " >
+						<button id="excel" type="button" class="btn btn-info btn-rounded btn-sm">
+							<i class="fas fa-download me-2">Excel</i>
+						</button>			
+					</div>
+			
+			
 					<div class="input-group md-form form-sm form-1 pl-0 col-4">
 						<div class="input-group-prepend">
 							<span class="input-group-text " id="basic-text1">
@@ -197,7 +204,7 @@ h1 {
 					</table>
 
 
-					<input type="hidden" id="currentPage" name="currentPage" value="" />
+					<input type="hidden" id="currentPage" name="currentPage" value="1" />
 				</div>
 			</form>
 
