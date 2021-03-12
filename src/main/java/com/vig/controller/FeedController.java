@@ -173,7 +173,7 @@ public class FeedController {
 				info.setPath(path+imageFile);
 				
 				//대기 리스트에 이미지 추가
-				WaitingList.images.offer(info);
+				WaitingList.setWaitImage(info);
 	        }			
 		}
 

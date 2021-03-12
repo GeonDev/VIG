@@ -40,6 +40,7 @@ import com.vig.domain.User;
  * 
  * @author kada 
  * @content 뷰 취급된 클래스로 엑셀파일을 생성하고 다운로드 하게 해준다.
+ *          static/excel 에 있는 엑셀파일을 이용하여 파일을 생성한다.
  * 
  * */
 
@@ -56,19 +57,17 @@ public class ExcelDownloader extends AbstractView{
 
 	private static String OS = System.getProperty("os.name").toLowerCase();
 	
+	//전달할 콘텐츠 타입을 지정
 	private static final String CONTENT_TYPE = "application/vnd.ms-excel";
-	
-	private String emptyFlie = "empty.xlsx";
+
 	private String template = "template.xlsx";
 	String filename = "";
 	
 	@Autowired
-	private ServletContext context;	
-	
+	private ServletContext context;		
 	
 	InputStream is = null;
-	Workbook wb = null;
-	
+	Workbook wb = null;	
 	
 	
     public void AdminExcelView() {
@@ -91,10 +90,7 @@ public class ExcelDownloader extends AbstractView{
         }     
         
         template = path + template;
-        emptyFlie = path + emptyFlie;
-		
-		
-		
+	
 		
 		filename = (String) model.get("fileName") + "_" + getDate();
 		
@@ -126,6 +122,7 @@ public class ExcelDownloader extends AbstractView{
 			XSSFWorkbook xwb = new XSSFWorkbook(is);
 			SXSSFWorkbook workbook = new SXSSFWorkbook(xwb);
 			
+			//엑셀의 시작열을 지정 0부터 카운트 한다.
 			int startRow = 4;
 			
 			//탬플릿 파일에 template 시트의 서식을 불러온다.
