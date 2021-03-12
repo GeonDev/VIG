@@ -14,6 +14,7 @@ import com.vig.controller.mainController;
 import com.vig.domain.Image;
 import com.vig.domain.ImageColor;
 import com.vig.domain.ImageKeyword;
+import com.vig.domain.Search;
 import com.vig.domain.User;
 import com.vig.service.ColorService;
 import com.vig.service.ImageService;
@@ -66,7 +67,8 @@ public class SetImages {
 	
 	public void setPasswordforSHA() throws Exception{
 		
-		List<User> list = userServices.getAllUserList();
+		//해쉬값을 위한 추출임으로 별다른 입력값없이 수행시킨다.
+		List<User> list = userServices.getAllUserList(new Search());
 		
 		logger.debug("회원정보 해쉬 적용 시작");
 

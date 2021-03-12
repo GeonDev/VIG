@@ -352,7 +352,7 @@
 					</h4>
 						 <div class="dropdown-divider"></div>
 						    <a class="dropdown-item" href="/myfeed/getMyFeedList?userCode=${user.userCode}" style="display: flex;justify-content: center;" >My Feed</a>
-						    <a class="dropdown-item" href="/feed/addFeed.jsp" style="display: flex;justify-content: center;">Upload</a>
+						    <a class="dropdown-item" href="/feed/addFeedView" style="display: flex;justify-content: center;">Upload</a>
 						  <div class="dropdown-divider"></div>
 						      <a class="dropdown-item" style="display: flex;justify-content: center;">Log Out</a>
 						 </div>

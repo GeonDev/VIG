@@ -86,9 +86,9 @@ public class UserService  {
 	}
 
 
-	public List<User> getAllUserList() throws Exception {
+	public List<User> getAllUserList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return userMapper.getAllUserList();
+		return userMapper.getAllUserList(search);
 	}
 
 
