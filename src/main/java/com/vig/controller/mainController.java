@@ -91,18 +91,18 @@ public class mainController {
 		List<ImageInfo> imagelist = new ArrayList<ImageInfo>();
 		
 		//VISION API의 1분당 최대 처리량 이하로 요청하기 위해 이미지 수 체크
-		int currentSize = WaitingList.images.size();
+		int currentSize = WaitingList.getWaitSize();
 		
 		
 		if(currentSize > 0) {
 			if(currentSize > limitCount ) {
 				for(int i =0; i< limitCount; i++) {
-					imagelist.add(WaitingList.images.poll());
+					imagelist.add(WaitingList.getWaitImage());
 				}
 				
 			}else {
 				for(int i=0; i< currentSize; i++) {
-					imagelist.add(WaitingList.images.poll());
+					imagelist.add(WaitingList.getWaitImage());
 				}
 			}			
 			
