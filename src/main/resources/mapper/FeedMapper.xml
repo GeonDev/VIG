@@ -63,11 +63,11 @@
 								
 		</select>
 						
-		<select id = "getlastFeedId" resultType="int">
+		<select id = "getLastFeedId" resultType="int">
 			SELECT MAX(feed_id) FROM feeds
 		</select>		
 		
-		<insert id ="insertFeed" parameterType="feed">
+		<insert id ="addFeed" parameterType="feed">
 			Insert INTO feeds(feed_id, user_code, feed_title, feed_explanation, feed_reg_date, feed_is_prime, category_id, feed_use_gears, feed_state, comment_range  )
 			VALUES(feed_id, #{writer.userCode}, #{feedTitle}, #{feedExplanation:VARCHAR}, NOW(), #{feedIsPrime:NUMERIC}, #{feedCategory.categoryId:NUMERIC}, #{feedUseGears:VARCHAR}, #{feedState:NUMERIC}, #{commentRange:NUMERIC})		
 		</insert>
@@ -214,7 +214,7 @@
 		<select id ="getFeedTitleList" parameterType="String" resultType="String">
 			SELECT feed_title FROM feeds
 			WHERE feed_title LIKE CONCAT('%',#{value},'%')
-			AND feeds.feed_state = 0 
+			AND feed_state = 0 
 			LIMIT 5
 			
 		</select>
@@ -243,10 +243,9 @@
 		<!-- 내가 좋아요한 피드 리스트를 불러온다. -->
 		<select id="getLikedFeedList" parameterType="search" resultMap="FeedSelectMap">
 			SELECT * FROM
-			(SELECT ROW_NUMBER() OVER(ORDER BY joiner.joiner_id DESC) num, feeds.* FROM feeds, joiner
-			WHERE feeds.feed_id = joiner.feed_id
-			AND joiner.is_like = 1
-			AND joiner.user_code = #{keyword}			
+			(SELECT ROW_NUMBER() OVER(ORDER BY liker.liker_id DESC) num, feeds.* FROM feeds, liker
+			WHERE feeds.feed_id = liker.feed_id			
+			AND liker.user_code = #{keyword}			
 			) temp
 			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}		
 		</select>
