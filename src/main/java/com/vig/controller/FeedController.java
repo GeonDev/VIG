@@ -7,8 +7,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -46,7 +46,7 @@ import com.vig.util.Translater;
 @RequestMapping("feed/*")
 public class FeedController {
 	
-	public static final Logger logger = LogManager.getLogger(FeedController.class); 
+	public static final Logger logger = LoggerFactory.getLogger(FeedController.class); 
 	
 	private static String OS = System.getProperty("os.name").toLowerCase();
 	
@@ -254,7 +254,7 @@ public class FeedController {
 	public ModelAndView deleteFeed(HttpSession session, @RequestParam("feedId") int feedId) throws Exception {
 		User user = (User)session.getAttribute("user");
 		
-		logger.info(feedId);
+		logger.info(String.valueOf(feedId));
 		feedServices.deleteFeed(feedId);
 		
 	

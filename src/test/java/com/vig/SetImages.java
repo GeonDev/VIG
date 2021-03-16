@@ -5,15 +5,13 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import com.vig.controller.mainController;
 import com.vig.domain.Image;
-import com.vig.domain.ImageColor;
-import com.vig.domain.ImageKeyword;
 import com.vig.domain.Search;
 import com.vig.domain.User;
 import com.vig.service.ColorService;
@@ -25,7 +23,7 @@ import com.vig.util.VisionInfo;
 
 public class SetImages {
 	
-	public static final Logger logger = LogManager.getLogger(mainController.class);
+	public static final Logger logger = LoggerFactory.getLogger(mainController.class);
 	
 	private static String OS = System.getProperty("os.name").toLowerCase();
 

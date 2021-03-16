@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -28,11 +28,9 @@ import com.vig.domain.Image;
 import com.vig.domain.ImageKeyword;
 import com.vig.domain.Search;
 import com.vig.domain.User;
-import com.vig.service.ColorService;
 import com.vig.service.FeedService;
 import com.vig.service.HistoryService;
 import com.vig.service.ImageService;
-import com.vig.service.KeywordService;
 import com.vig.service.UserService;
 import com.vig.util.CommonUtil;
 import com.vig.util.Translater;
@@ -43,7 +41,7 @@ import com.vig.util.Translater;
 @RequestMapping("search/*")
 public class RestSearchController {	
 
-	public static final Logger logger = LogManager.getLogger(RestSearchController.class); 
+	public static final Logger logger = LoggerFactory.getLogger(RestSearchController.class); 
 	
 	
 	@Autowired 	
