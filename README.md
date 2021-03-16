@@ -25,15 +25,15 @@
 <img src="https://user-images.githubusercontent.com/24502814/110430282-7a295400-80ef-11eb-8e8f-41fafce692c9.JPG" width="900" /></br> 
 ###### 이미지 검색
 <img src="https://user-images.githubusercontent.com/24502814/104086670-2f30c300-529d-11eb-91d2-5439e41487a9.PNG" width="900" /></br>  
-###### 피드 상세(키워드, 색상 추출)
-<img src="https://user-images.githubusercontent.com/24502814/110430280-78f82700-80ef-11eb-9b90-18ec737cb398.JPG" width="900" /></br>  
 ###### 유저 검색
+<img src="https://user-images.githubusercontent.com/24502814/110430280-78f82700-80ef-11eb-9b90-18ec737cb398.JPG" width="900" /></br>  
+###### 피드 상세(키워드, 색상 추출)
 <img src="https://user-images.githubusercontent.com/24502814/110430290-7bf31780-80ef-11eb-848e-fe63dc580c04.JPG" width="900" /></br>  
 ###### 이미지 상세(유사 이미지 추천)
 <img src="https://user-images.githubusercontent.com/24502814/110430271-7695cd00-80ef-11eb-89f7-4a146f967600.JPG" width="900" /></br>
 ###### 마이 피드
 
-## 적용 내용
+# 적용 내용
 #### 1. java 1.8
 #### 2. Spring 5.0 -> Springboot 2.4.2
 #### 3. MariaDB 10.4
@@ -48,8 +48,8 @@
 ###### * Web socket(실시간 알람) 적용
 ###### * google API(login, VISION, TRANS) 적용 
 ###### * 결제(I'm port) 적용
-###### * log4j2 적용
-###### * AOP 적용
+###### * log4j2, AOP 적용
+###### * DB URL 암호화(Jasypt)
 ###### * AWS EC2/ RDS 배포
    
    
