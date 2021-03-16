@@ -1,7 +1,7 @@
 > Springboot로 마이그레이션을 진행하였습니다</br>
  https://velog.io/@kada/이미지-검색프로젝트VIG-MigrationRefactoring-1
  
- VIG의 로그 정리 및 벤유저 자동 복구를 수행하는 데몬입니다.<br/>
+ > VIG의 로그 정리 및 벤유저 자동 복구를 수행하는 데몬입니다.<br/>
  https://github.com/GeonDev/VigDaemon
 
 
