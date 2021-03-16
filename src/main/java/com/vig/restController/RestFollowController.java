@@ -3,8 +3,8 @@ package com.vig.restController;
 
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +21,7 @@ import com.vig.service.UserService;
 @RequestMapping("follow/*")
 public class RestFollowController {
 	
-	public static final Logger logger = LogManager.getLogger(RestFollowController.class); 
+	public static final Logger logger = LoggerFactory.getLogger(RestFollowController.class); 
 	
 	@Autowired
 	private FollowService followServices;
@@ -76,7 +76,7 @@ public class RestFollowController {
 			
 		List<Follow> follower = followServices.getFollowerList(userCode); 
 		
-		logger.debug(follower);
+		logger.debug(follower.toString());
 		
 		
 		
@@ -93,7 +93,7 @@ public class RestFollowController {
 		
 		List<Follow> following = followServices.getFollowingList(userCode); 
 		
-		logger.debug(following);
+		logger.debug(following.toString());
 		
 		
 		

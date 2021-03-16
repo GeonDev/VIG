@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -30,7 +30,7 @@ import com.vig.service.WithdrawService;
 @RequestMapping("withdraw/*")
 public class WithdrawController {
 	
-	public static final Logger logger = LogManager.getLogger(WithdrawController.class); 
+	public static final Logger logger = LoggerFactory.getLogger(WithdrawController.class); 
 	
 	@Value("${pageUnit}")
 	int pageUnit;
@@ -96,8 +96,7 @@ public class WithdrawController {
 	public ModelAndView addWithdraw(HttpSession session, @RequestParam("paymentId") List<String> paymentIds, 
 																	@ModelAttribute("withdraw") Withdraw withdraw) throws Exception {
 		logger.debug("addWithdraw");
-		logger.debug(withdraw);
-		logger.debug(paymentIds);
+		logger.debug(withdraw.toString());
 		ModelAndView mav = new ModelAndView();
 		
 		if( withdraw.getAmount() <10000) {

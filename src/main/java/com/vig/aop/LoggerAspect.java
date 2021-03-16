@@ -1,17 +1,18 @@
 package com.vig.aop;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 @Aspect
 public class LoggerAspect {
 
-	public static final Logger logger = LogManager.getLogger(LoggerAspect.class); 
+	public static final Logger logger = LoggerFactory.getLogger(LoggerAspect.class); 
 
 	//@Around("execution(* com.board..controller.*Controller.*(..)) or execution(* com.board..service.*Impl.*(..)) or execution(* com.board..mapper.*Mapper.*(..))")
 	@Around("execution(* com.vig.controller.*Controller.get*(..))")

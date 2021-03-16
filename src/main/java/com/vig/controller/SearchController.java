@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -25,7 +25,7 @@ import com.vig.service.ImageService;
 @RequestMapping("search/*")
 public class SearchController {	
 	
-	public static final Logger logger = LogManager.getLogger(SearchController.class); 
+	public static final Logger logger = LoggerFactory.getLogger(SearchController.class); 
 	
 
 	@Autowired 

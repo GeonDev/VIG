@@ -6,8 +6,8 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -30,7 +30,7 @@ import com.vig.service.FeedService;
 @RequestMapping("event/*")
 public class EventController {
 	
-	public static final Logger logger = LogManager.getLogger(EventController.class);
+	public static final Logger logger = LoggerFactory.getLogger(EventController.class);
 	
 	private static String OS = System.getProperty("os.name").toLowerCase();
 	

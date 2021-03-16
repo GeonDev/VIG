@@ -3,8 +3,8 @@ package com.vig.handler;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
@@ -12,7 +12,6 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.vig.controller.mainController;
 import com.vig.domain.Alarm;
 import com.vig.domain.Feed;
 import com.vig.domain.Image;
@@ -42,7 +41,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
 	private AlarmService alarmService;
 	
 	
-	public static final Logger logger = LogManager.getLogger(); 	
+	public static final Logger logger = LoggerFactory.getLogger(WebSocketHandler.class); 	
     
     //세션을 모두 저장한다. -> 연결된 유저를 찾기 위하여  
 	private Map<String, WebSocketSession> sessions = new HashMap<String, WebSocketSession>();    
@@ -67,7 +66,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
     @Override
     protected void handleTextMessage(WebSocketSession wsession, TextMessage message) throws Exception {
     	
-    	logger.debug(message);
+    	logger.debug(message.toString());
     	String split[] = (message.getPayload()).split(",");
     	String sendUserName =  ((User)wsession.getAttributes().get("user")).getUserName(); 
     	String sendUserCode =  ((User)wsession.getAttributes().get("user")).getUserName(); 

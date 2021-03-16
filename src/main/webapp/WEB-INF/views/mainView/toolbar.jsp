@@ -9,7 +9,7 @@
 <!-- SocketJS CDN -->
 <script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
 <!-- favicon 영역 이후 툴바 적용 -->
-<link rel="shortcut icon" type="image/png" href="http://127.0.0.1:8080/images/others/favicon-16x16.png">
+<link rel="shortcut icon" type="image/png" href="/images/others/favicon-16x16.png">
 
 
 <script type="text/javascript">

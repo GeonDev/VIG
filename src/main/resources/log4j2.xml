@@ -2,16 +2,37 @@
 <Configuration status="WARN">
     <Appenders>
         <Console name="LogToConsole" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <PatternLayout pattern="%d{HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
+        
+      	<RollingFile name="SaveFile" fileName="./logs/VIG.log"
+			filePattern="./logs/VIG.%i.%d{yyyy-MM-dd}.log">
+			<PatternLayout
+				pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10MB" /> <!-- 이 용량이 초과되면 아래 DefaultRolloverStrategy 정책만큼 넘버링 할거다. -->
+			</Policies>
+			<DefaultRolloverStrategy max="1000"
+				fileIndex="min" /><!-- 0부터 1000개 까지만 만들거다 1000개 초과되면 파일이 더생성안된다. -->
+		</RollingFile>
+        
+        
     </Appenders>
     <Loggers>
-        <Logger name="com.vig" level="debug" additivity="false">
+    
+        <Root level="INFO">
+            <AppenderRef ref="LogToConsole"/>
+        </Root>
+        
+        
+        <Logger name="org.springframework" level="WARN" additivity="false">
+            <AppenderRef ref="LogToConsole"/>
+        </Logger>
+    
+        <Logger name="com.vig" level="DEBUG" additivity="false">
             <AppenderRef ref="LogToConsole"/>
         </Logger>
         
-        <Root level="info">
-            <AppenderRef ref="LogToConsole"/>
-        </Root>
+
     </Loggers>
 </Configuration>
