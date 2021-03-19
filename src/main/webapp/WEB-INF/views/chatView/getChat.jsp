@@ -216,19 +216,11 @@
 							$('.chat-body').append(displayValue);
 								
 							}
-
-					
-					
-					
 				}
 				$("#chatPlace").attr("style", "visibility:visible");
 				chatScrollfix();
 				$("#selectUser").html(user);
 				
-				
-				
-		
-			
 			
 			}
 		});
@@ -258,13 +250,7 @@
 				console.log(data);
 				data = JSON.parse(data);
 				for(var i = 0; i < data.length; i++){
-					
-					
-						
-					
 						for(var j=0; j< data[i].userCodes.length; j++) {
-							
-							
 							if(username != data[i].userCodes[j].userCode){ 
 								
 								var userinfo="";
@@ -280,15 +266,10 @@
 							
 							
 							$(".user_list").append(user);
-							} 
-						
-						
-						}
-					
+							} 						
+						}					
+					}			
 				}
-					
-				
-			}
 			});
 		
 		

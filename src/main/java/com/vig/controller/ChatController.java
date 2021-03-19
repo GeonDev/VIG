@@ -16,7 +16,7 @@ public class ChatController {
 	public ChatController() {}
 
 
-	@RequestMapping(value = "getChat",method = RequestMethod.GET)
+	@RequestMapping(value = "getChatView",method = RequestMethod.GET)
 	public ModelAndView getChat(HttpSession session, @RequestParam(value="receiver", required=false) String receiver)throws Exception{
 		
 

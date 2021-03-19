@@ -188,28 +188,16 @@ public class FeedController {
 		
 
 		Feed feed = feedServices.getFeed(feedId);
+		User user = (User)session.getAttribute("user");
+		User writer = feed.getWriter();
+		
+
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("feedView/getFeed");
 		
-		
-		//ip로 조회수 counting 하는 부분
-		String ipAddress = CommonUtil.getUserIp(request);
-
-		
-		User user = (User)session.getAttribute("user");
-		User writer = feed.getWriter();
-
-		
-		// 로그인한 유저정보가 있는지 체크 - 히스토리를 남기는 부분입니다.
-		History history = new History();		
-		history.setWatchUser(user);
-		history.setHistoryType(0);
-		history.setShowFeed(feed);
-		history.setIpAddress(ipAddress);
-		
 		if(user !=null) {
 			
-			//좋아요, 팔로우 여부 체크
+			//해당 게시글 좋아요, 팔로우 여부 체크
 			LikeUser likeUser = new LikeUser();
 			likeUser.setFeedId(feedId);
 			likeUser.setUser(user);			
@@ -221,32 +209,13 @@ public class FeedController {
 			int isFollow = followServices.getFollow(follow);
 			
 			mav.addObject("isFollow", isFollow);
-			mav.addObject("isLike", isLike);
+			mav.addObject("isLike", isLike);			
+		}
 		
-			if(historyServices.getViewHistory(history) == 0 ) {			
-				feedServices.updateViewCount(feedId);				
-			}
-			
-			//피드 뷰카운트는 늘지 않더라도 내가 본 기록에는 추가
-			historyServices.addHistory(history);
-			
-		
-		}//비회원이면
-		else if(user==null) {					
-			if(historyServices.getViewHistory(history) == 0 ) {
-				
-				//비회원의 조회 기록은 중복하여 저장할 필요가 없음
-				historyServices.addHistory(history);
-				feedServices.updateViewCount(feedId);
-				
-			}
-			
-		}		
 		Feed dbFeed = feedServices.getFeed(feedId);
 		mav.addObject("feed", dbFeed);
 		
-		return mav;
-		
+		return mav;		
 		}
 
 	
