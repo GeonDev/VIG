@@ -234,7 +234,7 @@
 					 	
 						<a id="btn_ch_m" class="btn3" href="/myfeed/getFollowingList?userCode=${writer.userCode}" >팔로잉</a>
 						
-						<a id="btn_ch_m" class="btn3" href="/chat/getChat?receiver=${writer.userCode}">채 팅</a>
+						<a id="btn_ch_m" class="btn3" href="/chat/getChatView?receiver=${writer.userCode}">채 팅</a>
 					</div>	 			
 				</div>			    					    	
 			  </div>  			    		

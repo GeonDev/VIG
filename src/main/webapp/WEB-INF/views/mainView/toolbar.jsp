@@ -325,7 +325,7 @@
 	              
 <!-- 채팅버튼 -->    
 			<c:if test="${!empty sessionScope.user }">   
-	        <a class="nav-link waves-effect waves-light" id=" chat_btn" href="/chat/getChat">
+	        <a class="nav-link waves-effect waves-light" id=" chat_btn" href="/chat/getChatView">
 	          <i class="fas fa-comments fas_ntn" ></i></a>
    			</c:if>
    			

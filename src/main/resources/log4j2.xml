@@ -41,7 +41,7 @@
             <AppenderRef ref="LogToConsole"/>           
         </Logger>
         
-         <Logger name="com.vig.repository" level="DEBUG" additivity="false">
+         <Logger name="com.vig.repository" level="INFO" additivity="false">
             <AppenderRef ref="LogToConsole"/>
 
         </Logger>
