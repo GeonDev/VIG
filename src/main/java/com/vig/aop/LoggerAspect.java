@@ -33,14 +33,14 @@ public class LoggerAspect {
 		// 메소드가 실행될때 까지 걸리는 실행시간 측정
 		long time = System.currentTimeMillis() - startTime;
 	
-		
-		logger.info(name + "." + joinPoint.getSignature().getName() + "() " + "WorkTime : "+ (time/1000.0f));
 	
 		if(parms != null ) {
 			for(Object t : parms) {
-				logger.info("ParameterType :" + t.getClass().getName());
+				logger.debug("ParameterType :" + t.getClass().getName());
 			}
 		}
+		
+		logger.debug(name + "." + joinPoint.getSignature().getName() + "() " + "WorkTime : "+ (time/1000.0f));
 
 		
 		return ret;

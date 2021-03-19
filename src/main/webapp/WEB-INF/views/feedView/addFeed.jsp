@@ -144,7 +144,7 @@
 			swal("Good job!", "You clicked the button!", "success");
 		});
 		
-		});
+	});
 	
 	//이미지 파일 유효성검사
 	function fileCheck(el) { 

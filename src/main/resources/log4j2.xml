@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="WARN">
+<Configuration>
+
     <Appenders>
         <Console name="LogToConsole" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
-        
-      	<RollingFile name="SaveFile" fileName="./logs/VIG.log"
-			filePattern="./logs/VIG.%i.%d{yyyy-MM-dd}.log">
-			<PatternLayout
-				pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
-			<Policies>
-				<SizeBasedTriggeringPolicy size="10MB" /> <!-- 이 용량이 초과되면 아래 DefaultRolloverStrategy 정책만큼 넘버링 할거다. -->
-			</Policies>
-			<DefaultRolloverStrategy max="1000"
-				fileIndex="min" /><!-- 0부터 1000개 까지만 만들거다 1000개 초과되면 파일이 더생성안된다. -->
+  		
+				
+		<RollingFile name="SaveFile">
+		  <FileName>./workspace/VIG/logs/VIG.log</FileName>
+		  <FilePattern>./workspace/VIG/logs/%d{yyyy-MM-dd}.log</FilePattern>
+		  <PatternLayout pattern="%d{yyyy-MMM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>	
+		  <Policies>
+		    <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+		  </Policies>
+		  <DefaultRolloverStrategy max="1000" />
 		</RollingFile>
         
         
     </Appenders>
     <Loggers>
     
+         <!-- 기본(디폴트) loger 설정-->
         <Root level="INFO">
             <AppenderRef ref="LogToConsole"/>
         </Root>
@@ -29,10 +31,20 @@
             <AppenderRef ref="LogToConsole"/>
         </Logger>
     
-        <Logger name="com.vig" level="DEBUG" additivity="false">
+        <Logger name="com.vig" level="INFO" additivity="false">
             <AppenderRef ref="LogToConsole"/>
+            <!--com.vig 패키지의 로그는 파일로 저장한다. -->
+            <AppenderRef ref="SaveFile"/>
         </Logger>
         
+        <Logger name="com.vig.aop" level="INFO" additivity="false">
+            <AppenderRef ref="LogToConsole"/>           
+        </Logger>
+        
+         <Logger name="com.vig.repository" level="DEBUG" additivity="false">
+            <AppenderRef ref="LogToConsole"/>
+
+        </Logger>
 
     </Loggers>
 </Configuration>
