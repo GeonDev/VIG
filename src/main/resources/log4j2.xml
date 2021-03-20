@@ -31,7 +31,7 @@
             <AppenderRef ref="LogToConsole"/>
         </Logger>
     
-        <Logger name="com.vig" level="INFO" additivity="false">
+        <Logger name="com.vig" level="debug" additivity="false">
             <AppenderRef ref="LogToConsole"/>
             <!--com.vig 패키지의 로그는 파일로 저장한다. -->
             <AppenderRef ref="SaveFile"/>

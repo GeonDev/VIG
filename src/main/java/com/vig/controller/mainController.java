@@ -62,9 +62,6 @@ public class mainController {
 		model.addAttribute("eventList", eventList);
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("pageSize", pageSize);
-
-		
-		
 		
 		return new ModelAndView("mainView/main");
 	}
@@ -85,8 +82,8 @@ public class mainController {
 	}
 	
 	
-	// 1분에 한번씩 실행되는 스케줄러
-	@Scheduled(fixedDelay = 60000)
+	// 5분에 한번씩 실행되는 스케줄러
+	@Scheduled(fixedDelay = 300000)
 	public void scheduleFixedRateTask() {
 		List<ImageInfo> imagelist = new ArrayList<ImageInfo>();
 		

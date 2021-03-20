@@ -86,6 +86,7 @@ public class LoggerAspect {
 		// 로그인한 유저정보가 있는지 체크 - 히스토리를 남기는 부분입니다.
 		History history = new History();		
 		history.setWatchUser(user);
+		// 유저가 열람한 피드 기록은 0으로 처리
 		history.setHistoryType(0);
 		history.setShowFeed(feed);
 		history.setIpAddress(ipAddress);
@@ -98,11 +99,15 @@ public class LoggerAspect {
 			feedService.updateViewCount(feedId);
 			
 			logger.info("FeedId : "+ feedId+" FeedViewCount History update" );
-			logger.info("UserCode : "+ user.getUserCode()+" FeedView History update" );
+			
+			if(user != null ) {
+				logger.info("UserCode : "+ user.getUserCode()+" FeedView History update" );
+			}			
+			
 		}else {
 			//유저가 로그인한 경우 히스토리 열람 날짜를 최신으로 변경
 			if(user != null) {
-				historyService.updateHistoryViewDate(feedId);
+				historyService.updateHistoryViewDate(history);
 			}	
 		}
 		

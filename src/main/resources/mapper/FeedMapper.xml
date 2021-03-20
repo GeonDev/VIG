@@ -256,15 +256,16 @@
 		<select id="getRecommendFeedList" parameterType="search" resultMap="FeedSelectMap">
 			SELECT *  FROM
 			(SELECT ROW_NUMBER() OVER(ORDER BY temp.same DESC) num, temp.* FROM
-			(SELECT COUNT(feeds.feed_id) same, feeds.* FROM feeds, images, keywords
-			WHERE feeds.feed_id = images.feed_id
-			AND images.image_id = keywords.image_id	
-			AND feeds.feed_state = 0
-			AND UPPER(keywords.keyword_en) IN
-			<foreach collection="keywords" item="item" open="(" close=")" separator=",">
-			 #{item.keywordEn}
-			</foreach>
-			GROUP BY feeds.feed_id) temp) tab
+				(SELECT COUNT(feeds.feed_id) same, feeds.* FROM feeds, images, keywords
+				WHERE feeds.feed_id = images.feed_id
+				AND images.image_id = keywords.image_id	
+				AND feeds.feed_state = 0
+				AND UPPER(keywords.keyword_en) IN
+				<foreach collection="keywords" item="item" open="(" close=")" separator=",">
+				 #{item.keywordEn}
+				</foreach>
+				GROUP BY feeds.feed_id)
+			 temp) tab
 			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}			
 		</select>
 		
