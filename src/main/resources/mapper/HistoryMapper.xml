@@ -116,6 +116,10 @@
 		AND date_format(history.show_date, '%Y%m%d') = #{date}				
 	</select>		
 	
+	
+	<update id ="updateHistoryViewDate" parameterType="int">
+		UPDATE history SET show_date = NOW() WHERE history.feed_id = #{value}	
+	</update>
 	 
 </mapper>
 
