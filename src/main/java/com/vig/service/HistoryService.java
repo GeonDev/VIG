@@ -78,8 +78,8 @@ public class HistoryService {
 	}
 	
 	
-	public void updateHistoryViewDate(int historyId ) throws Exception {
-		historyMapper.updateHistoryViewDate(historyId);
+	public void updateHistoryViewDate(History history ) throws Exception {
+		historyMapper.updateHistoryViewDate( history);
 	}
 
 

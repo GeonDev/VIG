@@ -66,13 +66,9 @@ public class RestSearchController {
 	
 	@Value("${colorRange}")
 	int colorRange;
-
-	@Value("${tagetPercent}")
-	int tagetPercent;
 	
-	@Value("${decreasePercent}")
-	int decreasePercent;
-
+	@Value("${keywordCount}")
+	int keywordCount;
 
 	
 	public RestSearchController() {
@@ -80,6 +76,7 @@ public class RestSearchController {
 	}	
 	
 
+	
 	@RequestMapping(value = "json/getSearchKeyword")
 	public List<String> getAutokeyword(@RequestBody Map<String, String> jsonData) throws Exception {			
 	
@@ -100,7 +97,6 @@ public class RestSearchController {
 		//이미지의 키워드를 자동완성
 		if(jsonData.get("mode").equals("Image")) {
 			return imageServices.getAutoImageKeywordList(key);
-					
 		}
 		
 		//유저의 닉네임을 자동완성
@@ -112,7 +108,6 @@ public class RestSearchController {
 		//비정상적인 값이 왔을 경우 종료
 		return null;		
 	}
-	
 	
 	
 	//선택된 유저가 작성한 피드 리스트를 반환한다.
@@ -168,20 +163,18 @@ public class RestSearchController {
 				
 			}else {
 			// 로그인 한 유저에게 피드를 추천한다.------------------------------------------------------//					
+							
+				search.setKeyword(user.getUserCode());			
+
+				//유저가 직접 본 페이지 만 가지고온다
+				search.setSearchType(0);	
+				search.setCurrentPage(1);				
 				
-				Search tempSearch = new Search();
-				tempSearch.setKeyword(user.getUserCode());
-				tempSearch.setPageSize(20);
+				//최근 본 피드정보를 가지고 온다.
+				List<History> historyList =	historyServices.getHistoryList(search);										
 				
-				//일반 피드를 본 기록을 가지고 온다.
-				tempSearch.setSearchType(0);
-				//첫페이지 양만 가지고 옴
-				tempSearch.setCurrentPage(1);				
-				
-				//최근 본 피드정보 20개를 가지고 온다.
-				List<History> historyList =	historyServices.getHistoryList(tempSearch);					
-				
-				if(historyList.size() > 0) {					
+				// 유저가 본 피드개수가 최소 열람개수를 초과했을 때
+				if(historysKeywordCount(historyList) > keywordCount ) {					
 					List<ImageKeyword> keywordList = new ArrayList<ImageKeyword>();
 					
 					//최근 본 피드의 썸네일 키워드 리스트를 가지고 온다.
@@ -189,14 +182,13 @@ public class RestSearchController {
 						keywordList.addAll(history.getShowFeed().getKeywords());
 					}
 					
-					keywordList = addkeywordListFromCookis(keywordList,searchKeys);
+					keywordList = addkeywordListFromCookis(keywordList, searchKeys);					
 					
-					
-					tempSearch.setKeywords(CommonUtil.checkEqualKeyword(keywordList));
-					tempSearch.setPageSize(pageSize);
-					tempSearch.setCurrentPage(Integer.valueOf(jsonData.get("currentPage")));
-					
-					feedlist = CommonUtil.checkEqualFeed(feedServices.getRecommendFeedList(tempSearch));									
+					search.setKeywords(CommonUtil.checkEqualKeyword(keywordList));
+					search.setPageSize(pageSize);
+					search.setCurrentPage(Integer.valueOf(jsonData.get("currentPage")));
+						
+					feedlist = CommonUtil.checkEqualFeed(feedServices.getRecommendFeedList(search));									
 	
 					
 				// 다른 피드를 본 기록이 없는 유저	
@@ -457,69 +449,6 @@ public class RestSearchController {
 	}	
 	
 	
-	//이미지 자세히 보기 
-	@RequestMapping(value = "json/getSearchImages")
-	public Map<String, Object> getSearchImageList(@RequestBody Map<String, String> jsonData, HttpSession session, @CookieValue(value = "searchKeys", defaultValue = "", required = false) String searchKeys ) throws Exception {		
-		
-		//연산 결과를 저장할 맵 생성
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		//기준 이미지 선택
-		Image image = imageServices.getImageOne(Integer.parseInt(jsonData.get("ImageId")));				
-		
-		//키워드 연관 이미지 추출하고 담을 객체
-		List<Image> relatedImages = new ArrayList<Image>();
-				
-		//검색 기준 저장
-		Search search = new Search();
-		search.setPageSize(pageSize);				
-	
-		search.setCurrentPage(Integer.valueOf(jsonData.get("currentPage")));		
-		
-		
-		//선택된 이미지의 키워드 + 최근검색어를 저장할 리스트
-		List<ImageKeyword> keylist = new ArrayList<ImageKeyword>();
-		keylist.addAll(image.getKeyword());				
-
-		keylist = addkeywordListFromCookis(keylist, searchKeys);
-		
-		//중복 키워드가 있는지 확인후 검색기준에 추가
-		keylist = CommonUtil.checkEqualKeyword(keylist);
-		
-		//조합 결과를 담을 리스트
-		List<String> resultkeys = new ArrayList<String>();
-		
-		//조합 연산을 위한 배열
-		boolean[] visited = new boolean[keylist.size()];
-		
-		int r = keylist.size() * ((tagetPercent - (decreasePercent*(Integer.valueOf(jsonData.get("currentPage"))-1)))/100);
-		
-		//주어진 퍼센트에 맞는 키워드 조합을 생성
-		CommonUtil.comb(keylist, visited, 0, r, resultkeys);
-		
-		for(String combKey: resultkeys) {
-			
-			String[] key = combKey.split(",");
-			List<ImageKeyword> combkeywords = new ArrayList<ImageKeyword>();
-			
-			for(String tempkey : key ) {
-				ImageKeyword temp = new ImageKeyword();
-				temp.setImageId(image.getImageId());	
-				temp.setKeywordEn(tempkey);
-			}
-			
-			//조합으로 생성한 키 리스트를 검색 기준으로 넣어  줌
-			search.setKeywords(combkeywords);
-			relatedImages.addAll(imageServices.getImageListFromImageALLKeys(search));
-		}
-		
-		
-				
-		//중복체크후 반환
-		map.put("list", CommonUtil.checkEqualImage(relatedImages));
-		return map;
-	}	
-	
 	//프라임피드 히스토리 기록
 	private void setPrimeHistory(Feed primeFeed, User user, String IP) throws Exception {		
 		
@@ -613,6 +542,22 @@ public class RestSearchController {
 		}
 		
 		return keywordList;
+	}
+	
+	private int historysKeywordCount(List<History> historyList ) {
+		int count = 0;
+		
+		List<Image> list = new ArrayList<Image>();
+		
+		for(History his : historyList ) {
+			list.addAll(his.getShowFeed().getImages());
+		}
+		
+		for(Image image : list ) {
+			count += image.getKeyword().size();
+		}
+		
+		return count; 
 	}
 
 

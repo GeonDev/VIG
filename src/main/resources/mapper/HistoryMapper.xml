@@ -40,7 +40,7 @@
 	<!-- 특정 유저가 자신의 기록을 조회 하는데 사용  -->
 	<select id="getHistoryListFormUser" parameterType="search" resultMap="HistorySelectMap">
 		SELECT * FROM 
-		(SELECT ROW_NUMBER() OVER(ORDER BY history.history_id DESC) num, history.* FROM history
+		(SELECT ROW_NUMBER() OVER(ORDER BY history.show_date DESC) num, history.* FROM history
 		WHERE watch_user_code = #{keyword}	
 		AND history.history_type = #{searchType})temp
 		WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
@@ -117,8 +117,8 @@
 	</select>		
 	
 	
-	<update id ="updateHistoryViewDate" parameterType="int">
-		UPDATE history SET show_date = NOW() WHERE history.feed_id = #{value}	
+	<update id ="updateHistoryViewDate" parameterType="history">
+		UPDATE history SET show_date = NOW() WHERE history.feed_id = #{showFeed.feedId} AND watch_user_code = #{watchUser.userCode}	 
 	</update>
 	 
 </mapper>
