@@ -16,7 +16,8 @@
 		<result property="score" 			column="keyword_score" 		jdbcType="FLOAT" />					
 	</resultMap>	
 	
-	<insert id ="addkeyword" parameterType="imagekeyword">
+	
+	<insert id ="addKeyword" parameterType="imagekeyword">
 		INSERT INTO keywords (keyword_id, image_id, is_tag, keyword_en, keyword_origin, keyword_score)
 		VALUES(keyword_id, #{imageId}, #{isTag:NUMERIC}, #{keywordEn:VARCHAR}, #{keywordOrigin:VARCHAR}, #{score:FLOAT})		
 	</insert>

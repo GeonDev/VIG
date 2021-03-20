@@ -7,6 +7,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.google.cloud.vision.v1.AnnotateImageRequest;
 import com.google.cloud.vision.v1.AnnotateImageResponse;
@@ -29,12 +30,9 @@ import com.vig.service.KeywordService;
 // Run As - Run Configurations - Environment - New 
 public class VisionInfo extends Thread {	
 	
-	@Autowired
-	private KeywordService keywordService;
-	
-	@Autowired
+	private KeywordService keywordService;	
+		
 	private ColorService colorService;
-	
 	
 	public static final Logger logger = LoggerFactory.getLogger(VisionInfo.class); 
 	
@@ -43,33 +41,35 @@ public class VisionInfo extends Thread {
 	private static final int colorRange = 30;
 	
 	private String imageFilePath;
-	private List<ImageKeyword> keywords;
-	private List<ImageColor> colors;
+	private List<ImageKeyword> keywords = new ArrayList<ImageKeyword>();
+	private List<ImageColor> colors = new ArrayList<ImageColor>();
 	private int imageId;
 	
 	
 	public VisionInfo() {}	
 	
-	public VisionInfo(String imageFilePath, int imageId) {
+	public VisionInfo(String imageFilePath, int imageId ) {
 		this.imageFilePath = imageFilePath;	
 		this.imageId = imageId;
-		colors = new ArrayList<ImageColor>();
-		keywords = new ArrayList<ImageKeyword>();
+		
+		keywordService = (KeywordService) BeanUtils.getBean("keywordService");
+		colorService = (ColorService) BeanUtils.getBean("colorService");
+		
 	}	
-
-
 	
 	//Vision API를 이용하여 추출 한 데이터를 DB에 저장 한다.
 	private void setVisionInfo() throws Exception {
 		
 		for(ImageKeyword keyword : keywords ) {
 			keywordService.addKeyword(keyword);
+			
 		}
 		
 		for(ImageColor color : colors ) {
 			colorService.addColor(color);
 		}
 		
+		logger.info("END Vision API ImagePath : "+imageFilePath);
 	}
 	
 	//이미지의 키워드를 추출하는 함수

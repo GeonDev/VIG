@@ -51,7 +51,7 @@ public class KeywordService {
 
 	public List<ImageKeyword> getFeedKeywordList(int feedId) throws Exception {
 		// TODO Auto-generated method stub
-		return keywordMapper.getFeedKeywordList(feedId);
+		return keywordMapper.getFeedTagList(feedId);
 	}
 
 

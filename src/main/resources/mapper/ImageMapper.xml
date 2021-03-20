@@ -140,7 +140,11 @@
 	</select>
 	
 	
-		
+	
+	<select id="getImageListNoKeyword" resultMap="ImageSelectMap">			
+		SELECT images.* FROM images LEFT JOIN keywords ON images.image_id = keywords.image_id 
+			 WHERE keywords.keyword_id IS NULL			
+	</select>
 	 
 </mapper>
 

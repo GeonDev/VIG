@@ -38,9 +38,13 @@ public interface ImageMapper {
 	
 	//이미지 키워드 자동완성
 	public List<String> getAutoImageKeywordList(String key) throws Exception;
+	
 	//마지막 이미지의 ID get
 	public int getLastImageId() throws Exception;	
 
+	//이미지는 등록되었으나 키워드가 추출되지 않은 리스트 받아오기
+	public List<Image> getImageListNoKeyword() throws Exception;
+	
 }
 
 
