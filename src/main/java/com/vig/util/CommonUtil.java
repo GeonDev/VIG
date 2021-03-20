@@ -19,9 +19,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.vig.domain.Feed;
@@ -33,11 +35,7 @@ import com.vig.domain.Search;
 
 public class CommonUtil {
 	
-	///Field
 	
-	///Constructor
-	
-	///Method
 	public static String null2str(String org, String converted) {
 		if (org == null || org.trim().length() == 0)
 			return converted;
@@ -457,6 +455,23 @@ public class CommonUtil {
 
 			return stringBuffer.toString();
 
+		}
+		
+		
+		public static String getFilePath(ServletContext context, String uploadPath, String realPath) {
+		    String path = context.getRealPath("/");  
+		    String OS = System.getProperty("os.name").toLowerCase();
+            
+	        if(OS.contains("win")) {
+	        	//워크스페이스 경로를 받아온다.
+	            path = path.substring(0,path.indexOf("\\.metadata"));         
+	            path +=  uploadPath;           
+	        }else {
+	        	//실제 톰켓 데이터가 저장되는 경로를 가리킨다.
+	        	path =  realPath;
+	        }
+	        
+	        return path;
 		}
 
 

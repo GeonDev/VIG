@@ -18,7 +18,7 @@ public interface KeywordMapper {
 	
 	public List<ImageKeyword> getKeywordList(int imageId) throws Exception;
 	
-	public List<ImageKeyword> getFeedKeywordList(int feedId) throws Exception;
+	public List<ImageKeyword> getFeedTagList(int feedId) throws Exception;
 	
 	public void updateSaveTag(int keywordId) throws Exception;
 	

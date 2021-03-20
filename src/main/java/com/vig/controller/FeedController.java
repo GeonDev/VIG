@@ -48,13 +48,11 @@ public class FeedController {
 	
 	public static final Logger logger = LoggerFactory.getLogger(FeedController.class); 
 	
-	private static String OS = System.getProperty("os.name").toLowerCase();
-	
 	@Value("${uploadPath}")
-	String uploadPath;
+	private String  uploadPath;
 	
 	@Value("${realPath}")
-	String realPath;
+	private String realPath;
 
 	@Autowired 
 	private ImageService imageServices;
@@ -64,17 +62,13 @@ public class FeedController {
 	
 	@Autowired
 	private FeedService feedServices;
-	
-	@Autowired
-	private HistoryService historyServices;
-	
+
 	@Autowired
 	private LikeService likeServices;
 	
 	@Autowired	
 	private FollowService followServices;
-		
-
+	
 	@Autowired
 	private ServletContext context;	
 
@@ -108,17 +102,8 @@ public class FeedController {
 		feed.setFeedCategory(category);			
 		feedServices.addFeed(feed);
 							
-        String path = context.getRealPath("/");  
-            
-        if(OS.contains("win")) {
-        	//워크스페이스 경로를 받아온다.
-            path = path.substring(0,path.indexOf("\\.metadata"));         
-            path +=  uploadPath;           
-        }else {
-        	//실제 톰켓 데이터가 저장되는 경로를 가리킨다.
-        	path =  realPath;
-        }        
-      
+          
+		String path = CommonUtil.getFilePath(context, uploadPath, realPath);
        
 		if(files != null) {
 			int k=0;	
