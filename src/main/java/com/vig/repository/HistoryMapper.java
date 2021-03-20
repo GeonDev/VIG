@@ -28,6 +28,8 @@ public interface HistoryMapper {
 	
 	public void deleteTempHistory() throws Exception;
 	
+	public void updateHistoryViewDate(int historyId) throws Exception;
+	
 	// 특정 유저가 작성한 피드들의 조회수를 일별로 카운트 한다. - > 통계 조회용
 	public int getfeedHistoryDateCount(HashMap<String, String> keys)throws Exception;
 	

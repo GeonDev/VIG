@@ -76,6 +76,11 @@ public class HistoryService {
 		historyMapper.deleteTempHistory();
 		
 	}
+	
+	
+	public void updateHistoryViewDate(int historyId ) throws Exception {
+		historyMapper.updateHistoryViewDate(historyId);
+	}
 
 
 	public HashMap<String,Object> getfeedHistoryMouthCount(HashMap<String, String> keys) throws Exception {

@@ -99,13 +99,14 @@ public class LoggerAspect {
 			
 			logger.info("FeedId : "+ feedId+" FeedViewCount History update" );
 			logger.info("UserCode : "+ user.getUserCode()+" FeedView History update" );
+		}else {
+			//유저가 로그인한 경우 히스토리 열람 날짜를 최신으로 변경
+			if(user != null) {
+				historyService.updateHistoryViewDate(feedId);
+			}	
 		}
 		
-		//유저가 로그인한 경우
-		if(user != null) {
-			//히스토리 기록에 열람기록은 추가
-			historyService.addHistory(history);
-		}			
+				
 	}
 	
 }
