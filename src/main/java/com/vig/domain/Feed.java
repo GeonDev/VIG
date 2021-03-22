@@ -11,6 +11,8 @@ import lombok.Data;
 @Data
 public class Feed implements Serializable {
 	
+	private static final long serialVersionUID = 1236283424582915L;
+	
 	private int feedId;
 	private String feedTitle;
 	private String feedExplanation;

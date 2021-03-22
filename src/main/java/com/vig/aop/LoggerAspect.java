@@ -59,13 +59,11 @@ public class LoggerAspect {
 			}
 		}
 		
-		
 		logger.info(name + "." + joinPoint.getSignature().getName() + "() " + "WorkTime : "+ (time/1000.0f));
-
 		
 		return ret;
 	}
-	
+
 	
 	
 	
@@ -109,9 +107,7 @@ public class LoggerAspect {
 			if(user != null) {
 				historyService.updateHistoryViewDate(history);
 			}	
-		}
-		
-				
+		}	
 	}
 	
 }

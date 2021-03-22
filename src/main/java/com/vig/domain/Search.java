@@ -1,12 +1,15 @@
 package com.vig.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
 import lombok.Data;
 
 @Data
-public class Search {
+public class Search implements Serializable{
 		
+	private static final long serialVersionUID = 1236283424582915L;
+	
 	//이미지 검색시 입력된 검색어	
 	private String keyword;
 	

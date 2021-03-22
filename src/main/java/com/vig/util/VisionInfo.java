@@ -56,6 +56,7 @@ public class VisionInfo extends Thread {
 		colorService = (ColorService) BeanUtils.getBean("colorService");
 		
 	}	
+
 	
 	//Vision API를 이용하여 추출 한 데이터를 DB에 저장 한다.
 	private void setVisionInfo() throws Exception {

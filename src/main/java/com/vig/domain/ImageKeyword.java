@@ -7,6 +7,8 @@ import lombok.Data;
 @Data
 public class ImageKeyword implements Serializable{
 	
+	private static final long serialVersionUID = 1236283424582915L;
+	
 	private int keywordId;
 	private int imageId;
 	// 0= 테그아님 1= 테그

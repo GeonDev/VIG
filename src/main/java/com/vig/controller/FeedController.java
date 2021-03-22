@@ -24,17 +24,14 @@ import org.springframework.web.servlet.ModelAndView;
 import com.vig.domain.Category;
 import com.vig.domain.Feed;
 import com.vig.domain.Follow;
-import com.vig.domain.History;
 import com.vig.domain.Image;
 import com.vig.domain.ImageInfo;
 import com.vig.domain.ImageKeyword;
-import com.vig.domain.JoinUser;
 import com.vig.domain.LikeUser;
 import com.vig.domain.User;
 import com.vig.scheduler.WaitingList;
 import com.vig.service.FeedService;
 import com.vig.service.FollowService;
-import com.vig.service.HistoryService;
 import com.vig.service.ImageService;
 import com.vig.service.KeywordService;
 import com.vig.service.LikeService;
@@ -96,7 +93,7 @@ public class FeedController {
 	
 	@Transactional
 	@RequestMapping(value = "addFeed", method = RequestMethod.POST)
-	public ModelAndView addFeed(@RequestParam("keyword") String keyword, @ModelAttribute("feed") Feed feed, @ModelAttribute("category") Category category,@RequestParam("uploadFile") List<MultipartFile> files, @SessionAttribute("user") User user,@ModelAttribute("joinUser") JoinUser joinUser) throws Exception {
+	public ModelAndView addFeed(@RequestParam("keyword") String keyword, @ModelAttribute("feed") Feed feed, @ModelAttribute("category") Category category,@RequestParam("uploadFile") List<MultipartFile> files, @SessionAttribute("user") User user) throws Exception {
 		
 		feed.setWriter(user);									
 		feed.setFeedCategory(category);			

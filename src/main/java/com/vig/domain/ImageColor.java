@@ -7,6 +7,8 @@ import lombok.Data;
 @Data
 public class ImageColor implements Serializable{	
 	
+	private static final long serialVersionUID = 1236283424582915L;
+	
 	private int colorId;
 	private int ImageId;
 	

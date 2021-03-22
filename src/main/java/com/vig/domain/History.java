@@ -8,6 +8,8 @@ import lombok.Data;
 @Data
 public class History implements Serializable{
 	
+	private static final long serialVersionUID = 1236283424582915L;
+	
 	private int historyId;
 	private User watchUser;
 	private Feed showFeed;
