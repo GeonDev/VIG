@@ -19,7 +19,8 @@
 		<result property="primeCount" 		column="prime_count" 		jdbcType="NUMERIC" />
 		<result property="email" 			column="email" 				jdbcType="VARCHAR" />
 		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
-		<result property="banDate" 			column="ban_date" 			jdbcType="DATE" />			
+		<result property="banDate" 			column="ban_date" 			jdbcType="DATE" />
+		<result property="preferCategory"   column="prefer_category_id" jdbcType="NUMERIC" />			
 	</resultMap>	 
 
 	 

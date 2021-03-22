@@ -34,6 +34,7 @@ public class User implements Serializable{
     private String content;
     private String receiver;
 
-
+    // 선호하는 카테고리 id
+    private int preferCategory;
 
 }
