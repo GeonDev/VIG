@@ -8,6 +8,8 @@ import lombok.Data;
 @Data
 public class Report implements Serializable{
 	
+	private static final long serialVersionUID = 1236283424582915L;
+	
 	private int reportId;
 	private User violator;
 	private User reporter;

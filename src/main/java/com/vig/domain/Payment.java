@@ -1,9 +1,13 @@
 package com.vig.domain;
 
+import java.io.Serializable;
+
 import lombok.Data;
 
 @Data
-public class Payment {
+public class Payment implements Serializable{
+	
+	private static final long serialVersionUID = 1236283424582915L;
 	
 	//import에서 오는 결제 uid
 	private String paymentId;

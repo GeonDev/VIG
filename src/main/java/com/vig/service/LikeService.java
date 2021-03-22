@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.vig.domain.JoinUser;
 import com.vig.domain.LikeUser;
 import com.vig.repository.LikerMapper;
 
@@ -31,7 +30,7 @@ public class LikeService  {
 	}
 	
 
-	public List<JoinUser> getLikeUser(int feedId) throws Exception {
+	public List<LikeUser> getLikeUser(int feedId) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

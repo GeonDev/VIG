@@ -9,6 +9,8 @@ import lombok.Data;
 @Data
 public class Follow implements Serializable{
 	
+	private static final long serialVersionUID = 1236283424582915L;
+	
 	private int followId;
 	
 	private User tagetUser;

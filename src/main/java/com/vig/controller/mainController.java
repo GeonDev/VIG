@@ -59,9 +59,6 @@ public class mainController {
 	
 	@Autowired
 	private ImageService ImageServices;
-	
-
-
 
 
 	public mainController() {	}
@@ -128,8 +125,8 @@ public class mainController {
 				if(info != null) {
 					logger.info("Start Vision API ImagePath :  "+info.getPath());
 					//Vision API에서 이미지 정보를 추출하는 쓰레드 생성
-					VisionInfo vision = new VisionInfo(info.getPath(), info.getImageId());
-					vision.start();	
+					VisionInfo vision = new VisionInfo(info.getPath(), info.getImageId() );
+					vision.start();
 				}
 			}			
 		}else {

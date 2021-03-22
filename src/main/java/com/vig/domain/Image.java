@@ -8,6 +8,8 @@ import lombok.Data;
 @Data
 public class Image implements Serializable {
 
+	private static final long serialVersionUID = 1236283424582915L;
+	
 	private int imageId;
 	private int feedId;
 	private int feedOrder;

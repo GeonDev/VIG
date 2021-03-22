@@ -1,11 +1,12 @@
 package com.vig.domain;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import lombok.Data;
 
 @Data
-public class Alarm {
+public class Alarm implements Serializable{
 	private int alarmId;
 	private User sendUser;
 	private User reciveUser;

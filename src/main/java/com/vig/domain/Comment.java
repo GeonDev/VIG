@@ -7,6 +7,8 @@ import lombok.Data;
 
 @Data
 public class Comment implements Serializable{
+	
+	private static final long serialVersionUID = 1236283424582915L;
 
 	private int commentId;
 	private int feedId;

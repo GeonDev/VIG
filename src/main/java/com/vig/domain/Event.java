@@ -7,6 +7,8 @@ import lombok.Data;
 @Data
 public class Event implements Serializable{
 	
+	private static final long serialVersionUID = 1236283424582915L;
+	
 	//field
 	private int eventId;
 	private String eventTitle;

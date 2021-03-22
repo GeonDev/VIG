@@ -1,9 +1,13 @@
 package com.vig.domain;
 
+import java.io.Serializable;
+
 import lombok.Data;
 
 @Data
-public class Page {
+public class Page implements Serializable{
+	
+	private static final long serialVersionUID = 1236283424582915L;
 	
 	///Field
 	private int currentPage;	
