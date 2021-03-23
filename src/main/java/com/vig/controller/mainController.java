@@ -33,14 +33,7 @@ public class mainController {
 	
 	public static final Logger logger = LoggerFactory.getLogger(mainController.class); 	
 	
-	@Value("${limitVisionImageCount}")
-	private int limitCount;
-	
-	@Value("${uploadPath}")
-	private String  uploadPath;
-	
-	@Value("${realPath}")
-	private String realPath;
+
 	
 	@Value("${pageUnit}")
 	int pageUnit;
@@ -48,22 +41,19 @@ public class mainController {
 	@Value("${pageSize}")
 	int pageSize;
 	
-	@Autowired
-	private ServletContext context;	
-	
+
 	@Autowired
 	private CategoryService categoryServices;
 
 	@Autowired
 	private EventService eventServices;
 	
-	@Autowired
-	private ImageService ImageServices;
+
 
 
 	public mainController() {	}
 
-	@GetMapping
+	@GetMapping("/")
 	public ModelAndView getMain(Model model, HttpSession session) throws Exception {
 
 		List<Category> categoryList = categoryServices.getAllCategoryList();
@@ -94,43 +84,5 @@ public class mainController {
 		return new ModelAndView("common/alertView", "message", msg);
 		
 	}
-	
-	
-	// 5분에 한번씩 실행되는 스케줄러
-	@Scheduled(fixedDelay = 300000)
-	@Transactional
-	public void scheduleFixedRateTask() {
-		
-		//이미지는 업로드 되었으나 아직 키워드가 추출되지 않은 이미지를 불러옴
-		try {
-			List<ImageInfo> imagelist = ImageServices.getImageListNoKeyword(context, uploadPath, realPath );
-			
-			if (!imagelist.isEmpty()) {
-				for(ImageInfo info : imagelist) {
-					WaitingList.setWaitImage(info);
-				}
-			}			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		//VISION API의 1분당 최대 처리량 이하로 요청하기 위해 이미지 수 체크
-		int currentSize = WaitingList.getWaitSize();
-		
-		
-		if(currentSize > 0) {	
-			for(int i =0; i< limitCount; i++) {				
-				ImageInfo info = WaitingList.getWaitImage();
-				if(info != null) {
-					logger.info("Start Vision API ImagePath :  "+info.getPath());
-					//Vision API에서 이미지 정보를 추출하는 쓰레드 생성
-					VisionInfo vision = new VisionInfo(info.getPath(), info.getImageId() );
-					vision.start();
-				}
-			}			
-		}else {
-			logger.info("no remain waiting image ");
-		} 
-	}
+
 }

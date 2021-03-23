@@ -20,7 +20,7 @@
 		<result property="email" 			column="email" 				jdbcType="VARCHAR" />
 		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
 		<result property="banDate" 			column="ban_date" 			jdbcType="DATE" />
-		<result property="preferCategory"   column="prefer_category_id" jdbcType="NUMERIC" />			
+		<result property="preferCategory"   column="prefer_category"    jdbcType="NUMERIC" />			
 	</resultMap>	 
 
 	 
@@ -119,7 +119,8 @@
 	 		user_name = #{userName:VARCHAR},
 	 		google_id = #{googleId:VARCHAR},
 	 		password = IFNULL(#{password:VARCHAR}, password),
-	 		profile_img = IFNULL(#{profileImg:VARCHAR}, profile_img)	 		
+	 		profile_img = IFNULL(#{profileImg:VARCHAR}, profile_img),
+	 		prefer_category = #{preferCategory:NUMERIC}	 		
 	 	WHERE user_code = #{userCode}
 	 </update>	
 
@@ -170,4 +171,5 @@
 						 		HAVING	user_code LIKE CONCAT('%',#{keyword},'%')
 						</if> ) countTable						
 	 </select>
+	 
 </mapper>

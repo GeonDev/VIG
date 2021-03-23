@@ -87,42 +87,40 @@
 		</select>
 		
 		
-		<!-- 우선 노출시 출력한 프라임 피드를 불러온다. (노출이 가장 작은 프라임피드) -->		
+		<!-- 우선 노출시 출력한 프라임 피드를 불러온다. (노출이 가장 작은 프라임피드) -->	
+		<!-- 피드 제목을 포함할 경우 OR 연산이 느려 UNION 사용-->	
 		<select id ="getPrimeFeed" parameterType="search" resultMap="FeedSelectMap">
-			SELECT feeds.* FROM feeds, images, keywords, users
-			WHERE feeds.feed_id = images.feed_id				
-			AND images.image_id = keywords.image_id
-			AND feeds.user_code = users.user_code
-			AND users.prime_count > 0			
-			AND feeds.feed_is_prime = 1 
-			AND feeds.feed_state = 0
-			<if test="keyword !=''">
-			AND UPPER(keywords.keyword_en) LIKE CONCAT('%',#{keyword},'%')				
-			</if>
-			<if test="searchType != 0">
-			AND	feeds.category_id = #{searchType}	
-			</if>
-			GROUP BY feeds.feed_id
-			ORDER BY feeds.prime_feed_view_count
-			limit 3	
-		</select>
-		
-		
-		<!-- 타이틀을 기준으로 우선 노출시 출력한 프라임 피드를 불러온다. (노출이 가장 작은 프라임피드) -->
-		<select id ="getPrimeFeedTitle" parameterType="search" resultMap="FeedSelectMap">
-			SELECT feeds.* FROM feeds, users
-			WHERE feeds.user_code = users.user_code
-			AND feeds.feed_is_prime = 1 
-			AND feeds.feed_state = 0
-			AND users.prime_count > 0
-			<if test="keyword !=''">
-			AND feeds.feed_title LIKE CONCAT('%',#{keyword},'%')				
-			</if>
-			<if test="searchType != 0">
-			AND	feeds.category_id = #{searchType}	
-			</if>		
-			ORDER BY feeds.prime_feed_view_count
-			limit 3 	
+			(SELECT feeds.* FROM feeds, images, keywords, users
+				WHERE feeds.feed_id = images.feed_id				
+				AND images.image_id = keywords.image_id
+				AND feeds.user_code = users.user_code
+				AND users.prime_count > 0			
+				AND feeds.feed_is_prime = 1 
+				AND feeds.feed_state = 0
+				<if test="keyword !=''">
+				AND UPPER(keywords.keyword_en) LIKE CONCAT('%',#{keyword},'%')				
+				</if>
+				<if test="searchType != 0">
+				AND	feeds.category_id = #{searchType}	
+				</if>
+				GROUP BY feeds.feed_id
+				ORDER BY feeds.prime_feed_view_count
+				LIMIT 3 )						
+			UNION				
+			(SELECT feeds.* FROM feeds, users
+				WHERE feeds.user_code = users.user_code
+				AND feeds.feed_is_prime = 1 
+				AND feeds.feed_state = 0
+				AND users.prime_count > 0
+				<if test="keyword !=''">
+				AND UPPER(feeds.feed_title) LIKE CONCAT('%',#{keyword},'%')				
+				</if>
+				<if test="searchType != 0">
+				AND	feeds.category_id = #{searchType}	
+				</if>		
+				ORDER BY feeds.prime_feed_view_count
+				LIMIT 3)
+			
 		</select>
 		
 		
@@ -161,37 +159,35 @@
 		
 		<!-- 주어진 키워드에 해당하는 피드를 출력  -->
 		<select id="getFeedListFromKeyword" parameterType="search" resultMap="FeedSelectMap">
-			SELECT *  FROM
-			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_view_count DESC) num, feeds.* FROM feeds, images, keywords
-			WHERE feeds.feed_id = images.feed_id
-			AND images.image_id = keywords.image_id			
-			AND feeds.feed_state = 0
-			AND feeds.feed_is_prime = 0
-			<if test="keyword !=''">
-			AND UPPER(keywords.keyword_en) LIKE CONCAT('%',#{keyword},'%')				
-			</if>
-			<if test="searchType != 0">
-			AND	feeds.category_id = #{searchType}	
-			</if>			
-			GROUP BY feeds.feed_id) temp
-			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}		
+			(SELECT *  FROM
+				(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_view_count DESC) num, feeds.* FROM feeds, images, keywords
+				WHERE feeds.feed_id = images.feed_id
+				AND images.image_id = keywords.image_id			
+				AND feeds.feed_state = 0
+				AND feeds.feed_is_prime = 0
+					<if test="keyword !=''">
+					AND UPPER(keywords.keyword_en) LIKE CONCAT('%',#{keyword},'%')				
+					</if>
+					<if test="searchType != 0">
+					AND	feeds.category_id = #{searchType}	
+					</if>			
+				GROUP BY feeds.feed_id) temp
+				WHERE num BETWEEN #{startRowNum} AND #{endRowNum})			
+			UNION			
+			(SELECT *  FROM
+				(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_view_count DESC) num, feeds.* FROM feeds
+				WHERE feeds.feed_state = 0
+				AND feeds.feed_is_prime = 0
+				<if test="keyword !=''">
+				AND feeds.feed_title LIKE CONCAT('%',#{keyword},'%')				
+				</if>
+				<if test="searchType != 0">
+				AND	feeds.category_id = #{searchType}	
+				</if>			
+				) temp
+				WHERE num BETWEEN #{startRowNum} AND #{endRowNum})	
 		</select>	
-		
-		<!-- 피드 타이틀에 입력한 키워드를 포함하는지 확인 (OR 연산 속도가 느려서 따로 계산) -->
-		<select id="getFeedListFromTitle" parameterType="search" resultMap="FeedSelectMap">
-			SELECT *  FROM
-			(SELECT ROW_NUMBER() OVER(ORDER BY feeds.feed_view_count DESC) num, feeds.* FROM feeds
-			WHERE feeds.feed_state = 0
-			AND feeds.feed_is_prime = 0
-			<if test="keyword !=''">
-			AND feeds.feed_title LIKE CONCAT('%',#{keyword},'%')				
-			</if>
-			<if test="searchType != 0">
-			AND	feeds.category_id = #{searchType}	
-			</if>			
-			) temp
-			WHERE num BETWEEN #{startRowNum} AND #{endRowNum}		
-		</select>	
+
 		
 				
 		<select id="getFeedListFromColor" parameterType="search" resultMap="FeedSelectMap">
@@ -212,9 +208,17 @@
 		
 		<!-- 자동완성용 쿼리문 -->
 		<select id ="getFeedTitleList" parameterType="String" resultType="String">
-			SELECT feed_title FROM feeds
-			WHERE feed_title LIKE CONCAT('%',#{value},'%')
+			(SELECT feed_title FROM feeds
+			WHERE UPPER(feed_title) LIKE CONCAT('%',#{value},'%')
 			AND feed_state = 0 
+			LIMIT 4)
+			UNION
+			(SELECT keywords.keyword_en FROM feeds, images, keywords
+			WHERE feeds.feed_id = images.feed_id
+			AND images.image_id = keywords.image_id			
+			AND feeds.feed_state = 0
+			AND UPPER(keywords.keyword_en) LIKE CONCAT('%',#{keyword},'%')
+			LIMIT 4)
 			LIMIT 5
 			
 		</select>
