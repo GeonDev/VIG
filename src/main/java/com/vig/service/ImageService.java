@@ -1,6 +1,7 @@
 package com.vig.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -59,7 +60,12 @@ public class ImageService  {
 
 	public List<Image> getImageListFromKeyword(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return imageMapper.getImageListFromKeyword(search);
+		List<Image> ImageList = imageMapper.getImageListFromKeyword(search);
+		
+		//이미지 순서 섞기 -> 검색결과가 다르게 보이도록
+		Collections.shuffle(ImageList);
+		
+		return ImageList;
 	}
 
 

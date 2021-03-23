@@ -31,15 +31,11 @@ public interface FeedMapper {
 	
 	public List<Feed> getFeedListFromKeyword(Search search) throws Exception;	
 	
-	public List<Feed> getFeedListFromTitle(Search search) throws Exception;	
-	
 	public List<Feed> getFeedListFromColor(Search search) throws Exception;	
 	
 	public List<String> getFeedTitleList(String key) throws Exception;	
 	
 	public List<Feed> getPrimeFeed(Search search) throws Exception;
-	
-	public List<Feed> getPrimeFeedTitle(Search search) throws Exception;
 	
 	public List<Feed> getHightViewFeedList(Search search) throws Exception;	
 	

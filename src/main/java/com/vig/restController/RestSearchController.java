@@ -69,6 +69,10 @@ public class RestSearchController {
 	
 	@Value("${keywordCount}")
 	int keywordCount;
+	
+	//번역기를 동작 시킬지 설정
+	@Value("${unTransrate}")
+	String unTrans;
 
 	
 	public RestSearchController() {
@@ -173,7 +177,7 @@ public class RestSearchController {
 				//최근 본 피드정보를 가지고 온다.
 				List<History> historyList =	historyServices.getHistoryList(search);										
 				
-				// 유저가 본 피드개수가 최소 열람개수를 초과했을 때
+				// 유저가 본 피드개수가 최소 열람개수를 초과했을 때만 작동한다.
 				if(historysKeywordCount(historyList) > keywordCount ) {					
 					List<ImageKeyword> keywordList = new ArrayList<ImageKeyword>();
 					
@@ -273,8 +277,18 @@ public class RestSearchController {
 					}				
 				
 				}else {
-					//검색어를 영어로 변역
-					String keyword = Translater.autoDetectTranslate(jsonData.get("keyword"),"en");
+					
+					String keyword = jsonData.get("keyword");
+					
+					if(unTrans.equals("N") ) {
+						//검색어를 영어로 변역 -> 어떤 언어로 입력해도 같은 값이 나오도록
+						keyword = Translater.autoDetectTranslate(keyword,"en");
+						
+					}else {
+						logger.info("Translater API SETUP NOT ACTIVE : Please check common.properties ");
+					}
+					
+			
 					search.setKeyword(keyword);
 					
 					//검색어를 쿠키에 추가
@@ -282,7 +296,8 @@ public class RestSearchController {
 					feedlist = feedServices.getFeedListFromKeyword(search);
 					primeFeed = feedServices.getPrimeFeed(search);
 				}					
-			}			
+			}
+			
 
 						
 			//프라임 피드를 지정된 위치에 출력시킨다.
@@ -352,19 +367,22 @@ public class RestSearchController {
 					}
 					
 				}else {
-					//검색어를 영어로 변역
-					String keyword = Translater.autoDetectTranslate(jsonData.get("keyword"),"en");
-					search.setKeyword(keyword);
+					String keyword = jsonData.get("keyword");
+					
+					if(unTrans.equals("N") ) {
+						//검색어를 영어로 변역 -> 어떤 언어로 입력해도 같은 값이 나오도록
+						keyword = Translater.autoDetectTranslate(keyword,"en");
+						
+					}else {
+						logger.info("Translater API SETUP NOT ACTIVE : Please check common.properties ");
+					}
 					
 					//검색어를 쿠키에 추가
 					addSearchKeyCookie(keyword, request, response);
 					imageList = imageServices.getImageListFromKeyword(search);
 				}			
 			}			
-			
-			
-			//선택된 이미지의 순서를 랜덤으로 섞어준다. -> 같은 피드의 이미지가 연속으로 나오지 않게 한다.
-			Collections.shuffle(imageList);			
+		
 			map.put("list", imageList);
 					
 		}

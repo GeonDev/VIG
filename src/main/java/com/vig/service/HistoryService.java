@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.vig.domain.History;
 import com.vig.domain.Search;
+import com.vig.domain.User;
 import com.vig.repository.HistoryMapper;
+import com.vig.repository.UserMapper;
 
 
 @Service
@@ -17,6 +19,9 @@ public class HistoryService {
 
 	@Autowired
 	private HistoryMapper historyMapper;
+	
+	@Autowired
+	private UserMapper userMapper;
 	
 	
 
@@ -80,6 +85,17 @@ public class HistoryService {
 	
 	public void updateHistoryViewDate(History history ) throws Exception {
 		historyMapper.updateHistoryViewDate( history);
+	}
+	
+	public void setMaxViewCategory() throws Exception {
+		
+		//전체 유저를 불러온다.
+		List<User> userList = userMapper.getAllUserList(null);
+		
+			for(User u : userList ) {			
+				u.setPreferCategory(historyMapper.getMaxViewCategory(u.getUserCode()));
+				userMapper.updateUser(u);
+			}
 	}
 
 

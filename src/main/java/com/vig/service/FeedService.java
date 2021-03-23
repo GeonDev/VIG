@@ -1,6 +1,7 @@
 package com.vig.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,9 +113,10 @@ public class FeedService {
 		}	
 		
 		List<Feed> feedlist = feedMapper.getFeedListFromKeyword(search);		
-		feedlist.addAll(feedMapper.getFeedListFromTitle(search));			
+			
 		
 		//피드 중복체크 이후 반환
+		Collections.shuffle(feedlist);
 		return CommonUtil.checkEqualFeed(feedlist);
 	}
 
@@ -127,7 +129,8 @@ public class FeedService {
 
 	public List<String> getfeedTitleList(String key) throws Exception {
 		
-		return feedMapper.getFeedTitleList(key);
+		//대소문자 구분하지 않음
+		return feedMapper.getFeedTitleList(key.toUpperCase());
 	}
 
 	
@@ -137,19 +140,21 @@ public class FeedService {
 	}
 
 
-	public List<Feed> getPrimeFeed(Search search) throws Exception {
-		List<Feed> feedList = feedMapper.getPrimeFeedTitle(search);			
+	public List<Feed> getPrimeFeed(Search search) throws Exception {				
 		
-		//검색어의 대소문자를 따지지 않음
+		//검색어의 대소문자를 따지지 않음-> 대문자로 변경
 		if(!(search.getKeyword()).equals("")) {			
 			search.setKeyword((search.getKeyword()).toUpperCase());
-		}				
+		}			
 
 		//프라임 피드 중 검색어를 타이틀에 포함하고 있는 피드를 포함한다.
-		feedList.addAll(feedMapper.getPrimeFeed(search));				
+		List<Feed> feedList = feedMapper.getPrimeFeed(search);				
 		
-		//피드 중복체크 이후 반환
+		//검색결과의 순서를 섞어준다. -> 항상 다른 결과가 나오도록
+		//피드 중복체크 이후 반환		
+		Collections.shuffle(feedList);
 		return CommonUtil.checkEqualFeed(feedList);
+
 	}
 
 

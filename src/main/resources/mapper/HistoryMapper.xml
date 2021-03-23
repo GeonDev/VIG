@@ -110,7 +110,7 @@
 	<!-- 특정유저가 작성한 피드들의 프라임피드 노출 수를 카운트 한다 -->
 	<select id = "getfeedHistoryPrimeDateCount" parameterType="hashMap" resultType="int">
 		SELECT COUNT(history.history_id) FROM history, feeds
-		WHERE  history.feed_id = feeds.feed_id	
+		WHERE history.feed_id = feeds.feed_id	
 		AND history.history_type = 2
 		AND feeds.user_code = #{userCode}
 		AND date_format(history.show_date, '%Y%m%d') = #{date}				
@@ -120,6 +120,19 @@
 	<update id ="updateHistoryViewDate" parameterType="history">
 		UPDATE history SET show_date = NOW() WHERE history.feed_id = #{showFeed.feedId} AND watch_user_code = #{watchUser.userCode}	 
 	</update>
+	
+	<select id= "getMaxViewCategory"  parameterType="string" resultType="int">
+	SELECT  IFNULL(temp.category_id,0)  FROM(			
+			SELECT COUNT(feeds.category_id) c, feeds.category_id FROM history, feeds
+			WHERE history.feed_id = feeds.feed_id	
+			AND feeds.user_code = #{value}
+			ORDER BY c DESC
+		)temp
+	LIMIT 1
+	</select>
+	
+	
+	
 	 
 </mapper>
 
