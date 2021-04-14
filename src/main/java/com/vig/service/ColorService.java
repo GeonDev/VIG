@@ -4,14 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vig.domain.ImageColor;
-import com.vig.repository.ColorMapper;
+import com.vig.repository.ColorRepository;
 
 @Service
 public class ColorService  {
 
 	
 	@Autowired	  
-	private ColorMapper colorMapper;
+	private ColorRepository colorMapper;
 	
 	
 	public ColorService() {

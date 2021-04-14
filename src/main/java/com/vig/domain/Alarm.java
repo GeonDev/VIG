@@ -3,11 +3,17 @@ package com.vig.domain;
 import java.io.Serializable;
 import java.sql.Date;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Alarm implements Serializable{
-	private int alarmId;
+	private long alarmId;
 	private User sendUser;
 	private User reciveUser;
 	private Feed likefeed;

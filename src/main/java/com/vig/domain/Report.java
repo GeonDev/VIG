@@ -3,14 +3,20 @@ package com.vig.domain;
 import java.io.Serializable;
 import java.sql.Date;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Report implements Serializable{
 	
 	private static final long serialVersionUID = 1236283424582915L;
 	
-	private int reportId;
+	private long reportId;
 	private User violator;
 	private User reporter;
 	

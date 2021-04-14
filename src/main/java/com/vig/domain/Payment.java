@@ -1,10 +1,17 @@
 package com.vig.domain;
 
 import java.io.Serializable;
+import java.sql.Date;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Payment implements Serializable{
 	
 	private static final long serialVersionUID = 1236283424582915L;
@@ -15,7 +22,7 @@ public class Payment implements Serializable{
 	private User buyer;
 	//후원시엔 후원을 받을 사람과 피드정보
 	private String beneficiary;
-	private int feedId;
+	private long feedId;
 	//0: 카드, 1: 실시간계좌이체
 	private int paymentOption;
 	//0: 프라임피드결제 , 1: 비즈니스전환결제, 2:후원결제

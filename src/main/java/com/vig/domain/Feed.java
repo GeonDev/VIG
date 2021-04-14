@@ -4,16 +4,22 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
-import com.vig.repository.LikerMapper;
+import com.vig.repository.LikerRepository;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Feed implements Serializable {
 	
 	private static final long serialVersionUID = 1236283424582915L;
 	
-	private int feedId;
+	private long feedId;
 	private String feedTitle;
 	private String feedExplanation;
 	private User writer;
@@ -39,8 +45,5 @@ public class Feed implements Serializable {
 	private List<ImageKeyword> keywords;	
 
 
-	public Feed() {
-		// TODO Auto-generated constructor stub
-	}
 
 }

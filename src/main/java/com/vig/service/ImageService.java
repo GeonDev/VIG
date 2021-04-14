@@ -13,14 +13,14 @@ import org.springframework.stereotype.Service;
 import com.vig.domain.Image;
 import com.vig.domain.ImageInfo;
 import com.vig.domain.Search;
-import com.vig.repository.ImageMapper;
+import com.vig.repository.ImageRepository;
 import com.vig.util.CommonUtil;
 
 @Service
 public class ImageService  {
 
 	@Autowired
-	private ImageMapper imageMapper;	
+	private ImageRepository imageMapper;	
 	
 	public ImageService() {
 		// TODO Auto-generated constructor stub
