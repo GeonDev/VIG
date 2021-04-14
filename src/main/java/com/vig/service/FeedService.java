@@ -12,18 +12,18 @@ import com.vig.domain.History;
 import com.vig.domain.ImageKeyword;
 import com.vig.domain.Search;
 import com.vig.domain.User;
-import com.vig.repository.FeedMapper;
-import com.vig.repository.HistoryMapper;
+import com.vig.repository.FeedRepository;
+import com.vig.repository.HistoryRepository;
 import com.vig.util.CommonUtil;
 
 @Service
 public class FeedService {
 	
 	@Autowired	  
-	private FeedMapper feedMapper;
+	private FeedRepository feedMapper;
 	
 	@Autowired
-	private HistoryMapper historyMapper;
+	private HistoryRepository historyMapper;
 	
 
 	public FeedService() {	}

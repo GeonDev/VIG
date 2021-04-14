@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 
 import com.vig.domain.Payment;
 import com.vig.domain.Search;
-import com.vig.repository.PaymentMapper;
+import com.vig.repository.PaymentRepository;
 
 
 @Service
 public class PaymentService {
 	
 	@Autowired
-	private PaymentMapper paymentMapper;
+	private PaymentRepository paymentMapper;
 	
 
 	public PaymentService() {

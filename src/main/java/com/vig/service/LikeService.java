@@ -8,13 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vig.domain.LikeUser;
-import com.vig.repository.LikerMapper;
+import com.vig.repository.LikerRepository;
 
 @Service
 public class LikeService  {
 
 	@Autowired
-	private LikerMapper likeMapper;
+	private LikerRepository likeMapper;
 	
 	public LikeService() {	}
 	

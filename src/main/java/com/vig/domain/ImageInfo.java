@@ -13,7 +13,7 @@ public class ImageInfo implements Serializable{
 	
 	private static final long serialVersionUID = 1236283424582915L;
 	
-	private int imageId;
+	private long imageId;
 	private String path;
 	
 }

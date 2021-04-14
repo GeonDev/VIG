@@ -2,15 +2,21 @@ package com.vig.domain;
 
 import java.io.Serializable;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Event implements Serializable{
 	
 	private static final long serialVersionUID = 1236283424582915L;
 	
 	//field
-	private int eventId;
+	private long eventId;
 	private String eventTitle;
 	private String eventSub; //부제
 	private String eventStart; //시작날짜
@@ -23,10 +29,7 @@ public class Event implements Serializable{
 	private String banner;
 	private boolean eventType; //false=일반, true=당첨자발표
 	
-	//constructor
-	public Event() {
-		
-	}
+
 	
 
 
