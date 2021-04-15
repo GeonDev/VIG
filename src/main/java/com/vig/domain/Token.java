@@ -8,7 +8,7 @@ import lombok.Data;
 public class Token implements Serializable {
 
 
-	private static final long serialVersionUID = 1236283424582915L;
+	private static final long serialVersionUID = 8067729718531214955L;
 	
 	
 	private String access_token;

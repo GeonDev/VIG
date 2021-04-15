@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @Table(name="feeds")
 public class Feed implements Serializable {
 	
-	private static final long serialVersionUID = 1236283424582915L;
+	private static final long serialVersionUID = 8067729718531214955L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

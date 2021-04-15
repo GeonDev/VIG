@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Table(name="event")
 public class Event implements Serializable{
 	
-	private static final long serialVersionUID = 1236283424582915L;
+	private static final long serialVersionUID = 8067729718531214955L;
 	
 	
 	@Id
@@ -37,6 +37,7 @@ public class Event implements Serializable{
 	private String eventImage;
 	//이벤트 배너 이미지
 	private String banner;
+	
 	private boolean eventType; //false=일반, true=당첨자발표
 	
 

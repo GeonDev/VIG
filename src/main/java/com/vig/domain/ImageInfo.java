@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ImageInfo implements Serializable{
 	
-	private static final long serialVersionUID = 1236283424582915L;
+	private static final long serialVersionUID = 8067729718531214955L;
 	
 	private long imageId;
 	private String path;

@@ -22,12 +22,13 @@ import lombok.NoArgsConstructor;
 @Table(name="comments")
 public class Comment implements Serializable{
 	
-	private static final long serialVersionUID = 1236283424582915L;
+	private static final long serialVersionUID = 8067729718531214955L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long commentId;
-	private long feedId;
+	
+	private Feed feed;
 	private String commentText;
 	private User user;
 	private Date regDate;
