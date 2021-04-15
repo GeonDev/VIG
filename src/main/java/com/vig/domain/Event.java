@@ -2,6 +2,12 @@ package com.vig.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,11 +17,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity
+@Table(name="event")
 public class Event implements Serializable{
 	
 	private static final long serialVersionUID = 1236283424582915L;
 	
-	//field
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long eventId;
 	private String eventTitle;
 	private String eventSub; //부제

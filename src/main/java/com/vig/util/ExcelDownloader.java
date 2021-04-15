@@ -141,7 +141,7 @@ public class ExcelDownloader extends AbstractView{
 			for(User user : userlist) {
 				SXSSFRow row = sheet.createRow(startRow);
 				
-				row.createCell(1).setCellValue(user.getUserId());
+				row.createCell(1).setCellValue(user.getUserCode());
 				row.createCell(2).setCellValue(user.getUserName());
 				row.createCell(3).setCellValue(user.getRole());
 				row.createCell(4).setCellValue(user.getState());
