@@ -3,6 +3,12 @@ package com.vig.domain;
 import java.io.Serializable;
 import java.sql.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,11 +18,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity
+@Table(name="payment")
 public class Payment implements Serializable{
 	
 	private static final long serialVersionUID = 1236283424582915L;
 	
 	//import에서 오는 결제 uid
+	@Id	
 	private String paymentId;
 	//구매자(후원자)
 	private User buyer;
@@ -37,8 +46,6 @@ public class Payment implements Serializable{
 	//0: 정상결제상태 1:결제취소상태
 	private int isCancel;
 	
-	public Payment() {
-		// TODO Auto-generated constructor stub
-	}
+
 
 }
