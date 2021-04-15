@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Table(name="images")
 public class Image implements Serializable {
 
-	private static final long serialVersionUID = 1236283424582915L;
+	private static final long serialVersionUID = 8067729718531214955L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Table(name="payment")
 public class Payment implements Serializable{
 	
-	private static final long serialVersionUID = 1236283424582915L;
+	private static final long serialVersionUID = 8067729718531214955L;
 	
 	//import에서 오는 결제 uid
 	@Id	
