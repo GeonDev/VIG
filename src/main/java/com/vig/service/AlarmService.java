@@ -6,14 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vig.domain.Alarm;
-import com.vig.repository.AlarmMapper;
+import com.vig.repository.AlarmRepository;
 
 
 @Service
 public class AlarmService  {
 
 	@Autowired	
-	private AlarmMapper alarmMapper;
+	private AlarmRepository alarmMapper;
 	
 	public AlarmService() {
 		// TODO Auto-generated constructor stub

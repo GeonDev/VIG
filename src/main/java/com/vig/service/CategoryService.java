@@ -6,14 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vig.domain.Category;
-import com.vig.repository.CategoryMapper;
+import com.vig.repository.CategoryRepository;
 
 
 @Service
 public class CategoryService {
 	
 	@Autowired	  
-	private CategoryMapper categoryMapper;
+	private CategoryRepository categoryMapper;
 
 	public CategoryService() {
 		// TODO Auto-generated constructor stub
