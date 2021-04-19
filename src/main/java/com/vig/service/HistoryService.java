@@ -10,18 +10,18 @@ import org.springframework.stereotype.Service;
 import com.vig.domain.History;
 import com.vig.domain.Search;
 import com.vig.domain.User;
-import com.vig.repository.HistoryMapper;
-import com.vig.repository.UserMapper;
+import com.vig.repository.HistoryRepository;
+import com.vig.repository.UserRepository;
 
 
 @Service
 public class HistoryService {
 
 	@Autowired
-	private HistoryMapper historyMapper;
+	private HistoryRepository historyMapper;
 	
 	@Autowired
-	private UserMapper userMapper;
+	private UserRepository userMapper;
 	
 	
 

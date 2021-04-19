@@ -7,13 +7,13 @@ import org.springframework.stereotype.Service;
 
 import com.vig.domain.Comment;
 import com.vig.domain.Search;
-import com.vig.repository.CommentMapper;
+import com.vig.repository.CommentRepository;
 
 @Service
 public class CommentService {
 	
 	@Autowired
-	private CommentMapper commentMapper;
+	private CommentRepository commentMapper;
 	
 	public CommentService() {
 

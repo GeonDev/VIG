@@ -1,4 +1,4 @@
-package com.vig.restController;
+package com.vig.controller.rest;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
