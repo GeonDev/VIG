@@ -3,6 +3,7 @@ package com.vig.domain;
 import java.io.Serializable;
 import java.sql.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,8 +27,13 @@ public class Category implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long categoryId;
+	@Column(name ="category_id")
+	private Long categoryId;
+		
+	@Column(name ="category_name")
 	private String categoryName;
+	
+	@Column(name ="category_img")
 	private String categoryImg;
 	
 

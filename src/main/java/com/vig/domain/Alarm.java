@@ -32,19 +32,19 @@ public class Alarm implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "alarm_Id")
-	private long alarmId;
+	private Long alarmId;
 	
-	@ManyToOne
-	@JoinColumn(name = "send_user_code")
+	@Column(name = "send_user_code")
+	@ManyToOne	
 	private User sendUser;
 	
-	@ManyToOne
-	@JoinColumn(name = "receive_user_code")
+	@Column(name = "receive_user_code")
+	@ManyToOne	
 	private User reciveUser;
 	
-	@ManyToOne
-	@JoinColumn(name = "like_feed_id")
-	private Feed likefeed;
+	@Column(name = "like_feed_id")
+	@ManyToOne	
+	private Feed likeFeed;
 	
 	@Column(name = "is_watch", nullable = false)
 	private int isWatch;
