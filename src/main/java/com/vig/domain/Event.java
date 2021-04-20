@@ -30,25 +30,34 @@ public class Event implements Serializable{
 	@Column(name ="event_id")
 	private Long eventId;
 	
+	@Column(name ="event_title")
 	private String eventTitle;
 	
+	@Column(name ="event_sub")
 	private String eventSub; //부제
 	
+	@Column(name ="event_start")
 	private String eventStart; //시작날짜
 	
+	@Column(name ="event_end")
 	private String eventEnd; //종료날짜
 	
+	@Column(name ="event_thumbnail")
 	private String eventThumb; //썸네일
 
+	@Column(name ="event_tag")
 	private String eventTags; //참여하기위한 태그
 	
+	@Column(name ="event_image")
 	//이벤트의 내용을 올릴때 사용하는 부분
 	private String eventImage;
 	
+	@Column(name ="banner")
 	//이벤트 배너 이미지
 	private String banner;
 	
-	private boolean eventType; //false=일반, true=당첨자발표
+	@Column(name ="event_type" , nullable = false)
+	private int eventType; //false=일반, true=당첨자발표
 	
 
 	

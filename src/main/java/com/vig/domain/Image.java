@@ -4,10 +4,13 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -27,14 +30,28 @@ public class Image implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long imageId;
+	@Column(name = "image_id")
+	private Long imageId;
 	
+	@Column(name = "feed_id")
+	@ManyToOne
 	private Feed feed;
+	
+	@Column(name = "feed_order" , nullable = false)
 	private int feedOrder;
+	
+	@Column(name = "is_thumbnail", nullable = false)
 	private int isThumbnail;
+	
+	@Column(name = "image_file")
 	private String imageFile;
 	
+
+	@OneToMany
 	private List<ImageColor> color;
+	
+
+	@OneToMany
 	private List<ImageKeyword> keyword;
 
 }
