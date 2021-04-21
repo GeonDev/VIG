@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 
 import com.vig.domain.Report;
 import com.vig.domain.Search;
-import com.vig.repository.ReportRepository;
+import com.vig.repository.ReportMapper;
 
 
 @Service
 public class ReportService  {
 	
 	@Autowired	  
-	private ReportRepository reportMapper;
+	private ReportMapper reportMapper;
 
 	public ReportService() {
 		// TODO Auto-generated constructor stub

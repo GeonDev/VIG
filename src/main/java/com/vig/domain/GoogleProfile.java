@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class GoogleProfile implements Serializable{
 	
-	private static final long serialVersionUID = 8067729718531214955L;
+	private static final long serialVersionUID = 1236283424582915L;
 	
 	private String id;
 	private String email;

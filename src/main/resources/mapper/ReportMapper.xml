@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vig.repository.ReportMapper"> 	
+ 	
+	<resultMap id="ReportSelectMap"  		type="report">
+		<result property="reportId"  		column="report_id"  		jdbcType="NUMERIC"/>
+		<result property="reportType" 		column="report_Type"  		jdbcType="NUMERIC" />
+		<result property="reportFeedId" 	column="report_feed_id"  	jdbcType="NUMERIC" />
+		<result property="reportMessage"  	column="report_message"  	jdbcType="VARCHAR" />
+		<result property="reportDate" 		column="report_date"  		jdbcType="DATE" />
+		<result property="banType" 			column="current_ban_type"   jdbcType="NUMERIC" />
+		<result property="banDate" 			column="current_ban_date"   jdbcType="DATE" />	
+		
+		<result property="totalCount"  		column="total_count"    	jdbcType="NUMERIC" />
+		<result property="currentCount"  	column="current_count"    	jdbcType="NUMERIC" />
+		
+		<association property="violator"    column="violator_code"    javaType="user"   select="setReporter"/>	
+		<association property="reporter"     column="reporter_code"     javaType="user"   select="setReporter"/>	
+						
+	</resultMap>	
+	
+		<select id="setReporter" parameterType="string" resultMap="com.vig.repository.UserMapper.userSelectMap" >
+		 	SELECT *
+		 	FROM users
+		 	WHERE user_code = #{value}		
+		</select>
+	
+		
+	<!-- 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000  -->	
+		
+	
+	<insert id="addReport" parameterType="report">
+		INSERT INTO report(report_id, reporter_code, violator_code, report_Type, report_feed_id, report_message, report_date)
+		VALUES(report_id, #{reporter.userCode}, #{violator.userCode} ,#{reportType}, #{reportFeedId}, #{reportMessage:VARCHAR},NOW())	
+	</insert>
+	
+	<select id="getReportList" parameterType="search" resultMap="ReportSelectMap">
+		SELECT * FROM
+		(SELECT  ROW_NUMBER() OVER(ORDER BY report.report_id) num,
+		COUNT(report_id) AS total_count, COUNT(IF(#{currentDate} > DATEDIFF(NOW(),report_date), 1, NULL )) AS current_count,
+		report.* FROM report GROUP BY violator_code
+		<if test="keyword !=''">
+		HAVING violator_code LIKE CONCAT('%',#{keyword},'%')
+		</if>		
+		) temp
+		WHERE num BETWEEN #{startRowNum} AND #{endRowNum}	
+	</select>
+	
+	
+	<select id="getCountReportList"  parameterType="search"  resultType="int">
+		SELECT COUNT(temp.violator_code) FROM 
+		(SELECT violator_code  FROM report GROUP BY violator_code
+			<if test="keyword !=''">
+			 HAVING violator_code LIKE CONCAT('%',#{keyword},'%')
+			 </if>
+		 )temp
+	</select>
+	
+	
+	<select id="getReportListFromUser" parameterType="search" resultMap="ReportSelectMap">
+		SELECT * FROM
+		(SELECT  ROW_NUMBER() OVER(ORDER BY report.report_id) num, report.* FROM report 
+		 WHERE violator_code = #{keyword}
+		) temp
+		WHERE num BETWEEN #{startRowNum} AND #{endRowNum}	
+	</select>
+	
+	
+	<select id="getCountReportListFromUser" parameterType="search"  resultType="int">
+		SELECT COUNT(*) FROM report 
+		 WHERE violator_code = #{keyword}
+	</select>
+	
+	<update id="updateBanState" parameterType="report">
+		UPDATE report INNER JOIN users on report.violator_code = users.user_code
+		SET report.current_ban_type = #{banType}, 
+		<if test="banType == 0">
+			users.state = #{banType}
+		</if>		
+		<if test="banType == 1">
+			users.state = #{banType},
+			report.current_ban_date = DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 3 DAY), '%Y-%m-%d'), 		 
+			users.ban_date = DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 3 DAY), '%Y-%m-%d')  
+		</if>		
+		<if test="banType == 2">
+			users.state = #{banType},
+			report.current_ban_date = DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 1 WEEK), '%Y-%m-%d'), 		 
+			users.ban_date = DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 1 WEEK), '%Y-%m-%d')  
+		</if>			
+		WHERE report.report_id = #{reportId}	
+	</update>
+	
+	 
+</mapper>
+
+

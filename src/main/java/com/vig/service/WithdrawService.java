@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.vig.domain.Search;
 import com.vig.domain.Withdraw;
-import com.vig.repository.WithdrawRepository;
+import com.vig.repository.WithdrawMapper;
 
 
 
@@ -16,7 +16,7 @@ import com.vig.repository.WithdrawRepository;
 public class WithdrawService{
 	
 	@Autowired
-	private WithdrawRepository withdrawMapper;
+	private WithdrawMapper withdrawMapper;
 	
 
 	public WithdrawService() {

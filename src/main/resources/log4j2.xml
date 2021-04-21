@@ -8,8 +8,8 @@
   		
 				
 		<RollingFile name="SaveFile">
-		  <FileName>./workspace/VIG/logs/VIG.log</FileName>
-		  <FilePattern>./workspace/VIG/logs/%d{yyyy-MM-dd}.log</FilePattern>
+		  <FileName>./logs/VIG.log</FileName>
+		  <FilePattern>./logs/VIG%d{yyyy-MM-dd}.log</FilePattern>
 		  <PatternLayout pattern="%d{yyyy-MMM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>	
 		  <Policies>
 		    <TimeBasedTriggeringPolicy interval="1" modulate="true" />

@@ -10,7 +10,7 @@ import com.vig.domain.Search;
 
 
 @Mapper
-public interface HistoryRepository {
+public interface HistoryMapper {
 	
 	public List<History> getHistoryListFormUser(Search search) throws Exception;
 	
