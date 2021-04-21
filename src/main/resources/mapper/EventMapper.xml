@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vig.repository.EventMapper"> 	
+ 	
+	<resultMap id="EventSelectMap" 	type="event">
+		<result property="eventId" 	column="event_id" 		jdbcType="NUMERIC"/>
+		<result property="eventTitle"	column="event_title" 		jdbcType="VARCHAR" />
+		<result property="eventSub" 	column="event_sub" 		jdbcType="VARCHAR"/>
+		<result property="eventStart" 		column="event_start" 		jdbcType="DATE" />
+		<result property="eventEnd" 	column="event_end" 		jdbcType="DATE" />
+		<result property="eventThumb" 	column="event_thumbnail" 		jdbcType="VARCHAR" />
+		<result property="eventTags" 	column="event_tag" 	jdbcType="VARCHAR" />	
+		<result property="eventImage" 	column="event_Image" 	jdbcType="VARCHAR" />
+		<result property="eventRegDate" 	column="event_RegDate" 	jdbcType="DATE" />
+		<result property="banner" 	column="banner" 	jdbcType="VARCHAR" />	
+		<result property="eventType" 	column="event_type" 	jdbcType="NUMERIC" />				
+	</resultMap>
+	
+	<insert id="addEvent" parameterType="event">
+		INSERT INTO event(event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner) 
+		VALUES( event_id, #{eventTitle:VARCHAR}, #{eventSub:VARCHAR}, #{eventStart:DATE}, #{eventEnd:DATE}, 
+		#{eventThumb:VARCHAR}, #{eventTags:VARCHAR}, #{eventImage:VARCHAR}, #{eventType:NUMERIC}, #{banner:VARCHAR})	
+	</insert>
+	
+	
+	<select id="getEvent" parameterType="int" resultMap="EventSelectMap">
+		SELECT event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner
+		FROM event
+		WHERE event_id=#{value};
+	</select>
+	
+	<select id="getEventList" parameterType="search" resultMap="EventSelectMap">
+		SELECT * FROM
+		(SELECT ROW_NUMBER() OVER(ORDER BY event.event_end DESC) num, event.*
+		FROM event
+		
+		<if test="keyword == 0">
+		WHERE event_type=0 AND event_end &gt;= CURRENT_DATE()
+		</if>
+		<if test="keyword == 1">
+		WHERE event_type=1
+		</if>
+		<if test="keyword == 2">
+		WHERE event_end &lt;= CURRENT_DATE()
+		</if>
+		) temp WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
+	</select>
+	
+	<select id="getLastEventList" resultMap="EventSelectMap">
+		SELECT *
+		FROM event
+		ORDER BY event_id DESC
+		LIMIT 3	
+	</select>
+	
+	
+	<update id="updateEvent" parameterType="event">
+		UPDATE event
+		SET 
+		event_title=#{eventTitle:VARCHAR}, event_sub=#{eventSub:VARCHAR}, event_start=#{eventStart:DATE}, event_end=#{eventEnd:DATE}, 
+		event_thumbnail=IFNULL(#{eventThumb:VARCHAR}, event_thumbnail), event_tag=#{eventTags:VARCHAR}, event_image=IFNULL(#{eventImage:VARCHAR}, event_image), 
+		event_type=#{eventType:NUMERIC}, banner=IFNULL(#{banner:VARCHAR}, banner)
+		WHERE event_id=#{eventId:NUMERIC}	
+	</update>
+	
+	<delete id="deleteEvent" parameterType="int">
+		DELETE FROM event
+      	WHERE event_id=#{value}
+	</delete>
+	
+	<select id="getEventCount" resultType="int">
+		SELECT COUNT(*)
+		FROM(	
+		SELECT *
+		FROM event
+		ORDER BY event_id) countTable
+	
+	</select>
+	
+	<insert id="addViewHistory" parameterType="map">
+		INSERT INTO ip_count (feed_id, ip, user_code, view_date)
+		VALUES(#{feedId:NUMERIC}, #{ip:VARCHAR}, #{userCode:VARCHAR}, NOW())
+	
+	</insert>
+
+	 
+</mapper>
+
+

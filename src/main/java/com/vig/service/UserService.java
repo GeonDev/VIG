@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 
 import com.vig.domain.Search;
 import com.vig.domain.User;
-import com.vig.repository.UserRepository;
+import com.vig.repository.UserMapper;
 
 @Service
 public class UserService  {	
 	
 	@Autowired	  
-	private UserRepository userMapper;	
+	private UserMapper userMapper;	
 	
 
 	public UserService() {

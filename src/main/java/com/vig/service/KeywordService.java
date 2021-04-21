@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vig.domain.ImageKeyword;
-import com.vig.repository.KeywordRepository;
+import com.vig.repository.KeywordMapper;
 
 @Service
 public class KeywordService {
 	
 	@Autowired	  
-	private KeywordRepository keywordMapper;
+	private KeywordMapper keywordMapper;
 
 	public KeywordService() {
 		// TODO Auto-generated constructor stub

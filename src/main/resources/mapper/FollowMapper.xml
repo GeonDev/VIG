@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vig.repository.FollowMapper"> 	
+
+	<resultMap type="follow" id="FollowSelectMap">
+		<result property="followId" 	column="follower_id" 	jdbcType="NUMERIC"/>	
+		<result property="addDate"  	column="add_date" 	 	jdbcType="DATE" />
+		
+		<!-- isF4F 맞팔로우 상태인지 확인한다. -->
+		<result property="isF4F" 	column="isF4F" 		jdbcType="VARCHAR"/>	
+			
+		<association property="followUser" 	column="follower_code" 	javaType="user"	  select="setFollow"/>	
+		<association property="tagetUser" 	column="user_code" 	javaType="user"	  select="setFollow"/>		
+		
+	</resultMap>
+ 	
+ 	<select id="setFollow" parameterType="String" resultMap="com.vig.repository.UserMapper.userSelectMap"> 	
+ 		SELECT * FROM users
+ 		WHERE user_code = #{value}
+ 	
+ 	</select>
+	
+	<insert id="addFollow" parameterType="follow">
+		INSERT INTO follow(user_code, follower_code, add_date)
+		VALUES (#{tagetUser.userCode:VARCHAR}, #{followUser.userCode:VARCHAR}, NOW())
+
+	</insert>
+
+	<delete id="deleteFollow" parameterType="follow">
+		DELETE FROM follow
+      	WHERE user_code=#{tagetUser.userCode} and follower_code=#{followUser.userCode}
+	</delete>
+	
+	<select id="getFollow" parameterType="follow" resultType="int">
+	
+		SELECT COUNT(*) FROM follow
+		WHERE user_code=#{tagetUser.userCode} and follower_code=#{followUser.userCode}
+	
+	</select>
+	
+	<select id="getFollowAll" parameterType="String" resultMap="FollowSelectMap">
+			
+			SELECT * FROM follow
+			WHERE user_code=#{value}
+	
+	</select>
+	
+	<!-- 내가 팔로우 한 사람 팔로잉-->
+	<select id="getFollowingList" parameterType="string" resultMap="FollowSelectMap">
+		SELECT F.*, 
+			(SELECT user_code FROM follow
+			 WHERE follower_code =  #{value} 
+			 AND user_code = F.follower_code LIMIT 1) AS isF4F 
+		FROM follow AS F
+		WHERE F.user_code= #{value}					
+	</select>
+	
+	<!-- 나를 팔로우 한 사람 팔로워-->
+	<select id="getFollowerList" parameterType="string" resultMap="FollowSelectMap">		
+		SELECT F.*, 
+		(SELECT user_code FROM follow
+		WHERE user_code =  #{value} 
+		AND follower_code = F.user_code LIMIT 1 ) AS isF4F 
+		FROM follow AS F
+		WHERE F.follower_code= #{value}				
+	</select>
+
+
+	 
+</mapper>
+
+
