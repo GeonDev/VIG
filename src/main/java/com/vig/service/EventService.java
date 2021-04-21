@@ -9,14 +9,14 @@ import org.springframework.stereotype.Service;
 
 import com.vig.domain.Event;
 import com.vig.domain.Search;
-import com.vig.repository.EventMapper;
+import com.vig.repository.EventRepository;
 
 @Service
 public class EventService {
 	
 	
 	@Autowired
-	private EventMapper eventMapper;
+	private EventRepository eventMapper;
 	
 	public EventService() {
 		

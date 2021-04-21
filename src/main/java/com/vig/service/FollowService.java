@@ -6,14 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vig.domain.Follow;
-import com.vig.repository.FollowMapper;
+import com.vig.repository.FollowRepository;
 
 
 @Service
 public class FollowService  {
 
 	@Autowired
-	private FollowMapper followMapper;
+	private FollowRepository followMapper;
 	
 	public FollowService() {
 		// TODO Auto-generated constructor stub

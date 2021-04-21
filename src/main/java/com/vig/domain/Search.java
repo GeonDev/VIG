@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class Search implements Serializable{
 		
-	private static final long serialVersionUID = 1236283424582915L;
+	private static final long serialVersionUID = 8067729718531214955L;
 	
 	//이미지 검색시 입력된 검색어	
 	private String keyword;
