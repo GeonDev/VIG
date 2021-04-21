@@ -52,5 +52,7 @@ public class WebConfig implements WebMvcConfigurer {
         registrationBean.addUrlPatterns("/*");
         return registrationBean;
     }
+	
+ 
 
 }

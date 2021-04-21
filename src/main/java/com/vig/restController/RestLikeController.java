@@ -1,4 +1,4 @@
-package com.vig.controller.rest;
+package com.vig.restController;
 
 import javax.servlet.http.HttpSession;
 
