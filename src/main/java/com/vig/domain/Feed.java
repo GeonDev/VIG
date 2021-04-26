@@ -6,12 +6,16 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.vig.domain.enums.FeedType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -53,8 +57,9 @@ public class Feed implements Serializable {
 	private int feedViewCount;
 	
 	// 0 = 일반피드, 1= 프라임피드
-	@Column(name ="feed_is_prime" , nullable = false)
-	private int feedIsPrime;
+	@Column(name ="feed_is_prime")
+	@Enumerated(EnumType.STRING)
+	private FeedType feedtype;
 	
 	//카테고리 저장
 	@Column(name ="category_id")

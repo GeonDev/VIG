@@ -13,7 +13,7 @@
 	<groupId>com</groupId>
 	<artifactId>vig</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>vig</name>
 	<description>clone project for behance and pinterest</description>
 	<properties>

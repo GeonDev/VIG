@@ -4,10 +4,14 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.vig.domain.enums.EventType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -56,8 +60,10 @@ public class Event implements Serializable{
 	//이벤트 배너 이미지
 	private String banner;
 	
-	@Column(name ="event_type" , nullable = false)
-	private int eventType; //false=일반, true=당첨자발표
+	@Column(name ="event_type")
+    @Enumerated(EnumType.STRING)
+    private EventType eventType;
+	//false=일반, true=당첨자발표
 	
 
 	

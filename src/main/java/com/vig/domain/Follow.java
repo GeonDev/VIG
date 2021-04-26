@@ -36,7 +36,7 @@ public class Follow implements Serializable{
 	private User tagetUser;
 	
 	@Column(name ="follower_code")
-	private User followUser; 
+	private User follower; 
 	
 	@Column(name ="add_date")
 	private Date addDate;
