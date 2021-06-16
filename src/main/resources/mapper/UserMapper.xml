@@ -7,20 +7,20 @@
 <mapper namespace="com.vig.repository.UserMapper"> 	
  	
 	<resultMap id="userSelectMap" type="user">
-		<result property="userCode" 		column="user_code" 			jdbcType="VARCHAR"/>
-		<result property="userName"			column="user_name" 			jdbcType="VARCHAR" />
-		<result property="password" 		column="password" 			jdbcType="VARCHAR" />
-		<result property="role" 			column="role" 				jdbcType="VARCHAR" />
-		<result property="profileImg" 		column="profile_img" 		jdbcType="VARCHAR" />
-		<result property="selfIntroduce" 	column="self_introduce" 	jdbcType="VARCHAR" />
-		<result property="state" 			column="state" 				jdbcType="NUMERIC" />
-		<result property="googleId" 		column="google_id" 			jdbcType="VARCHAR" />
-		<result property="account" 			column="account" 			jdbcType="VARCHAR" />
-		<result property="primeCount" 		column="prime_count" 		jdbcType="NUMERIC" />
-		<result property="email" 			column="email" 				jdbcType="VARCHAR" />
-		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
-		<result property="banDate" 			column="ban_date" 			jdbcType="DATE" />
-		<result property="preferCategory"   column="prefer_category"    jdbcType="NUMERIC" />			
+		<result property="userCode" 		column="user_code" 			   jdbcType="VARCHAR"/>
+		<result property="userName"			column="user_name" 			   jdbcType="VARCHAR" />
+		<result property="password" 		column="password" 			   jdbcType="VARCHAR" />
+		<result property="role" 			column="role" 				   jdbcType="VARCHAR" />
+		<result property="profileImg" 		column="profile_img" 		   jdbcType="VARCHAR" />
+		<result property="selfIntroduce" 	column="self_introduce" 	   jdbcType="VARCHAR" />
+		<result property="state" 			column="state" 				   jdbcType="NUMERIC" />
+		<result property="googleId" 		column="google_id" 			   jdbcType="VARCHAR" />
+		<result property="account" 			column="account" 			   jdbcType="VARCHAR" />
+		<result property="primeCount" 		column="prime_count" 		   jdbcType="NUMERIC" />
+		<result property="email" 			column="email" 				   jdbcType="VARCHAR" />
+		<result property="regDate" 			column="reg_date" 			   jdbcType="DATE" />
+		<result property="banDate" 			column="ban_date" 			   jdbcType="DATE" />
+		<result property="preferCategory"   column="prefer_category_id"    jdbcType="NUMERIC" />			
 	</resultMap>	 
 
 	 
@@ -120,7 +120,7 @@
 	 		google_id = #{googleId:VARCHAR},
 	 		password = IFNULL(#{password:VARCHAR}, password),
 	 		profile_img = IFNULL(#{profileImg:VARCHAR}, profile_img),
-	 		prefer_category = #{preferCategory:NUMERIC}	 		
+	 		prefer_category_id = #{preferCategory:NUMERIC}	 		
 	 	WHERE user_code = #{userCode}
 	 </update>	
 
