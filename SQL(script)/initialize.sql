@@ -1,44 +1,40 @@
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
-DROP DATABASE IF EXISTS `vig`;
-CREATE DATABASE IF NOT EXISTS `vig` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `vig`;
 
-DROP TABLE IF EXISTS `alarm`;
-CREATE TABLE IF NOT EXISTS `alarm` (
-  `alarm_id` bigint(20) NOT NULL DEFAULT 0,
-  `send_user_code` varchar(20) NOT NULL,
-  `receive_user_code` varchar(20) NOT NULL,
-  `like_feed_id` bigint(20) DEFAULT NULL,
-  `is_watch` tinyint(1) DEFAULT NULL,
-  `alarm_type` tinyint(1) DEFAULT NULL,
-  `add_date` date DEFAULT NULL,
-  PRIMARY KEY (`alarm_id`)
+DROP DATABASE IF EXISTS vig;
+CREATE DATABASE IF NOT EXISTS vig; 
+USE vig;
+
+DROP TABLE IF EXISTS alarm;
+CREATE TABLE IF NOT EXISTS alarm (
+  alarm_id bigint(20) NOT NULL DEFAULT 0,
+  send_user_code varchar(20) NOT NULL,
+  receive_user_code varchar(20) NOT NULL,
+  like_feed_id bigint(20) DEFAULT NULL,
+  is_watch tinyint(1) DEFAULT NULL,
+  alarm_type tinyint(1) DEFAULT NULL,
+  add_date date DEFAULT NULL,
+  PRIMARY KEY (alarm_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DELETE FROM `alarm`;
-/*!40000 ALTER TABLE `alarm` DISABLE KEYS */;
-INSERT INTO `alarm` (`alarm_id`, `send_user_code`, `receive_user_code`, `like_feed_id`, `is_watch`, `alarm_type`, `add_date`) VALUES
+DELETE FROM alarm;
+/*!40000 ALTER TABLE alarm DISABLE KEYS */;
+INSERT INTO alarm (alarm_id, send_user_code, receive_user_code, like_feed_id, is_watch, alarm_type, add_date) VALUES
 	(110000, 'user02', 'user01', NULL, 0, 2, '2010-01-03'),
 	(110001, 'user02', 'user01', 20000, 0, 0, '2021-01-09');
-/*!40000 ALTER TABLE `alarm` ENABLE KEYS */;
+/*!40000 ALTER TABLE alarm ENABLE KEYS */;
 
-DROP TABLE IF EXISTS `categories`;
-CREATE TABLE IF NOT EXISTS `categories` (
-  `category_id` bigint(20) NOT NULL DEFAULT 0,
-  `category_name` varchar(100) NOT NULL,
-  `category_img` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`category_id`),
-  UNIQUE KEY `category_name` (`category_name`)
+DROP TABLE IF EXISTS categories;
+CREATE TABLE IF NOT EXISTS categories (
+  category_id bigint(20) NOT NULL DEFAULT 0,
+  category_name varchar(100) NOT NULL,
+  category_img varchar(100) DEFAULT NULL,
+  PRIMARY KEY (category_id),
+  UNIQUE KEY category_name (category_name)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DELETE FROM `categories`;
-/*!40000 ALTER TABLE `categories` DISABLE KEYS */;
-INSERT INTO `categories` (`category_id`, `category_name`, `category_img`) VALUES
+DELETE FROM categories;
+/*!40000 ALTER TABLE categories DISABLE KEYS */;
+INSERT INTO categories (category_id, category_name, category_img) VALUES
 	(10000, 'Illustration', 'category01.jpg'),
 	(10001, 'Graphic design', 'category02.jpg'),
 	(10002, 'Architecture', 'category03.jpg'),
@@ -52,22 +48,22 @@ INSERT INTO `categories` (`category_id`, `category_name`, `category_img`) VALUES
 	(10010, 'Typography', 'category11.jpg'),
 	(10011, 'UI/UX', 'category12.jpg'),
 	(10012, 'RECOMMEND', 'recommend.jpg');
-/*!40000 ALTER TABLE `categories` ENABLE KEYS */;
+/*!40000 ALTER TABLE categories ENABLE KEYS */;
 
-DROP TABLE IF EXISTS `colors`;
-CREATE TABLE IF NOT EXISTS `colors` (
-  `color_id` bigint(20) NOT NULL DEFAULT 0,
-  `image_id` bigint(20) NOT NULL DEFAULT 0,
-  `haxcode` varchar(7) DEFAULT NULL,
-  `color_r` tinyint(4) unsigned DEFAULT NULL,
-  `color_g` tinyint(4) unsigned DEFAULT NULL,
-  `color_b` tinyint(4) unsigned DEFAULT NULL,
-  PRIMARY KEY (`color_id`)
+DROP TABLE IF EXISTS colors;
+CREATE TABLE IF NOT EXISTS colors (
+  color_id bigint(20) NOT NULL DEFAULT 0,
+  image_id bigint(20) NOT NULL DEFAULT 0,
+  haxcode varchar(7) DEFAULT NULL,
+  color_r tinyint(4) unsigned DEFAULT NULL,
+  color_g tinyint(4) unsigned DEFAULT NULL,
+  color_b tinyint(4) unsigned DEFAULT NULL,
+  PRIMARY KEY (color_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DELETE FROM `colors`;
-/*!40000 ALTER TABLE `colors` DISABLE KEYS */;
-INSERT INTO `colors` (`color_id`, `image_id`, `haxcode`, `color_r`, `color_g`, `color_b`) VALUES
+DELETE FROM colors;
+/*!40000 ALTER TABLE colors DISABLE KEYS */;
+INSERT INTO colors (color_id, image_id, haxcode, color_r, color_g, color_b) VALUES
 	(40000, 30000, '#b4b4b4', 180, 180, 180),
 	(40001, 30000, '#000000', 0, 0, 0),
 	(40002, 30000, '#1e1e1e', 30, 30, 30),
@@ -7492,68 +7488,68 @@ INSERT INTO `colors` (`color_id`, `image_id`, `haxcode`, `color_r`, `color_g`, `
 	(47421, 31074, '#1e3c5a', 30, 60, 90),
 	(47422, 31075, '#000000', 0, 0, 0),
 	(47423, 31075, '#1e1e1e', 30, 30, 30);
-/*!40000 ALTER TABLE `colors` ENABLE KEYS */;
+/*!40000 ALTER TABLE colors ENABLE KEYS */;
 
-DROP TABLE IF EXISTS `comments`;
-CREATE TABLE IF NOT EXISTS `comments` (
-  `comment_id` bigint(20) NOT NULL DEFAULT 0,
-  `feed_id` bigint(20) NOT NULL DEFAULT 0,
-  `comment_text` varchar(1024) NOT NULL,
-  `user_code` varchar(20) NOT NULL,
-  `reg_date` date DEFAULT NULL,
-  `edit_date` date DEFAULT NULL,
-  PRIMARY KEY (`comment_id`)
+DROP TABLE IF EXISTS comments;
+CREATE TABLE IF NOT EXISTS comments (
+  comment_id bigint(20) NOT NULL DEFAULT 0,
+  feed_id bigint(20) NOT NULL DEFAULT 0,
+  comment_text varchar(1024) NOT NULL,
+  user_code varchar(20) NOT NULL,
+  reg_date date DEFAULT NULL,
+  edit_date date DEFAULT NULL,
+  PRIMARY KEY (comment_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DELETE FROM `comments`;
-/*!40000 ALTER TABLE `comments` DISABLE KEYS */;
-/*!40000 ALTER TABLE `comments` ENABLE KEYS */;
+DELETE FROM comments;
+/*!40000 ALTER TABLE comments DISABLE KEYS */;
+/*!40000 ALTER TABLE comments ENABLE KEYS */;
 
-DROP TABLE IF EXISTS `event`;
-CREATE TABLE IF NOT EXISTS `event` (
-  `event_id` bigint(20) NOT NULL DEFAULT 0,
-  `event_title` varchar(100) DEFAULT NULL,
-  `event_sub` varchar(1024) DEFAULT NULL,
-  `event_start` date DEFAULT NULL,
-  `event_end` date DEFAULT NULL,
-  `event_thumbnail` varchar(100) DEFAULT NULL,
-  `event_tag` varchar(100) DEFAULT NULL,
-  `event_image` varchar(100) DEFAULT NULL,
-  `event_type` tinyint(1) DEFAULT NULL,
-  `banner` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`event_id`)
+DROP TABLE IF EXISTS event;
+CREATE TABLE IF NOT EXISTS event (
+  event_id bigint(20) NOT NULL DEFAULT 0,
+  event_title varchar(100) DEFAULT NULL,
+  event_sub varchar(1024) DEFAULT NULL,
+  event_start date DEFAULT NULL,
+  event_end date DEFAULT NULL,
+  event_thumbnail varchar(100) DEFAULT NULL,
+  event_tag varchar(100) DEFAULT NULL,
+  event_image varchar(100) DEFAULT NULL,
+  event_type tinyint(1) DEFAULT NULL,
+  banner varchar(100) DEFAULT NULL,
+  PRIMARY KEY (event_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DELETE FROM `event`;
-/*!40000 ALTER TABLE `event` DISABLE KEYS */;
-INSERT INTO `event` (`event_id`, `event_title`, `event_sub`, `event_start`, `event_end`, `event_thumbnail`, `event_tag`, `event_image`, `event_type`, `banner`) VALUES
+DELETE FROM event;
+/*!40000 ALTER TABLE event DISABLE KEYS */;
+INSERT INTO event (event_id, event_title, event_sub, event_start, event_end, event_thumbnail, event_tag, event_image, event_type, banner) VALUES
 	(140000, 'TWOTYPESET', '간직하고 싶은 글자', '2020-08-05', '2020-09-08', 'Event01_thumbnail.jpg', 'YoonGothicEvent,TPIST,YOONSHOWCASE2020', 'Event01_01.jpg', 0, 'Event01_banner.jpg'),
 	(140001, 'Design for People', '사람을 위한 디자인', '2020-07-29', '2020-09-29', 'Event03_thumbnail.jpg', 'ReasonableDesign,DesignForPeople,EveryPersonNeedsDesign', 'Event03_01.jpg', 0, 'Event03_banner.jpg'),
 	(140002, 'HERTZ', 'Function Shifted Answer Code Request', '2020-07-29', '2020-09-29', 'Event02_thumbnail.jpg', 'REDHEAD,DOUBLE U JAY,A.BREHME', 'Event02_01.jpg', 0, 'Event02_banner.jpg'),
 	(140003, 'BOOKLAND', 'BOOKLAND vol.001', '2020-09-28', '2020-10-26', 'Event04_thumbnail.jpg', 'BOOKLAND,booklandVol001,BOOKLAND EVENT', 'Event04_01.gif', 0, 'Event04_banner.gif');
-/*!40000 ALTER TABLE `event` ENABLE KEYS */;
+/*!40000 ALTER TABLE event ENABLE KEYS */;
 
-DROP TABLE IF EXISTS `feeds`;
-CREATE TABLE IF NOT EXISTS `feeds` (
-  `feed_id` bigint(20) NOT NULL DEFAULT 0,
-  `feed_title` varchar(100) NOT NULL,
-  `feed_explanation` varchar(1024) DEFAULT NULL,
-  `user_code` varchar(20) NOT NULL,
-  `feed_reg_date` date DEFAULT NULL,
-  `feed_edit_date` date DEFAULT NULL,
-  `feed_view_count` int(11) DEFAULT 0,
-  `feed_is_prime` tinyint(1) DEFAULT 0,
-  `category_id` bigint(20) DEFAULT NULL,
-  `feed_use_gears` varchar(1024) DEFAULT NULL,
-  `feed_state` tinyint(1) DEFAULT 0,
-  `prime_feed_view_count` int(11) DEFAULT 0,
-  `comment_range` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`feed_id`)
+DROP TABLE IF EXISTS feeds;
+CREATE TABLE IF NOT EXISTS feeds (
+  feed_id bigint(20) NOT NULL DEFAULT 0,
+  feed_title varchar(100) NOT NULL,
+  feed_explanation varchar(1024) DEFAULT NULL,
+  user_code varchar(20) NOT NULL,
+  feed_reg_date date DEFAULT NULL,
+  feed_edit_date date DEFAULT NULL,
+  feed_view_count int(11) DEFAULT 0,
+  feed_is_prime tinyint(1) DEFAULT 0,
+  category_id bigint(20) DEFAULT NULL,
+  feed_use_gears varchar(1024) DEFAULT NULL,
+  feed_state tinyint(1) DEFAULT 0,
+  prime_feed_view_count int(11) DEFAULT 0,
+  comment_range tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (feed_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DELETE FROM `feeds`;
-/*!40000 ALTER TABLE `feeds` DISABLE KEYS */;
-INSERT INTO `feeds` (`feed_id`, `feed_title`, `feed_explanation`, `user_code`, `feed_reg_date`, `feed_edit_date`, `feed_view_count`, `feed_is_prime`, `category_id`, `feed_use_gears`, `feed_state`, `prime_feed_view_count`, `comment_range`) VALUES
+DELETE FROM feeds;
+/*!40000 ALTER TABLE feeds DISABLE KEYS */;
+INSERT INTO feeds (feed_id, feed_title, feed_explanation, user_code, feed_reg_date, feed_edit_date, feed_view_count, feed_is_prime, category_id, feed_use_gears, feed_state, prime_feed_view_count, comment_range) VALUES
 	(20000, 'After Opportunity', 'After Opportunity centres on the curatorial concept of an exhibition on paper.', 'user01', '2021-01-09', NULL, 0, 1, 10003, NULL, 0, 2, NULL),
 	(20001, 'Art Direction', 'A mix of images I art directed across multiple studios.', 'user01', '2021-01-09', NULL, 0, 1, 10003, NULL, 0, 2, NULL),
 	(20002, 'From the streets of Kathmandu', '', 'user02', '2021-01-09', NULL, 0, 1, 10006, NULL, 0, 2, NULL),
@@ -7720,35 +7716,35 @@ INSERT INTO `feeds` (`feed_id`, `feed_title`, `feed_explanation`, `user_code`, `
 	(20211, 'IRONMAN', 'MARK...', 'user17', '2021-01-09', NULL, 1, 0, 10001, NULL, 0, 0, NULL),
 	(20212, 'Spider-Man: Into the Spider-Verse', 'Miles Morales!!!', 'user16', '2021-01-09', NULL, 1, 0, 10000, NULL, 0, 0, NULL),
 	(20213, 'flamenco', 'flamenco', 'user19', '2021-01-09', NULL, 3, 0, 10006, NULL, 0, 0, NULL);
-/*!40000 ALTER TABLE `feeds` ENABLE KEYS */;
+/*!40000 ALTER TABLE feeds ENABLE KEYS */;
 
-DROP TABLE IF EXISTS `follow`;
-CREATE TABLE IF NOT EXISTS `follow` (
-  `follower_id` bigint(20) NOT NULL DEFAULT 0,
-  `user_code` varchar(20) NOT NULL,
-  `follower_code` varchar(20) NOT NULL,
-  `add_date` date DEFAULT NULL,
-  PRIMARY KEY (`follower_id`)
+DROP TABLE IF EXISTS follow;
+CREATE TABLE IF NOT EXISTS follow (
+  follower_id bigint(20) NOT NULL DEFAULT 0,
+  user_code varchar(20) NOT NULL,
+  follower_code varchar(20) NOT NULL,
+  add_date date DEFAULT NULL,
+  PRIMARY KEY (follower_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DELETE FROM `follow`;
-/*!40000 ALTER TABLE `follow` DISABLE KEYS */;
-/*!40000 ALTER TABLE `follow` ENABLE KEYS */;
+DELETE FROM follow;
+/*!40000 ALTER TABLE follow DISABLE KEYS */;
+/*!40000 ALTER TABLE follow ENABLE KEYS */;
 
-DROP TABLE IF EXISTS `history`;
-CREATE TABLE IF NOT EXISTS `history` (
-  `history_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `feed_id` bigint(20) NOT NULL DEFAULT 0,
-  `watch_user_code` varchar(20) DEFAULT NULL,
-  `show_date` date DEFAULT NULL,
-  `ip_address` varchar(20) DEFAULT NULL,
-  `history_type` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`history_id`)
+DROP TABLE IF EXISTS history;
+CREATE TABLE IF NOT EXISTS history (
+  history_id bigint(20) NOT NULL AUTO_INCREMENT,
+  feed_id bigint(20) NOT NULL DEFAULT 0,
+  watch_user_code varchar(20) DEFAULT NULL,
+  show_date date DEFAULT NULL,
+  ip_address varchar(20) DEFAULT NULL,
+  history_type tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (history_id)
 ) ENGINE=InnoDB AUTO_INCREMENT=150104 DEFAULT CHARSET=utf8;
 
-DELETE FROM `history`;
-/*!40000 ALTER TABLE `history` DISABLE KEYS */;
-INSERT INTO `history` (`history_id`, `feed_id`, `watch_user_code`, `show_date`, `ip_address`, `history_type`) VALUES
+DELETE FROM history;
+/*!40000 ALTER TABLE history DISABLE KEYS */;
+INSERT INTO history (history_id, feed_id, watch_user_code, show_date, ip_address, history_type) VALUES
 	(1, 20192, NULL, '2021-06-16', '0:0:0:0:0:0:0:1', 2),
 	(150086, 20163, NULL, '2021-03-20', '0:0:0:0:0:0:0:1', 0),
 	(150087, 20197, NULL, '2021-03-20', '0:0:0:0:0:0:0:1', 0),
@@ -7768,21 +7764,21 @@ INSERT INTO `history` (`history_id`, `feed_id`, `watch_user_code`, `show_date`, 
 	(150101, 20194, NULL, '2021-06-16', '0:0:0:0:0:0:0:1', 2),
 	(150102, 20076, NULL, '2021-06-16', '0:0:0:0:0:0:0:1', 2),
 	(150103, 20149, NULL, '2021-06-16', '0:0:0:0:0:0:0:1', 2);
-/*!40000 ALTER TABLE `history` ENABLE KEYS */;
+/*!40000 ALTER TABLE history ENABLE KEYS */;
 
-DROP TABLE IF EXISTS `images`;
-CREATE TABLE IF NOT EXISTS `images` (
-  `image_id` bigint(20) NOT NULL DEFAULT 0,
-  `feed_id` bigint(20) NOT NULL DEFAULT 0,
-  `feed_order` int(11) DEFAULT NULL,
-  `is_thumbnail` tinyint(1) DEFAULT 0,
-  `image_file` varchar(100) NOT NULL,
-  PRIMARY KEY (`image_id`)
+DROP TABLE IF EXISTS images;
+CREATE TABLE IF NOT EXISTS images (
+  image_id bigint(20) NOT NULL DEFAULT 0,
+  feed_id bigint(20) NOT NULL DEFAULT 0,
+  feed_order int(11) DEFAULT NULL,
+  is_thumbnail tinyint(1) DEFAULT 0,
+  image_file varchar(100) NOT NULL,
+  PRIMARY KEY (image_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DELETE FROM `images`;
-/*!40000 ALTER TABLE `images` DISABLE KEYS */;
-INSERT INTO `images` (`image_id`, `feed_id`, `feed_order`, `is_thumbnail`, `image_file`) VALUES
+DELETE FROM images;
+/*!40000 ALTER TABLE images DISABLE KEYS */;
+INSERT INTO images (image_id, feed_id, feed_order, is_thumbnail, image_file) VALUES
 	(30000, 20000, 0, 1, 'feed01_thumbnail.jpg'),
 	(30001, 20000, 0, 0, 'feed01_1.jpg'),
 	(30002, 20000, 1, 0, 'feed01_2.jpg'),
@@ -8890,23 +8886,23 @@ INSERT INTO `images` (`image_id`, `feed_id`, `feed_order`, `is_thumbnail`, `imag
 	(31104, 20213, 3, 0, 'feed214_4.jpg'),
 	(31105, 20213, 4, 0, 'feed214_5.jpg'),
 	(31106, 20213, 5, 0, 'feed214_6.jpg');
-/*!40000 ALTER TABLE `images` ENABLE KEYS */;
+/*!40000 ALTER TABLE images ENABLE KEYS */;
 
-DROP TABLE IF EXISTS `keywords`;
-CREATE TABLE IF NOT EXISTS `keywords` (
-  `keyword_id` int(11) NOT NULL AUTO_INCREMENT,
-  `image_id` int(11) DEFAULT NULL,
-  `is_tag` tinyint(1) DEFAULT NULL,
-  `user_code` varchar(20) DEFAULT NULL,
-  `keyword_en` varchar(100) DEFAULT NULL,
-  `keyword_origin` varchar(100) DEFAULT NULL,
-  `keyword_score` float(5,5) DEFAULT NULL,
-  PRIMARY KEY (`keyword_id`)
+DROP TABLE IF EXISTS keywords;
+CREATE TABLE IF NOT EXISTS keywords (
+  keyword_id int(11) NOT NULL AUTO_INCREMENT,
+  image_id int(11) DEFAULT NULL,
+  is_tag tinyint(1) DEFAULT NULL,
+  user_code varchar(20) DEFAULT NULL,
+  keyword_en varchar(100) DEFAULT NULL,
+  keyword_origin varchar(100) DEFAULT NULL,
+  keyword_score float(5,5) DEFAULT NULL,
+  PRIMARY KEY (keyword_id)
 ) ENGINE=InnoDB AUTO_INCREMENT=71416 DEFAULT CHARSET=utf8;
 
-DELETE FROM `keywords`;
-/*!40000 ALTER TABLE `keywords` DISABLE KEYS */;
-INSERT INTO `keywords` (`keyword_id`, `image_id`, `is_tag`, `user_code`, `keyword_en`, `keyword_origin`, `keyword_score`) VALUES
+DELETE FROM keywords;
+/*!40000 ALTER TABLE keywords DISABLE KEYS */;
+INSERT INTO keywords (keyword_id, image_id, is_tag, user_code, keyword_en, keyword_origin, keyword_score) VALUES
 	(60000, 30150, 1, NULL, 'TWICE', 'TWICE', 0.00000),
 	(60001, 30151, 1, NULL, 'TWICE', 'TWICE', 0.00000),
 	(60002, 30152, 1, NULL, 'TWICE', 'TWICE', 0.00000),
@@ -20323,88 +20319,88 @@ INSERT INTO `keywords` (`keyword_id`, `image_id`, `is_tag`, `user_code`, `keywor
 	(71413, 31075, 0, NULL, 'Ceiling', NULL, 0.73464),
 	(71414, 31075, 0, NULL, 'Space', NULL, 0.73274),
 	(71415, 31075, 0, NULL, 'Metal', NULL, 0.71769);
-/*!40000 ALTER TABLE `keywords` ENABLE KEYS */;
+/*!40000 ALTER TABLE keywords ENABLE KEYS */;
 
-DROP TABLE IF EXISTS `liker`;
-CREATE TABLE IF NOT EXISTS `liker` (
-  `liker_id` bigint(20) NOT NULL DEFAULT 0,
-  `user_code` varchar(20) NOT NULL,
-  `feed_id` bigint(20) NOT NULL DEFAULT 0,
-  `add_date` date DEFAULT NULL,
-  PRIMARY KEY (`liker_id`)
+DROP TABLE IF EXISTS liker;
+CREATE TABLE IF NOT EXISTS liker (
+  liker_id bigint(20) NOT NULL DEFAULT 0,
+  user_code varchar(20) NOT NULL,
+  feed_id bigint(20) NOT NULL DEFAULT 0,
+  add_date date DEFAULT NULL,
+  PRIMARY KEY (liker_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DELETE FROM `liker`;
-/*!40000 ALTER TABLE `liker` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liker` ENABLE KEYS */;
+DELETE FROM liker;
+/*!40000 ALTER TABLE liker DISABLE KEYS */;
+/*!40000 ALTER TABLE liker ENABLE KEYS */;
 
-DROP TABLE IF EXISTS `payment`;
-CREATE TABLE IF NOT EXISTS `payment` (
-  `payment_id` varchar(50) NOT NULL,
-  `buyer` varchar(20) NOT NULL,
-  `beneficiary` varchar(20) DEFAULT NULL,
-  `feed_id` bigint(20) DEFAULT NULL,
-  `payment_option` tinyint(1) DEFAULT NULL,
-  `product_type` tinyint(1) DEFAULT NULL,
-  `select_price` int(11) DEFAULT NULL,
-  `last_price` int(11) DEFAULT NULL,
-  `payment_date` date DEFAULT NULL,
-  `is_cancel` tinyint(1) DEFAULT NULL,
-  `is_withdraw` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`payment_id`)
+DROP TABLE IF EXISTS payment;
+CREATE TABLE IF NOT EXISTS payment (
+  payment_id varchar(50) NOT NULL,
+  buyer varchar(20) NOT NULL,
+  beneficiary varchar(20) DEFAULT NULL,
+  feed_id bigint(20) DEFAULT NULL,
+  payment_option tinyint(1) DEFAULT NULL,
+  product_type tinyint(1) DEFAULT NULL,
+  select_price int(11) DEFAULT NULL,
+  last_price int(11) DEFAULT NULL,
+  payment_date date DEFAULT NULL,
+  is_cancel tinyint(1) DEFAULT NULL,
+  is_withdraw tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (payment_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DELETE FROM `payment`;
-/*!40000 ALTER TABLE `payment` DISABLE KEYS */;
-/*!40000 ALTER TABLE `payment` ENABLE KEYS */;
+DELETE FROM payment;
+/*!40000 ALTER TABLE payment DISABLE KEYS */;
+/*!40000 ALTER TABLE payment ENABLE KEYS */;
 
-DROP TABLE IF EXISTS `report`;
-CREATE TABLE IF NOT EXISTS `report` (
-  `report_id` bigint(20) NOT NULL DEFAULT 0,
-  `reporter_code` varchar(20) NOT NULL,
-  `violator_code` varchar(20) NOT NULL,
-  `report_Type` tinyint(1) DEFAULT NULL,
-  `report_feed_id` int(11) NOT NULL,
-  `report_message` varchar(1024) DEFAULT NULL,
-  `report_date` date DEFAULT NULL,
-  `current_ban_type` tinyint(1) DEFAULT NULL,
-  `current_ban_date` date DEFAULT NULL,
-  PRIMARY KEY (`report_id`)
+DROP TABLE IF EXISTS report;
+CREATE TABLE IF NOT EXISTS report (
+  report_id bigint(20) NOT NULL DEFAULT 0,
+  reporter_code varchar(20) NOT NULL,
+  violator_code varchar(20) NOT NULL,
+  report_Type tinyint(1) DEFAULT NULL,
+  report_feed_id int(11) NOT NULL,
+  report_message varchar(1024) DEFAULT NULL,
+  report_date date DEFAULT NULL,
+  current_ban_type tinyint(1) DEFAULT NULL,
+  current_ban_date date DEFAULT NULL,
+  PRIMARY KEY (report_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DELETE FROM `report`;
-/*!40000 ALTER TABLE `report` DISABLE KEYS */;
-INSERT INTO `report` (`report_id`, `reporter_code`, `violator_code`, `report_Type`, `report_feed_id`, `report_message`, `report_date`, `current_ban_type`, `current_ban_date`) VALUES
+DELETE FROM report;
+/*!40000 ALTER TABLE report DISABLE KEYS */;
+INSERT INTO report (report_id, reporter_code, violator_code, report_Type, report_feed_id, report_message, report_date, current_ban_type, current_ban_date) VALUES
 	(80000, 'user10', 'user02', 0, 20000, NULL, '2021-01-09', NULL, NULL),
 	(80001, 'user10', 'user02', 0, 20000, NULL, '2021-01-09', NULL, NULL),
 	(80002, 'user11', 'user02', 1, 20001, NULL, '2010-01-03', NULL, NULL),
 	(80003, 'user13', 'user02', 2, 20002, NULL, '2021-01-09', NULL, NULL),
 	(80004, 'user14', 'user02', 2, 20003, NULL, '2021-01-09', NULL, NULL),
 	(80005, 'user15', 'user03', 2, 20004, NULL, '2021-01-09', NULL, NULL);
-/*!40000 ALTER TABLE `report` ENABLE KEYS */;
+/*!40000 ALTER TABLE report ENABLE KEYS */;
 
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
-  `user_code` varchar(20) NOT NULL,
-  `user_name` varchar(50) NOT NULL,
-  `password` varchar(200) DEFAULT NULL,
-  `role` varchar(10) DEFAULT 'user',
-  `profile_img` varchar(100) DEFAULT 'profile_img.jpg',
-  `self_introduce` varchar(1024) DEFAULT NULL,
-  `state` tinyint(1) DEFAULT NULL,
-  `google_id` varchar(100) DEFAULT NULL,
-  `account` varchar(50) DEFAULT NULL,
-  `prime_count` int(11) DEFAULT NULL,
-  `email` varchar(50) DEFAULT NULL,
-  `reg_date` date DEFAULT NULL,
-  `ban_date` date DEFAULT NULL,
-  `prefer_category_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`user_code`)
+DROP TABLE IF EXISTS users;
+CREATE TABLE IF NOT EXISTS users (
+  user_code varchar(20) NOT NULL,
+  user_name varchar(50) NOT NULL,
+  password varchar(200) DEFAULT NULL,
+  role varchar(10) DEFAULT 'user',
+  profile_img varchar(100) DEFAULT 'profile_img.jpg',
+  self_introduce varchar(1024) DEFAULT NULL,
+  state tinyint(1) DEFAULT NULL,
+  google_id varchar(100) DEFAULT NULL,
+  account varchar(50) DEFAULT NULL,
+  prime_count int(11) DEFAULT NULL,
+  email varchar(50) DEFAULT NULL,
+  reg_date date DEFAULT NULL,
+  ban_date date DEFAULT NULL,
+  prefer_category_id bigint(20) DEFAULT NULL,
+  PRIMARY KEY (user_code)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DELETE FROM `users`;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`user_code`, `user_name`, `password`, `role`, `profile_img`, `self_introduce`, `state`, `google_id`, `account`, `prime_count`, `email`, `reg_date`, `ban_date`, `prefer_category_id`) VALUES
+DELETE FROM users;
+/*!40000 ALTER TABLE users DISABLE KEYS */;
+INSERT INTO users (user_code, user_name, password, role, profile_img, self_introduce, state, google_id, account, prime_count, email, reg_date, ban_date, prefer_category_id) VALUES
 	('admin', '관리자', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'admin', 'admin.jpg', NULL, 0, NULL, NULL, NULL, NULL, '2021-01-09', NULL, NULL),
 	('user01', 'Son Geon', '0ffe1abd1a08215353c233d6e009613e95eec4253832a761af28ff37ac5a150c', 'business', 'songeon.jpg', 'Hellow. my name is Geon!', 0, NULL, NULL, 1000, NULL, '2021-01-09', NULL, NULL),
 	('user02', 'Wei zhu', 'edee29f882543b956620b26d0ee0e7e950399b1c4222f5de05e06425b4c995e9', 'business', 'SDasdfas.jpg', 'Hellow. my name is Wei', 0, NULL, NULL, 1000, NULL, '2021-01-09', NULL, NULL),
@@ -20421,30 +20417,22 @@ INSERT INTO `users` (`user_code`, `user_name`, `password`, `role`, `profile_img`
 	('user13', 'Bibiane', '1cfafff6d51a03662b85b93dc3417f51687034ba9a46682f5328257eff7133ed', 'user', 'user13.jpg', 'Hellow. my name is Atom!', 0, NULL, NULL, 0, NULL, '2021-01-09', NULL, NULL),
 	('user14', '박서준', 'afbfb89027a4dae87c6033eaa07896e93f3f1ddc2214ca43658982e8aa74b4d4', 'business', 'user14.jpg', 'Hellow. my name is Atom!', 0, NULL, NULL, 1000, NULL, '2021-01-09', NULL, NULL),
 	('user15', 'door', 'f1ee529ef49111208f1c1646c53c8c311c9f093fd7891c1b46d77e98210b018d', 'user', 'profile_img.jpg', 'Hellow. my name is Atom!', 0, NULL, NULL, 0, NULL, '2021-01-09', NULL, NULL),
-	('user16', 'HAPPY Quokka', 'ee09198e46224875cf39928511ef2b855895c43ee86d1de894ee82bc7c990afa', 'business', 'user16_profileImg.jpeg', 'I`M SOOO HAPPY!', 0, NULL, NULL, 1000, NULL, '2021-01-09', NULL, 0),
+	('user16', 'HAPPY Quokka', 'ee09198e46224875cf39928511ef2b855895c43ee86d1de894ee82bc7c990afa', 'business', 'user16_profileImg.jpeg', 'IM SOOO HAPPY!', 0, NULL, NULL, 1000, NULL, '2021-01-09', NULL, 0),
 	('user17', 'Roman Reigns', '33dc0ba86008f4434bd43d050df9022209367483c1eef5280b25da861c32f6ad', 'business', 'user17_profileImg.jpg', 'my name is Roman Reigns', 0, NULL, NULL, 1000, NULL, '2021-01-09', NULL, NULL),
 	('user18', 'Seo Kang Jun', '8ffe8459134b46975acd31df13a50c51dbeacf1c19a764bf1602ba7c73ffc8fb', 'business', 'user18_profileImg.jpg', 'Hellow. my name is Kang Jun!', 0, NULL, NULL, 1000, NULL, '2021-01-09', NULL, NULL),
 	('user19', 'Joe Manganiello', '274dfec6e079fb08d6b5771537c54d3f0bd36c64c3d8ed0a4e6d2f201b489274', 'business', 'user19_profileImg.jpeg', 'Hi. my name is Joe Manganiello!', 0, NULL, NULL, 1000, NULL, '2021-01-09', NULL, 0),
 	('user20', 'Robyn Rihanna Fenty', '73a2af8864fc500fa49048bf3003776c19938f360e56bd03663866fb3087884a', 'business', 'user20_profileImg.jpg', ' Fenty Beauty by Rihanna', 2, NULL, NULL, 1000, NULL, '2021-01-09', '2021-01-09', NULL),
 	('user21', 'Myoi Mina', 'b8dc2c143be8994682b08461f46487e05874e59dd9ab65cf973e3a3c67a763aa', 'business', '1056019.jpg', 'Hellow. my name is Myoi Mina!', 2, NULL, NULL, 1000, NULL, '2021-01-09', '2021-01-09', NULL);
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+/*!40000 ALTER TABLE users ENABLE KEYS */;
 
-DROP TABLE IF EXISTS `withdraw`;
-CREATE TABLE IF NOT EXISTS `withdraw` (
-  `withdraw_id` bigint(20) NOT NULL DEFAULT 0,
-  `user_code` varchar(20) NOT NULL,
-  `acc_no` varchar(20) DEFAULT NULL,
-  `acc_holder` varchar(20) DEFAULT NULL,
-  `bank_code` tinyint(1) DEFAULT NULL,
-  `withdraw_date` date DEFAULT NULL,
-  `amount` int(11) DEFAULT NULL,
-  PRIMARY KEY (`withdraw_id`)
+DROP TABLE IF EXISTS withdraw;
+CREATE TABLE IF NOT EXISTS withdraw (
+  withdraw_id bigint(20) NOT NULL DEFAULT 0,
+  user_code varchar(20) NOT NULL,
+  acc_no varchar(20) DEFAULT NULL,
+  acc_holder varchar(20) DEFAULT NULL,
+  bank_code tinyint(1) DEFAULT NULL,
+  withdraw_date date DEFAULT NULL,
+  amount int(11) DEFAULT NULL,
+  PRIMARY KEY (withdraw_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-DELETE FROM `withdraw`;
-/*!40000 ALTER TABLE `withdraw` DISABLE KEYS */;
-/*!40000 ALTER TABLE `withdraw` ENABLE KEYS */;
-
-/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
-/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
